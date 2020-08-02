@@ -28,3 +28,14 @@ The repo itself contains mostly PoC code
 * Isolate the servo controllers from the front panel of CLIM to be able to move AC controls elsewhere
 * Reverse engineering the BSI as it's the main component of both AEE2004 and AEE2010
 * Create well-integrated optional modules such as ACC and DSG
+
+## Beware/Warning
+
+This project is (of course!) non-official, an thus, informations here may be incorrect (even if we take lots of precautions to avoid this),
+any modification you may do to your car is your sole responsibility!  
+This project uses a mix of english and french, be prepared to use a translation tool if you don't speak both languages (and the jargon in both!),
+the reason for this is that we tend to work in english, but are native french, and PSA works using french internally, so we adapt to their jargon.
+
+## Contribute
+
+The easiest way to contribute is probably to join the discord and go to the psa-can-re chan, alternatively, you can send me an email at jason [at] prototux.net
