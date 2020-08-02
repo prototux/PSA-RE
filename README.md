@@ -16,8 +16,8 @@ Some parts here seems valid for AEE2010, some aren't, not having a car using AEE
 ## Howto use this repo
 
 General documentation is in [the wiki](https://git.prototux.net/reverse-engineering/psa/canbus/-/wikis/home)  
-Informations about specific frames are [in issues](https://git.prototux.net/reverse-engineering/psa/canbus/-/issues)
-The discord where we talk about this is [here](https://discord.gg/uPykZ5W)
+Informations about specific frames are [in issues](https://git.prototux.net/reverse-engineering/psa/canbus/-/issues)  
+The discord where we talk about this is [here](https://discord.gg/uPykZ5W)  
 The repo itself contains mostly PoC code
 
 ## Ideas/Todo
