@@ -29,6 +29,13 @@ The repo itself contains mostly PoC code
 * Reverse engineering the BSI as it's the main component of both AEE2004 and AEE2010
 * Create well-integrated optional modules such as ACC and DSG
 
+## Status (may not be current)
+
+* 131 total IDs
+* 33 fully documented
+* 28 in progress
+* 70 not documented
+
 ## Beware/Warning
 
 This project is (of course!) non-official, an thus, informations here may be incorrect (even if we take lots of precautions to avoid this),
@@ -39,3 +46,11 @@ the reason for this is that we tend to work in english, but are native french, a
 ## Contribute
 
 The easiest way to contribute is probably to join the discord and go to the psa-can-re chan, alternatively, you can send me an email at jason [at] prototux.net
+
+## Thanks
+
+* Wouter Bokslag for his awesome work on the [reverse engineering of the immobilizer](https://fahrplan.events.ccc.de/congress/2019/Fahrplan/events/11020.html)
+* Alexandre Blin for his [tools](https://github.com/alexandreblin?tab=repositories), work on his 207 and for being a huge inspiration for this
+* Peter Pinter for his huge work on his own [FullCAN to VAN bridge](https://github.com/morcibacsi?tab=repositories)
+* Karaelyn and Kailokyra for their advices, especially on embedded dev
+* All the people who leaked parts of PSA's designs all over the internet :)
