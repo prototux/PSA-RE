@@ -11,14 +11,14 @@ See the great work of [Peter Pinter](https://github.com/morcibacsi?tab=repositor
 
 ## What if i have a car using AEE2010?
 
-Some parts here seems valid for AEE2010, some aren't, not having a car using AEE2010 i don't know how much AEE2010 is similar to AEE2004
+Some parts here seems valid for AEE2010, some aren't, not having a car using AEE2010, i don't know how much AEE2010 is similar to AEE2004
 
 ## Howto use this repo
 
 General documentation is in [the wiki](https://git.prototux.net/reverse-engineering/psa/canbus/-/wikis/home)  
 Informations about specific frames are [in issues](https://git.prototux.net/reverse-engineering/psa/canbus/-/issues)  
 The discord where we talk about this is [here](https://discord.gg/uPykZ5W)  
-The repo itself contains mostly PoC code
+The repo itself contains mostly documentation and some PoC code
 
 ## Ideas/Todo
 
@@ -29,19 +29,17 @@ The repo itself contains mostly PoC code
 * Reverse engineering the BSI as it's the main component of both AEE2004 and AEE2010
 * Create well-integrated optional modules such as ACC and DSG
 
-## Status (may not be current)
+## Status
 
-* 131 total IDs
-* 33 fully documented
-* 28 in progress
-* 70 not documented
+* See [the issue board](https://git.prototux.net/reverse-engineering/psa/canbus/-/boards)
 
 ## Beware/Warning
 
-This project is (of course!) non-official, an thus, informations here may be incorrect (even if we take lots of precautions to avoid this),
-any modification you may do to your car, even based on the documentation from here, is your sole responsibility!  
-This project uses a mix of english and french, be prepared to use a translation tool if you don't speak both languages (and the jargon in both!),
-the reason for this is that we tend to work in english, but are native french, and PSA works using french internally, so we adapt to their jargon.
+This project is (of course!) non-official, an thus, informations here may be incorrect (even if we try to avoid this)
+Any modification you may do to your car, even based on the documentation from here, is your sole responsibility!
+Similarely, we didn't have any reaction from PSA (nor know their position about FOSS projects), we cannot say if they may or not DMCA takedown your project
+This project uses a mix of english and french, be prepared to use a translation tool if you don't speak both languages (and the jargon in both!)
+The reason for this is that we tend to work in english, but are native french, and PSA works using french internally, so we adapt to their jargon
 
 ## Contribute
 
