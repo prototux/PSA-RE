@@ -31,7 +31,8 @@ The repo itself contains mostly documentation and some PoC code
 
 ## Status
 
-* See [the issue board](https://git.prototux.net/reverse-engineering/psa/canbus/-/boards)
+See [the issue board](https://git.prototux.net/reverse-engineering/psa/canbus/-/boards)  
+Basically, the I/S bus is mostly done (for ECUs we know at least), the CONF bus have a lot of documentation as well, the CAR bus is lacking
 
 ## Beware/Warning
 
