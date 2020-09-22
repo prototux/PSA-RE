@@ -20,19 +20,27 @@ Informations about specific frames are [in issues](https://git.prototux.net/reve
 The discord where we talk about this is [here](https://discord.gg/uPykZ5W)  
 The repo itself contains mostly documentation and some PoC code
 
-## Ideas/Todo
-
-* Do a ultra-low-power module for power management using PSA's COMMANDES_BSI frame
-* Create a C "libpsa" and python bindings to easily integrate PSA's canbus into projects
-* Create a RADIO and EMF replacement with more modern options
-* Isolate the servo controllers from the front panel of CLIM to be able to move AC controls elsewhere
-* Reverse engineering the BSI as it's the main component of both AEE2004 and AEE2010
-* Create well-integrated optional modules such as ACC and DSG
-
 ## Status
 
 See [the issue board](https://git.prototux.net/reverse-engineering/psa/canbus/-/boards)  
 Basically, the I/S bus is mostly done (for ECUs we know at least), the CONF bus have a lot of documentation as well, the CAR bus is lacking
+
+## Todo
+
+* Start to work on the diagnostics protocol (UDS + custom bits by PSA)
+* * Determine how to switch on the mux for the DiagOnCan pins of OBDII connector
+* * Reverse engineer UDS services and parameters for known ECUs
+* * Reverse engineer the UDS auth algorithm (derivative of the immobilizer one)
+* * Try to dump firmwares using UDS after successful auth
+* List cars using AEE2004 and their possible ECUs
+* Start to work on plip protocol
+* * Read frames sent by the plip
+* * Dump a key for a plip and decrypt the frame
+* * Implement HITAG2 and try to send valid frames
+* Clarify glossary (especially can ID vs device ID, and the buses vs LS and HS)
+* Analyze the can LS buses to map the bases IDs
+* Start to rewrite the infos in issues in .dbc files when the frames are done
+* Clarify the list of ECUs for VAN, AEE2004 and AEE2010
 
 ## Beware/Warning
 
@@ -45,6 +53,17 @@ The reason for this is that we tend to work in english, but are native french, a
 ## Contribute
 
 The easiest way to contribute is probably to join the discord and go to the psa-can-re chan, alternatively, you can send me an email at jason [at] prototux.net
+
+## Ideas/Associated projects
+
+* Do a ultra-low-power module for power management using PSA's COMMANDES_BSI frame
+* Create a C "libpsa" and python bindings to easily integrate PSA's canbus into projects
+* Create a RADIO and EMF replacement with more modern options
+* Isolate the servo controllers from the front panel of CLIM to be able to move AC controls elsewhere
+* Reverse engineering the BSI as it's the main component of both AEE2004 and AEE2010
+* Create well-integrated optional modules such as ACC and DSG
+
+
 
 ## Thanks
 
