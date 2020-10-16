@@ -1,6 +1,5 @@
 // UDS SA challenge-response implementation
 // This should match the authentication between diagbox and any ECU
-// Thanks to vlud for giving me the will to do it
 #include <inttypes.h>
 
 // Transformation function with PSA not-so-secret sauce
