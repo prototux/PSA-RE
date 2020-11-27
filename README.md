@@ -1,48 +1,27 @@
-# CANBus
+# Reverse engineering of PSA architectures
 
-## What is this repo about
+## Intro
 
-This project is about reverse engineering the AEE2004 ("full can") architecture of PSA (Peugeot/Citroen/DS) cars.
-It's the continuation of my previous work @ https://github.com/prototux/PSA-CANbus-reverse-engineering
+This project is an effort to reverse engineer and document most of the architectures used in PSA (Peugeot/Citroen/DS) cars.
+The goal is to enable anybody to explore their own cars and create cool DIY ECUs and tools.
 
-## What if i have a car using VAN?
 
-See the great work of [Peter Pinter](https://github.com/morcibacsi?tab=repositories)
+## Cars covered by this project
 
-## What if i have a car using AEE2010?
+All cars using the AEE2001 (VAN architecture), AEE2004 (first "FullCAN" architecture) and AEE2010 (current gen architecture), in theory all cars from the 1993 citroen XM (first car to use VAN) to the latest Peugeot, Citroen and DS cars should be covered.
 
-Some parts here seems valid for AEE2010, some aren't, not having a car using AEE2010, i don't know how much AEE2010 is similar to AEE2004
+## Ressources
 
-## Howto use this repo
+* This repository contains yaml files using the [DBMUXE format](https://github.com/prototux/PSA-RE/tree/master/dbmuxe) as well as proof of concept code
+* The [issues](https://git.prototux.net/reverse-engineering/psa/canbus/-/issues) contains the current work in progress on specific can/van/diag frames
+* The [wiki](https://github.com/prototux/PSA-RE/wiki) contains most of the information that isn't description of specific frames
 
-General documentation is in [the wiki](https://git.prototux.net/reverse-engineering/psa/canbus/-/wikis/home)  
-Informations about specific frames are [in issues](https://git.prototux.net/reverse-engineering/psa/canbus/-/issues)  
-The discord where we talk about this is [here](https://discord.gg/uPykZ5W)  
-The repo itself contains mostly documentation and some PoC code
+## Contribute
 
-## Status
+If you have informations that aren't documented yet, please open an issue!
+There's a channel open to dicuss the project on discord: psa-can-re @ [the nerds lair](https://discord.gg/uPykZ5W)
 
-See [the issue board](https://git.prototux.net/reverse-engineering/psa/canbus/-/boards)  
-Basically, the I/S bus is mostly done (for ECUs we know at least), the CONF bus have a lot of documentation as well, the CAR bus is lacking
-
-## Todo
-
-* Start to work on the diagnostics protocol (UDS + custom bits by PSA)
-* * Determine how to switch on the mux for the DiagOnCan pins of OBDII connector
-* * Reverse engineer UDS services and parameters for known ECUs
-* * Reverse engineer the UDS auth algorithm (derivative of the immobilizer one)
-* * Try to dump firmwares using UDS after successful auth
-* List cars using AEE2004 and their possible ECUs
-* Start to work on plip protocol
-* * Read frames sent by the plip
-* * Dump a key for a plip and decrypt the frame
-* * Implement HITAG2 and try to send valid frames
-* Clarify glossary (especially can ID vs device ID, and the buses vs LS and HS)
-* Analyze the can LS buses to map the bases IDs
-* Start to rewrite the infos in issues in .dbc files when the frames are done
-* Clarify the list of ECUs for VAN, AEE2004 and AEE2010
-
-## Beware/Warning
+## Warning
 
 This project is (of course!) non-official, an thus, informations here may be incorrect (even if we try to avoid this)  
 Any modification you may do to your car, even based on the documentation from here, is your sole responsibility!  
@@ -50,25 +29,9 @@ Similarely, we didn't got any reaction from PSA (nor know their position about F
 This project uses a mix of english and french, be prepared to use a translation tool if you don't speak both languages (and the jargon in both!)  
 The reason for this is that we tend to work in english, but are native french, and PSA works using french internally, so we adapt to their jargon
 
-## Contribute
-
-The easiest way to contribute is probably to join the discord and go to the psa-can-re chan, alternatively, you can send me an email at jason [at] prototux.net
-
-## Ideas/Associated projects
-
-* Do a ultra-low-power module for power management using PSA's COMMANDES_BSI frame
-* Create a C "libpsa" and python bindings to easily integrate PSA's canbus into projects
-* Create a RADIO and EMF replacement with more modern options
-* Isolate the servo controllers from the front panel of CLIM to be able to move AC controls elsewhere
-* Reverse engineering the BSI as it's the main component of both AEE2004 and AEE2010
-* Create well-integrated optional modules such as ACC and DSG
-
-
-
 ## Thanks
 
 * Wouter Bokslag for his awesome work on the [reverse engineering of the immobilizer](https://fahrplan.events.ccc.de/congress/2019/Fahrplan/events/11020.html)
 * Alexandre Blin for his [tools](https://github.com/alexandreblin?tab=repositories), work on his 207 and for being a huge inspiration for this
 * Peter Pinter for his huge work on his own [FullCAN to VAN bridge](https://github.com/morcibacsi?tab=repositories)
-* Karaelyn and Kailokyra for their advices, especially on embedded dev
 * All the people who leaked parts of PSA's designs all over the internet :)
