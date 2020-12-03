@@ -30,8 +30,7 @@ It's primarily used to describe the architectures from PSA (Peugeot/Citroen/DS),
 ├── buses
 │   ├── {architecture}.{variant}
 │   │   ├── {network}.{bus}
-│   │   │   ├── {node}.{protocol}
-│   │   │   │   ├── {message}.yml (a file describing a frame)
+│   │   │   ├── {message}.yml (a file describing a frame)
 ├── diag
 │   ├── {architecture}-{variant}
 │   │   ├── {node}
@@ -45,7 +44,6 @@ It's primarily used to describe the architectures from PSA (Peugeot/Citroen/DS),
 
 ## Rules
 
-* The message goes either to the sending node if there's only one, or the main receiving node if there's more than one sender. if there's multiple senders and receivers, use the most important sender or receiver node.
 * If a message is identical between multiple architectures (and versions of architectures), describe it in the most relevant version of the first architecture implementing it, then create symlink to it
 * The dot `.` is used as a separator when needed
 * The examples only set english (en) and french (fr) languages, but any language can be added with it's corresponding ISO code (2 letters)
