@@ -36,8 +36,8 @@ It's primarily used to describe the architectures from PSA (Peugeot/Citroen/DS),
 │   │   ├── {node}
 │   │   │   ├── dids
 │   │   │   │   ├── {did}.yml
-│   │   │   ├── dtcs
-│   │   │   │   ├── {dtc}.yml
+│   │   │   ├── dtcs.yml
+│   │   │   ├── resets.yml
 │   │   │   ├── routines
 │   │   │   │   ├── {routine}.yml
 ```

@@ -1,9 +1,6 @@
 id: 0x0F6
-name: BSI_SLOW_DATA
-original_name: DONNEES_BSI_LENTES
-display_name:
-  en: 'BSI slow data'
-  fr: 'Donnees BSI lentes'
+name: 'BSI_SLOW_DATA'
+alt_names: ['DONNEES_BSI_LENTES']
 length: 8
 comment:
   en: 'Contains misc informations, sent periodically with long pauses'
@@ -11,51 +8,235 @@ comment:
 type: 'can'
 periodicity: '500ms'
 senders:
-  - BSI
+  - 'BSI'
 receivers:
-  - RADIO # To get the reverse gear, for the AAS beeps
+  - 'RADIO' # To get the reverse gear, for the AAS beeps
 
 signals:
   CONFIG_MODE:
     bits: '1.7-1.6'
-    original_name: 'MDE_CFG'
+    alt_names: ['MDE_CFG']
     comment:
       en: 'Configuration mode'
       fr: 'Mode de configuration'
     type: 'uint'
     values:
       0x00:
-        name:
-          en: 'Factory'
-          fr: 'Usine'
+        en: 'Factory'
+        fr: 'Usine'
       0x01:
-        name:
-          en: 'Unused'
-          fr: 'Inutilise'
-      0x10:
-        name:
-          en: 'Customer'
-          fr: 'Client'
-      0x11:
-        name:
-          en: 'Unused'
-          fr: 'Inutilise'
+        unused: true
+      0x02:
+        en: 'Customer'
+        fr: 'Client'
+      0x03:
+        unused: true
 
   FACTORY_PARK:
     bits: '1.5'
-    original_name: 'PARC_USINE'
+    alt_names: ['PARC_USINE']
     comment:
       en: 'Factory configuration'
       fr: 'Configuration materielle parc'
     type: 'uint'
     values:
-      0x0:
-        name:
-          en: 'Not parked'
-          fr: 'Pas en parc'
-      0x1:
-        name:
-          en: 'Parked'
-          fr: 'En parc'
+      0x00:
+        en: 'Not parked'
+        fr: 'Pas en parc'
+      0x01:
+        en: 'Parked'
+        fr: 'En parc'
 
-  # TODO
+  MAIN_STATUS:
+    bits: '1.4-1.3'
+    alt_names: ['ETAT_PRINCIP_SEV']
+    comment:
+      en: 'Main SEV status'
+      fr: 'Etat principal SEV'
+    type: 'uint'
+    values:
+      0x00:
+        en: 'Stopped'
+        fr: 'Arret'
+      0x01:
+        en: 'Contact'
+        fr: 'Contact'
+      0x02:
+        en: 'Starting'
+        fr: 'Demarrage'
+      0x03:
+        unused: true
+
+  GEN_STATUS:
+    bits: '1.2'
+    alt_names: ['ETAT_GEN']
+    comment:
+      en: 'Generator status'
+      fr: 'Etat du generateur'
+    values:
+      0x00:
+        en: 'Generator not working'
+        fr: 'Generateur non operationnel (GNO)'
+      0x01:
+        en: 'Generator working'
+        fr: 'Generateur Opperationnel (GO)'
+
+  POWERTRAIN_STATUS:
+    bits: '1.1-1.0'
+    alt_names: ['ETAT_GMP']
+    comment:
+      en: 'Powertrain status'
+      fr: 'Etat du groupe moto-propulseur'
+    type: 'uint'
+    values:
+      0x00:
+        en: 'Motor stopped'
+        fr: 'Moteur non tournant'
+      0x01:
+        en: 'Starting'
+        fr: 'Demarrage en cours'
+      0x02:
+        en: 'Motor started'
+        fr: 'Moteur tournant'
+      0x03:
+        en: 'Stopping motor'
+        fr: 'Moteur arrete en phase de stop'
+
+  COOLANT_TEMPERATURE:
+    bits: '2.7-2.0'
+    alt_names: ['TEAU']
+    comment:
+      en: 'Coolant temperature'
+      fr: 'Temperature eau'
+    type: 'uint'
+    offset: -40
+    min: -40
+    max: 215
+    unit: 'celsius'
+
+  ODOMETER:
+    bits: '3.7-5.0'
+    alt_names: ['KM_TOTAL']
+    comment:
+      en: 'Odometer value, in kilometers'
+      fr: 'Totalisateur kilometrage vehicule'
+    type: 'float'
+    factor: -10
+    min: 0
+    max: 1677721.3
+    units: 'kilometers'
+
+  EXTERNAL_TEMPERATURE:
+    bits: '6.7-6.0'
+    alt_names: ['T_EXT']
+    comment:
+      en: 'External temperature'
+      fr: 'Temperature exterieure'
+    type: 'float'
+    offset: -40
+    factor: -2
+    min: -40
+    max: 87.5
+    units: 'celsius'
+
+  EXTERNAL_FILTERED_TEMPERATURE:
+    bits: '7.7-7.0'
+    alt_names: ['T_EXT_FILT']
+    comemnt:
+      en: 'Filtered external temperature'
+      fr: 'Temperature exterieure filtree'
+    type: 'float'
+    offset: -40
+    factor: -2
+    min: -40
+    max: 87.5
+    unit: 'celsius'
+
+  REVERSE_STATUS:
+    bits: '8.7'
+    alt_names: ['ETAT_MA']
+    comment:
+      en: 'Reverse gear status'
+      fr: 'Etat de la marche arriere'
+    type: 'uint'
+    values:
+      0x00:
+        en: 'Not in reverse gear'
+        fr: 'Marche arriere non enclenchee'
+      0x01:
+        en: 'In reverse gear'
+        fr: 'Marche arriere enclenchee'
+
+  FRONT_WIPERS_STATUS:
+    bits: '8.6'
+    alt_names: ['ESSUYAGE']
+    comment:
+      en: 'Front wiping confirmation'
+      fr: 'Confirmation esssyage avant'
+    type: 'uint'
+    values:
+      0x00:
+        en: 'Not wiping'
+        fr: 'Essuyage non confirme'
+      0x01:
+        en: 'Wiping'
+        fr: 'Essuyage confirme'
+
+  WHEEL_POSITION:
+    bits: '8.5-8.4'
+    alt_names: ['TYPE_DIR']
+    comment:
+      en: 'Wheel position'
+      fr: 'Type de direction du vehicule'
+    type: 'uint'
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Right'
+        fr: 'Direction a droite'
+      0x02:
+        en: 'Left'
+        fr: 'Direction a gauche'
+      0x03:
+        unused: true
+
+  CLUSTER_INDICATORS_TEST:
+    bits: '8.3'
+    alt_names: ['TEST_VOY_CMB']
+    comment:
+      en: 'Cluster indicator lights test'
+      fr: 'Test voyants du combine'
+    type: 'uint'
+    values:
+      0x00:
+        en: 'No test'
+        fr: 'Pas de test voyants'
+      0x01:
+        en: 'Test'
+        fr: 'Test voyants'
+
+  0F6_UNUSED_1:
+    bits: '8.2'
+    unused: true
+
+  BLINKERS_STATUS:
+    bits: '8.1-8.0'
+    alt_names: ['ETAT_CLIGNOTANTS']
+    comment:
+      en: 'Blinkers status'
+      fr: 'Etat des clignotants'
+    type: 'uint'
+    values:
+      0x00:
+        en: 'No blinkers'
+        fr: 'Clignotants inactifs'
+      0x01:
+        en: 'Only right blinker'
+        fr: 'Clignotant droit actif'
+      0x02:
+        en: 'Only left blinker'
+        fr: 'Clignotant gauche actif'
+      0x03:
+        en: 'Left and right blinkers'
+        fr: 'Clignotants gauche et droit actifs'
