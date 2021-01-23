@@ -1,0 +1,131 @@
+id: 0x0F6
+name: 'RADIO_COMMANDS'
+alt_names: ['CDE_RADIO']
+length: 3
+comment:
+  en: 'Contains wheel radio commands, proxied from the HDC on CAR bus'
+  fr: 'Commandes au volant pour la radio, transmis depuis le HDC sur le bus CAR'
+type: 'can'
+periodicity: '100ms'
+senders:
+  - 'BSI' # From HDC, proxied
+receivers:
+  - 'RADIO'
+  # Possibly other like telematics ECUs
+
+# Names are from a random chinese documentation for a radio
+# Both names were used, original one is unknown
+signals:
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  SRC:
+    bits: '1.1'
+    alt_names: ['HDC_SOURCE', 'MODE_TELEPH_ET_HDC']
+    comment:
+      en: 'Source (and possibly mode and phone?) button'
+      fr: 'Commande source'
+    values:
+      0x00:
+        en: 'Button released'
+        fr: 'Inactif'
+      0x01:
+        en: 'Button pushed'
+        fr: 'Actif'
+
+  VOL_DOWN:
+    bits: '1.2'
+    alt_names: ['HDC_VOLUME_DOWN', 'VOLUME_DWN_ET_HDC']
+    comment:
+      en: 'Volume down'
+      fr: 'Volume moins'
+    values:
+      0x00:
+        en: 'Button released'
+        fr: 'Inactif'
+      0x01:
+        en: 'Button pushed'
+        fr: 'Actif'
+
+  VOL_UP:
+    bits: '1.3'
+    alt_names: ['HDC_VOLUME_UP', 'VOLUME_UP_ET_HDC']
+    comment:
+      en: 'Volume up'
+      fr: 'Volume plus'
+    values:
+      0x00:
+        en: 'Button released'
+        fr: 'Inactif'
+      0x01:
+        en: 'Button pushed'
+        fr: 'Actif'
+
+  OVERFLOW_SCROLL_DOWN:
+    bits: '1.4'
+    comment:
+      en: 'Overflow while scrolling down'
+      fr: 'Debordement roulette bas'
+    values:
+      0x00:
+        en: 'No overflow'
+        fr: 'Pas de debordement'
+      0x01:
+        en: 'Overflowing'
+        fr: 'Debordement'
+
+  OVERFLOW_SCROLL_UP:
+    bits: '1.5'
+    comment:
+      en: 'Overflow while scrolling up'
+      fr: 'Debordement roulette haut'
+    values:
+      0x00:
+        en: 'No overflow'
+        fr: 'Pas de debordement'
+      0x01:
+        en: 'Overflow'
+        fr: 'Debordement'
+
+  SEEK_DOWN:
+    bits: '1.6'
+    alt_names: ['HDC_PRECEDENT', 'SEEK_DWN_ET_HDC']
+    comment:
+      en: 'Seek down'
+      fr: 'Recherche descendante'
+    values:
+      0x00:
+        en: 'Button released'
+        fr: 'Inactif'
+      0x01:
+        en: 'Button pushed'
+        fr: 'Actif'
+
+  SEEK_UP:
+    bits: '1.7'
+    alt_names: ['HDC_SUIVANT', 'SEEK_UP_ET_HDC']
+    comment:
+      en: 'Seek up'
+      fr: 'Recherche montante'
+    values:
+      0x00:
+        en: 'Button released'
+        fr: 'Inactif'
+      0x01:
+        en: 'Button pushed'
+        fr: 'Actif'
+
+  SCROLL:
+    bits: '2.0-2.7'
+    alt_names: ['HDC_MOLETTE', 'CMPT_MOL_ET_HDC']
+    comment:
+      en: 'Scroll wheel'
+      fr: 'Roulette'
+    type: 'sint'
+    min: -128
+    max: 128
+
+  UNUSED_2:
+    bits: '3.7-3.0'
+    unused: true
