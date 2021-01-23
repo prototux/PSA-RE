@@ -1,0 +1,270 @@
+id: 0x1D0
+name: 'CLIM_STATUS'
+length: 7
+comment:
+  en: 'Climate control panel status'
+  fr: 'Etat des commandes climatisation'
+type: 'can'
+periodicity: '500ms'
+senders:
+  - 'CLIM'
+receivers:
+  - 'BSI'
+
+signals:
+  UNUSED_1:
+    bits: '1.7'
+    unused: true
+
+  REAR_WINDSHIELD_HEAT:
+    bits: '1.6'
+
+  AUTO: # need to work more on this one
+    bits: '1.5-1.0'
+
+  UNUSED_2: # weird that this is unused, is it really?
+    bits: '2.7-2.0'
+    unused: true
+
+  UNUSED_3: # weird as well
+    bits: '3.7-3.3'
+    unused: true
+
+  FAN_SPEED:
+    bits: '3.2-3.0'
+    comment:
+      en: 'Fan speed'
+      fr: 'Vitesse du pulseur'
+    type: 'uint'
+    min: 0
+    max: 7
+
+  DIRECTION_LEFT:
+    bits: '4.7-4.4'
+    comment:
+      en: 'Left zone direction'
+      fr: 'Direction de la zone gauche'
+    values:
+      # 0x0000 when auto maybe? to be confirmed
+      0x01:
+        en: 'Up (when auto/windshield blowing'
+        fr: 'Haut (en mode auto/avec option degivrage)'
+      0x02:
+        en: 'Down'
+        fr: 'Bas'
+      0x03:
+        en: 'Front'
+        fr: 'Devant'
+      0x04:
+        en: 'Up'
+        fr: 'Haut'
+      0x05:
+        en: 'Front+Down'
+        fr: 'Devant+Bas'
+      0x06:
+        en: 'Up+Down'
+        fr: 'Haut+Bas'
+      # for some reason 0x07 and 0x08 doesn't exists, maybe there's Up+Front in it?
+
+  DIRECTION_RIGHT:
+    bits: '4.3-4.0'
+    comment:
+      en: 'Right zone direction'
+      fr: 'Direction pour la zone droite'
+    values:
+      # 0x0000 when auto maybe? to be confirmed
+      0x01:
+        en: 'Up (when auto/windshield blowing'
+        fr: 'Haut (en mode auto/avec option degivrage)'
+      0x02:
+        en: 'Down'
+        fr: 'Bas'
+      0x03:
+        en: 'Front'
+        fr: 'Devant'
+      0x04:
+        en: 'Up'
+        fr: 'Haut'
+      0x05:
+        en: 'Front+Down'
+        fr: 'Devant+Bas'
+      0x06:
+        en: 'Up+Down'
+        fr: 'Haut+Bas'
+      # for some reason 0x07 and 0x08 doesn't exists, maybe there's Up+Front in it?
+
+  UNUSED_4: # Didn't found any use for it, always 0
+    bits: '5.7-5.6'
+    unused: true
+
+  MODE:
+    bits: '5.5-5.4'
+    comment:
+      en: 'Air mode'
+      fr: 'Mode gestion'
+    values:
+      0x00:
+        en: 'Auto'
+        fr: 'Auto'
+      0x01:
+        en: 'Auto+Windshield blowing'
+        fr: 'Auto+Windshield blowing'
+      0x02:
+        en: 'Recycling disabled'
+        fr: 'Recyclage desactive'
+      0x03:
+        en: 'Recycling enabled'
+        fr: 'Recyclage active'
+
+  UNUSED_5: # No use found, always 0
+    bits: '5.3-5.0'
+    unused: true
+
+  TEMP_LEFT:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Left zone temperature'
+      fr: 'Temperature de la zone gauche'
+    values:
+      0x00:
+        en: 'LO'
+        fr: 'LO'
+      0x01:
+        en: '57f'
+        fr: '14c'
+      0x02:
+        en: '59f'
+        fr: '15c'
+      0x03:
+        en: '61f'
+        fr: '16c'
+      0x04:
+        en: '63f'
+        fr: '17c'
+      0x05:
+        en: '65f'
+        fr: '18c'
+      0x06:
+        en: '66f'
+        fr: '18.5c'
+      0x07:
+        en: '67f'
+        fr: '19c'
+      0x08:
+        en: '68f'
+        fr: '19.5c'
+      0x09:
+        en: '69f'
+        fr: '20c'
+      0x0A:
+        en: '70f'
+        fr: '20.5c'
+      0x0B:
+        en: '71f'
+        fr: '21c'
+      0x0C:
+        en: '72f'
+        fr: '21.5c'
+      0x0D:
+        en: '73f'
+        fr: '22c'
+      0x0E:
+        en: '74f'
+        fr: '22.5c'
+      0x0F:
+        en: '75f'
+        fr: '23c'
+      0x10:
+        en: '76f'
+        fr: '23.5c'
+      0x11:
+        en: '77f'
+        fr: '24c'
+      0x12:
+        en: '79f'
+        fr: '25c'
+      0x13:
+        en: '71f'
+        fr: '26c'
+      0x14:
+        en: '72f'
+        fr: '27c'
+      0x15:
+        en: '73f'
+        fr: '28c'
+      0x16:
+        en: 'HI'
+        fr: 'HI'
+
+  TEMP_RIGHT:
+    bits: '7.7-7.0'
+    values:
+      0x00:
+        en: 'LO'
+        fr: 'LO'
+      0x01:
+        en: '57f'
+        fr: '14c'
+      0x02:
+        en: '59f'
+        fr: '15c'
+      0x03:
+        en: '61f'
+        fr: '16c'
+      0x04:
+        en: '63f'
+        fr: '17c'
+      0x05:
+        en: '65f'
+        fr: '18c'
+      0x06:
+        en: '66f'
+        fr: '18.5c'
+      0x07:
+        en: '67f'
+        fr: '19c'
+      0x08:
+        en: '68f'
+        fr: '19.5c'
+      0x09:
+        en: '69f'
+        fr: '20c'
+      0x0A:
+        en: '70f'
+        fr: '20.5c'
+      0x0B:
+        en: '71f'
+        fr: '21c'
+      0x0C:
+        en: '72f'
+        fr: '21.5c'
+      0x0D:
+        en: '73f'
+        fr: '22c'
+      0x0E:
+        en: '74f'
+        fr: '22.5c'
+      0x0F:
+        en: '75f'
+        fr: '23c'
+      0x10:
+        en: '76f'
+        fr: '23.5c'
+      0x11:
+        en: '77f'
+        fr: '24c'
+      0x12:
+        en: '79f'
+        fr: '25c'
+      0x13:
+        en: '71f'
+        fr: '26c'
+      0x14:
+        en: '72f'
+        fr: '27c'
+      0x15:
+        en: '73f'
+        fr: '28c'
+      0x16:
+        en: 'HI'
+        fr: 'HI'
