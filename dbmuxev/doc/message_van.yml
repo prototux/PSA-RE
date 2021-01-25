@@ -1,0 +1,47 @@
+# VAN message format
+id: 0x042 # hex format, uppercase letters, 0x format
+name: 'TEST_FRAME' # uppercase and underscores only
+alt_names: # Alternative names, optional
+  - 'MESSAGE_DE_TEST'
+length: 15 # Length in bytes
+comment: # Comment, optional
+  en: 'This is an english comment'
+  fr: 'Ceci est un commentaire en francais'
+type: 'van'
+periodicity: 'oneshot' # or 'trigger' or 'Xms' eg. '200ms'
+senders:
+  - 'BSI'
+receivers:
+  - 'RADIO'
+
+# Message signals
+signals:
+  FIRST_SIGNAL: # signal ID, uppercase and underscores only
+    # The bits fields can either have a single bit location
+    # or a range. Ranges are defined as (start)-(end)
+    # Bits are defined in the form of (byte).(bit)
+    # The bytes are big-endian (counting left to right)
+    # The bit order is MSB->LSB (counting right to left)
+    # eg. [byte 0] [byte 1] [byte 3]
+    #             /        \
+    #          ----         ----
+    #         /                 \
+    #         [b3] [b2] [b1] [b0]
+    bits: '1.7-1.0' # Or single value, or '1.7-n' for can-tp
+    unused: true # If it is unused, optional
+    alt_names: # Alternative names, optional
+      - 'SIGNAL'
+    comment: # Comment, optional
+      en: 'Signal comment'
+      fr: 'Commentaire du signal'
+    type: 'uint' # or sint, float, double, str
+    min: 0x000 # Min value, optional
+    max: 0x000 # Max value, optional
+    units: 'kph' # Unit, optional
+    offset: '-40' # Offset (value to add or substract), optional
+    factor: '-100' # Factor (value to multiply or divide), optional
+    values: # List of values with their names and descriptions
+      0x000:
+        unused: true # If it is unused, optional
+        en: 'thing is enabled'
+        fr: 'thing is disabled'
