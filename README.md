@@ -5,14 +5,13 @@
 This project is an effort to reverse engineer and document most of the architectures used in PSA (Peugeot/Citroen/DS) cars.
 The goal is to enable anybody to explore their own cars and create cool DIY ECUs and tools.
 
-
 ## Cars covered by this project
 
 All cars using the AEE2001 (VAN architecture), AEE2004 (first "FullCAN" architecture) and AEE2010 (current gen architecture), in theory all cars from the 1993 citroen XM (first car to use VAN) to the latest Peugeot, Citroen and DS cars should be covered.
 
 ## Ressources
 
-* This repository contains yaml files using the [DBMUXE format](https://github.com/prototux/PSA-RE/tree/master/dbmuxe) as well as proof of concept code
+* This repository contains yaml files using the [DBMUXE format](https://github.com/prototux/PSA-RE/tree/master/dbmuxev/doc) as well as proof of concept code
 * The [issues](https://git.prototux.net/reverse-engineering/psa/canbus/-/issues) contains the current work in progress on specific can/van/diag frames
 * The [wiki](https://github.com/prototux/PSA-RE/wiki) contains most of the information that isn't description of specific frames
 
