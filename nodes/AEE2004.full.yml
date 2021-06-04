@@ -1,3 +1,7 @@
+# Some IDs are missing in this list because there's no vehicle that seems to use it, these are:
+# * COV_P and COV_C, it seems it was a project that PSA made with Faurecia that would measure the body volume of driver and passenger and send the information over CAN, it should have been used by the airbags to change the deploy volume/power so it's better suited to the people in the car, never made into a finished car apparently. They shoudl have IDs 0x05 and 0x06 respectively
+# Telephone Kit Main libre, i have no idea what this is for, maybe a KML but with an integrated phone instead of bluetooth? should have ID 0x14. It really looks like an older phone that was had an ID assigned and is referenced in some schematics (as number 8475), but has never made into an actual AEE2004 car, replaced by the NOMADE/KML
+
 BSI:
   bus:
     - 'HS.IS'
@@ -177,24 +181,25 @@ RAD:
     en: 'Radio (basic)'
     fr: 'Radio (basic)'
 
-RT:
+BTEL: # BTEL is for Boitier TELematique i guess
   bus:
     - 'LS.CONF'
   id:
     LS: 0x24
   alt:
-    # First generation
+    # First generation (RT2/RD2 were only on VAN/CAN cars)
     # The RT3/4/5 were also known as WIP Com (peugeot) and Navidrive (citroen)
     - 'RT3' # Nickname unknown, first CAN radio+gsm+navigation unit
+    - 'RT3ev' # A nickname for the RT4...
     - 'RT4' # Also known as WIP Com (peugeot) and Navidrive (citroen)
-            # It adds an integrated HDD (30G), probably based on RT3
+            # It adds an integrated HDD (30G), also known as RT3ev
     - 'RT5' # Also known as WIP Com, RT4 + USB + bluetooth hands-free
     # Second generation (replacing the HDD with an SD card)
     - 'RNEG' # Also known as WIP Nav (peugeot) and MyWay (citroen), low-end version of RT6
     - 'RT6' # Also known as WIP Nav+ (peugeot) and eMyWay (citroen), same as RT5 but with bluetooth audio
     - 'NG4' # Also known as WIP Com3D, high-end with 3D navigation
-    # Third generation (tacile screen)
-    # These are the same as RT6, but replacing the 1DIN+Screen for a 7" tactile screen
+    # Third generation (touchscreen)
+    # These are the same as RT6, but replacing the 1DIN+Screen for a 7" touchscreen
     - 'SMEG' # Not sure it was backported
     - 'SMEG+' # Backported because of the berlingo
     - 'SMEG+IV2' # Not sure that SMEG+IV2 was released for AEE2004
@@ -232,15 +237,85 @@ CLIM_AV:
     LS: 0x2D
   alt:
     - 'CLIM' # By default, when there's only one
+  name:
+    en: 'Climate Control - front'
+    fr: 'Climatisation - avant'
+
+
+AAD:
+  bus:
+    - 'LS.CONF'
+  id:
+    LS: 0x21
+  name:
+    en: 'City Park'
+    fr: 'Aide au Stationnement'
+
+BCD:
+  bus:
+    - 'LS.CONF'
+  id:
+    LS: 0x26
+  name:
+    # Also called "Afficheur Deporte"
+    # Apparently is the separate RPM meter on C4 picasso
+    en: 'Remote Display'
+    fr: 'Boitier Combine Deporte'
+
+# The BDMs are the electric/power seat memory units
+# They can remember up to (x) pre-recorded settings
+BDM_A:
+  bus:
+    - 'LS.CONF'
+  id:
+    LS: 0x17
+  name:
+    en: 'Memory Unit - rear'
+    fr: 'Boitier de Memorisation - arriere'
+
+BDM_C:
+  bus:
+    - 'LS.CONF'
+  id:
+    LS: 0x2E
+  alt:
+    - 'BDM' # Without any suffix
+  name:
+    en: 'Memory Unit - left/driver'
+    fr: 'Boitier de Memorisation - conducteur/gauche'
+
+BDM_P:
+  bus:
+    - 'LS.CONF'
+  id:
+    LS: 0x2F
+  name:
+    en: 'Memory Unit - right/passenger'
+    fr: 'Boitier de Memorisation - passager/droit'
+
+
+KML:
+  bus:
+    - 'LS.CONF'
+  id:
+    LS: 0x33
+  alt:
+    # Also called USB Box comercially
+    - 'NOMADE'
+  name:
+    en: 'Hands-free'
+    fr: 'Kit Main Libre'
+
+# Only found on the RCZ
+DEF:
+  bus:
+    - 'LS.CONF'
+  id: 0x34
+  name:
+    en: 'Mobile Deflector'
+    fr: 'Deflecteur Mobile'
 
 # Missing:
-# CONF: AAD
-# CONF: BCD/AD
-# CONF: BDM_A (rear)
-# CONF: BDM_C (left/driver)
-# CONF: BDM_P (right/passenger)
-# CONF: KML(?)
-# CONF: DEF (RCZ only)
 # CONF: CLIM_AR
 # CONF: CRT
 # CONF: EDP_C (left/driver)
@@ -264,4 +339,4 @@ CLIM_AV:
 # CAR: COV_C (left/driver)
 # CAR: COV_P (right/passenger)
 # LIN: BNBC (aka TNB)
-# LIN: ADDG
+# LIN: ADDGO
