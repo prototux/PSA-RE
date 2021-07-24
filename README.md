@@ -5,6 +5,10 @@
 This project is an effort to reverse engineer and document most of the architectures used in PSA (Peugeot/Citroen/DS) cars.
 The goal is to enable anybody to explore their own cars and create cool DIY ECUs and tools.
 
+## Status
+
+It takes some time to document all the frames, however, we have enough data to properly document most of the frames in VAN/AEE2001, AEE2004 and AEE2010, so don't hesitate to ask on the discord if there's data you need and isn't yet documented here.
+
 ## Cars covered by this project
 
 All cars using the AEE2001 (VAN architecture), AEE2004 (first "FullCAN" architecture) and AEE2010 (current gen architecture), in theory all cars from the 1993 citroen XM (first car to use VAN) to the latest Peugeot, Citroen and DS cars should be covered.
