@@ -22,7 +22,7 @@ All cars using the AEE2001 (VAN architecture), AEE2004 (first "FullCAN" architec
 ## Contribute
 
 If you have informations that aren't documented yet, please open an issue!
-There's a channel open to dicuss the project on discord: psa-can-re @ [the nerds lair](https://discord.gg/uPykZ5W)
+Feel free to chat in our discord server: [OpenLeo](https://discord.gg/DPthrN2cbS)
 
 ## Warning
 
