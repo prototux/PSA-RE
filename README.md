@@ -5,24 +5,28 @@
 This project is an effort to reverse engineer and document most of the architectures used in PSA (Peugeot/Citroen/DS) cars.
 The goal is to enable anybody to explore their own cars and create cool DIY ECUs and tools.
 
-## Status
+## Help needed!
 
-It takes some time to document all the frames, however, we have enough data to properly document most of the frames in VAN/AEE2001, AEE2004 and AEE2010, so don't hesitate to ask on the discord if there's data you need and isn't yet documented here.
+There's a lot of work still left to document as much of the can buses as possible, if you are willing to help on these subjects, please drop by on [our discord server](https://discord.gg/DPthrN2cbS)!
+
+Help is mode needed on these subjects:
+* Create a web-app to browse and view all the data in a more easy to read way
+* Create generators that parse the yaml to generate industry standard formats (DBC, ODX, etc)
+* Create the VAN yaml format and document VAN frames
+* Document more of the CAN frames for both AEE2004 and AEE2010
+* Document the diagnostics (KWP/UDS) part
+* And more!
 
 ## Cars covered by this project
 
-All cars using the AEE2001 (VAN architecture), AEE2004 (first "FullCAN" architecture) and AEE2010 (current gen architecture), in theory all cars from the 1993 citroen XM (first car to use VAN) to the latest Peugeot, Citroen and DS cars should be covered.
+All cars using the AEE2001 (VAN architecture), AEE2004 (first "FullCAN" architecture) and AEE2010 (cars made between 2010 and around 2020), in theory all cars from the 1993 citroen XM (first car to use VAN) to the early 2020s Peugeot, Citroen and DS cars should be covered.
+The new announced architecture, starting 2022/2023 isn't known yet.
 
 ## Ressources
 
 * This repository contains yaml files using the [DBMUXE format](https://github.com/prototux/PSA-RE/tree/master/dbmuxev/doc) as well as proof of concept code
 * The [issues](https://git.prototux.net/reverse-engineering/psa/canbus/-/issues) contains the current work in progress on specific can/van/diag frames
 * The [wiki](https://github.com/prototux/PSA-RE/wiki) contains most of the information that isn't description of specific frames
-
-## Contribute
-
-If you have informations that aren't documented yet, please open an issue!
-Feel free to chat in our discord server: [OpenLeo](https://discord.gg/DPthrN2cbS)
 
 ## Warning
 
