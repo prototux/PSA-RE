@@ -15,7 +15,7 @@ const uint8_t yamlBitPosition[64] =
     87, 86, 85, 84, 83, 82, 81, 80,
     };
 
-uint8_t getBitPosition(uint8_t ymlBitPos);
+inline static uint8_t getBitPosition(uint8_t ymlBitPos);
 int parsePsaYaml(const char *yamlFile, CanMessage &parsedMsg);
 
 #endif  // PARSE_PSA_YAML
