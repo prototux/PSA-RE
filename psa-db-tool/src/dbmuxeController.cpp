@@ -2,45 +2,174 @@
 #include "ryml.hpp"
 #include "ryml_std.hpp"
 
-int parsePsaYaml(const char *yamlFile, CanMessage &parsedMsg) {
+int parsePsaYaml(const char *yamlFile, CanFrame &thisFrame) {
 
     std::string yamlFileContent = get_file_contents(yamlFile);
-    ryml::Tree yamlRoot = ryml::parse_in_place(ryml::to_substr(yamlFileContent));
+    ryml::Tree tree = ryml::parse_in_place(ryml::to_substr(yamlFileContent));
 
-    bool has_id = 0, has_name = 0, has_length = 0, has_signals = 0;
-
-    for (size_t msgParamId = yamlRoot.first_child(yamlRoot.root_id()); msgParamId != ryml::NONE;
-                msgParamId = yamlRoot.next_sibling(msgParamId)) {
-        if (yamlRoot.key(msgParamId) == "id") {
-            ryml::atox(yamlRoot["id"].val(), &parsedMsg.id);
-            has_id = true;
-        } else if (yamlRoot.key(msgParamId) == "name") {
-            yamlRoot["name"] >> parsedMsg.name;
-            has_name = true;
-        } else if (yamlRoot.key(msgParamId) == "length") {
-            ryml::atou(yamlRoot["length"].val(), &parsedMsg.dlc);
-            has_length = true;
-        } else if (yamlRoot.key(msgParamId) == "type") {
-            yamlRoot["type"] >> parsedMsg.type;
-        } else if (yamlRoot.key(msgParamId) == "periodicity") {
-            yamlRoot["periodicity"] >> parsedMsg.periodicity;
-        } else if (yamlRoot.key(msgParamId) == "senders") {
-            ryml::NodeRef senders = yamlRoot["senders"];
+    for (ryml::ConstNodeRef const& frameParam : tree.crootref())
+    {
+        if (frameParam.key() == "id")
+        {
+            std::uint16_t tempId;
+            ryml::atox(frameParam.val(), &tempId);
+            thisFrame.setHexId(tempId);
+        }
+        else if (frameParam.key() == "name")
+        {
+            std::string tempName {frameParam.val().str, frameParam.val().len};
+            thisFrame.setName(tempName);
+        }
+        else if (frameParam.key() == "alt_names")
+        {
+            for (ryml::ConstNodeRef const& alternativeName : frameParam.children())
+            {
+                std::string tempAltName;
+                alternativeName >> tempAltName;
+                thisFrame.addAltName(tempAltName);
+            }
+        }
+        else if (frameParam.key() == "length")
+        {
+            std::uint16_t tempLength;
+            ryml::atou(frameParam.val(), &tempLength);
+            thisFrame.setLength(tempLength);
+            // std::cout << "PARAMETER LENGTH: " << frameParam.val().len << " " << std::endl;
+        }
+        else if (frameParam.key() == "comment")
+        {
+            for (ryml::ConstNodeRef const& comment : frameParam.children())
+            {
+                // std::string tempCommentLang {comment.key().str, comment.key().len};
+                std::string tempCommentText {comment.val().str, comment.val().len};
+                std::LanguageField tempComment(comment.key().begin(), tempCommentText);
+                thisFrame.addComment(tempComment);
+            }
+        }
+        else if (frameParam.key() == "type")
+        {
+            std::string tempType {frameParam.val().str, frameParam.val().len};
+            thisFrame.setType(tempType);
+        }
+        else if (frameParam.key() == "periodicity")
+        {
+            std::string tempPeriod {frameParam.val().str, frameParam.val().len};
+            thisFrame.setPeriod(tempPeriod);
+        }
+        else if (frameParam.key() == "senders")
+        {
+            for (ryml::ConstNodeRef const& sender : frameParam.children())
+            {
+                std::string tempSender;
+                sender >> tempSender;
+                thisFrame.addSender(tempSender);
+            }
+        }
+        else if (frameParam.key() == "receivers")
+        {
+            for (ryml::ConstNodeRef const& receiver : frameParam.children())
+            {
+                std::string tempReceiver;
+                receiver >> tempReceiver;
+                thisFrame.addReceiver(tempReceiver);
+            }
+        }
+        else if (frameParam.key() == "signals")
+        {
+            for (ryml::ConstNodeRef const& signal : frameParam.children())
+            {
+                CanSignal tempCanSignal;
+                memset(&tempCanSignal, 0, sizeof(tempCanSignal));
+                std::string tempName {signal.key().str, signal.key().len};
+                tempCanSignal.setName(tempName);
+                for (ryml::ConstNodeRef const& signalParam : signal.children())
+                {
+                    if (signalParam.key() == "bits")
+                    {
+                        std::string signalPositionStr {signalParam.val().str, signalParam.val().len};
+                        parseSignalPosition(signalPositionStr, tempCanSignal);
+                    }
+                    else if (signalParam.key() == "type")
+                    {
+                        std::string tempType {signalParam.val().str, signalParam.val().len};
+                        tempCanSignal.setType(tempType);
+                    }
+                    else if (signalParam.key() == "factor")
+                    {
+                        float tempFactor;
+                        ryml::atof(signalParam.val(), &tempFactor);
+                        tempCanSignal.setFactor(tempFactor);
+                    }
+                    else if (signalParam.key() == "offset")
+                    {
+                        std::int16_t tempOffset;
+                        ryml::atoi(signalParam.val(), &tempOffset);
+                        tempCanSignal.setOffset(tempOffset);
+                    }
+                    else if (signalParam.key() == "min")
+                    {
+                        std::int16_t tempMin;
+                        ryml::atoi(signalParam.val(), &tempMin);
+                        tempCanSignal.setMin(tempMin);
+                    }
+                    else if (signalParam.key() == "max")
+                    {
+                        std::int16_t tempMax;
+                        ryml::atoi(signalParam.val(), &tempMax);
+                        tempCanSignal.setMax(tempMax);
+                    }
+                    else if (signalParam.key() == "units")
+                    {
+                        std::string tempUnits {signalParam.val().str, signalParam.val().len};
+                        tempCanSignal.setUnits(tempUnits);
+                    }
+                    else if (signalParam.key() == "values")
+                    {
+                        for (ryml::ConstNodeRef const& value : signalParam.children())
+                        {
+                            vector<std::LanguageField> tempSignalValueMeanings;
+                            for (ryml::ConstNodeRef const &valueMeaning : value.children())
+                            {
+                                std::string tempMeaningDescription(valueMeaning.val().str, valueMeaning.val().len);
+                                std::LanguageField tempLangField(valueMeaning.key().begin(), tempMeaningDescription);
+                                tempSignalValueMeanings.push_back(tempLangField);
+                            }
+                            int16_t tempValue;
+                            ryml::atox(value.key(), &tempValue);
+                            tempCanSignal.addValueMeaning(tempValue, tempSignalValueMeanings);
+                        }
+                    }
+                    else
+                    {
+                        std::cout << "Unknown signal parameter [" << signalParam.key() << "].\n";
+                    }
+                }
+                thisFrame.addSignal(tempCanSignal);
+            }
+        }
+        else
+        {
+            std::cout << "Unknown CAN message parameter [" << frameParam.key() << "].\n";
+        }
+    }
+/*
+    for (size_t msgParamId = tree.first_child(tree.root_id()); msgParamId != ryml::NONE;
+                msgParamId = tree.next_sibling(msgParamId)) {
+        std::cout << "MsgParamId = " << msgParamId << " \n";
+        if (tree.key(msgParamId) == "type") {
+            tree["type"] >> thisFrame.type;
+        } else if (tree.key(msgParamId) == "periodicity") {
+            tree["periodicity"] >> thisFrame.periodicity;
+        } else if (tree.key(msgParamId) == "senders") {
+            ryml::NodeRef senders = tree["senders"];
             for (ryml::NodeRef const &child : senders.children()) {
                 std::string sender;
                 child >> sender;
-                parsedMsg.senders.push_back(sender);
+                thisFrame.senders.push_back(sender);
             }
-        } else if (yamlRoot.key(msgParamId) == "receivers") {
-            ryml::NodeRef receivers = yamlRoot["receivers"];
-            for (ryml::NodeRef const &child : receivers.children()) {
-                std::string receiver;
-                child >> receiver;
-                parsedMsg.receivers.push_back(receiver);
-            }
-        } else if (yamlRoot.key(msgParamId) == "signals") {
+        } else if (tree.key(msgParamId) == "signals") {
             has_signals = true;
-            ryml::NodeRef signals = yamlRoot["signals"];
+            ryml::NodeRef signals = tree["signals"];
             for (ryml::NodeRef const &signal : signals.children()) {
                 CanSignal tempCanSignal;
                 tempCanSignal.scale = 1;
@@ -51,27 +180,7 @@ int parsePsaYaml(const char *yamlFile, CanMessage &parsedMsg) {
 
                 tempCanSignal.name.assign(signal.key().str, signal.key().len);
                 for (auto const &signalParam : signal.children()) {
-                    if (signalParam.key() == "bits") {
-                        has_bits = true;
-                        std::string bits;
-                        bits.assign(signalParam.val().str, signalParam.val().len);
-                        if (bits.length() < 4) {
-                            bits = bits.erase(1, 1);
-                            tempCanSignal.startBit = bigEndianBitPosition[getBitPosition(stoi(bits))];
-                            tempCanSignal.lenInBits = 1;
-                        } else {
-                            uint8_t bit1 = getBitPosition(stoi(bits.substr(0, 3).erase(1, 1)));
-                            uint8_t bit2 = getBitPosition(stoi(bits.substr(4, 3).erase(1, 1)));
-                            if (bit1 < bit2) {
-                                tempCanSignal.startBit = bigEndianBitPosition[bit1];
-                                tempCanSignal.lenInBits = bit2 - bit1 + 1;
-                            } else {
-                                std::cout << "NOTE: Reversed bit order in signal [" << tempCanSignal.name << "].\n";
-                                tempCanSignal.startBit = bigEndianBitPosition[bit2];
-                                tempCanSignal.lenInBits = bit1 - bit2 + 1;
-                            }
-                        }
-                    } else if (signalParam.key() == "type") {
+                    if (signalParam.key() == "type") {
                         signalParam >> tempCanSignal.type;
                     } else if (signalParam.key() == "factor") {
                         ryml::atof(signalParam.val(), &tempCanSignal.scale);
@@ -109,22 +218,19 @@ int parsePsaYaml(const char *yamlFile, CanMessage &parsedMsg) {
                     }
                 }
 
-                parsedMsg.signal_list.push_back(tempCanSignal);
-                if (!has_bits) {
-                    std::cout << "INVALID SIGNAL. Doesn't have field [bits].\n";
-                }
+                thisFrame.signal_list.push_back(tempCanSignal);
             }
         } else {
-            std::cout << "Unknown CAN message parameter [" << yamlRoot.key(msgParamId) << "].\n";
+            std::cout << "Unknown CAN message parameter [" << tree.key(msgParamId) << "].\n";
         }
-    }
+    } */
 
-    if (has_id && has_name && has_length && has_signals) {
-        return EXIT_SUCCESS;
-    } else {
-        std::cout << "INVALID MESSAGE " << yamlFile << ". It doesn't have ID, NAME, LENGTH or SIGNALS field.\n";
+    if (thisFrame.isFrameInvalid())
+    {
+        std::cout << "INVALID MESSAGE " << yamlFile << ". It doesn't have ID, NAME or LENGTH field.\n";
         return EXIT_FAILURE;
     }
+    return EXIT_SUCCESS;
 }
 
 uint8_t getBitPosition(uint8_t ymlBitPos) {
@@ -134,4 +240,42 @@ uint8_t getBitPosition(uint8_t ymlBitPos) {
     }
     std::cout << "Invalid bit position.\n";
     return 0xFF; // ERROR
+}
+
+void parseSignalPosition(std::string &textLine, CanSignal &canSignal)
+{
+    std::string parameter;
+    splitString(textLine, '.', parameter);
+    canSignal.setStartByte(stoi(parameter, nullptr, 10));
+    bool endOfLine = splitString(textLine, '-', parameter);
+    canSignal.setStartBit(stoi(parameter, nullptr, 10));
+    if (endOfLine)
+    {
+        canSignal.setEndByte(canSignal.getStartByte());
+        canSignal.setEndBit(canSignal.getStartBit());
+    }
+    else
+    {
+        splitString(textLine, '.', parameter);
+        canSignal.setEndByte(stoi(parameter, nullptr, 10));
+        canSignal.setEndBit(stoi(textLine, nullptr, 10));
+    }
+}
+
+bool splitString(std::string &text, char delimiter, std::string &firstHalf)
+{
+    std::string temp {""};
+    for (size_t i = 0; i < text.length(); i++)
+    {
+        if (text[i] != delimiter)
+            temp += text[i];
+        else
+        {
+            firstHalf = temp;
+            text.erase(0, ++i);
+            return 0;
+        }
+    }
+    firstHalf = temp;
+    return 1;
 }

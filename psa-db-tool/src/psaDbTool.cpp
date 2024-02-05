@@ -8,8 +8,6 @@ enum Command { NONE, LOAD_FILE, LOAD_DIR, GENERATE_DBC };
 
 inline void print_usage(void);
 
-inline void print_can_message(CanMessage canMessage);
-
 int main(int argc, char const *argv[]) {
     if (argc < 2) {
         print_usage();
@@ -17,7 +15,7 @@ int main(int argc, char const *argv[]) {
     }
     
     Command execCommand = NONE;
-    std::vector<CanMessage> parsedMsgList;
+    std::vector<CanFrame> parsedMsgList;
     bool verbose_print = false;
 
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -73,7 +71,7 @@ int main(int argc, char const *argv[]) {
                     break;
                 case GENERATE_DBC:
                     std::cout << "  - Generating DBC [" << argv[argNr] << "]\n";
-                    generateDbc(argv[argNr], parsedMsgList);
+                    // generateDbc(argv[argNr], parsedMsgList);     Start OBP
                     break;
                 default:
                     std::cout << "This should never happen...";
@@ -85,7 +83,7 @@ int main(int argc, char const *argv[]) {
 // PRINT WHAT WE COLLECTED FROM YAML FILES
     if (verbose_print) {
         for (size_t i = 0; i < parsedMsgList.size(); i++) {
-            print_can_message(parsedMsgList.at(i));
+            parsedMsgList.at(i).print();
         }
     }
     
@@ -110,38 +108,4 @@ void print_usage(void) {
          << "  ./psaDbTool -Ld ../../../buses/AEE2004.full/HS.IS/ -Gd ./HS_IS.dbc\n"
          << "  ./psaDbTool -Lf ../../../buses/AEE2004.full/HS.IS/0A8.yml "
          << "../../../buses/AEE2004.full/HS.IS/072.yml -Gd ./immo.dbc\n";
-}
-
-void print_can_message(CanMessage canMessage) {
-    std::cout << "CAN_ID: " << canMessage.id << std::endl;
-    std::cout << "NAME: " << canMessage.name << std::endl;
-    std::cout << "DLC: " << canMessage.dlc << std::endl;
-    std::cout << "TYPE: " << canMessage.type << std::endl;
-    std::cout << "PERIOD: " << canMessage.periodicity << std::endl;
-    std::cout << "SENDERS:" << std::endl;
-    for (auto sender : canMessage.senders) {
-        std::cout << "   -" << sender << "-\n";
-    }
-    std::cout << "RECEIVERS:" << std::endl;
-    for (auto receiver : canMessage.receivers) {
-        std::cout << "   -" << receiver << "-\n";
-    }
-    std::cout << "SIGNALS:" << std::endl;
-    for (size_t signNr = 0; signNr < canMessage.signal_list.size(); signNr++) {
-        std::cout << "   -" << canMessage.signal_list[signNr].name << 
-        "-  START_BIT: " << canMessage.signal_list[signNr].startBit <<
-        "   LENGTH_BIT: " << canMessage.signal_list[signNr].lenInBits <<
-        "   TYPE: " << canMessage.signal_list[signNr].type <<
-        "   SCALE: " << canMessage.signal_list[signNr].scale <<
-        "   OFFSET: " << canMessage.signal_list[signNr].offset <<
-        "   MIN: " << canMessage.signal_list[signNr].min <<
-        "   MAX: " << canMessage.signal_list[signNr].max <<
-        "   UNITS: " << canMessage.signal_list[signNr].units <<
-        "   COMMENT: " << canMessage.signal_list[signNr].comment <<
-        "   VALUES:\n";
-        for (size_t valNr = 0; valNr < canMessage.signal_list[signNr].values.size(); valNr++) {
-            std::cout << "      ~ " << canMessage.signal_list[signNr].values[valNr].value
-            << ":  " << canMessage.signal_list[signNr].values[valNr].valueMeaning << std::endl;
-        }
-    }
 }

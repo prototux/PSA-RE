@@ -4,27 +4,27 @@
 #include <string>
 #include <vector>
 
-typedef struct
-{
-    short value;
-    std::string valueMeaning;
-} CanSignalMeaning;
+// typedef struct
+// {
+//     short value;
+//     std::string valueMeaning;
+// } CanSignalMeaning;
 
-typedef struct
-{
-    std::string name;
-    std::string comment;
-    std::string type;
-    short startBit;
-    short lenInBits;
-    bool isLittleEndian;
-    float scale;
-    int offset;
-    int min;
-    int max;
-    std::string units;
-    std::vector<CanSignalMeaning> values;
-} CanSignal;
+// typedef struct
+// {
+//     std::string name;
+//     std::string comment;
+//     std::string type;
+//     short startBit;
+//     short lenInBits;
+//     bool isLittleEndian;
+//     float scale;
+//     int offset;
+//     int min;
+//     int max;
+//     std::string units;
+//     std::vector<CanSignalMeaning> values;
+// } CanSignal;
 
 typedef struct
 {
@@ -37,7 +37,7 @@ typedef struct
     std::string periodicity;
     std::vector<std::string> senders;
     std::vector<std::string> receivers;
-    std::vector<CanSignal> signal_list;
+    // std::vector<CanSignal> signal_list;
 } CanMessage;
 
 const uint8_t bigEndianBitPosition[64] =

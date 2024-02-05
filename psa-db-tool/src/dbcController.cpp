@@ -51,36 +51,36 @@ void generateDbc(const char *filename, std::vector<CanMessage> const &canMsgList
     dbcFile << std::endl;
 
     /* CONSTRUCTING CAN MESSAGES */
-    for (size_t msgNr = 0; msgNr < canMsgList.size(); msgNr++) {
-        std::cout << "Constructing CAN message [" << canMsgList[msgNr].id << "]\n";
-        dbcFile << "BO_ " << canMsgList[msgNr].id << " " << canMsgList[msgNr].name
-            << ": " << canMsgList[msgNr].dlc << " " << canMsgList[msgNr].senders[0] << "\n";
+    // for (size_t msgNr = 0; msgNr < canMsgList.size(); msgNr++) {
+    //     std::cout << "Constructing CAN message [" << canMsgList[msgNr].id << "]\n";
+    //     dbcFile << "BO_ " << canMsgList[msgNr].id << " " << canMsgList[msgNr].name
+    //         << ": " << canMsgList[msgNr].dlc << " " << canMsgList[msgNr].senders[0] << "\n";
 
-    /* CONSTRUCTING ALL SIGNALS IN CORRESPONDING MESSAGE */
-        for (size_t signNr = 0; signNr < canMsgList[msgNr].signal_list.size(); signNr++) {
-            dbcFile << "   SG_ " << canMsgList[msgNr].signal_list[signNr].name << " : "
-                << canMsgList[msgNr].signal_list[signNr].startBit << "|"
-                << canMsgList[msgNr].signal_list[signNr].lenInBits << "@"
-                << canMsgList[msgNr].signal_list[signNr].isLittleEndian << "+ ("
-                << canMsgList[msgNr].signal_list[signNr].scale << ","
-                << canMsgList[msgNr].signal_list[signNr].offset << ") [0|1] \""
-                << canMsgList[msgNr].signal_list[signNr].units << "\" Vector__XXX\n";
-        }
-        dbcFile << std::endl;
-    }
+    // /* CONSTRUCTING ALL SIGNALS IN CORRESPONDING MESSAGE */
+    //     for (size_t signNr = 0; signNr < canMsgList[msgNr].signal_list.size(); signNr++) {
+    //         dbcFile << "   SG_ " << canMsgList[msgNr].signal_list[signNr].name << " : "
+    //             << canMsgList[msgNr].signal_list[signNr].startBit << "|"
+    //             << canMsgList[msgNr].signal_list[signNr].lenInBits << "@"
+    //             << canMsgList[msgNr].signal_list[signNr].isLittleEndian << "+ ("
+    //             << canMsgList[msgNr].signal_list[signNr].scale << ","
+    //             << canMsgList[msgNr].signal_list[signNr].offset << ") [0|1] \""
+    //             << canMsgList[msgNr].signal_list[signNr].units << "\" Vector__XXX\n";
+    //     }
+    //     dbcFile << std::endl;
+    // }
     
     /* CONSTRUCTING VALUE TABLE */
-    for (size_t msgNr = 0; msgNr < canMsgList.size(); msgNr++) {
-        for (size_t signNr = 0; signNr < canMsgList[msgNr].signal_list.size(); signNr++) {
-            if (!canMsgList[msgNr].signal_list[signNr].values.empty()) {
-                dbcFile << "VAL_ " << canMsgList[msgNr].id << " "
-                << canMsgList[msgNr].signal_list[signNr].name;
-                for (size_t valNr = 0; valNr < canMsgList[msgNr].signal_list[signNr].values.size(); valNr++) {
-                    dbcFile << " " << canMsgList[msgNr].signal_list[signNr].values[valNr].value
-                        << " \"" << canMsgList[msgNr].signal_list[signNr].values[valNr].valueMeaning << "\"";
-                }
-                dbcFile << ";\n";
-            }
-        }
-    }
+    // for (size_t msgNr = 0; msgNr < canMsgList.size(); msgNr++) {
+    //     for (size_t signNr = 0; signNr < canMsgList[msgNr].signal_list.size(); signNr++) {
+    //         if (!canMsgList[msgNr].signal_list[signNr].values.empty()) {
+    //             dbcFile << "VAL_ " << canMsgList[msgNr].id << " "
+    //             << canMsgList[msgNr].signal_list[signNr].name;
+    //             for (size_t valNr = 0; valNr < canMsgList[msgNr].signal_list[signNr].values.size(); valNr++) {
+    //                 dbcFile << " " << canMsgList[msgNr].signal_list[signNr].values[valNr].value
+    //                     << " \"" << canMsgList[msgNr].signal_list[signNr].values[valNr].valueMeaning << "\"";
+    //             }
+    //             dbcFile << ";\n";
+    //         }
+    //     }
+    // }
 }
