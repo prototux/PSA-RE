@@ -7,7 +7,7 @@ void CanFrame::printAltNames() const
     printVector(altNames_);
 }
 
-string CanFrame::getComment(const char *lang) const
+std::string CanFrame::getComment(const char *lang) const
 {
     for (size_t i=0; i<comments_.size(); i++)
     {
@@ -29,17 +29,21 @@ void CanFrame::printReceivers() const
 
 bool CanFrame::isFrameInvalid() const
 {
+    std::string missingPart{""};
     if (hexId_ == 0xFFFF)
-        return EXIT_FAILURE;
+        missingPart.assign("ID");
     else if (name_ == "")
-        return EXIT_FAILURE;
+        missingPart.assign("NAME");
     else if (length_ == 0xFFFF)
-        return EXIT_FAILURE;
+        missingPart.assign("DATA_LENGTH");
     else
         return EXIT_SUCCESS;
+    
+    std::cout << "Frame doesn't have " << missingPart << " field. Invalid frame." << std::endl;
+    return EXIT_FAILURE;
 }
 
-void CanFrame::printVector(vector<string> someVector) const
+void CanFrame::printVector(std::vector<std::string> someVector) const
 {
     for (std::string unitInVector : someVector)
     {
@@ -63,7 +67,7 @@ void CanFrame::print() const
     printSenders();
     std::cout << "RECEIVERS: ";
     printReceivers();
-    std::cout << "SIGNALS:   _____NAME____BITS__TYPE__FACTOR__OFFSET____MIN____MAX___UNITS_VALUES------------" << std::endl;
+    std::cout << "SIGNALS:   _____NAME____BITS__TYPE__FACTOR__OFFSET____MIN____MAX___UNITS_COMMENT____VALUES------------" << std::endl;
     for (CanSignal signal : signals_)
         signal.print();
 }

@@ -1,5 +1,5 @@
 #include "dbmuxeController.h"
-#include "dbcController.h"
+#include "DbcController.h"
 #include <string.h>
 #include <dirent.h>
 #include <chrono>
@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
     }
     
     Command execCommand = NONE;
-    std::vector<CanFrame> parsedMsgList;
+    std::vector<CanFrame> parsedFrameList;
     bool verbose_print = false;
 
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -46,8 +46,8 @@ int main(int argc, char const *argv[]) {
                     break;
                 case LOAD_FILE:
                     std::cout << "  - Loading file [" << argv[argNr] << "].\n";
-                    parsedMsgList.emplace_back();
-                    parsePsaYaml(argv[argNr], parsedMsgList.at(parsedMsgList.size() - 1));
+                    parsedFrameList.emplace_back();
+                    parsePsaYaml(argv[argNr], parsedFrameList.at(parsedFrameList.size() - 1));
                     break;
                 case LOAD_DIR:
                     std::cout << "  - Loading directory [" << argv[argNr] << "].\n";
@@ -61,17 +61,18 @@ int main(int argc, char const *argv[]) {
                     while ((p_inputFileDirStruct = readdir(p_inputFileDir)) != nullptr) {
                         if ('.' == p_inputFileDirStruct->d_name[0] || !strstr(p_inputFileDirStruct->d_name, ".yml"))
                             continue;
-                        parsedMsgList.emplace_back();
+                        parsedFrameList.emplace_back();
                         std::cout << "File in dir: " << p_inputFileDirStruct->d_name << ".\n";
                         char fullFileName[256];
                         strcpy(fullFileName, argv[argNr]);
                         strcat(fullFileName, p_inputFileDirStruct->d_name);
-                        parsePsaYaml(fullFileName, parsedMsgList.at(parsedMsgList.size() - 1));
+                        parsePsaYaml(fullFileName, parsedFrameList.at(parsedFrameList.size() - 1));
                     }
                     break;
                 case GENERATE_DBC:
                     std::cout << "  - Generating DBC [" << argv[argNr] << "]\n";
-                    // generateDbc(argv[argNr], parsedMsgList);     Start OBP
+                    DbcController dbcController;
+                    dbcController.generateDbc(argv[argNr], parsedFrameList);
                     break;
                 default:
                     std::cout << "This should never happen...";
@@ -82,8 +83,8 @@ int main(int argc, char const *argv[]) {
 
 // PRINT WHAT WE COLLECTED FROM YAML FILES
     if (verbose_print) {
-        for (size_t i = 0; i < parsedMsgList.size(); i++) {
-            parsedMsgList.at(i).print();
+        for (size_t i = 0; i < parsedFrameList.size(); i++) {
+            parsedFrameList.at(i).print();
         }
     }
     
@@ -105,7 +106,7 @@ void print_usage(void) {
          << "  -Gd <DBC-filename-with-path>                     = Generates DBC file.\n"
          << "  -v                                               = Verbosely list collected information.\n"
          << "Examples\n"
-         << "  ./psaDbTool -Ld ../../../buses/AEE2004.full/HS.IS/ -Gd ./HS_IS.dbc\n"
-         << "  ./psaDbTool -Lf ../../../buses/AEE2004.full/HS.IS/0A8.yml "
-         << "../../../buses/AEE2004.full/HS.IS/072.yml -Gd ./immo.dbc\n";
+         << "  ./psaDbTool -Ld ../../buses/AEE2004.full/HS.IS/ -v -Gd ./HS_IS.dbc\n"
+         << "  ./psaDbTool -Lf ../../buses/AEE2004.full/HS.IS/0A8.yml "
+         << "../../buses/AEE2004.full/HS.IS/072.yml -Gd ./immo.dbc\n";
 }
