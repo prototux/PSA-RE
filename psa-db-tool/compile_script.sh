@@ -9,8 +9,24 @@ else
     git submodule update --init --recursive
 fi
 
-cfg=${1:-Release}
+#cfg=${1:-Release}
+#cmake -S ./src -B ./build/$cfg
+#cmake --build ./build/$cfg
 
-cmake -S ./src -B ./build/$cfg
+cmd=${1:--help}
 
-cmake --build ./build/$cfg
+if [ $cmd = "--rebuild" ]
+then
+    cmake -S ./src -B ./build
+    cmake --build ./build --clean-first
+elif [ $cmd = "--build" ]
+then
+    cmake -S ./src -B ./build
+    cmake --build ./build
+else
+    echo "No argument means you need HELP"
+    echo "ARGUMENT          FUNCTION"
+    echo "--build         = normal build"
+    echo "--rebuild       = rebuild"
+    echo "everything else = this help dialog"
+fi

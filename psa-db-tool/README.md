@@ -15,10 +15,10 @@ $ ./compile_script.sh
 ```
 
 ## Usage
-From this directory go to `build/Release` and run `psaDbTool`:
+From this directory go to `build` and run `psaDbTool`:
 
 ```sh
-$ cd build/Release
+$ cd build
 $ ./psaDbTool
 ```
 
