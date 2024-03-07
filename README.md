@@ -1,5 +1,13 @@
 # Reverse engineering of PSA architectures
 
+## Update - Outro
+
+This project is unlikely to have any update anytime soon. As usual with open intiatives, people are ready to ask/require things and not contribute anything. Worse, some can act like the worst choosing beggars who thinks they're entitled to someone's free work while they only troll in return.
+
+I don't have time to continue adding data, there's several frames described in the Discord server that waited months for someone to help transcribing them. Nobody did. I do have enough data to document pretty much 100% of AEE2004 and AEE2010, but no motivation to do so anymore.
+
+I'm defintively stopping responding to data requests as well, unless it's from someone who do contribute to FOSS car projects.
+
 ## Intro
 
 This project is an effort to reverse engineer and document most of the architectures used in PSA (Peugeot/Citroen/DS) cars.
