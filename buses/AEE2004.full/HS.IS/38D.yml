@@ -1,0 +1,46 @@
+id: 0x38D
+name: 'ABS_GENERIC_DATA'
+length: 7
+comment:
+  en: Generic ABS data like speed, acceleration
+  fr: Données ABS génériques telles que la vitesse, l'accélération
+  de: Allgemeine Daten des ABS wie Fahrzeuggeschwindigkeit, Beschleunigung
+type: 'can'
+periodicity: 40
+senders:
+  - 'ABS'
+receivers:
+  - 'BSI'
+
+signals:
+  VEHICLE_SPEED:
+    bits: 1.7-2.0
+    type: float
+    factor: 0.01
+    min: 0
+    max: 655.35 # 0xFFFF * 0.01
+    comment: 
+      en: Vehicle speed
+      fr: Vitesse du véhicule
+      de: Fahrzeuggeschwindigkeit
+
+  UNKNOWN_1: 
+    bits: 3.7-4.0
+  
+  ACCELERATION_LONGITUDINALE:
+    bits: 5.7-5.0
+    type: float
+    factor: 0.08
+    offset: -14
+    min: -14
+    max: 6.4 # (0xFF * 0.08) - 14
+    comment: 
+      en: Longitudinale acceleration
+      fr: Accélération longitudinale
+      de: Längsschnittige Beschleunigung
+
+  UNKNOWN_2: 
+    bits: 6.7-6.0
+
+  UNKNOWN_3: 
+    bits: 7.7-7.0
