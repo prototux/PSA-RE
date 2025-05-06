@@ -1,23 +1,23 @@
 # TODO: check by someone whose french; this is mostly google translate 
 id: 0x488
-name: ENGINE_DATA
+name: 'ENGINE_DATA'
 alt_names: [] 
 length: 8
 comment: 
-  en: Engine Data 
-  fr: Données du moteur
-  de: Motordaten
-type: can 
+  en: 'Engine Data '
+  fr: 'Données du moteur'
+  de: 'Motordaten'
+type: 'can' 
 periodicity: 100
 senders:  
- - CMM # logically its the only thing that has direct access to the sensors
+ - 'CMM' # logically its the only thing that has direct access to the sensors
 receivers:
- - BSI # needs to gateway it to other buses
+ - 'BSI' # needs to gateway it to other buses
 
 signals:
   ENGINE_COOLANT_TEMPERATURE:
-    bits: 1.7-1.0
-    type: int
+    bits: '1.7-1.0'
+    type: 'int'
     comment:
       en: "Engine water temperature"
       fr: "Temperature d'eau moteur"
@@ -26,97 +26,97 @@ signals:
     min: -40
     max: 214
     offset: -40
-    unit: °C
+    unit: '°C'
   FUEL_CONSUMPTION_COUNTER: # Counter since in resets after max
-    bits: 2.7-2.0
-    type: uint
+    bits: '2.7-2.0'
+    type: 'uint'
     comment:
-      en: Fuel consumtion counter
-      fr: Consommation carburant
-      de: Kraftstoffverbrauch-Zähler
+      en: 'Fuel consumtion counter'
+      fr: 'Consommation carburant'
+      de: 'Kraftstoffverbrauch-Zähler'
     factor: 0.08
     min: 0 
     max: 20.4 # 0xFF * 0.08    
-    unit: mL
+    unit: 'mL'
 
     # A little counter intutive since 8 bits with factor of 8 only goes up to around 2000 when redline is like tripple that
     # In testing (from radston12) found that this value usually stays 840 (diesel cmm ; may be different in petrol) and the spikes when throttling are around 1/8 smaller than the acuall RPM peak so 
     # when the engine is throttled to around 3000 rpms the target value only goes up about 280 units even though the rpms rise about 2200 from idle
   ENGINE_RPM_IDLE_AND_TARGET:
-    bits: 3.7-3.0
-    type: uint
+    bits: '3.7-3.0'
+    type: 'uint'
     comment: 
-      en: Idle RPM ; When applying trottle -> (Difference - Idle) * 8 -> Targeted RPM
-      fr: Ralenti RPM ; lors de l'application de l'accélérateur -> (Différence - Ralenti) * 8 -> RPM ciblé
-      de: Standgas ; Beim Geben von Gas -> (Differenz - Standgas) * 8 -> Ziel Drehzahl
+      en: 'Idle RPM ; When applying trottle -> (Difference - Idle) * 8 -> Targeted RPM'
+      fr: "Ralenti RPM ; lors de l'application de l'accélérateur -> (Différence - Ralenti) * 8 -> RPM ciblé"
+      de: 'Standgas ; Beim Geben von Gas -> (Differenz - Standgas) * 8 -> Ziel Drehzahl'
     factor: 8
     min: 0
     max: 2040 # 0xFF * 8
-    unit: rpm # well not quite
+    unit: 'rpm' # well not quite
   UNKNOWN_1: # constant 10 then 0/1 seems to be related with engine running but stays on after shutoff - 
-    bits: 4.7-4.5
+    bits: '4.7-4.5'
   ADDITIV_ALERT:
     bits: '4.4'
-    type: bool
+    type: 'bool'
     comment:
-      en: Additiv alert
-      fr: alerte additive
-      de: Kraftstoffaditiv Warnung
+      en: 'Additiv alert'
+      fr: 'alerte additive'
+      de: 'Kraftstoffaditiv Warnung'
     values:
       0x0:
-        en: No Warning
-        fr: Aucun avertissement concernant les additifs
-        de: Keine Warnung
+        en: 'No Warning'
+        fr: 'Aucun avertissement concernant les additifs'
+        de: 'Keine Warnung'
       0x1:
-        en: Warning
-        fr: Avertissement concernant les additifs
-        de: Warnung
+        en: 'Warning'
+        fr: 'Avertissement concernant les additifs'
+        de: 'Warnung'
   COOLANT_OVERHEATING_ALERT:
     bits: '4.3'
-    type: bool
+    type: 'bool'
     comment:
-      en: Overheating alert
-      fr: alerte de surchauffe du liquide de refroidissement
-      de: Kühlmittel Überhitzung Warnung
+      en: 'Overheating alert'
+      fr: 'alerte de surchauffe du liquide de refroidissement'
+      de: 'Kühlmittel Überhitzung Warnung'
     values:
       0x0:
-        en: No Warning
-        fr: Aucun avertissement
-        de: Keine Warnung
+        en: 'No Warning'
+        fr: 'Aucun avertissement'
+        de: 'Keine Warnung'
       0x1:
-        en: Warning
-        fr: Avertissement 
-        de: Warnung
+        en: 'Warning'
+        fr: 'Avertissement '
+        de: 'Warnung'
   UNKNOWN_2:
     bits: '4.2'
   PREHEAT_ENGINE_LAMP_REQUEST:
     bits: '4.1'
-    type: bool
+    type: 'bool'
     comment: 
-      en: Preheating lamp request
-      fr: lampe de préchauffage
-      de: Vorglühen Anzeige Anfrage
+      en: 'Preheating lamp request'
+      fr: 'lampe de préchauffage'
+      de: 'Vorglühen Anzeige Anfrage'
     values:
       0x0:
-        en: Turn off lamp
-        fr: Éteindre la lampe de préchauffage
-        de: Lampe deaktivieren 
+        en: 'Turn off lamp'
+        fr: 'Éteindre la lampe de préchauffage'
+        de: 'Lampe deaktivieren '
       0x1: 
-        en: Turn on lamp
-        fr: Allumer la lampe de préchauffage
-        de: Lampe aktivieren
+        en: 'Turn on lamp'
+        fr: 'Allumer la lampe de préchauffage'
+        de: 'Lampe aktivieren'
   ENGINE_STARTING:
     bits: '4.0'
-    type: bool
+    type: 'bool'
     comment: 
-      en: Is engine currently starting?
-      fr: Le moteur démarre-t-il actuellement?
-      de: Startet der Motor gerade?
+      en: 'Is engine currently starting?'
+      fr: 'Le moteur démarre-t-il actuellement?'
+      de: 'Startet der Motor gerade?'
     values:
       0x0:
         en: 'No'
         fr: 'Non'
-        de: Nein
+        de: 'Nein'
       0x1:
         en: 'Yes'
         fr: 'Oui'
@@ -124,37 +124,37 @@ signals:
   UNKNOWN_3: 
     bits: '5.7-5.0'
   ENGINE_OIL_TEMPERATURE:
-    bits: 6.7-6.0
-    type: int
+    bits: '6.7-6.0'
+    type: 'int'
     comment:
-      en: Engine oil temperature
-      fr: Temperature d'huile moteur
-      de: Motoröltemperatur
+      en: 'Engine oil temperature'
+      fr: "Temperature d'huile moteur"
+      de: 'Motoröltemperatur'
     factor: 1
     min: -40
     max: 214 
     offset: -40
-    unit: °C
+    unit: '°C'
   AIR_CONDITINING_REFRIGERATION_PRESSURE:
-    bits: 7.7-7.0
-    type: uint
+    bits: '7.7-7.0'
+    type: 'uint'
     comment:
-      en: AC refrigerant pressure
-      fr: Pression du réfrigérant du climatiseur
-      de: Klimaanlage Kältemitteldruck
+      en: 'AC refrigerant pressure'
+      fr: 'Pression du réfrigérant du climatiseur'
+      de: 'Klimaanlage Kältemitteldruck'
     factor: 25
     min: 0
     max: 6375 # 0xFF * 25 
   ENGINE_INTAKE_AIR_TEMPERATURE:
-    bits: 8.7-8.0
-    type: int
+    bits: '8.7-8.0'
+    type: 'int'
     comment:
-      en: Engine intake air temperature
-      fr: Température de l'air d'admission du moteur
-      de: Ansauglufttemperatur Motor
+      en: 'Engine intake air temperature'
+      fr: "Température de l'air d'admission du moteur"
+      de: 'Ansauglufttemperatur Motor'
     factor: 1
     min: -40
     max: 214 
     offset: -40
-    unit: °C
+    unit: '°C'
   
