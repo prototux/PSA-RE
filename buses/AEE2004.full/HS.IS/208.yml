@@ -1,0 +1,88 @@
+# TODO: check by someone whose french; this is mostly google translate 
+id: 0x208
+name: 'GENERIC_ENGINE_DATA'
+alt_names: [] 
+length: 8
+comment: 
+  en: 'Generic Engine Data'
+  fr: 'Données moteur génériques' 
+  de: "Generelle Motordaten"
+type: 'can' 
+periodicity: 10
+senders:  
+ - 'CMM' # logically its the only thing that has direct access to the sensors
+receivers:
+ - 'BSI' # needs to gateway it to other buses
+
+signals:
+  ENGINE_RPM:
+    bits: '1.7-2.0'
+    type: 'uint'
+    factor: 0.125 
+    comment: 
+      en: "Engine rotations per minute"
+      fr: "Regime moteur"
+      de: "Motordrehzahl"
+    min: 0
+    max: 8196
+    units: 'rpm'
+  UNKNOWN_1: 
+    bits: '3.7-3.0'
+  THROTTLE_PERCENTAGE:
+    bits: '4.7-4.0'
+    type: 'uint'
+    factor: 0.5
+    comment: 
+      en: "Throttle percentage"
+      fr: "Pourcentage d'accélération du volonte conducteur"
+      de: "Prozent an Motordrosselung"
+    min: 0
+    max: 100 
+  UNKNOWN_2:
+    bits: '5.7-5.4'
+  CRUISE_CONTROL_STATUS:
+    bits: '5.3-5.2'
+    type: 'uint'
+    comment:
+      en: "Cruise control status"
+      fr: "État du régulateur de vitesse"
+      de: "Tempomat Status"
+    values:
+      0x0:
+        en: "Cruise control off"
+        fr: "régulateur de vitesse off"
+        de: "Tempomat aus"
+      0x1:
+        en: "Pedal mode"
+        fr: "Reprise pedale"
+        de: "Tempomat Pedal Modus"
+      0x2:
+        en: "Cruise control on"
+        fr: "régulateur de vitesse on"
+        de: "Tempomat an"
+      0x3:
+        en: "Not allowed"
+        fr: "Inhibee"
+        de: "Tempomat nicht erlaubt"
+  BREAKS_PRESSED:
+    bits: '5.1'
+    type: 'bool'
+    comment: 
+      en: "Breake pressed"
+      fr: "Frein pressé"
+      de: "Bremse betätigt"
+    values:
+      0x0:
+        en: "Breakes released"
+        fr: "Frein relache"
+        de: "Bremse ausgelassen"
+      0x1:
+        en: "Breakes applied"
+        fr: "Frein appuye"
+        de: "Bremse angezogen"
+  UNKNOWN_3:
+    bits: '6.7-6.0'
+  UNKNOWN_4:
+    bits: '7.7-7.0'
+  UNKNOWN_5:
+    bits: '8.7-8.0'

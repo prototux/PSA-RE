@@ -1,0 +1,49 @@
+id: 0x495
+name: 'POWER_STEERING_STATISTICS'
+length: 2
+comment:
+  en: 'Frame for power steering statistics'
+  fr: 'Cadre pour les statistiques de direction assistée'
+  de: 'Frame für Statistiken der elektronischen Servolenkung'
+type: 'can'
+periodicity: 100 # calculated 101.6 ms based on 0x208
+senders:
+  - 'DAE'
+receivers: 
+  - 'BSI'
+
+signals:
+  STEERING_TORQUE:
+    bits: '1.7-1.0'
+    type: 'int'
+    factor: 0.25
+    min: -32
+    max: 32
+    values:
+      0x7fff:
+        en: 'Error'
+        fr: 'erreur'
+        de: 'Fehler'
+
+  UNKNOWN_1:
+    bits: '2.7-2.2'
+
+  POWER_STEERING_WARNING_LIGHTS:
+    bits: '2.1-2.0'
+    values:
+      0x00: # 0b00
+        en: 'Nothing to report'
+        fr: 'Rien à signaler'
+        de: 'Keine Fehler'
+      0x01: # 0b01
+        en: 'Light up red warning light.'
+        fr: "Allumer le voyant d'avertissement rouge."
+        de: 'Erleuchte die rote Warnanzeige'
+      0x02: # 0b10
+        en: 'Light up yellow warning light'
+        fr: "Allumer le voyant d'avertissement jaune"
+        de: 'Erleuchte die gelbe Warnanzeige'
+      0x03: # 0b11 - Not tested
+        en: 'Light up yellow and red warning light'
+        fr: "Témoin d'avertissement jaune et rouge allumé"
+        de: 'Erleuchte die rote und gelbe Warnanzeige'

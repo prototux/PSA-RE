@@ -1,0 +1,43 @@
+id: 0x092
+name: 'DIAGNOSTIC_DATA'
+length: 1
+type: 'can'
+periodicity: 100
+comment:
+  fr: "Cette trame est destinée à tous les ECU sur le bus IS qui ont besoin de savoir si les diagnostics sont actifs ou d'effacer les défauts"
+  en: 'This can frame is for all ecus on the is bus which need to know if diagnostics are active or to clear faults'
+  de: 'Dieser CAN-Frame dient dazu alle Steuergeräte am IS-Bus über diagnostische Informationen zu informieren um zum Beispiel alle Fehlercodes zu löschen.'
+senders: 
+ - 'BSI'
+receivers: # Pretty much everything that has an fault storage / can have fault codes
+ - 'CMM'
+ - 'ABS'
+ - 'DAE'
+
+signals:
+  UNKNOWN_1:
+    bits: '1.7'
+  DIAGNOSTIC_MODE:
+    bits: '1.6'
+    values:
+      0x00:
+        en: 'Allowed'
+        fr: 'Permis'
+        de: 'Erlaubt'
+      0x01:
+        en: 'Inhibited'
+        fr: 'Inhibition'
+        de: 'Verboten'
+  UNKNOWN_2: 
+    bits: '1.5-1.1'
+  FAULT_CLEARING:
+    bits: '1.0'
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactive'
+        de: 'Inaktiv'
+      0x01:
+        en: 'Clear fault memory'
+        fr: 'Effacement memoire des defauts'
+        de: 'Fehlerspeicher löschen'

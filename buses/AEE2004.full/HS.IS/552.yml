@@ -1,0 +1,31 @@
+# TODO: make it less sad!
+
+id: 0x552
+name: 'CURRENT_TIME'
+length: 5
+comment:
+  en: 'This is data that is gatewated by the BSI from the EMF node which handles the main clock'
+  fr: "Il s'agit de données transmises par le BSI à partir du nœud EMF qui gère l'horloge principale"
+  de: 'Diese Daten kommen über das BSI vom EMF welches die Hauptuhr des Autos ist.'
+type: 'can'
+periodicity: 1000 # rounded up ; messured avg 950.18 ms but this was over a network tunnel!
+senders:
+  - 'BSI'
+receivers:
+  - 'CMM'
+
+signals:
+  SECONDS:
+    bits: '1.7-3.4'
+    type: 'uint'
+    min: 0
+    max: 86400 # 0xFF FF F  -> 1048575 but 24h is only 86400 sec
+  DAY:
+    bits: '3.3-4.0'
+    type: 'uint'
+    min: 0
+    max: 366 # max days in a leap year
+  YEAR:
+    bits: '5.7-5.0'
+    min: 0
+    max: 255 # 0xFF 
