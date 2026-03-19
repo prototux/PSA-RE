@@ -8,13 +8,24 @@ comment:
 type: 'can'
 periodicity: '500ms'
 senders:
-  - 'RADIO'
+  - 'RAD'
+  - 'BTEL'
+  - 'NG4'
+  - 'RNEG'
+  - 'PASS_ICSV'
 receivers:
   - 'EMF'
+  - 'AMPLI'
+  - 'CMB_EMF'
+  - 'PASS_ICSV'
 
 signals:
   LEFT_RIGHT_BALANCE_MENU:
+    alt_names: ['RGL_BAL']
     bits: '1.7'
+    comment:
+      en: 'Left/Right balance menu display'
+      fr: 'Affichage du menu de balance gauche/droite'
     values:
       0x00:
         en: 'No menu display'
@@ -24,14 +35,25 @@ signals:
         fr: 'Affichage du menu'
 
   LEFT_RIGHT_BALANCE_VALUE:
+    alt_names: ['NIV_BAL']
     bits: '1.6-1.0'
-    type: 'sint'
+    comment:
+      en: 'Left/Right balance value'
+      fr: 'Valeur de balance gauche/droite'
+    type: 'uint7'
+    offset: -63
     min: -9
     max: 9
-    offset: -63
+    resolution: 1
+    invalid:
+    units:
 
-  REAR_FRONT_BALANCE_MENU:
+  REAR_FRONT_BALANCF_MENU:
+    alt_names: ['RGL_FAD']
     bits: '2.7'
+    comment:
+      en: 'Rear/Front balance menu'
+      fr: 'Menu de balance arrière/avant'
     values:
       0x00:
         en: 'No menu display'
@@ -40,17 +62,26 @@ signals:
         en: 'Display menu'
         fr: 'Affichage du menu'
 
-# Fixed the same is in 128.yml at line 574
-# Renamed from LEFT_RIGHT_BALANCE_VALUE to LEFT_RIGHT_BALANCE_VALUE_DUPLICATE to fix duplicated mapping key error!
-  LEFT_RIGHT_BALANCE_VALUE_DUPLICATE:
+  REAR_FRONT_BALANCF_VALUE:
+    alt_names: ['NIV_FAD']
     bits: '2.6-2.0'
-    type: 'sint'
+    comment:
+      en: 'Rear/Front balance value'
+      fr: 'Valeur de balance arrière/avant'
+    type: 'uint7'
+    offset: -63
     min: -9
     max: 9
-    offset: -63
+    resolution: 1
+    invalid:
+    units:
 
   BASS_MENU:
     bits: '3.7'
+    alt_names: ['RGL_BAS']
+    comment:
+      en: 'Bass menu display'
+      fr: 'Affichage du menu de bass'
     values:
       0x00:
         en: 'No menu display'
@@ -61,16 +92,52 @@ signals:
 
   BASS_VALUE:
     bits: '3.6-3.0'
-    type: 'sint'
+    alt_names: ['NIV_BAS']
+    comment:
+      en: 'Bass value'
+      fr: 'Valeur de bass'
+    type: 'uint7'
+    offset: -63
     min: -9
     max: 9
-    offset: -63
+    resolution: 1
+    invalid:
+    units:
 
-  UNUSED_1: # I suspect there's a setting here
-    bits: '4.7-4.0'
+  MIDRANGE_ADJUSTMENT:
+    bits: '4.7'
+    alt_names: ['RGL_MED']
+    comment:
+      en: 'Midrange setting in progress'
+      fr: 'Réglage du médium en cours'
+    values:
+      0x00:
+        en: 'Not adjusting'
+        fr: 'Aucun réglage'
+      0x01:
+        en: 'Adjusting'
+        fr: 'Réglage en cours'
+
+  MIDRANGE_VALUE:
+    bits: '4.6-4.0'
+    alt_names: ['NIV_MED']
+    comment:
+      en: 'Midrange value'
+      fr: 'Valeur de médium'
+    type: 'uint7'
+    offset: -63
+    min: -9
+    max: 9
+    resolution: 1
+    invalid:
+    units:
 
   TREBLE_MENU:
     bits: '5.7'
+    alt_names: ['RGL_TREB']
+    comment:
+      en: 'Treble menu display'
+      fr: 'Affichage du menu des aigus'
     values:
       0x00:
         en: 'No menu display'
@@ -81,13 +148,24 @@ signals:
 
   TREBLE_VALUE:
     bits: '5.6-5.0'
-    type: 'sint'
+    alt_names: ['NIV_TREB']
+    comment:
+      en: 'Treble value'
+      fr: 'Valeur des aigus'
+    type: 'uint7'
+    offset: -63
     min: -9
     max: 9
-    offset: -63
+    resolution: 1
+    invalid:
+    units:
 
   LOUDNESS_MENU:
     bits: '6.7'
+    alt_names: ['RGL_LOUD']
+    comment:
+      en: 'Loudness menu display'
+      fr: 'Affichage du menu de loudness'
     values:
       0x00:
         en: 'No menu display'
@@ -98,6 +176,10 @@ signals:
 
   LOUDNESS_VALUE:
     bits: '6.6'
+    alt_names: ['LOUD_ON']
+    comment:
+      en: 'Loudness state'
+      fr: 'État de loudness'
     values:
       0x00:
         en: 'OFF'
@@ -106,24 +188,35 @@ signals:
         en: 'ON'
         fr: 'ON'
 
-  UNUSED_2:
+  UNUSED_1:
     bits: '6.5'
+    unused: true
 
-  AUTO_VOLUME_MENU:
+  AUTO_VOLUME_ADJUSTMENT:
     bits: '6.4'
+    alt_names: ['RGL_ASS']
+    comment:
+      en: 'Volume / speed control adjustment'
+      fr: 'Réglage automatique du volume en cours'
+
     values:
       0x00:
-        en: 'No menu display'
-        fr: 'Aucun affichage'
+        en: 'Not adjusting'
+        fr: 'Aucun réglage'
       0x01:
-        en: 'Display menu'
-        fr: 'Affichage du menu'
+        en: 'Adjusting'
+        fr: 'Réglage en cours'
 
-  UNUSED_3:
+  UNUSED_2:
     bits: '6.3'
+    unused: true
 
-  AUTO_VOLUME_VALUE:
+  AUTO_VOLUME_STATUS:
     bits: '6.2-6.0'
+    alt_names: ['ASS_ON']
+    comment:
+      en: 'Auto volume status'
+      fr: 'État du volume automatique'
     values:
       0x00:
         en: 'OFF'
@@ -132,11 +225,15 @@ signals:
         en: 'ON'
         fr: 'ON'
 
-  UNUSED_4:
+  UNUSED_3:
     bits: '7.7'
 
   AMBIANCE_MENU:
     bits: '7.6'
+    alt_names: ['RGL_AMB']
+    comment:
+      en: 'Ambiance menu display'
+      fr: 'Affichage du menu d''ambiance'
     values:
       0x00:
         en: 'No menu display'
@@ -145,11 +242,23 @@ signals:
         en: 'Display menu'
         fr: 'Affichage du menu'
 
-  UNUSED_5:
+  AUDIO_ADJUSTMENT_IMPOSSIBLE:
     bits: '7.5'
+    alt_names: ['REG_AUD_IMPOSSIBLE']
+    comment:
+      en: 'Impossible audio adjustment in phone source'
+      fr: 'Réglage audio impossible en source téléphone'
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+      0x01:
+        en: 'Action impossible'
+        fr: 'Réglage impossible'
 
   AMBIANCE_VALUE:
     bits: '7.4-7.2'
+    alt_names: ['TYPE_AMB']
     values:
       0x00:
         en: 'None'
@@ -170,6 +279,30 @@ signals:
         en: 'Techno'
         fr: 'Techno'
 
-  UNKNOWN_1: # Unknown, always 0x03
-    bits: '7.1-7.0'
-    unused: true
+  FADER_ACTIVE:
+    bits: '7.1'
+    alt_names: ['FADER_ACT']
+    comment:
+      en: 'Fader activated'
+      fr: 'Fader activé'
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+
+  SPEED_VOLUME_CONTROL_ACTIVE:
+    bits: '7.0'
+    alt_names: ['ASS_ACT']
+    comment:
+      en: 'Speed volume control activated'
+      fr: 'Asservissement volume/vitesse activé'
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'

@@ -8,10 +8,31 @@ senders:
   - 'BSI'
 receivers:
   - 'CMB'
+  - 'BTEL'
+  - 'BCD'
+  - 'CMB_EMF'
+  - 'MDS'
+  - 'RNEG'
+  - 'MATT'
+  - 'BGP'
 
 signals:
-  UNUSED_1: # RELANCE_NIV_HUILE is here
-    bits: '1.7-2.0'
+  OIL_LEVEL_RESTART:
+    bits: '1.7'
+    alt_names: ['RELANCE_NIV_HUILE']
+    comment:
+      en: 'Oil level restart'
+      fr: 'Relance niveau huile moteur'
+    values:
+      0x00:
+        en: 'No restart'
+        fr: 'Pas de relance'
+      0x01:
+        en: 'Restart'
+        fr: 'Relance'
+
+  UNUSED_1:
+    bits: '1.6-2.0'
     unused: true
 
   OIL_TEMPERATURE:
@@ -20,6 +41,13 @@ signals:
     comment:
       en: 'Oil temperature'
       fr: 'Temperature huile moteur'
+    type: 'uint8'
+    offset: -40
+    min: -40
+    max: 214
+    resolution: 1
+    invalid: 0xFF
+    units: 'C'
 
   FUEL_LEVEL:
     bits: '4.7-4.0'
@@ -27,6 +55,17 @@ signals:
     comment:
       en: 'Fuel level'
       fr: 'Niveau carburant'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 100
+    resolution: 1
+    invalid: 0xFF
+    units: '%'
+
+  UNUSED_2:
+    bits: '5.7-6.0'
+    unused: true
 
   OIL_LEVEL:
     bits: '7.7-7.0'
@@ -34,3 +73,11 @@ signals:
     comment:
       en: 'Oil level'
       fr: 'Niveau huile moteur'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 250
+    resolution: 1
+    invalid: 0xFF
+    units: '%'
+

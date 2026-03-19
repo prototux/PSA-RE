@@ -9,29 +9,60 @@ type: 'can'
 periodicity: '500ms'
 senders:
   - 'RADIO'
+  - 'RAD, BTEL'
+  - 'NG4'
+  - 'RNEG'
+  - 'PASS_ICSV'
 receivers:
   - 'EMF' # To display volume changes
+  - 'AMPLI'
+  - 'CMB_EMF'
+  - 'PASS_ICSV'
 
 signals:
   VOLUME_CHANGING:
     bits: '1.7-1.5'
+    alt_names: ['ORIGINE_VOL']
     comment:
       en: 'Volume is changing'
       fr: 'Le volume est en cours de changement'
-    type: 'uint'
     values:
       0x00:
-        en: 'Changing'
-        fr: 'Changement en cours'
+        fr: 'Réglage utilisateur'
+        en: 'User setting'
+      0x01:
+        fr: 'Changement de source'
+        en: 'Source changing'
+      0x02:
+        fr: 'Asservissement volume/vitesse'
+        en: 'Volume/speed control'
+      0x03:
+        fr: 'Mixing de source pour AAS'
+        en: 'Source mixing for AAS'
+      0x04:
+        fr: 'Protection thermique'
+        en: 'Thermal protection'
+      0x05:
+        fr: 'Depassement'
+        en: 'Overrun'
+      0x06:
+        fr: 'Réglage utilisateur téléphone'
+        en: 'Phone user setting'
       0x07:
-        en: 'Not changing'
-        fr: 'Pas de changement'
+        fr: 'Autre ou repos'
+        en: 'Other or idle'
 
   VOLUME:
     bits: '1.4-1.0'
+    alt_names: ['NIV_VOL']
     comment:
       en: 'Current volume'
       fr: 'Volume'
     type: 'uint'
+    type: 'uint5'
+    offset: 0
     min: 0
     max: 30
+    resolution: 1
+    invalid: 0x1F
+    units:

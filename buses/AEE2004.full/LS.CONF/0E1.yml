@@ -6,13 +6,24 @@ type: 'can'
 periodicity: '100ms'
 senders:
   - 'AAS'
+  - 'PASS_ICSV'
 receivers:
+  - 'BTEL'
+  - 'BSI'
+  - 'AMPLI'
+  - 'CMB_EMF'
   - 'EMF'
-  - 'RADIO' # For audio
+  - 'RAD'
+  - 'NG4'
+  - 'CMB'
+  - 'RNEG'
+  - 'ICSV'
+  - 'PASS_ICSV'
 
 signals:
   REAR_STATUS:
     bits: '1.7-1.5'
+    alt_names: ['ETAT_AAS_ARR']
     comment:
       en: 'Rear AAS status'
       fr: 'Etat AAS arriere'
@@ -38,6 +49,7 @@ signals:
 
   FRONT_STATUS:
     bits: '1.4-1.2'
+    alt_names: ['ETAT_AAS_AV']
     comment:
       en: 'Front AAS status'
       fr: 'Etat AAS avant'
@@ -58,36 +70,29 @@ signals:
         en: 'Not working'
         fr: 'HS'
 
-  BLIND_SPOT_RIGHT:
-    bits: '1.1'
+  CPK_SELECTION:
+    bits: '1.1-1.0'
+    alt_names: ['SELEC_MAN_CPK']
     comment:
-      en: 'Something in right blind spot'
-      fr: 'Presence objet angle mort droit'
+      en: 'Choice of operate side'
+      fr: 'Choix du coté de la manoeuvre'
     values:
       0x00:
-        en: 'None'
-        fr: 'Aucun'
+        en: 'Inactive'
+        fr: 'Inactif'
       0x01:
-        en: 'Presence of object'
-        fr: 'Objet present'
-
-
-  BLIND_SPOT_LEFT:
-    bits: '1.0'
-    comment:
-      en: 'Something in left blind spot'
-      fr: 'Presence objet angle mort gauche'
-    values:
-      0x00:
-        en: 'None'
-        fr: 'Aucun'
-      0x01:
-        en: 'Presence of object'
-        fr: 'Objet present'
-
+        en: 'Left'
+        fr: 'Gauche'
+      0x02:
+        en: 'Right'
+        fr: 'Droit'
+      0x03:
+        en: 'Not used'
+        fr: 'Non utilisé'
 
   SOUND_LR:
     bits: '2.7-2.6'
+    alt_names: ['REPART_AAS']
     comment:
       en: 'Left/Right sound'
       fr: 'Son en gauche/droite'
@@ -107,6 +112,7 @@ signals:
 
   SOUND_FR:
     bits: '2.5'
+    alt_names: ['LOCALISATION_AAS']
     comment:
       en: 'Front/Rear sound'
       fr: 'Son avant/arriere'
@@ -120,6 +126,7 @@ signals:
 
   SOUND_ENABLED:
     bits: '2.4'
+    alt_names: ['DMDE_AUDIO']
     comment:
       en: 'Audio enabled'
       fr: 'Son active'
@@ -152,6 +159,7 @@ signals:
 
   REAR_LEFT_STATUS:
     bits: '4.7-4.5'
+    alt_names: ['DIST_ARG']
     comment:
       en: 'Rear left distance'
       fr: 'Distance arriere gauche'
@@ -161,6 +169,7 @@ signals:
 
   REAR_MIDDLE_STATUS:
     bits: '4.4-4.2'
+    alt_names: ['DIST_ARM']
     comment:
       en: 'Rear middle distance'
       fr: 'Distance arriere milieu'
@@ -168,8 +177,13 @@ signals:
     max: 7
     units: 'zone'
 
+  UNUSED_1:
+    bits: '4.1-4.0'
+    unused: true
+
   REAR_RIGHT_STATUS:
     bits: '5.7-5.5'
+    alt_names: ['DIST_ARD']
     comment:
       en: 'Rear right distance'
       fr: 'Distance arriere droit'
@@ -179,6 +193,7 @@ signals:
 
   FRONT_LEFT_STATUS:
     bits: '5.4-5.2'
+    alt_names: ['DIST_AVG']
     comment:
       en: 'Front left distance'
       fr: 'Distance avant gauche'
@@ -186,8 +201,13 @@ signals:
     max: 7
     units: 'zone'
 
+  UNUSED_2:
+    bits: '5.1-5.0'
+    unused: true
+
   FRONT_MIDDLE_STATUS:
     bits: '6.7-6.5'
+    alt_names: ['DIST_AVM']
     comment:
       en: 'Front middle distance'
       fr: 'Distance avant milieu'
@@ -197,9 +217,112 @@ signals:
 
   FRONT_RIGHT_STATUS:
     bits: '6.4-6.2'
+    alt_names: ['DIST_AVD']
     comment:
       en: 'Front right distance'
       fr: 'Distance avant droit'
     min: 0
     max: 7
     units: 'zone'
+
+  AAS_DISPLAY_REQUEST:
+    bits: '6.1'
+    alt_names: ['DMDE_AFFICHAGE']
+    comment:
+      en: 'Display request'
+      fr: 'Demande d affichage'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+      0x01:
+        en: 'Requested'
+        fr: 'Demande'
+
+  UNUSED_3:
+    bits: '6.0'
+    unused: true
+
+  SPACE_MEASUREMENT_STATUS:
+    bits: '7.7-7.5'
+    alt_names: ['ETAT_MPD']
+    comment:
+      en: 'Space measurement status'
+      fr: 'Etat de la mesure de l espace'
+    values:
+      0x00:
+        en: 'Undefined'
+        fr: 'Non défini'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+      0x02:
+        fr: 'Etat off'
+        en: 'Off'
+      0x03:
+        en: 'Trailer inhibition'
+        fr: 'Inhibition remorque'
+      0x04:
+        en: 'Active'
+        fr: 'Active'
+      0x05:
+        en: 'Waiting for data'
+        fr: 'Attente'
+      0x06:
+        en: 'Out of service'
+        fr: 'Hors service'
+      0x07:
+        en: 'Not defined'
+        fr: 'Non défini'
+
+  MEASURED_DISTANCE:
+    bits: '7.4-7.3'
+    alt_names: ['TAILLE_PLACE']
+    comment:
+      en: 'Measured distance'
+      fr: 'Taille de la place mesurée'
+    values:
+      0x00:
+        en: 'Insufficient'
+        fr: 'Insuffisante'
+      0x01:
+        en: 'Small'
+        fr: 'Petite'
+      0x02:
+        en: 'Medium'
+        fr: 'Moyenne'
+      0x03:
+        en: 'Large'
+        fr: 'Grande'
+
+  SPACE_MEASUREMENT_DISPLAY_REQUEST:
+    bits: '7.2'
+    alt_names: ['AFFICHE_MPD']
+    comment:
+      en: 'Display request for the result of the evaluation of the measured space'
+      fr: 'Demande d''affichage résultat d''évaluation sur la place mesurée'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+      0x01:
+        en: 'Requested'
+        fr: 'Demande'
+
+  SPACE_MEASUREMENT_SIDE:
+    bits: '7.1'
+    alt_names: ['COTE_MESURE']
+    comment:
+      en: 'Side of the measured space'
+      fr: 'Côté de la place mesurée'
+    values:
+      0x00:
+        en: 'Left'
+        fr: 'Gauche'
+      0x01:
+        en: 'Right'
+        fr: 'Droite'
+
+  UNUSED_4:
+    bits: '7.0'
+    unused: true

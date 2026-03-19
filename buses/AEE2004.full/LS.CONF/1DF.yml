@@ -7,155 +7,237 @@ comment: # educated guess
   en: 'Contains information about the bluetooth device and the music list'
   fr: 'Contient des informations sur le périphérique Bluetooth et la liste de musique'
 type: 'can'
+periodicity: '500ms'
 senders:
+  - 'EMF'
+  - 'CMB_EMF'
+  - 'PASS_ICSV'
 receivers:
+  - 'RAD'
+  - 'KML'
+  - 'PASS_ICSV'
 
 signals:
+  ACCESS_TYPE:
+    bits: '1.7-1.6'
+    alt_names: ['ACCES_REP']
+    comment:
+      en: 'Access to directories'
+      fr: 'Accès aux répertoires'
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+      0x01:
+        fr: 'Accès au répertoire téléphone'
+        en: 'Phonebook access'
+      0x02:
+        fr: 'Accès au journal des appels'
+        en: 'Call log access'
+      0x03:
+        fr: 'Accès au répertoire des services'
+        en: 'Service directory access'
+
+  MUSIC_LIST_SORTING:
+    bits: '1.5-1.3'
+    alt_names: ['ACCES_TRI']
+    comment:
+      en: 'Access request to the classifications of USB or BT source'
+      fr: 'Demande d''accès aux classifications de la source USB ou BT'
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+      0x01:
+        en: 'By directory'
+        fr: 'Par répertoire'
+      0x02:
+        en: 'By artist'
+        fr: 'Par artiste'
+      0x03:
+        en: 'By genre'
+        fr: 'Par genre'
+      0x04:
+        en: 'By playlist'
+        fr: 'Par playlist'
+
+  LIST_ACCESS:
+    bits: '1.2-1.1'
+    alt_names: ['ORIGINE_DMD_LIST']
+    comment:
+      en: 'Origin of the request to open list '
+      fr: 'Origine de la demande de liste'
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+      0x01:
+        en: 'Direct Access'
+        fr: 'Accès direct'
+      0x02:
+        en: 'Indirect Access'
+        fr: 'Accès indirect'
+
   UNUSED_1:
     bits: '1.0'
-  LIST_ACCESS:
-    bits: '1.1-1.2'
-    values:
-      0x00:
-        en: "None"
-        fr: "Aucun"
-      0x01:
-        en: "Direct Access"
-        fr: "Accès direct"
-      0x02:
-        en: "Indirect Access"
-        fr: "Accès indirect"
-  MUSIC_LIST_SORTING:
-    bits: '1.3-1.5'
-    values:
-      0x00:
-        en: "None"
-        fr: "Aucun"
-      0x01:
-        en: "By directory"
-        fr: "Par répertoire"
-      0x02:
-        en: "By artist"
-        fr: "Par artiste"
-      0x03:
-        en: "By genre"
-        fr: "Par genre"
-      0x04:
-        en: "By playlist"
-        fr: "Par playlist"
-  ACCESS_TYPE:
-    bits: '1.6-1.7'
-    values:
-      0x00:
-        en: "None"
-        fr: "Aucun"
-      0x01:
-        en: "Phonebook"
-        fr: "Répertoire"
-      0x02:
-        en: "Log call"
-        fr: "Journal d'appel"
-      0x03:
-        en: "Services"
-        fr: "Services"
-      0x04:
-        en: "By playlist"
-        fr: "Par playlist"
+    unused: true
+
   CURRENT_CALL_ACTION:
     bits: '2.6-2.7'
+    alt_names: ['GERER_COM']
+    comment:
+      en: 'Manage the state of communication'
+      fr: 'Gérer l''état de la communication'
     values:
       0x00:
-        en: "None"
-        fr: "Aucun"
+        en: 'None'
+        fr: 'Aucun'
       0x01:
-        en: "Hangup"
-        fr: "Raccrocher"
+        en: 'Hangup'
+        fr: 'Raccrocher'
       0x02:
-        en: "Switch"
-        fr: "Changer"
+        fr: 'Permuter'
+        en: 'Swap'
+
   INBOUND_CALL_ACTION:
     bits: '2.5-2.4'
+    alt_names: ['REP_APPEL_ENTRANT']
+    comment:
+      en: 'Action on incoming call'
+      fr: 'Action sur appel entrant'
     values:
       0x00:
-        en: "None"
-        fr: "Aucun"
+        en: 'None'
+        fr: 'Aucun'
       0x01:
-        en: "Refuse"
-        fr: "Refuser"
+        en: 'Refuse'
+        fr: 'Refuser'
       0x02:
-        en: "Accept"
-        fr: "Accepter"
+        en: 'Accept'
+        fr: 'Accepter'
+
   SECRET_MODE_ACTIVATION:
     bits: '2.3'
-  REQUEST_RESON:
+    alt_names: ['DMD_MODE_SECRET']
+    comment:
+      en: 'Request for secret mode'
+      fr: 'Demande du mode secret'
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+      0x01:
+        en: 'Activate'
+        fr: 'Activer'
+
+  UNUSED_2:
+    bits: '2.2-2.0'
+    unused: true
+
+  REQUEST_REASON:
     bits: '3.6-3.7'
+    alt_names: ['DMD_LST_JUM']
+    comment:
+      en: 'Request for paired phones list '
+      fr: 'Demande de la liste des téléphones jumelés'
     values:
       0x00:
-        en: "Not Requested"
-        fr: "Non demandé"
+        en: 'Not Requested'
+        fr: 'Non demandé'
       0x01:
-        en: "To Delete"
-        fr: "Pour supprimer"
+        fr: 'Liste demandée pour suppression'
+        en: 'List requested for deletion'
       0x02:
-        en: "To List"
-        fr: "À la liste"
+        fr: 'Liste demandée pour consultation'
+        en: 'List requested for consultation'
       0x03:
-        en: "To Pair"
-        fr: "À jumeler"
+        fr: 'Liste demandée pour connexion'
+        en: 'List requested for connection'
+
   ACCEPT_PAIRING_REQUEST:
-    bits: '3.4-3.5'
+    bits: '3.5-3.4'
+    alt_names: ['ACCEP_JUM']
+    comment:
+      en: 'Accept pairing request'
+      fr: 'Accepter la demande de jumelage'
     values:
       0x00:
-        en: "Ignore request"
-        fr: "Ignorer la demande"
+        en: 'None'
+        fr: 'Aucun'
       0x01:
-        en: "Ignore request"
-        fr: "Ignorer la demande"
+        en: 'Ignore request'
+        fr: 'Ignorer la demande'
       0x02:
-        en: "Accept request"
-        fr: "Accepter la demande"
+        en: 'Accept request'
+        fr: 'Accepter la demande'
+
   OVERWRITE_DATA:
-    bits: '3.2-3.3'
+    bits: '3.3-3.2'
+    alt_names: ['ECRASER_JUM']
+    comment:
+      en: 'Overwrite paired phone data'
+      fr: 'Écraser les données du téléphone jumelé'
+
     values:
       0x00:
-        en: "Do not overwrite"
-        fr: "Ne pas écraser"
+        en: 'None'
+        fr: 'Aucun'
       0x01:
-        en: "Do not overwrite"
-        fr: "Ne pas écraser"
+        en: 'Do not overwrite'
+        fr: 'Ne pas écraser'
       0x02:
-        en: "Overwrite"
-        fr: "Écraser"
+        en: 'Overwrite'
+        fr: 'Écraser'
+
   DELETE_PAIRED_PHONE:
-    bits: '3.2-3.3'
+    bits: '3.1-3.0'
+    alt_names: ['SUPP_JUM']
+    comment:
+      en: 'Delete paired phone'
+      fr: 'Supprimer le téléphone jumelé'
     values:
       0x00:
-        en: "No"
-        fr: "Non"
+        en: 'None'
+        fr: 'Aucun'
       0x01:
-        en: "No"
-        fr: "Non"
+        en: 'No'
+        fr: 'Non'
       0x02:
-        en: "Yes"
-        fr: "Oui"
+        en: 'Yes'
+        fr: 'Oui'
+
+  UNUSED_3:
+    bits: '4.7'
+    unused: true
+
   BLUETOOTH_SCAN:
-    bits: '4.5-4.6'
+    bits: '4.6-4.5'
+    alt_names: ['DMD_SCAN_BT']
+    comment:
+      en: 'Bluetooth scan request'
+      fr: 'Demande de scan Bluetooth'
     values:
       0x00:
-        en: "None"
-        fr: "Aucun"
+        en: 'None'
+        fr: 'Aucun'
       0x01:
-        en: "Scan"
-        fr: "Analyse"
+        en: 'Scan'
+        fr: 'Analyse'
       0x02:
-        en: "Cancel scan"
-        fr: "Annuler l'analyse"
+        en: 'Cancel scan'
+        fr: 'Annuler l''analyse'
+
   LIST_TYPE:
     bits: '4.4'
+    alt_names: ['TYPE_LIST_CONNEX']
     values:
       0x00:
-        en: "List of phoens"
-        fr: "Liste des téléphones"
+        en: 'List of phones'
+        fr: 'Liste des téléphones'
       0x01:
-        en: "List of other devices"
-        fr: "Liste des autres appareils"
+        en: 'List of other devices'
+        fr: 'Liste des autres appareils'
+
+  UNUSED_4:
+    bits: '4.3-4.0'
+    unused: true

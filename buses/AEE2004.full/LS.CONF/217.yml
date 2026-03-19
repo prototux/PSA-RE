@@ -1,43 +1,749 @@
 id: 0x217
 name: 'CMB_STATUS'
+alt_names: ['ETAT_COMBINE']
 length: 8
 type: 'can'
 periodicity: '100ms'
 senders:
   - 'CMB'
+  - 'CMB_EMF'
 receivers:
   - 'BSI'
+  - 'VTH'
+  - 'BCD'
+  - 'MATT'
 
 signals:
   LUMINOSITY:
     bits: '1.7-1.4'
+    alt_names: ['NIV_LUM']
     comment:
-      en: 'luminosity level requested'
-      fr: 'niveau de luminosite demande'
-    type: 'uint'
+      en: 'Luminosity level requested'
+      fr: 'Niveau de luminosite demande'
+    type: 'uint4'
+    offset: 0
     min: 0
     max: 15
+    resolution: 1
+    invalid:
+    units:
 
   DARK_STATUS:
     bits: '1.3'
-    type: 'uint'
+    alt_names: ['BLAK_PAN']
     values:
       0x00:
-        en: 'dark mode not requested'
-        fr: 'pas de demande mode dark'
+        en: 'Dark mode not requested'
+        fr: 'Pas de demande mode dark'
       0x01:
-        en: 'dark mode requested'
-        fr: 'demande mode dark'
+        en: 'Dark mode requested'
+        fr: 'Demande mode dark'
 
   RESET_MAINTENANCE:
     bits: '1.2'
-    type: 'uint'
+    alt_names: ['RAZM']
     values:
       0x00:
-        en: 'maintenance reset not requested'
-        fr: 'pas de demande remise a zero maintenance'
+        en: 'Maintenance reset not requested'
+        fr: 'Pas de demande remise a zero maintenance'
       0x01:
-        en: 'maintenance reset requested'
-        fr: 'demande remise a zero maintenance'
+        en: 'Maintenance reset requested'
+        fr: 'Demande remise a zero maintenance'
 
-  # TODO
+  AIRBAG_INHIBITION_STATUS:
+    bits: '1.1-1.0'
+    alt_names: ['IHM_INHIB']
+    comment:
+      en: 'Airbag inhibition status'
+      fr: 'Etat inhibition airbag'
+    values:
+      0x00:
+        en: 'Undefined'
+        fr: 'Indefini'
+      0x01:
+        en: 'Signaled'
+        fr: 'Signale'
+      0x02:
+        en: 'Not signaled'
+        fr: 'Non signale'
+      0x03:
+        en: 'Error'
+        fr: 'Defaut'
+
+  AIRBAG_ERROR:
+    bits: '2.7-2.6'
+    alt_names: ['SIGNAL_DEF_AIRBAG']
+    comment:
+      en: 'Airbag error'
+      fr: 'Defaut airbag'
+    values:
+      0x00:
+        en: 'Undefined'
+        fr: 'Indefini'
+      0x01:
+        en: 'Signaled'
+        fr: 'Signale'
+      0x02:
+        en: 'Not signaled'
+        fr: 'Non signale'
+      0x03:
+        en: 'Error'
+        fr: 'Defaut'
+
+  CHECK_REQUESTED:
+    bits: '2.5'
+    alt_names: ['CHECK']
+    comment:
+      en: 'Check requested'
+      fr: 'Demande de check'
+    values:
+      0x00:
+        en: 'No check requested'
+        fr: 'Non en cours'
+      0x01:
+        en: 'Check in progress'
+        fr: 'En cours'
+
+  AUTO_CHECK:
+    bits: '2.4'
+    alt_names: ['CHECK_AUTO']
+    comment:
+      en: 'Auto check requested'
+      fr: 'Demande auto check'
+    values:
+      0x00:
+        en: 'Auto check not requested'
+        fr: 'Auto check non demande'
+      0x01:
+        en: 'Auto check requested'
+        fr: 'Auto check demande'
+
+  STOP_CHECK:
+    bits: '2.3'
+    alt_names: ['STOP_CHECK']
+    comment:
+      en: 'Stop check requested'
+      fr: 'Demande de stop du check'
+    values:
+      0x00:
+        en: 'Stop check not requested'
+        fr: 'Pas d''arrêt de CHECK'
+      0x01:
+        en: 'Stop check requested'
+        fr: 'Arrêt de CHECK demandé'
+
+  RESET_TOTAL_1:
+    bits: '2.2'
+    alt_names: ['DMD_RAZ_TRAJET1']
+    comment:
+      en: 'Total reset 1 requested'
+      fr: 'Demande remise a zero total 1'
+    values:
+      0x00:
+        en: 'Total reset 1 not requested'
+        fr: 'Pas de demande de remise a zero total'
+      0x01:
+        en: 'Total reset 1 requested'
+        fr: 'Demande de remise a zero total'
+
+  RESET_PARTIAL:
+    bits: '2.1'
+    alt_names: ['RAZ_ODO_PARTIEL']
+    comment:
+      en: 'Partial reset requested'
+      fr: 'Demande remise a zero partielle'
+    values:
+      0x00:
+        en: 'Partial reset not requested'
+        fr: 'Pas de demande de remise a zero partielle'
+      0x01:
+        en: 'Partial reset requested'
+        fr: 'Demande de remise a zero partielle'
+
+  DISTANCE_UNIT:
+    bits: '2.0'
+    alt_names: ['UNIT_DIST_CMB']
+    comment:
+      en: 'Distance unit'
+      fr: 'Unité de distance'
+    values:
+      0x00:
+        en: 'Kilometers'
+        fr: 'Kilometres'
+      0x01:
+        en: 'Miles'
+        fr: 'Miles'
+
+  AAS_BUTTON_STATUS:
+    bits: '3.7'
+    alt_names: ['ENT_PUSH_AAS']
+    comment:
+      en: 'AAS button status'
+      fr: 'Etat des boutons AAS'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  ESP_BUTTON_STATUS:
+    bits: '3.6'
+    alt_names: ['ENT_PUSH_ESP']
+    comment:
+      en: 'ESP button status'
+      fr: 'Etat du bouton ESP'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  CHILD_SAFETY_LOCK_STATUS:
+    bits: '3.5'
+    alt_names: ['ENT_PUSH_SECUR_ENF_SERR']
+    comment:
+      en: 'Child safety lock button status'
+      fr: 'Etat du bouton de verrouillage enfant'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  AMVAR_BUTTON_STATUS:
+    bits: '3.4'
+    alt_names: ['ENT_PUSH_SPOR_AMVAR']
+    comment:
+      en: 'AMVAR button status'
+      fr: 'Etat du bouton AMVAR'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  REQUEST_MATRIX_CHECK:
+    bits: '3.3'
+    alt_names: ['DMD_CHECK_MAT']
+    comment:
+      en: 'Request for dot matrix check'
+      fr: 'Demande de check matrice'
+    values:
+      0x00:
+        en: 'Dot matrix check not requested'
+        fr: 'Pas de demande de check matrice'
+      0x01:
+        en: 'Dot matrix check requested'
+        fr: 'Demande de check matrice'
+
+  FILTERED_PARTIAL_STATUS:
+    bits: '3.2'
+    alt_names: ['ENT_PUSH_ODO_FILTRE']
+    comment:
+      en: 'Filtered partial kilometric recorder pushbutton entry'
+      fr: 'Entrée du bouton poussoir du kilométrage partiel filtré'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  RHEOSTAGE_PLUS_STATUS:
+    bits: '3.1'
+    alt_names: ['ENT_RHEOSTAGE_PLUS']
+    comment:
+      en: 'Rheostage plus button status'
+      fr: 'Etat du bouton rheostage plus'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  RHEOSTAGE_MINUS_STATUS:
+    bits: '3.0'
+    alt_names: ['ENT_RHEOSTAGE_MOINS']
+    comment:
+      en: 'Rheostage minus button status'
+      fr: 'Etat du bouton rheostage moins'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  OVERSPEED_BUTTON_STATUS:
+    bits: '4.7'
+    alt_names: ['ENT_PUSH_SURVITESSE']
+    comment:
+      en: 'Overspeed button status'
+      fr: 'Etat du bouton survitesse'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  SIDE_TRAJECTORY_BUTTON_STATUS:
+    bits: '4.6'
+    alt_names: ['ENT_PUSH_STL']
+    comment:
+      en: 'Side trajectory button status'
+      fr: 'Etat du bouton trajectoire latérale'
+    values:
+      0x00:
+        en: 'Side trajectory button not pressed'
+        fr: 'Entrée push Suivi de Trajectoire Latérale'
+      0x01:
+        en: 'Side trajectory button pressed'
+        fr: 'Entrée push Suivi de Trajectoire Latérale'
+
+  AC_ON_BUTTON_STATUS:
+    bits: '4.5'
+    alt_names: ['ENT_PUSH_CLIM']
+    comment:
+      en: 'AC on button status'
+      fr: 'Etat du bouton climatisation'
+    values:
+      0x00:
+        en: 'AC on button not pressed'
+        fr: 'Entrée push climatisation'
+      0x01:
+        en: 'AC on button pressed'
+        fr: 'Entrée push climatisation'
+
+  REAR_WINDOW_HEATER_BUTTON_STATUS:
+    bits: '4.4'
+    alt_names: ['ENT_PUSH_LUCH']
+    comment:
+      en: 'Rear window heater button status'
+      fr: 'Etat du bouton de dégivrage de lunette arrière'
+    values:
+      0x00:
+        en: 'Rear window heater button not pressed'
+        fr: 'Entrée push dégivrage de lunette arrière'
+      0x01:
+        en: 'Rear window heater button pressed'
+        fr: 'Entrée push dégivrage de lunette arrière'
+
+  SAM_BUTTON_STATUS:
+    bits: '4.3'
+    alt_names: ['ENT_PUSH_SAM']
+    comment:
+      en: 'SAM (dead zone) button status'
+      fr: 'Etat du bouton SAM'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  MPD_BUTTON_STATUS:
+    bits: '4.2'
+    alt_names: ['ENT_PUSH_MPD']
+    comment:
+      en: 'MPD button status'
+      fr: 'Etat du bouton MPD'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  REQUEST_COMPRESSOR_MAX:
+    bits: '4.1'
+    alt_names: ['DMD_COMP_MAX']
+    comment:
+      en: 'Request for compressor max capacity'
+      fr: 'Demande cylindrée maximum compresseur'
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+
+  RESET_TOTAL_2:
+    bits: '4.0'
+    alt_names: ['DMD_RAZ_TRAJET2']
+    comment:
+      en: 'Total reset 2 requested'
+      fr: 'Demande remise a zero total 2'
+    values:
+      0x00:
+        en: 'Total reset 2 not requested'
+        fr: 'Pas de demande de remise a zero total 2'
+      0x01:
+        en: 'Total reset 2 requested'
+        fr: 'Demande de remise a zero total 2'
+
+  STOP_GO_BUTTON_STATUS:
+    bits: '5.7'
+    alt_names: ['STOP_GO_CMD_CLIM_CMB']
+    comment:
+      en: 'Stop and Go engine stop authorization'
+      fr: 'Autorisation arrêt moteur en Stop and Go'
+    values:
+      0x00:
+        en: 'Stop authorized'
+        fr: 'Autorisation du stop'
+      0x01:
+        en: 'Stop not authorized or start requested'
+        fr: 'interdiction du stop ou demande de start'
+
+  REQUEST_PTC_ON:
+    bits: '5.6'
+    alt_names: ['ENCL_CTP_DEM_CLIM_CMB']
+    comment:
+      en: 'Request for PTC (Positive Temperature Coefficient) heater activation'
+      fr: 'Demande d''enclenchement des CTP'
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+
+  ARTIV_BUTTON_STATUS:
+    bits: '5.5'
+    alt_names: ['ENT_PUSH_ARTIV']
+    comment:
+      en: 'ARTIV button status'
+      fr: 'Etat du bouton ARTIV'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  REQUEST_MATRIX_MAINTENANCE_RESET:
+    bits: '5.4'
+    alt_names: ['DMD_RAZM_MATTRAZ_MAT']
+    comment:
+      en: 'Request for dot matrix maintenance reset'
+      fr: 'Demande de remise a zero de la matrice'
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Pas de demande'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+
+  ARTIV_PLUS_BUTTON_STATUS:
+    bits: '5.3'
+    alt_names: ['ENT_CONS_ARTIV_PLUS']
+    comment:
+      en: 'ARTIV plus button status'
+      fr: 'Etat du bouton ARTIV plus'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  ARTIV_MINUS_BUTTON_STATUS:
+    bits: '5.2'
+    alt_names: ['ENT_CONS_ARTIV_MOINS']
+    comment:
+      en: 'ARTIV minus button status'
+      fr: 'Etat du bouton ARTIV moins'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  STT_BUTTON_STATUS:
+    bits: '5.1'
+    alt_names: ['ENT_PUSH_STT']
+    comment:
+      en: 'STT (Stop and Start) button status'
+      fr: 'Etat du bouton Stop and Start'
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non appuyé'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+
+  STT_MISTING_RISK:
+    bits: '5.0'
+    alt_names: ['RISQUE_EMBUAGE_STT']
+    comment:
+      en: 'STT misting risk'
+      fr: 'Risque d''embuage du STT'
+    values:
+      0x00:
+        en: 'Absent'
+        fr: 'Absent'
+      0x01:
+        en: 'Present'
+        fr: 'Present'
+
+  SPEED_DISPLAYED_ON_CMB:
+    bits: '6.7-6.0'
+    alt_names: ['VITESSE_AFF_CMB']
+    comment:
+      en: 'Displayed speed'
+      fr: 'Vitesse affichée'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 254
+    resolution: 1
+    invalid: 0xFF
+    units:
+
+  ALERT_LEVEL_0_AUTHORIZED:
+    bits: '7.7'
+    alt_names: ['NIV_0']
+    comment:
+      en: 'Alert level 0 authorized'
+      fr: 'Alerte niveau 0 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_1_AUTHORIZED:
+    bits: '7.6'
+    alt_names: ['NIV_1']
+    comment:
+      en: 'Alert level 1 authorized'
+      fr: 'Alerte niveau 1 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_2_AUTHORIZED:
+    bits: '7.5'
+    alt_names: ['NIV_2']
+    comment:
+      en: 'Alert level 2 authorized'
+      fr: 'Alerte niveau 2 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_3_AUTHORIZED:
+    bits: '7.4'
+    alt_names: ['NIV_3']
+    comment:
+      en: 'Alert level 3 authorized'
+      fr: 'Alerte niveau 3 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_4_AUTHORIZED:
+    bits: '7.3'
+    alt_names: ['NIV_4']
+    comment:
+      en: 'Alert level 4 authorized'
+      fr: 'Alerte niveau 4 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_5_AUTHORIZED:
+    bits: '7.2'
+    alt_names: ['NIV_5']
+    comment:
+      en: 'Alert level 5 authorized'
+      fr: 'Alerte niveau 5 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_6_AUTHORIZED:
+    bits: '7.1'
+    alt_names: ['NIV_6']
+    comment:
+      en: 'Alert level 6 authorized'
+      fr: 'Alerte niveau 6 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_7_AUTHORIZED:
+    bits: '7.0'
+    alt_names: ['NIV_7']
+    comment:
+      en: 'Alert level 7 authorized'
+      fr: 'Alerte niveau 7 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_8_AUTHORIZED:
+    bits: '8.7'
+    alt_names: ['NIV_8']
+    comment:
+      en: 'Alert level 8 authorized'
+      fr: 'Alerte niveau 8 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_9_AUTHORIZED:
+    bits: '8.6'
+    alt_names: ['NIV_9']
+    comment:
+      en: 'Alert level 9 authorized'
+      fr: 'Alerte niveau 9 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_10_AUTHORIZED:
+    bits: '8.5'
+    alt_names: ['NIV_10']
+    comment:
+      en: 'Alert level 10 authorized'
+      fr: 'Alerte niveau 10 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_11_AUTHORIZED:
+    bits: '8.4'
+    alt_names: ['NIV_11']
+    comment:
+      en: 'Alert level 11 authorized'
+      fr: 'Alerte niveau 11 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_12_AUTHORIZED:
+    bits: '8.3'
+    alt_names: ['NIV_12']
+    comment:
+      en: 'Alert level 12 authorized'
+      fr: 'Alerte niveau 12 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_13_AUTHORIZED:
+    bits: '8.2'
+    alt_names: ['NIV_13']
+    comment:
+      en: 'Alert level 13 authorized'
+      fr: 'Alerte niveau 13 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_14_AUTHORIZED:
+    bits: '8.1'
+    alt_names: ['NIV_14']
+    comment:
+      en: 'Alert level 14 authorized'
+      fr: 'Alerte niveau 14 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'
+
+  ALERT_LEVEL_15_AUTHORIZED:
+    bits: '8.0'
+    alt_names: ['NIV_15']
+    comment:
+      en: 'Alert level 15 authorized'
+      fr: 'Alerte niveau 15 autorisée'
+    values:
+      0x00:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+      0x01:
+        en: 'Authorized'
+        fr: 'Autorisé'

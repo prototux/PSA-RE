@@ -8,17 +8,50 @@ comment:
 type: 'can'
 periodicity: '500ms'
 senders:
-  - 'RADIO'
+  - RAD
+  - PASS_ICSV
 receivers:
   - 'EMF'
+  - 'CMB_EMF'
+  - 'MATT'
+  - 'PASS_ICSV'
 
 signals:
+  LIST_CD:
+    bits: '1.7'
+    alt_names: ['LISTE_CD_MP3']
+    comment:
+      en: 'List available tracks'
+      fr: 'Liste les pistes disponibles'
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+
   UNUSED_1:
-    bits: '1.7-1.4'
+    bits: '1.6-1.5'
     unused: true
+
+  MODE_CD:
+    bits: '1.4'
+    alt_names: ['MODE_CD']
+    comment:
+      en: 'Track/CD mode'
+      fr: 'Mode Track/CD'
+    values:
+      0x00:
+        en: 'Mode CD'
+        fr: 'Mode CD'
+      0x01:
+        en: 'Mode Track'
+        fr: 'Mode Track'
 
   REPEAT:
     bits: '1.3-1.2'
+    alt_names: ['REP_CD']
     values:
       0x00:
         en: 'No repeat'
@@ -30,9 +63,19 @@ signals:
         en: 'Disk repeat'
         fr: 'Repetition disque'
 
-  UNUSED_2:
-    bits: '1.1'
-    unused: true
+  CD_PLAY_STATUS:
+    bits: '1.1-1.0'
+    alt_names: ['LECT_CD']
+    comment:
+      en: 'CD player status'
+      fr: 'Etat du lecteur CD'
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+      0x01:
+        en: 'Random play'
+        fr: 'Lecture aléatoire des plages'
 
   RANDOM:
     bits: '1.0'
@@ -44,25 +87,55 @@ signals:
         en: 'Random'
         fr: 'Lecture aleatoire'
 
-  UNUSED_3:
-    bits: '2.7-2.6'
-    unused: true
-
-  DISK_ERROR:
-    bits: '2.5-2.4'
+  ACCESS_CD:
+    bits: '2.7'
+    alt_names: ['ACCES_CD']
+    comment:
+      en: 'CD access in progress'
+      fr: 'Accès CD en cours'
     values:
       0x00:
-        en: 'No error'
-        fr: 'Error'
+        en: 'No access'
+        fr: 'Pas d''accès'
       0x01:
-        en: 'Disk read error'
-        fr: 'Erreur de lecture disque'
-      0x02:
+        en: 'Accessing CD'
+        fr: 'Accès CD'
+
+  UNUSED_2:
+    bits: '2.6'
+    unused: true
+
+  DISK_DIRECTION:
+    bits: '2.5'
+    alt_names: ['ERR_DSK_CD']
+    values:
+      0x00:
+        fr: 'Disque à l''endroit'
+        en: 'Disk is right side up'
+      0x01:
         en: 'Disk upside down'
         fr: 'Disque dans le mauvais sens'
 
+  DISC_ERROR:
+    bits: '2.4'
+    alt_names: ['DISK_ILLISIBLE']
+    comment:
+      en: 'CD error'
+      fr: 'Erreur CD'
+    values:
+      0x00:
+        en: 'No error'
+        fr: 'Pas d''erreur'
+      0x01:
+        en: 'Read error'
+        fr: 'Erreur de lecture'
+
   TEXT_AVAILABLE:
     bits: '2.3'
+    alt_names: ['LISTE_CD_OK']
+    comment:
+      en: 'CD text available'
+      fr: 'Texte CD disponible'
     values:
       0x00:
         en: 'Text not available'
@@ -73,6 +146,10 @@ signals:
 
   STATUS:
     bits: '2.2-2.0'
+    alt_names: ['STA_CD']
+    comment:
+      en: 'CD player status'
+      fr: 'Etat du lecteur CD'
     values:
       0x00:
         en: 'No disk'
@@ -96,6 +173,34 @@ signals:
         en: 'Intro'
         fr: 'Intro'
 
-  UNUSED_4:
-    bits: '3.7-3.0'
+  CD_OVERHEATING:
+    bits: '3.7'
+    alt_names: ['TEMP_CD']
+    comment:
+      en: 'CD player overheating'
+      fr: 'Surchauffe lecteur CD'
+    values:
+      0x00:
+        en: 'Normal temperature'
+        fr: 'Température normale'
+      0x01:
+        en: 'Overheating'
+        fr: 'Surchauffe'
+
+  CD_PLAYER_ERROR:
+    bits: '3.6'
+    alt_names: ['ERROR_CD']
+    comment:
+      en: 'CD player error'
+      fr: 'Erreur lecteur CD'
+    values:
+      0x00:
+        en: 'No error'
+        fr: 'Pas d''erreur'
+      0x01:
+        en: 'Error'
+        fr: 'Erreur'
+
+UNUSED_3:
+    bits: '3.5-3.0'
     unused: true

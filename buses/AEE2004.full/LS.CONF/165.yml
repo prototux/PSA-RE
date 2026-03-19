@@ -8,14 +8,33 @@ comment:
 type: 'can'
 periodicity: '100ms'
 senders:
-  - 'RADIO'
+  - 'ICSV'
+  - 'PASS_ICSV'
+  - 'RAD'
+  - 'BTEL'
+  - 'NG4'
+  - 'RNEG'
+  - 'BTT'
+
 receivers:
   - 'BSI'
   - 'EMF'
+  - 'KML'
+  - 'AMPLI'
+  - 'CMB_EMF'
+  - 'MDS'
+  - 'BTT'
+  - 'MATT'
+  - 'CDC'
+  - 'PASS_ICSV'
 
 signals:
-  POWER: # also it's original name
+  POWER:
     bits: '1.7'
+    alt_names: ['POWER']
+    comment:
+      en: 'Radio power status'
+      fr: 'Etat de la radio'
     values:
       0x00:
         en: 'Radio disabled'
@@ -24,8 +43,12 @@ signals:
         en: 'Radio enabled'
         fr: 'Radio allumee'
 
-  AMPLI_ON: # also it's original name
+  AMPLI_ON:
     bits: '1.6'
+    alt_names: ['AMPLI_ON']
+    comment:
+      en: 'Amplifier status'
+      fr: 'Etat de l''amplificateur'
     values:
       0x00:
         en: 'Amplified disabled'
@@ -37,6 +60,9 @@ signals:
   MUTE:
     bits: '1.5'
     alt_names: ['MUTE_ACT']
+    comment:
+      en: 'Mute status'
+      fr: 'Etat du mute'
     values:
       0x00:
         en: 'Not muted'
@@ -45,12 +71,27 @@ signals:
         en: 'Muted'
         fr: 'Mute'
 
-  UNUSED_1:
+  REJECT_POWER_ON_IN_ECO:
     bits: '1.4'
-    unused: true
+    alt_names: ['ON_REFUSE']
+    comment:
+      en: 'Power on rejected in ECO mode'
+      fr: 'Allumage refuse en mode ECO'
+    values:
+      0x00:
+        en: 'Power on not rejected'
+        fr: 'Allumage non refuse'
+      0x01:
+        en: 'Power on rejected'
+        fr: 'Allumage refuse'
 
-  BI_TUNER: # also it's original name
+
+  BI_TUNER:
     bits: '1.3'
+    alt_names: ['BI_TUNER']
+    comment:
+      en: 'Bi-tuner status'
+      fr: 'Etat du bi-tuner'
     values:
       0x00:
         en: 'No bi-tuner'
@@ -59,8 +100,12 @@ signals:
         en: 'Bi-tuner'
         fr: 'Bi-tuner'
 
-  HIFI: # also it's original name
+  HIFI:
     bits: '1.2'
+    alt_names: ['HI_FI']
+    comment:
+      en: 'Hi-fi status'
+      fr: 'Etat du hi-fi'
     values:
       0x00:
         en: 'No hi-fi'
@@ -69,12 +114,40 @@ signals:
         en: 'Hi-fi'
         fr: 'Hi-fi'
 
-  UNUSED_2: # really unused? always 0
-    bits: '1.1-1.0'
-    unused: true
+  DYNAMICS_COMPRESSION:
+    bits: '1.1'
+    alt_names: ['COMP_DYN']
+    comment:
+      en: 'Dynamic compression status'
+      fr: 'Etat de la compression dynamique'
+    values:
+      0x00:
+        en: 'No dynamic compression'
+        fr: 'Pas de compression dynamique'
+      0x01:
+        en: 'Dynamic compression'
+        fr: 'Compression dynamique'
 
-  TUN_SRC: # also original name
+  USB_SOURCE_TYPE:
+    bits: '1.0'
+    alt_names: ['TYPE_SRC_SEL_USB']
+    comment:
+      en: 'Type of USB source'
+      fr: 'Type de source USB'
+    values:
+      0x00:
+        en: 'USB'
+        fr: 'USB'
+      0x01:
+        en: 'IPOD'
+        fr: 'IPOD'
+
+  TUN_SRC:
     bits: '2.7'
+    alt_names: ['TUN_SRC']
+    comment:
+      en: 'Tuner source status'
+      fr: 'Etat de la source du tuner'
     values:
       0x00:
         en: 'No tuner available'
@@ -83,8 +156,12 @@ signals:
         en: 'Tuner available'
         fr: 'Tuner disponible'
 
-  CD_SRC: # also original name
+  CD_SRC:
     bits: '2.6-2.5'
+    alt_names: ['CD_SRC']
+    comment:
+      en: 'Internal CD player source status'
+      fr: 'Etat de la source du lecteur CD interne'
     values:
       0x00:
         en: 'No internal CD player'
@@ -96,35 +173,61 @@ signals:
         en: 'Player and disk available'
         fr: 'Lecteur et disque disponibles'
 
-  CDC_SRC: # also original name
+  CDC_SRC:
     bits: '2.4-2.3'
+    alt_names: ['CDC_SRC']
+    comment:
+      en: 'CD changer source status'
+      fr: 'Etat de la source du changeur CD'
     values:
       0x00:
-        en: 'No internal CD player'
-        fr: 'Pas de lecteur CD interne'
+        en: 'Not present'
+        fr: 'Pas de changeur CD present'
       0x01:
-        en: 'No disk available'
-        fr: 'Pas de disque disponible'
+        en: 'Available but not usable'
+        fr: 'Disponible mais pas utilisable'
       0x02:
-        en: 'Player and disk available'
-        fr: 'Lecteur et disque disponibles'
+        en: 'Available and usable'
+        fr: 'Disponible et utilisable'
 
-  USB_SRC: # Also original name
-    bits: '2.2'
+  USB_SRC:
+    bits: '2.2-2.1'
+    alt_names: ['USB_SRC']
+    comment:
+      en: 'USB source status'
+      fr: 'Etat de la source USB'
     values:
       0x00:
-        en: 'No USB available'
-        fr: 'USB non disponible'
+        en: 'Not present'
+        fr: 'Pas de source USB presente'
       0x01:
-        en: 'USB available'
-        fr: 'USB disponible'
+        en: 'Available but not usable'
+        fr: 'Disponible mais pas utilisable'
+      0x02:
+        en: 'Available and usable'
+        fr: 'Disponible et utilisable'
 
-  UNUSED_3: # Probably contains BT_SRC, and maybe SOURCE_KML
-    bits: '2.1-2.0'
+  UNUSED_1:
+    bits: '2.0'
     unused: true
 
-  SRC_SEL: # also original name
-    bits: '3.7-3.4'
+  SRC_MIX:
+    bits: '3.7'
+    alt_names: ['SRC_MIX']
+    comment:
+      en: 'Mixed source status'
+      fr: 'Etat de la source mixte'
+    values:
+      0x00:
+        en: 'No mixed source'
+        fr: 'Pas de source mixte'
+      0x01:
+        en: 'Mixed source'
+        fr: 'Source mixte'
+
+  SRC_SEL:
+    bits: '3.6-3.4'
+    alt_names: ['SRC_SEL']
     comment:
       en: 'Selected audio source'
       fr: 'Source audio selectionnee'
@@ -154,11 +257,26 @@ signals:
         en: 'Bluetooth'
         fr: 'Bluetooth'
 
-  NO_SRC: # also original name
-    bits: '3.3-3.0'
+  SRC_KML:
+    bits: '3.3'
+    alt_names: ['SOURCE_KML']
     comment:
-      en: 'Audio source not available'
-      fr: 'Source audio non-disponible'
+      en: 'Switching to source with KML configuration '
+      fr: 'Passage a une source avec configuration KML'
+    values:
+      0x00:
+        en: 'No switching'
+        fr: 'Pas de passage'
+      0x01:
+        en: 'Switching done'
+        fr: 'Passage effectue'
+
+  NO_SRC:
+    bits: '3.2-3.0'
+    alt_names: ['NO_SRC']
+    comment:
+      en: 'Audio source change rejected'
+      fr: 'Rejet du changement de source audio'
     values:
       0x00:
         en: 'None'
@@ -185,50 +303,50 @@ signals:
         en: 'Bluetooth'
         fr: 'Bluetooth'
 
-  UNUSED_4: # to be checked
-    bits: '4.7-4.6'
-    unused: true
-
-  MP3_AVAILABLE:
-    bits: '4.5'
+  CD_AUDIO_COMPRESSION:
+    bits: '4.7-4.5'
     alt_names: ['FMT_COMP_AUDIO']
+    comment:
+      en: 'Audio compression format for CD sources'
+      fr: 'Format de compression audio pour les sources CD'
     values:
       0x00:
-        en: 'MP3 not available'
-        fr: 'MP3 non disponible'
+        en: 'No CD or unknown format'
+        fr: 'Pas de CD ou format inconnu'
       0x01:
-        en: 'MP3 available'
-        fr: 'MP3 disponible'
+        en: 'CD with MP3'
+        fr: 'CD avec fichiers MP3'
 
-  UNUSED_5:
-    bits: '4.4'
-    unused: true
-
-  DIGITAL_RADIO:
-    bits: '4.3-4.2'
+  SUPPORTED_DIGITAL_RADIO:
+    bits: '4.4-4.2'
     alt_names: ['RADIO_NUM']
+    comment:
+      en: 'Supported digital radio formats'
+      fr: 'Formats de radio numerique supportes'
     values:
       0x00:
-        en: 'No digital radio'
-        fr: 'Radio numerique non disponible'
+        en: 'No digital radio supported'
+        fr: 'Pas de radio numerique supportee'
       0x01:
-        en: 'DAB digital radio'
-        fr: 'Radio numerique DAB'
+        en: 'DAB supported'
+        fr: 'DAB supporte'
       0x02:
-        en: 'DVBT digital radio'
-        fr: 'Radio numerique DVBT'
+        en: 'DVBT supported'
+        fr: 'DVBT supporte'
 
-  UNUSED_6:
+  BT_SRC:
     bits: '4.1-4.0'
-    unused: true
-
-  # Missing signals:
-  # BT_SRC -> bluetooth source
-  # COMP_DYN -> dynamic compression/VBR mp3
-  # MISE_A_ON_RADIO -> radio starting up?
-  # MUTE_ACT_MIXED_CHANNEL
-  # SOURCE_KML -> phone input
-  # SRC_MIX
-  # TIMESHIFT_HOLD_ON
-  # TYPE_SRC_SEL_USB
-  # There's 10 unused bits, beside TYPE_SRC_SEL_USB or SRC_MIX, each signal is probably 1 bit each
+    alt_names: ['BT_SRC']
+    comment:
+      en: 'Bluetooth source status'
+      fr: 'Etat de la source Bluetooth'
+    values:
+      0x00:
+        en: 'Not present'
+        fr: 'Pas de source Bluetooth presente'
+      0x01:
+        en: 'Available but not usable'
+        fr: 'Disponible mais pas utilisable'
+      0x02:
+        en: 'Available and usable'
+        fr: 'Disponible et utilisable'

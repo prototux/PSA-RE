@@ -8,6 +8,40 @@ senders:
   - 'BSI'
 receivers:
   - 'CMB' # for speed and rpms
+  - 'EMF'
+  - 'RAD'
+  - 'CMB'
+  - 'VTH'
+  - 'TO'
+  - 'EDP_AV'
+  - 'BDM'
+  - 'AAS'
+  - 'CLV'
+  - 'EDP_AR'
+  - 'BTEL'
+  - 'CLR'
+  - 'DEF'
+  - 'PDS'
+  - 'BCD'
+  - 'TE'
+  - 'STL'
+  - 'CLIM_RFTA'
+  - 'AAD'
+  - 'BNB'
+  - 'PLC'
+  - 'KML'
+  - 'AMPLI'
+  - 'CMB_EMF'
+  - 'BDMA'
+  - 'SAM'
+  - 'PDPC'
+  - 'NG4'
+  - 'MDS'
+  - 'RNEG'
+  - 'BTT'
+  - 'MATT'
+  - 'ICSV'
+  - 'PASS_ICSV'
 
 signals:
   ENGINE_SPEED:
@@ -16,6 +50,12 @@ signals:
     comment:
       en: 'Engine speed'
       fr: 'Regime moteur'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 8191.75
+    resolution: 0.125
+    invalid: 0xFFFF
     units: 'rpm'
 
   CAR_SPEED:
@@ -24,7 +64,13 @@ signals:
     comment:
       en: 'Car speed'
       fr: 'Vitesse voiture'
-    units: 'kph'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 655.34
+    resolution: 0.01
+    invalid: 0xFFFF
+    units: 'km/h'
 
   TRAVEL_DISTANCE:
     alt_names: ['DIST']
@@ -32,6 +78,13 @@ signals:
     comment:
       en: 'Current trip distance'
       fr: 'Distance parcourue'
+    type: 'uint16'
+    offset: 0
+    min: 0
+    max: 6553.5
+    resolution: 0.1
+    invalid:
+    units: 'm'
 
   FUEL_CONSUMPTION:
     alt_names: ['CONSO']
@@ -39,7 +92,85 @@ signals:
     comment:
       en: 'Current trip total fuel consumption'
       fr: 'Consommation de carburant'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 20400
+    resolution: 80
+    invalid:
+    units: 'mm3'
 
-  UNUSED_1: # This contains SECU_VITV and SECU_VITESSE
+  SECURISATION: # This contains SECU_VITV and SECU_VITESSE
     bits: '8.7'
-    unused: true
+    alt_names: ['SECU_VITV']
+    comment:
+      en: 'Speed security'
+      fr: 'Securisation vitesse'
+    values:
+      0x00:
+        en: 'Speed info invalid'
+        fr: 'Information de vitesse invalide'
+      0x01:
+        en: 'Speed info valid'
+        fr: 'Information de vitesse valide'
+
+  SECU_VITESSE:
+    bits: '8.6-8.3'
+    alt_names: ['SECU_VITESSE']
+    comment:
+      en: 'Vehicle speed info security'
+      fr: 'Securisation des informations de vitesse'
+    values:
+      0x00:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x01:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x02:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x03:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x04:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x05:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x06:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x07:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x08:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x09:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x0A:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x0B:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x0C:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x0D:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x0E:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+      0x0F:
+        en: 'Vehicle speed info invalid'
+        fr: 'Information de vitesse du vehicule invalide'
+
+    UNUSED_1:
+      bits: '8.2-8.0'
+      unused: true
+
