@@ -3,12 +3,17 @@ name: 'TRIP_FIRST_INFOS'
 alt_names: ['INFOS_TRAJET1_ODB']
 length: 7
 type: 'can'
-periodicity: '1000ms'
+periodicity: ['1000ms']
 senders:
   - 'BSI'
 receivers:
   - 'EMF'
   - 'CMB'
+  - 'BTEL'
+  - 'CMB_EMF'
+  - 'RNEG'
+  - 'MATT'
+  - 'BGP'
 
 signals:
   MEAN_SPEED:
@@ -17,6 +22,13 @@ signals:
     comment:
       en: 'Mean speed'
       fr: 'Vitesse moyenne'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 250
+    resolution: 1
+    invalid: 0xFF
+    units: 'km/h'
 
   TOTAL_DISTANCE:
     bits: '2.7-3.0'
@@ -24,6 +36,13 @@ signals:
     comment:
       en: 'Total distance'
       fr: 'Distance totale'
+    type: 'uint16'
+    offset: 0
+    min: 0
+    max: 5000
+    resolution: 1
+    invalid: 0xFFFF
+    units: 'km'
 
   MEAN_CONSUMPTION:
     bits: '4.7-5.0'
@@ -31,6 +50,13 @@ signals:
     comment:
       en: 'Mean consumption'
       fr: 'Consommation moyenne carburant'
+    type: 'uint16'
+    offset: 0
+    min: 0
+    max: 30
+    resolution: 0.1
+    invalid: 0xFFFF
+    units: 'l/100km'
 
   TOTAL_TIME:
     bits: '6.7-7.0'
@@ -38,3 +64,10 @@ signals:
     comment:
       en: 'Total time'
       fr: 'Duree totale'
+    type: 'uint16'
+    offset: 0
+    min: 0
+    max: 65534
+    resolution: 1
+    invalid: 0xFFFF
+    units: 'minutes'

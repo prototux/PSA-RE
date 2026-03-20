@@ -1,37 +1,115 @@
 id: 0x1D0
 name: 'CLIM_STATUS'
+alt_names: ['ETAT_CLIM_AV_BSI']
 length: 7
 comment:
   en: 'Climate control panel status'
   fr: 'Etat des commandes climatisation'
 type: 'can'
-periodicity: '500ms'
+periodicity: ['500ms']
 senders:
   - 'CLIM'
 receivers:
   - 'BSI'
 
 signals:
-  UNUSED_1:
+  MODE_OFF:
     bits: '1.7'
-    unused: true
+    alt_names: ['MODE_OFF']
+    values:
+      0x00:
+        fr: 'Non Demandé'
+        en: 'Not requested'
+      0x01:
+        fr: 'Demandé'
+        en: 'Requested'
 
   REAR_WINDSHIELD_HEAT:
     bits: '1.6'
+    alt_names: ['ACTIVATE_LUCH']
+    values:
+      0x00:
+        fr: 'Non Demandé'
+        en: 'Not requested'
+      0x01:
+        fr: 'Demandé'
+        en: 'Requested'
 
-  AUTO: # need to work more on this one
-    bits: '1.5-1.0'
+  FRONT_HEATER: # need to work more on this one
+    bits: '1.5-1.4'
+    alt_names: ['PULSEUR_AVANT']
+    values:
+      0x00:
+        fr: 'Auto Confort'
+        en: 'Auto Comfort'
+      0x01:
+        fr: 'Auto Visibilité'
+        en: 'Auto Visibility'
+      0x02:
+        fr: 'Manuel'
+        en: 'Manual'
+      0x03:
+        fr: 'Auto Soft'
+        en: 'Auto Soft'
 
-  UNUSED_2: # weird that this is unused, is it really?
-    bits: '2.7-2.0'
+  FRONT_AC_ERROR:
+    bits: '1.3'
+    alt_names: ['DEF_CLIM_AV']
+    values:
+      0x00:
+        fr: 'Pas de défaut'
+        en: 'No error'
+      0x01:
+        fr: 'Défaut'
+        en: 'Error'
+
+  AC_REQUEST:
+    bits: '1.2-1.0'
+    alt_names: ['DEMANDE_AC']
+    values:
+      0x00:
+        fr: 'Auto Confort'
+        en: 'Auto Comfort'
+      0x01:
+        fr: 'Auto visibilité'
+        en: 'Auto Visibility'
+      0x02:
+        fr: 'Off'
+        en: 'Off'
+
+  CABIN_MICRO_FAN_FAILURE:
+    alt_names: ['DEF_MICROTURB_SDE_HAB']
+    bits: '2.7'
+    values:
+      0x00:
+        fr: 'Défaut absent'
+        en: 'No error'
+      0x01:
+        fr: 'Défaut présent'
+        en: 'Error present'
+
+  HEATER_MOTOR_FAILURE:
+    alt_names: ['DEF_MOTEUR_PULSEUR']
+    bits: '2.6'
+    values:
+      0x00:
+        fr: 'Défaut absent'
+        en: 'No error'
+      0x01:
+        fr: 'Défaut présent'
+        en: 'Error present'
+
+  UNUSED_1:
+    bits: '2.5-2.0'
     unused: true
 
-  UNUSED_3: # weird as well
-    bits: '3.7-3.3'
+  UNUSED_2:
+    bits: '3.7-3.4'
     unused: true
 
   FAN_SPEED:
-    bits: '3.2-3.0'
+    bits: '3.3-3.0'
+    alt_names: ['PULS_AV_ETAT_AFF_CLIM']
     comment:
       en: 'Fan speed'
       fr: 'Vitesse du pulseur'
@@ -41,11 +119,15 @@ signals:
 
   DIRECTION_LEFT:
     bits: '4.7-4.4'
+    alt_names: ['DISTRIBUTION_AV1']
     comment:
       en: 'Left zone direction'
       fr: 'Direction de la zone gauche'
     values:
       # 0x0000 when auto maybe? to be confirmed
+      0x00:
+        en: 'Auto'
+        fr: 'Auto'
       0x01:
         en: 'Up (when auto/windshield blowing'
         fr: 'Haut (en mode auto/avec option degivrage)'
@@ -64,15 +146,26 @@ signals:
       0x06:
         en: 'Up+Down'
         fr: 'Haut+Bas'
-      # for some reason 0x07 and 0x08 doesn't exists, maybe there's Up+Front in it?
+      0x07:
+        fr: 'Aération Dégivrage'
+        en: 'Defrost Ventilation'
+      0x08:
+        fr: 'Pied Aération Dégivrage'
+        en: 'Foot Defrost Ventilation'
+      0x09:
+        fr: 'Auto Soft'
+        en: 'Auto Soft'
 
   DIRECTION_RIGHT:
     bits: '4.3-4.0'
+    alt_names: ['DISTRIBUTION_AV2']
     comment:
       en: 'Right zone direction'
       fr: 'Direction pour la zone droite'
     values:
-      # 0x0000 when auto maybe? to be confirmed
+      0x00:
+        en: 'Auto'
+        fr: 'Auto'
       0x01:
         en: 'Up (when auto/windshield blowing'
         fr: 'Haut (en mode auto/avec option degivrage)'
@@ -91,14 +184,33 @@ signals:
       0x06:
         en: 'Up+Down'
         fr: 'Haut+Bas'
-      # for some reason 0x07 and 0x08 doesn't exists, maybe there's Up+Front in it?
+      0x07:
+        fr: 'Aération Dégivrage'
+        en: 'Defrost Ventilation'
+      0x08:
+        fr: 'Pied Aération Dégivrage'
+        en: 'Foot Defrost Ventilation'
+      0x09:
+        fr: 'Auto Soft'
+        en: 'Auto Soft'
 
-  UNUSED_4: # Didn't found any use for it, always 0
-    bits: '5.7-5.6'
-    unused: true
+  RESTORE_MODE:
+    bits: '5.7'
+    alt_names: ['MODE_RESTORE']
+    comment:
+      en: 'Restore mode'
+      fr: 'Mode restore'
+    values:
+      0x00:
+        fr: 'Non demandé'
+        en: 'Not requested'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
 
   MODE:
     bits: '5.5-5.4'
+    alt_names: ['ENTREE_AIR']
     comment:
       en: 'Air mode'
       fr: 'Mode gestion'
@@ -115,13 +227,21 @@ signals:
       0x03:
         en: 'Recycling enabled'
         fr: 'Recyclage active'
+      0x04:
+        en: 'Auto comfort without AQS'
+        fr: 'Auto confort sans AQS'
 
-  UNUSED_5: # No use found, always 0
+  UNUSED_3: # No use found, always 0
     bits: '5.3-5.0'
     unused: true
 
+  UNUSED_4:
+    bits: '6.7-6.5'
+    unused: true
+
   TEMP_LEFT:
-    bits: '6.7-6.0'
+    bits: '6.4-6.0'
+    alt_names: ['VAL_CONS_TEMP_AVC']
     comment:
       en: 'Left zone temperature'
       fr: 'Temperature de la zone gauche'
@@ -196,8 +316,17 @@ signals:
         en: 'HI'
         fr: 'HI'
 
+  UNUSED_5:
+    bits: '7.7-7.5'
+    unused: true
+
+
   TEMP_RIGHT:
-    bits: '7.7-7.0'
+    bits: '7.4-7.0'
+    alt_names: ['VAL_CONS_TEMP_AVP']
+    comment:
+      en: 'Right zone temperature'
+      fr: 'Temperature de la zone droite'
     values:
       0x00:
         en: 'LO'

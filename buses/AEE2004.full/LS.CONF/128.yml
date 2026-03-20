@@ -3,11 +3,16 @@ name: 'COMBINE_SIGNALS_INDICATORS'
 alt_names: ['CDE_COMBINE_SIGNALISATION']
 length: 8
 type: 'can'
-periodicity: '200ms'
+periodicity: ['200ms']
 senders:
   - 'BSI'
 receivers:
   - 'CMB'
+  - 'VTH'
+  - 'BCD'
+  - 'CMB_EMF'
+  - 'MATT'
+  - 'ICSV'
 
 signals:
   PASSENGER_AIRBAG:
@@ -67,6 +72,7 @@ signals:
         fr: 'On'
 
   FUEL_DISABLED:
+    alt_names: ['CCARB_NEUT']
     bits: '1.3'
     comment:
       en: 'Fuel is cut indicator'
@@ -107,9 +113,19 @@ signals:
         en: 'On'
         fr: 'On'
 
-  unused_1:
+  SERVICE_RESTART:
     bits: '1.0'
-    unused: true
+    alt_names: ['RELANCE_SERVICE']
+    comment:
+      en: 'Service restart indicator'
+      fr: 'Indicateur relance service'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
 
   MAINTENANCE:
     alt_names: ['SERVICE']
@@ -139,15 +155,26 @@ signals:
         en: 'On'
         fr: 'On'
 
-  UNUSED_2:
+  STOP_RESTART:
+    alt_names: ['RELANCE_STOP']
     bits: '2.5'
-    unused: true
+    comment:
+      en: 'Stop restart indicator'
+      fr: 'Indicateur relance STOP'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
 
   DOORS_1:
+    alt_names: ['SIGNAL_OUV_INF_10']
     bits: '2.4'
     comment:
-      en: 'Doors indicator'
-      fr: 'Indicateur ouvrants'
+      en: 'Doors indicator < 10 km/h'
+      fr: 'Indicateur ouvrants < 10 km/h'
     values:
       0x00:
         en: 'Off'
@@ -157,10 +184,11 @@ signals:
         fr: 'On'
 
   DOORS_2:
+    alt_names: ['SIGNAL_OUV_SUP_10']
     bits: '2.3'
     comment:
-      en: 'Doors indicator'
-      fr: 'Indicateur ouvrants'
+      en: 'Doors indicator > 10 km/h'
+      fr: 'Indicateur ouvrants > 10 km/h'
     values:
       0x00:
         en: 'Off'
@@ -169,17 +197,47 @@ signals:
         en: 'On'
         fr: 'On'
 
-  UNUSED_3:
+  FRONT_PASSENGER_PROTECTION:
+    alt_names: ['PROT_PASS_AV_ACT']
     bits: '2.2'
-    unused: true
+    comment:
+      en: 'Front passenger protection indicator'
+      fr: 'Indicateur protection passager avant'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
 
-  UNUSED_4:
+  ABS_IN_PROGRESS:
+    alt_names: ['ABS_ACT']
     bits: '2.1'
-    unused: true
+    comment:
+      en: 'ABS in progress indicator'
+      fr: 'Indicateur ABS en action'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
 
-  UNUSED_5:
+  REAR_SEATBELT_NOT_FASTENED:
+    alt_names: ['DEB_CEINT_AR']
     bits: '2.0'
-    unused: true
+    comment:
+      en: 'Rear seatbelt not fastened indicator'
+      fr: 'Indicateur ceinture arrière non attachée'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
 
   COLOR_CHANGE:
     alt_names: ['DMD_COULEUR_CMB']
@@ -279,9 +337,19 @@ signals:
         en: 'On'
         fr: 'On'
 
-  UNUSED_6:
+  IGNITION_READY:
+    alt_names: ['READY_HY']
     bits: '3.0'
-    unused: true
+    comment:
+      en: 'Ignition ready indicator'
+      fr: 'Indicateur allumage prêt'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
 
   FRONT_LEFT_SEATBELT_BLINK:
     alt_names: ['OUCC_CLIG']
@@ -311,9 +379,19 @@ signals:
         en: 'On'
         fr: 'On'
 
-  UNUSED_7:
+  HILL_HOLDER:
+    alt_names: ['HILL_HOLDER']
     bits: '4.5'
-    unused: true
+    comment:
+      en: 'Hill holder indicator'
+      fr: 'Indicateur hill holder'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
 
   AVAILABLE_SPACE:
     alt_names: ['MPD']
@@ -569,7 +647,7 @@ signals:
       0x01:
         en: 'On'
         fr: 'On'
-        
+
 # Renamed from REAR_RIGHT_SEATBELT_BLINK to REAR_RIGHT_SEATBELT_BLINK_DUPLICATE to fix duplicated mapping key error!
   REAR_RIGHT_SEATBELT_BLINK_DUPLICATE:
     alt_names: ['OUCARD_CLIG']

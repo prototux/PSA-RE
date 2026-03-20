@@ -3,47 +3,230 @@ name: 'BSI_COMMANDS'
 alt_names: ['COMMANDES_BSI']
 length: 8
 type: 'can'
-periodicity: '100ms'
+periodicity: ['100ms']
 senders:
   - 'BSI'
+  - 'PASS_ICSV'
 receivers:
-  - 'RADIO' # All ECUs
+  - 'AAS'
+  - 'BDM'
+  - 'BTEL'
+  - 'CLR'
+  - 'CLV'
+  - 'CMB'
+  - 'EDP_AV'
+  - 'EMF'
+  - 'PDS'
+  - 'RAD'
+  - 'TO'
+  - 'VTH'
+  - 'DEF'
+  - 'CDC'
+  - 'STL'
+  - 'BCD'
+  - 'CLIM_RFTA'
+  - 'TE'
+  - 'AAD'
+  - 'PLC'
+  - 'CRT'
+  - 'BDMA'
+  - 'KML'
+  - 'AMPLI'
+  - 'CMB_EMF'
+  - 'SAM'
+  - 'PDPC'
+  - 'NG4'
+  - 'MDS'
+  - 'RNEG'
+  - 'BTT'
+  - 'MATT'
+  - 'HORL'
+  - 'ICSV'
+  - 'PASS_ICSV'
 
 signals:
-  # Unknown byte, with data in it
-  UNKNOWN_1:
-    bits: '1.7-1.0'
-    unused: true
+  PROFILE_NUMBER_1:
+    bits: '1.7-1.6'
+    alt_names: ['NUM_PROF_1']
+    comment:
+      en: 'Profile number'
+      fr: 'Numero de profil'
+    values:
+      0x00:
+        fr: 'Profil constructeur'
+        en: 'Factory profile'
+      0x01:
+        en: 'Profile 1'
+        fr: 'Profil 1'
+      0x02:
+        en: 'Profile 2'
+        fr: 'Profil 2'
+      0x03:
+        en: 'Profile 3'
+        fr: 'Profil 3'
 
-  # Unknown byte, with data in it
-  UNKNOWN_2:
-    bits: '2.7-2.0'
-    unused: true
+  DRIVER_MEMORY:
+    bits: '1.5'
+    alt_names: ['RAPP_MEM_C']
+    comment:
+      en: 'Driver memory recall'
+      fr: 'Rappel memoire conducteur'
+    values:
+      0x00:
+        en: 'No recall'
+        fr: 'Pas de rappel'
+      0x01:
+        en: 'Recall'
+        fr: 'Rappel'
+
+  DRIVER_MEMORY_SAVE:
+    bits: '1.4'
+    alt_names: ['MISE_MEM_C']
+    comment:
+      en: 'Driver memory save'
+      fr: 'Enregistrement memoire conducteur'
+    values:
+      0x00:
+        en: 'No save'
+        fr: 'Pas de mise en memoire'
+      0x01:
+        en: 'Save'
+        fr: 'Mise en memoire'
+
+  DRIVER_MEMORY_COUNT:
+    bits: '1.3-1.0'
+    alt_names: ['NUM_MEM_C']
+    comment:
+      en: 'Number of driver memory profiles'
+      fr: 'Nombre de profils memoire conducteur'
+    type: 'uint'
+    offset: 0
+    min: 0
+    max: 14
+    resolution:
+    invalid:
+    units:
+
+  PROFILE_NUMBER_2:
+    bits: '2.7-2.6'
+    alt_names: ['NUM_PROF_2']
+    comment:
+      en: 'Profile number'
+      fr: 'Numero de profil'
+    values:
+      0x00:
+        fr: 'Profil constructeur'
+        en: 'Factory profile'
+      0x01:
+        en: 'Profile 1'
+        fr: 'Profil 1'
+      0x02:
+        en: 'Profile 2'
+        fr: 'Profil 2'
+      0x03:
+        en: 'Profile 3'
+        fr: 'Profil 3'
+
+  PASSENGER_MEMORY:
+    bits: '2.5'
+    alt_names: ['RAPP_MEM_P']
+    comment:
+      en: 'Passenger memory recall'
+      fr: 'Rappel memoire passager'
+    values:
+      0x00:
+        en: 'No recall'
+        fr: 'Pas de rappel'
+      0x01:
+        en: 'Recall'
+        fr: 'Rappel'
+
+  PASSENGER_MEMORY_SAVE:
+    bits: '2.4'
+    alt_names: ['MISE_MEM_P']
+    comment:
+      en: 'Passenger memory save'
+      fr: 'Enregistrement memoire passager'
+    values:
+      0x00:
+        en: 'No save'
+        fr: 'Pas de mise en memoire'
+      0x01:
+        en: 'Save'
+        fr: 'Mise en memoire'
+
+  PASSENGER_MEMORY_COUNT:
+    bits: '2.3-2.0'
+    alt_names: ['NUM_MEM_P']
+    comment:
+      en: 'Number of passenger memory profiles'
+      fr: 'Nombre de profils memoire passager'
+    type: 'uint'
+    offset: 0
+    min: 0
+    max: 14
+    resolution:
+    invalid:
+    units:
 
   ECO_MODE:
     bits: '3.7'
+    alt_names: ['MODE_ECO']
     comment:
       en: 'Energy economy mode status'
       fr: 'Status du mode economie energie'
     type: 'uint'
     values:
       0x00:
-        en: 'not in eco mode'
-        fr: 'pas en mode eco'
+        en: 'Not in eco mode'
+        fr: 'Pas en mode eco'
       0x01:
-        en: 'in eco mode'
-        fr: 'en mode eco'
+        en: 'In eco mode'
+        fr: 'En mode eco'
 
   UNUSED_1:
-    bits: '3.6-3.0'
+    bits: '3.6-3.4'
     unused: true
 
-  UNKNOWN_3:
-    bits: '4.7-4.6'
-    unused: true
+  POWER_SAVING_LEVEL:
+    bits: '3.3-3.0'
+    alt_names: ['NIV_DELEST']
+    comment:
+      en: 'Energy economy level'
+      fr: 'Niveau deconomie energie'
+    type: 'uint'
+
+  RESYNCHRONIZATION:
+    bits: '4.7'
+    alt_names: ['RESYNC']
+    comment:
+      en: 'Resynchronization command'
+      fr: 'Commande de resynchronisation'
+    values:
+      0x00:
+        en: 'No resynchronization'
+        fr: 'Pas de resynchronisation'
+      0x01:
+        en: 'Resynchronization'
+        fr: 'Resynchronisation'
+
+  RHEOSTAT_TYPE:
+    bits: '4.6'
+    alt_names: ['TYPE_RHEOS']
+    comment:
+      en: 'Rheostat type'
+      fr: 'Type de rheostat'
+    values:
+      0x00:
+        en: 'Manual'
+        fr: 'Manuel'
+      0x01:
+        en: 'Automatic'
+        fr: 'Automatique'
 
   DAYNIGHT_STATUS:
     bits: '4.5'
+    alt_names: ['ETAT_JN']
     comment:
       en: 'Day/night status'
       fr: 'Status jour/nuit'
@@ -58,10 +241,10 @@ signals:
 
   DARK_MODE:
     bits: '4.4'
+    alt_names: ['BCK_PNL']
     comment:
       en: 'Dark mode status'
       fr: 'Status mode dark'
-    type: 'uint'
     values:
       0x00:
         en: 'not in dark mode'
@@ -72,12 +255,17 @@ signals:
 
   BRIGHTNESS:
     bits: '4.3-4.0'
+    alt_names: ['LUMINOSITE']
     comment:
       en: 'Backlight brightness'
       fr: 'Luminosite retroeclairage'
     type: 'uint'
+    offset: 0
     min: 0
     max: 15
+    resolution: 1
+    invalid:
+    units:
 
   UNUSED_2:
     bits: '5.7'
@@ -85,6 +273,7 @@ signals:
 
   CLEAR_FAULTS:
     bits: '5.6'
+    alt_names: ['DEM_EFFAC_DEF']
     comment:
       en: 'Clear all faults command'
       fr: 'Demande effacement des defauts'
@@ -99,17 +288,17 @@ signals:
 
   DIAG_STATUS:
     bits: '5.5'
+    alt_names: ['DIAG_MUX_ON']
     comment:
       en: 'Diag session status'
       fr: 'Etat session de diagnostique'
-    type: 'uint'
     values:
       0x00:
-        en: 'no diag session'
-        fr: 'pas de session de diag'
+        en: 'No diag session'
+        fr: 'Pas de session de diag'
       0x01:
-        en: 'diag session'
-        fr: 'session de diag'
+        en: 'Diag session'
+        fr: 'Session de diag'
 
   UNUSED_3:
     bits: '5.4'
@@ -117,45 +306,177 @@ signals:
 
   LOG_FAULTS:
     bits: '5.3'
+    alt_names: ['INTERD_MEMO_DEF ']
     comment:
       en: 'Enable/disable logging faults'
       fr: 'Active/desactive la memorisation des defauts'
-    type: 'uint'
     values:
       0x00:
-        en: 'normal mode: log faults'
-        fr: 'mode normal: memorisation des defauts'
+        en: 'Normal mode: log faults'
+        fr: 'Mode normal: memorisation des defauts'
       0x01:
-        en: 'disabled mode: no fault logging'
-        fr: 'mode desactive: pas de memorisation des defauts'
+        en: 'Disabled mode: no fault logging'
+        fr: 'Mode desactive: pas de memorisation des defauts'
 
   POWER_MANAGEMENT:
     bits: '5.2-5.0'
+    alt_names: ['PHASE_VIE']
     comment:
       en: 'Power management status'
       fr: 'Etat gestion energie'
     type: 'uint'
     values:
       0x00:
-        en: 'sleep'
-        fr: 'veille'
+        en: 'Sleep'
+        fr: 'Veille'
       0x01:
-        en: 'normal'
-        fr: 'normal'
+        en: 'Normal'
+        fr: 'Normal'
       0x02:
-        en: 'going to sleep'
-        fr: 'mise en veille'
+        en: 'Going to sleep'
+        fr: 'Mise en veille'
       0x03:
-        en: 'wakeup'
-        fr: 'reveil'
+        en: 'Wakeup'
+        fr: 'Reveil'
       0x04:
-        en: 'no communications'
-        fr: 'pas de communication'
+        en: 'No communications'
+        fr: 'Pas de communication'
+
+  HYBRID_STATUS:
+    bits: '6.7-6.5'
+    alt_names: ['ETAT_GMP_HY']
+    comment:
+      en: 'Hybrid system status'
+      fr: 'Etat du systeme hybride'
+    values:
+      0x00:
+        en: 'Undefined'
+        fr: 'Indefini'
+      0x01:
+        en: 'Inactive'
+        fr: 'Inactif'
+      0x02:
+        en: 'Active in stop mode'
+        fr: 'Actif en mode arrêt'
+      0x03:
+        en: 'Active in traction mode'
+        fr: 'Actif en mode traction'
+      0x04:
+        en: 'Active in propulsion mode'
+        fr: 'Actif en mode propulsion'
+      0x05:
+        en: 'Active in hybrid mode'
+        fr: 'Actif en mode hybride'
+
+  HYBRID_STATUS_UPDATED:
+    bits: '6.4'
+    alt_names: ['UB_ETAT_GMP_HY']
+    comment:
+      en: 'Hybrid system status updated flag'
+      fr: 'Flag de mise a jour de letat du systeme hybride'
+    values:
+      0x00:
+        en: 'Not updated'
+        fr: 'Pas mis a jour'
+      0x01:
+        en: 'Updated'
+        fr: 'Mis a jour'
+
+  HYBRID_MODE:
+    bits: '6.3-6.1'
+    alt_names: ['MODE_HY']
+    comment:
+      en: 'Hybrid mode'
+      fr: 'Mode hybride'
+    values:
+      0x00:
+        en: '4x4'
+        fr: '4x4'
+      0x01:
+        en: 'Sport'
+        fr: 'Sport'
+      0x02:
+        en: 'HY'
+        fr: 'HY'
+      0x03:
+        en: 'ZEV'
+        fr: 'ZEV'
+
+  HYBRID_MODE_UPDATED:
+    bits: '6.0'
+    alt_names: ['UB_MODE_HY']
+    comment:
+      en: 'Hybrid mode updated flag'
+      fr: 'Flag de mise a jour du mode hybride'
+    values:
+      0x00:
+        en: 'Not updated'
+        fr: 'Pas mis a jour'
+      0x01:
+        en: 'Updated'
+        fr: 'Mis a jour'
 
   UNUSED_4:
-    bits: '6.7-7.0'
+    bits: '7.7-7.4'
     unused: true
 
-  UNKNOWN_4:
-    bits: '8.7-8.0'
+  AVR_ACTIVATION_STATUS:
+    bits: '7.3'
+    alt_names: ['ETAT_ACTIVATION_AVR']
+    comment:
+      en: 'AVR activation status'
+      fr: 'Etat dactivation de lAVR'
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+
+  UNUSED_5:
+    bits: '7.2-7.0'
     unused: true
+
+  SECURE_INFO:
+    bits: '8.7-8.4'
+    alt_names: ['SECU_ETAT_SEV']
+    comment:
+      en: 'Security info status'
+      fr: 'Etat des informations de securite'
+    values:
+      0x0A:
+        en: 'Security info valid'
+        fr: 'Informations de securite valides'
+
+  UNUSED_6:
+    bits: '8.3-8.2'
+    unused: true
+
+  AUDIO_INVIOLABILITY:
+    bits: '8.1'
+    alt_names: ['INVIOLABILITE_AUDIO']
+    comment:
+      en: 'Audio system inviolability request status'
+      fr: 'Etat de la demande d''inviolabilité du système audio'
+    values:
+      0x00:
+        en: 'Inviolability not requested'
+        fr: 'Inviolabilité non demandée'
+      0x01:
+        en: 'Inviolability requested'
+        fr: 'Inviolabilité demandée'
+
+  TE_POSITION:
+    bits: '8.0'
+    alt_names: ['POSITION_TE']
+    comment:
+      en: 'Convertible roof position'
+      fr: 'Position du toit ouvrant'
+    values:
+      0x00:
+        en: 'Closed position'
+        fr: 'Position coupe'
+      0x01:
+        en: 'Open position'
+        fr: 'Position cabriolet'

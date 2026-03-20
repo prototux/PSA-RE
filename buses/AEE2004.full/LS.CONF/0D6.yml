@@ -2,14 +2,17 @@ id: 0x0D6
 name: 'STATUS_BTE'
 length: 6
 type: 'can'
-periodicity: '200ms'
+periodicity: ['200ms']
 senders:
   - 'BTE'
 receivers:
   - 'BSI' # To display errors if needed
+  - 'PDPC'
+  - 'AMPLI'
 
 signals:
   BTE_FAULT:
+    alt_names: ['DEF_SYST_TE']
     bits: '1.7'
     comment:
       en: 'BTE Fault'
@@ -24,6 +27,7 @@ signals:
 
   TEMP_SAFETY:
     bits: '1.6'
+    alt_names: ['SEU_TEMP_EXT_TE']
     comment:
       en: 'Temperature safety status'
       fr: 'Etat securite temperature'
@@ -37,6 +41,7 @@ signals:
 
   SPEED_SAFETY:
     bits: '1.5'
+    alt_names: ['SEU_VIT_TE']
     comment:
       en: 'Speed safety status'
       fr: 'Etat securite vitesse'
@@ -50,6 +55,7 @@ signals:
 
   TRUNK_SAFETY:
     bits: '1.4'
+    alt_names: ['COF_BAG_OUV']
     comment:
       en: 'Trunk safety status'
       fr: 'Etat securite coffre'
@@ -63,6 +69,7 @@ signals:
 
   SCREEN_SAFETY:
     bits: '1.3'
+    alt_names: ['TEND_TIRE']
     comment:
       en: 'Screen safety status'
       fr: 'Etat securite tendelet'
@@ -76,6 +83,7 @@ signals:
 
   ROOF_LOCKED_STATUS:
     bits: '1.2'
+    alt_names: ['TE_VER']
     comment:
       en: 'Roof locked status'
       fr: 'Etat verouillage toit'
@@ -89,6 +97,7 @@ signals:
 
   TRUNK_LOCKED_STATUS:
     bits: '1.1'
+    alt_names: ['COF_TOIT_VER']
     comment:
       en: 'Trunk locked status'
       fr: 'Etat verouillage toit'
@@ -100,12 +109,16 @@ signals:
         en: 'Trunk not locked'
         fr: 'Coffre non verrouille'
 
-  UNUSED_1:
+  DMD_CY_TE_VIT_FIL_INV:
     bits: '1.0'
-    unused: true
+    alt_names: ['DMD_CY_TE_VIT_FIL_INV']
+    comment:
+      en: 'TE cycle request with an invalid wired speed '
+      fr: 'Demande de cycle TE avec une vitesse filaire invalide'
 
   BUTTON_STATUS:
     bits: '2.7'
+    alt_names: ['ETAT_PUSH_TE']
     comment:
       en: 'Button status'
       fr: 'Etat boutton'
@@ -119,6 +132,7 @@ signals:
 
   ROOF_STATUS:
     bits: '2.6-2.4'
+    alt_names: ['ETAT_TESC']
     comment:
       en: 'Roof status'
       fr: 'Etat toit'
@@ -141,6 +155,7 @@ signals:
 
   TRUNK_STATUS:
     bits: '2.3-2.1'
+    alt_names: ['ETAT_COFFRE_TOIT']
     comment:
       en: 'Trunk status, roof side'
       fr: 'Etat coffre, cote toit'
@@ -160,6 +175,7 @@ signals:
 
   TRUNK_STATUS_USER:
     bits: '2.0'
+    alt_names: ['ETAT_COFFRE_BAG']
     comment:
       en: 'Trunk status, user side'
       fr: 'Etat coffre, cote utilisateur'
@@ -173,6 +189,7 @@ signals:
 
   TRUNK_BUTTON_LOCK:
     bits: '3.7'
+    alt_names: ['DEM_INH_AC_COF_BAG']
     comment:
       en: 'Trunk button locking status'
       fr: 'Etat verouillage boutton coffre'
@@ -186,6 +203,7 @@ signals:
 
   WINDOW_LOCK:
     bits: '3.6'
+    alt_names: ['DEM_INH_LV_ETAT_TE']
     comment:
       en: 'Windows locking status'
       fr: 'Etat verouillage vitres'
@@ -198,27 +216,59 @@ signals:
         fr: 'Verouille'
 
   UNUSED_2:
+    bits: '3.5'
+    unused: true
+
+  ETAT_CACHE_ARTI:
     bits: '3.4-3.3'
+    alt_names: ['ETAT_CACHE_ARTI']
+    comment:
+      en: 'Status of articulated covers'
+      fr: 'Etat des caches articulés'
+    values:
+      0x00:
+        en: 'Status of articulated covers indeterminate'
+        fr: 'Caches articulés indéterminés'
+      0x01:
+        en: 'Articulated covers stored'
+        fr: 'Caches articulés rangés'
+      0x02:
+        en: 'Articulated covers deployed'
+        fr: 'Caches articulés déployés'
+      0x03:
+        en: 'Status of articulated covers indeterminate'
+        fr: 'Caches articulés indéterminés'
+
+  UNUSED_3:
+    bits: '3.2'
     unused: true
 
   SCREEN_STATUS:
     bits: '3.1-3.0'
+    alt_names: ['ETAT_TABLETTE']
     comment:
       en: 'Screen status'
       fr: 'Etat tendelet'
     values:
+      0x00:
+        en: 'Screen status indeterminate'
+        fr: 'Tablette indéterminée'
       0x01:
         en: 'Opened'
         fr: 'Ouvert'
       0x02:
         en: 'Closed'
         fr: 'Tire'
+      0x03:
+        en: 'Screen status indeterminate'
+        fr: 'Tablette indéterminée'
 
-  UNUSED_3:
+  UNUSED_4:
     bits: '4.7-4.6'
     unused: true
 
   REAR_LEFT_WINDOW_MOVEMENT:
+    alt_names: ['DEM_MVT_LV_ARG_ET_TE']
     bits: '4.5-4.3'
     comment:
       en: 'Rear left window movement'
@@ -244,6 +294,7 @@ signals:
         fr: 'Stop'
 
   REAR_RIGHT_WINDOW_MOVEMENT:
+    alt_names: ['DEM_MVT_LV_ARD_ET_TE']
     bits: '4.2-4.0'
     comment:
       en: 'Rear right window movement'
@@ -269,6 +320,7 @@ signals:
         fr: 'Stop'
 
   WINDOW_MOVEMENT_SOURCE:
+    alt_names: ['NAT_DEM_MVT_ETF_TE']
     bits: '5.7-5.6'
     comment:
       en: 'Source of window movement'
@@ -288,6 +340,7 @@ signals:
         fr: 'Toit escamotable'
 
   FRONT_LEFT_WINDOW_MOVEMENT:
+    alt_names: ['DEM_MVT_LV_AVG_ET_TE']
     bits: '5.5-5.3'
     comment:
       en: 'Front left window movement'
@@ -313,10 +366,11 @@ signals:
         fr: 'Stop'
 
   FRONT_RIGHT_WINDOW_MOVEMENT:
+    alt_names: ['DEM_MVT_LV_AVD_ET_TE']
     bits: '5.2-5.0'
     comment:
       en: 'Front right window movement'
-      fr: 'Mouvement vitre arriere droit'
+      fr: 'Mouvement vitre avant droit'
     values:
       0x00:
         en: 'None'
@@ -337,11 +391,12 @@ signals:
         en: 'Stop'
         fr: 'Stop'
 
-  UNUSED_4:
+  UNUSED_5:
     bits: '6.7-6.6'
     unused: true
 
   CENTRAL_SWITCH_REQUEST:
+    alt_names: ['DMD_LV_PUSH_TE']
     bits: '6.5-6.4'
     comment:
       en: 'Central switch request'
@@ -357,11 +412,12 @@ signals:
         en: 'Opening'
         fr: 'Ouverture'
 
-  UNUSED_5:
+  UNUSED_6:
     bits: '6.3'
     unused: true
 
   ALL_WINDOWS_MOVEMENT:
+    alt_names: ['DMD_LV_PC_TE']
     bits: '6.2-6.0'
     comment:
       en: 'All window movement'

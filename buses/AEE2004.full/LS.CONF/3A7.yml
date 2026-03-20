@@ -3,15 +3,22 @@ name: 'MAINTENANCE_STATUS'
 alt_names: ['INFOS_MAINTENANCE']
 length: 8
 type: 'can'
-periodicity: 500ms
+periodicity: ['500ms']
 senders:
   - 'BSI'
 receivers:
   - 'CMB'
+  - 'CMB_EMF'
+  - 'BTEL'
+  - 'BCD'
+  - 'MDS'
+  - 'MATT'
+  - 'BGP'
 
 signals:
   MAINTENANCE_TYPE:
     bits: '1.7'
+    alt_names: ['TYPE_MAINT']
     comment:
       en: 'Maintenance type'
       fr: 'Type maintenance'
@@ -23,11 +30,16 @@ signals:
         en: 'Time based'
         fr: 'Sur le temps'
 
+  UNUSED_1:
+    bits: '1.6'
+    unused: true
+
   ICON_STATUS:
     bits: '1.5-1.4'
+    alt_names: ['PICTO_CLE_MAINT']
     comment:
       en: 'Wrench icon status'
-      fr: 'Etat icone maintenance'
+      fr: 'Affichage du pictogramme clé de maintenance pendant l''affichage de la maintenance'
     values:
       0x00:
         en: 'Off'
@@ -38,13 +50,37 @@ signals:
       0x02:
         en: 'Blinking'
         fr: 'Blinking'
+      0x03:
+        en: 'Reserved'
+        fr: 'Reserve'
 
-  UNUSED_1:
+  ICON_STATUS_2:
     bits: '1.3-1.2'
+    alt_names: ['PICTO_CLE_NORM']
+    comment:
+      en: 'Wrench icon status'
+      fr: 'Affichage du pictogramme clé de maintenance hors affichage de la maintenance'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Off'
+      0x01:
+        en: 'On'
+        fr: 'On'
+      0x02:
+        en: 'Blinking'
+        fr: 'Blinking'
+      0x03:
+        en: 'Reserved'
+        fr: 'Reserve'
+
+  UNUSED_2:
+    bits: '1.1-1.0'
     unused: true
 
   DISTANCE_SYMBOL:
     bits: '2.7'
+    alt_names: ['SIGN_MAINT']
     comment:
       en: 'Symbol before the maintenance distance'
       fr: 'Symbole a afficher avant la distance'
@@ -56,8 +92,13 @@ signals:
         en: '-'
         fr: '-'
 
+  UNUSED_3:
+    bits: '2.6'
+    unused: true
+
   DISTANCE_BLINKING:
     bits: '2.5'
+    alt_names: ['AFF_MAINT']
     comment:
       en: 'Blinking maintenance distance'
       fr: 'Clignotement de la distance'
@@ -69,8 +110,13 @@ signals:
         en: 'Blinking'
         fr: 'Clignotement'
 
+  UNUSED_4:
+    bits: '2.4-2.0'
+    unused: true
+
   TIME_SYMBOL:
     bits: '3.7'
+    alt_names: ['SIGN_ECHEANCE ']
     comment:
       en: 'Symbol before the maintenance time'
       fr: 'Symbole a afficher avant le temps'
@@ -82,8 +128,13 @@ signals:
         en: '-'
         fr: '-'
 
+  UNUSED_5:
+    bits: '3.6'
+    unused: true
+
   TIME_BLINKING:
     bits: '3.5'
+    alt_names: ['AFF_ECHEANCE']
     comment:
       en: 'Blinking maintenance time'
       fr: 'Clignotement du temps'
@@ -95,20 +146,48 @@ signals:
         en: 'Blinking'
         fr: 'Clignotement'
 
+  UNUSED_6:
+    bits: '3.4-3.0'
+    unused: true
+
   DISTANCE:
     bits: '4.7-5.0'
+    alt_names: ['K_MAINT']
     comment:
       en: 'Distance'
       fr: 'Distance'
+    type: 'uint16'
+    offset: 0
+    min: 0
+    max: 14000
+    resolution: 20
+    invalid: 0xFFFF
+    units: 'km'
 
   TIME:
     bits: '6.7-7.0'
+    alt_names: ['NB_JOUR_MAINTENANCE']
     comment:
-      en: 'Time (real)'
+      en: 'Number of days before and after expiry of maintenance'
       fr: 'Duree (reele)'
+    type: 'uint16'
+    offset: 0
+    min: 0
+    max: 730
+    resolution: 1
+    invalid: 0xFFFF
+    units: 'days'
 
   DISPLAY_TIME:
     bits: '8.7-8.0'
+    alt_names: ['DUREE_AFF_MAINT']
     comment:
       en: 'Time (displayed)'
       fr: 'Duree (reele)'
+    type: 'uint8'
+    offset: 0
+    min: 1
+    max: 250
+    resolution: 1
+    invalid: 0xFF
+    units: 'seconds'

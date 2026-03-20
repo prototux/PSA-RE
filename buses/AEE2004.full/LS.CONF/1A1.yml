@@ -3,13 +3,17 @@ name: 'BSI_DISPLAY_MESSAGE'
 alt_names: ['BSI_CDE_PTR_MESSAGE']
 length: 8
 type: 'can'
-periodicity: '200ms'
+periodicity: ['200ms']
 senders:
   - 'BSI'
 receivers:
   - 'EMF'
   - 'CMB' # After it went to MATT
   - 'VTH'
+  - 'BTEL'
+  - 'CMB_EMF'
+  - 'RNEG'
+  - 'MATT'
 
 signals:
   DISPLAY_MESSAGE:
@@ -75,9 +79,26 @@ signals:
         en: 'Yes'
         fr: 'Oui'
 
-  UNUSED_1: # CHECK_COURS and PRIORITE are here, maybe INTERD_PHASE_DEM also
-    bits: '3.4-3.0'
-    unused: true
+  CHECK_IN_PROGRESS: # CHECK_COURS and PRIORITE are here, maybe INTERD_PHASE_DEM also
+    bits: '3.4'
+    alt_names: ['CHECK_COURS']
+    comment:
+      en: 'Check in progress'
+      fr: 'Check en cours'
+
+  PRIORITY:
+    bits: '3.3-3.0'
+    alt_names: ['PRIORITE']
+    comment:
+      en: 'Message priority'
+      fr: 'Priorite du message'
+    type: 'uint'
+    offset: 0
+    min: 0
+    max: 14
+    resolution: 1
+    invalid:
+    units:
 
   MESSAGE_ARGS:
     bits: '4.7-8.0'

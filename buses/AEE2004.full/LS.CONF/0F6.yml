@@ -6,11 +6,44 @@ comment:
   en: 'Contains misc informations, sent periodically with long pauses'
   fr: 'Donnes diverses, envoyees periodiquement et sur un cycle long'
 type: 'can'
-periodicity: '500ms'
+periodicity: ['500ms']
 senders:
   - 'BSI'
 receivers:
-  - 'RADIO' # To get the reverse gear, for the AAS beeps
+  - 'BDMA'
+  - 'KML'
+  - 'CMB_EMF'
+  - 'SAM'
+  - 'PDPC'
+  - 'NG4'
+  - 'MDS'
+  - 'RNEG'
+  - 'BTT'
+  - 'MATT'
+  - 'EMF'
+  - 'RAD'
+  - 'CMB'
+  - 'VTH'
+  - 'TO'
+  - 'EDP_AR'
+  - 'BDM'
+  - 'AAS'
+  - 'CLV'
+  - 'EDP_AV'
+  - 'CLR'
+  - 'BTEL'
+  - 'PDS'
+  - 'DEF'
+  - 'TE'
+  - 'STL'
+  - 'CLIM_RFTA'
+  - 'BCD'
+  - 'AAD'
+  - 'BNB'
+  - 'PLC'
+  - 'BGP'
+  - 'ICSV'
+  - 'PASS_ICSV'
 
 signals:
   CONFIG_MODE:
@@ -19,7 +52,7 @@ signals:
     comment:
       en: 'Configuration mode'
       fr: 'Mode de configuration'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'Factory'
@@ -38,7 +71,7 @@ signals:
     comment:
       en: 'Factory configuration'
       fr: 'Configuration materielle parc'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'Not parked'
@@ -53,7 +86,7 @@ signals:
     comment:
       en: 'Main SEV status'
       fr: 'Etat principal SEV'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'Stopped'
@@ -87,7 +120,7 @@ signals:
     comment:
       en: 'Powertrain status'
       fr: 'Etat du groupe moto-propulseur'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'Motor stopped'
@@ -108,10 +141,12 @@ signals:
     comment:
       en: 'Coolant temperature'
       fr: 'Temperature eau'
-    type: 'uint'
+    type: 'uint8'
     offset: -40
     min: -40
-    max: 215
+    max: 214
+    resolution: 1
+    invalid:
     units: 'celsius'
 
   ODOMETER:
@@ -120,11 +155,13 @@ signals:
     comment:
       en: 'Odometer value, in kilometers'
       fr: 'Totalisateur kilometrage vehicule'
-    type: 'float'
-    factor: -10
+    type: 'uint24'
+    offset: 0
     min: 0
-    max: 1677721.3
-    units: 'kilometers'
+    max: 1677721.4
+    resolution: 0.1
+    invalid: 0xFFFF
+    units: 'km'
 
   EXTERNAL_TEMPERATURE:
     bits: '6.7-6.0'
@@ -132,11 +169,12 @@ signals:
     comment:
       en: 'External temperature'
       fr: 'Temperature exterieure'
-    type: 'float'
+    type: 'uint8'
     offset: -40
-    factor: -2
     min: -40
-    max: 87.5
+    max: 85
+    resolution: 0.5
+    invalid: 0xFF
     units: 'celsius'
 
   EXTERNAL_FILTERED_TEMPERATURE:
@@ -145,11 +183,12 @@ signals:
     comment:
       en: 'Filtered external temperature'
       fr: 'Temperature exterieure filtree'
-    type: 'float'
+    type: 'uint8'
     offset: -40
-    factor: -2
     min: -40
-    max: 87.5
+    max: 85
+    resolution: 0.5
+    invalid: 0xFF
     units: 'celsius'
 
   REVERSE_STATUS:
@@ -158,7 +197,7 @@ signals:
     comment:
       en: 'Reverse gear status'
       fr: 'Etat de la marche arriere'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'Not in reverse gear'
@@ -173,7 +212,7 @@ signals:
     comment:
       en: 'Front wiping confirmation'
       fr: 'Confirmation esssyage avant'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'Not wiping'
@@ -188,7 +227,7 @@ signals:
     comment:
       en: 'Wheel position'
       fr: 'Type de direction du vehicule'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         unused: true
@@ -207,7 +246,7 @@ signals:
     comment:
       en: 'Cluster indicator lights test'
       fr: 'Test voyants du combine'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'No test'
@@ -226,7 +265,7 @@ signals:
     comment:
       en: 'Blinkers status'
       fr: 'Etat des clignotants'
-    type: 'uint'
+    type: 'uint8'
     values:
       0x00:
         en: 'No blinkers'

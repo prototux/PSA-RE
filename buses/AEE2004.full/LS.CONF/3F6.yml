@@ -3,33 +3,71 @@ name: 'CONFIG_DISPLAY'
 alt_names: ['DATE_CONFIG']
 length: 7
 type: 'can'
-periodicity: '1000ms'
+periodicity: ['1000ms']
 senders:
   - 'EMF'
+  - 'BTEL'
+  - 'CMB_EMF'
+  - 'NG4'
+  - 'RNEG'
+
 receivers:
-  [] # Unknown
+  - 'BSI'
+  - 'CMB'
+  - 'VTH'
+  - 'PASS_BSI'
+  - 'KML'
+  - 'MDS'
+  - 'MATT'
+  - 'CDC'
+  - 'BGP'
 
 signals:
   TIMESTAMP_SECS:
-    bits: '1.7-3.5'
+    bits: '1.7-3.4'
+    alt_names: ['SECONDE']
     comment:
-      en: 'Seconds'
-      fr: 'Seconds'
+      en: 'Number of seconds elapsed since the last power on of + PERM of the EMF - Binary counter modulo 86400 (24h*3600s)'
+      fr: 'Secondes écoulées depuis le dernier allumage de + PERM de l''EMF'
+    type: 'uint'
+    offset: 0
+    min: 0
+    max: 86339
+    resolution: 1
+    invalid:  0xFFFFF
+    units: 's'
 
   TIMESTAMP_DAYS:
-    bits: '3.3-4.5'
+    bits: '3.3-4.0'
+    alt_names: ['JOUR']
     comment:
-      en: 'Days'
-      fr: 'Jours'
+      en: 'Number of days elapsed since the last power on of + PERM of the EMF - Binary counter modulo 365'
+      fr: 'Jours écoulés depuis le dernier allumage de + PERM de l''EMF'
+    type: 'uint'
+    offset: 0
+    min: 0
+    max: 364
+    resolution: 1
+    invalid:  0xFFF
+    units: 'days'
 
   TIMESTAMP_YEARS:
     bits: '5.7-5.0'
+    alt_names: ['ANNEE']
     comment:
-      en: 'Years'
-      fr: 'Annees'
+      en: 'Number of years elapsed since the last power on of + PERM of the EMF - Binary counter modulo 100'
+      fr: 'Annees écoulées depuis le dernier allumage de + PERM de l''EMF'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 100
+    resolution: 1
+    invalid:  0xFF
+    units: 'years'
 
   CONFIG_DISPLAY_TIME:
     bits: '6.7'
+    alt_names: ['MODE_HEURE_CLIENT']
     comment:
       en: 'Time display mode'
       fr: 'Mode affichage horaire'
@@ -43,6 +81,7 @@ signals:
 
   CONFIG_DISPLAY_MODE:
     bits: '6.6'
+    alt_names: ['POS_NEG_CONF_CLIENT']
     comment:
       en: 'Display mode'
       fr: 'Mode affichage'
@@ -56,6 +95,7 @@ signals:
 
   CONFIG_TEMP_UNIT:
     bits: '6.5'
+    alt_names: ['UNITE_TEMP_CLIENT']
     comment:
       en: 'Temperature unit'
       fr: 'Unite temperature'
@@ -67,12 +107,23 @@ signals:
         en: 'Fahrenheit'
         fr: 'Fahrenheit'
 
-  UNUSED_1:
+  CHARACTERSET_CONFIG:
     bits: '6.4'
-    unused: true
+    alt_names: ['CARACT_MAUD']
+    comment:
+      en: 'Configured character set'
+      fr: 'Jeu de caracteres configure'
+    values:
+      0x00:
+        en: 'ASCII'
+        fr: 'ASCII'
+      0x01:
+        en: 'UTF-8'
+        fr: 'UTF-8'
 
   CONFIG_PRESSURE_UNIT:
     bits: '6.3'
+    alt_names: ['UNITE_PRESS']
     comment:
       en: 'Pressure unit'
       fr: 'Unite pression'
@@ -86,6 +137,7 @@ signals:
 
   CONFIG_CONSUMPTION_UNIT:
     bits: '6.2'
+    alt_names: ['UNITE_CONSO']
     comment:
       en: 'Consuption unit type'
       fr: 'Type unite consommation'
@@ -99,6 +151,7 @@ signals:
 
   CONFIG_VOLUME_UNIT:
     bits: '6.1'
+    alt_names: ['UNITE_VOLUME']
     comment:
       en: 'Volume unit'
       fr: 'Unite volume'
@@ -112,6 +165,7 @@ signals:
 
   CONFIG_DISTANCE_UNIT:
     bits: '6.0'
+    alt_names: ['UNITE_DIST']
     comment:
       en: 'Distance unit'
       fr: 'Unite distance'
@@ -123,8 +177,13 @@ signals:
         en: 'Mile'
         fr: 'Mile'
 
+  UNUSED_1:
+    bits: '7.7-7.4'
+    unused: true
+
   CONFIG_LANGUAGE:
     bits: '7.3-7.0'
+    alt_names: ['LANGUE']
     comment:
       en: 'Language'
       fr: 'Langue'

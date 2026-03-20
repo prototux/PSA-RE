@@ -6,50 +6,106 @@ comment:
   en: 'Internal CD track infos'
   fr: 'Informations de la piste CD en cours'
 type: 'can'
-periodicity: '500ms'
+periodicity: ['500ms']
 senders:
-  - 'RADIO'
+  - 'RAD'
+  - 'PASS_ICSV'
 receivers:
   - 'EMF'
+  - 'CMB_EMF'
+  - 'MATT'
+  - 'PASS_ICSV'
 
 signals:
   TRACK_NUMBER:
     bits: '1.7-1.0'
-    type: 'uint'
+    alt_names: ['NUM_TRK']
+    comment:
+      en: 'Current track number'
+      fr: 'Numéro de la piste en cours'
+    type: 'uint8'
+    offset: 0
     min: 1
     max: 254
-    values:
-      0x00:
-        en: 'No track'
-        fr: 'Pas de piste'
+    resolution: 1
+    invalid:
+    units:
 
   DURATION_MINUTES:
     bits: '2.7-2.0'
-    type: 'uint'
+    alt_names: ['MN_TRK']
+    type: 'uint8'
+    offset: 0
     min: 0
     max: 254
-    units: 'mn'
+    resolution: 1
+    invalid:
+    units: 'min'
 
   DURATION_SECONDS:
     bits: '3.7-3.0'
-    type: 'uint'
-    min: 0
+    alt_names: ['SEC_TRK']
+    comment:
+      en: 'Duration of the current track in seconds'
+      fr: 'Durée de la piste en cours en secondes'
+    type: 'uint8'
+    offset: 0
+    min: 1
     max: 254
+    resolution: 1
+    invalid:
     units: 's'
 
   ELAPSED_MINUTES:
     bits: '4.7-4.0'
-    type: 'uint'
+    alt_names: ['MN_DEBP']
+    type: 'uint8'
+    comment:
+      en: 'Minutes elapsed since track start'
+      fr: 'Minutes écoulées depuis le début de la piste'
     min: 0
     max: 254
     units: 'mn'
 
+  SIGN_OF_MINUTES_ELAPSED:
+    bits: '5.7'
+    alt_names: ['SENS_MN_DEBP']
+    comment:
+      en: 'Sign of elapsed minutes since track start'
+      fr: 'Sens des minutes écoulées depuis le début de la piste'
+    values:
+      0x00:
+        en: 'Positive'
+        fr: 'Positif'
+      0x01:
+        en: 'Negative'
+        fr: 'Négatif'
+
   ELAPSED_SECONDS:
     bits: '5.6-5.0'
-    type: 'uint'
+    alt_names: ['SEC_DEBP']
+    comment:
+      en: 'Seconds elapsed since track start'
+      fr: 'Secondes écoulées depuis le début de la piste'
+    type: 'uint8'
     min: 0
     max: 254
     units: 's'
 
+  CD_TRACK_CHANGE_ORIGIN:
+    bits: '6.7'
+    alt_names: ['ORG_CHANG_TRKCD']
+    comment:
+      en: 'Origin of CD track change'
+      fr: 'Origine du changement de piste CD'
+    values:
+      0x00:
+        en: 'Automatic track change'
+        fr: 'Changement de piste automatique'
+      0x01:
+        en: 'Manual track change'
+        fr: 'Changement de piste manuel'
+
   UNUSED_1:
-    bits: '6.7-6.0'
+    bits: '6.6-6.0'
+    unused: true

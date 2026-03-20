@@ -3,14 +3,20 @@ name: 'SPEED_CONTROL'
 alt_names: ['GESTION_VITESSE']
 length: 8
 type: 'can'
-periodicity: '200ms'
+periodicity: ['200ms']
 senders:
   - 'BSI'
 receivers:
   - 'CMB' # to display it
+  - 'VTH'
+  - 'BCD'
+  - 'CMB_EMF'
+  - 'MATT'
+  - 'BGP'
 
 signals:
   SPEED_CONTROL_TYPE:
+    alt_names: ['FONCT_ACT_LVV_RVV']
     bits: '1.7-1.6'
     comment:
       en: 'Speed control type'
@@ -25,16 +31,60 @@ signals:
       0x02:
         en: 'Limiter'
         fr: 'Limiter'
+      0x03:
+        en: 'Adaptive cruise control'
+        fr: 'Régulateur de vitesse adaptatif'
 
-  UNUSED_1:
-    bits: '1.5-1.2'
-    unused: true
+  ACTIVE_FUNCTION_STATUS:
+    alt_names: ['ETAT_FONCT_LVV_RVV']
+    bits: '1.5-1.3'
+    comment:
+      en: 'Active function status'
+      fr: 'Etat de la fonction active'
+    values:
+      0x00:
+        en: 'Stand by'
+      0x01:
+        en: 'Active without overspeed'
+        fr: 'Activité sans dépassement de vitesse'
+      0x02:
+        en: 'Limiter active with limiter in action'
+        fr: 'Limitation activée avec limiteur en cours d''action'
+      0x03:
+        en: 'Active with overspeed without pedal resumption'
+        fr: 'Activité avec dépassement vitesse sans reprise pédale'
+      0x04:
+        fr: 'Activité avec dépassement vitesse sur reprise pédale'
+        en: 'Active with overspeed with pedal resumption'
+      0x05:
+        en: 'Reserved'
+        fr: 'Réservé'
+      0x06:
+        en: 'Function not activable'
+        fr: 'Fonction non activable'
+      0x07:
+        en: 'Fault'
+        fr: 'Défaut'
+  ACTIVATION_ATTEMPT:
+    alt_names: ['TENT_ACT_LVV_RVV']
+    bits: '1.2'
+    comment:
+      en: 'Activation attempt'
+      fr: 'Tentative d''activation'
+    values:
+      0x00:
+        en: 'No new activation attempt'
+        fr: 'Pas de nouvelle tentative d''activation'
+      0x01:
+        en: 'New activation attempt'
+        fr: 'Nouvelle tentative d''activation'
 
   CONTROL_UNIT:
+    alt_names: ['UNITE_CONSIGNE_LVV_RVV']
     bits: '1.1'
     comment:
-      en: 'Units to display'
-      fr: 'Unite a afficher'
+      en: 'Processing Unit of the LVV / RVV speed setpoint in the BSI'
+      fr: 'Unité de traitement de la consigne vitesse LVV/RVV dans la BSI'
     values:
       0x00:
         en: 'kph'
@@ -43,12 +93,34 @@ signals:
         en: 'mph'
         fr: 'mph'
 
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
   SET_SPEED:
+    alt_names: ['VIT_CONS_LVV_RVV']
     bits: '2.7-3.0'
     comment:
       en: 'Speed set by the user'
       fr: 'Consigne vitesse'
+    type: 'uint16'
+    offset: 0
+    min: 0
+    max: 254.00
+    resolution: 0.01
+    invalid: 0xFFFF
+    units: 'km/h'
 
-  UNUSED_2:
+  ODOMETER_PARTIAL:
+    alt_names: ['ODO_PARTIEL']
     bits: '6.7-8.0'
-    unused: true
+    comment:
+      en: 'Partial odometer'
+      fr: 'Odomètre partiel'
+    type: 'uint24'
+    offset: 0
+    min: 0
+    max: 16777.214
+    resolution: 0.001
+    invalid: 0xFFFFFF
+    units: 'km'

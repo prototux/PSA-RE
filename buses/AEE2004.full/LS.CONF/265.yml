@@ -5,15 +5,24 @@ comment:
   en: 'Current station informations'
   fr: 'Informations sur la station FM selectionnee'
 type: 'can'
-periodicity: '500ms'
+periodicity: ['500ms']
 senders:
-  - 'RADIO'
+  - 'RAD'
+  - 'PASS_ICSV'
 receivers:
   - 'EMF'
+  - 'MATT'
+  - 'CMB_EMF'
+  - 'CDC'
+  - 'PASS_ICSV'
 
 signals:
   AF_ACTIVATED:
     bits: '1.7'
+    alt_names: ['AF']
+    comment:
+      en: 'Alternative frequencies activated'
+      fr: 'Frequences alternatives activees'
     values:
       0x00:
         en: 'Disabled'
@@ -24,6 +33,10 @@ signals:
 
   AF_STATUS:
     bits: '1.6-1.5'
+    alt_names: ['AF_OK']
+    comment:
+      en: 'Alternative frequencies status'
+      fr: 'Etat des frequences alternatives'
     values:
       0x00:
         en: 'Not available'
@@ -37,6 +50,10 @@ signals:
 
   TA_ACTIVATED:
     bits: '1.4'
+    alt_names: ['TA']
+    comment:
+      en: 'Traffic announcements activated'
+      fr: 'Annonces trafic activees'
     values:
       0x00:
         en: 'Disabled'
@@ -47,6 +64,10 @@ signals:
 
   TA_STATUS:
     bits: '1.3-1.2'
+    alt_names: ['TA_OK']
+    comment:
+      en: 'Traffic announcements status'
+      fr: 'Etat des annonces trafic'
     values:
       0x00:
         en: 'Not available'
@@ -58,24 +79,54 @@ signals:
         en: 'Working'
         fr: 'Traitement'
 
-  TA_CURRENT:
-    bits: '1.0'
-
-  PTY_ACTVATED:
-    bits: '2.7'
+  TA_OUT:
+    bits: '1.1'
+    alt_names: ['TA_OUT']
+    comment:
+      en: 'Traffic announcements playing'
+      fr: 'Annonces trafic en cours'
     values:
       0x00:
-        en: 'Disabled'
+        en: 'No'
+        fr: 'Non'
+      0x01:
+        en: 'Yes'
+        fr: 'Oui'
+
+  REG:
+    bits: '1.0'
+    alt_names: ['REG']
+    comment:
+      en: 'Regional mode'
+      fr: 'Mode regional'
+    values:
+      0x00:
+        en: 'Off'
         fr: 'Desactive'
       0x01:
-        en: 'Enabled'
+        en: 'On'
         fr: 'Active'
 
-  PTY_MENU:
-    bits: '2.6'
+  PTY_MODE:
+    bits: '2.7-2.6'
+    alt_names: ['PTY']
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demande'
+      0x01:
+        en: 'Selection mode'
+        fr: 'Mode selection'
+      0x02:
+        en: 'Surveillance mode'
+        fr: 'Mode surveillance'
 
   PTY_STATUS:
     bits: '2.5-2.4'
+    alt_names: ['PTY_OK']
+    comment:
+      en: 'Program type status'
+      fr: 'Etat du type de programme'
     values:
       0x00:
         en: 'Not available'
@@ -90,8 +141,12 @@ signals:
         en: 'Working'
         fr: 'Traitement'
 
-  TMC_ACTIVATED:
+  TMC:
     bits: '2.3'
+    alt_names: ['TMC']
+    comment:
+      en: 'Traffic Message Channel requested'
+      fr: 'TMC demande'
     values:
       0x00:
         en: 'Disabled'
@@ -102,6 +157,10 @@ signals:
 
   TMC_STATUS:
     bits: '2.2-2.1'
+    alt_names: ['TMC_OK']
+    comment:
+      en: 'Traffic Message Channel status'
+      fr: 'Etat du TMC'
     values:
       0x00:
         en: 'Not available'
@@ -118,6 +177,10 @@ signals:
 
   PTY_SELECTED:
     bits: '3.7-3.0'
+    alt_names: ['PTY_SEL']
+    comment:
+      en: 'Selected program type'
+      fr: 'Type de programme selectionne'
     values:
       0x00:
         en: 'No PTY'
@@ -212,6 +275,10 @@ signals:
 
   PTY_CURRENT:
     bits: '4.7-4.0'
+    alt_names: ['PTY_AIR']
+    comment:
+      en: 'Current program type on air'
+      fr: 'Type de programme en cours sur la station'
     values:
       0x00:
         en: 'No PTY'

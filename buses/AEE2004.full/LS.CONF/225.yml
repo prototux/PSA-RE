@@ -1,19 +1,25 @@
-id: 0x1A5
+id: 0x225
 name: 'RADIO_STATUS_TUNER'
+alt_names: ['ETAT_RADIO_TUNER_TUN']
 length: 5
 comment:
   en: 'Tuner status'
   fr: 'Etat du tuner'
 type: 'can'
-periodicity: '500ms'
+periodicity: ['500ms']
 senders:
-  - 'RADIO'
+  - 'RAD'
+  - 'PASS_ICSV'
 receivers:
   - 'EMF'
+  - 'CMB_EMF'
+  - 'MATT'
+  - 'PASS_ICSV'
 
 signals:
   DISPLAY_LIST:
     bits: '1.7'
+    alt_names: ['LISTE_TUN_PTY']
     values:
       0x00:
         en: 'No display'
@@ -22,12 +28,23 @@ signals:
         en: 'Display'
         fr: 'Affiche'
 
-  UNUSED_1:
+  MANUAL_TUNING:
     bits: '1.6'
-    unused: true
+    alt_names: ['MAN_TUN']
+    comment:
+      en: 'Manual tuning mode'
+      fr: 'Mode de syntonisation manuelle'
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandée'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandée'
 
   SEARCH_DIRECTION:
     bits: '1.5'
+    alt_names: ['DIR_TUN']
     values:
       0x00:
         en: 'Down'
@@ -36,12 +53,26 @@ signals:
         en: 'Up'
         fr: 'Croissant'
 
-  UNKNOWN_1:
+  TUNER_SENSITIVITY:
     bits: '1.4'
-    unused: true
+    alt_names: ['SNS_TUN']
+    comment:
+      en: 'Tuner sensitivity'
+      fr: 'Sensibilité du tuner'
+    values:
+      0x00:
+        en: 'Lo'
+        fr: 'Lo'
+      0x01:
+        en: 'Dx'
+        fr: 'Dx'
 
   SEARCH_STATUS:
     bits: '1.3-1.0'
+    alt_names: ['SRCH_TUN']
+    comment:
+      en: 'Search status'
+      fr: 'Etat de la recherche'
     values:
       0x00:
         en: 'Not searching'
@@ -74,26 +105,30 @@ signals:
         en: 'Error'
         fr: 'Erreur'
 
-
   CURRENT_MEMORY:
     bits: '2.7-2.4'
-    type: 'uint'
-    min: 1
-    max: 6
-    values:
-      0x00:
-        en: 'Not in memory'
-        fr: 'Pas en memoire'
-      0x07:
-        en: 'Error'
-        fr: 'Erreur'
+    alt_names: ['NUM_TUN']
+    comment:
+      en: 'Active memory number'
+      fr: 'Numero de memoire active'
+    type: 'uint8'
+    offset: 0
+    min: 0
+    max: 15
+    resolution: 1
+    invalid:
+    units:
 
-  UNUSED_2:
+  UNUSED_1:
     bits: '2.3-2.0'
     unused: true
 
   PTY_AVAILABLE:
     bits: '3.7'
+    alt_names: ['LISTE_PTY_OK']
+    comment:
+      en: 'PTY info availability'
+      fr: 'Disponibilité des infos PTY'
     values:
       0x00:
         en: 'Not available'
@@ -104,6 +139,7 @@ signals:
 
   BAND:
     bits: '3.6-3.4'
+    alt_names: ['BQE_TUN']
     values:
       0x00:
         en: 'None'
@@ -114,7 +150,9 @@ signals:
       0x02:
         en: 'FM2'
         fr: 'FM2'
-      # 0x03 is not used?
+      0x03:
+        en: 'FM3'
+        fr: 'FM3'
       0x04:
         en: 'FMAST'
         fr: 'FMAST'
@@ -122,16 +160,20 @@ signals:
         en: 'AM'
         fr: 'AM'
 
-  UNUSED_3:
+  UNUSED_2:
     bits: '3.3-3.0'
     unused: true
 
-  UNUSED_4:
+  UNUSED_3:
     bits: '4.7-4.3'
     unused: true
 
   FREQUENCY:
     bits: '4.2-5.0'
+    alt_names: ['FRQ_TUN']
+    comment:
+      en: 'Tuned frequency'
+      fr: 'Frequence syntonisee'
     min: 0
     max: 2046
     offset: 50

@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["id", "name", "length", "type", "signals"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "name": {
+      "type": "string"
+    },
+    "alt_names": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "comment": {
+        "$ref": "#/definitions/multilang"
+    },
+    "length": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "type": {
+      "type": "string",
+      "enum": ["can"]
+    },
+    "periodicity": {
+    "type": "array",
+    "items": {
+        "oneOf": [
+        {
+            "type": "string",
+            "pattern": "^[0-9]+ms$"
+        },
+        {
+            "type": "string",
+            "enum": ["trigger"]
+        }
+        ]
+    },
+    "minItems": 1,
+    "uniqueItems": true
+    },
+    "senders": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "receivers": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "signals": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/signal"
+      }
+    }
+  },
+
+  "definitions": {
+    "signal": {
+      "type": "object",
+      "required": ["bits"],
+      "properties": {
+        "alt_names": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "bits": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-7](?:-[0-9]+\\.[0-7])?$"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "values": {
+          "type": "object",
+          "patternProperties": {
+            "^(0x[0-9A-Fa-f]+|[0-9]+)$": {
+              "$ref": "#/definitions/valueEntry"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "enum": ["str", "uint", "uint8", "uint16", "uint24", "int8", "int16", "int24"]
+        },
+        "offset": {
+          "type": "number"
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "resolution": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invalid": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "units": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "factor": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unused": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "multilang": {
+      "type": "object",
+      "properties": {
+        "en": { "type": "string" },
+        "fr": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "valueEntry": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/multilang"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "unused": {
+              "type": "boolean"
+            }
+          },
+          "required": ["unused"],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+
+  "additionalProperties": false
+}
