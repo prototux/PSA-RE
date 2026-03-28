@@ -1,0 +1,609 @@
+id: 0x120
+name: 'VEHICLE_ALERT_LOG'
+alt_names: ['JOURNAL_ALERTES']
+length: 8
+type: 'can'
+periodicity: ['1000ms']
+senders:
+  - 'BSI'
+receivers:
+  - 'BTEL'
+  - 'EMF'
+  - 'CMB_EMF'
+  - 'CMB'
+  - 'MDS'
+  - 'RNEG'
+
+signals:
+  ACTIVE_DATA_BLOCK_NUMBER:
+    bits: '1.7-1.6'
+    alt_names: ['NUMERO_BLOC']
+    comment:
+      fr: 'Identification du bloc de données "ALERTES_VEHICULE"'
+      en: '"ALERTES_VEHICULE" data block identification'
+    values:
+      0x00:
+        fr: 'Données invalides'
+        en: 'Invalid data'
+      0x01:
+        fr: 'Bloc de données n°1'
+        en: 'Data block #1'
+      0x02:
+        fr: 'Bloc de données n°2'
+        en: 'Data block #2'
+      0x03:
+        fr: 'Bloc de données n°3'
+        en: 'Data block #3'
+
+  TOTAL_DATA_BLOCK_COUNT:
+    bits: '1.5-1.4'
+    alt_names: ['NB_BLOC']
+    comment:
+      fr: 'Nombre total de bloc de données "ALERTES_VEHICULE" nécessaires pour la fonction JDA'
+      en: 'Total number of data block "ALERTES_VEHICULE" necessary for the Alert Log function'
+    values:
+      0x00:
+        fr: 'Données invalides'
+        en: 'Invalid data'
+      0x01:
+        fr: '1 bloc de données'
+        en: '1 data block'
+      0x02:
+        fr: '2 blocs de données'
+        en: '2 data blocks'
+      0x03:
+        fr: '3 blocs de données'
+        en: '3 data blocks'
+
+  ALERT_LOG_MENU_AVAILABILITY:
+    bits: '1.3-1.2'
+    alt_names: ['ACCES_JDA']
+    comment:
+      fr: 'Accessibilité du menu "JdA"'
+      en: 'Accessibility of "Alert Log" menu'
+    values:
+      0x00:
+        fr: 'Menu non accessible et non activable'
+        en: 'Menu not accessible and not activable'
+      0x01:
+        fr: 'Menu non accessible activable'
+        en: 'Menu not accessible but activable'
+      0x02:
+        fr: 'Menu accessible et non activable'
+        en: 'Menu accessible but not activable'
+      0x03:
+        fr: 'Menu accessible et activable'
+        en: 'Menu accessible and activable'
+
+  UNUSED_1:
+    bits: '1.1-1.0'
+    alt_names: ['LIBRE_1']
+    unused: true
+
+  BOOT_OPEN:
+    bits: '2.7'
+    alt_names: ['BOOT_OPEN']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec le capot ouvert'
+      en: 'Indication that the vehicle was started with the hood open'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec capot fermé'
+        en: 'Vehicle started with hood closed'
+      0x01:
+        fr: 'Véhicule démarré avec capot ouvert'
+        en: 'Vehicle started with hood open'
+
+  BONNET_OPEN:
+    bits: '2.6'
+    alt_names: ['BONNET_OPEN']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec le coffre ouvert'
+      en: 'Indication that the vehicle was started with the trunk open'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec coffre fermé'
+        en: 'Vehicle started with trunk closed'
+      0x01:
+        fr: 'Véhicule démarré avec coffre ouvert'
+        en: 'Vehicle started with trunk open'
+
+  REAR_SCREEN_OPEN:
+    bits: '2.5'
+    alt_names: ['REAR_SCREEN_OPEN']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec la lunette arrière ouverte'
+      en: 'Indication that the vehicle was started with the rear screen open'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec lunette arrière fermée'
+        en: 'Vehicle started with rear screen closed'
+      0x01:
+        fr: 'Véhicule démarré avec lunette arrière ouverte'
+        en: 'Vehicle started with rear screen open'
+
+  FUEL_TANK_LOCK_ERROR:
+    bits: '2.4'
+    alt_names: ['FUEL_TANK_LOCK_ERROR']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de verrouillage du bouchon de réservoir à carburant'
+      en: 'Indication that the vehicle was started with a fuel tank cap locking anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de verrouillage du bouchon de réservoir à carburant'
+        en: 'Vehicle started without fuel tank cap locking anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de verrouillage du bouchon de réservoir à carburant'
+        en: 'Vehicle started with fuel tank cap locking anomaly'
+
+  UNKNOWN_1:
+    bits: '2.3'
+    alt_names: ['UNKNOWN_1']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  UNKNOWN_2:
+    bits: '2.2'
+    alt_names: ['UNKNOWN_2']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  HIGH_SPEED_CHECK_TYRE_PRESSURE:
+    bits: '2.1'
+    alt_names: ['HIGH_SPEED_CHECK_TYRE_PRESSURE']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de pression de pneu détectée par le système de contrôle de pression de pneu à haute vitesse'
+      en: 'Indication that the vehicle was started with a tire pressure anomaly detected by the high speed tire pressure monitoring system'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de pression de pneu détectée par le système de contrôle de pression de pneu à haute vitesse'
+        en: 'Vehicle started without tire pressure anomaly detected by the high speed tire pressure monitoring system'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de pression de pneu détectée par le système de contrôle de pression de pneu à haute vitesse'
+        en: 'Vehicle started with tire pressure anomaly detected by the high speed tire pressure monitoring system'
+
+  UNKNOWN_3:
+    bits: '2.0'
+    alt_names: ['UNKNOWN_3']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  UNKNOWN_4:
+    bits: '3.7'
+    alt_names: ['UNKNOWN_4']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  UNKNOWN_5:
+    bits: '3.6'
+    alt_names: ['UNKNOWN_5']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  UNKNOWN_6:
+    bits: '3.5'
+    alt_names: ['UNKNOWN_6']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  PARKING_BRAKE_FAULTY:
+    bits: '3.4'
+    alt_names: ['PARKING_BRAKE_FAULTY']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de frein de parking'
+      en: 'Indication that the vehicle was started with a parking brake anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de frein de parking'
+        en: 'Vehicle started without parking brake anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de frein de parking'
+        en: 'Vehicle started with parking brake anomaly'
+
+  ADJUSTABLE_WING_FAULT:
+    bits: '3.3'
+    alt_names: ['ADJUSTABLE_WING_FAULT']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie d''aile ajustable'
+      en: 'Indication that the vehicle was started with an adjustable wing anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie d''aile ajustable'
+        en: 'Vehicle started without adjustable wing anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie d''aile ajustable'
+        en: 'Vehicle started with adjustable wing anomaly'
+
+  BONNET_OPEN2:
+    bits: '3.2'
+    alt_names: ['BONNET_OPEN2']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec le capot ouvert (bit redondant avec BOOT_OPEN)'
+      en: 'Indication that the vehicle was started with the hood open (bit redundant with BOOT_OPEN)'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec capot fermé'
+        en: 'Vehicle started with hood closed'
+      0x01:
+        fr: 'Véhicule démarré avec capot ouvert'
+        en: 'Vehicle started with hood open'
+
+  DIRECTIONAL_HEADLAMPS_FAULT:
+    bits: '3.1'
+    alt_names: ['DIRECTIONAL_HEADLAMPS_FAULT']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de feux directionnels'
+      en: 'Indication that the vehicle was started with a directional headlamps anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de feux directionnels'
+        en: 'Vehicle started without directional headlamps anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de feux directionnels'
+        en: 'Vehicle started with directional headlamps anomaly'
+
+  UNKNWOWN_7:
+    bits: '3.0'
+    alt_names: ['UNKNOWN_7']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  UNKNOWN_8:
+    bits: '4.7'
+    alt_names: ['UNKNOWN_8']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  UNKNOWN_9:
+    bits: '4.6-4.3'
+    alt_names: ['UNKNOWN_9']
+    comment:
+      fr: 'Bits d''état inconnus'
+      en: 'Unknown status bits'
+    values:
+      0x00:
+        fr: 'Bits d''état inconnus à 0'
+        en: 'Unknown status bits at 0'
+
+  GEARBOX_FAULT_REPAIR_NEEDED:
+    bits: '4.2'
+    alt_names: ['GEARBOX_FAULT_REPAIR_NEEDED']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de boîte de vitesses nécessitant une réparation'
+      en: 'Indication that the vehicle was started with a gearbox anomaly requiring repair'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de boîte de vitesses nécessitant une réparation'
+        en: 'Vehicle started without gearbox anomaly requiring repair'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de boîte de vitesses nécessitant une réparation'
+        en: 'Vehicle started with gearbox anomaly requiring repair'
+
+  UNKNOWN_10:
+    bits: '4.1-4.0'
+    alt_names: ['UNKNOWN_10']
+    comment:
+      fr: 'Bits d''état inconnus'
+      en: 'Unknown status bits'
+    values:
+      0x00:
+        fr: 'Bits d''état inconnus à 0'
+        en: 'Unknown status bits at 0'
+
+  UNKNOWN_11:
+    bits: '5.7'
+    alt_names: ['UNKNOWN_11']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  ANTI_WANDER_DEVICE_FAULTY:
+    bits: '5.6'
+    alt_names: ['ANTI_WANDER_DEVICE_FAULTY']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de dispositif anti-déport'
+      en: 'Indication that the vehicle was started with an anti-wander device anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de dispositif anti-déport'
+        en: 'Vehicle started without anti-wander device anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de dispositif anti-déport'
+        en: 'Vehicle started with anti-wander device anomaly'
+
+  UNKNOWN_12:
+    bits: '5.5'
+    alt_names: ['UNKNOWN_12']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  TYRE_PRESSURE_TOO_LOW:
+    bits: '5.4'
+    alt_names: ['TYRE_PRESSURE_TOO_LOW']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une pression de pneu trop basse'
+      en: 'Indication that the vehicle was started with a too low tyre pressure'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans pression de pneu trop basse'
+        en: 'Vehicle started without too low tyre pressure'
+      0x01:
+        fr: 'Véhicule démarré avec pression de pneu trop basse'
+        en: 'Vehicle started with too low tyre pressure'
+
+  UNKNOWN_13:
+    bits: '5.3'
+    alt_names: ['UNKNOWN_13']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  ENGINE_FAULT_REPAIR_NEEDED:
+    bits: '5.2'
+    alt_names: ['ENGINE_FAULT_REPAIR_NEEDED']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie moteur nécessitant une réparation'
+      en: 'Indication that the vehicle was started with an engine anomaly requiring repair'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie moteur nécessitant une réparation'
+        en: 'Vehicle started without engine anomaly requiring repair'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie moteur nécessitant une réparation'
+        en: 'Vehicle started with engine anomaly requiring repair'
+
+  SUSPENSION_FAULTY:
+    bits: '5.1'
+    alt_names: ['SUSPENSION_FAULTY']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de suspension'
+      en: 'Indication that the vehicle was started with a suspension anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de suspension'
+        en: 'Vehicle started without suspension anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de suspension'
+        en: 'Vehicle started with suspension anomaly'
+
+  UNKNOWN_14:
+    bits: '5.0'
+    alt_names: ['UNKNOWN_14']
+    comment:
+      fr: 'Bit d''état inconnu'
+      en: 'Unknown status bit'
+    values:
+      0x00:
+        fr: 'Bit d''état inconnu à 0'
+        en: 'Unknown status bit at 0'
+      0x01:
+        fr: 'Bit d''état inconnu à 1'
+        en: 'Unknown status bit at 1'
+
+  UNKNOWN_15:
+    bits: '6.7-6.4'
+    alt_names: ['UNKNOWN_15']
+    comment:
+      fr: 'Bits d''état inconnus'
+      en: 'Unknown status bits'
+    values:
+      0x00:
+        fr: 'Bits d''état inconnus à 0'
+        en: 'Unknown status bits at 0'
+
+  FRONT_LEFT_TYRE_NOT_MONITORED:
+    bits: '6.3'
+    alt_names: ['FRONT_LEFT_TYRE_NOT_MONITORED']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec le pneu avant gauche non surveillé par le système de contrôle de pression de pneu'
+      en: 'Indication that the vehicle was started with the front left tyre not monitored by the tire pressure monitoring system'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec pneu avant gauche surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with front left tyre monitored by the tire pressure monitoring system'
+      0x01:
+        fr: 'Véhicule démarré avec pneu avant gauche non surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with front left tyre not monitored by the tire pressure monitoring system'
+
+  FRONT_RIGHT_TYRE_NOT_MONITORED:
+    bits: '6.2'
+    alt_names: ['FRONT_RIGHT_TYRE_NOT_MONITORED']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec le pneu avant droit non surveillé par le système de contrôle de pression de pneu'
+      en: 'Indication that the vehicle was started with the front right tyre not monitored by the tire pressure monitoring system'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec pneu avant droit surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with front right tyre monitored by the tire pressure monitoring system'
+      0x01:
+        fr: 'Véhicule démarré avec pneu avant droit non surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with front right tyre not monitored by the tire pressure monitoring system'
+
+  REAR_RIGHT_TYRE_NOT_MONITORED:
+    bits: '6.1'
+    alt_names: ['REAR_RIGHT_TYRE_NOT_MONITORED']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec le pneu arrière droit non surveillé par le système de contrôle de pression de pneu'
+      en: 'Indication that the vehicle was started with the rear right tyre not monitored by the tire pressure monitoring system'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec pneu arrière droit surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with rear right tyre monitored by the tire pressure monitoring system'
+      0x01:
+        fr: 'Véhicule démarré avec pneu arrière droit non surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with rear right tyre not monitored by the tire pressure monitoring system'
+
+  REAR_LEFT_TYRE_NOT_MONITORED:
+    bits: '6.0'
+    alt_names: ['REAR_LEFT_TYRE_NOT_MONITORED']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec le pneu arrière gauche non surveillé par le système de contrôle de pression de pneu'
+      en: 'Indication that the vehicle was started with the rear left tyre not monitored by the tire pressure monitoring system'
+    values:
+      0x00:
+        fr: 'Véhicule démarré avec pneu arrière gauche surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with rear left tyre monitored by the tire pressure monitoring system'
+      0x01:
+        fr: 'Véhicule démarré avec pneu arrière gauche non surveillé par le système de contrôle de pression de pneu'
+        en: 'Vehicle started with rear left tyre not monitored by the tire pressure monitoring system'
+
+  SUSPENSION_FAULTY2:
+    bits: '7.7'
+    alt_names: ['SUSPENSION_FAULTY']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de suspension'
+      en: 'Indication that the vehicle was started with a suspension anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de suspension'
+        en: 'Vehicle started without suspension anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de suspension'
+        en: 'Vehicle started with suspension anomaly'
+
+  POWER_STEERING_FAULTY:
+    bits: '7.6'
+    alt_names: ['POWER_STEERING_FAULTY']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie de direction assistée'
+      en: 'Indication that the vehicle was started with a power steering anomaly'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie de direction assistée'
+        en: 'Vehicle started without power steering anomaly'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie de direction assistée'
+        en: 'Vehicle started with power steering anomaly'
+
+  UNKNOWN_16:
+    bits: '7.5-7.3'
+    alt_names: ['UNKNOWN_16']
+    comment:
+      fr: 'Bits d''état inconnus'
+      en: 'Unknown status bits'
+    values:
+      0x00:
+        fr: 'Bits d''état inconnus à 0'
+        en: 'Unknown status bits at 0'
+
+  ENGINE_FAULT_STOP_THE_VEHICLE:
+    bits: '7.2'
+    alt_names: ['ENGINE_FAULT_STOP_THE_VEHICLE']
+    comment:
+      fr: 'Indication que le véhicule a été démarré avec une anomalie moteur nécessitant un arrêt du véhicule'
+      en: 'Indication that the vehicle was started with an engine anomaly requiring to stop the vehicle'
+    values:
+      0x00:
+        fr: 'Véhicule démarré sans anomalie moteur nécessitant un arrêt du véhicule'
+        en: 'Vehicle started without engine anomaly requiring to stop the vehicle'
+      0x01:
+        fr: 'Véhicule démarré avec anomalie moteur nécessitant un arrêt du véhicule'
+        en: 'Vehicle started with engine anomaly requiring to stop the vehicle'
+
+  UNKNOWN_17:
+    bits: '7.1-7.0'
+    alt_names: ['UNKNOWN_17']
+    comment:
+      fr: 'Bits d''état inconnus'
+      en: 'Unknown status bits'
+    values:
+      0x00:
+        fr: 'Bits d''état inconnus à 0'
+        en: 'Unknown status bits at 0'
+
+  UNKNOWN_18:
+    bits: '8.7-8.0'
+    alt_names: ['UNKNOWN_18']
+    comment:
+      fr: 'Bits d''état inconnus'
+      en: 'Unknown status bits'
+    values:
+      0x00:
+        fr: 'Bits d''état inconnus à 0'
+        en: 'Unknown status bits at 0'
