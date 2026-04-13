@@ -1,0 +1,165 @@
+id: 0x1E7
+name: 'ARTIV_AND_HYBRID_STATUS'
+alt_names: ['ETAT_ARTIV_ET_HY']
+length: 8
+comment:
+  en: 'Contains ARTIV system information'
+  fr: 'Contient des informations relatives au système ARTIV'
+type: 'can'
+periodicity: ['200ms', 'trigger']
+senders:
+  - 'BSI'
+receivers:
+  - 'CMB'
+  - 'VTH'
+  - 'MATT'
+  - 'NG4'
+  - 'RNEG'
+
+signals:
+  ARTIV_SELECTION_STATUS:
+    alt_names: ['ETAT_SELEC_ARTIV']
+    bits: "1.7-1.6"
+    comment:
+      fr: "Etat sélection ARTIV"
+      en: "ARTIV selection status"
+    values:
+      0:
+        fr: "Non sélectionné"
+        en: "Not selected"
+      1:
+        fr: "Sélectionné"
+        en: "Selected"
+      2:
+        fr: "Sélectionné mais indisponible"
+        en: "Selected but unavailable"
+      3:
+        fr: "Invalide"
+        en: "Invalid"
+
+  IHM_ARTIV_STATUS:
+    alt_names: ['ETAT_IHM_ARTIV']
+    bits: "1.5-1.4"
+    comment:
+      fr: "Etat IHM ARTIV"
+      en: "IHM ARTIV status"
+    values:
+      0:
+        fr: "Vitesse inadaptée"
+        en: "Unsuitable speed"
+      1:
+        fr: "Actif"
+        en: "Active"
+      2:
+        fr: "Visibilité réduite"
+        en: "Reduced visibility"
+      3:
+        fr: "Apprentissage"
+        en: "Learning"
+
+  ARTIV_ALERT:
+    alt_names: ['ALERTE_ARTIV']
+    bits: "1.3"
+    comment:
+      fr: "Alerte ARTIV"
+      en: "ARTIV alert"
+    values:
+      0:
+        fr: "Pas d'alerte"
+        en: "No alert"
+      1:
+        fr: "Alerte"
+        en: "Alert"
+
+  ARTIV_ALERT_ADJUSTMENT:
+    alt_names: ['REGL_ALERTE_ARTIV']
+    bits: "1.2"
+    comment:
+      fr: "Réglage alerte ARTIV"
+      en: "ARTIV alert adjustment"
+    values:
+      0:
+        fr: "Pas de réglage"
+        en: "No adjustment"
+      1:
+        fr: "Réglage"
+        en: "Adjustment"
+
+  ARTIV_TARGET_DETECTED:
+    alt_names: ['CIBLE_DETECTEE_ARTIV']
+    bits: "1.1"
+    comment:
+      fr: "Cible ARTIV détectée"
+      en: "ARTIV target detected"
+    values:
+      0:
+        fr: "Cible non détectée"
+        en: "Target not detected"
+      1:
+        fr: "Cible détectée"
+        en: "Target detected"
+
+  UNUSED_1:
+    alt_names: ['LIBRE_1']
+    bits: "1.0"
+    unused: true
+
+  TIV_SETPOINT:
+    alt_names: ['TIV_CONS']
+    bits: "2.7-2.0"
+    comment:
+      fr: "TIV consigne"
+      en: "Setpoint TIV"
+    type: uint8
+    resolution: 0.1
+    offset: 0
+    min: 0
+    max: 25.3
+    invalid: 255
+    units: "s"
+
+  TIV_TARGET:
+    alt_names: ['TIV_CIBLE']
+    bits: "3.7-3.0"
+    comment:
+      fr: "TIV cible"
+      en: "Target TIV"
+    type: uint8
+    resolution: 0.1
+    offset: 0
+    min: 0
+    max: 25.3
+    invalid: 255
+    units: "s"
+    values:
+      254:
+        fr: "TIV non affiché"
+        en: "TIV not displayed"
+
+  POWER_BATTERY_HT:
+    alt_names: ['CHARGE_ASSIST']
+    bits: "4.7-4.1"
+    comment:
+      fr: "Bilan de puissance batterie HT"
+      en: "Power of HT battery"
+    type: uint8
+    resolution: 1
+    offset: -50
+    min: -50
+    max: 50
+    invalid: 127
+    units: "kW"
+
+  HYBRID_POWER_TRACTION:
+    alt_names: ['PUISS_PTRAC']
+    bits: "4.0-5.0"
+    comment:
+      fr: "Puissance délivrée par la chaîne de traction hybride"
+      en: "Electrical power delivered by the hybrid powertrain"
+    type: uint16
+    resolution: 0.5
+    offset: -50
+    min: -50
+    max: 200
+    invalid: 511
+    units: "%"

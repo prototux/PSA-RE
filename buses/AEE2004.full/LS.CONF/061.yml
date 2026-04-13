@@ -1,0 +1,164 @@
+id: 0x061
+name: 'ELECTRIC_VEHICLE_INFO'
+alt_names: ['INFO_GEN_ELEC']
+length: 8
+comment:
+  en: 'Contains electric vehicle information'
+  fr: 'Contient des informations relatives au véhicule électrique'
+type: 'can'
+periodicity: ['200ms']
+senders:
+  - 'BSI'
+receivers:
+  - 'MDS'
+  - 'CMB'
+  - 'BTEL'
+  - 'EMF'
+
+signals:
+  BATTERY_STATUS:
+    alt_names: ['SOC_BATT']
+    bits: "1.7-1.0"
+    comment:
+      fr: "Etat de charge batterie"
+      en: "State of charge battery"
+    type: uint8
+    resolution: 1
+    offset: 0
+    min: 0
+    max: 100
+    invalid: 0x7F
+    units: "%"
+
+  ZEV_RANGE_WITHOUT_AUX:
+    alt_names: ['AUTONOMIE_SAUX']
+    bits: "2.7-3.6"
+    comment:
+      fr: "Autonomie ZEV sans auxiliaires"
+      en: "ZEV range without auxiliary"
+    type: uint16
+    resolution: 1
+    offset: 0
+    min: 0
+    max: 1022
+    invalid: 0x3FF
+    units: "km"
+
+  PLUG_IN_STATE:
+    alt_names: ['PRISE_BRANCHEE']
+    bits: "3.5-3.4"
+    comment:
+      fr: "État prise branchée"
+      en: "Plug in state"
+    values:
+      0x00:
+        fr: "Éteint"
+        en: "OFF"
+      0x01:
+        fr: "Fixe"
+        en: "Fixed"
+      0x02:
+        fr: "Clignotant"
+        en: "Flashing"
+      0x03:
+        fr: "Valeur non utilisée"
+        en: "Value not used"
+
+  TURTLE_MODE_REQUEST:
+    alt_names: ['DMD_MDE_TORTUE']
+    bits: "3.3"
+    comment:
+      fr: "Demande allumage témoin mode tortue"
+      en: "Warning light lighting turtle mode request"
+    values:
+      0x00:
+        fr: "OFF"
+        en: "OFF"
+      0x01:
+        fr: "ON"
+        en: "ON"
+
+  MAJOR_ELECTRIC_FAULT:
+    alt_names: ['EV_WARN_MAJEUR']
+    bits: "3.2"
+    comment:
+      fr: "Défaut électrique majeur"
+      en: "Major electric fault"
+    values:
+      0x00:
+        fr: "OFF"
+        en: "OFF"
+      0x01:
+        fr: "ON"
+        en: "ON"
+
+  MINOR_ELECTRIC_FAULT:
+    alt_names: ['EV_WARN_MINEUR']
+    bits: "3.1"
+    comment:
+      fr: "Défaut électrique mineur"
+      en: "Minor electric fault"
+    values:
+      0x00:
+        fr: "OFF"
+        en: "OFF"
+      0x01:
+        fr: "ON"
+        en: "ON"
+
+  UNUSED_1:
+    alt_names: ['LIBRE_1']
+    bits: "3.0"
+    unused: true
+
+  RANGE_GAIN_WITHOUT_AUX:
+    alt_names: ['GAIN_AUX']
+    bits: "4.7-5.6"
+    comment:
+      fr: "Gain d'autonomie lié à la non conso des auxiliaires"
+      en: "Range gain without auxiliary consumption"
+    type: uint16
+    resolution: 1
+    offset: 0
+    min: 0
+    max: 1022
+    invalid: 0x3FF
+    units: "km"
+
+  UNUSED_2:
+    alt_names: ['LIBRE_2']
+    bits: "5.5-5.0"
+    unused: true
+
+  KW_COUNTER:
+    alt_names: ['COMPTEUR_KW']
+    bits: "6.7-7.7"
+    comment:
+      fr: "Compteur KW"
+      en: "KW counter"
+    type: uint16
+    resolution: 1
+    offset: -100
+    min: -100
+    max: 200
+    invalid: 0x1FF
+    units: "%"
+
+  UNUSED_3:
+    alt_names: ['LIBRE_3']
+    bits: "7.6-7.0"
+    unused: true
+
+  AC_AUXILIARY_WATTAGE:
+    alt_names: ['P_INFO_CLIM_CONSO_AUX']
+    bits: "8.7-8.0"
+    comment:
+      fr: "Consommation des auxiliaires de clim"
+      en: "Air conditioning auxiliary wattage"
+    type: uint8
+    resolution: 40
+    offset: 0
+    min: 0
+    max: 10160
+    invalid: 0xFF
+    units: "W"
