@@ -1,55 +1,163 @@
-# PSA's Architectures
+# PSA's electrical/electronic architectures (AEE)
+# Format: see schemas/dbmuxev.schema.json (definitions/architectures) and dbmuxev/doc/architectures.yml
+#
+# <ARCH>.<variant> is used everywhere else (buses/<ARCH>.<variant>/, nodes/<ARCH>.<variant>.yml, cars)
+# 'ev' means "evolution" (a later revision of the architecture), not electric vehicle.
+# A variant with a 'parent' inherits the networks of its parent and only redefines what changed.
 
-# The VAN+CAN architecture, apparently named AEE2001 in diagbox
+# The VAN+CAN architecture, apparently named AEE2001 in diagnostic tools
+# (it's older than 2001: the first cars are from the late 90s, eg. the 206)
 AEE2001:
-  # There's only the full version known for AEE2001
   full:
     comment:
-      en: 'VAN+CAN, 1st gen'
-      fr: 'VAN+CAN, 1ere generation'
-      de: 'VAN+CAN, 1ste Generation'
+      en: 'VAN+CAN: VAN buses for body and comfort, a small CAN bus between the main powertrain nodes'
+      fr: 'VAN+CAN : bus VAN pour la carrosserie et le confort, un petit bus CAN entre les principaux calculateurs moteur'
+      es: 'VAN+CAN: buses VAN para carrocería y confort, un pequeño bus CAN entre los principales nodos del tren motriz'
+      de: 'VAN+CAN: VAN-Busse für Karosserie und Komfort, ein kleiner CAN-Bus zwischen den wichtigsten Antriebssteuergeräten'
+      it: 'VAN+CAN: bus VAN per carrozzeria e comfort, un piccolo bus CAN tra i principali nodi del gruppo propulsore'
+      pl: 'VAN+CAN: magistrale VAN dla nadwozia i komfortu, mała magistrala CAN między głównymi sterownikami napędu'
+      ru: 'VAN+CAN: шины VAN для кузова и комфорта, небольшая шина CAN между основными блоками силового агрегата'
+      zh: 'VAN+CAN：车身和舒适系统使用VAN总线，主要动力总成节点之间使用小型CAN总线'
+      hu: 'VAN+CAN: VAN buszok a karosszériához és a komforthoz, egy kis CAN busz a fő hajtáslánc-egységek között'
+      pt: 'VAN+CAN: barramentos VAN para carroçaria e conforto, um pequeno barramento CAN entre as principais centralinas do grupo motopropulsor'
+    years: '1998-2008'
+    status: 'partial'
     networks:
-      CAN_HS:
+      HS:
         IS:
           protocol: 'CAN'
-          # bitrate is probably 500 but i dont know for sure
+          bitrate: 250
           display_name:
             en: 'Inter-systems'
-            fr: 'Inter-systemes'
-            de: 'Interne Systeme'
+            fr: 'Inter-systèmes'
+            es: 'Inter-sistemas'
+            de: 'Inter-Systeme'
+            it: 'Inter-sistemi'
+            pl: 'Międzysystemowa'
+            ru: 'Межсистемная'
+            zh: '系统间总线'
+            hu: 'Rendszerek közötti'
+            pt: 'Intersistemas'
           comment:
-            en: 'CAN Bus for main nodes'
-            fr: 'Bus CAN des noeuds principaux'
-            de: 'CAN-Bus für Hauptsysteme'
-      VAN_LS:
+            en: 'CAN bus between the BSI and the powertrain/chassis nodes (engine, gearbox, ABS/ESP...)'
+            fr: 'Bus CAN entre la BSI et les calculateurs moteur/châssis (moteur, boîte, ABS/ESP...)'
+            es: 'Bus CAN entre la BSI y los nodos de tren motriz/chasis (motor, caja de cambios, ABS/ESP...)'
+            de: 'CAN-Bus zwischen dem BSI und den Antriebs-/Fahrwerkssteuergeräten (Motor, Getriebe, ABS/ESP...)'
+            it: 'Bus CAN tra la BSI e i nodi di propulsione/telaio (motore, cambio, ABS/ESP...)'
+            pl: 'Magistrala CAN między BSI a sterownikami napędu/podwozia (silnik, skrzynia biegów, ABS/ESP...)'
+            ru: 'Шина CAN между BSI и блоками силового агрегата/шасси (двигатель, КПП, ABS/ESP...)'
+            zh: 'BSI与动力总成/底盘节点（发动机、变速箱、ABS/ESP……）之间的CAN总线'
+            hu: 'CAN busz a BSI és a hajtáslánc/futómű egységek között (motor, váltó, ABS/ESP...)'
+            pt: 'Barramento CAN entre a BSI e as centralinas do grupo motopropulsor/chassis (motor, caixa de velocidades, ABS/ESP...)'
+      VAN:
         CONF:
           protocol: 'VAN'
+          bitrate: 125
           display_name:
             en: 'Comfort'
             fr: 'Confort'
+            es: 'Confort'
             de: 'Komfort'
+            it: 'Comfort'
+            pl: 'Komfort'
+            ru: 'Комфорт'
+            zh: '舒适'
+            hu: 'Komfort'
+            pt: 'Conforto'
           comment:
-            en: 'VAN Bus for infotainement and comfort nodes'
-            fr: 'Bus VAN pour les noeuds habitacle'
-            de: 'VAN Bus für Infotainment und Komfort'
+            en: 'VAN bus for infotainment and comfort nodes (display, radio, cluster, climate...). 125k time slots/s (~100 kbit/s of data)'
+            fr: 'Bus VAN des calculateurs habitacle (afficheur, radio, combiné, clim...). 125k slots/s (~100 kbit/s de données)'
+            es: 'Bus VAN para los nodos de infoentretenimiento y confort (pantalla, radio, cuadro, climatización...). 125k intervalos/s (~100 kbit/s de datos)'
+            de: 'VAN-Bus für Infotainment- und Komfortsteuergeräte (Display, Radio, Kombiinstrument, Klima...). 125k Zeitschlitze/s (~100 kbit/s Nutzdaten)'
+            it: 'Bus VAN per i nodi di infotainment e comfort (display, radio, quadro, clima...). 125k slot/s (~100 kbit/s di dati)'
+            pl: 'Magistrala VAN dla sterowników informacyjno-rozrywkowych i komfortu (wyświetlacz, radio, zegary, klimatyzacja...). 125k szczelin/s (~100 kbit/s danych)'
+            ru: 'Шина VAN для блоков информационно-развлекательной системы и комфорта (дисплей, радио, щиток приборов, климат...). 125k слотов/с (~100 кбит/с данных)'
+            zh: '用于信息娱乐和舒适节点（显示屏、收音机、仪表、空调……）的VAN总线。每秒125k时隙（约100 kbit/s有效数据）'
+            hu: 'VAN busz az infotainment és komfort egységekhez (kijelző, rádió, műszerfal, klíma...). 125k időrés/s (~100 kbit/s adat)'
+            pt: 'Barramento VAN para as centralinas de infoentretenimento e conforto (ecrã, rádio, quadrante, climatização...). 125k intervalos/s (~100 kbit/s de dados)'
         CAR:
           protocol: 'VAN'
+          bitrate: 62.5
           display_name:
             en: 'Body'
             fr: 'Carrosserie'
+            es: 'Carrocería'
             de: 'Karosserie'
-    protocols:
-      - 'VAN'
-      - 'CAN'
-      - 'K-LINE'
+            it: 'Carrozzeria'
+            pl: 'Nadwozie'
+            ru: 'Кузов'
+            zh: '车身'
+            hu: 'Karosszéria'
+            pt: 'Carroçaria'
+          comment:
+            en: 'VAN bus for body nodes (engine bay box, airbag, alarm, steering column switches...), BSI is the bus master. 62.5k time slots/s'
+            fr: 'Bus VAN des calculateurs carrosserie (BSM, airbag, alarme, commodos...), la BSI est maître du bus. 62,5k slots/s'
+            es: 'Bus VAN para los nodos de carrocería (caja del vano motor, airbag, alarma, mandos bajo volante...), la BSI es el maestro. 62,5k intervalos/s'
+            de: 'VAN-Bus für Karosseriesteuergeräte (Motorraumbox, Airbag, Alarm, Lenkstockschalter...), der BSI ist Busmaster. 62,5k Zeitschlitze/s'
+            it: 'Bus VAN per i nodi carrozzeria (scatola vano motore, airbag, allarme, devioluci...), la BSI è il master. 62,5k slot/s'
+            pl: 'Magistrala VAN dla sterowników nadwozia (skrzynka komory silnika, poduszki, alarm, przełączniki kolumny...), BSI jest masterem. 62,5k szczelin/s'
+            ru: 'Шина VAN для кузовных блоков (блок моторного отсека, подушки, сигнализация, подрулевые переключатели...), BSI — ведущий. 62,5k слотов/с'
+            zh: '用于车身节点（发动机舱盒、安全气囊、防盗、转向柱开关……）的VAN总线，BSI为总线主机。每秒62.5k时隙'
+            hu: 'VAN busz a karosszéria egységekhez (motortéri doboz, légzsák, riasztó, kormánykapcsolók...), a BSI a busz mestere. 62,5k időrés/s'
+            pt: 'Barramento VAN para as centralinas de carroçaria (caixa do compartimento do motor, airbag, alarme, comutadores da coluna de direção...), a BSI é o mestre do barramento. 62,5k intervalos/s'
+        CAR2:
+          protocol: 'VAN'
+          bitrate: 62.5
+          display_name:
+            en: 'Body 2'
+            fr: 'Carrosserie 2'
+            es: 'Carrocería 2'
+            de: 'Karosserie 2'
+            it: 'Carrozzeria 2'
+            pl: 'Nadwozie 2'
+            ru: 'Кузов 2'
+            zh: '车身2'
+            hu: 'Karosszéria 2'
+            pt: 'Carroçaria 2'
+          comment:
+            en: 'Second VAN body bus found on some cars (doors, seats)'
+            fr: 'Second bus VAN carrosserie présent sur certaines voitures (portes, sièges)'
+            es: 'Segundo bus VAN de carrocería presente en algunos coches (puertas, asientos)'
+            de: 'Zweiter VAN-Karosseriebus bei einigen Fahrzeugen (Türen, Sitze)'
+            it: 'Secondo bus VAN carrozzeria presente su alcune auto (porte, sedili)'
+            pl: 'Druga magistrala VAN nadwozia w niektórych autach (drzwi, fotele)'
+            ru: 'Вторая кузовная шина VAN на некоторых автомобилях (двери, сиденья)'
+            zh: '部分车型上的第二条VAN车身总线（车门、座椅）'
+            hu: 'Második VAN karosszéria busz néhány autón (ajtók, ülések)'
+            pt: 'Segundo barramento VAN de carroçaria presente em alguns carros (portas, bancos)'
+      KLINE:
+        DIAG:
+          protocol: 'K-LINE'
+          bitrate: 10.4
+          display_name:
+            en: 'Diagnostic K-line'
+            fr: 'Ligne K de diagnostic'
+            es: 'Línea K de diagnóstico'
+            de: 'Diagnose-K-Leitung'
+            it: 'Linea K di diagnosi'
+            pl: 'Linia K diagnostyki'
+            ru: 'Диагностическая K-линия'
+            zh: '诊断K线'
+            hu: 'Diagnosztikai K-vonal'
+            pt: 'Linha K de diagnóstico'
+    protocols: ['VAN', 'CAN', 'K-LINE', 'KWP2000', 'KWP-PSA2000', 'EOBD']
 
-# The first "Full-CAN" architecture, with EV and ECO variants
+# The first "full CAN" architecture
 AEE2004:
   full:
     comment:
-      en: 'Full-CAN, 1st gen'
-      fr: 'Full-CAN, 1ere generation'
-      de: 'Voll-CAN, 1ste Generation'
+      en: 'Full CAN, 1st generation (2004 cars)'
+      fr: 'Tout CAN, 1ère génération (voitures 2004)'
+      es: 'Todo CAN, 1ª generación (coches de 2004)'
+      de: 'Voll-CAN, 1. Generation (Fahrzeuge ab 2004)'
+      it: 'Tutto CAN, 1ª generazione (auto del 2004)'
+      pl: 'Pełny CAN, 1. generacja (auta z 2004)'
+      ru: 'Полностью CAN, 1-е поколение (автомобили 2004 года)'
+      zh: '全CAN架构，第一代（2004年车型）'
+      hu: 'Teljes CAN, 1. generáció (2004-es autók)'
+      pt: 'Totalmente CAN, 1.ª geração (carros de 2004)'
+    years: '2004-2018'
+    status: 'partial'
     networks:
       HS:
         IS:
@@ -57,151 +165,887 @@ AEE2004:
           bitrate: 500
           display_name:
             en: 'Inter-systems'
-            fr: 'Inter-systemes'
-            de: 'Interne Systeme'
+            fr: 'Inter-systèmes'
+            es: 'Inter-sistemas'
+            de: 'Inter-Systeme'
+            it: 'Inter-sistemi'
+            pl: 'Międzysystemowa'
+            ru: 'Межсистемная'
+            zh: '系统间总线'
+            hu: 'Rendszerek közötti'
+            pt: 'Intersistemas'
           comment:
-            en: 'CAN Bus for main nodes'
-            fr: 'Bus CAN des noeuds principaux'
-            de: 'CAN-Bus für Hauptsysteme'
+            en: 'High speed CAN bus for powertrain and chassis nodes'
+            fr: 'Bus CAN haute vitesse des calculateurs moteur et châssis'
+            es: 'Bus CAN de alta velocidad para los nodos de tren motriz y chasis'
+            de: 'High-Speed-CAN-Bus für Antriebs- und Fahrwerkssteuergeräte'
+            it: 'Bus CAN ad alta velocità per i nodi di propulsione e telaio'
+            pl: 'Szybka magistrala CAN dla sterowników napędu i podwozia'
+            ru: 'Высокоскоростная шина CAN для блоков силового агрегата и шасси'
+            zh: '用于动力总成和底盘节点的高速CAN总线'
+            hu: 'Nagysebességű CAN busz a hajtáslánc és futómű egységekhez'
+            pt: 'Barramento CAN de alta velocidade para as centralinas do grupo motopropulsor e do chassis'
+        HYB:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Hybrid'
+            fr: 'Hybride'
+            es: 'Híbrido'
+            de: 'Hybrid'
+            it: 'Ibrido'
+            pl: 'Hybryda'
+            ru: 'Гибрид'
+            zh: '混合动力'
+            hu: 'Hibrid'
+            pt: 'Híbrido'
+          comment:
+            en: 'Hybrid powertrain bus (hybrid control units, traction battery, engine)'
+            fr: 'Bus du groupe motopropulseur hybride (calculateurs hybrides, batterie de traction, moteur)'
+            es: 'Bus del tren motriz híbrido (unidades de control híbridas, batería de tracción, motor)'
+            de: 'Bus des Hybridantriebs (Hybridsteuergeräte, Traktionsbatterie, Motor)'
+            it: 'Bus del propulsore ibrido (centraline ibride, batteria di trazione, motore)'
+            pl: 'Magistrala napędu hybrydowego (sterowniki hybrydy, akumulator trakcyjny, silnik)'
+            ru: 'Шина гибридной силовой установки (блоки гибрида, тяговая батарея, двигатель)'
+            zh: '混合动力总成总线（混动控制单元、动力电池、发动机）'
+            hu: 'Hibrid hajtáslánc busz (hibrid vezérlők, hajtóakkumulátor, motor)'
+            pt: 'Barramento do grupo motopropulsor híbrido (centralinas híbridas, bateria de tração, motor)'
+        HCU:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Hybrid control units'
+            fr: 'Calculateurs hybrides'
+            es: 'Unidades de control híbridas'
+            de: 'Hybridsteuergeräte'
+            it: 'Centraline ibride'
+            pl: 'Sterowniki hybrydy'
+            ru: 'Блоки управления гибридом'
+            zh: '混动控制单元'
+            hu: 'Hibrid vezérlőegységek'
+            pt: 'Centralinas híbridas'
+          comment:
+            en: 'Private bus between the two hybrid control units'
+            fr: 'Bus privé entre les deux calculateurs hybrides'
+            es: 'Bus privado entre las dos unidades de control híbridas'
+            de: 'Privater Bus zwischen den beiden Hybridsteuergeräten'
+            it: 'Bus privato tra le due centraline ibride'
+            pl: 'Prywatna magistrala między dwoma sterownikami hybrydy'
+            ru: 'Частная шина между двумя блоками управления гибридом'
+            zh: '两个混动控制单元之间的私有总线'
+            hu: 'Privát busz a két hibrid vezérlőegység között'
+            pt: 'Barramento privado entre as duas centralinas híbridas'
+        DPL:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Emissions'
+            fr: 'Dépollution'
+            es: 'Emisiones'
+            de: 'Abgasnachbehandlung'
+            it: 'Emissioni'
+            pl: 'Emisja spalin'
+            ru: 'Экология'
+            zh: '排放'
+            hu: 'Károsanyag-kibocsátás'
+            pt: 'Emissões'
+          comment:
+            en: 'Private bus between the engine ECU and the exhaust after-treatment (urea injection, NOx sensors)'
+            fr: 'Bus privé entre le calculateur moteur et le post-traitement (injection d''urée, capteurs NOx)'
+            es: 'Bus privado entre la ECU del motor y el postratamiento de escape (inyección de urea, sensores de NOx)'
+            de: 'Privater Bus zwischen Motorsteuergerät und Abgasnachbehandlung (Harnstoffeinspritzung, NOx-Sensoren)'
+            it: 'Bus privato tra la centralina motore e il post-trattamento (iniezione di urea, sensori NOx)'
+            pl: 'Prywatna magistrala między sterownikiem silnika a oczyszczaniem spalin (wtrysk mocznika, czujniki NOx)'
+            ru: 'Частная шина между ЭБУ двигателя и системой нейтрализации (впрыск мочевины, датчики NOx)'
+            zh: '发动机ECU与尾气后处理（尿素喷射、NOx传感器）之间的私有总线'
+            hu: 'Privát busz a motorvezérlő és a kipufogógáz-utókezelés között (karbamid befecskendezés, NOx érzékelők)'
+            pt: 'Barramento privado entre a centralina do motor e o pós-tratamento dos gases de escape (injeção de ureia, sensores de NOx)'
       LS:
         CONF:
           protocol: 'CAN'
           bitrate: 125
-          display_name:
-            en: 'Comfort bus'
-            fr: 'Bus confort'
-            de: 'Komfort Bus'
-          comment:
-            en: 'Infotainement and comfort nodes'
-            fr: 'Bus pour les noeuds habitacle'
-            de: 'Infotainment und Komfortsysteme'
-        CAR:
-          protocol: 'CAN'
-          bitrate: 125
-          display_name:
-            en: 'Body'
-            fr: 'Carrosserie'
-            de: 'Karosserie'
-      LIN:
-        LIN:
-          protocol: 'LIN'
-          display_name:
-            en: 'LIN'
-            fr: 'LIN'
-            de: 'LIN'
-    protocols:
-      - 'CAN'
-      - 'LIN'
-      - 'EOBD'
-      - 'UDS'
-
-  # Economy variant
-  eco:
-    'TODO'
-
-  # Electric vehicle variant
-  ev:
-    'TODO'
-
-# The current-gen architecture, with EV and ECO variants
-AEE2010:
-  full:
-    comment:
-      en: 'Full-CAN, 2nd gen'
-      fr: 'Full-CAN, 2eme generation'
-      de: 'Voll-CAN, 2te Generation'
-    networks:
-      HS:
-        IS:
-          protocol: 'CAN'
-          # bitrate is probably 500 but i dont know for sure
-          display_name:
-            en: 'Inter-systems'
-            fr: 'Inter-systemes'
-            de: 'Interne Systeme'
-          comment:
-            en: 'CAN Bus for main nodes'
-            fr: 'Bus CAN des noeuds principaux'
-            de: 'CAN-Bus für Hauptsysteme'
-        LAS:
-          protocol: 'CAN'
-          # bitrate is probably 500 but i dont know for sure
-          dispaly_name:
-            en: 'Suspension Systems'
-            fr: 'Liaison Au Sol'
-            de: 'Federungssysteme'
-          comment:
-            en: 'Bus for secondary IS nodes'
-            fr: 'Bus pour noeuds IS secondaires'
-            de: 'Bus für zweitrangige Hauptsysteme'
-      LS:
-        CONF:
-          protocol: 'CAN'
-          # bitrate is probably 125 but i dont know for sure
           display_name:
             en: 'Comfort'
             fr: 'Confort'
+            es: 'Confort'
             de: 'Komfort'
-        INFO-DIV:
-          protocol: 'CAN'
-          # bitrate is probably 125 but i dont know for sure
-          display_name:
-            en: 'Infotainement'
-            fr: 'Info-Divertissement'
-            de: 'Infotainment'
+            it: 'Comfort'
+            pl: 'Komfort'
+            ru: 'Комфорт'
+            zh: '舒适'
+            hu: 'Komfort'
+            pt: 'Conforto'
+          comment:
+            en: 'Low speed (fault tolerant) CAN bus for infotainment and comfort nodes'
+            fr: 'Bus CAN basse vitesse (tolérant aux pannes) des calculateurs habitacle et info-divertissement'
+            es: 'Bus CAN de baja velocidad (tolerante a fallos) para nodos de infoentretenimiento y confort'
+            de: 'Low-Speed-CAN-Bus (fehlertolerant) für Infotainment- und Komfortsteuergeräte'
+            it: 'Bus CAN a bassa velocità (tollerante ai guasti) per nodi infotainment e comfort'
+            pl: 'Wolna (odporna na błędy) magistrala CAN dla sterowników multimediów i komfortu'
+            ru: 'Низкоскоростная (отказоустойчивая) шина CAN для блоков мультимедиа и комфорта'
+            zh: '用于信息娱乐和舒适节点的低速（容错）CAN总线'
+            hu: 'Alacsony sebességű (hibatűrő) CAN busz az infotainment és komfort egységekhez'
+            pt: 'Barramento CAN de baixa velocidade (tolerante a falhas) para as centralinas de infoentretenimento e conforto'
         CAR:
           protocol: 'CAN'
-          # bitrate is probably 125 but i dont know for sure
+          bitrate: 125
           display_name:
             en: 'Body'
             fr: 'Carrosserie'
+            es: 'Carrocería'
             de: 'Karosserie'
+            it: 'Carrozzeria'
+            pl: 'Nadwozie'
+            ru: 'Кузов'
+            zh: '车身'
+            hu: 'Karosszéria'
+            pt: 'Carroçaria'
+          comment:
+            en: 'Low speed (fault tolerant) CAN bus for body nodes'
+            fr: 'Bus CAN basse vitesse (tolérant aux pannes) des calculateurs carrosserie'
+            es: 'Bus CAN de baja velocidad (tolerante a fallos) para nodos de carrocería'
+            de: 'Low-Speed-CAN-Bus (fehlertolerant) für Karosseriesteuergeräte'
+            it: 'Bus CAN a bassa velocità (tollerante ai guasti) per nodi carrozzeria'
+            pl: 'Wolna (odporna na błędy) magistrala CAN dla sterowników nadwozia'
+            ru: 'Низкоскоростная (отказоустойчивая) шина CAN для кузовных блоков'
+            zh: '用于车身节点的低速（容错）CAN总线'
+            hu: 'Alacsony sebességű (hibatűrő) CAN busz a karosszéria egységekhez'
+            pt: 'Barramento CAN de baixa velocidade (tolerante a falhas) para as centralinas de carroçaria'
       LIN:
-        LIN:
+        LIN1:
           protocol: 'LIN'
+          bitrate: 19.2
           display_name:
-            en: 'LIN'
-            fr: 'LIN'
-            de: 'LIN'
+            en: 'LIN 1 (BSI)'
+            fr: 'LIN 1 (BSI)'
+            es: 'LIN 1 (BSI)'
+            de: 'LIN 1 (BSI)'
+            it: 'LIN 1 (BSI)'
+            pl: 'LIN 1 (BSI)'
+            ru: 'LIN 1 (BSI)'
+            zh: 'LIN 1（BSI）'
+            hu: 'LIN 1 (BSI)'
+            pt: 'LIN 1 (BSI)'
+        LIN2:
+          protocol: 'LIN'
+          bitrate: 19.2
+          display_name:
+            en: 'LIN 2 (BSI)'
+            fr: 'LIN 2 (BSI)'
+            es: 'LIN 2 (BSI)'
+            de: 'LIN 2 (BSI)'
+            it: 'LIN 2 (BSI)'
+            pl: 'LIN 2 (BSI)'
+            ru: 'LIN 2 (BSI)'
+            zh: 'LIN 2（BSI）'
+            hu: 'LIN 2 (BSI)'
+            pt: 'LIN 2 (BSI)'
+    protocols: ['CAN', 'CAN-TP', 'LIN', 'KWP2000', 'KWP-PSA2000', 'UDS', 'EOBD']
 
-  # Economy variant
-  eco:
+  # 2007 evolution of AEE2004 (sometimes called AEE2004-2007 or AEE2007)
+  ev:
+    parent: 'full'
     comment:
-      en: 'Economy variant'
-      fr: 'Economy variant'
-      de: 'Economy Variante'
+      en: 'Full CAN, 1st generation, 2007 evolution (frames added or changed for cars designed from 2007)'
+      fr: 'Tout CAN, 1ère génération, évolution 2007 (trames ajoutées ou modifiées pour les voitures conçues à partir de 2007)'
+      es: 'Todo CAN, 1ª generación, evolución 2007 (tramas añadidas o modificadas para coches diseñados desde 2007)'
+      de: 'Voll-CAN, 1. Generation, Evolution 2007 (Botschaften, die für ab 2007 entwickelte Fahrzeuge hinzugefügt oder geändert wurden)'
+      it: 'Tutto CAN, 1ª generazione, evoluzione 2007 (frame aggiunti o modificati per le auto progettate dal 2007)'
+      pl: 'Pełny CAN, 1. generacja, ewolucja 2007 (ramki dodane lub zmienione dla aut projektowanych od 2007)'
+      ru: 'Полностью CAN, 1-е поколение, эволюция 2007 (кадры, добавленные или изменённые для автомобилей, разработанных с 2007 года)'
+      zh: '全CAN架构，第一代，2007年演进版（为2007年起设计的车型新增或修改的帧）'
+      hu: 'Teljes CAN, 1. generáció, 2007-es evolúció (2007-től tervezett autókhoz hozzáadott vagy módosított keretek)'
+      pt: 'Totalmente CAN, 1.ª geração, evolução 2007 (tramas adicionadas ou alteradas para os carros concebidos a partir de 2007)'
+    years: '2007-2018'
+    status: 'partial'
+
+    networks:
+      HS:
+        LAS:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Chassis'
+            fr: 'Liaison au sol'
+            es: 'Chasis'
+            de: 'Fahrwerk'
+            it: 'Telaio'
+            pl: 'Podwozie'
+            ru: 'Шасси'
+            zh: '底盘'
+            hu: 'Futómű'
+            pt: 'Chassis'
+          comment:
+            en: 'Private high speed bus of the cars with Grip Control (3008 / 5008 1st generation, Partner / Berlingo II), between the ESP, the Grip Control ECU (ASR+) and the chassis sensors (steering angle, yaw rate / acceleration). Cars without Grip Control have no LAS bus, the sensors are then on the CAN IS'
+            fr: 'Bus haute vitesse privé des véhicules équipés du Grip Control (3008 / 5008 1ère génération, Partner / Berlingo II), entre l''ESP, le calculateur Grip Control (ASR+) et les capteurs de liaison au sol (angle volant, vitesse de lacet / accélération). Les véhicules sans Grip Control n''ont pas de bus LAS, les capteurs sont alors sur le CAN IS'
+            es: 'Bus privado de alta velocidad de los vehículos con Grip Control (3008 / 5008 1ª generación, Partner / Berlingo II), entre el ESP, la unidad Grip Control (ASR+) y los sensores del chasis (ángulo de volante, velocidad de guiñada / aceleración). Los vehículos sin Grip Control no tienen bus LAS, los sensores están entonces en el CAN IS'
+            de: 'Privater High-Speed-Bus der Fahrzeuge mit Grip Control (3008 / 5008 1. Generation, Partner / Berlingo II) zwischen ESP, Grip-Control-Steuergerät (ASR+) und Fahrwerkssensoren (Lenkwinkel, Gierrate / Beschleunigung). Fahrzeuge ohne Grip Control haben keinen LAS-Bus, die Sensoren liegen dann am CAN IS'
+            it: 'Bus privato ad alta velocità delle vetture con Grip Control (3008 / 5008 1ª generazione, Partner / Berlingo II), tra l''ESP, la centralina Grip Control (ASR+) e i sensori del telaio (angolo volante, velocità di imbardata / accelerazione). Le vetture senza Grip Control non hanno il bus LAS, i sensori sono allora sul CAN IS'
+            pl: 'Prywatna szybka magistrala samochodów z Grip Control (3008 / 5008 1. generacji, Partner / Berlingo II) między ESP, sterownikiem Grip Control (ASR+) a czujnikami podwozia (kąt skrętu, prędkość odchylenia / przyspieszenie). Samochody bez Grip Control nie mają magistrali LAS, czujniki są wtedy na CAN IS'
+            ru: 'Частная высокоскоростная шина автомобилей с Grip Control (3008 / 5008 1-го поколения, Partner / Berlingo II) между ESP, блоком Grip Control (ASR+) и датчиками шасси (угол поворота руля, скорость рыскания / ускорение). У автомобилей без Grip Control шины LAS нет, датчики тогда подключены к CAN IS'
+            zh: '配备 Grip Control 车辆（第一代 3008 / 5008、Partner / Berlingo II）的专用高速总线，连接 ESP、Grip Control 控制单元（ASR+）和底盘传感器（转向角、横摆角速度 / 加速度）。未配备 Grip Control 的车辆没有 LAS 总线，传感器连接在 CAN IS 上'
+            hu: 'A Grip Control-lal szerelt autók (1. generációs 3008 / 5008, Partner / Berlingo II) privát nagysebességű busza az ESP, a Grip Control vezérlő (ASR+) és a futómű-érzékelők (kormányszög, perdülési sebesség / gyorsulás) között. A Grip Control nélküli autókon nincs LAS busz, az érzékelők ekkor a CAN IS-en vannak'
+            pt: 'Barramento privado de alta velocidade dos veículos com Grip Control (3008 / 5008 1.ª geração, Partner / Berlingo II), entre o ESP, a centralina Grip Control (ASR+) e os sensores do chassis (ângulo do volante, velocidade de guinada / aceleração). Os veículos sem Grip Control não têm barramento LAS, os sensores ficam então no CAN IS'
+
+  # Electric version of the Partner / Berlingo II: the electric drivetrain ECUs replace the engine ECU
+  electric:
+    parent: 'ev'
+    comment:
+      en: 'Full CAN, 1st generation, 2007 evolution, electric drivetrain (frames of the power interface unit, charger and electric drive ECUs that replace the engine ECU ones)'
+      fr: 'Tout CAN, 1ère génération, évolution 2007, motorisation électrique (trames du boîtier d''interface de puissance, du chargeur et des calculateurs de traction électrique qui remplacent celles du calculateur moteur)'
+      es: 'Todo CAN, 1ª generación, evolución 2007, propulsión eléctrica (tramas de la unidad de interfaz de potencia, del cargador y de las centralitas de tracción eléctrica que sustituyen a las de la centralita del motor)'
+      de: 'Voll-CAN, 1. Generation, Evolution 2007, Elektroantrieb (Botschaften der Leistungsschnittstelle, des Ladegeräts und der Elektroantriebssteuergeräte, die die des Motorsteuergeräts ersetzen)'
+      it: 'Tutto CAN, 1ª generazione, evoluzione 2007, trazione elettrica (frame dell''unità di interfaccia di potenza, del caricatore e delle centraline di trazione elettrica che sostituiscono quelli della centralina motore)'
+      pl: 'Pełny CAN, 1. generacja, ewolucja 2007, napęd elektryczny (ramki modułu interfejsu mocy, ładowarki i sterowników napędu elektrycznego, które zastępują ramki sterownika silnika)'
+      ru: 'Полностью CAN, 1-е поколение, эволюция 2007, электрическая тяга (кадры блока силового интерфейса, зарядного устройства и блоков электропривода, заменяющие кадры блока управления двигателем)'
+      zh: '全CAN架构，第一代，2007年演进版，电动驱动（功率接口单元、充电器和电驱动ECU的帧，取代发动机ECU的帧）'
+      hu: 'Teljes CAN, 1. generáció, 2007-es evolúció, elektromos hajtás (a teljesítményinterfész-egység, a töltő és az elektromos hajtás vezérlőinek keretei, amelyek a motorvezérlő kereteit helyettesítik)'
+      pt: 'Totalmente CAN, 1.ª geração, evolução 2007, propulsão elétrica (tramas da unidade de interface de potência, do carregador e das centralinas de tração elétrica que substituem as da centralina do motor)'
+    years: '2013-2018'
+    status: 'partial'
+
+  # HYbrid4 diesel hybrid (3008)
+  hybrid:
+    parent: 'ev'
+    comment:
+      en: 'Full CAN, 1st generation, 2007 evolution, HYbrid4 diesel hybrid drivetrain (frames of the two hybrid control units and of the hybrid mode selector)'
+      fr: 'Tout CAN, 1ère génération, évolution 2007, motorisation hybride diesel HYbrid4 (trames des deux calculateurs de contrôle hybride et du sélecteur de mode hybride)'
+      es: 'Todo CAN, 1ª generación, evolución 2007, propulsión híbrida diésel HYbrid4 (tramas de las dos centralitas de control híbrido y del selector de modo híbrido)'
+      de: 'Voll-CAN, 1. Generation, Evolution 2007, HYbrid4-Diesel-Hybridantrieb (Botschaften der beiden Hybridsteuergeräte und des Hybridmodus-Wählers)'
+      it: 'Tutto CAN, 1ª generazione, evoluzione 2007, propulsione ibrida diesel HYbrid4 (frame delle due centraline di controllo ibrido e del selettore di modalità ibrida)'
+      pl: 'Pełny CAN, 1. generacja, ewolucja 2007, hybrydowy napęd diesla HYbrid4 (ramki dwóch sterowników hybrydowych i przełącznika trybu hybrydowego)'
+      ru: 'Полностью CAN, 1-е поколение, эволюция 2007, дизель-гибридная трансмиссия HYbrid4 (кадры двух гибридных блоков управления и селектора гибридного режима)'
+      zh: '全CAN架构，第一代，2007年演进版，HYbrid4柴油混动系统（两个混动控制单元和混动模式选择器的帧）'
+      hu: 'Teljes CAN, 1. generáció, 2007-es evolúció, HYbrid4 dízel hibrid hajtáslánc (a két hibrid vezérlő és a hibrid üzemmódválasztó kereteinek)'
+      pt: 'Totalmente CAN, 1.ª geração, evolução 2007, propulsão híbrida diesel HYbrid4 (tramas das duas centralinas de controlo híbrido e do seletor de modo híbrido)'
+    years: '2011-2016'
+    status: 'partial'
+  # Low cost variant, only known from ECU names so far
+  eco:
+    parent: 'full'
+    comment:
+      en: 'Economy variant (low cost cars), not documented yet'
+      fr: 'Variante économique (voitures à bas coût), pas encore documentée'
+      es: 'Variante económica (coches de bajo coste), aún no documentada'
+      de: 'Economy-Variante (Low-Cost-Fahrzeuge), noch nicht dokumentiert'
+      it: 'Variante economica (auto a basso costo), non ancora documentata'
+      pl: 'Wariant ekonomiczny (tanie auta), jeszcze nieudokumentowany'
+      ru: 'Эконом-вариант (бюджетные автомобили), пока не задокументирован'
+      zh: '经济型变体（低成本车型），尚未记录'
+      hu: 'Gazdaságos változat (olcsó autók), még nincs dokumentálva'
+      pt: 'Variante económica (carros de baixo custo), ainda não documentada'
+    status: 'todo'
+
+# The second full CAN generation
+AEE2010:
+  full:
+    comment:
+      en: 'Full CAN, 2nd generation'
+      fr: 'Tout CAN, 2ème génération'
+      es: 'Todo CAN, 2ª generación'
+      de: 'Voll-CAN, 2. Generation'
+      it: 'Tutto CAN, 2ª generazione'
+      pl: 'Pełny CAN, 2. generacja'
+      ru: 'Полностью CAN, 2-е поколение'
+      zh: '全CAN架构，第二代'
+      hu: 'Teljes CAN, 2. generáció'
+      pt: 'Totalmente CAN, 2.ª geração'
+    years: '2010-2022'
+    status: 'partial'
     networks:
       HS:
         IS:
           protocol: 'CAN'
-          # bitrate is probably 500 but i dont know for sure
+          bitrate: 500
           display_name:
             en: 'Inter-systems'
-            fr: 'Inter-systemes'
-            de: 'Interne Systeme'
+            fr: 'Inter-systèmes'
+            es: 'Inter-sistemas'
+            de: 'Inter-Systeme'
+            it: 'Inter-sistemi'
+            pl: 'Międzysystemowa'
+            ru: 'Межсистемная'
+            zh: '系统间总线'
+            hu: 'Rendszerek közötti'
+            pt: 'Intersistemas'
+          comment:
+            en: 'High speed CAN bus for the main powertrain and chassis nodes'
+            fr: 'Bus CAN haute vitesse des principaux calculateurs moteur et châssis'
+            es: 'Bus CAN de alta velocidad para los principales nodos de tren motriz y chasis'
+            de: 'High-Speed-CAN-Bus für die wichtigsten Antriebs- und Fahrwerkssteuergeräte'
+            it: 'Bus CAN ad alta velocità per i principali nodi di propulsione e telaio'
+            pl: 'Szybka magistrala CAN dla głównych sterowników napędu i podwozia'
+            ru: 'Высокоскоростная шина CAN для основных блоков силового агрегата и шасси'
+            zh: '用于主要动力总成和底盘节点的高速CAN总线'
+            hu: 'Nagysebességű CAN busz a fő hajtáslánc és futómű egységekhez'
+            pt: 'Barramento CAN de alta velocidade para as principais centralinas do grupo motopropulsor e do chassis'
+        LAS:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Chassis'
+            fr: 'Liaison au sol'
+            es: 'Chasis'
+            de: 'Fahrwerk'
+            it: 'Telaio'
+            pl: 'Podwozie'
+            ru: 'Шасси'
+            zh: '底盘'
+            hu: 'Futómű'
+            pt: 'Chassis'
+          comment:
+            en: 'High speed bus for chassis nodes (brakes, steering angle, suspension)'
+            fr: 'Bus haute vitesse des calculateurs de liaison au sol (freins, angle volant, suspension)'
+            es: 'Bus de alta velocidad para los nodos de chasis (frenos, ángulo de volante, suspensión)'
+            de: 'High-Speed-Bus für Fahrwerkssteuergeräte (Bremsen, Lenkwinkel, Federung)'
+            it: 'Bus ad alta velocità per i nodi del telaio (freni, angolo volante, sospensioni)'
+            pl: 'Szybka magistrala dla sterowników podwozia (hamulce, kąt skrętu, zawieszenie)'
+            ru: 'Высокоскоростная шина для блоков шасси (тормоза, угол руля, подвеска)'
+            zh: '用于底盘节点（制动、转向角、悬架）的高速总线'
+            hu: 'Nagysebességű busz a futómű egységekhez (fékek, kormányszög, felfüggesztés)'
+            pt: 'Barramento de alta velocidade para as centralinas do chassis (travões, ângulo do volante, suspensão)'
+        HS1:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'High speed 1 (powertrain)'
+            fr: 'Haute vitesse 1 (motorisation)'
+            es: 'Alta velocidad 1 (tren motriz)'
+            de: 'High-Speed 1 (Antrieb)'
+            it: 'Alta velocità 1 (propulsione)'
+            pl: 'Szybka 1 (napęd)'
+            ru: 'Высокоскоростная 1 (силовой агрегат)'
+            zh: '高速1（动力总成）'
+            hu: 'Nagysebességű 1 (hajtáslánc)'
+            pt: 'Alta velocidade 1 (grupo motopropulsor)'
+        HS2:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'High speed 2 (driving aids / electrified powertrain)'
+            fr: 'Haute vitesse 2 (aides à la conduite / motorisation électrifiée)'
+            es: 'Alta velocidad 2 (ayudas a la conducción / tren motriz electrificado)'
+            de: 'High-Speed 2 (Fahrerassistenz / elektrifizierter Antrieb)'
+            it: 'Alta velocità 2 (assistenza alla guida / propulsione elettrificata)'
+            pl: 'Szybka 2 (asystenci jazdy / napęd zelektryfikowany)'
+            ru: 'Высокоскоростная 2 (помощь водителю / электрифицированный привод)'
+            zh: '高速2（驾驶辅助/电气化动力总成）'
+            hu: 'Nagysebességű 2 (vezetéstámogatás / villamosított hajtáslánc)'
+            pt: 'Alta velocidade 2 (assistência à condução / grupo motopropulsor eletrificado)'
+        HS3:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'High speed 3 (cockpit)'
+            fr: 'Haute vitesse 3 (poste de conduite)'
+            es: 'Alta velocidad 3 (puesto de conducción)'
+            de: 'High-Speed 3 (Cockpit)'
+            it: 'Alta velocità 3 (posto guida)'
+            pl: 'Szybka 3 (kokpit)'
+            ru: 'Высокоскоростная 3 (место водителя)'
+            zh: '高速3（驾驶舱）'
+            hu: 'Nagysebességű 3 (vezetőfülke)'
+            pt: 'Alta velocidade 3 (posto de condução)'
+        ADAS:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Driving assistance'
+            fr: 'Aides à la conduite'
+            es: 'Asistencia a la conducción'
+            de: 'Fahrerassistenz'
+            it: 'Assistenza alla guida'
+            pl: 'Asystenci jazdy'
+            ru: 'Помощь водителю'
+            zh: '驾驶辅助'
+            hu: 'Vezetéstámogatás'
+            pt: 'Assistência à condução'
+        LIGHT:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Lighting'
+            fr: 'Éclairage'
+            es: 'Iluminación'
+            de: 'Beleuchtung'
+            it: 'Illuminazione'
+            pl: 'Oświetlenie'
+            ru: 'Освещение'
+            zh: '照明'
+            hu: 'Világítás'
+            pt: 'Iluminação'
+        TRQ:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Torque'
+            fr: 'Couple'
+            es: 'Par'
+            de: 'Drehmoment'
+            it: 'Coppia'
+            pl: 'Moment obrotowy'
+            ru: 'Крутящий момент'
+            zh: '扭矩'
+            hu: 'Nyomaték'
+            pt: 'Binário'
+        HYB:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Hybrid'
+            fr: 'Hybride'
+            es: 'Híbrido'
+            de: 'Hybrid'
+            it: 'Ibrido'
+            pl: 'Hybryda'
+            ru: 'Гибрид'
+            zh: '混合动力'
+            hu: 'Hibrid'
+            pt: 'Híbrido'
+        HCU:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Hybrid control units'
+            fr: 'Calculateurs hybrides'
+            es: 'Unidades de control híbridas'
+            de: 'Hybridsteuergeräte'
+            it: 'Centraline ibride'
+            pl: 'Sterowniki hybrydy'
+            ru: 'Блоки управления гибридом'
+            zh: '混动控制单元'
+            hu: 'Hibrid vezérlőegységek'
+            pt: 'Centralinas híbridas'
+        DPL:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Emissions'
+            fr: 'Dépollution'
+            es: 'Emisiones'
+            de: 'Abgasnachbehandlung'
+            it: 'Emissioni'
+            pl: 'Emisja spalin'
+            ru: 'Экология'
+            zh: '排放'
+            hu: 'Károsanyag-kibocsátás'
+            pt: 'Emissões'
       LS:
+        CONF:
+          protocol: 'CAN'
+          bitrate: 125
+          display_name:
+            en: 'Comfort'
+            fr: 'Confort'
+            es: 'Confort'
+            de: 'Komfort'
+            it: 'Comfort'
+            pl: 'Komfort'
+            ru: 'Комфорт'
+            zh: '舒适'
+            hu: 'Komfort'
+            pt: 'Conforto'
+        INFO-DIV:
+          protocol: 'CAN'
+          bitrate: 125
+          display_name:
+            en: 'Infotainment'
+            fr: 'Info-divertissement'
+            es: 'Infoentretenimiento'
+            de: 'Infotainment'
+            it: 'Infotainment'
+            pl: 'Multimedia'
+            ru: 'Информационно-развлекательная'
+            zh: '信息娱乐'
+            hu: 'Infotainment'
+            pt: 'Infoentretenimento'
+        CAR:
+          protocol: 'CAN'
+          bitrate: 125
+          display_name:
+            en: 'Body'
+            fr: 'Carrosserie'
+            es: 'Carrocería'
+            de: 'Karosserie'
+            it: 'Carrozzeria'
+            pl: 'Nadwozie'
+            ru: 'Кузов'
+            zh: '车身'
+            hu: 'Karosszéria'
+            pt: 'Carroçaria'
+      LIN:
+        LIN1:
+          protocol: 'LIN'
+          bitrate: 19.2
+          display_name:
+            en: 'LIN 1 (BSI)'
+            fr: 'LIN 1 (BSI)'
+            es: 'LIN 1 (BSI)'
+            de: 'LIN 1 (BSI)'
+            it: 'LIN 1 (BSI)'
+            pl: 'LIN 1 (BSI)'
+            ru: 'LIN 1 (BSI)'
+            zh: 'LIN 1（BSI）'
+            hu: 'LIN 1 (BSI)'
+            pt: 'LIN 1 (BSI)'
+        LIN2:
+          protocol: 'LIN'
+          bitrate: 19.2
+          display_name:
+            en: 'LIN 2 (BSI)'
+            fr: 'LIN 2 (BSI)'
+            es: 'LIN 2 (BSI)'
+            de: 'LIN 2 (BSI)'
+            it: 'LIN 2 (BSI)'
+            pl: 'LIN 2 (BSI)'
+            ru: 'LIN 2 (BSI)'
+            zh: 'LIN 2（BSI）'
+            hu: 'LIN 2 (BSI)'
+            pt: 'LIN 2 (BSI)'
+        LIN3:
+          protocol: 'LIN'
+          bitrate: 19.2
+          display_name:
+            en: 'LIN 3 (BSI)'
+            fr: 'LIN 3 (BSI)'
+            es: 'LIN 3 (BSI)'
+            de: 'LIN 3 (BSI)'
+            it: 'LIN 3 (BSI)'
+            pl: 'LIN 3 (BSI)'
+            ru: 'LIN 3 (BSI)'
+            zh: 'LIN 3（BSI）'
+            hu: 'LIN 3 (BSI)'
+            pt: 'LIN 3 (BSI)'
+        LIN4:
+          protocol: 'LIN'
+          bitrate: 19.2
+          display_name:
+            en: 'LIN 4 (BSI)'
+            fr: 'LIN 4 (BSI)'
+            es: 'LIN 4 (BSI)'
+            de: 'LIN 4 (BSI)'
+            it: 'LIN 4 (BSI)'
+            pl: 'LIN 4 (BSI)'
+            ru: 'LIN 4 (BSI)'
+            zh: 'LIN 4（BSI）'
+            hu: 'LIN 4 (BSI)'
+            pt: 'LIN 4 (BSI)'
+    protocols: ['CAN', 'CAN-TP', 'LIN', 'UDS', 'EOBD']
+
+  # Plug-in hybrid and electric drivetrains
+  electric:
+    parent: 'ev'
+    comment:
+      en: 'Full CAN, 2nd generation, evolution, electric drivetrain (plug-in hybrid and electric cars: frames of the vehicle control unit, charger, rear e-machine and pedestrian sound ECUs)'
+      fr: 'Tout CAN, 2ème génération, évolution, motorisation électrique (hybrides rechargeables et électriques : trames du superviseur de traction, du chargeur, de la machine électrique arrière et du générateur de son piéton)'
+      es: 'Todo CAN, 2ª generación, evolución, propulsión eléctrica (híbridos enchufables y eléctricos: tramas de la centralita de control del vehículo, del cargador, de la máquina eléctrica trasera y del sonido para peatones)'
+      de: 'Voll-CAN, 2. Generation, Evolution, Elektroantrieb (Plug-in-Hybride und Elektroautos: Botschaften des Fahrzeugsteuergeräts, des Ladegeräts, der hinteren E-Maschine und des Fußgänger-Warnsounds)'
+      it: 'Tutto CAN, 2ª generazione, evoluzione, propulsione elettrica (ibride plug-in ed elettriche: frame della centralina di controllo veicolo, del caricatore, della macchina elettrica posteriore e del suono per pedoni)'
+      pl: 'Pełny CAN, 2. generacja, ewolucja, napęd elektryczny (hybrydy plug-in i auta elektryczne: ramki sterownika pojazdu, ładowarki, tylnej maszyny elektrycznej i dźwięku dla pieszych)'
+      ru: 'Полностью CAN, 2-е поколение, эволюция, электрическая тяга (подключаемые гибриды и электромобили: кадры блока управления автомобилем, зарядного устройства, задней электромашины и звукового оповещения пешеходов)'
+      zh: '全CAN架构，第二代，演进版，电动驱动（插电混动和纯电车型：整车控制器、充电器、后电机和行人提示音ECU的帧）'
+      hu: 'Teljes CAN, 2. generáció, evolúció, elektromos hajtás (plug-in hibridek és elektromos autók: a járművezérlő, a töltő, a hátsó elektromos gép és a gyalogos-figyelmeztető hang kereteinek)'
+      pt: 'Totalmente CAN, 2.ª geração, evolução, propulsão elétrica (híbridos plug-in e elétricos: tramas da centralina de controlo do veículo, do carregador, da máquina elétrica traseira e do som para peões)'
+    status: 'partial'
+
+  # HYbrid4 diesel hybrids (508, DS5)
+  hybrid:
+    parent: 'full'
+    comment:
+      en: 'Full CAN, 2nd generation, HYbrid4 diesel hybrid drivetrain (frames of the two hybrid control units and of the hybrid mode selector)'
+      fr: 'Tout CAN, 2ème génération, motorisation hybride diesel HYbrid4 (trames des deux calculateurs de contrôle hybride et du sélecteur de mode hybride)'
+      es: 'Todo CAN, 2ª generación, propulsión híbrida diésel HYbrid4 (tramas de las dos centralitas de control híbrido y del selector de modo híbrido)'
+      de: 'Voll-CAN, 2. Generation, HYbrid4-Diesel-Hybridantrieb (Botschaften der beiden Hybridsteuergeräte und des Hybridmodus-Wählers)'
+      it: 'Tutto CAN, 2ª generazione, propulsione ibrida diesel HYbrid4 (frame delle due centraline di controllo ibrido e del selettore di modalità ibrida)'
+      pl: 'Pełny CAN, 2. generacja, hybrydowy napęd diesla HYbrid4 (ramki dwóch sterowników hybrydowych i przełącznika trybu hybrydowego)'
+      ru: 'Полностью CAN, 2-е поколение, дизель-гибридная трансмиссия HYbrid4 (кадры двух гибридных блоков управления и селектора гибридного режима)'
+      zh: '全CAN架构，第二代，HYbrid4柴油混动系统（两个混动控制单元和混动模式选择器的帧）'
+      hu: 'Teljes CAN, 2. generáció, HYbrid4 dízel hibrid hajtáslánc (a két hibrid vezérlő és a hibrid üzemmódválasztó kereteinek)'
+      pt: 'Totalmente CAN, 2.ª geração, propulsão híbrida diesel HYbrid4 (tramas das duas centralinas de controlo híbrido e do seletor de modo híbrido)'
+    years: '2011-2018'
+    status: 'partial'
+
+  # Economy variant: comfort, body and infotainment are merged on fewer buses
+  eco:
+    comment:
+      en: 'Economy variant (low cost cars): fewer, merged buses'
+      fr: 'Variante économique (voitures à bas coût) : moins de bus, regroupés'
+      es: 'Variante económica (coches de bajo coste): menos buses, fusionados'
+      de: 'Economy-Variante (Low-Cost-Fahrzeuge): weniger, zusammengelegte Busse'
+      it: 'Variante economica (auto a basso costo): meno bus, accorpati'
+      pl: 'Wariant ekonomiczny (tanie auta): mniej, połączonych magistral'
+      ru: 'Эконом-вариант (бюджетные автомобили): меньше шин, объединённые'
+      zh: '经济型变体（低成本车型）：总线更少、相互合并'
+      hu: 'Gazdaságos változat (olcsó autók): kevesebb, összevont busz'
+      pt: 'Variante económica (carros de baixo custo): menos barramentos, fundidos'
+    status: 'partial'
+    networks:
+      HS:
+        IS:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Inter-systems'
+            fr: 'Inter-systèmes'
+            es: 'Inter-sistemas'
+            de: 'Inter-Systeme'
+            it: 'Inter-sistemi'
+            pl: 'Międzysystemowa'
+            ru: 'Межсистемная'
+            zh: '系统间总线'
+            hu: 'Rendszerek közötti'
+            pt: 'Intersistemas'
+      LS:
+        CONF:
+          protocol: 'CAN'
+          bitrate: 125
+          display_name:
+            en: 'Comfort'
+            fr: 'Confort'
+            es: 'Confort'
+            de: 'Komfort'
+            it: 'Comfort'
+            pl: 'Komfort'
+            ru: 'Комфорт'
+            zh: '舒适'
+            hu: 'Komfort'
+            pt: 'Conforto'
         HABITACLE:
           protocol: 'CAN'
-          # bitrate is probably 125 but i dont know for sure
+          bitrate: 125
           display_name:
             en: 'Passenger compartment'
             fr: 'Habitacle'
-            de: 'Fahrzeuginnenraum'
+            es: 'Habitáculo'
+            de: 'Fahrgastraum'
+            it: 'Abitacolo'
+            pl: 'Kabina'
+            ru: 'Салон'
+            zh: '乘员舱'
+            hu: 'Utastér'
+            pt: 'Habitáculo'
         INFO-DIV:
           protocol: 'CAN'
-          # bitrate is probably 125 but i dont know for sure
+          bitrate: 125
           display_name:
-            en: 'Infotainement'
-            fr: 'Info-Divertissement'
+            en: 'Infotainment'
+            fr: 'Info-divertissement'
+            es: 'Infoentretenimiento'
             de: 'Infotainment'
+            it: 'Infotainment'
+            pl: 'Multimedia'
+            ru: 'Информационно-развлекательная'
+            zh: '信息娱乐'
+            hu: 'Infotainment'
+            pt: 'Infoentretenimento'
       LIN:
-        LIN:
+        LIN1:
           protocol: 'LIN'
+          bitrate: 19.2
           display_name:
-            en: 'LIN'
-            fr: 'LIN'
-            de: 'LIN'
+            en: 'LIN 1 (BSI)'
+            fr: 'LIN 1 (BSI)'
+            es: 'LIN 1 (BSI)'
+            de: 'LIN 1 (BSI)'
+            it: 'LIN 1 (BSI)'
+            pl: 'LIN 1 (BSI)'
+            ru: 'LIN 1 (BSI)'
+            zh: 'LIN 1（BSI）'
+            hu: 'LIN 1 (BSI)'
+            pt: 'LIN 1 (BSI)'
+    protocols: ['CAN', 'CAN-TP', 'LIN', 'UDS', 'EOBD']
 
-  # Electric vehicles variant
+  # Evolution(s) of AEE2010
   ev:
-    'TODO'
+    parent: 'full'
+    comment:
+      en: 'Full CAN, 2nd generation, evolution (frames added or changed for later cars)'
+      fr: 'Tout CAN, 2ème génération, évolution (trames ajoutées ou modifiées pour les voitures plus récentes)'
+      es: 'Todo CAN, 2ª generación, evolución (tramas añadidas o modificadas para coches posteriores)'
+      de: 'Voll-CAN, 2. Generation, Evolution (für spätere Fahrzeuge hinzugefügte oder geänderte Botschaften)'
+      it: 'Tutto CAN, 2ª generazione, evoluzione (frame aggiunti o modificati per auto successive)'
+      pl: 'Pełny CAN, 2. generacja, ewolucja (ramki dodane lub zmienione dla późniejszych aut)'
+      ru: 'Полностью CAN, 2-е поколение, эволюция (кадры, добавленные или изменённые для более поздних автомобилей)'
+      zh: '全CAN架构，第二代，演进版（为后续车型新增或修改的帧）'
+      hu: 'Teljes CAN, 2. generáció, evolúció (későbbi autókhoz hozzáadott vagy módosított keretek)'
+      pt: 'Totalmente CAN, 2.ª geração, evolução (tramas adicionadas ou alteradas para carros posteriores)'
+    status: 'partial'
+  ev_eco:
+    parent: 'eco'
+    networks:
+      HS:
+        LAS:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'Chassis'
+            fr: 'Liaison au sol'
+            es: 'Chasis'
+            de: 'Fahrwerk'
+            it: 'Telaio'
+            pl: 'Podwozie'
+            ru: 'Шасси'
+            zh: '底盘'
+            hu: 'Futómű'
+            pt: 'Chassis'
+        HS1:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'High speed 1 (powertrain)'
+            fr: 'Haute vitesse 1 (motorisation)'
+            es: 'Alta velocidad 1 (tren motriz)'
+            de: 'High-Speed 1 (Antrieb)'
+            it: 'Alta velocità 1 (propulsione)'
+            pl: 'Szybka 1 (napęd)'
+            ru: 'Высокоскоростная 1 (силовой агрегат)'
+            zh: '高速1（动力总成）'
+            hu: 'Nagysebességű 1 (hajtáslánc)'
+            pt: 'Alta velocidade 1 (grupo motopropulsor)'
+        HS2:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'High speed 2'
+            fr: 'Haute vitesse 2'
+            es: 'Alta velocidad 2'
+            de: 'High-Speed 2'
+            it: 'Alta velocità 2'
+            pl: 'Szybka 2'
+            ru: 'Высокоскоростная 2'
+            zh: '高速2'
+            hu: 'Nagysebességű 2'
+            pt: 'Alta velocidade 2'
+        HS3:
+          protocol: 'CAN'
+          bitrate: 500
+          display_name:
+            en: 'High speed 3 (cockpit)'
+            fr: 'Haute vitesse 3 (poste de conduite)'
+            es: 'Alta velocidad 3 (puesto de conducción)'
+            de: 'High-Speed 3 (Cockpit)'
+            it: 'Alta velocità 3 (posto guida)'
+            pl: 'Szybka 3 (kokpit)'
+            ru: 'Высокоскоростная 3 (место водителя)'
+            zh: '高速3（驾驶舱）'
+            hu: 'Nagysebességű 3 (vezetőfülke)'
+            pt: 'Alta velocidade 3 (posto de condução)'
+      LIN:
+        LIN4:
+          protocol: 'LIN'
+          bitrate: 19.2
+          display_name:
+            en: 'LIN 4 (BSI)'
+            fr: 'LIN 4 (BSI)'
+            es: 'LIN 4 (BSI)'
+            de: 'LIN 4 (BSI)'
+            it: 'LIN 4 (BSI)'
+            pl: 'LIN 4 (BSI)'
+            ru: 'LIN 4 (BSI)'
+            zh: 'LIN 4（BSI）'
+            hu: 'LIN 4 (BSI)'
+            pt: 'LIN 4 (BSI)'
+    comment:
+      en: 'Economy variant of the AEE2010 evolution'
+      fr: 'Variante économique de l''évolution AEE2010'
+      es: 'Variante económica de la evolución AEE2010'
+      de: 'Economy-Variante der AEE2010-Evolution'
+      it: 'Variante economica dell''evoluzione AEE2010'
+      pl: 'Wariant ekonomiczny ewolucji AEE2010'
+      ru: 'Эконом-вариант эволюции AEE2010'
+      zh: 'AEE2010演进版的经济型变体'
+      hu: 'Az AEE2010 evolúció gazdaságos változata'
+      pt: 'Variante económica da evolução AEE2010'
+    status: 'partial'
+
+# The architecture of the 2021+ cars (308 III, DS4 II, C5 X...), with a central vehicle supervisor (VSM)
+# instead of the BSI. Name and bus split are provisional, nothing is documented yet.
+NEA2020:
+  full:
+    comment:
+      en: 'New electronic architecture (2021+), central vehicle supervisor (VSM) instead of the BSI. Not documented yet'
+      fr: 'Nouvelle architecture électronique (2021+), superviseur central (VSM) à la place de la BSI. Pas encore documentée'
+      es: 'Nueva arquitectura electrónica (2021+), supervisor central del vehículo (VSM) en lugar de la BSI. Aún no documentada'
+      de: 'Neue Elektronikarchitektur (ab 2021), zentraler Fahrzeug-Supervisor (VSM) statt des BSI. Noch nicht dokumentiert'
+      it: 'Nuova architettura elettronica (2021+), supervisore centrale del veicolo (VSM) al posto della BSI. Non ancora documentata'
+      pl: 'Nowa architektura elektroniczna (od 2021), centralny nadzorca pojazdu (VSM) zamiast BSI. Jeszcze nieudokumentowana'
+      ru: 'Новая электронная архитектура (с 2021), центральный супервизор автомобиля (VSM) вместо BSI. Пока не задокументирована'
+      zh: '新电子架构（2021年起），由中央整车监控器（VSM）取代BSI。尚未记录'
+      hu: 'Új elektronikus architektúra (2021-től), központi járműfelügyelő (VSM) a BSI helyett. Még nincs dokumentálva'
+      pt: 'Nova arquitetura eletrónica (2021+), supervisor central do veículo (VSM) em vez da BSI. Ainda não documentada'
+    years: '2021-'
+    status: 'todo'
+    networks:
+      HS:
+        UNKNOWN:
+          protocol: 'CAN-FD'
+          comment:
+            en: 'Placeholder: the high speed buses are not documented yet'
+            fr: 'Provisoire : les bus haute vitesse ne sont pas encore documentés'
+            es: 'Provisional: los buses de alta velocidad aún no están documentados'
+            de: 'Vorläufig: die High-Speed-Busse sind noch nicht dokumentiert'
+            it: 'Provvisorio: i bus ad alta velocità non sono ancora documentati'
+            pl: 'Tymczasowe: szybkie magistrale nie są jeszcze udokumentowane'
+            ru: 'Временно: высокоскоростные шины ещё не задокументированы'
+            zh: '占位：高速总线尚未记录'
+            hu: 'Ideiglenes: a nagysebességű buszok még nincsenek dokumentálva'
+            pt: 'Provisório: os barramentos de alta velocidade ainda não estão documentados'
+      LS:
+        UNKNOWN:
+          protocol: 'CAN'
+          comment:
+            en: 'Placeholder: the body/comfort buses are not documented yet'
+            fr: 'Provisoire : les bus carrosserie/confort ne sont pas encore documentés'
+            es: 'Provisional: los buses de carrocería/confort aún no están documentados'
+            de: 'Vorläufig: die Karosserie-/Komfortbusse sind noch nicht dokumentiert'
+            it: 'Provvisorio: i bus carrozzeria/comfort non sono ancora documentati'
+            pl: 'Tymczasowe: magistrale nadwozia/komfortu nie są jeszcze udokumentowane'
+            ru: 'Временно: кузовные/комфортные шины ещё не задокументированы'
+            zh: '占位：车身/舒适总线尚未记录'
+            hu: 'Ideiglenes: a karosszéria/komfort buszok még nincsenek dokumentálva'
+            pt: 'Provisório: os barramentos de carroçaria/conforto ainda não estão documentados'
+    protocols: ['CAN', 'CAN-FD', 'LIN', 'UDS', 'EOBD', 'DOIP', 'ETHERNET']
+
+# Vehicles built with partners, using the partner's architecture (not documented here)
+MMC:
+  full:
+    comment:
+      en: 'Mitsubishi Motors architecture (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      fr: 'Architecture Mitsubishi Motors (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      es: 'Arquitectura de Mitsubishi Motors (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      de: 'Mitsubishi-Motors-Architektur (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      it: 'Architettura Mitsubishi Motors (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      pl: 'Architektura Mitsubishi Motors (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      ru: 'Архитектура Mitsubishi Motors (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      zh: '三菱汽车架构（4007、C-Crosser、iOn、C-Zero、4008……）'
+      hu: 'Mitsubishi Motors architektúra (4007, C-Crosser, iOn, C-Zero, 4008...)'
+      pt: 'Arquitetura Mitsubishi Motors (4007, C-Crosser, iOn, C-Zero, 4008...)'
+    status: 'todo'
+FIAT:
+  full:
+    comment:
+      en: 'Fiat architecture (vans built with Fiat, eg. Boxer/Jumper)'
+      fr: 'Architecture Fiat (utilitaires construits avec Fiat, ex. Boxer/Jumper)'
+      es: 'Arquitectura Fiat (furgonetas construidas con Fiat, ej. Boxer/Jumper)'
+      de: 'Fiat-Architektur (mit Fiat gebaute Transporter, z.B. Boxer/Jumper)'
+      it: 'Architettura Fiat (furgoni costruiti con Fiat, es. Boxer/Jumper)'
+      pl: 'Architektura Fiata (dostawczaki budowane z Fiatem, np. Boxer/Jumper)'
+      ru: 'Архитектура Fiat (фургоны, выпускаемые совместно с Fiat, напр. Boxer/Jumper)'
+      zh: '菲亚特架构（与菲亚特合作生产的厢式车，如Boxer/Jumper）'
+      hu: 'Fiat architektúra (a Fiattal gyártott kisteherautók, pl. Boxer/Jumper)'
+      pt: 'Arquitetura Fiat (furgões construídos com a Fiat, ex. Boxer/Jumper)'
+    status: 'todo'
+TOYOTA:
+  full:
+    comment:
+      en: 'Toyota architecture (city cars built with Toyota: 107/108, C1)'
+      fr: 'Architecture Toyota (citadines construites avec Toyota : 107/108, C1)'
+      es: 'Arquitectura Toyota (urbanos construidos con Toyota: 107/108, C1)'
+      de: 'Toyota-Architektur (mit Toyota gebaute Kleinstwagen: 107/108, C1)'
+      it: 'Architettura Toyota (citycar costruite con Toyota: 107/108, C1)'
+      pl: 'Architektura Toyoty (miejskie auta budowane z Toyotą: 107/108, C1)'
+      ru: 'Архитектура Toyota (городские автомобили, выпускаемые с Toyota: 107/108, C1)'
+      zh: '丰田架构（与丰田合作生产的城市车：107/108、C1）'
+      hu: 'Toyota architektúra (a Toyotával gyártott városi autók: 107/108, C1)'
+      pt: 'Arquitetura Toyota (citadinos construídos com a Toyota: 107/108, C1)'
+    status: 'todo'
