@@ -1,0 +1,121 @@
+node: 'BSC'
+model: 'BSC'
+display_name:
+  en: 'Trunk control module (BSC)'
+  fr: 'Boitier de servitude coffre (BSC)'
+comment:
+  en: 'Some configuration / measure LIDs of this ECU have no fixed layout: the ECU sends its own parameter table. Read it with 35 <root> 00 00 <n> 11 (root B0, C0 or D0, n from 01 until the answer byte 3 is FF): each record starts with the LID low nibble, then the list of the parameter indexes present in that LID, records are separated by FF'
+  fr: 'Certains LID de configuration / mesure de ce calculateur n''ont pas de format fixe : le calculateur envoie sa propre table de paramètres. Elle se lit par 35 <racine> 00 00 <n> 11 (racine B0, C0 ou D0, n à partir de 01 jusqu''à ce que l''octet 3 de la réponse soit FF) : chaque enregistrement commence par le quartet bas du LID puis la liste des index de paramètres présents dans ce LID, les enregistrements sont séparés par FF'
+protocols: ['KWP-PSA2000']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'KWP-PSA2000'
+    request_id: 0x752
+    response_id: 0x652
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+
+sessions:
+  0x81:
+    en: 'Default session / end of diagnostic'
+    fr: 'Session par défaut / fin de diagnostic'
+  0xC0:
+    en: 'PSA diagnostic session'
+    fr: 'Session de diagnostic PSA'
+
+services: [0x10, 0x17, 0x21, 0x27, 0x30, 0x3E]
+
+security_access:
+  - level: 0x83
+
+tester_present:
+  request: '3E'
+  period_ms: 1000
+
+identification:
+  request: '21 8C'
+  part_number: '8.7-12.0'
+  comment:
+    en: 'The ECU part number is in data bytes 8 to 12 of the answer to 21 8C (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 8 à 12 de la réponse à 21 8C (DCB), elle donne la variante logicielle'
+
+cars: ['D2', 'X6']
+
+variants:
+  D2_V1_0:
+    parts: ['9644332680']
+    cars: ['D2']
+  D2_V1_1:
+    parts: ['9656148180']
+    cars: ['D2']
+  D2_V1_2:
+    parts: ['9656148080']
+    cars: ['D2']
+  D2_V1_3:
+    parts: ['9648404480']
+    cars: ['D2']
+  D2_V1_4:
+    parts: ['9650589380']
+    cars: ['D2']
+  D2_V1_5:
+    parts: ['9650589480']
+    cars: ['D2']
+  D2_V1_6:
+    parts: ['9652409880']
+    cars: ['D2']
+  D2_V1_7:
+    parts: ['9655471980']
+    cars: ['D2']
+  D2_V1_8:
+    parts: ['9655472080']
+    cars: ['D2']
+  D2_V1_9:
+    parts: ['9645708680']
+    cars: ['D2']
+  D2_V1_10:
+    parts: ['9652410680']
+    cars: ['D2']
+  D2_V1_11:
+    parts: ['9652410780']
+    cars: ['D2']
+  D2_V1_12:
+    parts: ['9652409780']
+    cars: ['D2']
+  D2_V1_13:
+    parts: ['0000000000']
+    cars: ['D2']
+  D2_V1_14:
+    parts: ['9665778280']
+    cars: ['D2']
+  X6_V1_0:
+    parts: ['9644332680']
+    cars: ['X6']
+  X6_V1_1:
+    parts: ['9652409880']
+    cars: ['X6']
+  X6_V1_2:
+    parts: ['9655472080']
+    cars: ['X6']
+  X6_V1_3:
+    parts: ['9656148180']
+    cars: ['X6']
+  X6_V1_4:
+    parts: ['9650589380']
+    cars: ['X6']
+  X6_V1_5:
+    parts: ['9650589480']
+    cars: ['X6']
+  X6_V1_6:
+    parts: ['9652409780']
+    cars: ['X6']
+  X6_V1_7:
+    parts: ['9655471980']
+    cars: ['X6']
+  X6_V1_8:
+    parts: ['9656148080']
+    cars: ['X6']
+  X6_V1_9:
+    parts: ['9665778280']
+    cars: ['X6']

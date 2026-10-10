@@ -1,0 +1,219 @@
+lid: 0xC0
+name: 'LID_C0'
+display_name:
+  en: 'Data record 0xC0 (8 values)'
+  fr: 'Enregistrement 0xC0 (8 valeurs)'
+kind: 'config'
+access: 'read-write'
+length: 15
+variants: ['VCAN_*']
+
+params:
+  REAR_BODY_HEIGHT_SENSOR_SIGNAL:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Rear body height sensor signal'
+      fr: 'Signal capteur hauteur de caisse arrière'
+      es: 'Señal captador altura de carrocería trasera'
+      de: 'Signal Aufbauhöhengeber hinten'
+      pl: 'Sygnał czujnika wysokości nadwozia z tyłu'
+      hu: 'A hátsó karosszériamagasság-érzékelő jele'
+    type: 'uint'
+    factor: 0.0015
+    units: '%'
+
+  FRONT_BODY_HEIGHT_SENSOR_SIGNAL:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Front body height sensor signal'
+      fr: 'Signal capteur hauteur de caisse avant'
+      es: 'Señal captador altura de carrocería delantera'
+      de: 'Signal Aufbauhöhengeber vorn'
+      pl: 'Sygnał czujnika wysokości nadwozia z przodu'
+      hu: 'Az első karosszériamagasság-érzékelő jele'
+    type: 'uint'
+    factor: 0.0015
+    units: '%'
+
+  ECU_SUPPLY_VOLTAGE_IGNITION_POSITIVE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'ECU supply voltage (ignition positive)'
+      fr: 'Tension d''alimentation du calculateur (plus après contact)'
+      es: 'Tensión de alimentación del calculador (+ después contacto)'
+      de: 'Stromversorgungsspannung des Steuergeräts (+ nach Fahrtschalter)'
+      pl: 'Napięcie zasilania kalkulatora (plus po włączeniu zapłonu)'
+      hu: 'Computer tápellátó feszültsége (gyújtás utáni plusz)'
+    type: 'uint'
+    factor: 0.1
+    units: 'V'
+
+  VEHICLE_RIDE_HEIGHT_BEFORE_VIBRATION_ABSORPTION:
+    bits: '6.7-7.0'
+    comment:
+      en: 'Vehicle ride height before vibration absorption'
+      fr: 'Assiette du véhicule avant filtrage'
+      es: 'Platillo del vehículo antes del filtrado'
+      de: 'Fahrzeughöhe vor Filterung'
+      pl: 'Wysokość prześwitu przed filtrowaniem'
+      hu: 'Gépjármu útfekvésmagassága szurés elott'
+    type: 'uint'
+    factor: 0.00195
+    units: '% rad'
+
+  VEHICLE_DYNAMIC_RIDE_HEIGHT:
+    bits: '8.7-9.0'
+    comment:
+      en: 'Vehicle dynamic ride height'
+      fr: 'Assiette dynamique du véhicule'
+      es: 'Platillo dinámico del vehículo'
+      de: 'Dynamische Fahrzeughöhe'
+      pl: 'Wysokość prześwitu dynamiczna pojazdu'
+      hu: 'Gépjármu dinamikus útfekvésmagassága'
+    type: 'sint'
+    factor: 0.00195
+    units: '% rad'
+
+  BEAM_CORRECTION_ACTUATOR_CONTROL_SETTING:
+    bits: '10.7-11.0'
+    alt_names: ['VARIATION_HEADLAMP']
+    comment:
+      en: 'Beam correction actuator control setting'
+      fr: 'Consigne de commande de l''actionneur de correction de site'
+      es: 'Consigna de mando del accionador de corrección de altura'
+      de: 'Sollwert Betätigung Stellglied Leuchtweitenregulierung'
+      pl: 'Wartość zadana sterowania urządzenia wykonawczego korekcji nachylenia'
+      hu: 'Magasság korrekció működteto utasítás'
+    type: 'uint'
+    units: 'Steps'
+    values:
+      0x00:
+        en: 'Lower'
+        fr: 'Descente'
+        es: 'Bajada'
+        de: 'Abfall'
+        pl: 'Opuszczanie'
+        hu: 'Leeresztés'
+      0x01:
+        en: 'Raise'
+        fr: 'Montée'
+        es: 'Subida'
+        de: 'Anstieg'
+        pl: 'Podnoszenie'
+        hu: 'Felemelés'
+      0x03:
+        en: 'Rest'
+        fr: 'Repos'
+        es: 'Reposo'
+        de: 'Ruhestellung'
+        pl: 'Położenie spoczynkowe'
+        hu: 'Nyugalmi'
+
+  FILTERING_VALUE:
+    bits: '14.7-14.0'
+    comment:
+      en: 'Filtering value'
+      fr: 'Valeur du filtrage'
+      es: 'Valor del filtrado'
+      de: 'Wert der Filterung'
+      pl: 'Wartość filtrowania'
+      hu: 'Szűrési érték'
+    type: 'uint'
+    factor: 0.0039
+
+  VOLTAGE_TERMINALS_DISCHARGE_BULB:
+    bits: '15.7-15.0'
+    comment:
+      en: 'Voltage at the terminals of the discharge bulb'
+      fr: 'Tension aux bornes de la lampe à décharge'
+      es: 'Tensión en los bornes de la lámpara de descarga'
+      de: 'Spannung an den Klemmen der Entladungslampe'
+      pl: 'Napięcia na zaciskach lampy wyładowczej'
+      hu: 'Feszültség a kisüléses lámpa pólusain'
+    type: 'uint'
+    factor: 0.1
+    units: 'V'
+
+alternatives:
+  - note:
+      en: 'Layout seen on 18 other software variant(s)'
+      fr: 'Format vu sur 18 autre(s) variante(s) logicielle(s)'
+    variants: ['D2_*', 'T6_*', 'X6_*']
+    access: 'read'
+    length: 8
+    params:
+      HEADLAMP_SUPPLY_VOLTAGE:
+        bits: '1.7-1.0'
+        alt_names: ['ECU_SUPPLY_VOLTAGE_IGNITION_POSITIVE']
+        comment:
+          en: 'Headlamp supply voltage'
+          fr: 'Tension d''alimentation du projecteurs'
+          es: 'Tensión de alimentación de los faros'
+          de: 'Versorgungsspannung des Scheinwerfers'
+          pl: 'Napiecie zasilania reflektorów'
+          hu: 'A fényszórók tápfeszültsége'
+        type: 'uint'
+        factor: 0.1
+        units: 'V'
+      DIPPED_BEAM_HEADLAMP_SUPPLY_VOLTAGE:
+        bits: '2.7-2.0'
+        comment:
+          en: 'Dipped Beam Headlamp supply voltage'
+          fr: 'Tension d''alimentation du Code'
+          es: 'Tensión de alimentación del Código'
+          de: 'Stromversorgungsspannung Abblendlicht'
+          pl: 'Napięcie zasilania światła mijania'
+          hu: 'Tompított világítás tápellátó feszültsége'
+        type: 'uint'
+        factor: 0.1
+        units: 'V'
+      VOLTAGE_SENT_BULB_IGNITER:
+        bits: '3.7-3.0'
+        alt_names: ['XENON_BULB_VOLTAGE']
+        comment:
+          en: 'Voltage sent to the bulb igniter'
+          fr: 'Tension envoyé à l''igniteur de la lampe'
+          es: 'Tensión enviada al electrodo de cebado de la lámpara'
+          de: 'Spannung zur Lampen-Zündeinheit'
+          pl: 'Napięcie wysłane do zapłonnika żarówki'
+          hu: 'Lámpa gyújtójához elküldött feszültség'
+        type: 'uint'
+        units: 'V'
+      POWER_CONSUMED_BULB_AND_IGNITER:
+        bits: '4.7-4.0'
+        comment:
+          en: 'Power consumed by the bulb and its igniter'
+          fr: 'Puissance consommée par la lampe et son igniteur'
+          es: 'Potencia consumida por la lámpara y su electrodo de cebado'
+          de: 'Stromaufnahme der Lampe und ihrer Zündeinheit'
+          pl: 'Moc pobierana przez żarówkę i jej zapłonnik'
+          hu: 'A lámpa és gyújtója által felvett teljesítmény'
+        type: 'uint'
+        factor: 0.5
+        units: 'W'
+      POSITION_HEADLAMP_BEAM_MOTOR:
+        bits: '5.7-6.0'
+        alt_names: ['STEPPER_MOTOR_POSITION']
+        comment:
+          en: 'Position of the headlamp beam motor'
+          fr: 'Position du moteur de site projecteur'
+          es: 'Posición del motor de corrección de altura de faros'
+          de: 'Position des Motors des Scheinwerfersockels'
+          pl: 'Polozenie silnika nachylenia reflektora'
+          hu: 'A fényszóró magasságát szabályozó motor helyzete'
+        type: 'uint'
+        factor: 0.5
+        units: 'Half step'
+      HEIGHT_ADJUSTMENT_REFERENCE_VALUE_SENT_RIGHT:
+        bits: '7.7-8.0'
+        alt_names: ['HEIGHT_ADJUSTMENT_REFERENCE_VALUE_SENT_RIGHT_2']
+        comment:
+          en: 'Height adjustment reference value sent to the right headlamp'
+          fr: 'Consigne de correction envoyé au projecteur droit'
+          es: 'Consigna de correción enviada al faro derecho'
+          de: 'Verstellungsbefehl an den rechten Scheinwerfer'
+          pl: 'Wartość zadana korekcji, wysłanej do prawego reflektora'
+          hu: 'Jobb oldali fényszóróhoz elküldött módosító beállítási értékek'
+        type: 'sint'
+        factor: 0.0058
+        units: '°'

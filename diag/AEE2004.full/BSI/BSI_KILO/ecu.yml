@@ -1,0 +1,41 @@
+node: 'BSI'
+model: 'BSI_KILO'
+display_name:
+  en: 'Body control module / main gateway (BSI_KILO)'
+  fr: 'Boitier de servitude intelligent (BSI_KILO)'
+comment:
+  en: 'Some configuration / measure LIDs of this ECU have no fixed layout: the ECU sends its own parameter table. Read it with 35 <root> 00 00 <n> 11 (root B0, C0 or D0, n from 01 until the answer byte 3 is FF): each record starts with the LID low nibble, then the list of the parameter indexes present in that LID, records are separated by FF'
+  fr: 'Certains LID de configuration / mesure de ce calculateur n''ont pas de format fixe : le calculateur envoie sa propre table de paramètres. Elle se lit par 35 <racine> 00 00 <n> 11 (racine B0, C0 ou D0, n à partir de 01 jusqu''à ce que l''octet 3 de la réponse soit FF) : chaque enregistrement commence par le quartet bas du LID puis la liste des index de paramètres présents dans ce LID, les enregistrements sont séparés par FF'
+protocols: ['KWP-PSA2000']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'KWP-PSA2000'
+    request_id: 0x752
+    response_id: 0x652
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+
+sessions:
+  0x81:
+    en: 'Default session / end of diagnostic'
+    fr: 'Session par défaut / fin de diagnostic'
+  0xC0:
+    en: 'PSA diagnostic session'
+    fr: 'Session de diagnostic PSA'
+
+services: [0x10, 0x21, 0x81, 0x82]
+
+identification:
+  request: '21 80'
+  part_number: '1.7-5.0'
+  comment:
+    en: 'The ECU part number is in data bytes 1 to 5 of the answer to 21 80 (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 1 à 5 de la réponse à 21 80 (DCB), elle donne la variante logicielle'
+
+variants:
+  D2_V1:
+    parts: ['9642825280']
+  T3_V1_1:
+    parts: ['9657999680']

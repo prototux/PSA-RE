@@ -1,0 +1,129 @@
+did: 0x2101
+name: 'DID_2101'
+display_name:
+  en: 'Data record 0x2101 (5 values)'
+  fr: 'Enregistrement 0x2101 (5 valeurs)'
+kind: 'config'
+access: 'read-write'
+length: 12
+
+params:
+  CONFIGURATION_INDEX:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Configuration index'
+      fr: 'Indice de télécodage'
+      es: 'Indice de telecodificado'
+      de: 'Kennung Ferncodierung'
+      pl: 'WskaYnik telekodowania'
+      hu: 'Távkódolási indexszám'
+    type: 'enum'
+    mux_selector: true
+
+  BODYWORK:
+    bits: '2.7-7.0'
+    comment:
+      en: 'Bodywork'
+      fr: 'Carrosserie'
+      es: 'Carrocería'
+      de: 'Karosserie'
+      pl: 'Nadwozie'
+      hu: 'Karosszéria'
+    type: 'bytes'
+    mux:
+      selector: 'CONFIGURATION_INDEX'
+      values: [0x00]
+    values:
+      0xDFFFFFFFFFFF:
+        en: 'P84C'
+        fr: 'P84C'
+      0xFEFFFFFFFFFF:
+        en: 'P84'
+        fr: 'P84'
+      0xFFFDFFFFFFFF:
+        en: 'All models'
+        fr: 'Tous types'
+        es: 'Todos tipos'
+        de: 'Alle Typen'
+        pl: 'Wszystkie typy'
+        hu: 'Valamennyi típus'
+
+  TYPES_FRONT_BRAKE_POSSIBLE:
+    bits: '8.7-9.0'
+    comment:
+      en: 'Types of front brake possible'
+      fr: 'Types de frein avant possibles'
+      es: 'Tipos de freno delanteros posibles'
+      de: 'Mögliche Bremsarten vorn'
+      pl: 'Możliwe typy hamulców przednich'
+      hu: 'Első fék lehetséges típusai'
+    type: 'enum'
+    mux:
+      selector: 'CONFIGURATION_INDEX'
+      values: [0x00]
+    values:
+      0xFFFE:
+        en: 'Front discs 330X30-PHI60'
+        fr: 'Disques avant 330X30-PHI60'
+        es: 'Discos delanteros 330X30-PHI60'
+        de: 'Scheiben vorne 330X30-PHI60'
+        pl: 'Tarcze przednie 330X30-PHI60'
+        hu: 'Első féktárcsa 330X30-PHI60'
+
+  TYPES_REAR_BRAKE_POSSIBLE:
+    bits: '10.7-11.0'
+    comment:
+      en: 'Types of rear brake possible'
+      fr: 'Types de frein arrière possibles'
+      es: 'Tipos de frenos traseros posibles'
+      de: 'Mögliche Bremsarten hinten'
+      pl: 'Możliwe typy hamulców tylnych'
+      hu: 'A lehetséges hátsó fék típusok'
+    type: 'enum'
+    mux:
+      selector: 'CONFIGURATION_INDEX'
+      values: [0x00]
+    values:
+      0xEFFF:
+        en: 'Rear discs 290X12-PHI42'
+        fr: 'Disques arrière 290X12-PHI42'
+        es: 'Discos traseros 290X12-PHI42'
+        de: 'Scheiben hinten 290X12-PHI42'
+        pl: 'Tylne tarcze 290X12-PHI42'
+        hu: 'Hátsó tárcsák 290X12-PHI42'
+
+  TYPE_OF_STEERING:
+    bits: '12.0'
+    comment:
+      en: 'Type of steering'
+      fr: 'Type de direction'
+      es: 'Tipo de dirección'
+      de: 'Lenkungstyp'
+      pl: 'Typ układu kierowniczego'
+      hu: 'Kormányzás típusa'
+    type: 'bool'
+    mux:
+      selector: 'CONFIGURATION_INDEX'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'Right hand drive'
+        fr: 'Direction à droite'
+        es: 'Dirección a la derecha'
+        de: 'Rechtslenkung'
+        pl: 'Kierownica po prawej stronie'
+        hu: 'Jobb oldali korm ny'
+      0x01:
+        en: 'Left-hand drive'
+        fr: 'Direction à gauche'
+        es: 'Dirección a la izquierda'
+        de: 'Linkslenkung'
+        pl: 'Kierownica z lewej strony'
+        hu: 'Balkormányos'
+
+  RESERVED:
+    bits: '12.7-12.1'
+    unused: true
+    mux:
+      selector: 'CONFIGURATION_INDEX'
+      values: [0x00]

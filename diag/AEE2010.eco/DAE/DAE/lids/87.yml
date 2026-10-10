@@ -1,0 +1,517 @@
+lid: 0x87
+name: 'LID_87'
+display_name:
+  en: 'Data record 0x87 (10 values)'
+  fr: 'Enregistrement 0x87 (10 valeurs)'
+kind: 'other'
+access: 'read'
+length: 21
+variants: ['A9_*', 'A55P_*', 'A55_*', 'A91_*', 'A94C_A_281016_V98', 'A94_*', 'AI94MER_*', 'E3_*', 'M3_*']
+
+params:
+  DTC_CODE:
+    bits: '2.7-3.0'
+    type: 'uint'
+    mux_selector: true
+
+  DTC_RANG:
+    bits: '1.7-1.0'
+    type: 'uint'
+
+  MILEAGE:
+    bits: '8.6-10.0'
+    comment:
+      en: 'Mileage'
+      fr: 'Kilométrage'
+      es: 'Kilometraje'
+      de: 'Kilometerstand'
+      pl: 'Kilometraż'
+      hu: 'Futásteljesítmény / megtett km-ek száma'
+    type: 'uint'
+    units: 'km'
+
+  VEHICLE_SPEED:
+    bits: '14.7-14.0'
+    comment:
+      en: 'Vehicle speed'
+      fr: 'Vitesse véhicule'
+      es: 'Velocidad vehículo'
+      de: 'Fahrgeschwindigkeit'
+      pl: 'Prędkość pojazdu'
+      hu: 'Gépjárműsebesség'
+    type: 'uint'
+    units: 'km/h'
+
+  STEERING_WHEEL_TORQUE:
+    bits: '15.7-15.0'
+    comment:
+      en: 'Steering wheel torque'
+      fr: 'Couple volant'
+      es: 'Par volante'
+      de: 'Lenkmoment am Lenkrad'
+      pl: 'Moment na kierownicy'
+      hu: 'Kormánykerék-nyomaték'
+    type: 'uint'
+    factor: 0.1
+    offset: -12.8
+    units: 'N·m'
+
+  STEERING_WHEEL_ANGLE:
+    bits: '16.7-17.0'
+    comment:
+      en: 'STEERING WHEEL ANGLE'
+      fr: 'Angle volant'
+      es: 'ÁNGULO VOLANTE'
+      de: 'LENKWINKEL'
+      pl: 'KĄT KIEROWN.'
+      hu: 'KORMÁNYSZÖGHELYZET'
+    type: 'uint'
+    factor: 0.1
+    offset: -3276.8
+
+  ENGINE_TORQUE_CONTROL:
+    bits: '18.7-18.0'
+    comment:
+      en: 'Engine torque control'
+      fr: 'Commande couple moteur'
+      es: 'Mando par motor'
+      de: 'Steuerung des Motordrehmoments'
+      pl: 'Sterowanie momentem obrotowym silnika'
+      hu: 'Motornyomaték vezérlése'
+    type: 'uint'
+    factor: 0.01
+    units: 'N·m'
+
+  SUPPLY_VOLTAGE:
+    bits: '19.7-19.0'
+    comment:
+      en: 'Supply voltage'
+      fr: 'Tension d''alimentation'
+      es: 'Tensión de alimentación'
+      de: 'Nutzspannung7'
+      pl: 'Napięcie zasilania'
+      hu: 'Tápfeszültség'
+    type: 'uint'
+    factor: 0.1
+    units: 'V'
+
+  ECU_TEMPERATURE:
+    bits: '20.7-20.0'
+    comment:
+      en: 'ECU temperature'
+      fr: 'Température calculateur'
+      es: 'Temperatura calculador'
+      de: 'Temperatur-Steuergerät'
+      pl: 'Temperatura kalkulatora'
+      hu: 'Computer homérséklete'
+    type: 'uint'
+    offset: -40
+    units: '°C'
+
+  ENGINE_STATUS:
+    bits: '21.7-21.0'
+    comment:
+      en: 'Engine status'
+      fr: 'État moteur'
+      es: 'Estado motor'
+      de: 'Zustand Motor'
+      pl: 'Stan silnika'
+      hu: 'Motor állapota'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Gesperrt'
+        pl: 'Zablokowany'
+        hu: 'Reteszelt'
+      0x01:
+        en: 'Cut off stalled'
+        fr: 'Coupé calé'
+        es: 'Cortado calado'
+        de: 'Abgestellt abgestorben'
+        pl: 'Odcięty w stanie zablokowanym'
+        hu: 'Lekapcsolt lefulladt'
+      0x02:
+        en: 'Driven starting'
+        fr: 'Démarrage entraîné'
+        es: 'Arranque movido'
+        de: 'Antrieb anlassen'
+        pl: 'Rozruch napędzany'
+        hu: 'Kényszerített beindítás'
+      0x03:
+        en: 'Engine running'
+        fr: 'Moteur tournant'
+        es: 'Motor giratorio'
+        de: 'Laufender Motor'
+        pl: 'Przy pracujacym silniku'
+        hu: 'Járó motor'
+      0x04:
+        en: 'Off'
+        fr: 'Arrêté'
+        es: 'Parado'
+        de: 'Angehalten'
+        pl: 'Zatrzymany'
+        hu: 'Kikapcsolt'
+      0x05:
+        en: 'Driven restarting'
+        fr: 'Redémarrage entraîné'
+        es: 'Re-arranque arrastrado'
+        de: 'Neustart mit Anlasser'
+        pl: 'Ponowny rozruch pod działaniem układu napędowego'
+        hu: 'Újboli beindítás'
+      0x06:
+        en: 'Restarting in back-up mode'
+        fr: 'Redémarrage dégradé'
+        es: 'Re-arranque de emergencia'
+        de: 'Neustart im Notbetrieb'
+        pl: 'Ponowny rozruch w trybie awaryjnym'
+        hu: 'Csökkentett üzemű" újraindítás'
+      0x07:
+        en: 'In preparation'
+        fr: 'En préparation'
+        es: 'En preparación'
+        de: 'In Vorbereitung'
+        pl: 'W przygotowaniu'
+        hu: 'Előkészítésben'
+      0x0A:
+        en: 'Autonomous starting'
+        fr: 'Démarrage autonome'
+        es: 'Arranque autónomo'
+        de: 'Autonomes Starten'
+        pl: 'Rozruch niezależny'
+        hu: 'Önálló indítás'
+      0x0D:
+        en: 'Autonomous restarting'
+        fr: 'Redémarrage autonome'
+        es: 'Re-arranque autónomo'
+        de: 'Autonomer Neustart'
+        pl: 'Ponowny rozruch niezależny'
+        hu: 'Önálló újraindítás'
+
+alternatives:
+  - note:
+      en: 'Other reading of the same bytes (both are given by the observations)'
+      fr: 'Autre lecture des mêmes octets (les deux sont données par les observations)'
+    params:
+      DTC_CODE:
+        bits: '2.7-3.0'
+        type: 'uint'
+        mux_selector: true
+      DTC_RANG:
+        bits: '1.7-1.0'
+        type: 'uint'
+      MILEAGE:
+        bits: '8.6-10.0'
+        comment:
+          en: 'Mileage'
+          fr: 'Kilométrage'
+          es: 'Kilometraje'
+          de: 'Kilometerstand'
+          pl: 'Kilometraż'
+          hu: 'Futásteljesítmény / megtett km-ek száma'
+        type: 'uint'
+        units: 'km'
+      VEHICLE_SPEED:
+        bits: '14.7-14.0'
+        comment:
+          en: 'Vehicle speed'
+          fr: 'Vitesse véhicule'
+          es: 'Velocidad vehículo'
+          de: 'Fahrgeschwindigkeit'
+          pl: 'Prędkość pojazdu'
+          hu: 'Gépjárműsebesség'
+        type: 'uint'
+        units: 'km/h'
+      STEERING_WHEEL_TORQUE:
+        bits: '15.7-15.0'
+        comment:
+          en: 'Steering wheel torque'
+          fr: 'Couple volant'
+          es: 'Par volante'
+          de: 'Lenkmoment am Lenkrad'
+          pl: 'Moment na kierownicy'
+          hu: 'Kormánykerék-nyomaték'
+        type: 'uint'
+        factor: 0.1
+        offset: -12.8
+        units: 'N·m'
+      STEERING_WHEEL_ANGLE:
+        bits: '16.7-17.0'
+        comment:
+          en: 'STEERING WHEEL ANGLE'
+          fr: 'Angle volant'
+          es: 'ÁNGULO VOLANTE'
+          de: 'LENKWINKEL'
+          pl: 'KĄT KIEROWN.'
+          hu: 'KORMÁNYSZÖGHELYZET'
+        type: 'uint'
+        factor: 0.1
+        offset: -3276.8
+      ENGINE_TORQUE_CONTROL:
+        bits: '18.7-18.0'
+        comment:
+          en: 'Engine torque control'
+          fr: 'Commande couple moteur'
+          es: 'Mando par motor'
+          de: 'Steuerung des Motordrehmoments'
+          pl: 'Sterowanie momentem obrotowym silnika'
+          hu: 'Motornyomaték vezérlése'
+        type: 'uint'
+        factor: 0.01
+        units: 'N·m'
+      SUPPLY_VOLTAGE:
+        bits: '19.7-19.0'
+        comment:
+          en: 'Supply voltage'
+          fr: 'Tension d''alimentation'
+          es: 'Tensión de alimentación'
+          de: 'Nutzspannung7'
+          pl: 'Napięcie zasilania'
+          hu: 'Tápfeszültség'
+        type: 'uint'
+        factor: 0.1
+        units: 'V'
+      ECU_TEMPERATURE:
+        bits: '20.7-20.0'
+        comment:
+          en: 'ECU temperature'
+          fr: 'Température calculateur'
+          es: 'Temperatura calculador'
+          de: 'Temperatur-Steuergerät'
+          pl: 'Temperatura kalkulatora'
+          hu: 'Computer homérséklete'
+        type: 'uint'
+        offset: -40
+        units: '°C'
+      ASSISTANCE:
+        bits: '21.5'
+        comment:
+          en: 'Assistance'
+          fr: 'Assistance'
+          es: 'Asistencia'
+          de: 'Unterstützung'
+          pl: 'Platforma Techniczna'
+          hu: 'Assistance'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'NO'
+            fr: 'NON'
+            es: 'NO'
+            de: 'NEIN'
+            pl: 'NIE'
+            hu: 'NEM/NINCS'
+          0x01:
+            en: 'YES'
+            fr: 'OUI'
+            es: 'SI'
+            de: 'JA'
+            pl: 'TAK'
+            hu: 'IGEN'
+      POSITIVE_IGNITION_STATUS:
+        bits: '21.4'
+        comment:
+          en: 'Positive ignition on status'
+          fr: 'Etat plus après contact'
+          es: 'Estado + de contacto'
+          de: 'Zustand Zündungsplus'
+          pl: 'Stan +APC'
+          hu: 'Gyjtás utáni állapot'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'Deactivated'
+            fr: 'Désactivé'
+            es: 'Desactivado'
+            de: 'Deaktiviert'
+            pl: 'Wyłączony'
+            hu: 'Kiiktatva'
+          0x01:
+            en: 'Activated'
+            fr: 'Activé'
+            es: 'Activado'
+            de: 'Aktiviert'
+            pl: 'Aktywny'
+            hu: 'Aktív'
+  - note:
+      en: 'Layout seen on 88 other software variant(s)'
+      fr: 'Format vu sur 88 autre(s) variante(s) logicielle(s)'
+    variants: ['A7_*']
+    access: 'read'
+    length: 9
+    params:
+      DTC_CODE:
+        bits: '2.7-3.0'
+        type: 'uint'
+        mux_selector: true
+      VEHICLE_SPEED:
+        bits: '4.7-4.0'
+        comment:
+          en: 'Vehicle speed'
+          fr: 'Vitesse véhicule'
+          es: 'Velocidad vehículo'
+          de: 'Fahrgeschwindigkeit'
+          pl: 'Prędkość pojazdu'
+          hu: 'Gépjárműsebesség'
+        type: 'uint'
+        units: 'km/h'
+      INPUT_TORQUE:
+        bits: '5.7-5.0'
+        comment:
+          en: 'Input torque'
+          fr: 'Couple d''entrée'
+          es: 'Par de entrada'
+          de: 'Drehmoment'
+          pl: 'Moment obrotowy na wejściu'
+          hu: 'Bemeneti nyomaték'
+        type: 'uint'
+        factor: 0.153
+        offset: -19.58
+        units: 'N·m'
+      DTC_RANG:
+        bits: '1.7-1.0'
+        type: 'uint'
+      MEASURED_CURRENT:
+        bits: '6.7-6.0'
+        comment:
+          en: 'Measured current'
+          fr: 'Intensité mesurée'
+          es: 'Intensidad medida'
+          de: 'Gemessene Stromstärke'
+          pl: 'Zmierzone natężenie'
+          hu: 'Mért áramerősség'
+        type: 'uint'
+        factor: 0.5
+        units: 'A'
+      ECU_TEMPERATURE:
+        bits: '9.7-9.0'
+        comment:
+          en: 'ECU temperature'
+          fr: 'Température calculateur'
+          es: 'Temperatura calculador'
+          de: 'Temperatur-Steuergerät'
+          pl: 'Temperatura kalkulatora'
+          hu: 'Computer homérséklete'
+        type: 'uint'
+        offset: -40
+        units: '°C'
+  - note:
+      en: 'Layout seen on 39 other software variant(s)'
+      fr: 'Format vu sur 39 autre(s) variante(s) logicielle(s)'
+    variants: ['A58_*']
+    access: 'read'
+    length: 10
+    params:
+      DTC_CODE:
+        bits: '2.7-3.0'
+        type: 'uint'
+        mux_selector: true
+      VEHICLE_SPEED:
+        bits: '4.7-4.0'
+        comment:
+          en: 'Vehicle speed'
+          fr: 'Vitesse véhicule'
+          es: 'Velocidad vehículo'
+          de: 'Fahrgeschwindigkeit'
+          pl: 'Prędkość pojazdu'
+          hu: 'Gépjárműsebesség'
+        type: 'uint'
+        units: 'km/h'
+      INPUT_TORQUE:
+        bits: '5.7-5.0'
+        comment:
+          en: 'Input torque'
+          fr: 'Couple d''entrée'
+          es: 'Par de entrada'
+          de: 'Drehmoment'
+          pl: 'Moment obrotowy na wejściu'
+          hu: 'Bemeneti nyomaték'
+        type: 'uint'
+        factor: 0.153
+        offset: -19.58
+        units: 'N·m'
+      DTC_RANG:
+        bits: '1.7-1.0'
+        type: 'uint'
+      MEASURED_CURRENT:
+        bits: '6.7-6.0'
+        comment:
+          en: 'Measured current'
+          fr: 'Intensité mesurée'
+          es: 'Intensidad medida'
+          de: 'Gemessene Stromstärke'
+          pl: 'Zmierzone natężenie'
+          hu: 'Mért áramerősség'
+        type: 'uint'
+        factor: 0.5
+        units: 'A'
+      REFERENCE_CURRENT:
+        bits: '7.7-7.0'
+        comment:
+          en: 'Reference current'
+          fr: 'Intensité consigne'
+          es: 'Intensidad consigna'
+          de: 'Stromstärke Sollwert'
+          pl: 'Zadane natężenie prądu'
+          hu: 'Áramerősség utasítás'
+        type: 'uint'
+        factor: 0.5
+        units: 'A'
+      SUPPLY_VOLTAGE:
+        bits: '8.7-8.0'
+        comment:
+          en: 'Supply voltage'
+          fr: 'Tension d''alimentation'
+          es: 'Tensión de alimentación'
+          de: 'Nutzspannung7'
+          pl: 'Napięcie zasilania'
+          hu: 'Tápfeszültség'
+        type: 'uint'
+        factor: 0.5
+        units: 'V'
+      ECU_TEMPERATURE:
+        bits: '9.7-9.0'
+        comment:
+          en: 'ECU temperature'
+          fr: 'Température calculateur'
+          es: 'Temperatura calculador'
+          de: 'Temperatur-Steuergerät'
+          pl: 'Temperatura kalkulatora'
+          hu: 'Computer homérséklete'
+        type: 'uint'
+        offset: -40
+        units: '°C'
+      ENGINE_STATUS:
+        bits: '10.7-10.0'
+        comment:
+          en: 'Engine status'
+          fr: 'État du moteur'
+          es: 'Estado del motor'
+          de: 'Zustand des Motors'
+          pl: 'Stan silnika'
+          hu: 'A motor állapota'
+        type: 'enum'
+        values:
+          0x02:
+            en: 'Starter motor circuit'
+            fr: 'Démarrage'
+            es: 'Arranque'
+            de: 'Anlassen'
+            pl: 'Rozruch'
+            hu: 'Indítás'
+          0x03:
+            en: 'Engine running'
+            fr: 'Moteur tournant'
+            es: 'Motor en marcha'
+            de: 'Laufender Motor'
+            pl: 'Przy pracującym silniku'
+            hu: 'Járó motor'
+          0x04:
+            en: 'The engine stopped'
+            fr: 'Moteur arrêté'
+            es: 'Motor parado'
+            de: 'Abgestellter Motor'
+            pl: 'Przy wyłączonym silniku'
+            hu: 'Álló motor'

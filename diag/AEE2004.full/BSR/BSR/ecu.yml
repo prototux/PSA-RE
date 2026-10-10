@@ -1,0 +1,664 @@
+node: 'BSR'
+model: 'BSR'
+display_name:
+  en: 'Trailer control module (BSR)'
+  fr: 'Boitier de servitude remorque (BSR)'
+comment:
+  en: 'Some configuration / measure LIDs of this ECU have no fixed layout: the ECU sends its own parameter table. Read it with 35 <root> 00 00 <n> 11 (root B0, C0 or D0, n from 01 until the answer byte 3 is FF): each record starts with the LID low nibble, then the list of the parameter indexes present in that LID, records are separated by FF'
+  fr: 'Certains LID de configuration / mesure de ce calculateur n''ont pas de format fixe : le calculateur envoie sa propre table de paramètres. Elle se lit par 35 <racine> 00 00 <n> 11 (racine B0, C0 ou D0, n à partir de 01 jusqu''à ce que l''octet 3 de la réponse soit FF) : chaque enregistrement commence par le quartet bas du LID puis la liste des index de paramètres présents dans ce LID, les enregistrements sont séparés par FF'
+protocols: ['KWP-PSA2000']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'KWP-PSA2000'
+    request_id: 0x752
+    response_id: 0x652
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+
+sessions:
+  0x81:
+    en: 'Default session / end of diagnostic'
+    fr: 'Session par défaut / fin de diagnostic'
+  0xC0:
+    en: 'PSA diagnostic session'
+    fr: 'Session de diagnostic PSA'
+
+services: [0x10, 0x14, 0x17, 0x21, 0x27, 0x30, 0x31, 0x32, 0x3B, 0x3E]
+
+security_access:
+  - level: 0x83
+
+tester_present:
+  request: '3E'
+  period_ms: 1000
+
+identification:
+  request: '21 8D'
+  part_number: '8.7-12.0'
+  comment:
+    en: 'The ECU part number is in data bytes 8 to 12 of the answer to 21 8D (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 8 à 12 de la réponse à 21 8D (DCB), elle donne la variante logicielle'
+
+cars: ['A5', 'A7', 'B5', 'B9', 'D2', 'G9', 'T6', 'T7', 'T8', 'VCAN', 'X6', 'X7', 'Z9']
+
+variants:
+  A7_V1:
+    parts: ['9648404380']
+    cars: ['A7']
+  A7_V1_1:
+    parts: ['9648404480']
+    cars: ['A7']
+  A7_V1_2:
+    parts: ['9652246080']
+    cars: ['A7']
+  A7_V1_3:
+    parts: ['9652409680']
+    cars: ['A7']
+  A7_V1_4:
+    parts: ['9655471880']
+    cars: ['A7']
+  A7_V1_5:
+    parts: ['9655473280']
+    cars: ['A7']
+  A7_V1_6:
+    parts: ['9656147980']
+    cars: ['A7']
+  A7_V1_7:
+    parts: ['9656148680']
+    cars: ['A7']
+  A7_V1_8:
+    parts: ['9665778480']
+    cars: ['A7']
+  A7_V1_9:
+    parts: ['9665989580']
+    cars: ['A7']
+  A7_V1_10:
+    parts: ['0000000000']
+    cars: ['A7']
+  A7_V1_11:
+    parts: ['9665989680']
+    cars: ['A7']
+  A7_V1_12:
+    parts: ['5256147980']
+    cars: ['A7']
+  A51_V1:
+    parts: ['9648404380']
+    cars: ['A5']
+  A51_V1_1:
+    parts: ['9648404480']
+    cars: ['A5']
+  A51_V1_2:
+    parts: ['9652246080']
+    cars: ['A5']
+  A51_V1_3:
+    parts: ['9652409680']
+    cars: ['A5']
+  A51_V1_4:
+    parts: ['9655471880']
+    cars: ['A5']
+  A51_V1_5:
+    parts: ['9655473280']
+    cars: ['A5']
+  A51_V1_6:
+    parts: ['9656147980']
+    cars: ['A5']
+  A51_V1_7:
+    parts: ['9656148680']
+    cars: ['A5']
+  A51_V1_8:
+    parts: ['9665778480']
+    cars: ['A5']
+  A51_V1_9:
+    parts: ['9665989580']
+    cars: ['A5']
+  A51_V1_10:
+    parts: ['0000000000']
+    cars: ['A5']
+  A51_V1_11:
+    parts: ['9665989680']
+    cars: ['A5']
+  A51_V1_12:
+    parts: ['5256147980']
+    cars: ['A5']
+  A55_V1:
+    parts: ['9648404380']
+    cars: ['A5']
+  A55_V1_1:
+    parts: ['9648404480']
+    cars: ['A5']
+  A55_V1_2:
+    parts: ['9652246080']
+    cars: ['A5']
+  A55_V1_3:
+    parts: ['9652409680']
+    cars: ['A5']
+  A55_V1_4:
+    parts: ['9655471880']
+    cars: ['A5']
+  A55_V1_5:
+    parts: ['9655473280']
+    cars: ['A5']
+  A55_V1_6:
+    parts: ['9656147980']
+    cars: ['A5']
+  A55_V1_7:
+    parts: ['9656148680']
+    cars: ['A5']
+  A55_V1_8:
+    parts: ['9665778480']
+    cars: ['A5']
+  A55_V1_9:
+    parts: ['9665989580']
+    cars: ['A5']
+  A55_V1_10:
+    parts: ['0000000000']
+    cars: ['A5']
+  A55_V1_11:
+    parts: ['9665989680']
+    cars: ['A5']
+  A55_V1_12:
+    parts: ['5256147980']
+    cars: ['A5']
+  A58_V1:
+    parts: ['9648404380']
+    cars: ['A5']
+  A58_V1_1:
+    parts: ['9648404480']
+    cars: ['A5']
+  A58_V1_2:
+    parts: ['9652246080']
+    cars: ['A5']
+  A58_V1_3:
+    parts: ['9652409680']
+    cars: ['A5']
+  A58_V1_4:
+    parts: ['9655471880']
+    cars: ['A5']
+  A58_V1_5:
+    parts: ['9655473280']
+    cars: ['A5']
+  A58_V1_6:
+    parts: ['9656147980']
+    cars: ['A5']
+  A58_V1_7:
+    parts: ['9656148680']
+    cars: ['A5']
+  A58_V1_8:
+    parts: ['9665778480']
+    cars: ['A5']
+  A58_V1_9:
+    parts: ['9665989580']
+    cars: ['A5']
+  A58_V1_10:
+    parts: ['0000000000']
+    cars: ['A5']
+  A58_V1_11:
+    parts: ['9665989680']
+    cars: ['A5']
+  A58_V1_12:
+    parts: ['5256147980']
+    cars: ['A5']
+  B5_V1:
+    parts: ['9648404380']
+    cars: ['B5']
+  B5_V1_1:
+    parts: ['9648404480']
+    cars: ['B5']
+  B5_V1_2:
+    parts: ['9652246080']
+    cars: ['B5']
+  B5_V1_3:
+    parts: ['9652409680']
+    cars: ['B5']
+  B5_V1_4:
+    parts: ['9655471880']
+    cars: ['B5']
+  B5_V1_5:
+    parts: ['9655473280']
+    cars: ['B5']
+  B5_V1_6:
+    parts: ['9656147980']
+    cars: ['B5']
+  B5_V1_7:
+    parts: ['9656148680']
+    cars: ['B5']
+  B5_V1_8:
+    parts: ['9665778480']
+    cars: ['B5']
+  B5_V1_9:
+    parts: ['9665989580']
+    cars: ['B5']
+  B5_V1_10:
+    parts: ['0000000000']
+    cars: ['B5']
+  B5_V1_11:
+    parts: ['9665989680']
+    cars: ['B5']
+  B5_V1_12:
+    parts: ['5256147980']
+    cars: ['B5']
+  B9_V1:
+    parts: ['9648404380']
+    cars: ['B9']
+  B9_V1_1:
+    parts: ['9648404480']
+    cars: ['B9']
+  B9_V1_2:
+    parts: ['9652246080']
+    cars: ['B9']
+  B9_V1_3:
+    parts: ['9652409680']
+    cars: ['B9']
+  B9_V1_4:
+    parts: ['9655471880']
+    cars: ['B9']
+  B9_V1_5:
+    parts: ['9655473280']
+    cars: ['B9']
+  B9_V1_6:
+    parts: ['9656147980']
+    cars: ['B9']
+  B9_V1_7:
+    parts: ['9656148680']
+    cars: ['B9']
+  B9_V1_8:
+    parts: ['9665778480']
+    cars: ['B9']
+  B9_V1_9:
+    parts: ['9665989580']
+    cars: ['B9']
+  B9_V1_10:
+    parts: ['0000000000']
+    cars: ['B9']
+  B9_V1_11:
+    parts: ['9665989680']
+    cars: ['B9']
+  B9_V1_12:
+    parts: ['5256147980']
+    cars: ['B9']
+  D2_V1:
+    parts: ['9648404380']
+    cars: ['D2']
+  D2_V1_1:
+    parts: ['9648404480']
+    cars: ['D2']
+  D2_V1_2:
+    parts: ['9652246080']
+    cars: ['D2']
+  D2_V1_3:
+    parts: ['9652409680']
+    cars: ['D2']
+  D2_V1_4:
+    parts: ['9655471880']
+    cars: ['D2']
+  D2_V1_5:
+    parts: ['9655473280']
+    cars: ['D2']
+  D2_V1_6:
+    parts: ['9656147980']
+    cars: ['D2']
+  D2_V1_7:
+    parts: ['9656148680']
+    cars: ['D2']
+  D2_V1_8:
+    parts: ['9665778480']
+    cars: ['D2']
+  D2_V1_9:
+    parts: ['9665989580']
+    cars: ['D2']
+  D2_V1_10:
+    parts: ['0000000000']
+    cars: ['D2']
+  D2_V1_11:
+    parts: ['9665989680']
+    cars: ['D2']
+  D2_V1_12:
+    parts: ['5256147980']
+    cars: ['D2']
+  G9_V1:
+    parts: ['9648404380']
+    cars: ['G9']
+  G9_V3_1:
+    parts: ['9648404480']
+    cars: ['G9']
+  G9_V3_2:
+    parts: ['9652246080']
+    cars: ['G9']
+  G9_V3_3:
+    parts: ['9652409680']
+    cars: ['G9']
+  G9_V3_4:
+    parts: ['9655471880']
+    cars: ['G9']
+  G9_V3_5:
+    parts: ['9655473280']
+    cars: ['G9']
+  G9_V3_6:
+    parts: ['9656147980']
+    cars: ['G9']
+  G9_V3_7:
+    parts: ['9656148680']
+    cars: ['G9']
+  G9_V3_8:
+    parts: ['9665778480']
+    cars: ['G9']
+  G9_V3_9:
+    parts: ['9665989580']
+    cars: ['G9']
+  G9_V3_10:
+    parts: ['0000000000']
+    cars: ['G9']
+  G9_V3_11:
+    parts: ['9662007580']
+    cars: ['G9']
+  G9_V3_12:
+    parts: ['9665989680']
+    cars: ['G9']
+  G9_V3_13:
+    parts: ['5256147980']
+    cars: ['G9']
+  LA_V1:
+    parts: ['9648404380']
+    cars: ['A5']
+  LA_V2:
+    parts: ['9648404480']
+    cars: ['A5']
+  LA_V3:
+    parts: ['9665989680']
+    cars: ['A5']
+  LA_V4:
+    parts: ['5256147980']
+    cars: ['A5']
+  T6_V1:
+    parts: ['9648404380']
+    cars: ['T6']
+  T6_V1_1:
+    parts: ['9648404480']
+    cars: ['T6']
+  T6_V1_2:
+    parts: ['9652246080']
+    cars: ['T6']
+  T6_V1_3:
+    parts: ['9652409680']
+    cars: ['T6']
+  T6_V1_4:
+    parts: ['9655471880']
+    cars: ['T6']
+  T6_V1_5:
+    parts: ['9655473280']
+    cars: ['T6']
+  T6_V1_6:
+    parts: ['9656147980']
+    cars: ['T6']
+  T6_V1_7:
+    parts: ['9656148680']
+    cars: ['T6']
+  T6_V1_8:
+    parts: ['9665778480']
+    cars: ['T6']
+  T6_V1_9:
+    parts: ['9665989580']
+    cars: ['T6']
+  T6_V1_10:
+    parts: ['0000000000']
+    cars: ['T6']
+  T6_V1_11:
+    parts: ['9665989680']
+    cars: ['T6']
+  T6_V1_12:
+    parts: ['9662007580']
+    cars: ['T6']
+  T6_V1_13:
+    parts: ['5256147980']
+    cars: ['T6']
+  T7_V1:
+    parts: ['9648404380']
+    cars: ['T7']
+  T7_V1_1:
+    parts: ['9648404480']
+    cars: ['T7']
+  T7_V1_2:
+    parts: ['9652246080']
+    cars: ['T7']
+  T7_V1_3:
+    parts: ['9652409680']
+    cars: ['T7']
+  T7_V1_4:
+    parts: ['9655471880']
+    cars: ['T7']
+  T7_V1_5:
+    parts: ['9655473280']
+    cars: ['T7']
+  T7_V1_6:
+    parts: ['9656147980']
+    cars: ['T7']
+  T7_V1_7:
+    parts: ['9656148680']
+    cars: ['T7']
+  T7_V1_8:
+    parts: ['9665778480']
+    cars: ['T7']
+  T7_V1_9:
+    parts: ['9665989580']
+    cars: ['T7']
+  T7_V1_10:
+    parts: ['0000000000']
+    cars: ['T7']
+  T7_V1_11:
+    parts: ['9665989680']
+    cars: ['T7']
+  T7_V1_12:
+    parts: ['9662007580']
+    cars: ['T7']
+  T7_V1_13:
+    parts: ['5256147980']
+    cars: ['T7']
+  T84_V1:
+    parts: ['9648404380']
+    cars: ['T8']
+  T84_V1_1:
+    parts: ['9648404480']
+    cars: ['T8']
+  T84_V1_2:
+    parts: ['9652246080']
+    cars: ['T8']
+  T84_V1_3:
+    parts: ['9652409680']
+    cars: ['T8']
+  T84_V1_4:
+    parts: ['9655471880']
+    cars: ['T8']
+  T84_V1_5:
+    parts: ['9655473280']
+    cars: ['T8']
+  T84_V1_6:
+    parts: ['9656147980']
+    cars: ['T8']
+  T84_V1_7:
+    parts: ['9656148680']
+    cars: ['T8']
+  T84_V1_8:
+    parts: ['9665778480']
+    cars: ['T8']
+  T84_V1_9:
+    parts: ['9665989580']
+    cars: ['T8']
+  T84_V1_10:
+    parts: ['0000000000']
+    cars: ['T8']
+  T84_V1_11:
+    parts: ['9665989680']
+    cars: ['T8']
+  T84_V1_12:
+    parts: ['5256147980']
+    cars: ['T8']
+  VCAN_V1:
+    parts: ['9648404380']
+    cars: ['VCAN']
+  VCAN_V2_1:
+    parts: ['9648404480']
+    cars: ['VCAN']
+  VCAN_V2_2:
+    parts: ['9652246080']
+    cars: ['VCAN']
+  VCAN_V2_3:
+    parts: ['9652409680']
+    cars: ['VCAN']
+  VCAN_V2_4:
+    parts: ['9655471880']
+    cars: ['VCAN']
+  VCAN_V2_5:
+    parts: ['9655473280']
+    cars: ['VCAN']
+  VCAN_V2_6:
+    parts: ['9656147980']
+    cars: ['VCAN']
+  VCAN_V2_7:
+    parts: ['9656148680']
+    cars: ['VCAN']
+  VCAN_V2_8:
+    parts: ['9665778480']
+    cars: ['VCAN']
+  VCAN_V2_9:
+    parts: ['9665989580']
+    cars: ['VCAN']
+  VCAN_V2_10:
+    parts: ['0000000000']
+    cars: ['VCAN']
+  VCAN_V2_11:
+    parts: ['9665989680']
+    cars: ['VCAN']
+  VCAN_V2_12:
+    parts: ['9662007580']
+    cars: ['VCAN']
+  VCAN_V2_13:
+    parts: ['5256147980']
+    cars: ['VCAN']
+  X6_V1:
+    parts: ['9648404380']
+    cars: ['X6']
+  X6_V2:
+    parts: ['9648404480']
+    cars: ['X6']
+  X6_V3:
+    parts: ['9652246080']
+    cars: ['X6']
+  X6_V4:
+    parts: ['9652409680']
+    cars: ['X6']
+  X6_V5:
+    parts: ['9655471880']
+    cars: ['X6']
+  X6_V6:
+    parts: ['9655473280']
+    cars: ['X6']
+  X6_V7:
+    parts: ['9656147980']
+    cars: ['X6']
+  X6_V8:
+    parts: ['9656148680']
+    cars: ['X6']
+  X6_V9:
+    parts: ['9665778480']
+    cars: ['X6']
+  X6_V10:
+    parts: ['9665989580']
+    cars: ['X6']
+  X6_V11:
+    parts: ['0000000000']
+    cars: ['X6']
+  X6_V12:
+    parts: ['9665989680']
+    cars: ['X6']
+  X6_V13:
+    parts: ['9662007580']
+    cars: ['X6']
+  X6_V14:
+    parts: ['5256147980']
+    cars: ['X6']
+  X7_V3:
+    parts: ['9648404380']
+    cars: ['X7']
+  X7_V3_1:
+    parts: ['9648404480']
+    cars: ['X7']
+  X7_V3_2:
+    parts: ['9652246080']
+    cars: ['X7']
+  X7_V3_3:
+    parts: ['9652409680']
+    cars: ['X7']
+  X7_V3_4:
+    parts: ['9655471880']
+    cars: ['X7']
+  X7_V3_5:
+    parts: ['9655473280']
+    cars: ['X7']
+  X7_V3_6:
+    parts: ['9656147980']
+    cars: ['X7']
+  X7_V3_7:
+    parts: ['9656148680']
+    cars: ['X7']
+  X7_V3_8:
+    parts: ['9665778480']
+    cars: ['X7']
+  X7_V3_9:
+    parts: ['9665989580']
+    cars: ['X7']
+  X7_V3_10:
+    parts: ['0000000000']
+    cars: ['X7']
+  X7_V3_11:
+    parts: ['9665989680']
+    cars: ['X7']
+  X7_V3_12:
+    parts: ['9662007580']
+    cars: ['X7']
+  X7_V3_13:
+    parts: ['5256147980']
+    cars: ['X7']
+  Z9_V1:
+    parts: ['9648404380']
+    cars: ['Z9']
+  Z9_V1_1:
+    parts: ['9648404480']
+    cars: ['Z9']
+  Z9_V1_2:
+    parts: ['9652246080']
+    cars: ['Z9']
+  Z9_V1_3:
+    parts: ['9652409680']
+    cars: ['Z9']
+  Z9_V1_4:
+    parts: ['9655471880']
+    cars: ['Z9']
+  Z9_V1_5:
+    parts: ['9655473280']
+    cars: ['Z9']
+  Z9_V1_6:
+    parts: ['9656147980']
+    cars: ['Z9']
+  Z9_V1_7:
+    parts: ['9656148680']
+    cars: ['Z9']
+  Z9_V1_8:
+    parts: ['9665778480']
+    cars: ['Z9']
+  Z9_V1_9:
+    parts: ['9665989580']
+    cars: ['Z9']
+  Z9_V1_10:
+    parts: ['0000000000']
+    cars: ['Z9']
+  Z9_V1_11:
+    parts: ['9665989680']
+    cars: ['Z9']
+  Z9_V1_12:
+    parts: ['9662007580']
+    cars: ['Z9']
+  Z9_V1_13:
+    parts: ['5256147980']
+    cars: ['Z9']

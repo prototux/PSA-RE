@@ -1,0 +1,59 @@
+node: 'ADDGO'
+model: 'PADDGO_INERGY'
+display_name:
+  en: 'Diesel additive (FAP) pump (PADDGO_INERGY)'
+  fr: 'Pompe d''additif gasoil (FAP) (PADDGO_INERGY)'
+protocols: ['UDS']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'UDS'
+    request_id: 0x731
+    response_id: 0x711
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+
+sessions:
+  0x01:
+    en: 'Default session'
+    fr: 'Session par défaut'
+  0x03:
+    en: 'Extended diagnostic session'
+    fr: 'Session de diagnostic étendue'
+  0x60:
+    en: 'Supplier session'
+    fr: 'Session fournisseur'
+
+services: [0x10, 0x14, 0x19, 0x22, 0x27, 0x2E, 0x2F, 0x31, 0x3E]
+
+security_access:
+  - level: 0x01
+  - level: 0x03
+
+tester_present:
+  request: '3E 00'
+  period_ms: 1000
+
+identification:
+  request: '22 F0 80'
+  part_number: '1.7-5.0'
+  comment:
+    en: 'The ECU part number is in data bytes 1 to 5 of the answer to 22 F0 80 (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 1 à 5 de la réponse à 22 F0 80 (DCB), elle donne la variante logicielle'
+
+cars: ['B78', 'T9']
+
+variants:
+  B78_V1:
+    parts: ['967460558A']
+    cars: ['B78']
+  B78_V2:
+    parts: ['9800202080']
+    cars: ['B78']
+  T9_V1:
+    parts: ['967460558A']
+    cars: ['T9']
+  T9_V2:
+    parts: ['9800202080']
+    cars: ['T9']

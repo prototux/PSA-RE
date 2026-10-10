@@ -1,0 +1,111 @@
+node: 'RMCU'
+model: 'RMCU_PHEV'
+display_name:
+  en: 'Rear electric motor control unit (RMCU_PHEV)'
+  fr: 'Calculateur de moteur electrique arriere (RMCU_PHEV)'
+protocols: ['UDS']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'UDS'
+    request_id: 0x6A7
+    response_id: 0x687
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+  - transport: 'can-tp'
+    bus: 'HS.IS'
+    protocol: 'UDS'
+    request_id: 0x6A7
+    response_id: 0x687
+
+sessions:
+  0x01:
+    en: 'Default session'
+    fr: 'Session par défaut'
+  0x02:
+    en: 'Programming session'
+    fr: 'Session de programmation'
+  0x03:
+    en: 'Extended diagnostic session'
+    fr: 'Session de diagnostic étendue'
+  0x50:
+    en: 'Session 0x50'
+    fr: 'Session 0x50'
+  0x60:
+    en: 'Supplier session'
+    fr: 'Session fournisseur'
+  0x7A:
+    en: 'Session 0x7A'
+    fr: 'Session 0x7A'
+  0x7B:
+    en: 'Session 0x7B'
+    fr: 'Session 0x7B'
+
+resets:
+  0x02:
+    en: 'Key off / on reset'
+    fr: 'Réinitialisation coupure / mise du contact'
+  0x03:
+    en: 'Soft reset'
+    fr: 'Réinitialisation logicielle'
+  0xFF:
+    en: 'Reset 0xFF'
+    fr: 'Réinitialisation 0xFF'
+
+services: [0x10, 0x11, 0x14, 0x19, 0x22, 0x27, 0x2E, 0x31]
+
+security_access:
+  - level: 0x01
+    algorithm: 'PSA_SEED_KEY'
+    key: '01FB'
+  - level: 0x03
+    algorithm: 'PSA_SEED_KEY'
+    key: '01FB'
+
+identification:
+  request: '22 F0 FE'
+  part_number: '22.7-24.0'
+  comment:
+    en: 'The ECU part number is in data bytes 22 to 24 of the answer to 22 F0 FE (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 22 à 24 de la réponse à 22 F0 FE (DCB), elle donne la variante logicielle'
+
+cars: ['C84', 'P8', 'R8', 'X74']
+
+variants:
+  C84C_V1:
+    parts: ['936411']
+    cars: ['C84']
+  P8_V1:
+    parts: ['936802']
+    cars: ['P8']
+  P8_V2:
+    parts: ['934161']
+    cars: ['P8']
+  P8_V3:
+    parts: ['936411']
+    cars: ['P8']
+  P8_V4:
+    parts: ['940676']
+    cars: ['P8']
+  P8_V5:
+    parts: ['943551']
+    cars: ['P8']
+  R8_V1:
+    parts: ['936802']
+    cars: ['R8']
+  X74_V1:
+    parts: ['934172']
+    cars: ['X74']
+  X74_V2:
+    parts: ['936802']
+    cars: ['X74']
+  X74_V3:
+    parts: ['936411']
+    cars: ['X74']
+  X74_V4:
+    parts: ['934778']
+    cars: ['X74']
+  X74_V5:
+    parts: ['943551']
+    cars: ['X74']

@@ -1,0 +1,64 @@
+node: 'BPL'
+model: 'BPL'
+display_name:
+  en: 'Interior lighting module (BPL)'
+  fr: 'Boitier eclairage interieur (BPL)'
+protocols: ['KWP-PSA2000']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'KWP-PSA2000'
+    request_id: 0x6C2
+    response_id: 0x602
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+
+sessions:
+  0x81:
+    en: 'Default session / end of diagnostic'
+    fr: 'Session par défaut / fin de diagnostic'
+  0xC0:
+    en: 'PSA diagnostic session'
+    fr: 'Session de diagnostic PSA'
+  0xFA:
+    en: 'Supplier specific session'
+    fr: 'Session spécifique fournisseur'
+  0xFB:
+    en: 'Session 0xFB'
+    fr: 'Session 0xFB'
+  0xFC:
+    en: 'Session 0xFC'
+    fr: 'Session 0xFC'
+  0xFD:
+    en: 'Session 0xFD'
+    fr: 'Session 0xFD'
+  0xFE:
+    en: 'Session 0xFE'
+    fr: 'Session 0xFE'
+
+services: [0x10, 0x14, 0x17, 0x21, 0x27, 0x30, 0x3B, 0x3E]
+
+security_access:
+  - level: 0x83
+
+tester_present:
+  request: '3E'
+  period_ms: 1000
+
+identification:
+  request: '21 D7'
+  part_number: '1.7-5.0'
+  comment:
+    en: 'The ECU part number is in data bytes 1 to 5 of the answer to 21 D7 (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 1 à 5 de la réponse à 21 D7 (DCB), elle donne la variante logicielle'
+
+cars: ['B5']
+
+variants:
+  B5_V1:
+    parts: ['9654157480']
+    cars: ['B5']
+  B5_V2:
+    parts: ['9663392880']
+    cars: ['B5']

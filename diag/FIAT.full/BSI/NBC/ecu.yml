@@ -1,0 +1,52 @@
+node: 'BSI'
+model: 'NBC'
+display_name:
+  en: 'Body control module / main gateway (NBC)'
+  fr: 'Boitier de servitude intelligent (NBC)'
+protocols: ['KWP-PSA2000']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'KWP-PSA2000'
+    request_id: 0x7B0
+    response_id: 0x7C0
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+
+sessions:
+  0x81:
+    en: 'Default session / end of diagnostic'
+    fr: 'Session par défaut / fin de diagnostic'
+  0xC0:
+    en: 'PSA diagnostic session'
+    fr: 'Session de diagnostic PSA'
+  0xFA:
+    en: 'Supplier specific session'
+    fr: 'Session spécifique fournisseur'
+
+services: [0x10, 0x14, 0x17, 0x18, 0x1A, 0x20, 0x21, 0x27, 0x30, 0x31, 0x33, 0x3B, 0x3E]
+
+security_access:
+  - level: 0x03
+
+tester_present:
+  request: '3E'
+  period_ms: 1000
+
+identification:
+  request: '1A 80'
+  part_number: '43.7-47.0'
+  comment:
+    en: 'The ECU part number is in data bytes 43 to 47 of the answer to 1A 80 (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 43 à 47 de la réponse à 1A 80 (DCB), elle donne la variante logicielle'
+
+cars: ['X250']
+
+variants:
+  X250_V1:
+    parts: ['4083268543']
+    cars: ['X250']
+  X250_V2:
+    parts: ['40834608E6']
+    cars: ['X250']

@@ -1,0 +1,95 @@
+node: 'RBG'
+model: 'SAC_TRW'
+display_name:
+  en: 'Airbag control unit (SAC_TRW)'
+  fr: 'Calculateur airbag (SAC_TRW)'
+protocols: ['UDS', 'KWP-PSA2000']
+
+addressing:
+  - transport: 'can-tp'
+    bus: 'HS.IS'
+    protocol: 'UDS'
+    request_id: 0x6E0
+    response_id: 0x51C
+  - transport: 'can-tp'
+    protocol: 'UDS'
+    request_id: 0x7B0
+    response_id: 0x7DA
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+
+sessions:
+  0x81:
+    en: 'Default session / end of diagnostic'
+    fr: 'Session par défaut / fin de diagnostic'
+  0x83:
+    en: 'Session 0x83'
+    fr: 'Session 0x83'
+  0x85:
+    en: 'Programming session'
+    fr: 'Session de programmation'
+  0x8A:
+    en: 'Session 0x8A'
+    fr: 'Session 0x8A'
+  0x92:
+    en: 'Session 0x92'
+    fr: 'Session 0x92'
+  0xFA:
+    en: 'Supplier specific session'
+    fr: 'Session spécifique fournisseur'
+
+resets:
+  0x01:
+    en: 'Hard reset'
+    fr: 'Réinitialisation matérielle'
+
+services: [0x10, 0x11, 0x14, 0x17, 0x18, 0x1A, 0x20, 0x21, 0x27, 0x28, 0x29, 0x30, 0x31, 0x33, 0x34, 0x36, 0x37, 0x3B, 0x3E, 0x85]
+
+security_access:
+  - level: 0x01
+
+tester_present:
+  request: '3E'
+  period_ms: 1000
+
+identification:
+  request: '1A 87'
+  part_number: '11.7-18.0'
+  comment:
+    en: 'The ECU part number is in data bytes 11 to 18 of the answer to 1A 87 (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 11 à 18 de la réponse à 1A 87 (DCB), elle donne la variante logicielle'
+
+cars: ['B0', 'I3', 'J3', 'X250']
+
+variants:
+  AIRBAG_I3_I4_V1:
+    parts: ['3836333541313032']
+    cars: ['I3']
+  AIRBAG_I3_I4_V2:
+    parts: ['3836333541303533']
+    cars: ['I3']
+  AIRBAG_I3_I4_V3:
+    parts: ['3836333541303535']
+    cars: ['I3']
+  AIRBAG_J3_J4_V1:
+    parts: ['3836333541323738']
+    cars: ['J3']
+  AIRBAG_J3_J4_V2:
+    parts: ['3836333541333232']
+    cars: ['J3']
+  X250_V1_0:
+    parts: ['EA070D0457']
+    cars: ['X250']
+  X250_V1_1:
+    parts: ['EA079D07EA']
+    cars: ['X250']
+  X250_V1_2:
+    parts: ['1342896080']
+    cars: ['X250']
+  X250_V1_3:
+    parts: ['1342893080']
+    cars: ['X250']
+  X250_V1_4:
+    parts: ['1342894080']
+    cars: ['X250']

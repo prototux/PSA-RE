@@ -1,0 +1,84 @@
+node: 'EBB'
+model: 'EBB'
+display_name:
+  en: 'Electric brake booster (EBB)'
+  fr: 'Amplificateur de freinage electrique (EBB)'
+protocols: ['UDS']
+
+addressing:
+  - transport: 'can-tp'
+    protocol: 'UDS'
+    request_id: 0x5D0
+    response_id: 0x5CF
+    comment:
+      en: 'Reached from the diagnostic socket (through the gateway on most cars)'
+      fr: 'Atteint depuis la prise diagnostic (à travers la passerelle sur la plupart des véhicules)'
+  - transport: 'can-tp'
+    bus: 'HS.IS'
+    protocol: 'UDS'
+    request_id: 0x5D0
+    response_id: 0x5CF
+
+sessions:
+  0x01:
+    en: 'Default session'
+    fr: 'Session par défaut'
+  0x02:
+    en: 'Programming session'
+    fr: 'Session de programmation'
+  0x03:
+    en: 'Extended diagnostic session'
+    fr: 'Session de diagnostic étendue'
+
+resets:
+  0x02:
+    en: 'Key off / on reset'
+    fr: 'Réinitialisation coupure / mise du contact'
+
+services: [0x10, 0x11, 0x14, 0x19, 0x22, 0x27, 0x2E, 0x31]
+
+security_access:
+  - level: 0x03
+    algorithm: 'PSA_SEED_KEY'
+    key: 'BB20'
+
+identification:
+  request: '22 F0 FE'
+  part_number: '22.7-24.0'
+  comment:
+    en: 'The ECU part number is in data bytes 22 to 24 of the answer to 22 F0 FE (BCD), it gives the software variant'
+    fr: 'La référence du calculateur est dans les octets de données 22 à 24 de la réponse à 22 F0 FE (DCB), elle donne la variante logicielle'
+
+cars: ['C84', 'P8', 'R8', 'X74']
+
+variants:
+  C84C_V0:
+    parts: ['937036']
+    cars: ['C84']
+  P8_V1:
+    parts: ['935099']
+    cars: ['P8']
+  P8_V2:
+    parts: ['935100']
+    cars: ['P8']
+  P8_V3:
+    parts: ['928176']
+    cars: ['P8']
+  P8_V4:
+    parts: ['937035']
+    cars: ['P8']
+  P8_V5:
+    parts: ['938619']
+    cars: ['P8']
+  R8_V1:
+    parts: ['928174']
+    cars: ['R8']
+  R8_V2:
+    parts: ['935121']
+    cars: ['R8']
+  X74_V1:
+    parts: ['935098']
+    cars: ['X74']
+  X74_V2:
+    parts: ['935097']
+    cars: ['X74']
