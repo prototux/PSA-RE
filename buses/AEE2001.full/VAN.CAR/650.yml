@@ -1,0 +1,256 @@
+id: 0x650
+name: 'TRANSPONDER_COMMAND'
+type: 'van'
+length: 12
+comment:
+  en: 'Immobiliser transponder command to the steering column module: identification, authentication, key presence and remote-control identification requests, random challenge, encrypted user-page read command and encrypted password.'
+  fr: 'Commande transpondeur d''immobilisation vers le module de colonne de direction : demandes d''identification, d''authentification, de présence de clé et d''identification télécommande, défi aléatoire, commande de lecture cryptée de la page utilisateur et mot de passe crypté.'
+  es: 'Comando de transpondedor del inmovilizador al módulo de columna de dirección: solicitudes de identificación, autenticación, presencia de llave e identificación del mando a distancia, desafío aleatorio, comando de lectura cifrada de la página de usuario y contraseña cifrada.'
+  de: 'Transponder-Wegfahrsperrenbefehl an das Lenksäulenmodul: Identifikations-, Authentifizierungs-, Schlüsselanwesenheits- und Fernbedienungsidentifikationsanfragen, Zufalls-Challenge, verschlüsselter Lesebefehl der Benutzerseite und verschlüsseltes Passwort.'
+  it: 'Comando transponder dell''immobilizzatore al modulo del piantone dello sterzo: richieste di identificazione, autenticazione, presenza chiave e identificazione del telecomando, challenge casuale, comando di lettura cifrata della pagina utente e password cifrata.'
+  pl: 'Polecenie transpondera immobilizera do modułu kolumny kierownicy: żądania identyfikacji, uwierzytelnienia, obecności kluczyka i identyfikacji pilota, losowe wyzwanie, szyfrowane polecenie odczytu strony użytkownika i szyfrowane hasło.'
+  ru: 'Команда транспондера иммобилайзера модулю рулевой колонки: запросы идентификации, аутентификации, присутствия ключа и идентификации пульта, случайный вызов, зашифрованная команда чтения пользовательской страницы и зашифрованный пароль.'
+  zh: '发往转向柱模块的防盗发射应答器命令:身份识别、认证、钥匙存在和遥控识别请求、随机挑战码、加密用户页读取命令和加密密码。'
+  hu: 'Indításgátló transzponder parancs a kormányoszlop modulnak: azonosítási, hitelesítési, kulcsjelenlét- és távirányító-azonosítási kérések, véletlen kihívás, titkosított felhasználói lapolvasási parancs és titkosított jelszó.'
+  pt: 'Comando do transponder do imobilizador para o módulo da coluna de direção: identificação, autenticação, pedidos de presença da chave e de identificação do comando à distância, desafio aleatório, comando de leitura encriptado da página do utilizador e palavra-passe encriptada.'
+periodicity: ['trigger']
+senders: ['BSI']
+receivers: ['HDC']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  TRANSPONDER_IDENT_REQUEST:
+    bits: '1.7'
+    comment:
+      en: 'Transponder identification request'
+      fr: 'Demande d''identification du transpondeur'
+      es: 'Solicitud de identificación del transpondedor'
+      de: 'Anforderung zur Transponder-Identifikation'
+      it: 'Richiesta di identificazione del transponder'
+      pl: 'Żądanie identyfikacji transpondera'
+      ru: 'Запрос идентификации транспондера'
+      zh: '应答器识别请求'
+      hu: 'Transzponder azonosításának kérése'
+      pt: 'Pedido de identificação do transponder'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande d''identification'
+        es: 'Sin solicitud de identificación'
+        de: 'Keine Identifikationsanforderung'
+        it: 'Nessuna richiesta di identificazione'
+        pl: 'Brak żądania identyfikacji'
+        ru: 'Нет запроса идентификации'
+        zh: '无识别请求'
+        hu: 'Nincs azonosítási kérés'
+        pt: 'Sem pedido de identificação'
+      0x01:
+        en: 'Identification requested'
+        fr: 'Demande d''identification'
+        es: 'Solicitud de identificación'
+        de: 'Identifikation angefordert'
+        it: 'Identificazione richiesta'
+        pl: 'Żądanie identyfikacji'
+        ru: 'Запрошена идентификация'
+        zh: '请求识别'
+        hu: 'Azonosítás kérve'
+        pt: 'Pedido de identificação'
+
+  TRANSPONDER_AUTH_REQUEST:
+    bits: '1.6'
+    comment:
+      en: 'Transponder authentication request'
+      fr: 'Demande d''authentification du transpondeur'
+      es: 'Solicitud de autenticación del transpondedor'
+      de: 'Anforderung zur Transponder-Authentifizierung'
+      it: 'Richiesta di autenticazione del transponder'
+      pl: 'Żądanie uwierzytelnienia transpondera'
+      ru: 'Запрос аутентификации транспондера'
+      zh: '应答器认证请求'
+      hu: 'Transzponder hitelesítésének kérése'
+      pt: 'Pedido de autenticação do transponder'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No authentication request'
+        fr: 'Pas de demande d''authentification'
+        es: 'Sin solicitud de autenticación'
+        de: 'Keine Authentifizierungsanforderung'
+        it: 'Nessuna richiesta di autenticazione'
+        pl: 'Brak żądania uwierzytelnienia'
+        ru: 'Нет запроса аутентификации'
+        zh: '无认证请求'
+        hu: 'Nincs hitelesítési kérés'
+        pt: 'Sem pedido de autenticação'
+      0x01:
+        en: 'Authentication requested'
+        fr: 'Demande d''authentification'
+        es: 'Autenticación solicitada'
+        de: 'Authentifizierung angefordert'
+        it: 'Autenticazione richiesta'
+        pl: 'Żądanie uwierzytelnienia'
+        ru: 'Запрошена аутентификация'
+        zh: '已请求身份验证'
+        hu: 'Hitelesítés kérve'
+        pt: 'Autenticação pedida'
+
+  KEY_PRESENCE_REQUEST:
+    bits: '1.5'
+    comment:
+      en: 'Key presence request'
+      fr: 'Demande de présence de la clé'
+      es: 'Solicitud de presencia de la llave'
+      de: 'Anforderung zur Schlüsselanwesenheit'
+      it: 'Richiesta di presenza della chiave'
+      pl: 'Żądanie obecności kluczyka'
+      ru: 'Запрос наличия ключа'
+      zh: '钥匙存在检测请求'
+      hu: 'Kulcs jelenlétének lekérdezése'
+      pt: 'Pedido de presença da chave'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande de présence clé'
+        es: 'Sin solicitud de presencia de llave'
+        de: 'Keine Anforderung Schlüsselerkennung'
+        it: 'Nessuna richiesta di presenza chiave'
+        pl: 'Brak żądania obecności kluczyka'
+        ru: 'Нет запроса присутствия ключа'
+        zh: '无钥匙在位请求'
+        hu: 'Nincs kulcsjelenlét-kérés'
+        pt: 'Sem pedido de presença de chave'
+      0x01:
+        en: 'Key presence requested'
+        fr: 'Demande de présence de clé'
+        es: 'Solicitud de presencia de llave'
+        de: 'Anforderung der Schlüsselanwesenheit'
+        it: 'Richiesta di presenza della chiave'
+        pl: 'Żądanie obecności kluczyka'
+        ru: 'Запрос присутствия ключа'
+        zh: '请求钥匙存在检测'
+        hu: 'A kulcs jelenlétének lekérdezése'
+        pt: 'Pedido de presença de chave'
+
+  REMOTE_IDENT_REQUEST:
+    bits: '1.4'
+    comment:
+      en: 'Remote control identification request'
+      fr: 'Demande d''identification de la télécommande'
+      es: 'Solicitud de identificación del mando a distancia'
+      de: 'Anforderung zur Identifikation der Fernbedienung'
+      it: 'Richiesta di identificazione del telecomando'
+      pl: 'Żądanie identyfikacji pilota'
+      ru: 'Запрос идентификации радиобрелока'
+      zh: '遥控器识别请求'
+      hu: 'Távirányító azonosításának kérése'
+      pt: 'Pedido de identificação do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande d''identification'
+        es: 'Sin solicitud de identificación'
+        de: 'Keine Identifikationsanforderung'
+        it: 'Nessuna richiesta di identificazione'
+        pl: 'Brak żądania identyfikacji'
+        ru: 'Нет запроса идентификации'
+        zh: '无识别请求'
+        hu: 'Nincs azonosítási kérés'
+        pt: 'Sem pedido de identificação'
+      0x01:
+        en: 'Identification requested'
+        fr: 'Demande d''identification'
+        es: 'Solicitud de identificación'
+        de: 'Identifikation angefordert'
+        it: 'Identificazione richiesta'
+        pl: 'Żądanie identyfikacji'
+        ru: 'Запрошена идентификация'
+        zh: '请求识别'
+        hu: 'Azonosítás kérve'
+        pt: 'Pedido de identificação'
+
+  UNUSED_1:
+    bits: '1.3-1.0'
+    unused: true
+
+  TRANSPONDER_RANDOM_CHALLENGE:
+    bits: '2.7-5.0'
+    comment:
+      en: 'Random challenge code'
+      fr: 'Code aléatoire'
+      es: 'Código aleatorio'
+      de: 'Zufallscode (Challenge)'
+      it: 'Codice casuale'
+      pl: 'Losowy kod'
+      ru: 'Случайный код запроса'
+      zh: '随机挑战码'
+      hu: 'Véletlen kihívási kód'
+      pt: 'Código aleatório de desafio'
+    type: 'bytes'
+    default: 0x00
+
+  UNUSED_2:
+    bits: '6.7-6.2'
+    unused: true
+
+  USER_PAGE_READ_COMMAND_HI:
+    bits: '6.1-6.0'
+    comment:
+      en: 'Encrypted read command for user page p4 (high bits)'
+      fr: 'Commande cryptée de lecture de la page utilisateur p4 (bits de poids fort)'
+      es: 'Comando cifrado de lectura de la página de usuario p4 (bits más significativos)'
+      de: 'Verschlüsselter Lesebefehl für Benutzerseite p4 (höherwertige Bits)'
+      it: 'Comando cifrato di lettura della pagina utente p4 (bit più significativi)'
+      pl: 'Szyfrowane polecenie odczytu strony użytkownika p4 (starsze bity)'
+      ru: 'Зашифрованная команда чтения пользовательской страницы p4 (старшие биты)'
+      zh: '用户页p4加密读取指令(高位)'
+      hu: 'A p4 felhasználói oldal titkosított olvasási parancsa (felső bitek)'
+      pt: 'Comando cifrado de leitura da página de utilizador p4 (bits mais significativos)'
+    type: 'uint'
+    default: 0x00
+
+  USER_PAGE_READ_COMMAND_LO:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Encrypted read command for user page p4 (low bits)'
+      fr: 'Commande cryptée de lecture de la page utilisateur p4 (bits de poids faible)'
+      es: 'Comando cifrado de lectura de la página de usuario p4 (bits menos significativos)'
+      de: 'Verschlüsselter Lesebefehl für Benutzerseite p4 (niederwertige Bits)'
+      it: 'Comando cifrato di lettura della pagina utente p4 (bit meno significativi)'
+      pl: 'Szyfrowane polecenie odczytu strony użytkownika p4 (młodsze bity)'
+      ru: 'Зашифрованная команда чтения пользовательской страницы p4 (младшие биты)'
+      zh: '用户页p4加密读取指令(低位)'
+      hu: 'A p4 felhasználói oldal titkosított olvasási parancsa (alsó bitek)'
+      pt: 'Comando cifrado de leitura da página de utilizador p4 (bits menos significativos)'
+    type: 'uint'
+    default: 0x00
+
+  UNUSED_3:
+    bits: '8.7-8.0'
+    unused: true
+
+  TRANSPONDER_ENCRYPTED_PASSWORD:
+    bits: '9.7-12.0'
+    comment:
+      en: 'Transponder encrypted password'
+      fr: 'Mot de passe crypté du transpondeur'
+      es: 'Contraseña cifrada del transpondedor'
+      de: 'Verschlüsseltes Transponder-Passwort'
+      it: 'Password cifrata del transponder'
+      pl: 'Zaszyfrowane hasło transpondera'
+      ru: 'Зашифрованный пароль транспондера'
+      zh: '应答器加密密码'
+      hu: 'Transzponder titkosított jelszava'
+      pt: 'Palavra-passe encriptada do transponder'
+    type: 'bytes'
+    default: 0x00

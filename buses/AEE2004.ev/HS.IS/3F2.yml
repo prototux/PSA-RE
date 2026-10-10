@@ -1,0 +1,318 @@
+id: 0x3F2
+name: 'BSI_CABIN_DATA'
+type: 'can'
+length: 3
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+observations:
+  en: 'On state change of: SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+  fr: 'Sur changement d''état de : SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+  es: 'Al cambiar el estado de: SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+  de: 'Bei Statusänderung von: SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+  it: 'Al cambiamento di stato di: SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+  ru: 'При изменении состояния: SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+  zh: '当DMD_DELEST_SUSP, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, DMD_DELEST_ABS_ESP状态变化时'
+  hu: 'A(z) SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: SUSPENSION_POWER_CUT_REQUEST, EASYMOVE_POWER_CUT_REQUEST, POWER_STEERING_CUT_REQUEST, ABS_ESP_POWER_CUT_REQUEST'
+periodicity: ['50ms', 'trigger']
+senders: ['BSI']
+receivers: ['ABS', 'CAAR', 'DAE', 'BHI', 'HCU1', 'CMM']
+
+signals:
+  ZEV_MODE_PROHIBITION:
+    bits: '1.5'
+    comment:
+      en: 'Prohibition of entering zero-emission (ZEV) mode'
+      fr: 'Interdiction d''entrée en mode zéro émission (ZEV)'
+      es: 'Prohibición de entrar en modo cero emisiones (ZEV)'
+      de: 'Verbot des Eintritts in den Nullemissionsmodus (ZEV)'
+      it: 'Divieto di ingresso in modalità a zero emissioni (ZEV)'
+      pl: 'Zakaz wejścia w tryb zeroemisyjny (ZEV)'
+      ru: 'Запрет входа в режим нулевых выбросов (ZEV)'
+      zh: '禁止进入零排放(ZEV)模式'
+      hu: 'A nulla kibocsátású (ZEV) mód belépésének tiltása'
+      pt: 'Proibição de entrada no modo zero emissões (ZEV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'ZEV authorized'
+        fr: 'ZEV autorisé'
+        es: 'ZEV autorizado'
+        de: 'ZEV zulässig'
+        it: 'ZEV autorizzato'
+        pl: 'ZEV dozwolone'
+        ru: 'ZEV разрешён'
+        zh: '允许ZEV'
+        hu: 'ZEV engedélyezve'
+        pt: 'ZEV autorizado'
+      0x01:
+        en: 'ZEV forbidden'
+        fr: 'ZEV interdit'
+        es: 'ZEV prohibido'
+        de: 'ZEV verboten'
+        it: 'ZEV vietato'
+        pl: 'ZEV zabronione'
+        ru: 'ZEV запрещён'
+        zh: '禁止ZEV'
+        hu: 'ZEV tiltva'
+        pt: 'ZEV proibido'
+
+  SUSPENSION_POWER_CUT_REQUEST:
+    bits: '1.4'
+    comment:
+      en: 'Suspension power cut (load shedding) request'
+      fr: 'Demande de délestage de la suspension'
+      es: 'Solicitud de reducción de carga de la suspensión'
+      de: 'Lastabwurfanforderung der Federung'
+      it: 'Richiesta di riduzione del carico della sospensione'
+      pl: 'Żądanie ograniczenia obciążenia zawieszenia'
+      ru: 'Запрос снижения нагрузки подвески'
+      zh: '悬架减载请求'
+      hu: 'A felfüggesztés terheléscsökkentési kérése'
+      pt: 'Pedido de redução de carga da suspensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Power cut request'
+        fr: 'Demande de délestage'
+        es: 'Solicitud de deslastre'
+        de: 'Lastabwurfanforderung'
+        it: 'Richiesta di distacco carico'
+        pl: 'Żądanie redukcji obciążenia'
+        ru: 'Запрос сброса нагрузки'
+        zh: '负载脱扣请求'
+        hu: 'Terheléscsökkentési kérés'
+        pt: 'Pedido de corte de alimentação'
+
+  EASYMOVE_POWER_CUT_REQUEST:
+    bits: '1.3'
+    comment:
+      en: 'EASYMOVE power cut (load shedding) request'
+      fr: 'Demande de délestage de l''EASYMOVE'
+      es: 'Solicitud de reducción de carga del EASYMOVE'
+      de: 'Lastabwurfanforderung von EASYMOVE'
+      it: 'Richiesta di riduzione del carico dell''EASYMOVE'
+      pl: 'Żądanie ograniczenia obciążenia systemu EASYMOVE'
+      ru: 'Запрос снижения нагрузки системы EASYMOVE'
+      zh: 'EASYMOVE辅助转向系统减载请求'
+      hu: 'Az EASYMOVE rendszer terheléscsökkentési kérése'
+      pt: 'Pedido de redução de carga do EASYMOVE'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Power cut request'
+        fr: 'Demande de délestage'
+        es: 'Solicitud de deslastre'
+        de: 'Lastabwurfanforderung'
+        it: 'Richiesta di distacco carico'
+        pl: 'Żądanie redukcji obciążenia'
+        ru: 'Запрос сброса нагрузки'
+        zh: '负载脱扣请求'
+        hu: 'Terheléscsökkentési kérés'
+        pt: 'Pedido de corte de alimentação'
+
+  POWER_STEERING_CUT_REQUEST:
+    bits: '1.2'
+    comment:
+      en: 'Power steering power cut (load shedding) request'
+      fr: 'Demande de délestage de la direction assistée'
+      es: 'Solicitud de reducción de carga de la dirección asistida'
+      de: 'Lastabwurfanforderung der Servolenkung'
+      it: 'Richiesta di riduzione del carico dello sterzo assistito'
+      pl: 'Żądanie ograniczenia obciążenia wspomagania kierownicy'
+      ru: 'Запрос снижения нагрузки усилителя рулевого управления'
+      zh: '助力转向减载请求'
+      hu: 'A szervokormány terheléscsökkentési kérése'
+      pt: 'Pedido de redução de carga da direção assistida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Power cut request'
+        fr: 'Demande de délestage'
+        es: 'Solicitud de deslastre'
+        de: 'Lastabwurfanforderung'
+        it: 'Richiesta di distacco carico'
+        pl: 'Żądanie redukcji obciążenia'
+        ru: 'Запрос сброса нагрузки'
+        zh: '负载脱扣请求'
+        hu: 'Terheléscsökkentési kérés'
+        pt: 'Pedido de corte de alimentação'
+
+  ABS_ESP_POWER_CUT_REQUEST:
+    bits: '1.1'
+    comment:
+      en: 'ABS/ESP power cut (load shedding) request'
+      fr: 'Demande de délestage de l''ABS/ESP'
+      es: 'Solicitud de reducción de carga del ABS/ESP'
+      de: 'Lastabwurfanforderung von ABS/ESP'
+      it: 'Richiesta di riduzione del carico di ABS/ESP'
+      pl: 'Żądanie ograniczenia obciążenia ABS/ESP'
+      ru: 'Запрос снижения нагрузки ABS/ESP'
+      zh: 'ABS/ESP减载请求'
+      hu: 'Az ABS/ESP terheléscsökkentési kérése'
+      pt: 'Pedido de redução de carga do ABS/ESP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Power cut request'
+        fr: 'Demande de délestage'
+        es: 'Solicitud de deslastre'
+        de: 'Lastabwurfanforderung'
+        it: 'Richiesta di distacco carico'
+        pl: 'Żądanie redukcji obciążenia'
+        ru: 'Запрос сброса нагрузки'
+        zh: '负载脱扣请求'
+        hu: 'Terheléscsökkentési kérés'
+        pt: 'Pedido de corte de alimentação'
+
+  DEMISTING_REQUEST:
+    bits: '1.0'
+    comment:
+      en: 'Demisting request'
+      fr: 'Demande de désembuage'
+      es: 'Solicitud de desempañado'
+      de: 'Anforderung der Scheibenentfeuchtung'
+      it: 'Richiesta di disappannamento'
+      pl: 'Żądanie odparowania szyb'
+      ru: 'Запрос устранения запотевания стёкол'
+      zh: '除雾请求'
+      hu: 'Páramentesítési kérés'
+      pt: 'Pedido de desembaciamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  CHECKSUM:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '2.3-2.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  AC_BLOWER_SPEED:
+    bits: '3.6-3.0'
+    comment:
+      en: 'Current air conditioning blower speed'
+      fr: 'Vitesse actuelle du pulseur de climatisation'
+      es: 'Velocidad actual del ventilador de climatización'
+      de: 'Aktuelle Drehzahl des Klimaanlagengebläses'
+      it: 'Velocità attuale del ventilatore del climatizzatore'
+      pl: 'Aktualna prędkość dmuchawy klimatyzacji'
+      ru: 'Текущая скорость вентилятора кондиционера'
+      zh: '空调鼓风机当前转速'
+      hu: 'A klíma fúvómotorjának aktuális sebessége'
+      pt: 'Velocidade atual do ventilador de climatização'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00

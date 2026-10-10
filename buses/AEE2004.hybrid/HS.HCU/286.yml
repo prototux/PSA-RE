@@ -1,0 +1,428 @@
+id: 0x286
+name: 'HCU2_DYNAMIC_DATA_5'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor current and fault states (short circuit, mode, performance), from the hybrid control unit.'
+  fr: 'Courant et états de défaut (court-circuit, mode, performance) du moteur électrique avant, issus du calculateur hybride.'
+  es: 'Corriente y estados de fallo (cortocircuito, modo, rendimiento) del motor eléctrico delantero, procedentes de la centralita híbrida.'
+  de: 'Strom und Fehlerzustände (Kurzschluss, Modus, Leistung) des vorderen Elektromotors vom Hybridsteuergerät.'
+  it: 'Corrente e stati di guasto (cortocircuito, modalità, prestazioni) del motore elettrico anteriore, dalla centralina ibrida.'
+  pl: 'Prąd i stany usterek (zwarcie, tryb, wydajność) przedniego silnika elektrycznego z hybrydowego sterownika.'
+  ru: 'Ток и статусы неисправностей (короткое замыкание, режим, производительность) переднего электродвигателя от гибридного блока управления.'
+  zh: '前置电动机的电流及故障状态(短路、模式、性能),来自混合动力控制单元。'
+  hu: 'Az első elektromos motor árama és hibaállapotai (rövidzárlat, üzemmód, teljesítmény) a hibrid vezérlőegységtől.'
+  pt: 'Corrente e estados de avaria (curto-circuito, modo, desempenho) do motor elétrico dianteiro, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU2']
+receivers: ['HCU1']
+
+signals:
+  CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  DCDC_HARDWARE_FAULT:
+    bits: '2.7'
+    comment:
+      en: 'DC/DC converter hardware fault'
+      fr: 'Défaut matériel du convertisseur DC/DC'
+      es: 'Fallo de hardware del convertidor DC/DC'
+      de: 'Hardwarefehler des DC/DC-Wandlers'
+      it: 'Guasto hardware del convertitore DC/DC'
+      pl: 'Usterka sprzętowa przetwornicy DC/DC'
+      ru: 'Аппаратная неисправность DC/DC-преобразователя'
+      zh: 'DC/DC转换器硬件故障'
+      hu: 'A DC/DC átalakító hardverhibája'
+      pt: 'Falha de hardware do conversor DC/DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Hardware fault detected'
+        fr: 'Défaut matériel détecté'
+        es: 'Fallo de hardware detectado'
+        de: 'Hardwarefehler erkannt'
+        it: 'Guasto hardware rilevato'
+        pl: 'Wykryto usterkę sprzętową'
+        ru: 'Обнаружена аппаратная неисправность'
+        zh: '检测到硬件故障'
+        hu: 'Hardverhiba észlelve'
+        pt: 'Avaria de hardware detetada'
+
+  LV_SIDE_CURRENT:
+    bits: '2.2-4.5'
+    comment:
+      en: 'Low-voltage side current'
+      fr: 'Courant côté basse tension'
+      es: 'Corriente en el lado de baja tensión'
+      de: 'Strom auf der Niedervoltseite'
+      it: 'Corrente lato bassa tensione'
+      pl: 'Prąd po stronie niskiego napięcia'
+      ru: 'Ток на стороне низкого напряжения'
+      zh: '低压侧电流'
+      hu: 'Áram a kisfeszültségű oldalon'
+      pt: 'Corrente no lado de baixa tensão'
+    type: 'uint'
+    factor: 0.1
+    offset: -511
+    min: -511
+    max: 510
+    units: 'A'
+    invalid: 0x3FFF
+    default: 0x13F6
+
+  DCDC_HV_VOLTAGE:
+    bits: '4.4-5.0'
+    comment:
+      en: 'DC/DC converter high-voltage side voltage'
+      fr: 'Tension côté haute tension du convertisseur DC/DC'
+      es: 'Tensión del lado de alta tensión del convertidor DC/DC'
+      de: 'Spannung auf der Hochvoltseite des DC/DC-Wandlers'
+      it: 'Tensione lato alta tensione del convertitore DC/DC'
+      pl: 'Napięcie po stronie wysokiego napięcia przetwornicy DC/DC'
+      ru: 'Напряжение на стороне высокого напряжения DC/DC-преобразователя'
+      zh: 'DC/DC转换器高压侧电压'
+      hu: 'A DC/DC átalakító feszültsége a nagyfeszültségű oldalon'
+      pt: 'Tensão do lado de alta tensão do conversor DC/DC'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FFF
+    default: 0x5DC
+
+  DERATING_MAX_TEMPERATURE:
+    bits: '6.7'
+    comment:
+      en: 'Power derating due to maximum temperature'
+      fr: 'Limitation de puissance (derating) sur température maximale'
+      es: 'Reducción de potencia (derating) por temperatura máxima'
+      de: 'Leistungsreduzierung (Derating) wegen maximaler Temperatur'
+      it: 'Riduzione di potenza (derating) per temperatura massima'
+      pl: 'Ograniczenie mocy (derating) z powodu maksymalnej temperatury'
+      ru: 'Снижение мощности (дерейтинг) из-за максимальной температуры'
+      zh: '因最高温度而降额'
+      hu: 'Teljesítménykorlátozás (derating) a maximális hőmérséklet miatt'
+      pt: 'Redução de potência (derating) por temperatura máxima'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No derating'
+        fr: 'Pas de réduction de puissance'
+        es: 'Sin reducción de potencia'
+        de: 'Keine Leistungsreduzierung'
+        it: 'Nessuna riduzione di potenza'
+        pl: 'Brak ograniczenia mocy'
+        ru: 'Нет снижения мощности'
+        zh: '无降额'
+        hu: 'Nincs teljesítménycsökkentés'
+        pt: 'Sem redução de potência'
+      0x01:
+        en: 'Derating'
+        fr: 'Réduction de puissance'
+        es: 'Reducción de potencia'
+        de: 'Leistungsreduzierung'
+        it: 'Riduzione di potenza'
+        pl: 'Ograniczenie mocy'
+        ru: 'Снижение мощности'
+        zh: '降额'
+        hu: 'Teljesítménycsökkentés'
+        pt: 'Redução de potência'
+
+  OFFSET_CALIBRATION_REQUEST:
+    bits: '6.6'
+    comment:
+      en: 'Offset calibration request'
+      fr: 'Requête de calibration de l''offset'
+      es: 'Solicitud de calibración del offset'
+      de: 'Anforderung der Offset-Kalibrierung'
+      it: 'Richiesta di calibrazione dell''offset'
+      pl: 'Żądanie kalibracji przesunięcia (offset)'
+      ru: 'Запрос калибровки смещения (offset)'
+      zh: '偏移量校准请求'
+      hu: 'Az eltolás (offset) kalibrálási kérése'
+      pt: 'Pedido de calibração do offset'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No offset calibration requested'
+        fr: 'Pas de demande de calibration d''offset'
+        es: 'Sin solicitud de calibración de desviación'
+        de: 'Keine Offset-Kalibrierung angefordert'
+        it: 'Nessuna richiesta di calibrazione dell''offset'
+        pl: 'Brak żądania kalibracji przesunięcia'
+        ru: 'Калибровка смещения не запрошена'
+        zh: '未请求偏移校准'
+        hu: 'Nincs eltoláskalibrálási kérés'
+        pt: 'Sem pedido de calibração de offset'
+      0x01:
+        en: 'Offset calibration request'
+        fr: 'Demande de calibration de l''offset'
+        es: 'Solicitud de calibración de offset'
+        de: 'Anforderung der Offset-Kalibrierung'
+        it: 'Richiesta di calibrazione dell''offset'
+        pl: 'Żądanie kalibracji przesunięcia (offsetu)'
+        ru: 'Запрос калибровки смещения'
+        zh: '偏移校准请求'
+        hu: 'Eltolás (offset) kalibrálási kérés'
+        pt: 'Pedido de calibração de offset'
+
+  FRONT_EMOTOR_MAX_TORQUE_FAULT:
+    bits: '6.5'
+    comment:
+      en: 'Front electric machine maximum absolute torque fault'
+      fr: 'Défaut sur le couple absolu maximal de la machine électrique avant'
+      es: 'Fallo en el par absoluto máximo de la máquina eléctrica delantera'
+      de: 'Fehler beim maximalen absoluten Drehmoment der vorderen E-Maschine'
+      it: 'Guasto sulla coppia assoluta massima della macchina elettrica anteriore'
+      pl: 'Usterka maksymalnego momentu bezwzględnego przedniej maszyny elektrycznej'
+      ru: 'Неисправность максимального абсолютного момента передней электромашины'
+      zh: '前电机最大绝对扭矩故障'
+      hu: 'Az első elektromos gép maximális abszolút nyomatékának hibája'
+      pt: 'Falha no binário absoluto máximo da máquina elétrica dianteira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reconfiguration'
+        fr: 'Pas de reconfiguration'
+        es: 'Sin reconfiguración'
+        de: 'Keine Neukonfiguration'
+        it: 'Nessuna riconfigurazione'
+        pl: 'Brak rekonfiguracji'
+        ru: 'Нет реконфигурации'
+        zh: '无重新配置'
+        hu: 'Nincs újrakonfigurálás'
+        pt: 'Sem reconfiguração'
+      0x01:
+        en: 'Reconfiguration'
+        fr: 'Reconfiguration'
+        es: 'Reconfiguración'
+        de: 'Neukonfiguration'
+        it: 'Riconfigurazione'
+        pl: 'Rekonfiguracja'
+        ru: 'Реконфигурация'
+        zh: '重新配置'
+        hu: 'Újrakonfigurálás'
+        pt: 'Reconfiguração'
+
+  FRONT_EMOTOR_MIN_TORQUE_FAULT:
+    bits: '6.4'
+    comment:
+      en: 'Front electric machine minimum absolute torque fault'
+      fr: 'Défaut sur le couple absolu minimal de la machine électrique avant'
+      es: 'Fallo en el par absoluto mínimo de la máquina eléctrica delantera'
+      de: 'Fehler beim minimalen absoluten Drehmoment der vorderen E-Maschine'
+      it: 'Guasto sulla coppia assoluta minima della macchina elettrica anteriore'
+      pl: 'Usterka minimalnego momentu bezwzględnego przedniej maszyny elektrycznej'
+      ru: 'Неисправность минимального абсолютного момента передней электромашины'
+      zh: '前电机最小绝对扭矩故障'
+      hu: 'Az első elektromos gép minimális abszolút nyomatékának hibája'
+      pt: 'Falha no binário absoluto mínimo da máquina elétrica dianteira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reconfiguration'
+        fr: 'Pas de reconfiguration'
+        es: 'Sin reconfiguración'
+        de: 'Keine Neukonfiguration'
+        it: 'Nessuna riconfigurazione'
+        pl: 'Brak rekonfiguracji'
+        ru: 'Нет реконфигурации'
+        zh: '无重新配置'
+        hu: 'Nincs újrakonfigurálás'
+        pt: 'Sem reconfiguração'
+      0x01:
+        en: 'Reconfiguration'
+        fr: 'Reconfiguration'
+        es: 'Reconfiguración'
+        de: 'Neukonfiguration'
+        it: 'Riconfigurazione'
+        pl: 'Rekonfiguracja'
+        ru: 'Реконфигурация'
+        zh: '重新配置'
+        hu: 'Újrakonfigurálás'
+        pt: 'Reconfiguração'
+
+  FRONT_EMOTOR_MAX_TORQUE_FAULT_AN0:
+    bits: '6.3'
+    comment:
+      en: 'Front electric machine maximum torque fault at speed AN0'
+      fr: 'Défaut sur le couple maximal de la machine électrique avant au régime AN0'
+      es: 'Fallo en el par máximo de la máquina eléctrica delantera en el régimen AN0'
+      de: 'Fehler beim maximalen Drehmoment der vorderen E-Maschine bei Drehzahl AN0'
+      it: 'Guasto sulla coppia massima della macchina elettrica anteriore al regime AN0'
+      pl: 'Usterka maksymalnego momentu przedniej maszyny elektrycznej przy prędkości AN0'
+      ru: 'Неисправность максимального момента передней электромашины при AN0'
+      zh: '前电机在AN0转速下的最大扭矩故障'
+      hu: 'Az első elektromos gép AN0 fordulatszámon mért maximális nyomatékának hibája'
+      pt: 'Falha no binário máximo da máquina elétrica dianteira no regime AN0'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reconfiguration'
+        fr: 'Pas de reconfiguration'
+        es: 'Sin reconfiguración'
+        de: 'Keine Neukonfiguration'
+        it: 'Nessuna riconfigurazione'
+        pl: 'Brak rekonfiguracji'
+        ru: 'Нет реконфигурации'
+        zh: '无重新配置'
+        hu: 'Nincs újrakonfigurálás'
+        pt: 'Sem reconfiguração'
+      0x01:
+        en: 'Reconfiguration'
+        fr: 'Reconfiguration'
+        es: 'Reconfiguración'
+        de: 'Neukonfiguration'
+        it: 'Riconfigurazione'
+        pl: 'Rekonfiguracja'
+        ru: 'Реконфигурация'
+        zh: '重新配置'
+        hu: 'Újrakonfigurálás'
+        pt: 'Reconfiguração'
+
+  FRONT_EMOTOR_MAX_TORQUE_FAULT_AN1:
+    bits: '6.2'
+    comment:
+      en: 'Front electric machine maximum torque fault at speed AN1'
+      fr: 'Défaut sur le couple maximal de la machine électrique avant au régime AN1'
+      es: 'Fallo en el par máximo de la máquina eléctrica delantera en el régimen AN1'
+      de: 'Fehler beim maximalen Drehmoment der vorderen E-Maschine bei Drehzahl AN1'
+      it: 'Guasto sulla coppia massima della macchina elettrica anteriore al regime AN1'
+      pl: 'Usterka maksymalnego momentu przedniej maszyny elektrycznej przy prędkości AN1'
+      ru: 'Неисправность максимального момента передней электромашины при AN1'
+      zh: '前电机在AN1转速下的最大扭矩故障'
+      hu: 'Az első elektromos gép AN1 fordulatszámon mért maximális nyomatékának hibája'
+      pt: 'Falha no binário máximo da máquina elétrica dianteira no regime AN1'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reconfiguration'
+        fr: 'Pas de reconfiguration'
+        es: 'Sin reconfiguración'
+        de: 'Keine Neukonfiguration'
+        it: 'Nessuna riconfigurazione'
+        pl: 'Brak rekonfiguracji'
+        ru: 'Нет реконфигурации'
+        zh: '无重新配置'
+        hu: 'Nincs újrakonfigurálás'
+        pt: 'Sem reconfiguração'
+      0x01:
+        en: 'Reconfiguration'
+        fr: 'Reconfiguration'
+        es: 'Reconfiguración'
+        de: 'Neukonfiguration'
+        it: 'Riconfigurazione'
+        pl: 'Rekonfiguracja'
+        ru: 'Реконфигурация'
+        zh: '重新配置'
+        hu: 'Újrakonfigurálás'
+        pt: 'Reconfiguração'
+
+  FRONT_EMOTOR_ESTIMATED_SPEED_FAULT:
+    bits: '6.1'
+    comment:
+      en: 'Front electric machine estimated speed fault'
+      fr: 'Défaut sur le régime estimé de la machine électrique avant'
+      es: 'Fallo en el régimen estimado de la máquina eléctrica delantera'
+      de: 'Fehler bei der geschätzten Drehzahl der vorderen E-Maschine'
+      it: 'Guasto sul regime stimato della macchina elettrica anteriore'
+      pl: 'Usterka szacowanej prędkości obrotowej przedniej maszyny elektrycznej'
+      ru: 'Неисправность оценочной частоты вращения передней электромашины'
+      zh: '前电机估算转速故障'
+      hu: 'Az első elektromos gép becsült fordulatszámának hibája'
+      pt: 'Falha no regime estimado da máquina elétrica dianteira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reconfiguration'
+        fr: 'Pas de reconfiguration'
+        es: 'Sin reconfiguración'
+        de: 'Keine Neukonfiguration'
+        it: 'Nessuna riconfigurazione'
+        pl: 'Brak rekonfiguracji'
+        ru: 'Нет реконфигурации'
+        zh: '无重新配置'
+        hu: 'Nincs újrakonfigurálás'
+        pt: 'Sem reconfiguração'
+      0x01:
+        en: 'Reconfiguration'
+        fr: 'Reconfiguration'
+        es: 'Reconfiguración'
+        de: 'Neukonfiguration'
+        it: 'Riconfigurazione'
+        pl: 'Rekonfiguracja'
+        ru: 'Реконфигурация'
+        zh: '重新配置'
+        hu: 'Újrakonfigurálás'
+        pt: 'Reconfiguração'
+
+  FRONT_EMOTOR_ANGLE_OFFSET:
+    bits: '7.0-8.0'
+    comment:
+      en: 'Angle offset of the front electric machine'
+      fr: 'Décalage angulaire (offset) de la machine électrique avant'
+      es: 'Desfase angular (offset) de la máquina eléctrica delantera'
+      de: 'Winkelversatz (Offset) der vorderen E-Maschine'
+      it: 'Scostamento angolare (offset) della macchina elettrica anteriore'
+      pl: 'Przesunięcie kątowe (offset) przedniej maszyny elektrycznej'
+      ru: 'Угловое смещение (offset) передней электромашины'
+      zh: '前电机角度偏移量'
+      hu: 'Az első elektromos gép szögeltolása (offset)'
+      pt: 'Desfasamento angular (offset) da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 360
+    units: '°'
+    invalid: 0x1FF
+    default: 0x00

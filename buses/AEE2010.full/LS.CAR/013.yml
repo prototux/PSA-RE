@@ -1,0 +1,132 @@
+id: 0x013
+name: 'STEERING_LOCK_STATUS'
+type: 'can'
+length: 1
+comment:
+  en: 'Electric steering column lock status: anti-scanning, rolling code, motor power/command state, column state, unlock handshake.'
+  fr: 'État de l''antivol électrique de colonne de direction : anti-scanning, code tournant, alimentation et commande moteur, état colonne, déverrouillage.'
+  es: 'Estado del antirrobo eléctrico de la columna de dirección: antiescaneo, código variable, alimentación y mando del motor, estado de la columna, protocolo de desbloqueo.'
+  de: 'Status der elektrischen Lenksäulenverriegelung: Anti-Scanning, Rollcode, Motorversorgung/-ansteuerung, Säulenstatus, Entriegelungs-Handshake.'
+  it: 'Stato del bloccasterzo elettrico: anti-scanning, codice variabile, alimentazione e comando motore, stato del piantone, handshake di sblocco.'
+  pl: 'Stan elektrycznej blokady kolumny kierowniczej: ochrona przed skanowaniem, kod zmienny, zasilanie i sterowanie silnikiem, stan kolumny, uzgadnianie odblokowania.'
+  ru: 'Статус электрического замка рулевой колонки: защита от сканирования, плавающий код, питание и управление двигателем, состояние колонки, квитирование разблокировки.'
+  zh: '电动转向柱锁状态:防扫描、滚动码、电机供电/指令状态、转向柱状态、解锁握手。'
+  hu: 'Az elektromos kormányoszlop-zár állapota: letapogatás elleni védelem, kódvándorlás, motor tápellátás/vezérlés állapota, oszlop állapota, kioldási kézfogás.'
+  pt: 'Estado do bloqueio elétrico da coluna de direção: anti-varrimento, código rolante, estado de alimentação/comando do motor, estado da coluna, acordo de destrancagem.'
+observations:
+  en: 'On state change of: AVE_RESPONSE'
+  fr: 'Sur changement d''état de : AVE_RESPONSE'
+  es: 'Al cambiar el estado de: AVE_RESPONSE'
+  de: 'Bei Statusänderung von: AVE_RESPONSE'
+  it: 'Al cambiamento di stato di: AVE_RESPONSE'
+  pl: 'Wysyłane przy zmianie stanu: AVE_RESPONSE'
+  ru: 'При изменении состояния: AVE_RESPONSE'
+  zh: '当DMD_INFO_AVE_BLOQUE, REPONSE_AVE状态变化时'
+  hu: 'A(z), AVE_RESPONSE állapotváltozásakor'
+  pt: 'Na mudança de estado de: AVE_RESPONSE'
+periodicity: ['trigger']
+senders: ['AVE']
+receivers: ['BSI']
+
+signals:
+  AVE_UCE_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'AVE control unit initialization status'
+      fr: 'État d''initialisation de l''UCE de l''AVE'
+      es: 'Estado de inicialización de la UCE del AVE'
+      de: 'Initialisierungsstatus der AVE-Steuereinheit (UCE)'
+      it: 'Stato di inizializzazione dell''UCE dell''AVE'
+      pl: 'Stan inicjalizacji jednostki sterującej UCE AVE'
+      ru: 'Состояние инициализации блока управления UCE AVE'
+      zh: 'AVE控制单元(UCE)初始化状态'
+      hu: 'Az AVE vezérlőegység (UCE) inicializálási állapota'
+      pt: 'Estado de inicialização da unidade de controlo AVE'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Uninitialized'
+        fr: 'Non initialisée'
+        es: 'No inicializada'
+        de: 'Nicht initialisiert'
+        it: 'Non inizializzata'
+        pl: 'Niezainicjowana'
+        ru: 'Не инициализировано'
+        zh: '未初始化'
+        hu: 'Nincs inicializálva'
+        pt: 'Não inicializada'
+      0x01:
+        en: 'Initialized'
+        fr: 'Initialisée'
+        es: 'Inicializado'
+        de: 'Initialisiert'
+        it: 'Inizializzata'
+        pl: 'Zainicjowane'
+        ru: 'Инициализировано'
+        zh: '已初始化'
+        hu: 'Inicializálva'
+        pt: 'Inicializado'
+
+  AVE_RESPONSE:
+    bits: '1.6-1.5'
+    comment:
+      en: 'AVE response'
+      fr: 'Réponse de l''AVE'
+      es: 'Respuesta del AVE'
+      de: 'Antwort des AVE'
+      it: 'Risposta dell''AVE'
+      pl: 'Odpowiedź AVE'
+      ru: 'Ответ AVE'
+      zh: 'AVE应答'
+      hu: 'Az AVE válasza'
+      pt: 'Resposta do AVE'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Write completed OK'
+        fr: 'Écriture terminée, OK'
+        es: 'Escritura finalizada, OK'
+        de: 'Schreiben abgeschlossen, OK'
+        it: 'Scrittura terminata, OK'
+        pl: 'Zapis zakończony, OK'
+        ru: 'Запись завершена, ОК'
+        zh: '写入完成,正常'
+        hu: 'Írás befejezve, OK'
+        pt: 'Escrita concluída OK'
+      0x01:
+        en: 'Invalid request'
+        fr: 'Requête invalide'
+        es: 'Solicitud no válida'
+        de: 'Ungültige Anfrage'
+        it: 'Richiesta non valida'
+        pl: 'Nieprawidłowe żądanie'
+        ru: 'Недействительный запрос'
+        zh: '无效请求'
+        hu: 'Érvénytelen kérés'
+        pt: 'Pedido inválido'
+      0x02:
+        en: 'Write failed'
+        fr: 'Échec d''écriture'
+        es: 'Fallo de escritura'
+        de: 'Schreibvorgang fehlgeschlagen'
+        it: 'Scrittura non riuscita'
+        pl: 'Zapis nieudany'
+        ru: 'Ошибка записи'
+        zh: '写入失败'
+        hu: 'Az írás sikertelen'
+        pt: 'Falha de escrita'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_1:
+    bits: '1.4-1.0'
+    unused: true

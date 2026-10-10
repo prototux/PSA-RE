@@ -1,0 +1,174 @@
+id: 0x086
+name: 'DRIVING_SCHOOL_MODULE_STATUS'
+type: 'can'
+length: 6
+comment:
+  en: 'Driving-school module push-button states (instructor lighting, indicator, fog, horn controls and dual-pedal activation), debounced.'
+  fr: 'États débruités des boutons poussoirs du module auto-école (commandes éclairage, clignotant, antibrouillard, avertisseur moniteur et activation double pédale).'
+  es: 'Estados filtrados de los pulsadores del módulo de autoescuela (mandos de iluminación, intermitente, antiniebla, claxon del instructor y activación de doble pedal).'
+  de: 'Entprellte Tasterzustände des Fahrschulmoduls (Licht-, Blinker-, Nebelschlussleuchten- und Hupensteuerung des Fahrlehrers sowie Doppelpedalaktivierung).'
+  it: 'Stati filtrati dei pulsanti del modulo autoscuola (comandi luci, indicatori, fendinebbia, clacson istruttore e attivazione doppio pedale).'
+  pl: 'Odfiltrowane stany przycisków modułu nauki jazdy (sterowanie światłami, kierunkowskazem, światłami przeciwmgielnymi, klaksonem instruktora i aktywacją podwójnego pedału).'
+  ru: 'Отфильтрованные состояния кнопок модуля автошколы (управление светом, указателями поворота, противотуманными фарами, звуковым сигналом инструктора и активацией сдвоенной педали).'
+  zh: '驾校模块按钮状态(经消抖处理):教练灯光、转向灯、雾灯、喇叭控制及双踏板激活。'
+  hu: 'Az autósiskola-modul nyomógombjainak (zajszűrt) állapotai: oktatói világítás-, index-, ködlámpa- és kürtvezérlés, valamint duplapedál-aktiválás.'
+  pt: 'Estados dos botões do módulo de duplo comando (auto-escola) (iluminação do instrutor, comandos de pisca, nevoeiro, buzina e ativação do pedal duplo), com filtragem antirrebentos.'
+observations:
+  en: 'On state change of: MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur changement d''état de : MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al cambiar el estado de: MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Statusänderung von: MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Al cambiamento di stato di: MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Wysyłane przy zmianie stanu: MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении состояния: MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '当CDE_FEUX_MAE, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, PUSH_AVER_SON_ET_MAE状态变化时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A(z) MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON állapotváltozásakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança de estado de: MAE_LIGHT_CONTROL, MAE_INDICATOR_CONTROL, HEADLAMP_FLASH_BUTTON, HORN_BUTTON. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['200ms', 'trigger']
+senders: ['MAE']
+receivers: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.4'
+    unused: true
+
+  UNUSED_2:
+    bits: '1.3-1.2'
+    unused: true
+
+  HEADLAMP_FLASH_BUTTON:
+    bits: '1.1'
+    comment:
+      en: 'Headlamp flash button'
+      fr: 'Commande appel de phares activée'
+      es: 'Botón de ráfagas de luces'
+      de: 'Lichthupentaste'
+      it: 'Pulsante lampeggio abbaglianti'
+      pl: 'Przycisk błysku świateł drogowych'
+      ru: 'Кнопка светового сигнала'
+      zh: '灯光闪烁按钮'
+      hu: 'Fényvillogtató gomb'
+      pt: 'Botão de chamada de luzes'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.5'
+          fr: 'Aussi observé aux bits 2.5'
+          es: 'También observado en los bits 2.5'
+          de: 'Auch an den Bits 2.5 beobachtet'
+          it: 'Osservato anche ai bit 2.5'
+          pl: 'Obserwowany także na bitach 2.5'
+          ru: 'Также наблюдался в битах 2.5'
+          zh: '也观察到位于位2.5'
+          hu: 'Megfigyelve a(z) 2.5 biteken is'
+          pt: 'Também observado nos bits 2.5'
+        bits: '2.5'
+
+  HORN_BUTTON:
+    bits: '1.0'
+    comment:
+      en: 'Horn button'
+      fr: 'Commande avertisseur sonore activée'
+      es: 'Botón de claxon'
+      de: 'Hupentaste'
+      it: 'Pulsante avvisatore acustico'
+      pl: 'Przycisk klaksonu'
+      ru: 'Кнопка звукового сигнала'
+      zh: '喇叭按钮'
+      hu: 'Dudagomb'
+      pt: 'Botão de buzina'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.4'
+          fr: 'Aussi observé aux bits 2.4'
+          es: 'También observado en los bits 2.4'
+          de: 'Auch an den Bits 2.4 beobachtet'
+          it: 'Osservato anche ai bit 2.4'
+          pl: 'Obserwowany także na bitach 2.4'
+          ru: 'Также наблюдался в битах 2.4'
+          zh: '也观察到位于位2.4'
+          hu: 'Megfigyelve a(z) 2.4 biteken is'
+          pt: 'Também observado nos bits 2.4'
+        bits: '2.4'
+
+  UNUSED_3:
+    bits: '2.7-2.6'
+    unused: true
+
+  UNUSED_4:
+    bits: '2.5-2.4'
+    unused: true
+
+  UNUSED_5:
+    bits: '2.3-2.2'
+    unused: true
+
+  UNUSED_6:
+    bits: '2.1-2.0'
+    unused: true
+
+  UNUSED_7:
+    bits: '3.7-3.6'
+    unused: true
+
+  UNUSED_8:
+    bits: '3.5-3.4'
+    unused: true
+
+  UNUSED_9:
+    bits: '3.3-3.2'
+    unused: true
+
+  UNUSED_10:
+    bits: '3.1-3.0'
+    unused: true

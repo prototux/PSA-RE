@@ -1,284 +1,743 @@
 id: 0x018
 name: 'CRASH_INFO'
-alt_names: ['ETAT_INFO_CRASH']
+type: 'can'
 length: 5
 comment:
-  en: 'Contains crash information'
-  fr: 'Contient des informations relatives aux crashs'
-type: 'can'
+  en: 'Airbag system status: passenger airbag inhibition, rollover and rear impact detection, fired pyrotechnic igniters and crash detected flag. Also used by the body computer as the presence-monitoring frame for the airbag ECU.'
+  fr: 'État du système airbag : inhibition airbag passager, détection de retournement et de choc arrière, allumeurs pyrotechniques déclenchés et indicateur de choc détecté. Utilisée aussi par la BSI comme trame de supervision de présence du calculateur airbag.'
+  es: 'Estado del sistema de airbag: inhibición del airbag del pasajero, detección de vuelco y de impacto trasero, iniciadores pirotécnicos disparados e indicador de impacto detectado. Usada también por la BSI como trama de supervisión de presencia de la centralita de airbag.'
+  de: 'Status des Airbagsystems: Beifahrer-Airbag-Deaktivierung, Überschlag- und Heckaufprallerkennung, ausgelöste pyrotechnische Zünder und Crash-erkannt-Kennzeichen. Wird auch von der BSI als Präsenzüberwachungsrahmen des Airbag-Steuergeräts genutzt.'
+  it: 'Stato del sistema airbag: inibizione airbag passeggero, rilevamento ribaltamento e urto posteriore, inneschi pirotecnici attivati e indicatore di urto rilevato. Usata anche dalla BSI come trama di supervisione della presenza della centralina airbag.'
+  pl: 'Stan systemu poduszek powietrznych: wyłączenie poduszki pasażera, wykrycie przewrócenia i uderzenia tylnego, zadziałane zapłonniki pirotechniczne oraz flaga wykrytego zderzenia. Używana także przez BSI jako ramka nadzoru obecności sterownika poduszek powietrznych.'
+  ru: 'Статус системы подушек безопасности: отключение подушки пассажира, обнаружение опрокидывания и заднего удара, сработавшие пиротехнические воспламенители и флаг обнаруженного столкновения. Также используется BSI как кадр контроля присутствия блока подушек безопасности.'
+  zh: '安全气囊系统状态:乘客安全气囊禁用、翻车和后部碰撞检测、已触发的火药式点火器及碰撞检测标志。BSI也将其用作安全气囊控制单元的存在监控帧。'
+  hu: 'A légzsákrendszer állapota: utas légzsák letiltása, borulás- és hátsó ütközésérzékelés, kioldott pirotechnikai gyújtók és ütközésérzékelési jelző. A BSI a légzsák-vezérlőegység jelenlét-felügyeleti kereteként is használja.'
+  pt: 'Estado do sistema de airbags: inibição do airbag do passageiro, deteção de capotamento e de impacto traseiro, ignitores pirotécnicos disparados e indicador de colisão detetada. Também utilizada pelo computador de servidão como trama de supervisão de presença da unidade de controlo do airbag.'
 periodicity: ['200ms', 'trigger']
-senders:
-  - 'PASS_BSI'
-receivers:
-  - 'BTEL'
-  - 'PLC'
-  - 'PDPC'
-  - 'MDS'
+senders: ['BSI']
+receivers: ['BTEL', 'MDPLC', 'EDP_C', 'MDS']
 
 signals:
   PASSENGER_AIRBAG_INHIBITION_STATUS:
-    alt_names: ['ET_INHIBITION']
-    bits: "1.7"
+    bits: '1.7'
     comment:
-      fr: "Etat de l'inhibition réelle de l'airbag passager"
-      en: "Actual inhibition status of the passenger airbag"
+      en: 'Passenger airbag real inhibition state'
+      fr: 'État de l''inhibition réelle de l''airbag passager'
+      es: 'Estado real de inhibición del airbag del pasajero'
+      de: 'Tatsächlicher Deaktivierungsstatus des Beifahrerairbags'
+      it: 'Stato effettivo di inibizione dell''airbag passeggero'
+      pl: 'Rzeczywisty stan wyłączenia poduszki powietrznej pasażera'
+      ru: 'Фактическое состояние отключения подушки безопасности пассажира'
+      zh: '乘客安全气囊实际抑制状态'
+      hu: 'Az utasoldali légzsák tényleges letiltási állapota'
+      pt: 'Estado real de inibição do airbag do passageiro'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Air bag passager inhibé"
-        en: "Passenger airbag inhibited"
+        en: 'Passenger airbag inhibited'
+        fr: 'Airbag passager inhibé'
+        es: 'Airbag del pasajero inhibido'
+        de: 'Beifahrerairbag deaktiviert'
+        it: 'Airbag passeggero inibito'
+        pl: 'Poduszka powietrzna pasażera wyłączona'
+        ru: 'Подушка безопасности пассажира отключена'
+        zh: '乘客安全气囊已禁用'
+        hu: 'Utasoldali légzsák letiltva'
+        pt: 'Airbag do passageiro inibido'
       0x01:
-        fr: "Air bag passager activé"
-        en: "Passenger airbag activated"
+        en: 'Passenger airbag active'
+        fr: 'Airbag passager activé'
+        es: 'Airbag del pasajero activado'
+        de: 'Beifahrer-Airbag aktiv'
+        it: 'Airbag passeggero attivo'
+        pl: 'Aktywna poduszka powietrzna pasażera'
+        ru: 'Подушка безопасности пассажира активна'
+        zh: '乘客安全气囊已激活'
+        hu: 'Az utasoldali légzsák aktív'
+        pt: 'Airbag do passageiro ativado'
 
   POSSIBLE_FRONTAL_CRASH:
-    alt_names: ['FRONT_REPAR']
-    bits: "1.6"
+    bits: '1.6'
     comment:
-      fr: "Info Crash frontal réparabilité"
-      en: "Possibility of repairing frontal Info Crash"
+      en: 'Possibility of repairing after front crash'
+      fr: 'Info crash frontal réparabilité'
+      es: 'Posibilidad de reparación tras choque frontal'
+      de: 'Reparaturmöglichkeit nach Frontalcrash'
+      it: 'Possibilità di riparazione dopo urto frontale'
+      pl: 'Możliwość naprawy po zderzeniu czołowym'
+      ru: 'Возможность ремонта после фронтального столкновения'
+      zh: '正面碰撞后可修复性'
+      hu: 'Javíthatóság frontális ütközés után'
+      pt: 'Possibilidade de reparação após colisão frontal'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   LOW_SPEED_FRONTAL_CRASH:
-    alt_names: ['FRONT_F_VIT']
-    bits: "1.5"
+    bits: '1.5'
     comment:
-      fr: "Info Crash frontal faible vitesse"
-      en: "Low speed frontal Info Crash"
+      en: 'Low speed front crash info'
+      fr: 'Info crash frontal faible vitesse'
+      es: 'Información de choque frontal a baja velocidad'
+      de: 'Niedriggeschwindigkeits-Frontalcrashinfo'
+      it: 'Informazione di urto frontale a bassa velocità'
+      pl: 'Informacja o zderzeniu czołowym przy niskiej prędkości'
+      ru: 'Информация о фронтальном столкновении на низкой скорости'
+      zh: '低速正面碰撞信息'
+      hu: 'Alacsony sebességű frontális ütközés információ'
+      pt: 'Informação de colisão frontal a baixa velocidade'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   AVERAGE_SPEED_FRONTAL_CRASH_N1:
-    alt_names: ['FRONT_M_VIT_1']
-    bits: "1.4"
+    bits: '1.4'
     comment:
-      fr: "Info Crash frontal moyenne vitesse N1"
-      en: "Average speed to N1 frontal Info Crash"
+      en: 'N1 average speed front crash info'
+      fr: 'Info crash frontal moyenne vitesse N1'
+      es: 'Información de choque frontal a velocidad media N1'
+      de: 'Mittelgeschwindigkeits-Frontalcrashinfo N1'
+      it: 'Informazione di urto frontale a velocità media N1'
+      pl: 'Informacja o zderzeniu czołowym przy średniej prędkości N1'
+      ru: 'Информация о фронтальном столкновении на средней скорости N1'
+      zh: 'N1中速正面碰撞信息'
+      hu: 'N1 közepes sebességű frontális ütközés információ'
+      pt: 'Informação de colisão frontal a velocidade média N1'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   AVERAGE_SPEED_FRONTAL_CRASH_N2:
-    alt_names: ['FRONT_M_VIT_2']
-    bits: "1.3"
+    bits: '1.3'
     comment:
-      fr: "Info Crash frontal moyenne vitesse N2"
-      en: "Average speed to N2 frontal Info Crash"
+      en: 'N2 average speed front crash info'
+      fr: 'Info crash frontal moyenne vitesse N2'
+      es: 'Información de choque frontal a velocidad media N2'
+      de: 'Mittelgeschwindigkeits-Frontalcrashinfo N2'
+      it: 'Informazione di urto frontale a velocità media N2'
+      pl: 'Informacja o zderzeniu czołowym przy średniej prędkości N2'
+      ru: 'Информация о фронтальном столкновении на средней скорости N2'
+      zh: 'N2中速正面碰撞信息'
+      hu: 'N2 közepes sebességű frontális ütközés információ'
+      pt: 'Informação de colisão frontal a velocidade média N2'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   HIGH_SPEED_FRONTAL_CRASH:
-    alt_names: ['FRONT_G_VIT']
-    bits: "1.2"
+    bits: '1.2'
     comment:
-      fr: "Info Crash frontal grande vitesse"
-      en: "High speed frontal Info Crash"
+      en: 'High speed front crash info'
+      fr: 'Info crash frontal grande vitesse'
+      es: 'Información de choque frontal a alta velocidad'
+      de: 'Hochgeschwindigkeits-Frontalcrashinfo'
+      it: 'Informazione di urto frontale ad alta velocità'
+      pl: 'Informacja o zderzeniu czołowym przy dużej prędkości'
+      ru: 'Информация о фронтальном столкновении на высокой скорости'
+      zh: '高速正面碰撞信息'
+      hu: 'Nagy sebességű frontális ütközés információ'
+      pt: 'Informação de colisão frontal a alta velocidade'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   POSSIBLE_SIDE_CRASH:
-    alt_names: ['LAT_REPAR']
-    bits: "1.1"
+    bits: '1.1'
     comment:
-      fr: "Info Crash latéral réparabilité"
-      en: "Possibility of repairing side Info Crash"
+      en: 'Possibility of repairing after side crash'
+      fr: 'Info crash latéral réparabilité'
+      es: 'Posibilidad de reparación tras choque lateral'
+      de: 'Reparaturmöglichkeit nach Seitencrash'
+      it: 'Possibilità di riparazione dopo urto laterale'
+      pl: 'Możliwość naprawy po zderzeniu bocznym'
+      ru: 'Возможность ремонта после бокового столкновения'
+      zh: '侧面碰撞后可修复性'
+      hu: 'Javíthatóság oldalütközés után'
+      pt: 'Possibilidade de reparação após colisão lateral'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   LOW_SPEED_SIDE_CRASH:
-    alt_names: ['LAT_F_VIT']
-    bits: "1.0"
+    bits: '1.0'
     comment:
-      fr: "Info Crash latéral faible vitesse"
-      en: "Low speed side Info Crash"
+      en: 'Low speed side crash info'
+      fr: 'Info crash latéral faible vitesse'
+      es: 'Información de choque lateral a baja velocidad'
+      de: 'Niedriggeschwindigkeits-Seitencrashinfo'
+      it: 'Informazione di urto laterale a bassa velocità'
+      pl: 'Informacja o zderzeniu bocznym przy niskiej prędkości'
+      ru: 'Информация о боковом столкновении на низкой скорости'
+      zh: '低速侧面碰撞信息'
+      hu: 'Alacsony sebességű oldalütközés információ'
+      pt: 'Informação de colisão lateral a baixa velocidade'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   AVERAGE_SPEED_SIDE_CRASH:
-    alt_names: ['LAT_M_VIT']
-    bits: "2.7"
+    bits: '2.7'
     comment:
-      fr: "Info Crash latéral moyenne vitesse"
-      en: "Average speed side Info Crash"
+      en: 'Average speed side crash info'
+      fr: 'Info crash latéral moyenne vitesse'
+      es: 'Información de choque lateral a velocidad media'
+      de: 'Mittelgeschwindigkeits-Seitencrashinfo'
+      it: 'Informazione di urto laterale a velocità media'
+      pl: 'Informacja o zderzeniu bocznym przy średniej prędkości'
+      ru: 'Информация о боковом столкновении на средней скорости'
+      zh: '中速侧面碰撞信息'
+      hu: 'Közepes sebességű oldalütközés információ'
+      pt: 'Informação de colisão lateral a velocidade média'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   HIGH_SPEED_SIDE_CRASH:
-    alt_names: ['LAT_G_VIT']
-    bits: "2.6"
+    bits: '2.6'
     comment:
-      fr: "Info Crash latéral grande vitesse"
-      en: "High speed side Info Crash"
+      en: 'High speed side crash info'
+      fr: 'Info crash latéral grande vitesse'
+      es: 'Información de choque lateral a alta velocidad'
+      de: 'Hochgeschwindigkeits-Seitencrashinfo'
+      it: 'Informazione di urto laterale ad alta velocità'
+      pl: 'Informacja o zderzeniu bocznym przy dużej prędkości'
+      ru: 'Информация о боковом столкновении на высокой скорости'
+      zh: '高速侧面碰撞信息'
+      hu: 'Nagy sebességű oldalütközés információ'
+      pt: 'Informação de colisão lateral a alta velocidade'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   POSSIBLE_REAR_CRASH:
-    alt_names: ['ARR_REPAR']
-    bits: "2.5"
+    bits: '2.5'
     comment:
-      fr: "Info Crash arrière réparabilité"
-      en: "Possibility of repairing rear Info Crash"
+      en: 'Possibility of repairing after rear crash'
+      fr: 'Info crash arrière réparabilité'
+      es: 'Posibilidad de reparación tras choque trasero'
+      de: 'Reparaturmöglichkeit nach Heckcrash'
+      it: 'Possibilità di riparazione dopo urto posteriore'
+      pl: 'Możliwość naprawy po zderzeniu tylnym'
+      ru: 'Возможность ремонта после заднего столкновения'
+      zh: '后部碰撞后可修复性'
+      hu: 'Javíthatóság hátsó ütközés után'
+      pt: 'Possibilidade de reparação após colisão traseira'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   LOW_SPEED_REAR_CRASH:
-    alt_names: ['ARR_F_VIT']
-    bits: "2.4"
+    bits: '2.4'
     comment:
-      fr: "Info Crash arrière faible vitesse"
-      en: "Low speed rear Info Crash"
+      en: 'Low speed rear crash info'
+      fr: 'Info crash arrière faible vitesse'
+      es: 'Información de choque trasero a baja velocidad'
+      de: 'Niedriggeschwindigkeits-Heckcrashinfo'
+      it: 'Informazione di urto posteriore a bassa velocità'
+      pl: 'Informacja o zderzeniu tylnym przy niskiej prędkości'
+      ru: 'Информация о заднем столкновении на низкой скорости'
+      zh: '低速后部碰撞信息'
+      hu: 'Alacsony sebességű hátsó ütközés információ'
+      pt: 'Informação de colisão traseira a baixa velocidade'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   AVERAGE_SPEED_REAR_CRASH:
-    alt_names: ['ARR_M_VIT']
-    bits: "2.3"
+    bits: '2.3'
     comment:
-      fr: "Info Crash arrière moyenne vitesse"
-      en: "Average speed rear Info Crash"
+      en: 'Average speed rear crash info'
+      fr: 'Info crash arrière moyenne vitesse'
+      es: 'Información de choque trasero a velocidad media'
+      de: 'Mittelgeschwindigkeits-Heckcrashinfo'
+      it: 'Informazione di urto posteriore a velocità media'
+      pl: 'Informacja o zderzeniu tylnym przy średniej prędkości'
+      ru: 'Информация о заднем столкновении на средней скорости'
+      zh: '中速后部碰撞信息'
+      hu: 'Közepes sebességű hátsó ütközés információ'
+      pt: 'Informação de colisão traseira a velocidade média'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   HIGH_SPEED_REAR_CRASH:
-    alt_names: ['ARR_G_VIT']
-    bits: "2.2"
+    bits: '2.2'
     comment:
-      fr: "Info Crash arrière grande vitesse"
-      en: "High speed rear Info Crash"
+      en: 'High speed rear crash info'
+      fr: 'Info crash arrière grande vitesse'
+      es: 'Información de choque trasero a alta velocidad'
+      de: 'Hochgeschwindigkeits-Heckcrashinfo'
+      it: 'Informazione di urto posteriore ad alta velocità'
+      pl: 'Informacja o zderzeniu tylnym przy dużej prędkości'
+      ru: 'Информация о заднем столкновении на высокой скорости'
+      zh: '高速后部碰撞信息'
+      hu: 'Nagy sebességű hátsó ütközés információ'
+      pt: 'Informação de colisão traseira a alta velocidade'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   ROLLOVER_CRASH:
-    alt_names: ['RETOURN']
-    bits: "2.1"
+    bits: '2.1'
     comment:
-      fr: "Info Crash retournement"
-      en: "Rollover Info Crash"
+      en: 'Rollover crash info'
+      fr: 'Info crash retournement'
+      es: 'Información de vuelco'
+      de: 'Überschlag-Crashinfo'
+      it: 'Informazione di urto con ribaltamento'
+      pl: 'Informacja o zderzeniu z przewróceniem'
+      ru: 'Информация о столкновении с опрокидыванием'
+      zh: '侧翻碰撞信息'
+      hu: 'Borulásos ütközés információ'
+      pt: 'Informação de capotamento'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   CRASH_DETECTED_SINCE_LAST_POWER_UP:
-    alt_names: ['INFO_CRASH']
-    bits: "2.0"
+    bits: '2.0'
     comment:
-      fr: "Info crash détecté"
-      en: "Info crash detected"
+      en: 'Crash detected since the last power-up'
+      fr: 'Choc détecté depuis la dernière mise sous tension'
+      es: 'Choque detectado desde el último encendido'
+      de: 'Crash seit dem letzten Einschalten erkannt'
+      it: 'Urto rilevato dall''ultima accensione'
+      pl: 'Wykryto zderzenie od ostatniego włączenia'
+      ru: 'Авария обнаружена с момента последнего включения питания'
+      zh: '自上次上电以来检测到碰撞'
+      hu: 'Ütközés érzékelve a legutóbbi bekapcsolás óta'
+      pt: 'Colisão detetada desde a última ativação'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté depuis la dernière mise du + APC"
-        en: "Crash detected since the last +APC power-up"
+        en: 'Crash detected since last ignition on'
+        fr: 'Choc détecté depuis la dernière mise du +APC'
+        es: 'Impacto detectado desde el último encendido'
+        de: 'Aufprall erkannt seit letztem Einschalten der Zündung'
+        it: 'Urto rilevato dall''ultima accensione'
+        pl: 'Wykryto zderzenie od ostatniego włączenia zapłonu'
+        ru: 'Обнаружено столкновение с момента последнего включения зажигания'
+        zh: '自上次点火开启以来检测到碰撞'
+        hu: 'Ütközés érzékelve a legutóbbi gyújtásbekapcsolás óta'
+        pt: 'Colisão detetada desde a última ligação da ignição'
 
   UNUSED_1:
-    alt_names: ['LIBRE_1']
-    bits: "3.7-3.3"
+    bits: '3.7-3.3'
     unused: true
 
-  AUTOMATIC_ECALL:
-    alt_names: ['ECALL_AUTO']
-    bits: "3.2-3.1"
+  AUTOMATIC_ECALL_TRIGGER:
+    bits: '3.2-3.1'
+    alt_names: ['AUTOMATIC_ECALL', 'ECALL_AUTO']
     comment:
-      fr: "Envoi d'un Ecall auto suite à un choc détecté"
-      en: "Sending an automatic Ecall following a detected shock"
+      en: 'Sending an automatic eCall after a detected impact'
+      fr: 'Envoi d''un eCall automatique suite à un choc détecté'
+      es: 'Envío de una eCall automática tras un impacto detectado'
+      de: 'Automatischer eCall-Versand nach erkanntem Aufprall'
+      it: 'Invio di una eCall automatica dopo un urto rilevato'
+      pl: 'Wysłanie automatycznego połączenia eCall po wykryciu uderzenia'
+      ru: 'Автоматическая отправка eCall после обнаружения удара'
+      zh: '检测到碰撞后自动发送eCall'
+      hu: 'Automatikus eCall küldése észlelt ütközés után'
+      pt: 'Envio de uma eCall automática após um impacto detetado'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        fr: "Calculateur airbag inapte à détecter un choc"
-        en: "Airbag ECU unable to detect a shock"
+        en: 'Airbag ECU unable to detect an impact'
+        fr: 'Calculateur airbag incapable de détecter un choc'
+        es: 'Unidad de control del airbag incapaz de detectar un impacto'
+        de: 'Airbagsteuergerät kann keinen Aufprall erkennen'
+        it: 'Centralina airbag non in grado di rilevare un urto'
+        pl: 'Sterownik poduszek powietrznych nie może wykryć uderzenia'
+        ru: 'Блок управления подушками безопасности не может обнаружить удар'
+        zh: '安全气囊控制单元无法检测碰撞'
+        hu: 'Légzsák vezérlőegység nem képes ütközést érzékelni'
+        pt: 'Unidade de controlo do airbag incapaz de detetar um impacto'
       0x01:
-        fr: "Pas de choc détecté"
-        en: "No shock detected"
+        en: 'No impact detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin impacto detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Brak wykrytego uderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs ütközés észlelve'
+        pt: 'Sem impacto detetado'
       0x02:
-        fr: "Choc détecté nécessitant l'envoi d'un Ecall auto"
-        en: "Shock detected requiring an automatic Ecall"
+        en: 'Impact detected that needs an automatic eCall'
+        fr: 'Choc détecté nécessitant l''envoi d''un eCall automatique'
+        es: 'Impacto detectado que requiere el envío de una eCall automática'
+        de: 'Aufprall erkannt, der einen automatischen eCall erfordert'
+        it: 'Urto rilevato che richiede l''invio di una eCall automatica'
+        pl: 'Wykryto uderzenie wymagające wysłania automatycznego eCall'
+        ru: 'Обнаружено столкновение, требующее автоматического вызова eCall'
+        zh: '检测到需要发送自动eCall的碰撞'
+        hu: 'Ütközés észlelve, amely automatikus eCall küldését igényli'
+        pt: 'Impacto detetado que requer o envio de uma eCall automática'
       0x03:
         unused: true
 
   PEDESTRIAN_CRASH_INFO:
-    alt_names: ['PIETON']
-    bits: "3.0"
+    bits: '3.0'
     comment:
-      fr: "Info Crash pieton"
-      en: "Pedestrian Info crash"
+      en: 'Pedestrian impact info'
+      fr: 'Info crash piéton'
+      es: 'Información de choque con peatón'
+      de: 'Fußgängeraufprallinfo'
+      it: 'Informazione di urto con pedone'
+      pl: 'Informacja o zderzeniu z pieszym'
+      ru: 'Информация о наезде на пешехода'
+      zh: '行人碰撞信息'
+      hu: 'Gyalogosütközés információ'
+      pt: 'Informação de choque com peão'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: "Crash non détecté"
-        en: "Crash not detected"
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
       0x01:
-        fr: "Crash détecté"
-        en: "Crash detected"
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
 
   UNUSED_2:
-    alt_names: ['LIBRE_2']
-    bits: "4.7-5.0"
+    bits: '4.7-5.0'
     unused: true

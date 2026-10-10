@@ -1,0 +1,2260 @@
+id: 0x564
+name: 'MESSAGE_FOR_DISPLAY'
+type: 'van'
+length: 27
+comment:
+  en: 'Complementary display data from the BSI: bulb faults, body height, lamps commanded, cruise/unlock/load-shedding messages, doors/openings state, LPG range and trip computer data.'
+  fr: 'Données complémentaires d''affichage de la BSI : défauts d''ampoules, hauteur de caisse, commande des lampes, messages régulateur/déverrouillage/délestage, état des ouvrants, autonomie GPL et données ordinateur de bord.'
+  es: 'Datos complementarios de visualización de la BSI: fallos de bombillas, altura de carrocería, mando de lámparas, mensajes de regulador/desbloqueo/reducción de carga, estado de las puertas, autonomía GLP y datos del ordenador de a bordo.'
+  de: 'Ergänzende Anzeigedaten des BSI: Lampenfehler, Karosseriehöhe, Lampenansteuerung, Tempomat-/Entriegelungs-/Lastabwurfmeldungen, Zustand der Öffnungen, Autogas-Reichweite und Bordcomputerdaten.'
+  it: 'Dati di visualizzazione complementari della BSI: guasti lampadine, altezza scocca, comando lampade, messaggi regolatore/sblocco/riduzione carico, stato delle aperture, autonomia GPL e dati computer di bordo.'
+  pl: 'Dodatkowe dane wyświetlacza z BSI: usterki żarówek, wysokość nadwozia, sterowanie lampami, komunikaty tempomatu/odblokowania/zrzutu obciążenia, stan otwarć, zasięg LPG i dane komputera pokładowego.'
+  ru: 'Дополнительные данные дисплея от BSI: неисправности ламп, высота кузова, управление лампами, сообщения круиз-контроля/разблокировки/сброса нагрузки, состояние проёмов, запас хода на ГБО и данные бортового компьютера.'
+  zh: 'BSI发出的补充显示数据:灯泡故障、车身高度、灯光命令、巡航/解锁/减载消息、门窗状态、液化气续航里程和行车电脑数据。'
+  hu: 'A BSI kiegészítő kijelzési adatai: izzóhibák, karosszéria magasság, lámpavezérlés, tempomat/kioldás/terheléscsökkentés üzenetek, nyílászárók állapota, LPG hatótáv és fedélzeti számítógép adatai.'
+  pt: 'Dados complementares de visualização da BSI: avarias de lâmpadas, altura da carroçaria, luzes comandadas, mensagens de regulador de velocidade/destrancagem/corte de carga, estado das portas/aberturas, autonomia de GPL e dados do computador de bordo.'
+periodicity: ['trigger', 'request']
+senders: ['BSI']
+receivers: ['BTEL', 'EMF']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BTEL']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  FRONT_RIGHT_LAMP_STATUS:
+    bits: '2.7'
+    comment:
+      en: 'Front right sidelight fault'
+      fr: 'Défaut de la lanterne avant droite'
+      es: 'Fallo de la luz de posición delantera derecha'
+      de: 'Fehler des rechten vorderen Standlichts'
+      it: 'Guasto della luce di posizione anteriore destra'
+      pl: 'Usterka prawego przedniego światła pozycyjnego'
+      ru: 'Неисправность переднего правого габаритного огня'
+      zh: '右前示宽灯故障'
+      hu: 'Jobb első helyzetjelző lámpa hiba'
+      pt: 'Avaria da luz de presença dianteira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  REAR_RIGHT_LAMP_STATUS:
+    bits: '2.6'
+    comment:
+      en: 'Rear right sidelight fault'
+      fr: 'Défaut de la lanterne arrière droite'
+      es: 'Fallo de la luz de posición trasera derecha'
+      de: 'Fehler des rechten hinteren Standlichts'
+      it: 'Guasto della luce di posizione posteriore destra'
+      pl: 'Usterka prawego tylnego światła pozycyjnego'
+      ru: 'Неисправность заднего правого габаритного огня'
+      zh: '右后示宽灯故障'
+      hu: 'Jobb hátsó helyzetjelző lámpa hiba'
+      pt: 'Avaria da luz de presença traseira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  FRONT_LEFT_LAMP_STATUS:
+    bits: '2.5'
+    comment:
+      en: 'Front left sidelight fault'
+      fr: 'Défaut de la lanterne avant gauche'
+      es: 'Fallo de la luz de posición delantera izquierda'
+      de: 'Fehler des linken vorderen Standlichts'
+      it: 'Guasto della luce di posizione anteriore sinistra'
+      pl: 'Usterka lewego przedniego światła pozycyjnego'
+      ru: 'Неисправность переднего левого габаритного огня'
+      zh: '左前示宽灯故障'
+      hu: 'Bal első helyzetjelző lámpa hiba'
+      pt: 'Avaria da luz de presença dianteira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  REAR_LEFT_SIDELIGHT_FAULT:
+    bits: '2.4'
+    alt_names: ['REAR_LEFT_LAMP_STATUS', 'LAN_AG_D_DEFL_CPL']
+    comment:
+      en: 'Rear left sidelight fault'
+      fr: 'Défaut de la lanterne arrière gauche'
+      es: 'Fallo de la luz de posición trasera izquierda'
+      de: 'Fehler des linken hinteren Standlichts'
+      it: 'Guasto della luce di posizione posteriore sinistra'
+      pl: 'Usterka lewego tylnego światła pozycyjnego'
+      ru: 'Неисправность заднего левого габаритного огня'
+      zh: '左后示宽灯故障'
+      hu: 'Bal hátsó helyzetjelző lámpa hiba'
+      pt: 'Avaria da luz de presença traseira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  RIGHT_LOW_BEAM_STATUS:
+    bits: '2.3'
+    comment:
+      en: 'Right low beam fault'
+      fr: 'Défaut du feu de croisement droit'
+      es: 'Fallo de la luz de cruce derecha'
+      de: 'Fehler des rechten Abblendlichts'
+      it: 'Guasto dell''anabbagliante destro'
+      pl: 'Usterka prawego światła mijania'
+      ru: 'Неисправность правой фары ближнего света'
+      zh: '右近光灯故障'
+      hu: 'Jobb tompított fényszóró hiba'
+      pt: 'Avaria do farol de cruzamento direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  LEFT_LOW_BEAM_STATUS:
+    bits: '2.2'
+    comment:
+      en: 'Left low beam fault'
+      fr: 'Défaut du feu de croisement gauche'
+      es: 'Fallo de la luz de cruce izquierda'
+      de: 'Fehler des linken Abblendlichts'
+      it: 'Guasto dell''anabbagliante sinistro'
+      pl: 'Usterka lewego światła mijania'
+      ru: 'Неисправность левой фары ближнего света'
+      zh: '左近光灯故障'
+      hu: 'Bal tompított fényszóró hiba'
+      pt: 'Avaria do farol de cruzamento esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  RIGHT_HIGH_BEAM_STATUS:
+    bits: '2.1'
+    comment:
+      en: 'Right high beam fault'
+      fr: 'Défaut du feu de route droit'
+      es: 'Fallo de la luz de carretera derecha'
+      de: 'Fehler des rechten Fernlichts'
+      it: 'Guasto dell''abbagliante destro'
+      pl: 'Usterka prawego światła drogowego'
+      ru: 'Неисправность правой фары дальнего света'
+      zh: '右远光灯故障'
+      hu: 'Jobb távolsági fényszóró hiba'
+      pt: 'Avaria do farol de máximos direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  LEFT_HIGH_BEAM_STATUS:
+    bits: '2.0'
+    comment:
+      en: 'Left high beam fault'
+      fr: 'Défaut du feu de route gauche'
+      es: 'Fallo de la luz de carretera izquierda'
+      de: 'Fehler des linken Fernlichts'
+      it: 'Guasto dell''abbagliante sinistro'
+      pl: 'Usterka lewego światła drogowego'
+      ru: 'Неисправность левой фары дальнего света'
+      zh: '左远光灯故障'
+      hu: 'Bal távolsági fényszóró hiba'
+      pt: 'Avaria do farol de máximos esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  RIGHT_BRAKE_LIGHT_STATUS:
+    bits: '3.7'
+    comment:
+      en: 'Right brake light fault'
+      fr: 'Défaut du feu de stop droit'
+      es: 'Fallo de la luz de freno derecha'
+      de: 'Fehler der rechten Bremsleuchte'
+      it: 'Guasto della luce di stop destra'
+      pl: 'Usterka prawego światła stop'
+      ru: 'Неисправность правого стоп-сигнала'
+      zh: '右刹车灯故障'
+      hu: 'Jobb féklámpa hiba'
+      pt: 'Falha da luz de travão direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  LEFT_BRAKE_LIGHT_STATUS:
+    bits: '3.6'
+    comment:
+      en: 'Left brake light fault'
+      fr: 'Défaut du feu de stop gauche'
+      es: 'Fallo de la luz de freno izquierda'
+      de: 'Fehler der linken Bremsleuchte'
+      it: 'Guasto della luce di stop sinistra'
+      pl: 'Usterka lewego światła stop'
+      ru: 'Неисправность левого стоп-сигнала'
+      zh: '左刹车灯故障'
+      hu: 'Bal féklámpa hiba'
+      pt: 'Falha da luz de travão esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  FRONT_LEFT_FOG_LIGHT_STATUS:
+    bits: '3.5'
+    comment:
+      en: 'Front left fog light fault'
+      fr: 'Défaut du feu antibrouillard avant gauche'
+      es: 'Fallo del faro antiniebla delantero izquierdo'
+      de: 'Fehler des linken vorderen Nebelscheinwerfers'
+      it: 'Guasto del fendinebbia anteriore sinistro'
+      pl: 'Usterka lewego przedniego światła przeciwmgielnego'
+      ru: 'Неисправность передней левой противотуманной фары'
+      zh: '左前雾灯故障'
+      hu: 'Bal első ködlámpa hiba'
+      pt: 'Avaria do farol de nevoeiro dianteiro esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  FRONT_RIGHT_FOG_LIGHT_STATUS:
+    bits: '3.4'
+    comment:
+      en: 'Front right fog light fault'
+      fr: 'Défaut du feu antibrouillard avant droit'
+      es: 'Fallo del faro antiniebla delantero derecho'
+      de: 'Fehler des rechten vorderen Nebelscheinwerfers'
+      it: 'Guasto del fendinebbia anteriore destro'
+      pl: 'Usterka prawego przedniego światła przeciwmgielnego'
+      ru: 'Неисправность передней правой противотуманной фары'
+      zh: '右前雾灯故障'
+      hu: 'Jobb első ködlámpa hiba'
+      pt: 'Avaria do farol de nevoeiro dianteiro direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  REAR_LEFT_FOG_LIGHT_STATUS:
+    bits: '3.3'
+    comment:
+      en: 'Rear left fog light fault'
+      fr: 'Défaut du feu antibrouillard arrière gauche'
+      es: 'Fallo del faro antiniebla trasero izquierdo'
+      de: 'Fehler der linken hinteren Nebelschlussleuchte'
+      it: 'Guasto del fendinebbia posteriore sinistro'
+      pl: 'Usterka lewego tylnego światła przeciwmgielnego'
+      ru: 'Неисправность задней левой противотуманной фары'
+      zh: '左后雾灯故障'
+      hu: 'Bal hátsó ködlámpa hiba'
+      pt: 'Avaria do farolim de nevoeiro traseiro esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  REAR_RIGHT_FOG_LIGHT_STATUS:
+    bits: '3.2'
+    comment:
+      en: 'Rear right fog light fault'
+      fr: 'Défaut du feu antibrouillard arrière droit'
+      es: 'Fallo del faro antiniebla trasero derecho'
+      de: 'Fehler der rechten hinteren Nebelschlussleuchte'
+      it: 'Guasto del fendinebbia posteriore destro'
+      pl: 'Usterka prawego tylnego światła przeciwmgielnego'
+      ru: 'Неисправность задней правой противотуманной фары'
+      zh: '右后雾灯故障'
+      hu: 'Jobb hátsó ködlámpa hiba'
+      pt: 'Avaria do farolim de nevoeiro traseiro direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  FRONT_LEFT_XENON_LIGHT_STATUS:
+    bits: '3.1'
+    comment:
+      en: 'Front left xenon (discharge) light fault'
+      fr: 'Défaut de la lampe à décharge (xénon) avant gauche'
+      es: 'Fallo de la lámpara de descarga (xenón) delantera izquierda'
+      de: 'Fehler der linken vorderen Xenon-Entladungslampe'
+      it: 'Guasto della lampada a scarica (xeno) anteriore sinistra'
+      pl: 'Usterka lewej przedniej lampy wyładowczej (ksenonowej)'
+      ru: 'Неисправность передней левой газоразрядной (ксеноновой) лампы'
+      zh: '左前氙气放电灯故障'
+      hu: 'Bal első xenon (kisülőlámpa) hiba'
+      pt: 'Avaria da luz de xénon (descarga) dianteira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  FRONT_RIGHT_XENON_LIGHT_STATUS:
+    bits: '3.0'
+    comment:
+      en: 'Front right xenon (discharge) light fault'
+      fr: 'Défaut de la lampe à décharge (xénon) avant droite'
+      es: 'Fallo de la lámpara de descarga (xenón) delantera derecha'
+      de: 'Fehler der rechten vorderen Xenon-Entladungslampe'
+      it: 'Guasto della lampada a scarica (xeno) anteriore destra'
+      pl: 'Usterka prawej przedniej lampy wyładowczej (ksenonowej)'
+      ru: 'Неисправность передней правой газоразрядной (ксеноновой) лампы'
+      zh: '右前氙气放电灯故障'
+      hu: 'Jobb első xenon (kisülőlámpa) hiba'
+      pt: 'Avaria da luz de xénon (descarga) dianteira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  FRONT_RIGHT_TURN_INDICATOR_LIGHT_STATUS:
+    bits: '4.7'
+    comment:
+      en: 'Front right turn indicator fault'
+      fr: 'Défaut du clignotant avant droit'
+      es: 'Fallo del intermitente delantero derecho'
+      de: 'Fehler des rechten vorderen Blinkers'
+      it: 'Guasto della freccia anteriore destra'
+      pl: 'Usterka prawego przedniego kierunkowskazu'
+      ru: 'Неисправность переднего правого указателя поворота'
+      zh: '右前转向灯故障'
+      hu: 'Jobb első irányjelző hiba'
+      pt: 'Falha do pisca dianteiro direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  REAR_RIGHT_TURN_INDICATOR_LIGHT_STATUS:
+    bits: '4.6'
+    comment:
+      en: 'Rear right turn indicator fault'
+      fr: 'Défaut du clignotant arrière droit'
+      es: 'Fallo del intermitente trasero derecho'
+      de: 'Fehler des rechten hinteren Blinkers'
+      it: 'Guasto della freccia posteriore destra'
+      pl: 'Usterka prawego tylnego kierunkowskazu'
+      ru: 'Неисправность заднего правого указателя поворота'
+      zh: '右后转向灯故障'
+      hu: 'Jobb hátsó irányjelző hiba'
+      pt: 'Falha do pisca traseiro direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  FRONT_LEFT_TURN_INDICATOR_LIGHT_STATUS:
+    bits: '4.5'
+    comment:
+      en: 'Front left turn indicator fault'
+      fr: 'Défaut du clignotant avant gauche'
+      es: 'Fallo del intermitente delantero izquierdo'
+      de: 'Fehler des linken vorderen Blinkers'
+      it: 'Guasto della freccia anteriore sinistra'
+      pl: 'Usterka lewego przedniego kierunkowskazu'
+      ru: 'Неисправность переднего левого указателя поворота'
+      zh: '左前转向灯故障'
+      hu: 'Bal első irányjelző hiba'
+      pt: 'Falha do pisca dianteiro esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  REAR_LEFT_INDICATOR_FAULT:
+    bits: '4.4'
+    alt_names: ['REAR_LEFT_TURN_INDICATOR_LIGHT_STATUS', 'CLIG_AR_D_DEFL_CPL']
+    comment:
+      en: 'Rear left turn indicator fault'
+      fr: 'Défaut du clignotant arrière gauche'
+      es: 'Fallo del intermitente trasero izquierdo'
+      de: 'Fehler des linken hinteren Blinkers'
+      it: 'Guasto della freccia posteriore sinistra'
+      pl: 'Usterka lewego tylnego kierunkowskazu'
+      ru: 'Неисправность заднего левого указателя поворота'
+      zh: '左后转向灯故障'
+      hu: 'Bal hátsó irányjelző hiba'
+      pt: 'Falha do pisca traseiro esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, or fault unlikely'
+        fr: 'Défaut absent ou improbable'
+        es: 'Fallo ausente o improbable'
+        de: 'Fehler nicht vorhanden oder unwahrscheinlich'
+        it: 'Guasto assente o improbabile'
+        pl: 'Brak usterki lub mało prawdopodobna'
+        ru: 'Неисправность отсутствует или маловероятна'
+        zh: '无故障或故障可能性低'
+        hu: 'Nincs hiba, vagy valószínűtlen'
+        pt: 'Sem falha, ou falha improvável'
+      0x01:
+        en: 'Lamp fault'
+        fr: 'Défaut de lampe'
+        es: 'Fallo de lámpara'
+        de: 'Lampenfehler'
+        it: 'Guasto lampada'
+        pl: 'Usterka żarówki'
+        ru: 'Неисправность лампы'
+        zh: '灯泡故障'
+        hu: 'Izzóhiba'
+        pt: 'Falha de lâmpada'
+
+  US_BRAKE_LIGHT_STATUS:
+    bits: '4.3'
+    comment:
+      en: 'US-spec brake light burnt out'
+      fr: 'Feu de stop (version US) grillé'
+      es: 'Luz de freno (versión US) fundida'
+      de: 'Bremsleuchte (US-Version) durchgebrannt'
+      it: 'Luce di stop (versione US) bruciata'
+      pl: 'Przepalone światło stop (wersja US)'
+      ru: 'Перегорел стоп-сигнал (версия US)'
+      zh: '美规刹车灯烧坏'
+      hu: 'US kivitelű féklámpa kiégett'
+      pt: 'Luz de STOP (especificação EUA) fundida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Brake light not blown'
+        fr: 'Feu stop non grillé'
+        es: 'Luz de freno no fundida'
+        de: 'Bremsleuchte nicht durchgebrannt'
+        it: 'Luce di stop non bruciata'
+        pl: 'Światło stop niesprawne (nieprzepalone)'
+        ru: 'Стоп-сигнал не перегорел'
+        zh: '刹车灯未烧毁'
+        hu: 'A féklámpa nincs kiégve'
+        pt: 'Luz de travão não fundida'
+      0x01:
+        en: 'Blown'
+        fr: 'Grillé'
+        es: 'Fundido'
+        de: 'Durchgebrannt'
+        it: 'Bruciato'
+        pl: 'Przepalona'
+        ru: 'Перегорела'
+        zh: '已烧坏'
+        hu: 'Kiégett'
+        pt: 'Fundida'
+
+  UNUSED_1:
+    bits: '4.2-4.0'
+    unused: true
+
+  BODY_POSITION_STATUS:
+    bits: '5.7'
+    comment:
+      en: 'Body height position accepted or rejected'
+      fr: 'Position (hauteur) de caisse acceptée ou refusée'
+      es: 'Posición (altura) de la carrocería aceptada o rechazada'
+      de: 'Karosseriehöhenposition akzeptiert oder abgelehnt'
+      it: 'Posizione (altezza) della scocca accettata o rifiutata'
+      pl: 'Pozycja (wysokość) nadwozia zaakceptowana lub odrzucona'
+      ru: 'Положение (высота) кузова принято или отклонено'
+      zh: '车身高度位置已接受或已拒绝'
+      hu: 'Karosszéria magasságpozíció elfogadva vagy elutasítva'
+      pt: 'Posição (altura) da carroçaria aceite ou recusada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Position refused'
+        fr: 'Position refusée'
+        es: 'Posición rechazada'
+        de: 'Position abgelehnt'
+        it: 'Posizione rifiutata'
+        pl: 'Pozycja odrzucona'
+        ru: 'Позиция отклонена'
+        zh: '位置被拒绝'
+        hu: 'A pozíció elutasítva'
+        pt: 'Posição recusada'
+
+  BODY_POSITION_VALUE:
+    bits: '5.6-5.4'
+    comment:
+      en: 'Body height coding'
+      fr: 'Codage de la hauteur de caisse'
+      es: 'Codificación de la altura de la carrocería'
+      de: 'Codierung der Karosseriehöhe'
+      it: 'Codifica dell''altezza della scocca'
+      pl: 'Kodowanie wysokości nadwozia'
+      ru: 'Кодирование клиренса кузова'
+      zh: '车身高度编码'
+      hu: 'Karosszéria magasságának kódolása'
+      pt: 'Codificação da altura da carroçaria'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Low'
+        fr: 'Basse'
+        es: 'Baja'
+        de: 'Niedrig'
+        it: 'Bassa'
+        pl: 'Niska'
+        ru: 'Низкая'
+        zh: '低'
+        hu: 'Alacsony'
+        pt: 'Baixa'
+      0x01:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x02:
+        en: 'Medium'
+        fr: 'Moyen'
+        es: 'Medio'
+        de: 'Mittel'
+        it: 'Medio'
+        pl: 'Średni'
+        ru: 'Средний'
+        zh: '中等'
+        hu: 'Közepes'
+        pt: 'Médio'
+      0x03:
+        en: 'High'
+        fr: 'Haut'
+        es: 'Alto'
+        de: 'Hoch'
+        it: 'Alto'
+        pl: 'Wysoki'
+        ru: 'Высокий'
+        zh: '高'
+        hu: 'Magas'
+        pt: 'Alto'
+
+  UNUSED_2:
+    bits: '5.3-5.1'
+    unused: true
+
+  CMD_LAMPES_LD_CPL:
+    bits: '5.0'
+    comment:
+      en: 'Right sidelights commanded'
+      fr: 'Lanternes droites commandées'
+      es: 'Luces de posición derechas accionadas'
+      de: 'Angesteuertes rechtes Standlicht'
+      it: 'Luci di posizione destre comandate'
+      pl: 'Sterowanie prawymi światłami pozycyjnymi'
+      ru: 'Управление правыми габаритными огнями'
+      zh: '右示宽灯已控制点亮'
+      hu: 'Jobb helyzetjelző lámpák vezérelve'
+      pt: 'Luzes de presença direitas acionadas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_LG_CPL:
+    bits: '6.7'
+    comment:
+      en: 'Left sidelights commanded'
+      fr: 'Lanternes gauches commandées'
+      es: 'Luces de posición izquierdas accionadas'
+      de: 'Angesteuertes linkes Standlicht'
+      it: 'Luci di posizione sinistre comandate'
+      pl: 'Sterowanie lewymi światłami pozycyjnymi'
+      ru: 'Управление левыми габаритными огнями'
+      zh: '左示宽灯已控制点亮'
+      hu: 'Bal helyzetjelző lámpák vezérelve'
+      pt: 'Luzes de presença esquerdas acionadas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_C_CPL:
+    bits: '6.6'
+    comment:
+      en: 'Low beam (dipped) lights commanded'
+      fr: 'Feux de croisement commandés'
+      es: 'Luces de cruce accionadas'
+      de: 'Angesteuertes Abblendlicht'
+      it: 'Anabbaglianti comandati'
+      pl: 'Sterowanie światłami mijania'
+      ru: 'Управление ближним светом'
+      zh: '近光灯已控制点亮'
+      hu: 'Tompított fényszórók vezérelve'
+      pt: 'Luzes de cruzamento acionadas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_FR_CPL:
+    bits: '6.5'
+    comment:
+      en: 'High beam lights commanded'
+      fr: 'Feux de route commandés'
+      es: 'Luces de carretera accionadas'
+      de: 'Angesteuertes Fernlicht'
+      it: 'Abbaglianti comandati'
+      pl: 'Sterowanie światłami drogowymi'
+      ru: 'Управление дальним светом'
+      zh: '远光灯已控制点亮'
+      hu: 'Távolsági fényszórók vezérelve'
+      pt: 'Luzes de estrada acionadas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_S_CPL:
+    bits: '6.4'
+    comment:
+      en: 'Brake (stop) lights commanded'
+      fr: 'Feux de stop commandés'
+      es: 'Luces de freno accionadas'
+      de: 'Angesteuerte Bremsleuchten'
+      it: 'Luci di stop comandate'
+      pl: 'Sterowanie światłami stop'
+      ru: 'Управление стоп-сигналами'
+      zh: '刹车灯已控制点亮'
+      hu: 'Féklámpák vezérelve'
+      pt: 'Luzes de travão acionadas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_ABAV_CPL:
+    bits: '6.3'
+    comment:
+      en: 'Front fog lights commanded'
+      fr: 'Feux antibrouillard avant commandés'
+      es: 'Faros antiniebla delanteros accionados'
+      de: 'Angesteuerte Nebelscheinwerfer'
+      it: 'Fendinebbia anteriori comandati'
+      pl: 'Sterowanie przednimi światłami przeciwmgielnymi'
+      ru: 'Управление передними противотуманными фарами'
+      zh: '前雾灯已控制点亮'
+      hu: 'Első ködlámpák vezérelve'
+      pt: 'Faróis antinevoeiro dianteiros acionados'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_ABAR_CPL:
+    bits: '6.2'
+    comment:
+      en: 'Rear fog lights commanded'
+      fr: 'Feux antibrouillard arrière commandés'
+      es: 'Faros antiniebla traseros accionados'
+      de: 'Angesteuerte Nebelschlussleuchten'
+      it: 'Fendinebbia posteriori comandati'
+      pl: 'Sterowanie tylnymi światłami przeciwmgielnymi'
+      ru: 'Управление задними противотуманными фарами'
+      zh: '后雾灯已控制点亮'
+      hu: 'Hátsó ködlámpák vezérelve'
+      pt: 'Faróis antinevoeiro traseiros acionados'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_CD_CPL:
+    bits: '6.1'
+    comment:
+      en: 'Right turn indicator lights commanded'
+      fr: 'Clignotants droits commandés'
+      es: 'Intermitentes derechos accionados'
+      de: 'Angesteuerte rechte Blinker'
+      it: 'Frecce destre comandate'
+      pl: 'Sterowanie prawymi kierunkowskazami'
+      ru: 'Управление правыми указателями поворота'
+      zh: '右转向灯已控制点亮'
+      hu: 'Jobb irányjelzők vezérelve'
+      pt: 'Piscas direitos acionados'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  CMD_LAMPES_CG_CPL:
+    bits: '6.0'
+    comment:
+      en: 'Left turn indicator lights commanded'
+      fr: 'Clignotants gauches commandés'
+      es: 'Intermitentes izquierdos accionados'
+      de: 'Angesteuerte linke Blinker'
+      it: 'Frecce sinistre comandate'
+      pl: 'Sterowanie lewymi kierunkowskazami'
+      ru: 'Управление левыми указателями поворота'
+      zh: '左转向灯已控制点亮'
+      hu: 'Bal irányjelzők vezérelve'
+      pt: 'Piscas esquerdos acionados'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded'
+        fr: 'Non commandées'
+        es: 'Sin mando'
+        de: 'Nicht angesteuert'
+        it: 'Non comandate'
+        pl: 'Niesterowane'
+        ru: 'Не управляется'
+        zh: '未控制'
+        hu: 'Nincs vezérelve'
+        pt: 'Não comandado'
+      0x01:
+        en: 'Commanded'
+        fr: 'Commandées'
+        es: 'Comandado'
+        de: 'Angesteuert'
+        it: 'Comandato'
+        pl: 'Sterowane'
+        ru: 'Управляется'
+        zh: '已命令'
+        hu: 'Vezérelve'
+        pt: 'Comandado'
+
+  REGULV_SIG_CPL:
+    bits: '7.7-7.6'
+    comment:
+      en: 'Speed regulation mode'
+      fr: 'Mode de régulation de vitesse'
+      es: 'Modo de regulación de velocidad'
+      de: 'Geschwindigkeitsregelungsmodus'
+      it: 'Modalità di regolazione della velocità'
+      pl: 'Tryb regulacji prędkości'
+      ru: 'Режим регулирования скорости'
+      zh: '车速调节模式'
+      hu: 'Sebességszabályozási mód'
+      pt: 'Modo de regulação de velocidade'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Distance'
+        fr: 'Distance'
+        es: 'Distancia'
+        de: 'Entfernung'
+        it: 'Distanza'
+        pl: 'Odległość'
+        ru: 'Расстояние'
+        zh: '距离'
+        hu: 'Távolság'
+        pt: 'Distância'
+      0x01:
+        en: 'Transition from distance to speed'
+        fr: 'Transition de distance à vitesse'
+        es: 'Transición de distancia a velocidad'
+        de: 'Übergang von Abstand zu Geschwindigkeit'
+        it: 'Transizione da distanza a velocità'
+        pl: 'Przejście z odległości na prędkość'
+        ru: 'Переход от дистанции к скорости'
+        zh: '距离到速度的过渡'
+        hu: 'Átmenet távolságról sebességre'
+        pt: 'Transição de distância para velocidade'
+      0x02:
+        en: 'Transition from speed to distance'
+        fr: 'Transition de vitesse à distance'
+        es: 'Transición de velocidad a distancia'
+        de: 'Übergang von Geschwindigkeit zu Abstand'
+        it: 'Transizione da velocità a distanza'
+        pl: 'Przejście z prędkości na odległość'
+        ru: 'Переход от скорости к дистанции'
+        zh: '从速度到距离的过渡'
+        hu: 'Átmenet sebességről távolságra'
+        pt: 'Transição de velocidade para distância'
+      0x03:
+        en: 'Speed'
+        fr: 'Vitesse'
+        es: 'Velocidad'
+        de: 'Geschwindigkeit'
+        it: 'Velocità'
+        pl: 'Prędkość'
+        ru: 'Скорость'
+        zh: '车速'
+        hu: 'Sebesség'
+        pt: 'Velocidade'
+
+  BREAK_IN_REGISTERED:
+    bits: '7.5'
+    comment:
+      en: 'Break-in registered'
+      fr: 'Effraction enregistrée'
+      es: 'Intrusión registrada'
+      de: 'Einbruch registriert'
+      it: 'Effrazione registrata'
+      pl: 'Zarejestrowano włamanie'
+      ru: 'Зафиксирован взлом'
+      zh: '记录到非法闯入'
+      hu: 'Betörés regisztrálva'
+      pt: 'Intrusão registada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not recorded'
+        fr: 'Non enregistrée'
+        es: 'No registrado'
+        de: 'Nicht aufgezeichnet'
+        it: 'Non registrato'
+        pl: 'Niezarejestrowane'
+        ru: 'Не записано'
+        zh: '未记录'
+        hu: 'Nincs rögzítve'
+        pt: 'Não registado'
+      0x01:
+        en: 'Recorded'
+        fr: 'Enregistrée'
+        es: 'Grabada'
+        de: 'Aufgezeichnet'
+        it: 'Registrata'
+        pl: 'Zapisano'
+        ru: 'Записано'
+        zh: '已记录'
+        hu: 'Rögzítve'
+        pt: 'Gravado'
+
+  LOAD_SHEDDING_MESSAGE:
+    bits: '7.4-7.3'
+    comment:
+      en: 'Load-shedding message'
+      fr: 'Message de délestage'
+      es: 'Mensaje de deslastre de carga'
+      de: 'Lastabschaltungsmeldung'
+      it: 'Messaggio di distacco del carico'
+      pl: 'Komunikat zrzutu obciążenia'
+      ru: 'Сообщение о сбросе нагрузки'
+      zh: '甩负荷信息'
+      hu: 'Terheléscsökkentési üzenet'
+      pt: 'Mensagem de deslastre de carga'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'Driver information'
+        fr: 'Information conducteur'
+        es: 'Información del conductor'
+        de: 'Fahrerinformation'
+        it: 'Informazione conducente'
+        pl: 'Informacja dla kierowcy'
+        ru: 'Информация для водителя'
+        zh: '驾驶员信息'
+        hu: 'Vezetői információ'
+        pt: 'Informação ao condutor'
+      0x02:
+        en: 'Re-arming accepted'
+        fr: 'Réarmement accepté'
+        es: 'Rearme aceptado'
+        de: 'Wiederscharfschaltung akzeptiert'
+        it: 'Riarmo accettato'
+        pl: 'Zaakceptowano ponowne uzbrojenie'
+        ru: 'Повторная постановка на охрану принята'
+        zh: '已接受重新布防'
+        hu: 'Az újraélesítés elfogadva'
+        pt: 'Rearme aceite'
+      0x03:
+        en: 'Re-arming refused'
+        fr: 'Réarmement refusé'
+        es: 'Rearme rechazado'
+        de: 'Wiederscharfschaltung abgelehnt'
+        it: 'Riarmo rifiutato'
+        pl: 'Odmowa ponownego uzbrojenia'
+        ru: 'Повторное взведение отклонено'
+        zh: '重新布防被拒绝'
+        hu: 'Újraélesítés elutasítva'
+        pt: 'Rearmamento recusado'
+
+  UNUSED_3:
+    bits: '7.2-7.0'
+    unused: true
+
+  DOOR_STATUS_FRONT_RIGHT:
+    bits: '8.7'
+    comment:
+      en: 'Opening element state: front right door'
+      fr: 'État des ouvrants : porte avant droite'
+      es: 'Estado de los elementos abatibles: puerta delantera derecha'
+      de: 'Zustand der Öffnungselemente: vordere rechte Tür'
+      it: 'Stato degli elementi apribili: portiera anteriore destra'
+      pl: 'Stan elementów otwieranych: przednie prawe drzwi'
+      ru: 'Состояние открывающихся элементов: передняя правая дверь'
+      zh: '开启部件状态:右前门'
+      hu: 'Nyitható elemek állapota: jobb első ajtó'
+      pt: 'Estado dos elementos móveis: porta dianteira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
+      0x01:
+        en: 'Open'
+        fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
+
+  DOOR_STATUS_FRONT_LEFT:
+    bits: '8.6'
+    comment:
+      en: 'Opening element state: front left door'
+      fr: 'État des ouvrants : porte avant gauche'
+      es: 'Estado de los elementos abatibles: puerta delantera izquierda'
+      de: 'Zustand der Öffnungselemente: vordere linke Tür'
+      it: 'Stato degli elementi apribili: portiera anteriore sinistra'
+      pl: 'Stan elementów otwieranych: przednie lewe drzwi'
+      ru: 'Состояние открывающихся элементов: передняя левая дверь'
+      zh: '开启部件状态:左前门'
+      hu: 'Nyitható elemek állapota: bal első ajtó'
+      pt: 'Estado dos elementos móveis: porta dianteira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
+      0x01:
+        en: 'Open'
+        fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
+
+  DOOR_STATUS_REAR_RIGHT:
+    bits: '8.5'
+    comment:
+      en: 'Opening element state: rear right door'
+      fr: 'État des ouvrants : porte arrière droite'
+      es: 'Estado de los elementos abatibles: puerta trasera derecha'
+      de: 'Zustand der Öffnungselemente: hintere rechte Tür'
+      it: 'Stato degli elementi apribili: portiera posteriore destra'
+      pl: 'Stan elementów otwieranych: tylne prawe drzwi'
+      ru: 'Состояние открывающихся элементов: задняя правая дверь'
+      zh: '开启部件状态:右后门'
+      hu: 'Nyitható elemek állapota: jobb hátsó ajtó'
+      pt: 'Estado dos elementos móveis: porta traseira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
+      0x01:
+        en: 'Open'
+        fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
+
+  DOOR_STATUS_REAR_LEFT:
+    bits: '8.4'
+    comment:
+      en: 'Opening element state: rear left door'
+      fr: 'État des ouvrants : porte arrière gauche'
+      es: 'Estado de los elementos abatibles: puerta trasera izquierda'
+      de: 'Zustand der Öffnungselemente: hintere linke Tür'
+      it: 'Stato degli elementi apribili: portiera posteriore sinistra'
+      pl: 'Stan elementów otwieranych: tylne lewe drzwi'
+      ru: 'Состояние открывающихся элементов: задняя левая дверь'
+      zh: '开启部件状态:左后门'
+      hu: 'Nyitható elemek állapota: bal hátsó ajtó'
+      pt: 'Estado dos elementos móveis: porta traseira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
+      0x01:
+        en: 'Open'
+        fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
+
+  DOOR_STATUS_TRUNK:
+    bits: '8.3'
+    comment:
+      en: 'Opening element state: boot'
+      fr: 'État des ouvrants : coffre'
+      es: 'Estado de los elementos abatibles: maletero'
+      de: 'Zustand der Öffnungselemente: Kofferraum'
+      it: 'Stato degli elementi apribili: bagagliaio'
+      pl: 'Stan elementów otwieranych: bagażnik'
+      ru: 'Состояние открывающихся элементов: багажник'
+      zh: '开启部件状态:后备厢'
+      hu: 'Nyitható elemek állapota: csomagtartó'
+      pt: 'Estado dos elementos móveis: bagageira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
+      0x01:
+        en: 'Open'
+        fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
+
+  DOOR_STATUS_HOOD:
+    bits: '8.2'
+    comment:
+      en: 'Opening element state: bonnet'
+      fr: 'État des ouvrants : capot'
+      es: 'Estado de los elementos abatibles: capó'
+      de: 'Zustand der Öffnungselemente: Motorhaube'
+      it: 'Stato degli elementi apribili: cofano'
+      pl: 'Stan elementów otwieranych: maska'
+      ru: 'Состояние открывающихся элементов: капот'
+      zh: '开启部件状态:发动机罩'
+      hu: 'Nyitható elemek állapota: motorháztető'
+      pt: 'Estado dos elementos abatíveis: capot'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
+      0x01:
+        en: 'Open'
+        fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
+
+  DOOR_STATUS_SUNROOF:
+    bits: '8.1'
+    comment:
+      en: 'Opening element state: sunroof'
+      fr: 'État des ouvrants : toit ouvrant'
+      es: 'Estado de los elementos abatibles: techo solar'
+      de: 'Zustand der Öffnungselemente: Schiebedach'
+      it: 'Stato degli elementi apribili: tettuccio apribile'
+      pl: 'Stan elementów otwieranych: szyberdach'
+      ru: 'Состояние открывающихся элементов: люк крыши'
+      zh: '开启部件状态:天窗'
+      hu: 'Nyitható elemek állapota: napfénytető'
+      pt: 'Estado das aberturas: teto de abrir'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+      0x01:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+
+  DOOR_STATUS_FUEL_DOOR:
+    bits: '8.0'
+    comment:
+      en: 'Opening element state: fuel flap'
+      fr: 'État des ouvrants : trappe à carburant'
+      es: 'Estado de los elementos abatibles: tapa de combustible'
+      de: 'Zustand der Öffnungselemente: Tankklappe'
+      it: 'Stato degli elementi apribili: sportello del carburante'
+      pl: 'Stan elementów otwieranych: klapka wlewu paliwa'
+      ru: 'Состояние открывающихся элементов: лючок топливного бака'
+      zh: '开启部件状态:油箱盖'
+      hu: 'Nyitható elemek állapota: üzemanyag-betöltő ajtó'
+      pt: 'Estado das aberturas: tampa de combustível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
+      0x01:
+        en: 'Open'
+        fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
+
+  REMAINING_LPG:
+    bits: '9.7-10.0'
+    comment:
+      en: 'Remaining LPG range'
+      fr: 'Autonomie résiduelle au GPL'
+      es: 'Autonomía restante de GLP'
+      de: 'Verbleibende Autogas-Reichweite (LPG)'
+      it: 'Autonomia residua a GPL'
+      pl: 'Pozostały zasięg na LPG'
+      ru: 'Оставшийся запас хода на газе (LPG)'
+      zh: '剩余液化石油气续航里程'
+      hu: 'Hátralévő LPG-hatótávolság'
+      pt: 'Autonomia residual a GPL'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2000
+    units: 'km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  CONSUMPTION_STATUS:
+    bits: '11.7'
+    comment:
+      en: 'Fuel consumption invalid (flow meter fault)'
+      fr: 'Consommation invalide (défaut du débitmètre)'
+      es: 'Consumo inválido (fallo del caudalímetro)'
+      de: 'Verbrauch ungültig (Durchflussmesserfehler)'
+      it: 'Consumo non valido (guasto del misuratore di portata)'
+      pl: 'Nieprawidłowe zużycie (usterka przepływomierza)'
+      ru: 'Недостоверный расход (неисправность расходомера)'
+      zh: '油耗无效(流量计故障)'
+      hu: 'Érvénytelen fogyasztás (áramlásmérő hiba)'
+      pt: 'Consumo inválido (falha do caudalímetro)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+      0x01:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  RANGE_INDICATOR_STATUS:
+    bits: '11.6'
+    comment:
+      en: 'Range invalid (gauge fault)'
+      fr: 'Autonomie invalide (défaut de jauge)'
+      es: 'Autonomía inválida (fallo del indicador)'
+      de: 'Reichweite ungültig (Geberfehler)'
+      it: 'Autonomia non valida (guasto del livello)'
+      pl: 'Nieprawidłowy zasięg (usterka wskaźnika poziomu)'
+      ru: 'Недостоверный запас хода (неисправность датчика уровня)'
+      zh: '续航里程无效(油量计故障)'
+      hu: 'Érvénytelen hatótávolság (szintjelző hiba)'
+      pt: 'Autonomia inválida (falha do indicador)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+      0x01:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  INVALID_RANGE_STATUS:
+    bits: '11.5'
+    comment:
+      en: 'Range invalid (insufficient fuel level)'
+      fr: 'Autonomie invalide (niveau de carburant insuffisant)'
+      es: 'Autonomía inválida (nivel de combustible insuficiente)'
+      de: 'Reichweite ungültig (Kraftstoffstand zu niedrig)'
+      it: 'Autonomia non valida (livello carburante insufficiente)'
+      pl: 'Nieprawidłowy zasięg (niewystarczający poziom paliwa)'
+      ru: 'Недостоверный запас хода (недостаточный уровень топлива)'
+      zh: '续航里程无效(燃油量不足)'
+      hu: 'Érvénytelen hatótávolság (nem elegendő üzemanyagszint)'
+      pt: 'Autonomia inválida (nível de combustível insuficiente)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Possible'
+        fr: 'Possible'
+        es: 'Posible'
+        de: 'Möglich'
+        it: 'Possibile'
+        pl: 'Możliwe'
+        ru: 'Возможно'
+        zh: '可能'
+        hu: 'Lehetséges'
+        pt: 'Possível'
+      0x01:
+        en: 'Not possible'
+        fr: 'Impossible'
+        es: 'No posible'
+        de: 'Nicht möglich'
+        it: 'Non possibile'
+        pl: 'Niemożliwe'
+        ru: 'Невозможно'
+        zh: '不可能'
+        hu: 'Nem lehetséges'
+        pt: 'Não possível'
+
+  INSUFFICIENT_RANGE_STATUS:
+    bits: '11.4'
+    comment:
+      en: 'Trip A distance too short (less than 400 m since reset)'
+      fr: 'Distance trajet A insuffisante (moins de 400 m depuis la réinitialisation)'
+      es: 'Distancia del trayecto A insuficiente (menos de 400 m desde el reinicio)'
+      de: 'Strecke Fahrt A zu kurz (weniger als 400 m seit Rücksetzung)'
+      it: 'Distanza percorso A insufficiente (meno di 400 m dall''azzeramento)'
+      pl: 'Za mały dystans trasy A (mniej niż 400 m od zerowania)'
+      ru: 'Недостаточное расстояние поездки A (менее 400 м с момента сброса)'
+      zh: '行程A距离不足(自复位以来不足400米)'
+      hu: 'Az A útvonal távolsága nem elegendő (kevesebb mint 400 m a nullázás óta)'
+      pt: 'Distância do trajeto A insuficiente (menos de 400 m desde o reinício)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Sufficient'
+        fr: 'Suffisant'
+        es: 'Suficiente'
+        de: 'Ausreichend'
+        it: 'Sufficiente'
+        pl: 'Wystarczające'
+        ru: 'Достаточно'
+        zh: '充足'
+        hu: 'Elegendő'
+        pt: 'Suficiente'
+      0x01:
+        en: 'Insufficient'
+        fr: 'Insuffisante'
+        es: 'Insuficiente'
+        de: 'Unzureichend'
+        it: 'Insufficiente'
+        pl: 'Niewystarczający'
+        ru: 'Недостаточно'
+        zh: '不足'
+        hu: 'Elégtelen'
+        pt: 'Insuficiente'
+
+  INSUFFICIENT_TRIP_STATUS:
+    bits: '11.3'
+    comment:
+      en: 'Trip B distance too short (less than 400 m since reset)'
+      fr: 'Distance trajet B insuffisante (moins de 400 m depuis la réinitialisation)'
+      es: 'Distancia del trayecto B insuficiente (menos de 400 m desde el reinicio)'
+      de: 'Strecke Fahrt B zu kurz (weniger als 400 m seit Rücksetzung)'
+      it: 'Distanza percorso B insufficiente (meno di 400 m dall''azzeramento)'
+      pl: 'Za mały dystans trasy B (mniej niż 400 m od zerowania)'
+      ru: 'Недостаточное расстояние поездки B (менее 400 м с момента сброса)'
+      zh: '行程B距离不足(自复位以来不足400米)'
+      hu: 'A B útvonal távolsága nem elegendő (kevesebb mint 400 m a nullázás óta)'
+      pt: 'Distância do trajeto B insuficiente (menos de 400 m desde o reinício)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Sufficient'
+        fr: 'Suffisant'
+        es: 'Suficiente'
+        de: 'Ausreichend'
+        it: 'Sufficiente'
+        pl: 'Wystarczające'
+        ru: 'Достаточно'
+        zh: '充足'
+        hu: 'Elegendő'
+        pt: 'Suficiente'
+      0x01:
+        en: 'Insufficient'
+        fr: 'Insuffisante'
+        es: 'Insuficiente'
+        de: 'Unzureichend'
+        it: 'Insufficiente'
+        pl: 'Niewystarczający'
+        ru: 'Недостаточно'
+        zh: '不足'
+        hu: 'Elégtelen'
+        pt: 'Insuficiente'
+
+  UNUSED_4:
+    bits: '11.2-11.1'
+    unused: true
+
+  TRIP_BUTTON_STATUS:
+    bits: '11.0'
+    comment:
+      en: 'Trip computer scroll button state'
+      fr: 'État du poussoir de défilement du calculateur de bord'
+      es: 'Estado del pulsador de desplazamiento del ordenador de a bordo'
+      de: 'Zustand der Scroll-Taste des Bordcomputers'
+      it: 'Stato del pulsante di scorrimento del computer di bordo'
+      pl: 'Stan przycisku przewijania komputera pokładowego'
+      ru: 'Состояние кнопки прокрутки бортового компьютера'
+      zh: '行车电脑翻页按钮状态'
+      hu: 'Fedélzeti számítógép léptető gombjának állapota'
+      pt: 'Estado do botão de deslocamento do computador de bordo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Released'
+        fr: 'Relâché'
+        es: 'Soltado'
+        de: 'Losgelassen'
+        it: 'Rilasciato'
+        pl: 'Zwolniony'
+        ru: 'Отпущено'
+        zh: '已释放'
+        hu: 'Elengedve'
+        pt: 'Solto'
+      0x01:
+        en: 'Pressed'
+        fr: 'Enfoncé'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Premido'
+
+  TRIP_AVG_COURSE_SPEED:
+    bits: '12.7-12.0'
+    comment:
+      en: 'Average speed, trip A'
+      fr: 'Vitesse moyenne, trajet A (Parcours)'
+      es: 'Velocidad media, trayecto A'
+      de: 'Durchschnittsgeschwindigkeit, Fahrt A'
+      it: 'Velocità media, percorso A'
+      pl: 'Prędkość średnia, trasa A'
+      ru: 'Средняя скорость, поездка A'
+      zh: '平均车速,行程A'
+      hu: 'Átlagsebesség, A útvonal'
+      pt: 'Velocidade média, trajeto A'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0xFF
+
+  TRIP_AVG_TRAVEL_SPEED:
+    bits: '13.7-13.0'
+    comment:
+      en: 'Average speed, trip B'
+      fr: 'Vitesse moyenne, trajet B'
+      es: 'Velocidad media, trayecto B'
+      de: 'Durchschnittsgeschwindigkeit, Fahrt B'
+      it: 'Velocità media, percorso B'
+      pl: 'Prędkość średnia, trasa B'
+      ru: 'Средняя скорость, поездка B'
+      zh: '平均车速,行程B'
+      hu: 'Átlagsebesség, B útvonal'
+      pt: 'Velocidade média, trajeto B'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0xFF
+
+  TRIP_FILTERED_SPEED:
+    bits: '14.7-14.0'
+    comment:
+      en: 'Filtered vehicle speed (0x00 to 0xFA)'
+      fr: 'Vitesse véhicule filtrée (0x00 à 0xFA)'
+      es: 'Velocidad del vehículo filtrada (0x00 a 0xFA)'
+      de: 'Gefilterte Fahrzeuggeschwindigkeit (0x00 bis 0xFA)'
+      it: 'Velocità del veicolo filtrata (da 0x00 a 0xFA)'
+      pl: 'Filtrowana prędkość pojazdu (0x00 do 0xFA)'
+      ru: 'Отфильтрованная скорость автомобиля (0x00–0xFA)'
+      zh: '滤波后车速(0x00至0xFA)'
+      hu: 'Szűrt járműsebesség (0x00-0xFA)'
+      pt: 'Velocidade do veículo filtrada (0x00 a 0xFA)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0xFF
+
+  TRIP_DISTANCE_TRAVELED:
+    bits: '15.7-16.0'
+    comment:
+      en: 'Cumulative distance, trip A'
+      fr: 'Cumul de distance, trajet A (Parcours)'
+      es: 'Distancia acumulada, trayecto A'
+      de: 'Kumulierte Strecke, Fahrt A'
+      it: 'Distanza cumulata, percorso A'
+      pl: 'Skumulowany dystans, trasa A'
+      ru: 'Накопленное расстояние, поездка A'
+      zh: '累计里程,行程A'
+      hu: 'Halmozott távolság, A útvonal'
+      pt: 'Distância acumulada, trajeto A'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 50000
+    units: 'km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  TRIP_AVG_TRIP_CONSUMPTION:
+    bits: '17.7-18.0'
+    comment:
+      en: 'Average fuel consumption, trip A'
+      fr: 'Consommation moyenne de carburant, trajet A (Parcours)'
+      es: 'Consumo medio de combustible, trayecto A'
+      de: 'Durchschnittlicher Kraftstoffverbrauch, Fahrt A'
+      it: 'Consumo medio di carburante, percorso A'
+      pl: 'Średnie zużycie paliwa, trasa A'
+      ru: 'Средний расход топлива, поездка A'
+      zh: '平均油耗,行程A'
+      hu: 'Átlagos üzemanyag-fogyasztás, A útvonal'
+      pt: 'Consumo médio de combustível, trajeto A'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  TRIP_TOTAL_TRIP_DISTANCE:
+    bits: '19.7-20.0'
+    comment:
+      en: 'Cumulative distance, trip B'
+      fr: 'Cumul de distance, trajet B'
+      es: 'Distancia acumulada, trayecto B'
+      de: 'Kumulierte Strecke, Fahrt B'
+      it: 'Distanza cumulata, percorso B'
+      pl: 'Skumulowany dystans, trasa B'
+      ru: 'Накопленное расстояние, поездка B'
+      zh: '累计里程,行程B'
+      hu: 'Halmozott távolság, B útvonal'
+      pt: 'Distância acumulada, trajeto B'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 50000
+    units: 'km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  TRIP_AVG_FUEL_CONSUMPTION:
+    bits: '21.7-22.0'
+    comment:
+      en: 'Average fuel consumption, trip B'
+      fr: 'Consommation moyenne de carburant, trajet B'
+      es: 'Consumo medio de combustible, trayecto B'
+      de: 'Durchschnittlicher Kraftstoffverbrauch, Fahrt B'
+      it: 'Consumo medio di carburante, percorso B'
+      pl: 'Średnie zużycie paliwa, trasa B'
+      ru: 'Средний расход топлива, поездка B'
+      zh: '平均油耗,行程B'
+      hu: 'Átlagos üzemanyag-fogyasztás, B útvonal'
+      pt: 'Consumo médio de combustível, trajeto B'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  TRIP_INSTANT_FUEL_CONSUMPTION:
+    bits: '23.7-24.0'
+    comment:
+      en: 'Instantaneous fuel consumption'
+      fr: 'Consommation instantanée de carburant'
+      es: 'Consumo instantáneo de combustible'
+      de: 'Momentaner Kraftstoffverbrauch'
+      it: 'Consumo istantaneo di carburante'
+      pl: 'Chwilowe zużycie paliwa'
+      ru: 'Мгновенный расход топлива'
+      zh: '瞬时油耗'
+      hu: 'Pillanatnyi üzemanyag-fogyasztás'
+      pt: 'Consumo instantâneo de combustível'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  TRIP_TOTAL_RANGE:
+    bits: '25.7-26.0'
+    comment:
+      en: 'Total range'
+      fr: 'Autonomie totale'
+      es: 'Autonomía total'
+      de: 'Gesamtreichweite'
+      it: 'Autonomia totale'
+      pl: 'Całkowity zasięg'
+      ru: 'Общий запас хода'
+      zh: '总续航里程'
+      hu: 'Teljes hatótávolság'
+      pt: 'Autonomia total'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2000
+    units: 'km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  FOOTER:
+    bits: '27.7-27.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

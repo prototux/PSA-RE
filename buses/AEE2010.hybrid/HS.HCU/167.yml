@@ -1,0 +1,206 @@
+id: 0x167
+name: 'EMF_CONTROL_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRONT_EMOTOR_VOLTAGE_SETPOINT:
+    bits: '4.2-5.2'
+    comment:
+      en: 'Front electric machine voltage setpoint'
+      fr: 'Consigne de tension de la machine électrique avant'
+      es: 'Consigna de tensión de la máquina eléctrica delantera'
+      de: 'Sollspannung der vorderen E-Maschine'
+      it: 'Valore di tensione richiesto della macchina elettrica anteriore'
+      pl: 'Zadane napięcie przedniej maszyny elektrycznej'
+      ru: 'Заданное напряжение передней электромашины'
+      zh: '前电机电压设定值'
+      hu: 'Az első elektromos gép feszültség-alapjele'
+      pt: 'Consigna de tensão da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 500
+    units: 'V'
+    default: 0xC8
+
+  REAR_EMOTOR_STANDBY_REQUEST_EMERGENCY:
+    bits: '5.1'
+    comment:
+      en: 'Emergency request to put the rear e-machine system (BASS) on standby via EDTS'
+      fr: 'Demande de mise en veille du système BASS par l''EDTS en cas d''urgence'
+      es: 'Solicitud de urgencia de puesta en espera del sistema de la máquina trasera (BASS) por el EDTS'
+      de: 'Notfallanforderung zur Versetzung des Systems der hinteren E-Maschine (BASS) in den Standby-Modus über EDTS'
+      it: 'Richiesta di emergenza di messa in standby del sistema della macchina posteriore (BASS) tramite EDTS'
+      pl: 'Żądanie awaryjne przejścia systemu tylnej maszyny elektrycznej (BASS) w stan gotowości przez EDTS'
+      ru: 'Аварийный запрос перевода системы задней электромашины (BASS) в режим ожидания через EDTS'
+      zh: 'EDTS发出的紧急请求,使后电机系统(BASS)进入待机'
+      hu: 'Vészhelyzeti kérés a hátsó elektromosgép-rendszer (BASS) készenléti állapotba helyezésére az EDTS-en keresztül'
+      pt: 'Pedido de urgência de colocação em repouso do sistema da máquina elétrica traseira (BASS) pelo EDTS'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  TORQUE_RAMP_SETPOINT:
+    bits: '5.0-6.0'
+    comment:
+      en: 'Desired torque ramp for torque control mode'
+      fr: 'Consigne de gradient de couple pour la régulation de couple'
+      es: 'Consigna de gradiente de par para el modo de control de par'
+      de: 'Sollwert der Drehmomentrampe für den Drehmoment-Regelmodus'
+      it: 'Valore richiesto del gradiente di coppia per la modalità di controllo coppia'
+      pl: 'Zadany gradient momentu obrotowego dla trybu regulacji momentu'
+      ru: 'Заданный темп изменения момента для режима регулирования момента'
+      zh: '扭矩控制模式所需的扭矩变化率'
+      hu: 'A nyomatékszabályozási üzemmódhoz kívánt nyomatékgradiens'
+      pt: 'Rampa de binário desejada para o modo de controlo de binário'
+    type: 'uint'
+    factor: 10
+    min: 0
+    max: 3000
+    units: 'Nm/s'
+    invalid: 0x1FF
+    default: 0x32
+
+  DCDC_DESIRED_MODE:
+    bits: '7.7-7.6'
+    comment:
+      en: 'Desired DC/DC converter operating mode'
+      fr: 'Mode de fonctionnement souhaité du convertisseur DC/DC'
+      es: 'Modo de funcionamiento deseado del convertidor DC/DC'
+      de: 'Gewünschter Betriebsmodus des DC/DC-Wandlers'
+      it: 'Modalità di funzionamento desiderata del convertitore DC/DC'
+      pl: 'Żądany tryb pracy przetwornicy DC/DC'
+      ru: 'Желаемый режим работы DC/DC-преобразователя'
+      zh: '所需的DC/DC转换器工作模式'
+      hu: 'A DC/DC átalakító kívánt üzemmódja'
+      pt: 'Modo de funcionamento pretendido do conversor DC/DC'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Czuwanie'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x01:
+        en: 'Buck mode (HV to LV conversion)'
+        fr: 'Mode abaisseur (conversion HT vers BT)'
+        es: 'Modo reductor (conversión AT a BT)'
+        de: 'Abwärtswandlermodus (HV-zu-LV-Umwandlung)'
+        it: 'Modalità buck (conversione AT verso BT)'
+        pl: 'Tryb obniżający (konwersja WN na NN)'
+        ru: 'Понижающий режим (преобразование ВН в НН)'
+        zh: '降压模式(高压转低压)'
+        hu: 'Csökkentő (buck) üzemmód (nagyfeszültség-kisfeszültség átalakítás)'
+        pt: 'Modo Buck (conversão de alta para baixa tensão)'
+      0x02:
+        en: 'Boost mode (LV to HV conversion)'
+        fr: 'Mode boost (conversion BT vers HT)'
+        es: 'Modo boost (conversión BT a AT)'
+        de: 'Boost-Modus (NV-zu-HV-Umwandlung)'
+        it: 'Modalità boost (conversione BT verso AT)'
+        pl: 'Tryb boost (konwersja niskiego na wysokie napięcie)'
+        ru: 'Режим boost (преобразование НН в ВН)'
+        zh: '增压模式(低压转高压)'
+        hu: 'Boost üzemmód (kisfeszültségről nagyfeszültségre alakítás)'
+        pt: 'Modo boost (conversão BT para AT)'
+      0x03:
+        unused: true
+
+  FRONT_EMOTOR_TORQUE_SETPOINT_SATURATED:
+    bits: '7.5-8.0'
+    comment:
+      en: 'Front electric machine torque setpoint, saturated'
+      fr: 'Consigne de couple de la machine électrique avant, saturée'
+      es: 'Consigna de par de la máquina eléctrica delantera, saturada'
+      de: 'Solldrehmoment der vorderen E-Maschine, begrenzt'
+      it: 'Valore di coppia richiesto della macchina elettrica anteriore, saturato'
+      pl: 'Zadany moment obrotowy przedniej maszyny elektrycznej, nasycony'
+      ru: 'Заданный момент передней электромашины, ограниченный (насыщенный)'
+      zh: '前电机扭矩设定值(饱和)'
+      hu: 'Az első elektromos gép nyomaték-alapjele, telítve'
+      pt: 'Consigna de binário da máquina elétrica dianteira, saturada'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40

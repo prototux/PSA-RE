@@ -1,0 +1,123 @@
+id: 0x3C7
+name: 'HV_BATTERY_MANAGEMENT_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'HV battery management data: engine auto-stop authorisation, warning-lamp reset command and request, climate-control inhibition, engine action request, and battery state of charge/state of health.'
+  fr: 'Données de gestion batterie HT : autorisation d''arrêt automatique moteur, commande et demande de remise à zéro du voyant, inhibition climatisation, demande d''action moteur, et état de charge/état de santé de la batterie.'
+  es: 'Datos de gestión de batería de alta tensión: autorización de parada automática del motor, comando y solicitud de reinicio del testigo, inhibición de la climatización, solicitud de acción del motor, y estado de carga/estado de salud de la batería.'
+  de: 'Hochvoltbatterie-Managementdaten: Freigabe des automatischen Motorstopps, Rücksetzbefehl und -anforderung der Kontrollleuchte, Klimaanlagensperre, Motoraktionsanforderung sowie Ladezustand/Alterungszustand der Batterie.'
+  it: 'Dati di gestione batteria AT: autorizzazione arresto automatico motore, comando e richiesta di reset spia, inibizione climatizzazione, richiesta di azione motore, e stato di carica/stato di salute della batteria.'
+  pl: 'Dane zarządzania akumulatorem WN: autoryzacja automatycznego zatrzymania silnika, polecenie i żądanie kasowania kontrolki, blokada klimatyzacji, żądanie działania silnika oraz stan naładowania/stan zdrowia akumulatora.'
+  ru: 'Данные управления высоковольтной батареей: разрешение автоматической остановки двигателя, команда и запрос сброса индикатора, блокировка кондиционера, запрос действия двигателя, а также уровень заряда/состояние батареи.'
+  zh: '高压电池管理数据:发动机自动停止授权、警示灯复位命令和请求、空调抑制、发动机动作请求,以及电池充电状态/健康状态。'
+  hu: 'Nagyfeszültségű akkumulátor kezelési adatok: motor automatikus leállásának engedélyezése, jelzőlámpa visszaállítási parancs és kérés, klíma letiltása, motorművelet kérése, valamint az akkumulátor töltöttségi/állapotszintje.'
+  pt: 'Dados de gestão da bateria de alta tensão: autorização de paragem automática do motor, comando e pedido de reposição da luz avisadora, inibição da climatização, pedido de ação do motor, e estado de carga/estado de saúde da bateria.'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  TOTAL_HV_BATT_NEGATIVE_CHARGE:
+    bits: '1.7-2.4'
+    comment:
+      en: 'Total electric charge discharged from the HV battery'
+      fr: 'Charge électrique totale déchargée par la batterie HT'
+      es: 'Carga eléctrica total descargada de la batería de alta tensión'
+      de: 'Gesamte von der HV-Batterie abgegebene elektrische Ladung'
+      it: 'Carica elettrica totale scaricata dalla batteria HT'
+      pl: 'Całkowity ładunek elektryczny rozładowany z akumulatora wysokiego napięcia'
+      ru: 'Суммарный электрический заряд, отданный ВВ батареей'
+      zh: '高压电池累计放电电荷量'
+      hu: 'A nagyfeszültségű akkumulátorból leadott teljes elektromos töltés'
+      pt: 'Carga elétrica total descarregada pela bateria de alta tensão'
+    type: 'uint'
+    factor: 125
+    min: 0
+    max: 500000
+    units: 'Ah'
+    invalid: 0xFFF
+
+  HV_BATTERY_TOTAL_POSITIVE_ENERGY:
+    bits: '2.3-3.0'
+    comment:
+      en: 'Total positive (charge) energy of the HV battery'
+      fr: 'Énergie totale positive (charge) de la batterie haute tension'
+      es: 'Energía total positiva (carga) de la batería de alta tensión'
+      de: 'Gesamte positive (Lade-)Energie der Hochvoltbatterie'
+      it: 'Energia totale positiva (carica) della batteria ad alta tensione'
+      pl: 'Całkowita energia dodatnia (ładowania) akumulatora wysokiego napięcia'
+      ru: 'Общая положительная энергия (заряда) высоковольтной батареи'
+      zh: '高压电池正能量(充电)总量'
+      hu: 'A nagyfeszültségű akkumulátor pozitív (töltési) energiájának összege'
+      pt: 'Energia total positiva (carga) da bateria de alta tensão'
+    type: 'uint'
+    factor: 35
+    min: 0
+    max: 140000
+    units: 'kWh'
+    invalid: 0xFFF
+
+  TOTAL_HV_BATT_NEGATIVE_ENERGY:
+    bits: '4.7-5.4'
+    comment:
+      en: 'Total energy discharged from the HV battery'
+      fr: 'Énergie totale déchargée par la batterie HT'
+      es: 'Energía total descargada de la batería de alta tensión'
+      de: 'Gesamte von der HV-Batterie abgegebene Energie'
+      it: 'Energia totale scaricata dalla batteria HT'
+      pl: 'Całkowita energia rozładowana z akumulatora wysokiego napięcia'
+      ru: 'Суммарная энергия, отданная ВВ батареей (разряд)'
+      zh: '高压电池累计放电能量'
+      hu: 'A nagyfeszültségű akkumulátorból leadott összes energia'
+      pt: 'Energia total descarregada pela bateria de alta tensão'
+    type: 'uint'
+    factor: 35
+    min: 0
+    max: 140000
+    units: 'kWh'
+    invalid: 0xFFF
+
+  TIME_HV_BATT_OVER_CHARGE_POWER:
+    bits: '5.3-7.7'
+    comment:
+      en: 'Cumulative time the HV battery has spent above the maximum charge power limit'
+      fr: 'Durée cumulée pendant laquelle la batterie HT a dépassé la puissance de charge maximale'
+      es: 'Tiempo acumulado en el que la batería de alta tensión ha superado la potencia máxima de carga'
+      de: 'Kumulierte Zeit, in der die HV-Batterie die maximale Ladeleistung überschritten hat'
+      it: 'Tempo cumulativo in cui la batteria HT ha superato la potenza massima di carica'
+      pl: 'Łączny czas, przez jaki akumulator wysokiego napięcia przekraczał maksymalną moc ładowania'
+      ru: 'Суммарное время, в течение которого ВВ батарея превышала максимальную мощность зарядки'
+      zh: '高压电池超过最大充电功率的累计时间'
+      hu: 'Az az összesített idő, amíg a nagyfeszültségű akkumulátor túllépte a maximális töltési teljesítményt'
+      pt: 'Tempo acumulado em que a bateria de alta tensão ultrapassou a potência de carga máxima'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 600
+    units: 'h'
+    invalid: 0x1FFF
+
+  TIME_HV_BATT_OVER_DISCHARGE_POWER:
+    bits: '7.6-8.2'
+    comment:
+      en: 'Cumulative time the HV battery has spent above the maximum discharge power limit'
+      fr: 'Durée cumulée pendant laquelle la batterie HT a dépassé la puissance de décharge maximale'
+      es: 'Tiempo acumulado en el que la batería de alta tensión ha superado la potencia máxima de descarga'
+      de: 'Kumulierte Zeit, in der die HV-Batterie die maximale Entladeleistung überschritten hat'
+      it: 'Tempo cumulativo in cui la batteria HT ha superato la potenza massima di scarica'
+      pl: 'Łączny czas, przez jaki akumulator wysokiego napięcia przekraczał maksymalną moc rozładowania'
+      ru: 'Суммарное время, в течение которого ВВ батарея превышала максимальную мощность разряда'
+      zh: '高压电池超过最大放电功率的累计时间'
+      hu: 'Az az összesített idő, amíg a nagyfeszültségű akkumulátor túllépte a maximális kisütési teljesítményt'
+      pt: 'Tempo acumulado em que a bateria de alta tensão ultrapassou a potência de descarga máxima'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 600
+    units: 'h'
+    invalid: 0x1FFF
+
+  UNUSED_1:
+    bits: '8.1-8.0'
+    unused: true

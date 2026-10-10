@@ -1,0 +1,723 @@
+id: 0x2E8
+name: 'ENGINE_GEARBOX_DYNAMIC_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine-gearbox dynamic data: powertrain wheel-torque potential setpoint, min/max powertrain ratio, active torque control, accelerator pedal position and transmission piloting status.'
+  fr: 'Données dynamiques moteur-boîte : consigne potentielle de couple roue du GMP, rapport GMP min/max, contrôle de couple actif, position pédale d''accélérateur et état de pilotage de la transmission.'
+  es: 'Datos dinámicos motor-caja: consigna potencial de par de rueda del grupo motopropulsor, relación GMP mín/máx, control de par activo, posición del pedal acelerador y estado de pilotaje de la transmisión.'
+  de: 'Motor-Getriebe-Dynamikdaten: potenzieller Radmoment-Sollwert des Antriebsstrangs, min./max. Antriebsstrangübersetzung, aktive Momentregelung, Gaspedalstellung und Getriebesteuerungsstatus.'
+  it: 'Dati dinamici motore-cambio: setpoint potenziale di coppia ruota del gruppo propulsore, rapporto GMP min/max, controllo coppia attivo, posizione pedale acceleratore e stato di pilotaggio della trasmissione.'
+  pl: 'Dane dynamiczne silnik-skrzynia: potencjalna nastawa momentu koła układu napędowego, min/maks przełożenie układu napędowego, aktywna kontrola momentu, pozycja pedału przyspieszenia i stan sterowania transmisją.'
+  ru: 'Динамические данные двигатель-коробка: потенциальная уставка крутящего момента колеса силового агрегата, мин/макс передаточное число силового агрегата, активное управление моментом, положение педали акселератора и статус управления трансмиссией.'
+  zh: '发动机-变速箱动态数据:动力总成车轮扭矩潜在设定值、动力总成最小/最大传动比、主动扭矩控制、加速踏板位置和变速器控制状态。'
+  hu: 'Motor-váltó dinamikus adatok: a hajtáslánc keréknyomaték potenciális alapjele, min/max hajtáslánc-áttétel, aktív nyomatékszabályozás, gázpedál pozíció és a hajtómű vezérlési állapota.'
+  pt: 'Dados dinâmicos motor-caixa de velocidades: ponto de ajuste potencial de binário nas rodas do grupo motopropulsor, relação mínima/máxima da caixa, controlo de binário ativo, posição do pedal do acelerador e estado de pilotagem da transmissão.'
+periodicity: ['20ms']
+senders: ['CMM']
+receivers: ['BVA']
+
+signals:
+  POWERTRAIN_WHEEL_TORQUE_ABSOLUTE_POTENTIAL_REQUEST:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Powertrain absolute potential wheel torque request'
+      fr: 'Demande de couple roue potentiel absolu du groupe motopropulseur'
+      es: 'Solicitud de par en rueda potencial absoluto del grupo motopropulsor'
+      de: 'Absolute potenzielle Radmomentanforderung des Antriebsstrangs'
+      it: 'Richiesta di coppia ruota potenziale assoluta del gruppo motopropulsore'
+      pl: 'Żądanie bezwzględnego potencjalnego momentu na kole zespołu napędowego'
+      ru: 'Запрос абсолютного потенциального момента на колесе силового агрегата'
+      zh: '动力总成绝对潜在车轮扭矩请求'
+      hu: 'Az erőátviteli rendszer abszolút potenciális kerék-nyomatékigénye'
+      pt: 'Pedido de binário na roda potencial absoluto do grupo motopropulsor'
+    type: 'uint'
+    factor: 20
+    offset: -1000
+    min: -1000
+    max: 4000
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+  POWERTRAIN_ACCELERATOR_POSITION:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Driver accelerator pedal position, as used by the powertrain'
+      fr: 'Position de la pédale d''accélérateur du conducteur, utilisée par le groupe motopropulseur'
+      es: 'Posición del pedal del acelerador del conductor, utilizada por el grupo motopropulsor'
+      de: 'Fahrpedalstellung des Fahrers, wie vom Antriebsstrang verwendet'
+      it: 'Posizione del pedale dell''acceleratore del conducente, utilizzata dal gruppo motopropulsore'
+      pl: 'Położenie pedału przyspieszenia kierowcy, wykorzystywane przez zespół napędowy'
+      ru: 'Положение педали акселератора водителя, используемое силовым агрегатом'
+      zh: '动力总成使用的驾驶员加速踏板位置'
+      hu: 'A vezető gázpedáljának helyzete, az erőátviteli rendszer által használva'
+      pt: 'Posição do pedal do acelerador do condutor, utilizada pelo grupo motopropulsor'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  POWERTRAIN_MAX_GEAR_REQUEST:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Powertrain maximum gear request'
+      fr: 'Demande de rapport maximal du groupe motopropulseur'
+      es: 'Solicitud de marcha máxima del grupo motopropulsor'
+      de: 'Anforderung des maximalen Gangs des Antriebsstrangs'
+      it: 'Richiesta di marcia massima del gruppo motopropulsore'
+      pl: 'Żądanie maksymalnego biegu zespołu napędowego'
+      ru: 'Запрос максимальной передачи силового агрегата'
+      zh: '动力总成最高挡位请求'
+      hu: 'Az erőátviteli rendszer maximális fokozatigénye'
+      pt: 'Pedido de mudança máxima do grupo motopropulsor'
+    type: 'enum'
+    default: 0x0F
+    values:
+      0x00:
+        en: 'Low fallback value'
+        fr: 'Valeur de repli basse'
+        es: 'Valor de reserva bajo'
+        de: 'Niedriger Ersatzwert'
+        it: 'Valore di riserva basso'
+        pl: 'Niska wartość awaryjna'
+        ru: 'Нижнее резервное значение'
+        zh: '低位替代值'
+        hu: 'Alacsony biztonsági érték'
+        pt: 'Valor de recurso baixo'
+      0x01:
+        en: '1st gear'
+        fr: '1ère'
+        es: '1ª marcha'
+        de: '1. Gang'
+        it: '1ª marcia'
+        pl: '1. bieg'
+        ru: '1-я передача'
+        zh: '1挡'
+        hu: '1. fokozat'
+        pt: '1.ª velocidade'
+      0x02:
+        en: '2nd'
+        fr: '2ème'
+        es: '2.º'
+        de: '2.'
+        it: '2°'
+        pl: '2.'
+        ru: '2-й'
+        zh: '第2'
+        hu: '2.'
+        pt: '2.º'
+      0x03:
+        en: '3rd'
+        fr: '3ème'
+        es: '3ª'
+        de: '3.'
+        it: '3ª'
+        pl: '3.'
+        ru: '3-я'
+        zh: '第3'
+        hu: '3.'
+        pt: '3.ª'
+      0x04:
+        en: '4th'
+        fr: '4e'
+        es: '4.º'
+        de: '4.'
+        it: '4°'
+        pl: '4.'
+        ru: '4-й'
+        zh: '第4'
+        hu: '4.'
+        pt: '4.º'
+      0x05:
+        en: '5th gear'
+        fr: '5ème'
+        es: '5ª marcha'
+        de: '5. Gang'
+        it: '5ª marcia'
+        pl: '5. bieg'
+        ru: '5-я передача'
+        zh: '5挡'
+        hu: '5. fokozat'
+        pt: '5.ª velocidade'
+      0x06:
+        en: '6th'
+        fr: '6ème'
+        es: '6.º'
+        de: '6.'
+        it: '6°'
+        pl: '6.'
+        ru: '6-я'
+        zh: '第 6'
+        hu: '6.'
+        pt: '6.º'
+      0x07:
+        en: '7th'
+        fr: '7ème'
+        es: '7.º'
+        de: '7.'
+        it: '7°'
+        pl: '7.'
+        ru: '7-й'
+        zh: '第7'
+        hu: '7.'
+        pt: '7.º'
+      0x08:
+        en: '8th'
+        fr: '8e'
+        es: '8.º'
+        de: '8.'
+        it: '8°'
+        pl: '8.'
+        ru: '8-й'
+        zh: '第8'
+        hu: '8.'
+        pt: '8.º'
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'High fallback value'
+        fr: 'Valeur de repli haute'
+        es: 'Valor de reserva alto'
+        de: 'Oberer Ersatzwert'
+        it: 'Valore di riserva alto'
+        pl: 'Wysoka wartość zastępcza'
+        ru: 'Верхнее резервное значение'
+        zh: '高位回退值'
+        hu: 'Magas tartalék érték'
+        pt: 'Valor de reserva alto'
+
+  POWERTRAIN_MIN_GEAR_REQUEST:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Powertrain minimum gear request'
+      fr: 'Demande de rapport minimal du groupe motopropulseur'
+      es: 'Solicitud de marcha mínima del grupo motopropulsor'
+      de: 'Anforderung des minimalen Gangs des Antriebsstrangs'
+      it: 'Richiesta di marcia minima del gruppo motopropulsore'
+      pl: 'Żądanie minimalnego biegu zespołu napędowego'
+      ru: 'Запрос минимальной передачи силового агрегата'
+      zh: '动力总成最低挡位请求'
+      hu: 'Az erőátviteli rendszer minimális fokozatigénye'
+      pt: 'Pedido de mudança mínima do grupo motopropulsor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Low fallback value'
+        fr: 'Valeur de repli basse'
+        es: 'Valor de reserva bajo'
+        de: 'Niedriger Ersatzwert'
+        it: 'Valore di riserva basso'
+        pl: 'Niska wartość awaryjna'
+        ru: 'Нижнее резервное значение'
+        zh: '低位替代值'
+        hu: 'Alacsony biztonsági érték'
+        pt: 'Valor de recurso baixo'
+      0x01:
+        en: '1st gear'
+        fr: '1ère'
+        es: '1ª marcha'
+        de: '1. Gang'
+        it: '1ª marcia'
+        pl: '1. bieg'
+        ru: '1-я передача'
+        zh: '1挡'
+        hu: '1. fokozat'
+        pt: '1.ª velocidade'
+      0x02:
+        en: '2nd'
+        fr: '2ème'
+        es: '2.º'
+        de: '2.'
+        it: '2°'
+        pl: '2.'
+        ru: '2-й'
+        zh: '第2'
+        hu: '2.'
+        pt: '2.º'
+      0x03:
+        en: '3rd'
+        fr: '3ème'
+        es: '3ª'
+        de: '3.'
+        it: '3ª'
+        pl: '3.'
+        ru: '3-я'
+        zh: '第3'
+        hu: '3.'
+        pt: '3.ª'
+      0x04:
+        en: '4th'
+        fr: '4e'
+        es: '4.º'
+        de: '4.'
+        it: '4°'
+        pl: '4.'
+        ru: '4-й'
+        zh: '第4'
+        hu: '4.'
+        pt: '4.º'
+      0x05:
+        en: '5th gear'
+        fr: '5ème'
+        es: '5ª marcha'
+        de: '5. Gang'
+        it: '5ª marcia'
+        pl: '5. bieg'
+        ru: '5-я передача'
+        zh: '5挡'
+        hu: '5. fokozat'
+        pt: '5.ª velocidade'
+      0x06:
+        en: '6th'
+        fr: '6ème'
+        es: '6.º'
+        de: '6.'
+        it: '6°'
+        pl: '6.'
+        ru: '6-я'
+        zh: '第 6'
+        hu: '6.'
+        pt: '6.º'
+      0x07:
+        en: '7th'
+        fr: '7ème'
+        es: '7.º'
+        de: '7.'
+        it: '7°'
+        pl: '7.'
+        ru: '7-й'
+        zh: '第7'
+        hu: '7.'
+        pt: '7.º'
+      0x08:
+        en: '8th'
+        fr: '8e'
+        es: '8.º'
+        de: '8.'
+        it: '8°'
+        pl: '8.'
+        ru: '8-й'
+        zh: '第8'
+        hu: '8.'
+        pt: '8.º'
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'High fallback value'
+        fr: 'Valeur de repli haute'
+        es: 'Valor de reserva alto'
+        de: 'Oberer Ersatzwert'
+        it: 'Valore di riserva alto'
+        pl: 'Wysoka wartość zastępcza'
+        ru: 'Верхнее резервное значение'
+        zh: '高位回退值'
+        hu: 'Magas tartalék érték'
+        pt: 'Valor de reserva alto'
+
+  POWERTRAIN_TRANSMISSION_CONTROL_STATUS:
+    bits: '4.7-4.6'
+    comment:
+      en: 'Powertrain transmission control status'
+      fr: 'État de pilotage de la transmission du groupe motopropulseur'
+      es: 'Estado de control de la transmisión del grupo motopropulsor'
+      de: 'Status der Antriebsstrang-Getriebesteuerung'
+      it: 'Stato di controllo della trasmissione del gruppo motopropulsore'
+      pl: 'Stan sterowania przeniesieniem napędu zespołu napędowego'
+      ru: 'Статус управления трансмиссией силового агрегата'
+      zh: '动力总成变速控制状态'
+      hu: 'Az erőátviteli rendszer erőátvitel-vezérlésének állapota'
+      pt: 'Estado de controlo da transmissão do grupo motopropulsor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Control not requested'
+        fr: 'Pilotage non demandé'
+        es: 'Control no solicitado'
+        de: 'Keine Ansteuerung angefordert'
+        it: 'Controllo non richiesto'
+        pl: 'Brak żądania sterowania'
+        ru: 'Управление не запрошено'
+        zh: '未请求控制'
+        hu: 'Vezérlés nem kért'
+        pt: 'Controlo não pedido'
+      0x01:
+        en: 'Control requested, or mode 1 requested'
+        fr: 'Pilotage demandé ou mode 1 demandé'
+        es: 'Control solicitado o modo 1 solicitado'
+        de: 'Steuerung angefordert oder Modus 1 angefordert'
+        it: 'Controllo richiesto o modalità 1 richiesta'
+        pl: 'Żądanie sterowania lub żądanie trybu 1'
+        ru: 'Запрошено управление или режим 1'
+        zh: '请求控制或请求模式 1'
+        hu: 'Vezérlés kérve vagy 1. mód kérve'
+        pt: 'Controlo pedido, ou modo 1 pedido'
+      0x02:
+        en: 'Full-pass control requested, or mode 2 requested'
+        fr: 'Pilotage en mode Fullpass demandé, ou mode 2 demandé'
+        es: 'Control en modo Fullpass solicitado, o modo 2 solicitado'
+        de: 'Fullpass-Steuerung angefordert oder Modus 2 angefordert'
+        it: 'Pilotaggio in modalità Fullpass richiesto, o modalità 2 richiesta'
+        pl: 'Żądane sterowanie w trybie Fullpass lub tryb 2'
+        ru: 'Запрошено управление в режиме Fullpass или режим 2'
+        zh: '请求全通模式控制或请求模式2'
+        hu: 'Fullpass vezérlés vagy 2. mód kérve'
+        pt: 'Controlo em modo Fullpass solicitado, ou modo 2 solicitado'
+      0x03:
+        en: 'Reserved, or mode 3 requested'
+        fr: 'Réservé ou mode 3 demandé'
+        es: 'Reservado o modo 3 solicitado'
+        de: 'Reserviert oder Modus 3 angefordert'
+        it: 'Riservato o modalità 3 richiesta'
+        pl: 'Zarezerwowane lub żądany tryb 3'
+        ru: 'Зарезервировано или запрошен режим 3'
+        zh: '保留或请求模式3'
+        hu: 'Fenntartva vagy 3. mód kérve'
+        pt: 'Reservado ou modo 3 solicitado'
+
+  POWERTRAIN_TORQUE_CONTROL_ACTIVE:
+    bits: '4.5'
+    comment:
+      en: 'Powertrain torque control active'
+      fr: 'Contrôle de couple du groupe motopropulseur actif'
+      es: 'Control de par del grupo motopropulsor activo'
+      de: 'Antriebsstrang-Drehmomentregelung aktiv'
+      it: 'Controllo di coppia del gruppo motopropulsore attivo'
+      pl: 'Aktywna kontrola momentu zespołu napędowego'
+      ru: 'Активно управление моментом силового агрегата'
+      zh: '动力总成扭矩控制激活'
+      hu: 'Az erőátviteli rendszer nyomatékvezérlése aktív'
+      pt: 'Controlo de binário do grupo motopropulsor ativo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  GEARBOX_DYNAMIC_MODE:
+    bits: '4.4-4.3'
+    comment:
+      en: 'Current gearbox dynamic mode'
+      fr: 'Mode dynamique courant de la boîte de vitesses'
+      es: 'Modo dinámico actual de la caja de cambios'
+      de: 'Aktueller dynamischer Getriebemodus'
+      it: 'Modalità dinamica attuale del cambio'
+      pl: 'Bieżący tryb dynamiczny skrzyni biegów'
+      ru: 'Текущий динамический режим коробки передач'
+      zh: '变速箱当前动态模式'
+      hu: 'A sebességváltó aktuális dinamikus üzemmódja'
+      pt: 'Modo dinâmico atual da caixa de velocidades'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x02:
+        en: 'Eco'
+        fr: 'Éco'
+        es: 'Eco'
+        de: 'Eco'
+        it: 'Eco'
+        pl: 'Eco'
+        ru: 'Эко'
+        zh: '经济模式'
+        hu: 'Eco'
+        pt: 'Eco'
+      0x03:
+        en: 'Snow'
+        fr: 'Neige'
+        es: 'Nieve'
+        de: 'Schnee'
+        it: 'Neve'
+        pl: 'Śnieg'
+        ru: 'Снег'
+        zh: '雪'
+        hu: 'Hó'
+        pt: 'Neve'
+
+  UNUSED_1:
+    bits: '4.2-4.0'
+    unused: true
+
+  MIN_TORQUE_NO_INJECTION_IDLE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Minimum torque with injection cut and idle torque'
+      fr: 'Couple minimum sans injection avec couple de ralenti'
+      es: 'Par mínimo sin inyección con par de ralentí'
+      de: 'Mindestdrehmoment ohne Einspritzung mit Leerlaufdrehmoment'
+      it: 'Coppia minima senza iniezione con coppia al minimo'
+      pl: 'Minimalny moment obrotowy bez wtrysku z momentem biegu jałowego'
+      ru: 'Минимальный крутящий момент без впрыска с моментом холостого хода'
+      zh: '无喷油情况下含怠速扭矩的最小扭矩'
+      hu: 'Minimális nyomaték befecskendezés nélkül, alapjárati nyomatékkal'
+      pt: 'Binário mínimo sem injeção com binário de ralenti'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+  ENGINE_STOP_START_STATE:
+    bits: '6.7-6.4'
+    comment:
+      en: 'Engine state for the Stop & Start function'
+      fr: 'État du moteur pour la fonction Stop & Start'
+      es: 'Estado del motor para la función Stop & Start'
+      de: 'Motorzustand für die Stop & Start-Funktion'
+      it: 'Stato del motore per la funzione Stop & Start'
+      pl: 'Stan silnika dla funkcji Stop & Start'
+      ru: 'Состояние двигателя для функции Stop & Start'
+      zh: '自动启停功能的发动机状态'
+      hu: 'A motor állapota a Stop & Start funkcióhoz'
+      pt: 'Estado do motor para a função Stop & Start'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Init'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        en: 'Engine stop preparation'
+        fr: 'Préparation à l''arrêt moteur'
+        es: 'Preparación para la parada del motor'
+        de: 'Vorbereitung Motorstopp'
+        it: 'Preparazione all''arresto motore'
+        pl: 'Przygotowanie do zatrzymania silnika'
+        ru: 'Подготовка к остановке двигателя'
+        zh: '发动机停机准备'
+        hu: 'Motorleállás előkészítése'
+        pt: 'Preparação para a paragem do motor'
+      0x03:
+        en: 'Stopping in progress'
+        fr: 'Arrêt en cours'
+        es: 'Parada en curso'
+        de: 'Anhalten läuft'
+        it: 'Arresto in corso'
+        pl: 'Trwa zatrzymywanie'
+        ru: 'Идёт остановка'
+        zh: '停止进行中'
+        hu: 'Leállás folyamatban'
+        pt: 'Paragem em curso'
+      0x04:
+        en: 'Stopped'
+        fr: 'Moteur_Arrete'
+        es: 'Motor detenido'
+        de: 'Motor gestoppt'
+        it: 'Motore fermo'
+        pl: 'Silnik zatrzymany'
+        ru: 'Двигатель остановлен'
+        zh: '发动机已停止'
+        hu: 'Motor leállítva'
+        pt: 'Motor parado'
+      0x05:
+        en: 'Restarting with starter engaged'
+        fr: 'Redémarrage démarreur engagé'
+        es: 'Reencendido con motor de arranque engranado'
+        de: 'Neustart mit eingekuppeltem Anlasser'
+        it: 'Riavvio con motorino di avviamento innestato'
+        pl: 'Ponowne uruchomienie z włączonym rozrusznikiem'
+        ru: 'Повторный запуск с включённым стартером'
+        zh: '起动机接合下重新起动'
+        hu: 'Újraindítás bekapcsolt indítómotorral'
+        pt: 'A reiniciar com motor de arranque engatado'
+      0x06:
+        en: 'Autonomous restart, cranking'
+        fr: 'Redémarrage autonome, lancement'
+        es: 'Reinicio autónomo, arranque'
+        de: 'Autonomer Neustart, Anlassen'
+        it: 'Riavvio autonomo, avviamento'
+        pl: 'Samodzielny restart, rozruch'
+        ru: 'Автономный перезапуск, прокрутка'
+        zh: '自主重启，起动中'
+        hu: 'Autonóm újraindítás, indítás'
+        pt: 'Reinício autónomo, arranque'
+      0x07:
+        en: 'Engine ready to deliver torque'
+        fr: 'Moteur apte à fournir du couple'
+        es: 'Motor listo para entregar par'
+        de: 'Motor bereit, Drehmoment zu liefern'
+        it: 'Motore pronto a fornire coppia'
+        pl: 'Silnik gotowy do dostarczania momentu obrotowego'
+        ru: 'Двигатель готов подавать крутящий момент'
+        zh: '发动机具备提供扭矩能力'
+        hu: 'A motor készen áll a nyomaték leadására'
+        pt: 'Motor pronto para fornecer binário'
+      0x08:
+        en: 'Engine stopped (ignition off)'
+        fr: 'Coupé (contact coupé)'
+        es: 'Motor parado (contacto apagado)'
+        de: 'Motor abgestellt (Zündung aus)'
+        it: 'Motore spento (accensione spenta)'
+        pl: 'Silnik zatrzymany (zapłon wyłączony)'
+        ru: 'Двигатель заглушён (зажигание выключено)'
+        zh: '发动机熄火(点火关闭)'
+        hu: 'Motor leállítva (gyújtás kikapcsolva)'
+        pt: 'Motor parado (ignição desligada)'
+      0x09:
+        en: 'Stalled'
+        fr: 'Calé'
+        es: 'Calado'
+        de: 'Abgewürgt'
+        it: 'In stallo'
+        pl: 'Zgaśnięty'
+        ru: 'Заглох'
+        zh: '熄火'
+        hu: 'Leállt'
+        pt: 'Calado'
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  UNUSED_2:
+    bits: '6.3-6.0'
+    unused: true
+
+  DRIVER_TORQUE_WITH_TARGET_SPEED:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Driver torque request accounting for target vehicle speed'
+      fr: 'Couple demandé par le conducteur prenant en compte la vitesse véhicule cible'
+      es: 'Par solicitado por el conductor teniendo en cuenta la velocidad objetivo del vehículo'
+      de: 'Fahrerdrehmomentanforderung unter Berücksichtigung der Ziel-Fahrzeuggeschwindigkeit'
+      it: 'Coppia richiesta dal conducente tenendo conto della velocità veicolo target'
+      pl: 'Żądany moment obrotowy kierowcy z uwzględnieniem docelowej prędkości pojazdu'
+      ru: 'Запрошенный водителем крутящий момент с учётом целевой скорости автомобиля'
+      zh: '考虑目标车速的驾驶员扭矩请求'
+      hu: 'A vezető nyomatékigénye a célsebesség figyelembevételével'
+      pt: 'Binário solicitado pelo condutor tendo em conta a velocidade-alvo do veículo'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    default: 0x32
+
+  PROCESS_COUNTER_4BIT_2E8:
+    bits: '8.7-8.4'
+    comment:
+      en: '4-bit process counter (2E8)'
+      fr: 'Compteur de process 4 bits (2E8)'
+      es: 'Contador de proceso de 4 bits (2E8)'
+      de: '4-Bit-Prozesszähler (2E8)'
+      it: 'Contatore di processo a 4 bit (2E8)'
+      pl: '4-bitowy licznik procesu (2E8)'
+      ru: '4-битный счётчик процесса (2E8)'
+      zh: '4位过程计数器(2E8)'
+      hu: '4 bites folyamatszámláló (2E8)'
+      pt: 'Contador de processo de 4 bits (2E8)'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM_4BIT_2E8:
+    bits: '8.3-8.0'
+    comment:
+      en: '4-bit frame checksum (2E8)'
+      fr: 'Somme de contrôle de trame 4 bits (2E8)'
+      es: 'Suma de comprobación de trama de 4 bits (2E8)'
+      de: '4-Bit-Frame-Prüfsumme (2E8)'
+      it: 'Checksum del frame a 4 bit (2E8)'
+      pl: '4-bitowa suma kontrolna ramki (2E8)'
+      ru: '4-битная контрольная сумма кадра (2E8)'
+      zh: '4位帧校验和(2E8)'
+      hu: '4 bites keret ellenőrző összeg (2E8)'
+      pt: 'Soma de verificação de trama de 4 bits (2E8)'
+    type: 'uint'

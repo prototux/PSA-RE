@@ -1,0 +1,631 @@
+id: 0x5C1
+name: 'SCR_SYSTEM_DATA_2'
+type: 'can'
+length: 6
+comment:
+  en: 'SCR system data: secure-dosing feedback counters and event timing, heater electrical power (3 zones plus supply), secure-valve and system status.'
+  fr: 'Données système SCR : compteurs de retour de dosage sécurisé et horodatage d''événement, puissance électrique de chauffage (3 zones plus alimentation), état de la vanne sécurisée et état système.'
+  es: 'Datos del sistema SCR: contadores de retorno de dosificación segura y sincronización de eventos, potencia eléctrica de calefacción (3 zonas más alimentación), estado de la válvula segura y estado del sistema.'
+  de: 'SCR-Systemdaten: Rückmeldezähler der Sicherheitsdosierung und Ereigniszeitpunkt, elektrische Heizleistung (3 Zonen plus Versorgung), Status des Sicherheitsventils und Systemstatus.'
+  it: 'Dati del sistema SCR: contatori di riscontro dosaggio sicuro e tempistica evento, potenza elettrica di riscaldamento (3 zone più alimentazione), stato della valvola di sicurezza e stato del sistema.'
+  pl: 'Dane systemu SCR: liczniki sprzężenia zwrotnego bezpiecznego dozowania i czas zdarzenia, moc elektryczna grzania (3 strefy plus zasilanie), stan zaworu bezpieczeństwa i stan systemu.'
+  ru: 'Данные системы SCR: счётчики обратной связи безопасного дозирования и время события, электрическая мощность нагрева (3 зоны плюс питание), статус предохранительного клапана и статус системы.'
+  zh: 'SCR系统数据:安全计量反馈计数器和事件计时、加热电功率(3个区域加供电)、安全阀和系统状态。'
+  hu: 'SCR rendszer adatok: biztonságos adagolás visszajelző számlálói és eseményidőzítés, fűtési elektromos teljesítmény (3 zóna plusz tápellátás), biztonsági szelep és rendszerállapot.'
+  pt: 'Dados do sistema SCR: contadores de retorno de dosagem segura e temporização de eventos, potência elétrica do aquecedor (3 zonas mais alimentação), estado da válvula segura e do sistema.'
+periodicity: ['300ms']
+senders: ['SCR']
+receivers: ['CMM']
+
+signals:
+  SCR_OBD_SYSTEM_STATUS:
+    bits: '1.7-1.0'
+    comment:
+      en: 'SCR system status and its impact on OBD'
+      fr: 'État du système SCR et impact sur l''OBD'
+      es: 'Estado del sistema SCR y su impacto en el OBD'
+      de: 'Status des SCR-Systems und dessen Auswirkung auf die OBD'
+      it: 'Stato del sistema SCR e relativo impatto sulla diagnosi OBD'
+      pl: 'Stan układu SCR i jego wpływ na system OBD'
+      ru: 'Статус системы SCR и её влияние на OBD'
+      zh: 'SCR系统状态及其对OBD的影响'
+      hu: 'Az SCR rendszer állapota és hatása az OBD-re'
+      pt: 'Estado do sistema SCR e impacto no OBD'
+    type: 'uint'
+
+  PRESSURE_SENSOR_STUCK_MIN:
+    bits: '2.7'
+    comment:
+      en: 'Pressure sensor stuck at minimum value'
+      fr: 'Diagnostic du capteur de pression bloqué à la valeur minimale'
+      es: 'Diagnóstico del sensor de presión bloqueado en el valor mínimo'
+      de: 'Diagnose: Drucksensor auf Minimalwert festgesetzt'
+      it: 'Diagnosi del sensore di pressione bloccato al valore minimo'
+      pl: 'Diagnostyka czujnika ciśnienia zablokowanego na wartości minimalnej'
+      ru: 'Диагностика датчика давления, заблокированного на минимальном значении'
+      zh: '压力传感器卡在最小值诊断'
+      hu: 'A nyomásérzékelő minimális értéken ragadásának diagnosztikája'
+      pt: 'Diagnóstico do sensor de pressão bloqueado no valor mínimo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Blocked at minimum value'
+        fr: 'Bloqué à la valeur minimale'
+        es: 'Bloqueado en el valor mínimo'
+        de: 'Auf Minimalwert blockiert'
+        it: 'Bloccato al valore minimo'
+        pl: 'Zablokowane na wartości minimalnej'
+        ru: 'Заблокировано на минимальном значении'
+        zh: '锁定在最小值'
+        hu: 'Minimális értéken rögzítve'
+        pt: 'Bloqueado no valor mínimo'
+
+  PRESSURE_SENSOR_STUCK_MAX:
+    bits: '2.6'
+    comment:
+      en: 'Pressure sensor stuck at maximum value'
+      fr: 'Diagnostic du capteur de pression bloqué à la valeur maximale'
+      es: 'Diagnóstico del sensor de presión bloqueado en el valor máximo'
+      de: 'Diagnose: Drucksensor auf Maximalwert festgesetzt'
+      it: 'Diagnosi del sensore di pressione bloccato al valore massimo'
+      pl: 'Diagnostyka czujnika ciśnienia zablokowanego na wartości maksymalnej'
+      ru: 'Диагностика датчика давления, заблокированного на максимальном значении'
+      zh: '压力传感器卡在最大值诊断'
+      hu: 'A nyomásérzékelő maximális értéken ragadásának diagnosztikája'
+      pt: 'Diagnóstico do sensor de pressão bloqueado no valor máximo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Locked at maximum value'
+        fr: 'Bloqué à la valeur maximale'
+        es: 'Bloqueado en el valor máximo'
+        de: 'Auf Maximalwert festgelegt'
+        it: 'Bloccato al valore massimo'
+        pl: 'Zablokowane na wartości maksymalnej'
+        ru: 'Заблокировано на максимальном значении'
+        zh: '锁定为最大值'
+        hu: 'Maximális értékre rögzítve'
+        pt: 'Bloqueado no valor máximo'
+
+  DOSING_VALVE_STUCK_CLOSED:
+    bits: '2.5'
+    comment:
+      en: 'Dosing solenoid valve stuck closed diagnosis'
+      fr: 'Diagnostic de l''électrovanne de dosage bloquée fermée'
+      es: 'Diagnóstico de la electroválvula de dosificación bloqueada cerrada'
+      de: 'Diagnose: Dosierventil in Stellung geschlossen festgesetzt'
+      it: 'Diagnosi dell''elettrovalvola di dosaggio bloccata chiusa'
+      pl: 'Diagnostyka zaworu dozującego zablokowanego w pozycji zamkniętej'
+      ru: 'Диагностика дозирующего электроклапана, заблокированного в закрытом положении'
+      zh: '计量电磁阀卡在关闭位置诊断'
+      hu: 'Az adagolószelep zárt állapotban ragadásának diagnosztikája'
+      pt: 'Diagnóstico de eletroválvula de dosagem presa fechada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Locked in closed state'
+        fr: 'Bloqué à l''état fermé'
+        es: 'Bloqueado en estado cerrado'
+        de: 'Im geschlossenen Zustand blockiert'
+        it: 'Bloccato in stato chiuso'
+        pl: 'Zablokowane w stanie zamkniętym'
+        ru: 'Заблокировано в закрытом состоянии'
+        zh: '锁定在关闭状态'
+        hu: 'Zárt állapotban reteszelve'
+        pt: 'Bloqueado no estado fechado'
+
+  DOSING_VALVE_STUCK_OPEN:
+    bits: '2.4'
+    comment:
+      en: 'Dosing solenoid valve stuck open diagnosis'
+      fr: 'Diagnostic de l''électrovanne de dosage bloquée ouverte'
+      es: 'Diagnóstico de la electroválvula de dosificación bloqueada abierta'
+      de: 'Diagnose: Dosierventil in Stellung offen festgesetzt'
+      it: 'Diagnosi dell''elettrovalvola di dosaggio bloccata aperta'
+      pl: 'Diagnostyka zaworu dozującego zablokowanego w pozycji otwartej'
+      ru: 'Диагностика дозирующего электроклапана, заблокированного в открытом положении'
+      zh: '计量电磁阀卡在打开位置诊断'
+      hu: 'Az adagolószelep nyitott állapotban ragadásának diagnosztikája'
+      pt: 'Diagnóstico de eletroválvula de dosagem presa aberta'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Blocked in open state'
+        fr: 'Bloqué à l''état ouvert'
+        es: 'Bloqueado en estado abierto'
+        de: 'Im geöffneten Zustand blockiert'
+        it: 'Bloccato in stato aperto'
+        pl: 'Zablokowane w stanie otwartym'
+        ru: 'Заблокировано в открытом состоянии'
+        zh: '锁定于打开状态'
+        hu: 'Nyitott állapotban reteszelve'
+        pt: 'Bloqueado no estado aberto'
+
+  SAFETY_VALVE_STUCK_CLOSED:
+    bits: '2.3'
+    comment:
+      en: 'Safety solenoid valve stuck closed diagnosis'
+      fr: 'Diagnostic de l''électrovanne de sécurité bloquée fermée'
+      es: 'Diagnóstico de la electroválvula de seguridad bloqueada cerrada'
+      de: 'Diagnose: Sicherheitsventil in Stellung geschlossen festgesetzt'
+      it: 'Diagnosi dell''elettrovalvola di sicurezza bloccata chiusa'
+      pl: 'Diagnostyka zaworu bezpieczeństwa zablokowanego w pozycji zamkniętej'
+      ru: 'Диагностика предохранительного электроклапана, заблокированного в закрытом положении'
+      zh: '安全电磁阀卡在关闭位置诊断'
+      hu: 'A biztonsági szelep zárt állapotban ragadásának diagnosztikája'
+      pt: 'Diagnóstico de eletroválvula de segurança presa fechada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Locked in closed state'
+        fr: 'Bloqué à l''état fermé'
+        es: 'Bloqueado en estado cerrado'
+        de: 'Im geschlossenen Zustand blockiert'
+        it: 'Bloccato in stato chiuso'
+        pl: 'Zablokowane w stanie zamkniętym'
+        ru: 'Заблокировано в закрытом состоянии'
+        zh: '锁定在关闭状态'
+        hu: 'Zárt állapotban reteszelve'
+        pt: 'Bloqueado no estado fechado'
+
+  SAFETY_VALVE_STUCK_OPEN:
+    bits: '2.2'
+    comment:
+      en: 'Safety solenoid valve stuck open diagnosis'
+      fr: 'Diagnostic de l''électrovanne de sécurité bloquée ouverte'
+      es: 'Diagnóstico de la electroválvula de seguridad bloqueada abierta'
+      de: 'Diagnose: Sicherheitsventil in Stellung offen festgesetzt'
+      it: 'Diagnosi dell''elettrovalvola di sicurezza bloccata aperta'
+      pl: 'Diagnostyka zaworu bezpieczeństwa zablokowanego w pozycji otwartej'
+      ru: 'Диагностика предохранительного электроклапана, заблокированного в открытом положении'
+      zh: '安全电磁阀卡在打开位置诊断'
+      hu: 'A biztonsági szelep nyitott állapotban ragadásának diagnosztikája'
+      pt: 'Diagnóstico de eletroválvula de segurança presa aberta'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Blocked in open state'
+        fr: 'Bloqué à l''état ouvert'
+        es: 'Bloqueado en estado abierto'
+        de: 'Im geöffneten Zustand blockiert'
+        it: 'Bloccato in stato aperto'
+        pl: 'Zablokowane w stanie otwartym'
+        ru: 'Заблокировано в открытом состоянии'
+        zh: '锁定于打开状态'
+        hu: 'Nyitott állapotban reteszelve'
+        pt: 'Bloqueado no estado aberto'
+
+  SCR_HEATER_M1_STUCK_OFF_FAULT:
+    bits: '2.1'
+    comment:
+      en: 'Fault: SCR heater cartridge M1 stuck off, not heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage M1 SCR bloquée à l''arrêt, ne chauffe pas'
+      es: 'Fallo: resistencia del cartucho calefactor M1 del SCR bloqueada apagada, no calienta'
+      de: 'Fehler: Heizpatrone M1 des SCR-Systems blockiert im Zustand „aus“, heizt nicht'
+      it: 'Guasto: resistenza della cartuccia riscaldante M1 dell''SCR bloccata spenta, non riscalda'
+      pl: 'Usterka: grzałka wkładu M1 układu SCR zablokowana w stanie wyłączonym, nie grzeje'
+      ru: 'Неисправность: нагреватель картриджа M1 SCR заблокирован в выключенном состоянии, не греет'
+      zh: '故障:SCR M1加热筒电阻卡在关闭状态,无法加热'
+      hu: 'Hiba: az SCR M1 fűtőpatron ellenállása kikapcsolt állapotban ragadt, nem fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR M1 preso desligado, sem aquecer'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Stuck not heating'
+        fr: 'Bloqué en position non chauffé'
+        es: 'Bloqueado sin calentar'
+        de: 'Blockiert im Zustand „nicht heizend"'
+        it: 'Bloccato non riscaldante'
+        pl: 'Zablokowany w stanie niegrzejącym'
+        ru: 'Заблокирован в состоянии без нагрева'
+        zh: '卡在不加热状态'
+        hu: 'Nem fűtő állapotban ragadt'
+        pt: 'Bloqueado sem aquecer'
+
+  SCR_HEATER_M1_STUCK_ON_FAULT:
+    bits: '2.0'
+    comment:
+      en: 'Fault: SCR heater cartridge M1 stuck on, permanent heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage M1 SCR bloquée en chauffage permanent'
+      es: 'Fallo: resistencia del cartucho calefactor M1 del SCR bloqueada encendida, calentamiento permanente'
+      de: 'Fehler: Heizpatrone M1 des SCR-Systems blockiert im Dauerheizbetrieb'
+      it: 'Guasto: resistenza della cartuccia riscaldante M1 dell''SCR bloccata accesa, riscaldamento permanente'
+      pl: 'Usterka: grzałka wkładu M1 układu SCR zablokowana w stanie włączonym, grzeje stale'
+      ru: 'Неисправность: нагреватель картриджа M1 SCR заблокирован во включённом состоянии, постоянный нагрев'
+      zh: '故障:SCR M1加热筒电阻卡在开启状态,持续加热'
+      hu: 'Hiba: az SCR M1 fűtőpatron ellenállása bekapcsolt állapotban ragadt, folyamatosan fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR M1 preso ligado, aquecimento permanente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Locked to permanent heating'
+        fr: 'Bloqué en chauffage permanent'
+        es: 'Bloqueado en calefacción permanente'
+        de: 'Auf Dauerheizung festgelegt'
+        it: 'Bloccato al riscaldamento permanente'
+        pl: 'Zablokowane na stałym ogrzewaniu'
+        ru: 'Заблокировано в режиме постоянного обогрева'
+        zh: '锁定为持续加热'
+        hu: 'Folyamatos fűtésre rögzítve'
+        pt: 'Bloqueado em aquecimento permanente'
+
+  SCR_HEATER_SU_STUCK_OFF_FAULT:
+    bits: '3.7'
+    comment:
+      en: 'Fault: SCR heater cartridge SU stuck off, not heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage SU SCR bloquée à l''arrêt, ne chauffe pas'
+      es: 'Fallo: resistencia del cartucho calefactor SU del SCR bloqueada apagada, no calienta'
+      de: 'Fehler: Heizpatrone SU des SCR-Systems blockiert im Zustand „aus“, heizt nicht'
+      it: 'Guasto: resistenza della cartuccia riscaldante SU dell''SCR bloccata spenta, non riscalda'
+      pl: 'Usterka: grzałka wkładu SU układu SCR zablokowana w stanie wyłączonym, nie grzeje'
+      ru: 'Неисправность: нагреватель картриджа SU SCR заблокирован в выключенном состоянии, не греет'
+      zh: '故障:SCR SU加热筒电阻卡在关闭状态,无法加热'
+      hu: 'Hiba: az SCR SU fűtőpatron ellenállása kikapcsolt állapotban ragadt, nem fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR SU preso desligado, sem aquecer'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Stuck not heating'
+        fr: 'Bloqué en position non chauffé'
+        es: 'Bloqueado sin calentar'
+        de: 'Blockiert im Zustand „nicht heizend"'
+        it: 'Bloccato non riscaldante'
+        pl: 'Zablokowany w stanie niegrzejącym'
+        ru: 'Заблокирован в состоянии без нагрева'
+        zh: '卡在不加热状态'
+        hu: 'Nem fűtő állapotban ragadt'
+        pt: 'Bloqueado sem aquecer'
+
+  SCR_HEATER_SU_STUCK_ON_FAULT:
+    bits: '3.6'
+    comment:
+      en: 'Fault: SCR heater cartridge SU stuck on, permanent heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage SU SCR bloquée en chauffage permanent'
+      es: 'Fallo: resistencia del cartucho calefactor SU del SCR bloqueada encendida, calentamiento permanente'
+      de: 'Fehler: Heizpatrone SU des SCR-Systems blockiert im Dauerheizbetrieb'
+      it: 'Guasto: resistenza della cartuccia riscaldante SU dell''SCR bloccata accesa, riscaldamento permanente'
+      pl: 'Usterka: grzałka wkładu SU układu SCR zablokowana w stanie włączonym, grzeje stale'
+      ru: 'Неисправность: нагреватель картриджа SU SCR заблокирован во включённом состоянии, постоянный нагрев'
+      zh: '故障:SCR SU加热筒电阻卡在开启状态,持续加热'
+      hu: 'Hiba: az SCR SU fűtőpatron ellenállása bekapcsolt állapotban ragadt, folyamatosan fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR SU preso ligado, aquecimento permanente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Locked to permanent heating'
+        fr: 'Bloqué en chauffage permanent'
+        es: 'Bloqueado en calefacción permanente'
+        de: 'Auf Dauerheizung festgelegt'
+        it: 'Bloccato al riscaldamento permanente'
+        pl: 'Zablokowane na stałym ogrzewaniu'
+        ru: 'Заблокировано в режиме постоянного обогрева'
+        zh: '锁定为持续加热'
+        hu: 'Folyamatos fűtésre rögzítve'
+        pt: 'Bloqueado em aquecimento permanente'
+
+  SCR_HEATER_M2_STUCK_OFF_FAULT:
+    bits: '3.5'
+    comment:
+      en: 'Fault: SCR heater cartridge M2 stuck off, not heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage M2 SCR bloquée à l''arrêt, ne chauffe pas'
+      es: 'Fallo: resistencia del cartucho calefactor M2 del SCR bloqueada apagada, no calienta'
+      de: 'Fehler: Heizpatrone M2 des SCR-Systems blockiert im Zustand „aus“, heizt nicht'
+      it: 'Guasto: resistenza della cartuccia riscaldante M2 dell''SCR bloccata spenta, non riscalda'
+      pl: 'Usterka: grzałka wkładu M2 układu SCR zablokowana w stanie wyłączonym, nie grzeje'
+      ru: 'Неисправность: нагреватель картриджа M2 SCR заблокирован в выключенном состоянии, не греет'
+      zh: '故障:SCR M2加热筒电阻卡在关闭状态,无法加热'
+      hu: 'Hiba: az SCR M2 fűtőpatron ellenállása kikapcsolt állapotban ragadt, nem fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR M2 preso desligado, sem aquecer'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Stuck not heating'
+        fr: 'Bloqué en position non chauffé'
+        es: 'Bloqueado sin calentar'
+        de: 'Blockiert im Zustand „nicht heizend"'
+        it: 'Bloccato non riscaldante'
+        pl: 'Zablokowany w stanie niegrzejącym'
+        ru: 'Заблокирован в состоянии без нагрева'
+        zh: '卡在不加热状态'
+        hu: 'Nem fűtő állapotban ragadt'
+        pt: 'Bloqueado sem aquecer'
+
+  SCR_HEATER_M2_STUCK_ON_FAULT:
+    bits: '3.4'
+    comment:
+      en: 'Fault: SCR heater cartridge M2 stuck on, permanent heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage M2 SCR bloquée en chauffage permanent'
+      es: 'Fallo: resistencia del cartucho calefactor M2 del SCR bloqueada encendida, calentamiento permanente'
+      de: 'Fehler: Heizpatrone M2 des SCR-Systems blockiert im Dauerheizbetrieb'
+      it: 'Guasto: resistenza della cartuccia riscaldante M2 dell''SCR bloccata accesa, riscaldamento permanente'
+      pl: 'Usterka: grzałka wkładu M2 układu SCR zablokowana w stanie włączonym, grzeje stale'
+      ru: 'Неисправность: нагреватель картриджа M2 SCR заблокирован во включённом состоянии, постоянный нагрев'
+      zh: '故障:SCR M2加热筒电阻卡在开启状态,持续加热'
+      hu: 'Hiba: az SCR M2 fűtőpatron ellenállása bekapcsolt állapotban ragadt, folyamatosan fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR M2 preso ligado, aquecimento permanente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Locked to permanent heating'
+        fr: 'Bloqué en chauffage permanent'
+        es: 'Bloqueado en calefacción permanente'
+        de: 'Auf Dauerheizung festgelegt'
+        it: 'Bloccato al riscaldamento permanente'
+        pl: 'Zablokowane na stałym ogrzewaniu'
+        ru: 'Заблокировано в режиме постоянного обогрева'
+        zh: '锁定为持续加热'
+        hu: 'Folyamatos fűtésre rögzítve'
+        pt: 'Bloqueado em aquecimento permanente'
+
+  SCR_HEATER_M3_STUCK_OFF_FAULT:
+    bits: '3.3'
+    comment:
+      en: 'Fault: SCR heater cartridge M3 stuck off, not heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage M3 SCR bloquée à l''arrêt, ne chauffe pas'
+      es: 'Fallo: resistencia del cartucho calefactor M3 del SCR bloqueada apagada, no calienta'
+      de: 'Fehler: Heizpatrone M3 des SCR-Systems blockiert im Zustand „aus“, heizt nicht'
+      it: 'Guasto: resistenza della cartuccia riscaldante M3 dell''SCR bloccata spenta, non riscalda'
+      pl: 'Usterka: grzałka wkładu M3 układu SCR zablokowana w stanie wyłączonym, nie grzeje'
+      ru: 'Неисправность: нагреватель картриджа M3 SCR заблокирован в выключенном состоянии, не греет'
+      zh: '故障:SCR M3加热筒电阻卡在关闭状态,无法加热'
+      hu: 'Hiba: az SCR M3 fűtőpatron ellenállása kikapcsolt állapotban ragadt, nem fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR M3 preso desligado, sem aquecer'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Stuck not heating'
+        fr: 'Bloqué en position non chauffé'
+        es: 'Bloqueado sin calentar'
+        de: 'Blockiert im Zustand „nicht heizend"'
+        it: 'Bloccato non riscaldante'
+        pl: 'Zablokowany w stanie niegrzejącym'
+        ru: 'Заблокирован в состоянии без нагрева'
+        zh: '卡在不加热状态'
+        hu: 'Nem fűtő állapotban ragadt'
+        pt: 'Bloqueado sem aquecer'
+
+  SCR_HEATER_M3_STUCK_ON_FAULT:
+    bits: '3.2'
+    comment:
+      en: 'Fault: SCR heater cartridge M3 stuck on, permanent heating'
+      fr: 'Défaut : résistance de la cartouche de chauffage M3 SCR bloquée en chauffage permanent'
+      es: 'Fallo: resistencia del cartucho calefactor M3 del SCR bloqueada encendida, calentamiento permanente'
+      de: 'Fehler: Heizpatrone M3 des SCR-Systems blockiert im Dauerheizbetrieb'
+      it: 'Guasto: resistenza della cartuccia riscaldante M3 dell''SCR bloccata accesa, riscaldamento permanente'
+      pl: 'Usterka: grzałka wkładu M3 układu SCR zablokowana w stanie włączonym, grzeje stale'
+      ru: 'Неисправность: нагреватель картриджа M3 SCR заблокирован во включённом состоянии, постоянный нагрев'
+      zh: '故障:SCR M3加热筒电阻卡在开启状态,持续加热'
+      hu: 'Hiba: az SCR M3 fűtőpatron ellenállása bekapcsolt állapotban ragadt, folyamatosan fűt'
+      pt: 'Avaria: cartucho de aquecimento SCR M3 preso ligado, aquecimento permanente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Locked to permanent heating'
+        fr: 'Bloqué en chauffage permanent'
+        es: 'Bloqueado en calefacción permanente'
+        de: 'Auf Dauerheizung festgelegt'
+        it: 'Bloccato al riscaldamento permanente'
+        pl: 'Zablokowane na stałym ogrzewaniu'
+        ru: 'Заблокировано в режиме постоянного обогрева'
+        zh: '锁定为持续加热'
+        hu: 'Folyamatos fűtésre rögzítve'
+        pt: 'Bloqueado em aquecimento permanente'
+
+  UNUSED_1:
+    bits: '3.1-3.0'
+    unused: true
+
+  SCR_SUPPLY_VOLTAGE:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Supply voltage at the SCR unit terminals'
+      fr: 'Tension d''alimentation aux bornes de l''unité SCR'
+      es: 'Tensión de alimentación en los bornes de la unidad SCR'
+      de: 'Versorgungsspannung an den Anschlüssen der SCR-Einheit'
+      it: 'Tensione di alimentazione ai terminali dell''unità SCR'
+      pl: 'Napięcie zasilania na zaciskach jednostki SCR'
+      ru: 'Напряжение питания на клеммах блока SCR'
+      zh: 'SCR单元接线端子处的供电电压'
+      hu: 'A tápfeszültség az SCR egység csatlakozóin'
+      pt: 'Tensão de alimentação nos terminais da unidade SCR'
+    type: 'uint'
+    factor: 0.1
+    offset: 6
+    min: 6
+    max: 18.6
+    units: 'V'
+    invalid: 0x7F
+    default: 0x7F
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (offset 8)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (offset 8)'
+          es: 'También observado con otro escalado (offset 8)'
+          de: 'Auch mit anderer Skalierung beobachtet (offset 8)'
+          it: 'Osservato anche con un''altra scala (offset 8)'
+          pl: 'Obserwowany także z innym skalowaniem (offset 8)'
+          ru: 'Также наблюдался с другим масштабом (offset 8)'
+          zh: '也观察到使用另一种缩放（offset 8）'
+          hu: 'Megfigyelve más skálázással is (offset 8)'
+          pt: 'Também observado com outra escala (offset 8)'
+        offset: 8
+
+  UNUSED_2:
+    bits: '4.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '5.7-5.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '6.7-6.0'
+    unused: true

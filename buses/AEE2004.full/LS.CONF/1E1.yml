@@ -1,274 +1,1020 @@
 id: 0x1E1
 name: 'TPMS_STATUS'
-alt_names: ['DONNEES_ETAT_ROUES']
+type: 'can'
 length: 8
 comment:
-  en: 'Contains tyre pressure monitoring system information'
-  fr: 'Contient des informations relatives au système de surveillance de la pression des pneus'
-type: 'can'
+  en: 'Values of pressures returned by the wheel sensors: overall TPMS state and status of each wheel including the spare.'
+  fr: 'Valeurs des pressions retournées par les capteurs de roue : état général du système et état de chaque roue, y compris la roue de secours.'
+  es: 'Valores de presión devueltos por los sensores de rueda: estado general del sistema y estado de cada rueda, incluida la de repuesto.'
+  de: 'Von den Radsensoren gemeldete Druckwerte: allgemeiner Systemstatus und Status jedes Rads, einschließlich Reserverad.'
+  it: 'Valori di pressione restituiti dai sensori delle ruote: stato generale del sistema e stato di ogni ruota, compresa la ruota di scorta.'
+  pl: 'Wartości ciśnienia zwracane przez czujniki kół: ogólny stan systemu i stan każdego koła, w tym koła zapasowego.'
+  ru: 'Значения давления, возвращаемые датчиками колёс: общий статус системы и статус каждого колеса, включая запасное.'
+  zh: '车轮传感器返回的压力值:整体TPMS状态以及包括备胎在内的每个车轮的状态。'
+  hu: 'A kerékérzékelők által visszaküldött nyomásértékek: az abroncsnyomás-ellenőrző rendszer általános állapota és minden egyes kerék (a pótkerekét is beleértve) állapota.'
+  pt: 'Valores de pressão devolvidos pelos sensores das rodas: estado geral do TPMS e estado de cada roda, incluindo o sobresselente.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
 periodicity: ['500ms']
-senders:
-  - 'BSI'
-receivers:
-  - 'EMF'
-  - 'CMB'
-  - 'BTEL'
-  - 'CMB_EMF'
-  - 'MATT'
-  - 'BGP'
+senders: ['BSI']
+receivers: ['EMF', 'CMB', 'BTEL', 'MATT', 'BGP', 'BCD']
 
 signals:
   FRONT_LEFT_WHEEL_STATUS:
-    alt_names: ['ETAT_ROUE_AVG']
-    bits: "1.7-1.3"
+    bits: '1.7-1.3'
     comment:
-      fr: "Etat de la roue AVG"
-      en: "Front left wheel status"
+      en: 'Front left wheel tyre pressure status'
+      fr: 'État de pression du pneu avant gauche'
+      es: 'Estado de presión del neumático delantero izquierdo'
+      de: 'Reifendruckstatus des linken Vorderrads'
+      it: 'Stato di pressione del pneumatico anteriore sinistro'
+      pl: 'Stan ciśnienia opony przedniej lewej'
+      ru: 'Статус давления в шине переднего левого колеса'
+      zh: '左前轮胎压状态'
+      hu: 'Az első bal kerék gumiabroncsnyomás-állapota'
+      pt: 'Estado da pressão do pneu da roda dianteira esquerda'
+    type: 'enum'
+    default: 0x10
     values:
       0x01:
-        fr: "Roue crevée"
-        en: "Flat tyre"
+        en: 'Punctured wheel'
+        fr: 'Roue crevée'
+        es: 'Rueda pinchada'
+        de: 'Reifenpanne'
+        it: 'Ruota forata'
+        pl: 'Przebite koło'
+        ru: 'Спущенное колесо'
+        zh: '车轮爆胎'
+        hu: 'Defektes kerék'
+        pt: 'Roda furada'
       0x02:
-        fr: "Roue faiblement dégonflée"
-        en: "Slightly deflated tyre"
+        en: 'Slightly deflated wheel'
+        fr: 'Roue faiblement dégonflée'
+        es: 'Rueda ligeramente desinflada'
+        de: 'Leicht unterfülltes Rad'
+        it: 'Ruota leggermente sgonfia'
+        pl: 'Lekko niedopompowane koło'
+        ru: 'Слегка спущенное колесо'
+        zh: '轮胎轻微亏气'
+        hu: 'Enyhén leeresztett kerék'
+        pt: 'Roda ligeiramente desinflada'
       0x04:
-        fr: "Roue fortement dégonflée"
-        en: "Heavily deflated tyre"
+        en: 'Severely deflated wheel'
+        fr: 'Roue fortement dégonflée'
+        es: 'Rueda muy desinflada'
+        de: 'Stark unterfülltes Rad'
+        it: 'Ruota fortemente sgonfia'
+        pl: 'Znacznie spuszczone koło'
+        ru: 'Сильно спущенное колесо'
+        zh: '车轮严重亏气'
+        hu: 'Erősen leeresztett kerék'
+        pt: 'Roda severamente desinsuflada'
       0x08:
-        fr: "Pression roue non surveillée"
-        en: "Tyre pressure not monitored"
+        en: 'Wheel pressure not monitored'
+        fr: 'Pression de roue non surveillée'
+        es: 'Presión de rueda no supervisada'
+        de: 'Reifendruck nicht überwacht'
+        it: 'Pressione ruota non monitorata'
+        pl: 'Ciśnienie w kole niemonitorowane'
+        ru: 'Давление в колесе не контролируется'
+        zh: '轮胎气压未监测'
+        hu: 'A kerékabroncsnyomás nincs felügyelve'
+        pt: 'Pressão da roda não monitorizada'
       0x10:
-        fr: "Pression normale"
-        en: "Normal pressure"
-
-  FRONT_LEFT_PAX_WHEEL_STATUS:
-    alt_names: ['ETAT_PAX_AVG']
-    bits: "1.2-1.1"
-    comment:
-      fr: "Etat roue PAX AVG"
-      en: "Front left PAX wheel status"
-    values:
-      0x00:
-        fr: "Roue PAX non crevée"
-        en: "PAX tyre not flat"
-      0x01:
-        fr: "Roue PAX crevée"
-        en: "PAX tyre flat"
-      0x02:
-        fr: "Valeur indisponible"
-        en: "Value unavailable"
-      0x03:
-        fr: "Invalide"
-        en: "Invalid"
+        en: 'Normal pressure'
+        fr: 'Pression normale'
+        es: 'Presión normal'
+        de: 'Normaler Druck'
+        it: 'Pressione normale'
+        pl: 'Ciśnienie normalne'
+        ru: 'Нормальное давление'
+        zh: '正常压力'
+        hu: 'Normál nyomás'
+        pt: 'Pressão normal'
 
   UNUSED_1:
-    alt_names: ['LIBRE_1']
-    bits: "1.0"
+    bits: '1.2-1.1'
+    unused: true
+
+  UNUSED_2:
+    bits: '1.0'
     unused: true
 
   FRONT_RIGHT_WHEEL_STATUS:
-    alt_names: ['ETAT_ROUE_AVD']
-    bits: "2.7-2.3"
+    bits: '2.7-2.3'
     comment:
-      fr: "Etat de la roue AVD"
-      en: "Front right wheel status"
+      en: 'Front right wheel tyre pressure status'
+      fr: 'État de pression du pneu avant droit'
+      es: 'Estado de presión del neumático delantero derecho'
+      de: 'Reifendruckstatus des rechten Vorderrads'
+      it: 'Stato di pressione del pneumatico anteriore destro'
+      pl: 'Stan ciśnienia opony przedniej prawej'
+      ru: 'Статус давления в шине переднего правого колеса'
+      zh: '右前轮胎压状态'
+      hu: 'Az első jobb kerék gumiabroncsnyomás-állapota'
+      pt: 'Estado da pressão do pneu da roda dianteira direita'
+    type: 'enum'
+    default: 0x10
     values:
       0x01:
-        fr: "Roue crevée"
-        en: "Flat tyre"
+        en: 'Punctured wheel'
+        fr: 'Roue crevée'
+        es: 'Rueda pinchada'
+        de: 'Reifenpanne'
+        it: 'Ruota forata'
+        pl: 'Przebite koło'
+        ru: 'Спущенное колесо'
+        zh: '车轮爆胎'
+        hu: 'Defektes kerék'
+        pt: 'Roda furada'
       0x02:
-        fr: "Roue faiblement dégonflée"
-        en: "Slightly deflated tyre"
+        en: 'Slightly deflated wheel'
+        fr: 'Roue faiblement dégonflée'
+        es: 'Rueda ligeramente desinflada'
+        de: 'Leicht unterfülltes Rad'
+        it: 'Ruota leggermente sgonfia'
+        pl: 'Lekko niedopompowane koło'
+        ru: 'Слегка спущенное колесо'
+        zh: '轮胎轻微亏气'
+        hu: 'Enyhén leeresztett kerék'
+        pt: 'Roda ligeiramente desinflada'
       0x04:
-        fr: "Roue fortement dégonflée"
-        en: "Heavily deflated tyre"
+        en: 'Severely deflated wheel'
+        fr: 'Roue fortement dégonflée'
+        es: 'Rueda muy desinflada'
+        de: 'Stark unterfülltes Rad'
+        it: 'Ruota fortemente sgonfia'
+        pl: 'Znacznie spuszczone koło'
+        ru: 'Сильно спущенное колесо'
+        zh: '车轮严重亏气'
+        hu: 'Erősen leeresztett kerék'
+        pt: 'Roda severamente desinsuflada'
       0x08:
-        fr: "Pression roue non surveillée"
-        en: "Tyre pressure not monitored"
+        en: 'Wheel pressure not monitored'
+        fr: 'Pression de roue non surveillée'
+        es: 'Presión de rueda no supervisada'
+        de: 'Reifendruck nicht überwacht'
+        it: 'Pressione ruota non monitorata'
+        pl: 'Ciśnienie w kole niemonitorowane'
+        ru: 'Давление в колесе не контролируется'
+        zh: '轮胎气压未监测'
+        hu: 'A kerékabroncsnyomás nincs felügyelve'
+        pt: 'Pressão da roda não monitorizada'
       0x10:
-        fr: "Pression normale"
-        en: "Normal pressure"
+        en: 'Normal pressure'
+        fr: 'Pression normale'
+        es: 'Presión normal'
+        de: 'Normaler Druck'
+        it: 'Pressione normale'
+        pl: 'Ciśnienie normalne'
+        ru: 'Нормальное давление'
+        zh: '正常压力'
+        hu: 'Normál nyomás'
+        pt: 'Pressão normal'
 
-  FRONT_RIGHT_PAX_WHEEL_STATUS:
-    alt_names: ['ETAT_PAX_AVD']
-    bits: "2.2-2.1"
-    comment:
-      fr: "Etat roue PAX AVD"
-      en: "Front right PAX wheel status"
-    values:
-      0x00:
-        fr: "Roue PAX non crevée"
-        en: "PAX tyre not flat"
-      0x01:
-        fr: "Roue PAX crevée"
-        en: "PAX tyre flat"
-      0x02:
-        fr: "Valeur indisponible"
-        en: "Value unavailable"
-      0x03:
-        fr: "Invalide"
-        en: "Invalid"
+  UNUSED_3:
+    bits: '2.2-2.1'
+    unused: true
 
-  UNUSED_2:
-    alt_names: ['LIBRE_2']
-    bits: "2.0"
+  UNUSED_4:
+    bits: '2.0'
     unused: true
 
   REAR_LEFT_WHEEL_STATUS:
-    alt_names: ['ETAT_ROUE_ARG']
-    bits: "3.7-3.3"
+    bits: '3.7-3.3'
     comment:
-      fr: "Etat de la roue ARG"
-      en: "Rear left wheel status"
+      en: 'Rear left wheel tyre pressure status'
+      fr: 'État de pression du pneu arrière gauche'
+      es: 'Estado de presión del neumático trasero izquierdo'
+      de: 'Reifendruckstatus des linken Hinterrads'
+      it: 'Stato di pressione del pneumatico posteriore sinistro'
+      pl: 'Stan ciśnienia opony tylnej lewej'
+      ru: 'Статус давления в шине заднего левого колеса'
+      zh: '左后轮胎压状态'
+      hu: 'A hátsó bal kerék gumiabroncsnyomás-állapota'
+      pt: 'Estado da pressão do pneu da roda traseira esquerda'
+    type: 'enum'
+    default: 0x10
     values:
       0x01:
-        fr: "Roue crevée"
-        en: "Flat tyre"
+        en: 'Punctured wheel'
+        fr: 'Roue crevée'
+        es: 'Rueda pinchada'
+        de: 'Reifenpanne'
+        it: 'Ruota forata'
+        pl: 'Przebite koło'
+        ru: 'Спущенное колесо'
+        zh: '车轮爆胎'
+        hu: 'Defektes kerék'
+        pt: 'Roda furada'
       0x02:
-        fr: "Roue faiblement dégonflée"
-        en: "Slightly deflated tyre"
+        en: 'Slightly deflated wheel'
+        fr: 'Roue faiblement dégonflée'
+        es: 'Rueda ligeramente desinflada'
+        de: 'Leicht unterfülltes Rad'
+        it: 'Ruota leggermente sgonfia'
+        pl: 'Lekko niedopompowane koło'
+        ru: 'Слегка спущенное колесо'
+        zh: '轮胎轻微亏气'
+        hu: 'Enyhén leeresztett kerék'
+        pt: 'Roda ligeiramente desinflada'
       0x04:
-        fr: "Roue fortement dégonflée"
-        en: "Heavily deflated tyre"
+        en: 'Severely deflated wheel'
+        fr: 'Roue fortement dégonflée'
+        es: 'Rueda muy desinflada'
+        de: 'Stark unterfülltes Rad'
+        it: 'Ruota fortemente sgonfia'
+        pl: 'Znacznie spuszczone koło'
+        ru: 'Сильно спущенное колесо'
+        zh: '车轮严重亏气'
+        hu: 'Erősen leeresztett kerék'
+        pt: 'Roda severamente desinsuflada'
       0x08:
-        fr: "Pression roue non surveillée"
-        en: "Tyre pressure not monitored"
+        en: 'Wheel pressure not monitored'
+        fr: 'Pression de roue non surveillée'
+        es: 'Presión de rueda no supervisada'
+        de: 'Reifendruck nicht überwacht'
+        it: 'Pressione ruota non monitorata'
+        pl: 'Ciśnienie w kole niemonitorowane'
+        ru: 'Давление в колесе не контролируется'
+        zh: '轮胎气压未监测'
+        hu: 'A kerékabroncsnyomás nincs felügyelve'
+        pt: 'Pressão da roda não monitorizada'
       0x10:
-        fr: "Pression normale"
-        en: "Normal pressure"
+        en: 'Normal pressure'
+        fr: 'Pression normale'
+        es: 'Presión normal'
+        de: 'Normaler Druck'
+        it: 'Pressione normale'
+        pl: 'Ciśnienie normalne'
+        ru: 'Нормальное давление'
+        zh: '正常压力'
+        hu: 'Normál nyomás'
+        pt: 'Pressão normal'
 
-  REAR_LEFT_PAX_WHEEL_STATUS:
-    alt_names: ['ETAT_PAX_ARG']
-    bits: "3.2-3.1"
-    comment:
-      fr: "Etat roue PAX ARG"
-      en: "Rear left PAX wheel status"
-    values:
-      0x00:
-        fr: "Roue PAX non crevée"
-        en: "PAX tyre not flat"
-      0x01:
-        fr: "Roue PAX crevée"
-        en: "PAX tyre flat"
-      0x02:
-        fr: "Valeur indisponible"
-        en: "Value unavailable"
-      0x03:
-        fr: "Invalide"
-        en: "Invalid"
+  UNUSED_5:
+    bits: '3.2-3.1'
+    unused: true
 
-  UNUSED_3:
-    alt_names: ['LIBRE_3']
-    bits: "3.0"
+  UNUSED_6:
+    bits: '3.0'
     unused: true
 
   REAR_RIGHT_WHEEL_STATUS:
-    alt_names: ['ETAT_ROUE_ARD']
-    bits: "4.7-4.3"
+    bits: '4.7-4.3'
     comment:
-      fr: "Etat de la roue ARD"
-      en: "Rear right wheel status"
+      en: 'Rear right wheel tyre pressure status'
+      fr: 'État de pression du pneu arrière droit'
+      es: 'Estado de presión del neumático trasero derecho'
+      de: 'Reifendruckstatus des rechten Hinterrads'
+      it: 'Stato di pressione del pneumatico posteriore destro'
+      pl: 'Stan ciśnienia opony tylnej prawej'
+      ru: 'Статус давления в шине заднего правого колеса'
+      zh: '右后轮胎压状态'
+      hu: 'A hátsó jobb kerék gumiabroncsnyomás-állapota'
+      pt: 'Estado da pressão do pneu da roda traseira direita'
+    type: 'enum'
+    default: 0x10
     values:
       0x01:
-        fr: "Roue crevée"
-        en: "Flat tyre"
+        en: 'Punctured wheel'
+        fr: 'Roue crevée'
+        es: 'Rueda pinchada'
+        de: 'Reifenpanne'
+        it: 'Ruota forata'
+        pl: 'Przebite koło'
+        ru: 'Спущенное колесо'
+        zh: '车轮爆胎'
+        hu: 'Defektes kerék'
+        pt: 'Roda furada'
       0x02:
-        fr: "Roue faiblement dégonflée"
-        en: "Slightly deflated tyre"
+        en: 'Slightly deflated wheel'
+        fr: 'Roue faiblement dégonflée'
+        es: 'Rueda ligeramente desinflada'
+        de: 'Leicht unterfülltes Rad'
+        it: 'Ruota leggermente sgonfia'
+        pl: 'Lekko niedopompowane koło'
+        ru: 'Слегка спущенное колесо'
+        zh: '轮胎轻微亏气'
+        hu: 'Enyhén leeresztett kerék'
+        pt: 'Roda ligeiramente desinflada'
       0x04:
-        fr: "Roue fortement dégonflée"
-        en: "Heavily deflated tyre"
+        en: 'Severely deflated wheel'
+        fr: 'Roue fortement dégonflée'
+        es: 'Rueda muy desinflada'
+        de: 'Stark unterfülltes Rad'
+        it: 'Ruota fortemente sgonfia'
+        pl: 'Znacznie spuszczone koło'
+        ru: 'Сильно спущенное колесо'
+        zh: '车轮严重亏气'
+        hu: 'Erősen leeresztett kerék'
+        pt: 'Roda severamente desinsuflada'
       0x08:
-        fr: "Pression roue non surveillée"
-        en: "Tyre pressure not monitored"
+        en: 'Wheel pressure not monitored'
+        fr: 'Pression de roue non surveillée'
+        es: 'Presión de rueda no supervisada'
+        de: 'Reifendruck nicht überwacht'
+        it: 'Pressione ruota non monitorata'
+        pl: 'Ciśnienie w kole niemonitorowane'
+        ru: 'Давление в колесе не контролируется'
+        zh: '轮胎气压未监测'
+        hu: 'A kerékabroncsnyomás nincs felügyelve'
+        pt: 'Pressão da roda não monitorizada'
       0x10:
-        fr: "Pression normale"
-        en: "Normal pressure"
+        en: 'Normal pressure'
+        fr: 'Pression normale'
+        es: 'Presión normal'
+        de: 'Normaler Druck'
+        it: 'Pressione normale'
+        pl: 'Ciśnienie normalne'
+        ru: 'Нормальное давление'
+        zh: '正常压力'
+        hu: 'Normál nyomás'
+        pt: 'Pressão normal'
 
-  REAR_RIGHT_PAX_WHEEL_STATUS:
-    alt_names: ['ETAT_PAX_ARD']
-    bits: "4.2-4.1"
-    comment:
-      fr: "Etat roue PAX ARD"
-      en: "Rear right PAX wheel status"
-    values:
-      0x00:
-        fr: "Roue PAX non crevée"
-        en: "PAX tyre not flat"
-      0x01:
-        fr: "Roue PAX crevée"
-        en: "PAX tyre flat"
-      0x02:
-        fr: "Valeur indisponible"
-        en: "Value unavailable"
-      0x03:
-        fr: "Invalide"
-        en: "Invalid"
+  UNUSED_7:
+    bits: '4.2-4.1'
+    unused: true
+
+  UNUSED_8:
+    bits: '4.0'
+    unused: true
 
   SPARE_WHEEL_STATUS:
-    alt_names: ['ETAT_ROUE_SECOURS']
-    bits: "5.7-5.3"
+    bits: '5.7-5.3'
     comment:
-      fr: "Etat de la roue de secours"
-      en: "Spare wheel status"
+      en: 'Spare wheel status'
+      fr: 'État de la roue de secours'
+      es: 'Estado de la rueda de repuesto'
+      de: 'Status des Reserverads'
+      it: 'Stato della ruota di scorta'
+      pl: 'Stan koła zapasowego'
+      ru: 'Состояние запасного колеса'
+      zh: '备胎状态'
+      hu: 'A pótkerék állapota'
+      pt: 'Estado da roda sobresselente'
+    type: 'enum'
+    default: 0x10
     values:
       0x01:
-        fr: "Roue crevée"
-        en: "Flat tyre"
+        en: 'Punctured wheel'
+        fr: 'Roue crevée'
+        es: 'Rueda pinchada'
+        de: 'Reifenpanne'
+        it: 'Ruota forata'
+        pl: 'Przebite koło'
+        ru: 'Спущенное колесо'
+        zh: '车轮爆胎'
+        hu: 'Defektes kerék'
+        pt: 'Roda furada'
       0x02:
-        fr: "Roue faiblement dégonflée"
-        en: "Slightly deflated tyre"
+        en: 'Slightly deflated wheel'
+        fr: 'Roue faiblement dégonflée'
+        es: 'Rueda ligeramente desinflada'
+        de: 'Leicht unterfülltes Rad'
+        it: 'Ruota leggermente sgonfia'
+        pl: 'Lekko niedopompowane koło'
+        ru: 'Слегка спущенное колесо'
+        zh: '轮胎轻微亏气'
+        hu: 'Enyhén leeresztett kerék'
+        pt: 'Roda ligeiramente desinflada'
       0x04:
-        fr: "Roue fortement dégonflée"
-        en: "Heavily deflated tyre"
+        en: 'Severely deflated wheel'
+        fr: 'Roue fortement dégonflée'
+        es: 'Rueda muy desinflada'
+        de: 'Stark unterfülltes Rad'
+        it: 'Ruota fortemente sgonfia'
+        pl: 'Znacznie spuszczone koło'
+        ru: 'Сильно спущенное колесо'
+        zh: '车轮严重亏气'
+        hu: 'Erősen leeresztett kerék'
+        pt: 'Roda severamente desinsuflada'
       0x08:
-        fr: "Pression roue non surveillée"
-        en: "Tyre pressure not monitored"
+        en: 'Wheel pressure not monitored'
+        fr: 'Pression de roue non surveillée'
+        es: 'Presión de rueda no supervisada'
+        de: 'Reifendruck nicht überwacht'
+        it: 'Pressione ruota non monitorata'
+        pl: 'Ciśnienie w kole niemonitorowane'
+        ru: 'Давление в колесе не контролируется'
+        zh: '轮胎气压未监测'
+        hu: 'A kerékabroncsnyomás nincs felügyelve'
+        pt: 'Pressão da roda não monitorizada'
       0x10:
-        fr: "Pression normale"
-        en: "Normal pressure"
+        en: 'Normal pressure'
+        fr: 'Pression normale'
+        es: 'Presión normal'
+        de: 'Normaler Druck'
+        it: 'Pressione normale'
+        pl: 'Ciśnienie normalne'
+        ru: 'Нормальное давление'
+        zh: '正常压力'
+        hu: 'Normál nyomás'
+        pt: 'Pressão normal'
+
+  UNUSED_9:
+    bits: '5.2-5.0'
+    unused: true
 
   GENERAL_TPMS_STATUS:
-    alt_names: ['ETAT_DSG_GENERAL']
-    bits: "6.7-6.5"
+    bits: '6.7-6.5'
     comment:
-      fr: "Etat DSG Général"
-      en: "General TPMS status"
+      en: 'General tyre pressure monitoring status'
+      fr: 'État général de la surveillance de pression des pneus (DSG)'
+      es: 'Estado general del sistema de control de presión de neumáticos (DSG)'
+      de: 'Allgemeiner Status der Reifendrucküberwachung (DSG)'
+      it: 'Stato generale del monitoraggio della pressione pneumatici (DSG)'
+      pl: 'Ogólny stan systemu monitorowania ciśnienia w oponach (DSG)'
+      ru: 'Общий статус системы контроля давления в шинах (DSG)'
+      zh: '胎压监测系统总体状态 (DSG)'
+      hu: 'Gumiabroncsnyomás-felügyeleti rendszer (DSG) általános állapota'
+      pt: 'Estado geral do sistema de controlo de pressão dos pneus (DSG)'
+    type: 'enum'
+    default: 0x07
     values:
       0x00:
-        fr: "Pressions roues non surveillées. Environnement ne permettant pas une bonne réception"
-        en: "Tyre pressures not monitored. Environment not allowing good reception"
+        en: 'Wheel pressures not monitored; environment does not allow good reception'
+        fr: 'Pressions des roues non surveillées ; environnement ne permettant pas une bonne réception'
+        es: 'Presiones de las ruedas no supervisadas; el entorno no permite una buena recepción'
+        de: 'Reifendrücke nicht überwacht; Umgebung erlaubt keinen guten Empfang'
+        it: 'Pressioni delle ruote non monitorate; l''ambiente non consente una buona ricezione'
+        pl: 'Ciśnienia w kołach nie są monitorowane; otoczenie nie pozwala na dobry odbiór'
+        ru: 'Давление в шинах не контролируется; условия не позволяют обеспечить хороший приём'
+        zh: '未监测车轮胎压；环境条件不利于良好接收'
+        hu: 'A kerék nyomása nincs felügyelve; a környezet nem teszi lehetővé a jó vételt'
+        pt: 'Pressões das rodas não supervisionadas; ambiente não permite boa receção'
       0x01:
-        fr: "Pressions roues non surveillées. Problème système"
-        en: "Tyre pressures not monitored. System problem"
+        en: 'Wheel pressures not monitored. System problem'
+        fr: 'Pressions des roues non surveillées. Problème système'
+        es: 'Presiones de las ruedas no supervisadas. Problema del sistema'
+        de: 'Raddrücke nicht überwacht. Systemproblem'
+        it: 'Pressioni delle ruote non monitorate. Problema di sistema'
+        pl: 'Ciśnienia w kołach nie są monitorowane. Problem systemu'
+        ru: 'Давление в шинах не контролируется. Проблема системы'
+        zh: '车轮压力未监控。系统问题'
+        hu: 'A kerék­nyomások nincsenek felügyelve. Rendszerprobléma'
+        pt: 'Pressões dos pneus não monitorizadas. Problema do sistema'
       0x02:
-        fr: "Pressions roues inadaptées à la charge"
-        en: "Tyre pressures unsuitable for load"
+        en: 'Wheel pressures unsuited to load'
+        fr: 'Pressions des roues inadaptées à la charge'
+        es: 'Presiones de las ruedas no adecuadas a la carga'
+        de: 'Reifendrücke nicht an die Zuladung angepasst'
+        it: 'Pressioni delle ruote non adatte al carico'
+        pl: 'Ciśnienia w kołach niedostosowane do obciążenia'
+        ru: 'Давление в шинах не соответствует нагрузке'
+        zh: '轮胎气压与负载不匹配'
+        hu: 'A kerékabroncsnyomás nem megfelelő a terheléshez'
+        pt: 'Pressões dos pneus não adequadas à carga'
       0x03:
-        fr: "Pressions roues inadaptées à la vitesse"
-        en: "Tyre pressures unsuitable for speed"
+        en: 'Wheel pressures unsuitable for speed'
+        fr: 'Pressions des roues inadaptées à la vitesse'
+        es: 'Presiones de las ruedas inadecuadas para la velocidad'
+        de: 'Reifendrücke unpassend zur Geschwindigkeit'
+        it: 'Pressioni delle ruote non adatte alla velocità'
+        pl: 'Ciśnienia w kołach niedostosowane do prędkości'
+        ru: 'Давление в шинах не соответствует скорости'
+        zh: '胎压与车速不匹配'
+        hu: 'A keréknyomások nem megfelelőek a sebességhez'
+        pt: 'Pressões dos pneus inadequadas para a velocidade'
       0x04:
-        fr: "En cours"
-        en: "In progress"
+        en: 'In progress'
+        fr: 'En cours'
+        es: 'En curso'
+        de: 'Läuft'
+        it: 'In corso'
+        pl: 'W toku'
+        ru: 'Выполняется'
+        zh: '进行中'
+        hu: 'Folyamatban'
+        pt: 'Em curso'
       0x05:
         unused: true
       0x06:
         unused: true
       0x07:
-        fr: "Ok"
-        en: "Ok"
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
 
-  UNUSED_5:
-    alt_names: ['LIBRE_5']
-    bits: "6.4-6.0"
+  UNUSED_10:
+    bits: '6.4-6.0'
     unused: true
 
-  UNUSED_6:
-    alt_names: ['LIBRE_6']
-    bits: "7.7-7.0"
+  UNUSED_11:
+    bits: '7.7-7.0'
     unused: true
 
-  UNUSED_8:
-    alt_names: ['RESERVE_8']
-    bits: "8.7-8.0"
+  UNUSED_12:
+    bits: '8.7-8.0'
     unused: true
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['500ms']
+    senders: ['BSI']
+    receivers: ['BTEL', 'CMB', 'EMF', 'VTH']
+    signals:
+      FRONT_LEFT_TYRE_PRESSURE_STATUS:
+        bits: '1.7-1.6'
+        comment:
+          en: 'Front left tyre pressure status (normal, too low, too high, invalid measurement)'
+          fr: 'État de la pression du pneu avant gauche (normale, trop basse, trop haute, mesure invalide)'
+          es: 'Estado de la presión del neumático delantero izquierdo (normal, demasiado baja, demasiado alta, medición no válida)'
+          de: 'Reifendruckstatus vorne links (normal, zu niedrig, zu hoch, ungültige Messung)'
+          it: 'Stato della pressione del pneumatico anteriore sinistro (normale, troppo bassa, troppo alta, misura non valida)'
+          pl: 'Stan ciśnienia w oponie przedniej lewej (normalne, zbyt niskie, zbyt wysokie, pomiar nieprawidłowy)'
+          ru: 'Статус давления переднего левого колеса (норма, слишком низкое, слишком высокое, измерение недействительно)'
+          zh: '左前轮胎压力状态(正常、过低、过高、测量无效)'
+          hu: 'Az első bal gumiabroncs nyomásállapota (normál, túl alacsony, túl magas, érvénytelen mérés)'
+          pt: 'Estado da pressão do pneu dianteiro esquerdo (normal, demasiado baixa, demasiado alta, medição inválida)'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'Normal pressure'
+            fr: 'Pression_normale'
+            es: 'Presión normal'
+            de: 'Normaler Druck'
+            it: 'Pressione normale'
+            pl: 'Normalne ciśnienie'
+            ru: 'Нормальное давление'
+            zh: '正常压力'
+            hu: 'Normál nyomás'
+            pt: 'Pressão normal'
+          0x01:
+            en: 'Pressure too low'
+            fr: 'Pression trop basse'
+            es: 'Presión demasiado baja'
+            de: 'Druck zu niedrig'
+            it: 'Pressione troppo bassa'
+            pl: 'Zbyt niskie ciśnienie'
+            ru: 'Слишком низкое давление'
+            zh: '压力过低'
+            hu: 'A nyomás túl alacsony'
+            pt: 'Pressão demasiado baixa'
+          0x02:
+            en: 'Pressure too high'
+            fr: 'Pression trop élevée'
+            es: 'Presión demasiado alta'
+            de: 'Druck zu hoch'
+            it: 'Pressione troppo alta'
+            pl: 'Zbyt wysokie ciśnienie'
+            ru: 'Слишком высокое давление'
+            zh: '压力过高'
+            hu: 'Túl magas nyomás'
+            pt: 'Pressão demasiado elevada'
+          0x03:
+            en: 'Invalid measurement'
+            fr: 'Mesure invalide'
+            es: 'Medición no válida'
+            de: 'Ungültige Messung'
+            it: 'Misurazione non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      FRONT_LEFT_TYRE_PRESSURE:
+        bits: '1.5-1.0'
+        comment:
+          en: 'Front left tyre pressure (bar)'
+          fr: 'Pression du pneu avant gauche (bar)'
+          es: 'Presión del neumático delantero izquierdo (bar)'
+          de: 'Reifendruck vorne links (bar)'
+          it: 'Pressione del pneumatico anteriore sinistro (bar)'
+          pl: 'Ciśnienie w oponie przedniej lewej (bar)'
+          ru: 'Давление в переднем левом колесе (бар)'
+          zh: '左前轮胎压力(bar)'
+          hu: 'Az első bal gumiabroncs nyomása (bar)'
+          pt: 'Pressão do pneu dianteiro esquerdo (bar)'
+        type: 'enum'
+        values:
+          0x00:
+            en: '0 bar'
+            fr: '0 bar'
+            es: '0 bar'
+            de: '0 bar'
+            it: '0 bar'
+            pl: '0 bar'
+            ru: '0 бар'
+            zh: '0巴'
+            hu: '0 bar'
+            pt: '0 bar'
+          0x01:
+            en: '0-1 bar'
+            fr: '0-1 bar'
+            es: '0-1 bar'
+            de: '0-1 bar'
+            it: '0-1 bar'
+            pl: '0-1 bar'
+            ru: '0-1 бар'
+            zh: '0-1巴'
+            hu: '0-1 bar'
+            pt: '0-1 bar'
+          0x3E:
+            en: '6.2 bar'
+            fr: '6,2 bar'
+            es: '6,2 bar'
+            de: '6,2 bar'
+            it: '6,2 bar'
+            pl: '6,2 bar'
+            ru: '6,2 бар'
+            zh: '6.2 巴'
+            hu: '6,2 bar'
+            pt: '6,2 bar'
+          0x3F:
+            en: 'Invalid measurement'
+            fr: 'Mesaure_invalide'
+            es: 'Medición inválida'
+            de: 'Ungültige Messung'
+            it: 'Misura non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      FRONT_RIGHT_TYRE_PRESSURE_STATUS:
+        bits: '2.7-2.6'
+        comment:
+          en: 'Front right tyre pressure status (normal, too low, too high, invalid measurement)'
+          fr: 'État de la pression du pneu avant droit (normale, trop basse, trop haute, mesure invalide)'
+          es: 'Estado de la presión del neumático delantero derecho (normal, demasiado baja, demasiado alta, medición no válida)'
+          de: 'Reifendruckstatus vorne rechts (normal, zu niedrig, zu hoch, ungültige Messung)'
+          it: 'Stato della pressione del pneumatico anteriore destro (normale, troppo bassa, troppo alta, misura non valida)'
+          pl: 'Stan ciśnienia w oponie przedniej prawej (normalne, zbyt niskie, zbyt wysokie, pomiar nieprawidłowy)'
+          ru: 'Статус давления переднего правого колеса (норма, слишком низкое, слишком высокое, измерение недействительно)'
+          zh: '右前轮胎压力状态(正常、过低、过高、测量无效)'
+          hu: 'Az első jobb gumiabroncs nyomásállapota (normál, túl alacsony, túl magas, érvénytelen mérés)'
+          pt: 'Estado da pressão do pneu dianteiro direito (normal, demasiado baixa, demasiado alta, medição inválida)'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'Normal pressure'
+            fr: 'Pression_normale'
+            es: 'Presión normal'
+            de: 'Normaler Druck'
+            it: 'Pressione normale'
+            pl: 'Normalne ciśnienie'
+            ru: 'Нормальное давление'
+            zh: '正常压力'
+            hu: 'Normál nyomás'
+            pt: 'Pressão normal'
+          0x01:
+            en: 'Pressure too low'
+            fr: 'Pression trop basse'
+            es: 'Presión demasiado baja'
+            de: 'Druck zu niedrig'
+            it: 'Pressione troppo bassa'
+            pl: 'Zbyt niskie ciśnienie'
+            ru: 'Слишком низкое давление'
+            zh: '压力过低'
+            hu: 'A nyomás túl alacsony'
+            pt: 'Pressão demasiado baixa'
+          0x02:
+            en: 'Pressure too high'
+            fr: 'Pression trop élevée'
+            es: 'Presión demasiado alta'
+            de: 'Druck zu hoch'
+            it: 'Pressione troppo alta'
+            pl: 'Zbyt wysokie ciśnienie'
+            ru: 'Слишком высокое давление'
+            zh: '压力过高'
+            hu: 'Túl magas nyomás'
+            pt: 'Pressão demasiado elevada'
+          0x03:
+            en: 'Invalid measurement'
+            fr: 'Mesure invalide'
+            es: 'Medición no válida'
+            de: 'Ungültige Messung'
+            it: 'Misurazione non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      FRONT_RIGHT_TYRE_PRESSURE:
+        bits: '2.5-2.0'
+        comment:
+          en: 'Front right tyre pressure (bar)'
+          fr: 'Pression du pneu avant droit (bar)'
+          es: 'Presión del neumático delantero derecho (bar)'
+          de: 'Reifendruck vorne rechts (bar)'
+          it: 'Pressione del pneumatico anteriore destro (bar)'
+          pl: 'Ciśnienie w oponie przedniej prawej (bar)'
+          ru: 'Давление в переднем правом колесе (бар)'
+          zh: '右前轮胎压力(bar)'
+          hu: 'Az első jobb gumiabroncs nyomása (bar)'
+          pt: 'Pressão do pneu dianteiro direito (bar)'
+        type: 'enum'
+        values:
+          0x00:
+            en: '0 bar'
+            fr: '0 bar'
+            es: '0 bar'
+            de: '0 bar'
+            it: '0 bar'
+            pl: '0 bar'
+            ru: '0 бар'
+            zh: '0巴'
+            hu: '0 bar'
+            pt: '0 bar'
+          0x01:
+            en: '0-1 bar'
+            fr: '0-1 bar'
+            es: '0-1 bar'
+            de: '0-1 bar'
+            it: '0-1 bar'
+            pl: '0-1 bar'
+            ru: '0-1 бар'
+            zh: '0-1巴'
+            hu: '0-1 bar'
+            pt: '0-1 bar'
+          0x3E:
+            en: '6.2 bar'
+            fr: '6,2 bar'
+            es: '6,2 bar'
+            de: '6,2 bar'
+            it: '6,2 bar'
+            pl: '6,2 bar'
+            ru: '6,2 бар'
+            zh: '6.2 巴'
+            hu: '6,2 bar'
+            pt: '6,2 bar'
+          0x3F:
+            en: 'Invalid measurement'
+            fr: 'Mesaure_invalide'
+            es: 'Medición inválida'
+            de: 'Ungültige Messung'
+            it: 'Misura non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      REAR_LEFT_TYRE_PRESSURE_STATUS:
+        bits: '3.7-3.6'
+        comment:
+          en: 'Rear left tyre pressure status (normal, too low, too high, invalid measurement)'
+          fr: 'État de la pression du pneu arrière gauche (normale, trop basse, trop haute, mesure invalide)'
+          es: 'Estado de la presión del neumático trasero izquierdo (normal, demasiado baja, demasiado alta, medición no válida)'
+          de: 'Reifendruckstatus hinten links (normal, zu niedrig, zu hoch, ungültige Messung)'
+          it: 'Stato della pressione del pneumatico posteriore sinistro (normale, troppo bassa, troppo alta, misura non valida)'
+          pl: 'Stan ciśnienia w oponie tylnej lewej (normalne, zbyt niskie, zbyt wysokie, pomiar nieprawidłowy)'
+          ru: 'Статус давления заднего левого колеса (норма, слишком низкое, слишком высокое, измерение недействительно)'
+          zh: '左后轮胎压力状态(正常、过低、过高、测量无效)'
+          hu: 'A hátsó bal gumiabroncs nyomásállapota (normál, túl alacsony, túl magas, érvénytelen mérés)'
+          pt: 'Estado da pressão do pneu traseiro esquerdo (normal, demasiado baixa, demasiado alta, medição inválida)'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'Normal pressure'
+            fr: 'Pression_normale'
+            es: 'Presión normal'
+            de: 'Normaler Druck'
+            it: 'Pressione normale'
+            pl: 'Normalne ciśnienie'
+            ru: 'Нормальное давление'
+            zh: '正常压力'
+            hu: 'Normál nyomás'
+            pt: 'Pressão normal'
+          0x01:
+            en: 'Pressure too low'
+            fr: 'Pression trop basse'
+            es: 'Presión demasiado baja'
+            de: 'Druck zu niedrig'
+            it: 'Pressione troppo bassa'
+            pl: 'Zbyt niskie ciśnienie'
+            ru: 'Слишком низкое давление'
+            zh: '压力过低'
+            hu: 'A nyomás túl alacsony'
+            pt: 'Pressão demasiado baixa'
+          0x02:
+            en: 'Pressure too high'
+            fr: 'Pression trop élevée'
+            es: 'Presión demasiado alta'
+            de: 'Druck zu hoch'
+            it: 'Pressione troppo alta'
+            pl: 'Zbyt wysokie ciśnienie'
+            ru: 'Слишком высокое давление'
+            zh: '压力过高'
+            hu: 'Túl magas nyomás'
+            pt: 'Pressão demasiado elevada'
+          0x03:
+            en: 'Invalid measurement'
+            fr: 'Mesure invalide'
+            es: 'Medición no válida'
+            de: 'Ungültige Messung'
+            it: 'Misurazione non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      REAR_LEFT_TYRE_PRESSURE:
+        bits: '3.5-3.0'
+        comment:
+          en: 'Rear left tyre pressure (bar)'
+          fr: 'Pression du pneu arrière gauche (bar)'
+          es: 'Presión del neumático trasero izquierdo (bar)'
+          de: 'Reifendruck hinten links (bar)'
+          it: 'Pressione del pneumatico posteriore sinistro (bar)'
+          pl: 'Ciśnienie w oponie tylnej lewej (bar)'
+          ru: 'Давление в заднем левом колесе (бар)'
+          zh: '左后轮胎压力(bar)'
+          hu: 'A hátsó bal gumiabroncs nyomása (bar)'
+          pt: 'Pressão do pneu traseiro esquerdo (bar)'
+        type: 'enum'
+        values:
+          0x00:
+            en: '0 bar'
+            fr: '0 bar'
+            es: '0 bar'
+            de: '0 bar'
+            it: '0 bar'
+            pl: '0 bar'
+            ru: '0 бар'
+            zh: '0巴'
+            hu: '0 bar'
+            pt: '0 bar'
+          0x01:
+            en: '0-1 bar'
+            fr: '0-1 bar'
+            es: '0-1 bar'
+            de: '0-1 bar'
+            it: '0-1 bar'
+            pl: '0-1 bar'
+            ru: '0-1 бар'
+            zh: '0-1巴'
+            hu: '0-1 bar'
+            pt: '0-1 bar'
+          0x3E:
+            en: '6.2 bar'
+            fr: '6,2 bar'
+            es: '6,2 bar'
+            de: '6,2 bar'
+            it: '6,2 bar'
+            pl: '6,2 bar'
+            ru: '6,2 бар'
+            zh: '6.2 巴'
+            hu: '6,2 bar'
+            pt: '6,2 bar'
+          0x3F:
+            en: 'Invalid measurement'
+            fr: 'Mesaure_invalide'
+            es: 'Medición inválida'
+            de: 'Ungültige Messung'
+            it: 'Misura non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      REAR_RIGHT_TYRE_PRESSURE_STATUS:
+        bits: '4.7-4.6'
+        comment:
+          en: 'Rear right tyre pressure status (normal, too low, too high, invalid measurement)'
+          fr: 'État de la pression du pneu arrière droit (normale, trop basse, trop haute, mesure invalide)'
+          es: 'Estado de la presión del neumático trasero derecho (normal, demasiado baja, demasiado alta, medición no válida)'
+          de: 'Reifendruckstatus hinten rechts (normal, zu niedrig, zu hoch, ungültige Messung)'
+          it: 'Stato della pressione del pneumatico posteriore destro (normale, troppo bassa, troppo alta, misura non valida)'
+          pl: 'Stan ciśnienia w oponie tylnej prawej (normalne, zbyt niskie, zbyt wysokie, pomiar nieprawidłowy)'
+          ru: 'Статус давления заднего правого колеса (норма, слишком низкое, слишком высокое, измерение недействительно)'
+          zh: '右后轮胎压力状态(正常、过低、过高、测量无效)'
+          hu: 'A hátsó jobb gumiabroncs nyomásállapota (normál, túl alacsony, túl magas, érvénytelen mérés)'
+          pt: 'Estado da pressão do pneu traseiro direito (normal, demasiado baixa, demasiado alta, medição inválida)'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'Normal pressure'
+            fr: 'Pression_normale'
+            es: 'Presión normal'
+            de: 'Normaler Druck'
+            it: 'Pressione normale'
+            pl: 'Normalne ciśnienie'
+            ru: 'Нормальное давление'
+            zh: '正常压力'
+            hu: 'Normál nyomás'
+            pt: 'Pressão normal'
+          0x01:
+            en: 'Pressure too low'
+            fr: 'Pression trop basse'
+            es: 'Presión demasiado baja'
+            de: 'Druck zu niedrig'
+            it: 'Pressione troppo bassa'
+            pl: 'Zbyt niskie ciśnienie'
+            ru: 'Слишком низкое давление'
+            zh: '压力过低'
+            hu: 'A nyomás túl alacsony'
+            pt: 'Pressão demasiado baixa'
+          0x02:
+            en: 'Pressure too high'
+            fr: 'Pression trop élevée'
+            es: 'Presión demasiado alta'
+            de: 'Druck zu hoch'
+            it: 'Pressione troppo alta'
+            pl: 'Zbyt wysokie ciśnienie'
+            ru: 'Слишком высокое давление'
+            zh: '压力过高'
+            hu: 'Túl magas nyomás'
+            pt: 'Pressão demasiado elevada'
+          0x03:
+            en: 'Invalid measurement'
+            fr: 'Mesure invalide'
+            es: 'Medición no válida'
+            de: 'Ungültige Messung'
+            it: 'Misurazione non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      REAR_RIGHT_TYRE_PRESSURE:
+        bits: '4.5-4.0'
+        comment:
+          en: 'Rear right tyre pressure (bar)'
+          fr: 'Pression du pneu arrière droit (bar)'
+          es: 'Presión del neumático trasero derecho (bar)'
+          de: 'Reifendruck hinten rechts (bar)'
+          it: 'Pressione del pneumatico posteriore destro (bar)'
+          pl: 'Ciśnienie w oponie tylnej prawej (bar)'
+          ru: 'Давление в заднем правом колесе (бар)'
+          zh: '右后轮胎压力(bar)'
+          hu: 'A hátsó jobb gumiabroncs nyomása (bar)'
+          pt: 'Pressão do pneu traseiro direito (bar)'
+        type: 'enum'
+        values:
+          0x00:
+            en: '0 bar'
+            fr: '0 bar'
+            es: '0 bar'
+            de: '0 bar'
+            it: '0 bar'
+            pl: '0 bar'
+            ru: '0 бар'
+            zh: '0巴'
+            hu: '0 bar'
+            pt: '0 bar'
+          0x01:
+            en: '0-1 bar'
+            fr: '0-1 bar'
+            es: '0-1 bar'
+            de: '0-1 bar'
+            it: '0-1 bar'
+            pl: '0-1 bar'
+            ru: '0-1 бар'
+            zh: '0-1巴'
+            hu: '0-1 bar'
+            pt: '0-1 bar'
+          0x3E:
+            en: '6.2 bar'
+            fr: '6,2 bar'
+            es: '6,2 bar'
+            de: '6,2 bar'
+            it: '6,2 bar'
+            pl: '6,2 bar'
+            ru: '6,2 бар'
+            zh: '6.2 巴'
+            hu: '6,2 bar'
+            pt: '6,2 bar'
+          0x3F:
+            en: 'Invalid measurement'
+            fr: 'Mesaure_invalide'
+            es: 'Medición inválida'
+            de: 'Ungültige Messung'
+            it: 'Misura non valida'
+            pl: 'Nieprawidłowy pomiar'
+            ru: 'Недействительное измерение'
+            zh: '测量无效'
+            hu: 'Érvénytelen mérés'
+            pt: 'Medição inválida'
+      UNUSED_1:
+        bits: '5.7-5.6'
+        unused: true
+      UNUSED_2:
+        bits: '5.5-5.0'
+        unused: true

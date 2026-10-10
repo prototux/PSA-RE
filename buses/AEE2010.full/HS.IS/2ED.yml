@@ -1,0 +1,518 @@
+id: 0x2ED
+name: 'WHEEL_PULSE_COUNTER_DATA_2'
+type: 'can'
+length: 8
+comment:
+  en: 'Wheel-speed sensor pulse counters and fault flags for each wheel.'
+  fr: 'Compteurs d''impulsions des capteurs de vitesse de roue et indicateurs de défaut pour chaque roue.'
+  es: 'Contadores de impulsos de los sensores de velocidad de rueda e indicadores de fallo de cada rueda.'
+  de: 'Impulszähler der Raddrehzahlsensoren und Fehlerkennungen für jedes Rad.'
+  it: 'Contatori di impulsi dei sensori di velocità ruota e indicatori di guasto per ciascuna ruota.'
+  pl: 'Liczniki impulsów czujników prędkości koła oraz flagi usterek dla każdego koła.'
+  ru: 'Счётчики импульсов датчиков скорости колёс и флаги неисправности для каждого колеса.'
+  zh: '各车轮轮速传感器脉冲计数及故障标志。'
+  hu: 'A kerékfordulatszám-érzékelők impulzusszámlálói és hibajelzői kerekenként.'
+  pt: 'Contadores de impulsos e indicadores de avaria dos sensores de velocidade das rodas, para cada roda.'
+periodicity: ['40ms']
+senders: ['ABS']
+receivers: ['AAS', 'CVM']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRONT_LEFT_WHEEL_PULSE_COUNTER_FAULT:
+    bits: '2.7'
+    comment:
+      en: 'Front left wheel pulse counter fault'
+      fr: 'Défaut du compteur de tops de la roue avant gauche'
+      es: 'Fallo del contador de impulsos de la rueda delantera izquierda'
+      de: 'Fehler des Impulszählers des linken Vorderrads'
+      it: 'Guasto del contatore di impulsi della ruota anteriore sinistra'
+      pl: 'Usterka licznika impulsów przedniego lewego koła'
+      ru: 'Неисправность счётчика импульсов переднего левого колеса'
+      zh: '左前轮脉冲计数器故障'
+      hu: 'A bal első kerék impulzusszámlálójának hibája'
+      pt: 'Avaria do contador de impulsos da roda dianteira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault on the FRL pulse counter'
+        fr: 'Pas de défaut sur le compteur de tops avant gauche'
+        es: 'Sin fallo en el contador de impulsos delantero izquierdo'
+        de: 'Kein Fehler am Impulszähler vorne links'
+        it: 'Nessun guasto sul contatore di impulsi anteriore sinistro'
+        pl: 'Brak usterki licznika impulsów przedniego lewego koła'
+        ru: 'Нет неисправности счётчика импульсов переднего левого колеса'
+        zh: '左前脉冲计数器无故障'
+        hu: 'Nincs hiba a bal első impulzusszámlálón'
+        pt: 'Sem falha no contador de impulsos dianteiro esquerdo'
+      0x01:
+        en: 'Front left pulse counter fault'
+        fr: 'Défaut du compteur de tops avant gauche'
+        es: 'Fallo del contador de impulsos delantero izquierdo'
+        de: 'Fehler des Impulszählers vorne links'
+        it: 'Guasto del contatore di impulsi anteriore sinistro'
+        pl: 'Usterka licznika impulsów przedniego lewego'
+        ru: 'Неисправность счётчика импульсов переднего левого'
+        zh: '左前脉冲计数器故障'
+        hu: 'A bal első impulzusszámláló hibája'
+        pt: 'Falha do contador de impulsos dianteiro esquerdo'
+
+  FRONT_LEFT_WHEEL_PULSE_COUNTER:
+    bits: '2.6-3.4'
+    comment:
+      en: 'Front left wheel pulse counter (96 pulses/rev)'
+      fr: 'Compteur de tops de la roue avant gauche (96 tops/tour)'
+      es: 'Contador de impulsos de la rueda delantera izquierda (96 impulsos/vuelta)'
+      de: 'Impulszähler des linken Vorderrads (96 Impulse/Umdrehung)'
+      it: 'Contatore di impulsi della ruota anteriore sinistra (96 impulsi/giro)'
+      pl: 'Licznik impulsów przedniego lewego koła (96 impulsów/obrót)'
+      ru: 'Счётчик импульсов переднего левого колеса (96 импульсов/оборот)'
+      zh: '左前轮脉冲计数器(96脉冲/圈)'
+      hu: 'A bal első kerék impulzusszámlálója (96 impulzus/fordulat)'
+      pt: 'Contador de impulsos da roda dianteira esquerda (96 impulsos/volta)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2047
+    default: 0x00
+
+  FRONT_RIGHT_WHEEL_PULSE_COUNTER_FAULT:
+    bits: '3.3'
+    comment:
+      en: 'Front right wheel pulse counter fault'
+      fr: 'Défaut du compteur de tops de la roue avant droite'
+      es: 'Fallo del contador de impulsos de la rueda delantera derecha'
+      de: 'Fehler des Impulszählers des rechten Vorderrads'
+      it: 'Guasto del contatore di impulsi della ruota anteriore destra'
+      pl: 'Usterka licznika impulsów przedniego prawego koła'
+      ru: 'Неисправность счётчика импульсов переднего правого колеса'
+      zh: '右前轮脉冲计数器故障'
+      hu: 'A jobb első kerék impulzusszámlálójának hibája'
+      pt: 'Avaria do contador de impulsos da roda dianteira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault on front-right pulse counter'
+        fr: 'Pas de défaut du compteur de tops avant droit'
+        es: 'Sin fallo del contador de pulsos delantero derecho'
+        de: 'Kein Fehler des Impulszählers vorne rechts'
+        it: 'Nessun guasto del contatore di impulsi anteriore destro'
+        pl: 'Brak usterki licznika impulsów przedniego prawego'
+        ru: 'Неисправности счётчика импульсов переднего правого колеса нет'
+        zh: '右前脉冲计数器无故障'
+        hu: 'Nincs hiba a jobb első impulzusszámlálón'
+        pt: 'Sem avaria no contador de impulsos dianteiro direito'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  FRONT_RIGHT_WHEEL_PULSE_COUNTER:
+    bits: '3.2-4.0'
+    comment:
+      en: 'Front right wheel pulse counter (96 pulses/rev)'
+      fr: 'Compteur de tops de la roue avant droite (96 tops/tour)'
+      es: 'Contador de impulsos de la rueda delantera derecha (96 impulsos/vuelta)'
+      de: 'Impulszähler des rechten Vorderrads (96 Impulse/Umdrehung)'
+      it: 'Contatore di impulsi della ruota anteriore destra (96 impulsi/giro)'
+      pl: 'Licznik impulsów przedniego prawego koła (96 impulsów/obrót)'
+      ru: 'Счётчик импульсов переднего правого колеса (96 импульсов/оборот)'
+      zh: '右前轮脉冲计数器(96脉冲/圈)'
+      hu: 'A jobb első kerék impulzusszámlálója (96 impulzus/fordulat)'
+      pt: 'Contador de impulsos da roda dianteira direita (96 impulsos/volta)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2047
+    default: 0x00
+
+  REAR_LEFT_WHEEL_PULSE_COUNTER_FAULT:
+    bits: '5.7'
+    comment:
+      en: 'Rear left wheel pulse counter fault'
+      fr: 'Défaut du compteur de tops de la roue arrière gauche'
+      es: 'Fallo del contador de impulsos de la rueda trasera izquierda'
+      de: 'Fehler des Impulszählers des linken Hinterrads'
+      it: 'Guasto del contatore di impulsi della ruota posteriore sinistra'
+      pl: 'Usterka licznika impulsów tylnego lewego koła'
+      ru: 'Неисправность счётчика импульсов заднего левого колеса'
+      zh: '左后轮脉冲计数器故障'
+      hu: 'A bal hátsó kerék impulzusszámlálójának hibája'
+      pt: 'Avaria do contador de impulsos da roda traseira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault on the RRL pulse counter'
+        fr: 'Pas de défaut sur le compteur de tops arrière gauche'
+        es: 'Sin fallo en el contador de impulsos trasero izquierdo'
+        de: 'Kein Fehler am Impulszähler hinten links'
+        it: 'Nessun guasto sul contatore di impulsi posteriore sinistro'
+        pl: 'Brak usterki licznika impulsów tylnego lewego koła'
+        ru: 'Нет неисправности счётчика импульсов заднего левого колеса'
+        zh: '左后脉冲计数器无故障'
+        hu: 'Nincs hiba a bal hátsó impulzusszámlálón'
+        pt: 'Sem falha no contador de impulsos traseiro esquerdo'
+      0x01:
+        en: 'Fault on the rear left pulse counter'
+        fr: 'Défaut du compteur d''impulsions arrière gauche'
+        es: 'Fallo en el contador de impulsos trasero izquierdo'
+        de: 'Fehler am Impulszähler hinten links'
+        it: 'Guasto nel contatore di impulsi posteriore sinistro'
+        pl: 'Usterka licznika impulsów tylnego lewego'
+        ru: 'Неисправность счётчика импульсов заднего левого колеса'
+        zh: '后左脉冲计数器故障'
+        hu: 'Hiba a hátsó bal impulzusszámlálóban'
+        pt: 'Avaria no contador de impulsos traseiro esquerdo'
+
+  REAR_LEFT_WHEEL_PULSE_COUNTER:
+    bits: '5.6-6.4'
+    comment:
+      en: 'Rear left wheel pulse counter (96 pulses/rev)'
+      fr: 'Compteur de tops de la roue arrière gauche (96 tops/tour)'
+      es: 'Contador de impulsos de la rueda trasera izquierda (96 impulsos/vuelta)'
+      de: 'Impulszähler des linken Hinterrads (96 Impulse/Umdrehung)'
+      it: 'Contatore di impulsi della ruota posteriore sinistra (96 impulsi/giro)'
+      pl: 'Licznik impulsów tylnego lewego koła (96 impulsów/obrót)'
+      ru: 'Счётчик импульсов заднего левого колеса (96 импульсов/оборот)'
+      zh: '左后轮脉冲计数器(96脉冲/圈)'
+      hu: 'A bal hátsó kerék impulzusszámlálója (96 impulzus/fordulat)'
+      pt: 'Contador de impulsos da roda traseira esquerda (96 impulsos/volta)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2047
+    default: 0x00
+
+  REAR_RIGHT_WHEEL_PULSE_COUNTER_FAULT:
+    bits: '6.3'
+    comment:
+      en: 'Rear right wheel pulse counter fault'
+      fr: 'Défaut du compteur de tops de la roue arrière droite'
+      es: 'Fallo del contador de impulsos de la rueda trasera derecha'
+      de: 'Fehler des Impulszählers des rechten Hinterrads'
+      it: 'Guasto del contatore di impulsi della ruota posteriore destra'
+      pl: 'Usterka licznika impulsów tylnego prawego koła'
+      ru: 'Неисправность счётчика импульсов заднего правого колеса'
+      zh: '右后轮脉冲计数器故障'
+      hu: 'A jobb hátsó kerék impulzusszámlálójának hibája'
+      pt: 'Avaria do contador de impulsos da roda traseira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Rear-right pulse counter fault'
+        fr: 'Défaut du compteur de tops arrière droit'
+        es: 'Fallo del contador de pulsos trasero derecho'
+        de: 'Fehler des Impulszählers hinten rechts'
+        it: 'Guasto del contatore di impulsi posteriore destro'
+        pl: 'Usterka licznika impulsów tylnego prawego'
+        ru: 'Неисправность счётчика импульсов заднего правого колеса'
+        zh: '右后脉冲计数器故障'
+        hu: 'Hátsó jobb impulzusszámláló hiba'
+        pt: 'Avaria do contador de impulsos traseiro direito'
+
+  REAR_RIGHT_WHEEL_PULSE_COUNTER:
+    bits: '6.2-7.0'
+    comment:
+      en: 'Rear right wheel pulse counter (96 pulses/rev)'
+      fr: 'Compteur de tops de la roue arrière droite (96 tops/tour)'
+      es: 'Contador de impulsos de la rueda trasera derecha (96 impulsos/vuelta)'
+      de: 'Impulszähler des rechten Hinterrads (96 Impulse/Umdrehung)'
+      it: 'Contatore di impulsi della ruota posteriore destra (96 impulsi/giro)'
+      pl: 'Licznik impulsów tylnego prawego koła (96 impulsów/obrót)'
+      ru: 'Счётчик импульсов заднего правого колеса (96 импульсов/оборот)'
+      zh: '右后轮脉冲计数器(96脉冲/圈)'
+      hu: 'A jobb hátsó kerék impulzusszámlálója (96 impulzus/fordulat)'
+      pt: 'Contador de impulsos da roda traseira direita (96 impulsos/volta)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2047
+    default: 0x00
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['20ms']
+    senders: ['ABS']
+    receivers: ['CMM']
+    signals:
+      FARC_DECELERATION_FUNCTION_STATUS:
+        bits: '1.7-1.6'
+        comment:
+          en: 'FARC (adaptive cruise) deceleration function status'
+          fr: 'État de la fonction de décélération FARC (régulateur adaptatif)'
+          es: 'Estado de la función de deceleración FARC (control de crucero adaptativo)'
+          de: 'Status der FARC-Verzögerungsfunktion (adaptiver Tempomat)'
+          it: 'Stato della funzione di decelerazione FARC (cruise control adattivo)'
+          pl: 'Stan funkcji zwalniania FARC (adaptacyjny tempomat)'
+          ru: 'Статус функции замедления FARC (адаптивный круиз-контроль)'
+          zh: 'FARC(自适应巡航)减速功能状态'
+          hu: 'A FARC (adaptív sebességtartó) lassítási funkciójának állapota'
+          pt: 'Estado da função de desaceleração FARC (regulador adaptativo)'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Inhibited'
+            fr: 'Inhibé'
+            es: 'Inhibido'
+            de: 'Gesperrt'
+            it: 'Inibito'
+            pl: 'Zablokowany'
+            ru: 'Заблокировано'
+            zh: '已抑制'
+            hu: 'Letiltva'
+            pt: 'Inibido'
+          0x01:
+            en: 'Waiting'
+            fr: 'Attente'
+            es: 'Espera'
+            de: 'Warten'
+            it: 'Attesa'
+            pl: 'Oczekiwanie'
+            ru: 'Ожидание'
+            zh: '等待中'
+            hu: 'Várakozás'
+            pt: 'Espera'
+          0x02:
+            en: 'Active'
+            fr: 'Actif'
+            es: 'Activo'
+            de: 'Aktiv'
+            it: 'Attivo'
+            pl: 'Aktywny'
+            ru: 'Активно'
+            zh: '激活'
+            hu: 'Aktív'
+            pt: 'Ativo'
+          0x03:
+            en: 'Faulty'
+            fr: 'En défaut'
+            es: 'En fallo'
+            de: 'Fehlerhaft'
+            it: 'In guasto'
+            pl: 'Usterka'
+            ru: 'Неисправно'
+            zh: '故障'
+            hu: 'Hibás'
+            pt: 'Em falha'
+      BRAKE_FORCE_APPLIED_STATUS:
+        bits: '1.5'
+        comment:
+          en: 'Non-zero braking force status'
+          fr: 'Etat d''effort de freinage non nul'
+          es: 'Estado de fuerza de frenado no nula'
+          de: 'Status ungleich null Bremskraft'
+          it: 'Stato di forza frenante diversa da zero'
+          pl: 'Stan niezerowej siły hamowania'
+          ru: 'Состояние ненулевого тормозного усилия'
+          zh: '非零制动力状态'
+          hu: 'A nullától eltérő fékerő állapota'
+          pt: 'Estado de força de travagem não nula'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No braking force generated'
+            fr: 'Pas d''effort de freinage généré'
+            es: 'Sin fuerza de frenado generada'
+            de: 'Keine Bremskraft erzeugt'
+            it: 'Nessuna forza frenante generata'
+            pl: 'Brak wygenerowanej siły hamowania'
+            ru: 'Тормозное усилие не создано'
+            zh: '未产生制动力'
+            hu: 'Nincs generált fékerő'
+            pt: 'Nenhuma força de travagem gerada'
+          0x01:
+            en: 'Braking force generated'
+            fr: 'Effort de freinage généré'
+            es: 'Fuerza de frenado generada'
+            de: 'Erzeugte Bremskraft'
+            it: 'Forza frenante generata'
+            pl: 'Wygenerowana siła hamowania'
+            ru: 'Тормозное усилие создано'
+            zh: '已产生制动力'
+            hu: 'Fékerő létrehozva'
+            pt: 'Força de travagem gerada'
+      BRAKE_TEMPERATURE_ALERT:
+        bits: '1.4'
+        comment:
+          en: 'Brake temperature alert'
+          fr: 'Alerte de température des freins'
+          es: 'Alerta de temperatura de los frenos'
+          de: 'Bremstemperatur-Warnung'
+          it: 'Allarme temperatura dei freni'
+          pl: 'Alert temperatury hamulców'
+          ru: 'Предупреждение о температуре тормозов'
+          zh: '刹车温度警报'
+          hu: 'Fékhőmérséklet riasztás'
+          pt: 'Alerta de temperatura dos travões'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No alert'
+            fr: 'Pas d''alerte'
+            es: 'Sin alerta'
+            de: 'Keine Warnung'
+            it: 'Nessun avviso'
+            pl: 'Brak alertu'
+            ru: 'Нет предупреждения'
+            zh: '无警报'
+            hu: 'Nincs riasztás'
+            pt: 'Sem alerta'
+          0x01:
+            en: 'Alert'
+            fr: 'Alerte'
+            es: 'Alerta'
+            de: 'Warnung'
+            it: 'Allarme'
+            pl: 'Alarm'
+            ru: 'Предупреждение'
+            zh: '警报'
+            hu: 'Riasztás'
+            pt: 'Alerta'
+      AUTOMATIC_BRAKING_IN_PROGRESS:
+        bits: '1.3'
+        comment:
+          en: 'Automatic braking in progress'
+          fr: 'Freinage automatique en cours'
+          es: 'Frenado automático en curso'
+          de: 'Automatische Bremsung läuft'
+          it: 'Frenata automatica in corso'
+          pl: 'Trwa automatyczne hamowanie'
+          ru: 'Идёт автоматическое торможение'
+          zh: '自动制动进行中'
+          hu: 'Automatikus fékezés folyamatban'
+          pt: 'Travagem automática em curso'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No automatic braking in progress'
+            fr: 'Pas de freinage automatique en cours'
+            es: 'Sin frenado automático en curso'
+            de: 'Keine automatische Bremsung im Gange'
+            it: 'Nessuna frenata automatica in corso'
+            pl: 'Brak trwającego hamowania automatycznego'
+            ru: 'Автоматическое торможение не выполняется'
+            zh: '无自动制动进行中'
+            hu: 'Nincs folyamatban automatikus fékezés'
+            pt: 'Sem travagem automática em curso'
+          0x01:
+            en: 'Automatic braking in progress'
+            fr: 'Freinage automatique en cours'
+            es: 'Frenado automático en curso'
+            de: 'Automatisches Bremsen läuft'
+            it: 'Frenata automatica in corso'
+            pl: 'Trwa automatyczne hamowanie'
+            ru: 'Выполняется автоматическое торможение'
+            zh: '自动制动进行中'
+            hu: 'Automatikus fékezés folyamatban'
+            pt: 'Travagem automática em curso'
+      BRAKE_TORQUE_SETPOINT_CDD:
+        bits: '2.7-2.0'
+        comment:
+          en: 'CDD requested braking torque setpoint'
+          fr: 'Couple de freinage de consigne demandé par le CDD'
+          es: 'Consigna de par de frenado solicitada por el CDD'
+          de: 'Vom CDD angefordertes Bremsmoment-Sollwert'
+          it: 'Setpoint di coppia frenante richiesto dal CDD'
+          pl: 'Wartość zadana momentu hamowania żądana przez CDD'
+          ru: 'Уставка тормозного момента, запрошенная CDD'
+          zh: 'CDD请求的制动扭矩设定值'
+          hu: 'A CDD által kért fékezőnyomaték-alapérték'
+          pt: 'Consigna de binário de travagem solicitada pelo CDD'
+        type: 'uint'
+        factor: 50
+        min: 0
+        max: 12650
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0xFE
+      WHEEL_BRAKE_TORQUE:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Wheel braking torque'
+          fr: 'Couple de freinage aux roues'
+          es: 'Par de frenado en las ruedas'
+          de: 'Bremsmoment an den Rädern'
+          it: 'Coppia frenante alle ruote'
+          pl: 'Moment hamowania na kołach'
+          ru: 'Тормозной момент на колёсах'
+          zh: '车轮制动扭矩'
+          hu: 'Kerékfékező nyomaték'
+          pt: 'Binário de travagem nas rodas'
+        type: 'uint'
+        factor: 50
+        min: 0
+        max: 12650
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0xFE
+      UNUSED_1:
+        bits: '4.7-4.6'
+        unused: true

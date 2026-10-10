@@ -1,0 +1,124 @@
+id: 0x31F
+name: 'DISPLAY_LVDS_CONTROL'
+type: 'can'
+length: 3
+comment:
+  en: 'Instrument cluster LVDS video link control: object acknowledgement and retransmission requests.'
+  fr: 'Contrôle du lien vidéo LVDS du combiné : accusé de réception d''objet et demandes de retransmission.'
+  es: 'Control del enlace de vídeo LVDS del cuadro de instrumentos: acuse de recibo de objeto y solicitudes de retransmisión.'
+  de: 'Steuerung der LVDS-Videoverbindung des Kombiinstruments: Objektbestätigung und Neuübertragungsanforderungen.'
+  it: 'Controllo del collegamento video LVDS del quadro strumenti: conferma dell''oggetto e richieste di ritrasmissione.'
+  pl: 'Sterowanie łączem wideo LVDS zestawu wskaźników: potwierdzenie odbioru obiektu i żądania retransmisji.'
+  ru: 'Управление видеоканалом LVDS комбинации приборов: подтверждение объекта и запросы повторной передачи.'
+  zh: '仪表组LVDS视频链路控制:对象确认及重传请求。'
+  hu: 'A műszeregység LVDS videokapcsolatának vezérlése: objektum-nyugtázás és újraküldési kérések.'
+  pt: 'Controlo do enlace de vídeo LVDS do quadrante: confirmação de receção de objeto e pedidos de retransmissão.'
+observations:
+  en: 'On reception of an LVDS object'
+  fr: 'Sur réception d''un objet LVDS'
+  es: 'Al recibir un objeto LVDS'
+  de: 'Beim Empfang eines LVDS-Objekts'
+  it: 'Alla ricezione di un oggetto LVDS'
+  pl: 'Wysyłane przy odbiorze obiektu LVDS'
+  ru: 'При получении объекта LVDS'
+  zh: '接收到LVDS对象时'
+  hu: 'LVDS objektum fogadásakor'
+  pt: 'Na receção de um objeto LVDS'
+periodicity: ['trigger']
+senders: ['CMB']
+receivers: ['OVIP', 'BTEL']
+
+signals:
+  LVDS_REQUEST_TYPE:
+    bits: '1.7-1.5'
+    comment:
+      en: 'Request type sent by the receiver to the sender'
+      fr: 'Type de requête envoyée par le récepteur à l''émetteur'
+      es: 'Tipo de solicitud enviada por el receptor al emisor'
+      de: 'Vom Empfänger an den Sender gesendeter Anforderungstyp'
+      it: 'Tipo di richiesta inviata dal ricevitore al mittente'
+      pl: 'Rodzaj żądania wysłanego przez odbiorcę do nadawcy'
+      ru: 'Тип запроса, отправляемого приёмником отправителю'
+      zh: '接收方向发送方发出的请求类型'
+      hu: 'A vevő által a küldőnek küldött kérés típusa'
+      pt: 'Tipo de pedido enviado pelo recetor ao emissor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Retransmit request'
+        fr: 'Demande de retransmission'
+        es: 'Solicitud de retransmisión'
+        de: 'Neuübertragungsanforderung'
+        it: 'Richiesta di ritrasmissione'
+        pl: 'Żądanie retransmisji'
+        ru: 'Запрос повторной передачи'
+        zh: '重传请求'
+        hu: 'Újraküldési kérés'
+        pt: 'Pedido de retransmissão'
+      0x02:
+        en: 'Acknowledgement'
+        fr: 'Accusé de réception'
+        es: 'Acuse de recibo'
+        de: 'Quittierung'
+        it: 'Conferma di ricezione'
+        pl: 'Potwierdzenie'
+        ru: 'Подтверждение'
+        zh: '确认'
+        hu: 'Nyugtázás'
+        pt: 'Confirmação de receção'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  UNUSED_1:
+    bits: '1.4-1.0'
+    unused: true
+
+  LVDS_FRAME_ACK:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Acknowledgement of the frame, mentioning its session counter'
+      fr: 'Accusé de réception de la trame, mentionnant son compteur de session'
+      es: 'Confirmación de la trama, indicando su contador de sesión'
+      de: 'Quittierung des Frames unter Angabe seines Sitzungszählers'
+      it: 'Conferma del frame, con indicazione del suo contatore di sessione'
+      pl: 'Potwierdzenie ramki z podaniem jej licznika sesji'
+      ru: 'Подтверждение кадра с указанием счётчика сеанса'
+      zh: '带会话计数器的帧确认应答'
+      hu: 'A keret nyugtázása, a munkamenet-számlálóval együtt'
+      pt: 'Confirmação de receção da trama, indicando o seu contador de sessão'
+    type: 'uint'
+
+  LVDS_RETRANSMIT_REQUEST:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Retransmit request for an LVDS object of the given type'
+      fr: 'Demande de retransmission d''un objet LVDS du type donné'
+      es: 'Solicitud de retransmisión de un objeto LVDS del tipo indicado'
+      de: 'Anforderung zur erneuten Übertragung eines LVDS-Objekts des angegebenen Typs'
+      it: 'Richiesta di ritrasmissione di un oggetto LVDS del tipo indicato'
+      pl: 'Żądanie retransmisji obiektu LVDS danego typu'
+      ru: 'Запрос повторной передачи объекта LVDS указанного типа'
+      zh: '针对指定类型LVDS对象的重传请求'
+      hu: 'Egy adott típusú LVDS objektum újraküldési kérése'
+      pt: 'Pedido de retransmissão de um objeto LVDS do tipo indicado'
+    type: 'uint'

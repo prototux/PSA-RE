@@ -1,0 +1,3275 @@
+id: 0x554
+name: 'RADIO'
+type: 'van'
+length: 22
+comment:
+  en: 'Family of frames sharing this ID: the content depends on RADIO_STATUS_ID'
+  fr: 'Famille de trames partageant cet identifiant : le contenu dépend de RADIO_STATUS_ID'
+  es: 'Familia de tramas que comparten este identificador: el contenido depende de RADIO_STATUS_ID'
+  de: 'Familie von Botschaften mit dieser ID: der Inhalt hängt von RADIO_STATUS_ID ab'
+  it: 'Famiglia di frame che condividono questo ID: il contenuto dipende da RADIO_STATUS_ID'
+  pl: 'Rodzina ramek o tym samym identyfikatorze: zawartość zależy od RADIO_STATUS_ID'
+  ru: 'Семейство кадров с этим идентификатором: содержимое зависит от RADIO_STATUS_ID'
+  zh: '共用此ID的一组帧：内容取决于RADIO_STATUS_ID'
+  hu: 'Ezt az azonosítót megosztó keretcsalád: a tartalom a(z) RADIO_STATUS_ID értékétől függ'
+  pt: 'Família de tramas que partilham este identificador: o conteúdo depende de RADIO_STATUS_ID'
+periodicity: ['trigger', 'request']
+senders: ['RAD']
+receivers: ['EMF']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['EMF']
+
+signals:
+  RADIO_STATUS_ID:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Identifies the status layout carried by the radio status frame (sub-addressing)'
+      fr: 'Identification de la donnée de la trame ETAT_RADIO (sous-adressage)'
+      es: 'Identifica el diseño de estado transportado por la trama de estado de la radio (subdireccionamiento)'
+      de: 'Kennzeichnet das Statuslayout des Radio-Statusrahmens (Unteradressierung)'
+      it: 'Identifica il layout di stato trasportato dalla trama di stato della radio (sotto-indirizzamento)'
+      pl: 'Identyfikuje układ stanu przenoszony przez ramkę stanu radia (podadresowanie)'
+      ru: 'Определяет формат состояния, передаваемый кадром состояния радио (субадресация)'
+      zh: '标识收音机状态帧携带的状态布局(子寻址)'
+      hu: 'Azonosítja a rádió állapotkeretében szereplő állapotelrendezést (alcímzés)'
+      pt: 'Identifica o formato de estado transportado pela trama de estado do rádio (subendereçamento)'
+    type: 'enum'
+    default: 0x00
+    mux_selector: true
+    values:
+      0xD1:
+        en: 'Tuner status'
+        fr: 'État du tuner'
+        es: 'Estado del sintonizador'
+        de: 'Tuner-Status'
+        it: 'Stato del sintonizzatore'
+        pl: 'Stan tunera'
+        ru: 'Статус тюнера'
+        zh: '调谐器状态'
+        hu: 'A tuner állapota'
+        pt: 'Estado do sintonizador'
+      0xD2:
+        en: 'Cassette status'
+        fr: 'État de la cassette'
+        es: 'Estado de la cinta'
+        de: 'Kassettenstatus'
+        it: 'Stato della cassetta'
+        pl: 'Stan kasety'
+        ru: 'Состояние кассеты'
+        zh: '磁带状态'
+        hu: 'Kazetta állapota'
+        pt: 'Estado da cassete'
+      0xD3:
+        en: 'Tuner preset list'
+        fr: 'Liste de préréglages tuner'
+        es: 'Lista de presintonías del sintonizador'
+        de: 'Senderspeicherliste'
+        it: 'Elenco delle preselezioni del sintonizzatore'
+        pl: 'Lista stacji zaprogramowanych tunera'
+        ru: 'Список предустановок тюнера'
+        zh: '调谐器预设列表'
+        hu: 'Tuner memóriahelyek listája'
+        pt: 'Lista de predefinições do sintonizador'
+      0xD4:
+        en: 'Reserved (equalizer/DSP)'
+        fr: 'Réservé (égaliseur/DSP)'
+        es: 'Reservado (ecualizador/DSP)'
+        de: 'Reserviert (Equalizer/DSP)'
+        it: 'Riservato (equalizzatore/DSP)'
+        pl: 'Zarezerwowane (korektor/DSP)'
+        ru: 'Резерв (эквалайзер/DSP)'
+        zh: '保留(均衡器/DSP)'
+        hu: 'Fenntartva (hangszínszabályzó/DSP)'
+        pt: 'Reservado (equalizador/DSP)'
+      0xD5:
+        en: 'Reserved (DCC/MiniDisc)'
+        fr: 'Réservé (DCC/MiniDisc)'
+        es: 'Reservado (DCC/MiniDisc)'
+        de: 'Reserviert (DCC/MiniDisc)'
+        it: 'Riservato (DCC/MiniDisc)'
+        pl: 'Zarezerwowane (DCC/MiniDisc)'
+        ru: 'Зарезервировано (DCC/MiniDisc)'
+        zh: '保留(DCC/MiniDisc)'
+        hu: 'Fenntartva (DCC/MiniDisc)'
+        pt: 'Reservado (DCC/MiniDisc)'
+      0xD6:
+        en: 'CD status'
+        fr: 'État CD'
+        es: 'Estado CD'
+        de: 'CD-Status'
+        it: 'Stato CD'
+        pl: 'Stan CD'
+        ru: 'Состояние CD'
+        zh: 'CD状态'
+        hu: 'CD állapota'
+        pt: 'Estado do CD'
+      0xD7:
+        en: 'Reserved (TMC)'
+        fr: 'Réservé (TMC)'
+        es: 'Reservado (TMC)'
+        de: 'Reserviert (TMC)'
+        it: 'Riservato (TMC)'
+        pl: 'Zarezerwowane (TMC)'
+        ru: 'Зарезервировано (TMC)'
+        zh: '保留(TMC)'
+        hu: 'Fenntartva (TMC)'
+        pt: 'Reservado (TMC)'
+
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  TUNER_DURING_CASSETTE_WIND:
+    bits: '3.7'
+    comment:
+      en: 'Tuner listened to during fast forward/rewind'
+      fr: 'Écoute du tuner pendant avance/retour rapide'
+      es: 'Sintonizador escuchado durante avance/rebobinado'
+      de: 'Tuner-Wiedergabe während Vor-/Rücklauf'
+      it: 'Sintonizzatore ascoltato durante avanzamento/riavvolgimento rapido'
+      pl: 'Odsłuch tunera podczas przewijania do przodu/w tył'
+      ru: 'Прослушивание тюнера при перемотке вперёд/назад'
+      zh: '快进/快退时收听调谐器'
+      hu: 'Tuner hallgatása gyors előre-/hátracsévélés közben'
+      pt: 'Sintonizador ouvido durante o avanço/retrocesso rápido'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non actif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  UNUSED_1_D2:
+    bits: '3.6'
+    unused: true
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+
+  UNUSED_1_D6:
+    bits: '3.7-3.4'
+    unused: true
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+
+  UNUSED_1_D1:
+    bits: '6.4-6.3'
+    unused: true
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+
+  CASSETTE_DIRECTION:
+    bits: '3.5'
+    comment:
+      en: 'Tape direction'
+      fr: 'Sens de défilement de la cassette'
+      es: 'Dirección de la cinta'
+      de: 'Bandrichtung'
+      it: 'Direzione del nastro'
+      pl: 'Kierunek przesuwu taśmy'
+      ru: 'Направление движения ленты'
+      zh: '磁带走带方向'
+      hu: 'Szalag futási iránya'
+      pt: 'Sentido de avanço da cassete'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+    values:
+      0x00:
+        en: 'Forward'
+        fr: 'Défilement vers l''avant'
+        es: 'Desplazamiento hacia adelante'
+        de: 'Vorwärts blättern'
+        it: 'Scorrimento in avanti'
+        pl: 'Przewijanie do przodu'
+        ru: 'Прокрутка вперёд'
+        zh: '向前滚动'
+        hu: 'Előre görgetés'
+        pt: 'Deslocamento para a frente'
+      0x01:
+        en: 'Reverse'
+        fr: 'Défilement vers l''arrière'
+        es: 'Desplazamiento hacia atrás'
+        de: 'Rückwärts scrollen'
+        it: 'Scorrimento all''indietro'
+        pl: 'Przewijanie wstecz'
+        ru: 'Прокрутка назад'
+        zh: '向后滚动'
+        hu: 'Visszafelé görgetés'
+        pt: 'Marcha-atrás'
+
+  CASSETTE_PLAYER_STATE:
+    bits: '3.4-3.2'
+    comment:
+      en: 'Cassette player state: stop (motor stopped), pause (motor declutched), or a non-zero value once a cassette is inserted'
+      fr: 'État du lecteur de cassettes : arrêt (moteur arrêté), pause (moteur débrayé), ou valeur non nulle dès qu''une cassette est insérée'
+      es: 'Estado del reproductor de casetes: parado (motor detenido), pausa (motor desembragado) o valor distinto de cero al insertar una cinta'
+      de: 'Zustand des Kassettenlaufwerks: Stopp (Motor gestoppt), Pause (Motor ausgekuppelt) oder ungleich null bei eingelegter Kassette'
+      it: 'Stato del lettore di cassette: stop (motore fermo), pausa (motore disinnestato) o valore diverso da zero all''inserimento di una cassetta'
+      pl: 'Stan magnetofonu kasetowego: stop (silnik zatrzymany), pauza (silnik rozłączony) lub wartość niezerowa po włożeniu kasety'
+      ru: 'Состояние кассетного проигрывателя: стоп (двигатель остановлен), пауза (двигатель расцеплен) или ненулевое значение при вставленной кассете'
+      zh: '磁带机状态:停止(电机停止)、暂停(电机脱离)或插入磁带后为非零值'
+      hu: 'A kazettás lejátszó állapota: stop (motor leállítva), szünet (motor kikuplungozva) vagy nem nulla érték kazetta behelyezésekor'
+      pt: 'Estado do leitor de cassetes: parado (motor parado), pausa (motor desembraiado), ou um valor não nulo assim que uma cassete é inserida'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+    values:
+      0x00:
+        en: 'No cassette'
+        fr: 'Pas de cassette'
+        es: 'Sin cinta'
+        de: 'Keine Kassette'
+        it: 'Nessuna cassetta'
+        pl: 'Brak kasety'
+        ru: 'Нет кассеты'
+        zh: '无磁带'
+        hu: 'Nincs kazetta'
+        pt: 'Sem cassete'
+      0x01:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Paused'
+        fr: 'Pause'
+        es: 'En pausa'
+        de: 'Pausiert'
+        it: 'In pausa'
+        pl: 'Wstrzymane'
+        ru: 'Пауза'
+        zh: '已暂停'
+        hu: 'Szüneteltetve'
+        pt: 'Em pausa'
+      0x03:
+        en: 'Playing'
+        fr: 'Lecture'
+        es: 'Reproduciendo'
+        de: 'Wiedergabe'
+        it: 'Riproduzione'
+        pl: 'Odtwarzanie'
+        ru: 'Воспроизведение'
+        zh: '播放中'
+        hu: 'Lejátszás'
+        pt: 'A reproduzir'
+      0x04:
+        en: 'Fast forward'
+        fr: 'Avance rapide'
+        es: 'Avance rápido'
+        de: 'Schneller Vorlauf'
+        it: 'Avanzamento rapido'
+        pl: 'Szybkie przewijanie do przodu'
+        ru: 'Быстрая перемотка вперёд'
+        zh: '快进'
+        hu: 'Gyors előretekerés'
+        pt: 'Avanço rápido'
+      0x05:
+        en: 'Blank search'
+        fr: 'Recherche de blanc'
+        es: 'Búsqueda de silencio'
+        de: 'Suche nach Sendepause'
+        it: 'Ricerca del silenzio'
+        pl: 'Wyszukiwanie ciszy'
+        ru: 'Поиск паузы в эфире'
+        zh: '空白搜索'
+        hu: 'Némaszakasz-keresés'
+        pt: 'Procura de silêncio'
+      0x06:
+        en: 'Blank skip'
+        fr: 'Saut de blanc'
+        es: 'Salto en blanco'
+        de: 'Leerraumsprung'
+        it: 'Salto del bianco'
+        pl: 'Pominięcie pustego miejsca'
+        ru: 'Пропуск пустого места'
+        zh: '空白跳过'
+        hu: 'Üres hely átugrása'
+        pt: 'Salto em branco'
+      0x07:
+        en: 'Intro scan'
+        fr: 'Balayage d''intro'
+        es: 'Exploración de introducción'
+        de: 'Intro-Scan'
+        it: 'Scansione intro'
+        pl: 'Skanowanie wstępu'
+        ru: 'Сканирование вступлений'
+        zh: '前奏扫描'
+        hu: 'Bevezető pásztázás'
+        pt: 'Procura de introdução'
+
+  CASSETTE_BLANK_SKIP_MODE:
+    bits: '3.1'
+    comment:
+      en: 'Blank skip mode'
+      fr: 'Mode saut de blancs'
+      es: 'Modo de salto de silencios'
+      de: 'Leerstellen-Überspringmodus'
+      it: 'Modalità salto degli spazi vuoti'
+      pl: 'Tryb pomijania pustych fragmentów'
+      ru: 'Режим пропуска тишины'
+      zh: '跳过空白模式'
+      hu: 'Üres részek átugrása mód'
+      pt: 'Modo de salto de silêncios'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non actif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  CASSETTE_SIDE:
+    bits: '3.0'
+    comment:
+      en: 'Cassette side'
+      fr: 'Face de la cassette'
+      es: 'Cara de la cinta'
+      de: 'Kassettenseite'
+      it: 'Lato della cassetta'
+      pl: 'Strona kasety'
+      ru: 'Сторона кассеты'
+      zh: '磁带面'
+      hu: 'Kazetta oldala'
+      pt: 'Lado da cassete'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+    values:
+      0x00:
+        en: 'Side A'
+        fr: 'Face A'
+        es: 'Cara A'
+        de: 'Seite A'
+        it: 'Lato A'
+        pl: 'Strona A'
+        ru: 'Сторона A'
+        zh: 'A面'
+        hu: 'A oldal'
+        pt: 'Lado A'
+      0x01:
+        en: 'Side B'
+        fr: 'Face B'
+        es: 'Cara B'
+        de: 'Seite B'
+        it: 'Lato B'
+        pl: 'Strona B'
+        ru: 'Сторона B'
+        zh: 'B面'
+        hu: 'B oldal'
+        pt: 'Lado B'
+
+  UNUSED_2_D2:
+    bits: '4.7-4.4'
+    unused: true
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+
+  UNUSED_2_D6:
+    bits: '4.7-4.5'
+    unused: true
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+
+  UNUSED_2_D1:
+    bits: '12.7-12.5'
+    unused: true
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+
+  CASSETTE_TAPE_TYPE:
+    bits: '4.3-4.2'
+    comment:
+      en: 'Tape type'
+      fr: 'Type de cassette'
+      es: 'Tipo de cinta'
+      de: 'Bandtyp'
+      it: 'Tipo di nastro'
+      pl: 'Typ taśmy'
+      ru: 'Тип ленты'
+      zh: '磁带类型'
+      hu: 'Szalag típusa'
+      pt: 'Tipo de cassete'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+    values:
+      0x00:
+        en: 'Ferro'
+        fr: 'Ferro'
+        es: 'Ferro'
+        de: 'Ferro'
+        it: 'Ferro'
+        pl: 'Ferro'
+        ru: 'Ferro'
+        zh: 'Ferro'
+        hu: 'Ferro'
+        pt: 'Ferro'
+      0x01:
+        en: 'CrO2/metal'
+        fr: 'CrO2/métal'
+        es: 'CrO2/metal'
+        de: 'CrO2/Metall'
+        it: 'CrO2/metallo'
+        pl: 'CrO2/metal'
+        ru: 'CrO2/металл'
+        zh: 'CrO2/金属'
+        hu: 'CrO2/fém'
+        pt: 'CrO2/metal'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+
+  CASSETTE_DOLBY_TYPE:
+    bits: '4.1-4.0'
+    comment:
+      en: 'Dolby noise reduction type'
+      fr: 'Type de réduction de bruit Dolby'
+      es: 'Tipo de reducción de ruido Dolby'
+      de: 'Dolby-Rauschunterdrückungstyp'
+      it: 'Tipo di riduzione del rumore Dolby'
+      pl: 'Typ redukcji szumów Dolby'
+      ru: 'Тип шумоподавления Dolby'
+      zh: '杜比降噪类型'
+      hu: 'Dolby zajcsökkentés típusa'
+      pt: 'Tipo de redução de ruído Dolby'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'Dolby B'
+        fr: 'Dolby B'
+        es: 'Dolby B'
+        de: 'Dolby B'
+        it: 'Dolby B'
+        pl: 'Dolby B'
+        ru: 'Dolby B'
+        zh: 'Dolby B'
+        hu: 'Dolby B'
+        pt: 'Dolby B'
+      0x02:
+        en: 'Dolby C'
+        fr: 'Dolby C'
+        es: 'Dolby C'
+        de: 'Dolby C'
+        it: 'Dolby C'
+        pl: 'Dolby C'
+        ru: 'Dolby C'
+        zh: 'Dolby C'
+        hu: 'Dolby C'
+        pt: 'Dolby C'
+      0x03:
+        en: 'Dolby NR'
+        fr: 'Dolby NR'
+        es: 'Dolby NR'
+        de: 'Dolby NR'
+        it: 'Dolby NR'
+        pl: 'Dolby NR'
+        ru: 'Dolby NR'
+        zh: '杜比降噪(Dolby NR)'
+        hu: 'Dolby NR'
+        pt: 'Dolby NR'
+
+  FOOTER_D2:
+    bits: '5.7-5.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD2]
+
+  FOOTER_D6:
+    bits: '19.7-19.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+
+  FOOTER_D1:
+    bits: '22.7-22.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+
+  FOOTER_D3:
+    bits: '12.7-12.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD3]
+
+  CD_REPEAT_STATE:
+    bits: '3.3-3.2'
+    comment:
+      en: 'CD track/disc repeat mode'
+      fr: 'État de répétition plage/disque du CD'
+      es: 'Modo de repetición de pista/disco del CD'
+      de: 'CD-Wiederholmodus Titel/Disc'
+      it: 'Modalità di ripetizione traccia/disco del CD'
+      pl: 'Tryb powtarzania utworu/płyty CD'
+      ru: 'Режим повтора дорожки/диска CD'
+      zh: 'CD曲目/整盘重复模式'
+      hu: 'CD szám-/lemezismétlési mód'
+      pt: 'Modo de repetição de faixa/disco do CD'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Repeat track'
+        fr: 'Répétition de la plage'
+        es: 'Repetición de pista'
+        de: 'Titelwiederholung'
+        it: 'Ripetizione traccia'
+        pl: 'Powtarzanie utworu'
+        ru: 'Повтор трека'
+        zh: '重复曲目'
+        hu: 'Szám ismétlése'
+        pt: 'Repetição da faixa'
+      0x02:
+        en: 'Repeat disc'
+        fr: 'Répétition du disque'
+        es: 'Repetición del disco'
+        de: 'Disc-Wiederholung'
+        it: 'Ripetizione del disco'
+        pl: 'Powtarzanie płyty'
+        ru: 'Повтор диска'
+        zh: '光盘重复播放'
+        hu: 'Lemez ismétlése'
+        pt: 'Repetir disco'
+
+  CD_PLAY_MODE:
+    bits: '3.1-3.0'
+    comment:
+      en: 'CD play mode'
+      fr: 'Mode de lecture du CD'
+      es: 'Modo de reproducción del CD'
+      de: 'CD-Wiedergabemodus'
+      it: 'Modalità di riproduzione del CD'
+      pl: 'Tryb odtwarzania CD'
+      ru: 'Режим воспроизведения CD'
+      zh: 'CD播放模式'
+      hu: 'CD lejátszási mód'
+      pt: 'Modo de reprodução de CD'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Random track playback'
+        fr: 'Lecture aléatoire des pistes'
+        es: 'Reproducción aleatoria de pistas'
+        de: 'Zufällige Titelwiedergabe'
+        it: 'Riproduzione casuale delle tracce'
+        pl: 'Odtwarzanie losowe utworów'
+        ru: 'Воспроизведение треков в случайном порядке'
+        zh: '曲目随机播放'
+        hu: 'Számok véletlen lejátszása'
+        pt: 'Reprodução aleatória de faixas'
+      0x02:
+        en: 'Reserved (random disc play)'
+        fr: 'Réservé (lecture aléatoire des disques)'
+        es: 'Reservado (reproducción aleatoria de discos)'
+        de: 'Reserviert (Zufallswiedergabe der Discs)'
+        it: 'Riservato (riproduzione casuale dei dischi)'
+        pl: 'Zarezerwowane (losowe odtwarzanie płyt)'
+        ru: 'Зарезервировано (случайное воспроизведение дисков)'
+        zh: '保留(光盘随机播放)'
+        hu: 'Fenntartva (lemezek véletlenszerű lejátszása)'
+        pt: 'Reservado (reprodução aleatória de disco)'
+      0x03:
+        en: 'Reserved (random track + disc play)'
+        fr: 'Réservé (lecture aléatoire pistes et disques)'
+        es: 'Reservado (reproducción aleatoria de pistas y discos)'
+        de: 'Reserviert (Zufallswiedergabe Titel + Disc)'
+        it: 'Riservato (riproduzione casuale tracce e dischi)'
+        pl: 'Zarezerwowane (losowe odtwarzanie ścieżek i płyt)'
+        ru: 'Резерв (случайное воспроизведение треков и дисков)'
+        zh: '保留(曲目+光盘随机播放)'
+        hu: 'Fenntartva (véletlenszerű szám- és lemezlejátszás)'
+        pt: 'Reservado (reprodução aleatória de faixas e discos)'
+
+  CD_ACCESS_IN_PROGRESS:
+    bits: '4.4'
+    comment:
+      en: 'CD player changing track or reading the table of contents'
+      fr: 'Accès en cours du CD (changement de plage ou lecture du sommaire)'
+      es: 'El reproductor de CD está cambiando de pista o leyendo el índice'
+      de: 'CD-Spieler wechselt Titel oder liest das Inhaltsverzeichnis'
+      it: 'Il lettore CD sta cambiando traccia o leggendo il sommario'
+      pl: 'Odtwarzacz CD zmienia utwór lub odczytuje spis treści'
+      ru: 'Проигрыватель CD меняет дорожку или считывает оглавление'
+      zh: 'CD播放器正在切换曲目或读取目录'
+      hu: 'A CD-lejátszó számot vált vagy a tartalomjegyzéket olvassa'
+      pt: 'O leitor de CD está a mudar de faixa ou a ler o índice'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0x00:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x01:
+        en: 'Access in progress'
+        fr: 'Accès en cours'
+        es: 'Acceso en curso'
+        de: 'Zugriff läuft'
+        it: 'Accesso in corso'
+        pl: 'Trwa dostęp'
+        ru: 'Выполняется доступ'
+        zh: '访问进行中'
+        hu: 'Hozzáférés folyamatban'
+        pt: 'Acesso em curso'
+
+  CD_CHECK_IN_PROGRESS:
+    bits: '4.3'
+    comment:
+      en: 'CD presence test in progress'
+      fr: 'Phase de test de présence du CD'
+      es: 'Prueba de presencia del CD en curso'
+      de: 'CD-Vorhandenseinstest läuft'
+      it: 'Test di presenza del CD in corso'
+      pl: 'Trwa test obecności płyty CD'
+      ru: 'Идёт проверка наличия CD'
+      zh: 'CD存在检测进行中'
+      hu: 'CD-jelenlét tesztelése folyamatban'
+      pt: 'Fase de teste de presença do CD'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0x00:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x01:
+        en: 'Test in progress'
+        fr: 'Test en cours'
+        es: 'Prueba en curso'
+        de: 'Test läuft'
+        it: 'Test in corso'
+        pl: 'Test w toku'
+        ru: 'Тест выполняется'
+        zh: '测试进行中'
+        hu: 'Teszt folyamatban'
+        pt: 'Teste em curso'
+
+  CD_PLAYER_STATE:
+    bits: '4.2-4.0'
+    comment:
+      en: 'CD player state: an ejected disc not taken within 10 s is reloaded automatically'
+      fr: 'État du lecteur de CD : un disque éjecté non repris sous 10 s est rechargé automatiquement'
+      es: 'Estado del reproductor de CD: un disco expulsado no retirado en 10 s se recarga automáticamente'
+      de: 'CD-Spielerzustand: Eine ausgeworfene, nicht innerhalb 10 s entnommene Disc wird automatisch neu geladen'
+      it: 'Stato del lettore CD: un disco espulso non ritirato entro 10 s viene ricaricato automaticamente'
+      pl: 'Stan odtwarzacza CD: niewyjęta w ciągu 10 s wysunięta płyta jest automatycznie ładowana ponownie'
+      ru: 'Состояние CD-проигрывателя: извлечённый, но не взятый в течение 10 с диск автоматически перезагружается'
+      zh: 'CD播放器状态:弹出的光盘10秒内未取出将自动重新装入'
+      hu: 'A CD-lejátszó állapota: a 10 másodpercen belül ki nem vett kiadott lemez automatikusan visszatöltődik'
+      pt: 'Estado do leitor de CD: um disco ejetado e não retirado em 10 s é recarregado automaticamente'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0x00:
+        en: 'No disc'
+        fr: 'Pas de disque'
+        es: 'Sin disco'
+        de: 'Keine CD'
+        it: 'Nessun disco'
+        pl: 'Brak płyty'
+        ru: 'Нет диска'
+        zh: '无光盘'
+        hu: 'Nincs lemez'
+        pt: 'Sem disco'
+      0x01:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Paused'
+        fr: 'Pause'
+        es: 'En pausa'
+        de: 'Pausiert'
+        it: 'In pausa'
+        pl: 'Wstrzymane'
+        ru: 'Пауза'
+        zh: '已暂停'
+        hu: 'Szüneteltetve'
+        pt: 'Em pausa'
+      0x03:
+        en: 'Playing'
+        fr: 'Lecture'
+        es: 'Reproduciendo'
+        de: 'Wiedergabe'
+        it: 'Riproduzione'
+        pl: 'Odtwarzanie'
+        ru: 'Воспроизведение'
+        zh: '播放中'
+        hu: 'Lejátszás'
+        pt: 'A reproduzir'
+      0x04:
+        en: 'Fast forward'
+        fr: 'Avance rapide'
+        es: 'Avance rápido'
+        de: 'Schneller Vorlauf'
+        it: 'Avanzamento rapido'
+        pl: 'Szybkie przewijanie do przodu'
+        ru: 'Быстрая перемотка вперёд'
+        zh: '快进'
+        hu: 'Gyors előretekerés'
+        pt: 'Avanço rápido'
+      0x05:
+        en: 'Fast rewind'
+        fr: 'Retour rapide'
+        es: 'Rebobinado rápido'
+        de: 'Schneller Rücklauf'
+        it: 'Riavvolgimento rapido'
+        pl: 'Szybkie przewijanie do tyłu'
+        ru: 'Быстрая перемотка назад'
+        zh: '快退'
+        hu: 'Gyors visszatekerés'
+        pt: 'Retrocesso rápido'
+      0x07:
+        en: 'Intro scan'
+        fr: 'Balayage d''intro'
+        es: 'Escaneo de intro'
+        de: 'Anspielscan'
+        it: 'Scansione intro'
+        pl: 'Skanowanie wstępu'
+        ru: 'Сканирование вступлений'
+        zh: '片头扫描'
+        hu: 'Bevezető-pásztázás'
+        pt: 'Varrimento de intro'
+
+  CD_OVERTEMPERATURE:
+    bits: '5.7'
+    comment:
+      en: 'CD player over-temperature (threshold depends on the player)'
+      fr: 'Dépassement de température du lecteur CD'
+      es: 'Sobretemperatura del reproductor de CD (el umbral depende del reproductor)'
+      de: 'Übertemperatur des CD-Spielers (Schwelle abhängig vom Gerät)'
+      it: 'Sovratemperatura del lettore CD (la soglia dipende dal lettore)'
+      pl: 'Przekroczenie temperatury odtwarzacza CD (próg zależy od odtwarzacza)'
+      ru: 'Превышение температуры CD-проигрывателя (порог зависит от модели)'
+      zh: 'CD播放器过温(阈值取决于播放器型号)'
+      hu: 'A CD-lejátszó túlmelegedése (a küszöbérték a lejátszótól függ)'
+      pt: 'Sobreaquecimento do leitor de CD (o limiar depende do leitor)'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0x00:
+        en: 'Normal temperature'
+        fr: 'Température normale'
+        es: 'Temperatura normal'
+        de: 'Normale Temperatur'
+        it: 'Temperatura normale'
+        pl: 'Normalna temperatura'
+        ru: 'Нормальная температура'
+        zh: '正常温度'
+        hu: 'Normál hőmérséklet'
+        pt: 'Temperatura normal'
+      0x01:
+        en: 'Over temperature'
+        fr: 'Dépassement de température'
+        es: 'Sobretemperatura'
+        de: 'Übertemperatur'
+        it: 'Superamento della temperatura'
+        pl: 'Przekroczenie temperatury'
+        ru: 'Превышение температуры'
+        zh: '温度超限'
+        hu: 'Hőmérséklet-túllépés'
+        pt: 'Excesso de temperatura'
+
+  CD_ERROR:
+    bits: '5.6'
+    comment:
+      en: 'CD error: mechanism jammed, loading/unloading impossible, disc upside down, eject impossible, etc.'
+      fr: 'Défaut CD : mécanisme coincé, chargement/déchargement impossible, disque à l''envers, éjection impossible, etc.'
+      es: 'Error de CD: mecanismo atascado, carga/descarga imposible, disco al revés, expulsión imposible, etc.'
+      de: 'CD-Fehler: Mechanismus blockiert, Laden/Entladen unmöglich, Disc verkehrt herum, Auswurf unmöglich usw.'
+      it: 'Errore CD: meccanismo bloccato, caricamento/scaricamento impossibile, disco capovolto, espulsione impossibile, ecc.'
+      pl: 'Błąd CD: zablokowany mechanizm, niemożliwe załadowanie/wyładowanie, płyta odwrócona, niemożliwe wysunięcie itd.'
+      ru: 'Ошибка CD: заклинивание механизма, невозможность загрузки/выгрузки, диск перевёрнут, невозможность извлечения и т.д.'
+      zh: 'CD错误:机构卡住、无法加载/退出、光盘装反、无法弹出等'
+      hu: 'CD-hiba: elakadt mechanizmus, be-/kirakás lehetetlen, fordítva behelyezett lemez, kiadás lehetetlen stb.'
+      pt: 'Falha de CD: mecanismo encravado, carga/descarga impossível, disco ao contrário, ejeção impossível, etc.'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Error'
+        fr: 'Erreur'
+        es: 'Error'
+        de: 'Fehler'
+        it: 'Errore'
+        pl: 'Błąd'
+        ru: 'Ошибка'
+        zh: '错误'
+        hu: 'Hiba'
+        pt: 'Erro'
+
+  UNUSED_3:
+    bits: '5.5-5.0'
+    unused: true
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+
+  CD_TRACK_ELAPSED_MINUTES:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Elapsed minutes since the start of the track (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Minutes écoulées depuis le début de la plage (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Minutos transcurridos desde el inicio de la pista (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Verstrichene Minuten seit Titelbeginn (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Minuti trascorsi dall''inizio della traccia (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Liczba minut od początku utworu (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Минуты, прошедшие с начала дорожки (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '自曲目开始经过的分钟数(BCD);搜索中或无法读取时为0xFF'
+      hu: 'Az eltelt percek a szám kezdete óta (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Minutos decorridos desde o início da faixa (BCD); 0xFF durante a procura ou se a leitura for impossível'
+    type: 'bcd'
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_TRACK_ELAPSED_SECONDS:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Elapsed seconds since the start of the track (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Secondes écoulées depuis le début de la plage (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Segundos transcurridos desde el inicio de la pista (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Verstrichene Sekunden seit Titelbeginn (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Secondi trascorsi dall''inizio della traccia (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Liczba sekund od początku utworu (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Секунды, прошедшие с начала дорожки (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '自曲目开始经过的秒数(BCD);搜索中或无法读取时为0xFF'
+      hu: 'Az eltelt másodpercek a szám kezdete óta (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Segundos decorridos desde o início da faixa (BCD); 0xFF durante a busca ou se a leitura for impossível'
+    type: 'bcd'
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_TRACK_NUMBER:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Current track number (BCD 01..99, 0 reserved); shows the track being searched during search'
+      fr: 'Numéro de la plage écoutée (BCD 01 à 99, 0 réservé) ; indique la plage recherchée pendant la recherche'
+      es: 'Número de pista actual (BCD 01..99, 0 reservado); muestra la pista buscada durante la búsqueda'
+      de: 'Aktuelle Titelnummer (BCD 01..99, 0 reserviert); zeigt während der Suche den gesuchten Titel'
+      it: 'Numero della traccia corrente (BCD 01..99, 0 riservato); mostra la traccia cercata durante la ricerca'
+      pl: 'Numer bieżącego utworu (BCD 01..99, 0 zarezerwowane); podczas wyszukiwania pokazuje wyszukiwany utwór'
+      ru: 'Номер текущей дорожки (BCD 01..99, 0 зарезервирован); показывает искомую дорожку во время поиска'
+      zh: '当前曲目编号(BCD 01..99,0保留);搜索中显示正在搜索的曲目'
+      hu: 'Az aktuális szám száma (BCD 01..99, 0 fenntartva); keresés közben a keresett számot mutatja'
+      pt: 'Número da faixa atual (BCD 01 a 99, 0 reservado); mostra a faixa sendo procurada durante a busca'
+    type: 'bcd'
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases'
+        fr: 'Pendant les phases de recherche'
+        es: 'Durante las fases de búsqueda'
+        de: 'Während der Suchphasen'
+        it: 'Durante le fasi di ricerca'
+        pl: 'Podczas faz wyszukiwania'
+        ru: 'Во время фаз поиска'
+        zh: '搜索阶段期间'
+        hu: 'A keresési fázisok alatt'
+        pt: 'Durante as fases de procura'
+
+  CD_TRACK_COUNT:
+    bits: '9.7-9.0'
+    comment:
+      en: 'Number of tracks on the disc (BCD 01..99); 0xFF if reading is impossible'
+      fr: 'Nombre de plages sur le disque (BCD 01 à 99) ; 0xFF si la lecture est impossible'
+      es: 'Número de pistas en el disco (BCD 01..99); 0xFF si la lectura es imposible'
+      de: 'Anzahl der Titel auf der Disc (BCD 01..99); 0xFF wenn Lesen unmöglich ist'
+      it: 'Numero di tracce sul disco (BCD 01..99); 0xFF se la lettura è impossibile'
+      pl: 'Liczba utworów na płycie (BCD 01..99); 0xFF gdy odczyt jest niemożliwy'
+      ru: 'Число дорожек на диске (BCD 01..99); 0xFF если чтение невозможно'
+      zh: '光盘曲目数(BCD 01..99);无法读取时为0xFF'
+      hu: 'A lemezen lévő számok száma (BCD 01..99); 0xFF, ha az olvasás lehetetlen'
+      pt: 'Número de faixas no disco (BCD 01..99); 0xFF se a leitura for impossível'
+    type: 'bcd'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'If reading is not possible'
+        fr: 'Si la lecture est impossible'
+        es: 'Si la lectura no es posible'
+        de: 'Wenn das Auslesen nicht möglich ist'
+        it: 'Se la lettura non è possibile'
+        pl: 'Jeśli odczyt jest niemożliwy'
+        ru: 'Если считывание невозможно'
+        zh: '如果无法读取'
+        hu: 'Ha az olvasás nem lehetséges'
+        pt: 'Se a leitura não for possível'
+
+  CD_TOTAL_MINUTES:
+    bits: '10.7-10.0'
+    comment:
+      en: 'Total disc duration in minutes (BCD); 0xFF if reading is impossible'
+      fr: 'Durée totale du CD en minutes (BCD) ; 0xFF si la lecture est impossible'
+      es: 'Duración total del CD en minutos (BCD); 0xFF si la lectura es imposible'
+      de: 'Gesamtdauer der Disc in Minuten (BCD); 0xFF wenn Lesen unmöglich ist'
+      it: 'Durata totale del CD in minuti (BCD); 0xFF se la lettura è impossibile'
+      pl: 'Całkowity czas trwania płyty CD w minutach (BCD); 0xFF gdy odczyt jest niemożliwy'
+      ru: 'Общая продолжительность диска в минутах (BCD); 0xFF если чтение невозможно'
+      zh: '光盘总分钟数(BCD);无法读取时为0xFF'
+      hu: 'A lemez teljes időtartama percben (BCD); 0xFF, ha az olvasás lehetetlen'
+      pt: 'Duração total do CD em minutos (BCD); 0xFF se a leitura for impossível'
+    type: 'bcd'
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'If reading is not possible'
+        fr: 'Si la lecture est impossible'
+        es: 'Si la lectura no es posible'
+        de: 'Wenn das Auslesen nicht möglich ist'
+        it: 'Se la lettura non è possibile'
+        pl: 'Jeśli odczyt jest niemożliwy'
+        ru: 'Если считывание невозможно'
+        zh: '如果无法读取'
+        hu: 'Ha az olvasás nem lehetséges'
+        pt: 'Se a leitura não for possível'
+
+  CD_TOTAL_SECONDS:
+    bits: '11.7-11.0'
+    comment:
+      en: 'Total disc duration in seconds (BCD); 0xFF if reading is impossible'
+      fr: 'Durée totale du CD en secondes (BCD) ; 0xFF si la lecture est impossible'
+      es: 'Duración total del CD en segundos (BCD); 0xFF si la lectura es imposible'
+      de: 'Gesamtdauer der Disc in Sekunden (BCD); 0xFF wenn Lesen unmöglich ist'
+      it: 'Durata totale del CD in secondi (BCD); 0xFF se la lettura è impossibile'
+      pl: 'Całkowity czas trwania płyty CD w sekundach (BCD); 0xFF gdy odczyt jest niemożliwy'
+      ru: 'Общая продолжительность диска в секундах (BCD); 0xFF если чтение невозможно'
+      zh: '光盘总秒数(BCD);无法读取时为0xFF'
+      hu: 'A lemez teljes időtartama másodpercben (BCD); 0xFF, ha az olvasás lehetetlen'
+      pt: 'Duração total do CD em segundos (BCD); 0xFF se a leitura for impossível'
+    type: 'bcd'
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'If reading is not possible'
+        fr: 'Si la lecture est impossible'
+        es: 'Si la lectura no es posible'
+        de: 'Wenn das Auslesen nicht möglich ist'
+        it: 'Se la lettura non è possibile'
+        pl: 'Jeśli odczyt jest niemożliwy'
+        ru: 'Если считывание невозможно'
+        zh: '如果无法读取'
+        hu: 'Ha az olvasás nem lehetséges'
+        pt: 'Se a leitura não for possível'
+
+  CD_TRACK_DURATION_MINUTES:
+    bits: '12.7-12.0'
+    comment:
+      en: 'Track duration in minutes (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Durée de la plage en minutes (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Duración de la pista en minutos (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Titeldauer in Minuten (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Durata della traccia in minuti (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Czas trwania utworu w minutach (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Продолжительность дорожки в минутах (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '曲目时长(分钟,BCD);搜索中或无法读取时为0xFF'
+      hu: 'A szám időtartama percben (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Duração da faixa em minutos (BCD); 0xFF durante a procura ou se a leitura for impossível'
+    type: 'bcd'
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_TRACK_DURATION_SECONDS:
+    bits: '13.7-13.0'
+    comment:
+      en: 'Track duration in seconds (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Durée de la plage en secondes (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Duración de la pista en segundos (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Titeldauer in Sekunden (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Durata della traccia in secondi (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Czas trwania utworu w sekundach (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Продолжительность дорожки в секундах (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '曲目时长(秒,BCD);搜索中或无法读取时为0xFF'
+      hu: 'A szám időtartama másodpercben (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Duração da faixa em segundos (BCD); 0xFF durante a busca ou se a leitura for impossível'
+    type: 'bcd'
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_REMAINING_MINUTES:
+    bits: '14.7-14.0'
+    comment:
+      en: 'Remaining disc time in minutes (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Minutes restantes jusqu''à la fin du CD (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Minutos restantes hasta el final del CD (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Verbleibende Disc-Zeit in Minuten (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Minuti rimanenti alla fine del CD (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Liczba pozostałych minut do końca płyty CD (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Оставшееся время диска в минутах (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '光盘剩余分钟数(BCD);搜索中或无法读取时为0xFF'
+      hu: 'A lemez hátralévő ideje percben (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Minutos restantes até ao fim do CD (BCD); 0xFF durante a procura ou se a leitura for impossível'
+    type: 'bcd'
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_REMAINING_SECONDS:
+    bits: '15.7-15.0'
+    comment:
+      en: 'Remaining disc time in seconds (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Secondes restantes jusqu''à la fin du CD (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Segundos restantes hasta el final del CD (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Verbleibende Disc-Zeit in Sekunden (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Secondi rimanenti alla fine del CD (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Liczba pozostałych sekund do końca płyty CD (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Оставшееся время диска в секундах (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '光盘剩余秒数(BCD);搜索中或无法读取时为0xFF'
+      hu: 'A lemez hátralévő ideje másodpercben (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Segundos restantes até ao fim do CD (BCD); 0xFF durante a busca ou se a leitura for impossível'
+    type: 'bcd'
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_TRACK_REMAINING_MINUTES:
+    bits: '16.7-16.0'
+    comment:
+      en: 'Remaining track time in minutes (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Minutes restantes jusqu''à la fin de la plage (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Minutos restantes hasta el final de la pista (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Verbleibende Titelzeit in Minuten (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Minuti rimanenti alla fine della traccia (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Liczba pozostałych minut do końca utworu (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Оставшееся время дорожки в минутах (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '曲目剩余分钟数(BCD);搜索中或无法读取时为0xFF'
+      hu: 'A szám hátralévő ideje percben (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Minutos restantes até ao fim da faixa (BCD); 0xFF durante a procura ou se a leitura for impossível'
+    type: 'bcd'
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_TRACK_REMAINING_SECONDS:
+    bits: '17.7-17.0'
+    comment:
+      en: 'Remaining track time in seconds (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Secondes restantes jusqu''à la fin de la plage (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Segundos restantes hasta el final de la pista (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Verbleibende Titelzeit in Sekunden (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Secondi rimanenti alla fine della traccia (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Liczba pozostałych sekund do końca utworu (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Оставшееся время дорожки в секундах (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '曲目剩余秒数(BCD);搜索中或无法读取时为0xFF'
+      hu: 'A szám hátralévő ideje másodpercben (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Segundos restantes até ao fim da faixa (BCD); 0xFF durante a busca ou se a leitura for impossível'
+    type: 'bcd'
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CD_TIME_TO_NEXT_TRACK:
+    bits: '18.7-18.0'
+    comment:
+      en: 'Delay to reach the next track, in seconds (BCD); 0xFF during search or if reading is impossible'
+      fr: 'Délai pour atteindre la prochaine plage en secondes (BCD) ; 0xFF pendant la recherche ou si la lecture est impossible'
+      es: 'Tiempo para alcanzar la siguiente pista, en segundos (BCD); 0xFF durante la búsqueda o si la lectura es imposible'
+      de: 'Zeit bis zum nächsten Titel in Sekunden (BCD); 0xFF während der Suche oder wenn Lesen unmöglich ist'
+      it: 'Tempo per raggiungere la traccia successiva, in secondi (BCD); 0xFF durante la ricerca o se la lettura è impossibile'
+      pl: 'Czas do osiągnięcia następnego utworu w sekundach (BCD); 0xFF podczas wyszukiwania lub gdy odczyt jest niemożliwy'
+      ru: 'Время до следующей дорожки в секундах (BCD); 0xFF во время поиска или если чтение невозможно'
+      zh: '到达下一曲目的延迟秒数(BCD);搜索中或无法读取时为0xFF'
+      hu: 'A következő számig hátralévő idő másodpercben (BCD); 0xFF keresés közben vagy ha az olvasás lehetetlen'
+      pt: 'Tempo até à próxima faixa, em segundos (BCD); 0xFF durante a busca ou se a leitura for impossível'
+    type: 'bcd'
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD6]
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  PRESET_STORED:
+    bits: '3.7'
+    comment:
+      en: 'Preset store in progress; reset once read.'
+      fr: 'Mémorisation en cours ; remise à zéro après lecture.'
+      es: 'Memorización en curso; se restablece tras la lectura'
+      de: 'Speichervorgang läuft; wird nach dem Auslesen zurückgesetzt'
+      it: 'Memorizzazione in corso; azzerato dopo la lettura'
+      pl: 'Trwa zapis do pamięci; resetowane po odczycie'
+      ru: 'Выполняется сохранение; сбрасывается после считывания'
+      zh: '存储进行中；读取后复位'
+      hu: 'Tárolás folyamatban; olvasás után nullázódik'
+      pt: 'Memorização em curso; reposição a zero após leitura.'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Not memorized'
+        fr: 'Mémorisation non effectuée'
+        es: 'No memorizado'
+        de: 'Nicht gespeichert'
+        it: 'Non memorizzato'
+        pl: 'Niezapisane'
+        ru: 'Не сохранено'
+        zh: '未记忆'
+        hu: 'Nincs eltárolva'
+        pt: 'Não memorizado'
+      0x01:
+        en: 'Memorized'
+        fr: 'Mémorisation effectuée'
+        es: 'Memorización realizada'
+        de: 'Gespeichert'
+        it: 'Memorizzazione effettuata'
+        pl: 'Zapisano w pamięci'
+        ru: 'Сохранено'
+        zh: '已存储'
+        hu: 'Elmentve'
+        pt: 'Memorização efetuada'
+
+  ACTIVE_PRESET_NUMBER:
+    bits: '3.6-3.3'
+    comment:
+      en: 'Active preset number (0 = station not in active bank)'
+      fr: 'Numéro de la mémoire active (0 = station hors banque active)'
+      es: 'Número de memoria activa (0 = emisora no está en el banco activo)'
+      de: 'Aktive Speichernummer (0 = Sender nicht in der aktiven Bank)'
+      it: 'Numero di preselezione attivo (0 = stazione non nel banco attivo)'
+      pl: 'Aktywny numer stacji zaprogramowanej (0 = stacja spoza aktywnego banku)'
+      ru: 'Активный номер предустановки (0 = станция не в активном банке)'
+      zh: '当前预设编号（0 = 电台不在当前频段）'
+      hu: 'Aktív tárhely száma (0 = az állomás nincs az aktív tárban)'
+      pt: 'Número de memória ativa (0 = estação fora do banco ativo)'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Not a stored preset'
+        fr: 'Pas mémorisée'
+        es: 'No memorizada'
+        de: 'Nicht gespeichert'
+        it: 'Non memorizzata'
+        pl: 'Niezapamiętana'
+        ru: 'Не сохранено'
+        zh: '未记忆'
+        hu: 'Nincs elmentve'
+        pt: 'Não memorizada'
+      0x01:
+        en: 'Preset 1'
+        fr: 'Mémoire 1'
+        es: 'Memoria 1'
+        de: 'Speicher 1'
+        it: 'Memoria 1'
+        pl: 'Pamięć 1'
+        ru: 'Память 1'
+        zh: '预设1'
+        hu: '1. előre beállított'
+        pt: 'Memória 1'
+      0x0F:
+        en: 'Preset 15 (max)'
+        fr: 'Mémo 15 (max)'
+        es: 'Preajuste 15 (máx.)'
+        de: 'Voreinstellung 15 (max.)'
+        it: 'Preimpostazione 15 (max)'
+        pl: 'Ustawienie wstępne 15 (maks.)'
+        ru: 'Предустановка 15 (макс.)'
+        zh: '预设15（最大）'
+        hu: '15. előbeállítás (max)'
+        pt: 'Preselecção 15 (máx.)'
+
+  ACTIVE_PRESET_BANK:
+    bits: '3.2-3.0'
+    comment:
+      en: 'Active preset bank (a single value covers AM long+medium wave)'
+      fr: 'Banque mémoire active (valeur unique si une seule banque couvre PO + GO).'
+      es: 'Banco de emisoras memorizadas activo (un único valor si un solo banco cubre OL + OM)'
+      de: 'Aktive Senderspeicherbank (ein einziger Wert, wenn eine Bank LW + MW abdeckt)'
+      it: 'Banco delle stazioni memorizzate attivo (valore unico se un solo banco copre OL + OM)'
+      pl: 'Aktywny bank stacji zaprogramowanych (jedna wartość, gdy jeden bank obejmuje DŁ + ŚR)'
+      ru: 'Активный банк предустановленных станций (одно значение, если один банк охватывает ДВ + СВ)'
+      zh: '当前预设频段（若单一频段覆盖长波+中波则为单一值）'
+      hu: 'Aktív állomástár (egy érték, ha egy tár fedi le a hosszú- és középhullámot)'
+      pt: 'Banco de memória ativo (valor único se um só banco cobrir OL + OM)'
+    type: 'enum'
+    default: 0x01
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'FM1'
+        fr: 'FM1'
+        es: 'FM1'
+        de: 'FM1'
+        it: 'FM1'
+        pl: 'FM1'
+        ru: 'FM1'
+        zh: 'FM1'
+        hu: 'FM1'
+        pt: 'FM1'
+      0x02:
+        en: 'FM2'
+        fr: 'FM2'
+        es: 'FM2'
+        de: 'FM2'
+        it: 'FM2'
+        pl: 'FM2'
+        ru: 'FM2'
+        zh: 'FM2'
+        hu: 'FM2'
+        pt: 'FM2'
+      0x03:
+        en: 'FM3'
+        fr: 'FM3'
+        es: 'FM3'
+        de: 'FM3'
+        it: 'FM3'
+        pl: 'FM3'
+        ru: 'FM3'
+        zh: 'FM3'
+        hu: 'FM3'
+        pt: 'FM3'
+      0x04:
+        en: 'FMT (auto-stored FM)'
+        fr: 'FMT (FM mémorisée automatiquement)'
+        es: 'FMT (FM memorizada automáticamente)'
+        de: 'FMT (automatisch gespeichertes FM)'
+        it: 'FMT (FM memorizzata automaticamente)'
+        pl: 'FMT (automatycznie zapisane FM)'
+        ru: 'FMT (автоматически сохранённая частота FM)'
+        zh: 'FMT(自动存储的FM)'
+        hu: 'FMT (automatikusan tárolt FM)'
+        pt: 'FMT (FM memorizado automaticamente)'
+      0x05:
+        en: 'MW (or AM)'
+        fr: 'MW (ou AM)'
+        es: 'MW (o AM)'
+        de: 'MW (oder AM)'
+        it: 'MW (o AM)'
+        pl: 'MW (lub AM)'
+        ru: 'MW (или AM)'
+        zh: 'MW（或AM）'
+        hu: 'MW (vagy AM)'
+        pt: 'OM (ou AM)'
+      0x06:
+        en: 'LW'
+        fr: 'LW'
+        es: 'LW'
+        de: 'LW'
+        it: 'LW'
+        pl: 'LW'
+        ru: 'ДВ'
+        zh: 'LW'
+        hu: 'LW'
+        pt: 'LW'
+      0x07:
+        en: 'PTY'
+        fr: 'PTY'
+        es: 'PTY'
+        de: 'PTY'
+        it: 'PTY'
+        pl: 'PTY'
+        ru: 'PTY'
+        zh: 'PTY'
+        hu: 'PTY'
+        pt: 'PTY'
+
+  SEARCH_DIRECTION:
+    bits: '4.7'
+    comment:
+      en: 'Search direction'
+      fr: 'Sens de la recherche de fréquence'
+      es: 'Dirección de búsqueda'
+      de: 'Suchrichtung'
+      it: 'Direzione di ricerca'
+      pl: 'Kierunek wyszukiwania'
+      ru: 'Направление поиска'
+      zh: '搜索方向'
+      hu: 'Keresési irány'
+      pt: 'Sentido da procura'
+    type: 'bool'
+    default: 0x01
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Decreasing frequency'
+        fr: 'Fréquence décroissante'
+        es: 'Frecuencia decreciente'
+        de: 'Abnehmende Frequenz'
+        it: 'Frequenza decrescente'
+        pl: 'Malejąca częstotliwość'
+        ru: 'Убывающая частота'
+        zh: '频率递减'
+        hu: 'Csökkenő frekvencia'
+        pt: 'Frequência decrescente'
+      0x01:
+        en: 'Increasing frequency'
+        fr: 'Fréquence croissante'
+        es: 'Frecuencia creciente'
+        de: 'Steigende Frequenz'
+        it: 'Frequenza crescente'
+        pl: 'Rosnąca częstotliwość'
+        ru: 'Возрастающая частота'
+        zh: '频率递增'
+        hu: 'Növekvő frekvencia'
+        pt: 'Frequência crescente'
+
+  STATION_SEARCH_STATE:
+    bits: '4.6-4.3'
+    comment:
+      en: 'Station search state; a specific code means no receivable station is stored in the active bank'
+      fr: 'État de recherche de station ; un code spécifique signifie qu''aucune station recevable n''est mémorisée dans la banque active.'
+      es: 'Estado de búsqueda de emisora; un código específico indica que no hay ninguna emisora escuchable en el banco activo'
+      de: 'Status der Sendersuche; ein bestimmter Code bedeutet, dass im aktiven Speicher kein empfangbarer Sender vorhanden ist'
+      it: 'Stato di ricerca stazione; un codice specifico indica che nessuna stazione ricevibile è memorizzata nel banco attivo'
+      pl: 'Stan wyszukiwania stacji; określony kod oznacza brak odbieralnej stacji w aktywnym banku'
+      ru: 'Состояние поиска станции; определённый код означает отсутствие принимаемой станции в активном банке'
+      zh: '电台搜索状态；特定代码表示当前频段中没有可接收电台'
+      hu: 'Állomáskeresés állapota; egy adott kód azt jelzi, hogy az aktív tárban nincs vehető állomás'
+      pt: 'Estado de procura de estação; um código específico significa que não há nenhuma estação recebível memorizada no banco ativo'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Idle (listening)'
+        fr: 'Repos (écoute)'
+        es: 'Reposo (escucha)'
+        de: 'Ruhe (Abhören)'
+        it: 'Riposo (ascolto)'
+        pl: 'Spoczynek (nasłuch)'
+        ru: 'Покой (прослушивание)'
+        zh: '待机(监听)'
+        hu: 'Nyugalmi állapot (figyelés)'
+        pt: 'Repouso (escuta)'
+      0x01:
+        en: 'Manual frequency search'
+        fr: 'Recherche de fréquence manuelle'
+        es: 'Búsqueda de frecuencia manual'
+        de: 'Manuelle Frequenzsuche'
+        it: 'Ricerca frequenza manuale'
+        pl: 'Ręczne wyszukiwanie częstotliwości'
+        ru: 'Ручной поиск частоты'
+        zh: '手动频率搜索'
+        hu: 'Kézi frekvenciakeresés'
+        pt: 'Busca de frequência manual'
+      0x02:
+        en: 'Automatic frequency search'
+        fr: 'Recherche de fréquence automatique'
+        es: 'Búsqueda automática de frecuencia'
+        de: 'Automatische Frequenzsuche'
+        it: 'Ricerca automatica della frequenza'
+        pl: 'Automatyczne wyszukiwanie częstotliwości'
+        ru: 'Автоматический поиск частоты'
+        zh: '自动频率搜索'
+        hu: 'Automatikus frekvenciakeresés'
+        pt: 'Busca automática de frequência'
+      0x03:
+        en: 'PI search'
+        fr: 'Recherche PI'
+        es: 'Búsqueda PI'
+        de: 'PI-Suche'
+        it: 'Ricerca PI'
+        pl: 'Wyszukiwanie PI'
+        ru: 'Поиск PI'
+        zh: 'PI搜索'
+        hu: 'PI-keresés'
+        pt: 'Procura PI'
+      0x04:
+        en: 'PTY search'
+        fr: 'Recherche PTY'
+        es: 'Búsqueda PTY'
+        de: 'PTY-Suche'
+        it: 'Ricerca PTY'
+        pl: 'Wyszukiwanie PTY'
+        ru: 'Поиск PTY'
+        zh: 'PTY搜索'
+        hu: 'PTY keresés'
+        pt: 'Procura PTY'
+      0x05:
+        en: 'Frequency scan'
+        fr: 'Exploration de fréquence'
+        es: 'Exploración de frecuencia'
+        de: 'Frequenzsuchlauf'
+        it: 'Scansione di frequenza'
+        pl: 'Skanowanie częstotliwości'
+        ru: 'Сканирование частоты'
+        zh: '频率搜索'
+        hu: 'Frekvenciakeresés'
+        pt: 'Exploração de frequência'
+      0x06:
+        en: 'Preset scan'
+        fr: 'Balayage des présélections'
+        es: 'Barrido de emisoras memorizadas'
+        de: 'Speicherplatz-Suchlauf'
+        it: 'Scansione preimpostazioni'
+        pl: 'Przeszukiwanie zaprogramowanych stacji'
+        ru: 'Сканирование предустановок'
+        zh: '预设扫描'
+        hu: 'Előbeállítások keresése'
+        pt: 'Varrimento das preselecções'
+      0x07:
+        en: 'Auto-store'
+        fr: 'Mémorisation automatique'
+        es: 'Memorización automática'
+        de: 'Automatische Speicherung'
+        it: 'Memorizzazione automatica'
+        pl: 'Automatyczne zapamiętywanie'
+        ru: 'Автоматическое сохранение'
+        zh: '自动记忆存储'
+        hu: 'Automatikus mentés'
+        pt: 'Memorização automática'
+      0x08:
+        en: 'No station'
+        fr: 'Pas de station'
+        es: 'Sin emisora'
+        de: 'Kein Sender'
+        it: 'Nessuna stazione'
+        pl: 'Brak stacji'
+        ru: 'Нет станции'
+        zh: '无电台'
+        hu: 'Nincs állomás'
+        pt: 'Sem emissora'
+      0x0F:
+        en: 'AF frequency change'
+        fr: 'Changement de fréquence AF'
+        es: 'Cambio de frecuencia AF'
+        de: 'AF-Frequenzwechsel'
+        it: 'Cambio di frequenza AF'
+        pl: 'Zmiana częstotliwości AF'
+        ru: 'Изменение частоты AF'
+        zh: 'AF频率变更'
+        hu: 'AF frekvenciaváltás'
+        pt: 'Mudança de frequência AF'
+
+  PTY_MODE:
+    bits: '4.2'
+    comment:
+      en: 'PTY mode'
+      fr: 'Mode PTY'
+      es: 'Modo PTY'
+      de: 'PTY-Modus'
+      it: 'Modalità PTY'
+      pl: 'Tryb PTY'
+      ru: 'Режим PTY'
+      zh: 'PTY 模式'
+      hu: 'PTY mód'
+      pt: 'Modo PTY'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Deactivated'
+        fr: 'Désactivé'
+        es: 'Desactivado'
+        de: 'Deaktiviert'
+        it: 'Disattivato'
+        pl: 'Wyłączony'
+        ru: 'Отключено'
+        zh: '已停用'
+        hu: 'Letiltva'
+        pt: 'Desativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  TUNER_SENSITIVITY:
+    bits: '4.1'
+    comment:
+      en: 'Tuner sensitivity'
+      fr: 'Sensibilité Tuner'
+      es: 'Sensibilidad del sintonizador'
+      de: 'Tunerempfindlichkeit'
+      it: 'Sensibilità del sintonizzatore'
+      pl: 'Czułość tunera'
+      ru: 'Чувствительность тюнера'
+      zh: '调谐器灵敏度'
+      hu: 'Tuner érzékenysége'
+      pt: 'Sensibilidade do sintonizador'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Local'
+        fr: 'Local'
+        es: 'Local'
+        de: 'Lokal'
+        it: 'Locale'
+        pl: 'Lokalny'
+        ru: 'Локальный'
+        zh: '本地'
+        hu: 'Helyi'
+        pt: 'Local'
+      0x01:
+        en: 'Distant (DX)'
+        fr: 'Lointain (DX)'
+        es: 'Distante (DX)'
+        de: 'Fern (DX)'
+        it: 'Distante (DX)'
+        pl: 'Daleki (DX)'
+        ru: 'Дальний (DX)'
+        zh: '远程（DX）'
+        hu: 'Távoli (DX)'
+        pt: 'Distante (DX)'
+
+  RDS_ONLY_SEARCH:
+    bits: '4.0'
+    comment:
+      en: 'Station search criterion (RDS-only)'
+      fr: 'Critère de recherche des stations (RDS uniquement)'
+      es: 'Criterio de búsqueda de emisoras (solo RDS)'
+      de: 'Sendersuchkriterium (nur RDS)'
+      it: 'Criterio di ricerca stazioni (solo RDS)'
+      pl: 'Kryterium wyszukiwania stacji (tylko RDS)'
+      ru: 'Критерий поиска станций (только RDS)'
+      zh: '电台搜索条件（仅 RDS）'
+      hu: 'Állomáskeresési kritérium (csak RDS)'
+      pt: 'Critério de procura de estações (apenas RDS)'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'All stations'
+        fr: 'Toutes les stations'
+        es: 'Todas las emisoras'
+        de: 'Alle Sender'
+        it: 'Tutte le stazioni'
+        pl: 'Wszystkie stacje'
+        ru: 'Все станции'
+        zh: '所有电台'
+        hu: 'Minden állomás'
+        pt: 'Todas as estações'
+      0x01:
+        en: 'RDS stations only'
+        fr: 'Stations RDS uniquement'
+        es: 'Solo emisoras RDS'
+        de: 'Nur RDS-Sender'
+        it: 'Solo stazioni RDS'
+        pl: 'Tylko stacje RDS'
+        ru: 'Только станции RDS'
+        zh: '仅RDS电台'
+        hu: 'Csak RDS állomások'
+        pt: 'Apenas estações RDS'
+
+  TUNER_FREQUENCY_LSB:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Low byte of the tuned frequency step count.'
+      fr: 'Octet de poids faible du compteur de pas de fréquence.'
+      es: 'Byte menos significativo del contador de pasos de frecuencia'
+      de: 'Niederwertiges Byte des Frequenzschrittzählers'
+      it: 'Byte meno significativo del contatore di passi di frequenza'
+      pl: 'Młodszy bajt licznika kroków częstotliwości'
+      ru: 'Младший байт счётчика шагов частоты'
+      zh: '频率步进计数低字节'
+      hu: 'A frekvencialépés-számláló alacsony bájtja'
+      pt: 'Byte baixo da contagem de passos de frequência sintonizada.'
+    type: 'uint'
+    default: 0xFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+
+  TUNER_REGION:
+    bits: '6.7-6.5'
+    comment:
+      en: 'Tuner region of use'
+      fr: 'Zone d''utilisation'
+      es: 'Región de uso del sintonizador'
+      de: 'Nutzungsregion des Tuners'
+      it: 'Regione d''uso del sintonizzatore'
+      pl: 'Region użytkowania tunera'
+      ru: 'Регион использования тюнера'
+      zh: '调谐器使用地区'
+      hu: 'A tuner használati régiója'
+      pt: 'Região de utilização do sintonizador'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Western Europe'
+        fr: 'Europe occidentale'
+        es: 'Europa Occidental'
+        de: 'Westeuropa'
+        it: 'Europa occidentale'
+        pl: 'Europa Zachodnia'
+        ru: 'Западная Европа'
+        zh: '西欧'
+        hu: 'Nyugat-Európa'
+        pt: 'Europa Ocidental'
+      0x01:
+        en: 'Japan'
+        fr: 'Japon'
+        es: 'Japón'
+        de: 'Japan'
+        it: 'Giappone'
+        pl: 'Japonia'
+        ru: 'Япония'
+        zh: '日本'
+        hu: 'Japán'
+        pt: 'Japão'
+      0x02:
+        en: 'Latin America'
+        fr: 'Amérique latine'
+        es: 'América Latina'
+        de: 'Lateinamerika'
+        it: 'America Latina'
+        pl: 'Ameryka Łacińska'
+        ru: 'Латинская Америка'
+        zh: '拉丁美洲'
+        hu: 'Latin-Amerika'
+        pt: 'América Latina'
+      0x03:
+        en: 'China'
+        fr: 'Chine'
+        es: 'China'
+        de: 'China'
+        it: 'Cina'
+        pl: 'Chiny'
+        ru: 'Китай'
+        zh: '中国'
+        hu: 'Kína'
+        pt: 'China'
+      0x04:
+        en: 'India'
+        fr: 'Inde'
+        es: 'India'
+        de: 'Indien'
+        it: 'India'
+        pl: 'Indie'
+        ru: 'Индия'
+        zh: '印度'
+        hu: 'India'
+        pt: 'Índia'
+      0x05:
+        en: 'Eastern Europe'
+        fr: 'Europe de l''Est'
+        es: 'Europa del Este'
+        de: 'Osteuropa'
+        it: 'Europa dell''Est'
+        pl: 'Europa Wschodnia'
+        ru: 'Восточная Европа'
+        zh: '东欧'
+        hu: 'Kelet-Európa'
+        pt: 'Europa de Leste'
+      0x06:
+        en: 'Other countries'
+        fr: 'Autres pays'
+        es: 'Otros países'
+        de: 'Andere Länder'
+        it: 'Altri paesi'
+        pl: 'Inne kraje'
+        ru: 'Другие страны'
+        zh: '其他国家'
+        hu: 'Egyéb országok'
+        pt: 'Outros países'
+      0x07:
+        en: 'Other countries'
+        fr: 'Autres pays'
+        es: 'Otros países'
+        de: 'Andere Länder'
+        it: 'Altri paesi'
+        pl: 'Inne kraje'
+        ru: 'Другие страны'
+        zh: '其他国家'
+        hu: 'Egyéb országok'
+        pt: 'Outros países'
+
+  TUNER_FREQUENCY_MSB:
+    bits: '6.2-6.0'
+    comment:
+      en: 'High bits of the tuned frequency step count.'
+      fr: 'Bits de poids fort du compteur de pas de fréquence.'
+      es: 'Bits más significativos del contador de pasos de frecuencia'
+      de: 'Höherwertige Bits des Frequenzschrittzählers'
+      it: 'Bit più significativi del contatore di passi di frequenza'
+      pl: 'Starsze bity licznika kroków częstotliwości'
+      ru: 'Старшие биты счётчика шагов частоты'
+      zh: '频率步进计数高位'
+      hu: 'A frekvencialépés-számláló magas bitjei'
+      pt: 'Bits altos da contagem de passos de frequência sintonizada.'
+    type: 'uint'
+    default: 0x07
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+
+  RECEPTION_QUALITY:
+    bits: '7.7-7.4'
+    comment:
+      en: 'Tuner signal quality (0 = minimum)'
+      fr: 'Qualité de signal du tuner (0 = minimum)'
+      es: 'Calidad de la señal del sintonizador (0 = mínimo)'
+      de: 'Signalqualität des Tuners (0 = Minimum)'
+      it: 'Qualità del segnale del sintonizzatore (0 = minimo)'
+      pl: 'Jakość sygnału tunera (0 = minimum)'
+      ru: 'Качество сигнала тюнера (0 = минимум)'
+      zh: '调谐器信号质量（0 = 最低）'
+      hu: 'Tuner jelminősége (0 = minimum)'
+      pt: 'Qualidade do sinal do sintonizador (0 = mínimo)'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Minimum'
+        fr: 'Minimum'
+        es: 'Mínimo'
+        de: 'Minimum'
+        it: 'Minimo'
+        pl: 'Minimum'
+        ru: 'Минимум'
+        zh: '最小值'
+        hu: 'Minimum'
+        pt: 'Mínimo'
+
+  RECEPTION_LEVEL:
+    bits: '7.3-7.0'
+    comment:
+      en: 'Tuner signal level (0 = minimum)'
+      fr: 'Niveau du signal du tuner (0 = minimum)'
+      es: 'Nivel de señal del sintonizador (0 = mínimo)'
+      de: 'Tuner-Signalpegel (0 = Minimum)'
+      it: 'Livello del segnale del sintonizzatore (0 = minimo)'
+      pl: 'Poziom sygnału tunera (0 = minimum)'
+      ru: 'Уровень сигнала тюнера (0 = минимум)'
+      zh: '调谐器信号电平（0 = 最低）'
+      hu: 'Tuner jelszintje (0 = minimum)'
+      pt: 'Nível de sinal do sintonizador (0 = mínimo)'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Minimum'
+        fr: 'Minimum'
+        es: 'Mínimo'
+        de: 'Minimum'
+        it: 'Minimo'
+        pl: 'Minimum'
+        ru: 'Минимум'
+        zh: '最小值'
+        hu: 'Minimum'
+        pt: 'Mínimo'
+
+  TA_BROADCAST_IN_PROGRESS:
+    bits: '8.7'
+    comment:
+      en: 'Traffic announcement currently being played (feedback of the TA broadcast command)'
+      fr: 'Écoute en cours du message trafic (retour de la commande de diffusion TA)'
+      es: 'Mensaje de tráfico reproduciéndose actualmente'
+      de: 'Verkehrsfunk-Hinweis wird gerade wiedergegeben'
+      it: 'Messaggio sul traffico attualmente in riproduzione'
+      pl: 'Aktualnie odtwarzany komunikat drogowy'
+      ru: 'В настоящее время воспроизводится дорожное сообщение'
+      zh: '交通播报正在播放'
+      hu: 'Forgalmi közlemény éppen lejátszás alatt'
+      pt: 'Mensagem de tráfego atualmente em reprodução (retorno do comando de difusão TA)'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x01:
+        en: 'Listening for traffic announcements (TA)'
+        fr: 'Écoute des infos trafic (TA) en cours'
+        es: 'Escucha de información de tráfico (TA) en curso'
+        de: 'Verkehrsdurchsagen (TA) werden empfangen'
+        it: 'Ascolto informazioni sul traffico (TA) in corso'
+        pl: 'Nasłuch komunikatów drogowych (TA)'
+        ru: 'Прослушивание дорожных сообщений (TA)'
+        zh: '正在接收交通广播 (TA)'
+        hu: 'Forgalmi közlemények (TA) figyelése'
+        pt: 'Escuta das informações de tráfego (TA) em curso'
+
+  TP_STATION:
+    bits: '8.6'
+    comment:
+      en: 'Station carries traffic information (TP); loss is reported only after a stable delay'
+      fr: 'Programme comportant des infos trafic (TP) ; la perte n''est signalée qu''après un délai stable.'
+      es: 'La emisora incluye información de tráfico (TP); la pérdida solo se notifica tras un retardo estable'
+      de: 'Sender führt Verkehrsfunkinformationen (TP); Verlust wird erst nach einer stabilen Verzögerung gemeldet'
+      it: 'La stazione trasmette informazioni sul traffico (TP); la perdita è segnalata solo dopo un ritardo stabile'
+      pl: 'Stacja nadaje informacje drogowe (TP); utrata jest zgłaszana dopiero po stabilnym opóźnieniu'
+      ru: 'Станция передаёт дорожную информацию (TP); потеря сообщается только после стабильной задержки'
+      zh: '电台携带交通信息（TP）；信号丢失仅在稳定延迟后才报告'
+      hu: 'Az állomás forgalmi információt (TP) sugároz; a jel elvesztése csak stabil késleltetés után kerül jelzésre'
+      pt: 'A estação transmite informação de tráfego (TP); a perda só é comunicada após um atraso estável'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  AF_AVAILABLE:
+    bits: '8.5'
+    comment:
+      en: 'At least one receivable alternative frequency is available.'
+      fr: 'Au moins une fréquence alternative recevable est disponible.'
+      es: 'Al menos una frecuencia alternativa recibible está disponible'
+      de: 'Mindestens eine empfangbare Alternativfrequenz ist verfügbar'
+      it: 'È disponibile almeno una frequenza alternativa ricevibile'
+      pl: 'Dostępna jest co najmniej jedna odbieralna częstotliwość alternatywna'
+      ru: 'Доступна как минимум одна принимаемая альтернативная частота'
+      zh: '至少有一个可接收的备用频率可用'
+      hu: 'Legalább egy vehető alternatív frekvencia elérhető'
+      pt: 'Está disponível pelo menos uma frequência alternativa recebível.'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No AF, or AF bit = 0'
+        fr: 'Pas d''AF ou bit AF = 0'
+        es: 'Sin AF o bit AF = 0'
+        de: 'Kein AF oder AF-Bit = 0'
+        it: 'Nessun AF o bit AF = 0'
+        pl: 'Brak AF lub bit AF = 0'
+        ru: 'Нет AF или бит AF = 0'
+        zh: '无AF或AF位=0'
+        hu: 'Nincs AF vagy az AF bit = 0'
+        pt: 'Sem AF, ou bit AF = 0'
+      0x01:
+        en: 'AF service available'
+        fr: 'Service AF disponible'
+        es: 'Servicio AF disponible'
+        de: 'AF-Dienst verfügbar'
+        it: 'Servizio AF disponibile'
+        pl: 'Usługa AF dostępna'
+        ru: 'Служба AF доступна'
+        zh: 'AF服务可用'
+        hu: 'AF szolgáltatás elérhető'
+        pt: 'Serviço AF disponível'
+
+  EON_STATION:
+    bits: '8.4'
+    comment:
+      en: 'Station belongs to an associated EON network'
+      fr: 'Station appartenant au réseau EON associé'
+      es: 'La emisora pertenece a una red EON asociada'
+      de: 'Sender gehört zu einem zugehörigen EON-Netzwerk'
+      it: 'La stazione appartiene a una rete EON associata'
+      pl: 'Stacja należy do powiązanej sieci EON'
+      ru: 'Станция принадлежит связанной сети EON'
+      zh: '电台属于关联的 EON 网络'
+      hu: 'Az állomás egy társított EON hálózathoz tartozik'
+      pt: 'Estação pertencente à rede EON associada'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x01:
+        en: 'Station of an associated EON network'
+        fr: 'Station d''un réseau EON associé'
+        es: 'Emisora de una red EON asociada'
+        de: 'Sender eines verknüpften EON-Netzwerks'
+        it: 'Stazione di una rete EON associata'
+        pl: 'Stacja powiązanej sieci EON'
+        ru: 'Станция связанной сети EON'
+        zh: '关联EON网络的电台'
+        hu: 'Egy társított EON-hálózat állomása'
+        pt: 'Estação de uma rede EON associada'
+
+  TA_MESSAGE_RECEIVED:
+    bits: '8.3'
+    comment:
+      en: 'A traffic announcement is being received (not necessarily played to the user)'
+      fr: 'Réception d''un message trafic (ne signifie pas qu''il est diffusé à l''utilisateur)'
+      es: 'Se está recibiendo un mensaje de tráfico (no implica que se esté reproduciendo)'
+      de: 'Ein Verkehrsfunk-Hinweis wird empfangen (nicht zwangsläufig wiedergegeben)'
+      it: 'È in ricezione un messaggio sul traffico (non necessariamente riprodotto)'
+      pl: 'Odbierany jest komunikat drogowy (niekoniecznie odtwarzany)'
+      ru: 'Принимается дорожное сообщение (не обязательно воспроизводится)'
+      zh: '正在接收交通播报（不一定正在播放）'
+      hu: 'Forgalmi közlemény vétele folyamatban (nem feltétlenül kerül lejátszásra)'
+      pt: 'Está a ser recebida uma mensagem de tráfego (não significa que esteja a ser reproduzida ao utilizador)'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x01:
+        en: 'TA message present'
+        fr: 'Présence d''un message TA'
+        es: 'Presencia de un mensaje TA'
+        de: 'TA-Meldung vorhanden'
+        it: 'Presenza di un messaggio TA'
+        pl: 'Obecność komunikatu TA'
+        ru: 'Присутствует сообщение TA'
+        zh: '存在TA消息'
+        hu: 'TA üzenet jelen van'
+        pt: 'Presença de mensagem TA'
+
+  RDS_REGIONAL_STATE:
+    bits: '8.2'
+    comment:
+      en: 'RDS regional mode (reflects the user request, independent of AF)'
+      fr: 'Mode régional (REG) ; reflète la demande utilisateur, indépendamment du bit AF.'
+      es: 'Modo regional RDS (refleja la solicitud del usuario, independientemente de AF)'
+      de: 'RDS-Regionalmodus (spiegelt die Benutzeranforderung wider, unabhängig von AF)'
+      it: 'Modalità regionale RDS (riflette la richiesta dell''utente, indipendentemente da AF)'
+      pl: 'Tryb regionalny RDS (odzwierciedla żądanie użytkownika, niezależnie od AF)'
+      ru: 'Региональный режим RDS (отражает запрос пользователя, независимо от AF)'
+      zh: 'RDS 区域模式（反映用户请求，与 AF 无关）'
+      hu: 'RDS regionális mód (a felhasználói kérést tükrözi, az AF-től függetlenül)'
+      pt: 'Modo regional RDS (reflete o pedido do utilizador, independentemente do bit AF)'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non actif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  TA_SELECTED:
+    bits: '8.1'
+    comment:
+      en: 'Traffic announcements wanted by the user; when 0, TA message and TA broadcast bits are forced to 0'
+      fr: 'Annonce trafic souhaitée (TA) ; si à 0, les bits TA_MESSAGE et TA_OUT sont forcés à 0.'
+      es: 'Anuncios de tráfico deseados por el usuario; si es 0, los bits de mensaje y difusión de TA se fuerzan a 0'
+      de: 'Vom Benutzer gewünschte Verkehrsfunkdurchsagen; bei 0 werden die Bits TA_MESSAGE und TA_OUT auf 0 gezwungen'
+      it: 'Annunci sul traffico desiderati dall''utente; se a 0, i bit TA_MESSAGE e TA_OUT sono forzati a 0'
+      pl: 'Komunikaty drogowe żądane przez użytkownika; przy 0 bity TA_MESSAGE i TA_OUT są wymuszane na 0'
+      ru: 'Дорожные сообщения, запрошенные пользователем; при 0 биты TA_MESSAGE и TA_OUT принудительно равны 0'
+      zh: '用户请求的交通播报；为 0 时，TA_MESSAGE 和 TA_OUT 位强制为 0'
+      hu: 'A felhasználó által kért forgalmi közlemények; 0 esetén a TA_MESSAGE és TA_OUT bitek kényszerítve 0-ra állnak'
+      pt: 'Anúncios de tráfego desejados pelo utilizador; se a 0, os bits de mensagem e difusão TA são forçados a 0'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Not selected'
+        fr: 'Non sélectionné'
+        es: 'No seleccionado'
+        de: 'Nicht ausgewählt'
+        it: 'Non selezionato'
+        pl: 'Niewybrane'
+        ru: 'Не выбрано'
+        zh: '未选择'
+        hu: 'Nincs kiválasztva'
+        pt: 'Não selecionado'
+      0x01:
+        en: 'Selected'
+        fr: 'Sélectionné'
+        es: 'Seleccionado'
+        de: 'Ausgewählt'
+        it: 'Selezionato'
+        pl: 'Wybrany'
+        ru: 'Выбрано'
+        zh: '已选择'
+        hu: 'Kiválasztva'
+        pt: 'Selecionado'
+
+  AF_SELECTED:
+    bits: '8.0'
+    comment:
+      en: 'Alternative frequencies wanted by the user'
+      fr: 'Fréquences alternatives souhaitées'
+      es: 'Frecuencias alternativas deseadas por el usuario'
+      de: 'Vom Benutzer gewünschte Alternativfrequenzen'
+      it: 'Frequenze alternative desiderate dall''utente'
+      pl: 'Częstotliwości alternatywne żądane przez użytkownika'
+      ru: 'Альтернативные частоты, запрошенные пользователем'
+      zh: '用户所需的备用频率'
+      hu: 'A felhasználó által kért alternatív frekvenciák'
+      pt: 'Frequências alternativas desejadas pelo utilizador'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Not selected'
+        fr: 'Non sélectionné'
+        es: 'No seleccionado'
+        de: 'Nicht ausgewählt'
+        it: 'Non selezionato'
+        pl: 'Niewybrane'
+        ru: 'Не выбрано'
+        zh: '未选择'
+        hu: 'Nincs kiválasztva'
+        pt: 'Não selecionado'
+      0x01:
+        en: 'Selected'
+        fr: 'Sélectionné'
+        es: 'Seleccionado'
+        de: 'Ausgewählt'
+        it: 'Selezionato'
+        pl: 'Wybrany'
+        ru: 'Выбрано'
+        zh: '已选择'
+        hu: 'Kiválasztva'
+        pt: 'Selecionado'
+
+  RDS_PI:
+    bits: '9.7-10.0'
+    comment:
+      en: 'RDS programme identification of the station listened to.'
+      fr: 'Identification RDS de la station écoutée.'
+      es: 'Identificación RDS de la emisora escuchada'
+      de: 'RDS-Programmkennung des gehörten Senders'
+      it: 'Identificazione RDS della stazione ascoltata'
+      pl: 'Identyfikacja RDS słuchanej stacji'
+      ru: 'RDS-идентификация прослушиваемой станции'
+      zh: '正在收听电台的 RDS 节目识别码'
+      hu: 'A hallgatott állomás RDS programazonosítója'
+      pt: 'Identificação RDS da estação ouvida.'
+    type: 'uint'
+    default: 0xFFFF
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+
+  PTY_LISTEN:
+    bits: '11.7'
+    comment:
+      en: 'PTY listen/store flag'
+      fr: 'Écoute / mémorisation PTY'
+      es: 'Indicador de escucha/memorización de PTY'
+      de: 'PTY-Hör-/Speicherkennzeichen'
+      it: 'Flag di ascolto/memorizzazione PTY'
+      pl: 'Flaga słuchania/zapisu PTY'
+      ru: 'Флаг прослушивания/сохранения PTY'
+      zh: 'PTY 收听／存储标志'
+      hu: 'PTY hallgatási/tárolási jelző'
+      pt: 'Indicador de escutar/guardar PTY'
+    type: 'bool'
+    default: 0x01
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Store'
+        fr: 'Mémorisation'
+        es: 'Almacenar'
+        de: 'Speichern'
+        it: 'Memorizzazione'
+        pl: 'Zapisz'
+        ru: 'Сохранить'
+        zh: '存储'
+        hu: 'Tárolás'
+        pt: 'Memorizar'
+      0x01:
+        en: 'Listening'
+        fr: 'Écoute'
+        es: 'Escucha'
+        de: 'Abhören'
+        it: 'Ascolto'
+        pl: 'Nasłuchiwanie'
+        ru: 'Прослушивание'
+        zh: '监听'
+        hu: 'Hallgatás'
+        pt: 'A ouvir'
+
+  PTY_SELECTION_ACTIVE:
+    bits: '11.6'
+    comment:
+      en: 'PTY selection phase active; selecting a preset copies its PTY into the selected PTY field'
+      fr: 'Phase de sélection d''un PTY active ; sélectionner une mémoire copie son PTY dans le champ PTY sélectionné.'
+      es: 'Fase de selección de PTY activa; al elegir una memoria, su PTY se copia en el campo PTY seleccionado'
+      de: 'PTY-Auswahlphase aktiv; bei Auswahl eines Senderspeichers wird dessen PTY in das ausgewählte PTY-Feld kopiert'
+      it: 'Fase di selezione PTY attiva; selezionando una preselezione, il suo PTY viene copiato nel campo PTY selezionato'
+      pl: 'Aktywna faza wyboru PTY; wybór zaprogramowanej stacji kopiuje jej PTY do pola wybranego PTY'
+      ru: 'Активна фаза выбора PTY; при выборе предустановки её PTY копируется в поле выбранного PTY'
+      zh: 'PTY 选择阶段激活；选择预设时会将其 PTY 复制到已选 PTY 字段'
+      hu: 'PTY kiválasztási fázis aktív; egy tárhely kiválasztásakor annak PTY-je bemásolódik a kiválasztott PTY mezőbe'
+      pt: 'Fase de seleção de PTY ativa; ao selecionar uma memória, o seu PTY é copiado para o campo PTY selecionado'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'Selection phase expired'
+        fr: 'Phase de sélection expirée'
+        es: 'Fase de selección expirada'
+        de: 'Auswahlphase abgelaufen'
+        it: 'Fase di selezione scaduta'
+        pl: 'Faza wyboru wygasła'
+        ru: 'Фаза выбора истекла'
+        zh: '选择阶段已过期'
+        hu: 'A kiválasztási fázis lejárt'
+        pt: 'Fase de seleção expirada'
+      0x01:
+        en: 'Selection phase active'
+        fr: 'Phase de sélection active'
+        es: 'Fase de selección activa'
+        de: 'Auswahlphase aktiv'
+        it: 'Fase di selezione attiva'
+        pl: 'Aktywna faza wyboru'
+        ru: 'Активна фаза выбора'
+        zh: '选择阶段激活'
+        hu: 'Kiválasztási fázis aktív'
+        pt: 'Fase de seleção ativa'
+
+  NO_PTY:
+    bits: '11.5'
+    comment:
+      en: 'Programme carries no selected or broadcast PTY.'
+      fr: 'Programme sans PTY sélectionné ni diffusé.'
+      es: 'Programa sin PTY seleccionado ni difundido'
+      de: 'Programm ohne ausgewählten oder ausgestrahlten PTY'
+      it: 'Programma senza PTY selezionato o trasmesso'
+      pl: 'Program bez wybranego lub nadawanego PTY'
+      ru: 'Программа без выбранного или транслируемого PTY'
+      zh: '节目未携带所选或广播的 PTY'
+      hu: 'A műsor nem tartalmaz kiválasztott vagy sugárzott PTY-t'
+      pt: 'Programa sem PTY selecionado nem difundido.'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'PTY available (selected PTY differs from broadcast PTY, etc.)'
+        fr: 'PTY sélectionné différent du PTY diffusé, etc.'
+        es: 'PTY disponible (el PTY seleccionado difiere del PTY emitido, etc.)'
+        de: 'PTY verfügbar (ausgewählter PTY weicht vom gesendeten PTY ab usw.)'
+        it: 'PTY disponibile (il PTY selezionato è diverso da quello trasmesso, ecc.)'
+        pl: 'Dostępny PTY (wybrany PTY różni się od nadawanego PTY itd.)'
+        ru: 'PTY доступен (выбранный PTY отличается от транслируемого PTY и т.д.)'
+        zh: 'PTY可用(所选PTY与广播PTY不同等)'
+        hu: 'PTY elérhető (a kiválasztott PTY eltér a sugárzott PTY-től stb.)'
+        pt: 'PTY disponível (o PTY selecionado difere do PTY emitido, etc.)'
+      0x01:
+        en: 'No PTY'
+        fr: 'Pas de PTY'
+        es: 'Sin PTY'
+        de: 'Kein PTY'
+        it: 'Nessun PTY'
+        pl: 'Brak PTY'
+        ru: 'Нет PTY'
+        zh: '无PTY'
+        hu: 'Nincs PTY'
+        pt: 'Sem PTY'
+
+  SELECTED_PTY:
+    bits: '11.4-11.0'
+    comment:
+      en: 'Selected RDS programme type'
+      fr: 'Type de programme RDS sélectionné'
+      es: 'Tipo de programa RDS seleccionado'
+      de: 'Ausgewählter RDS-Programmtyp'
+      it: 'Tipo di programma RDS selezionato'
+      pl: 'Wybrany typ programu RDS'
+      ru: 'Выбранный тип программы RDS'
+      zh: '已选 RDS 节目类型'
+      hu: 'Kiválasztott RDS programtípus'
+      pt: 'Tipo de programa RDS selecionado'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No PTY'
+        fr: 'Pas de PTY'
+        es: 'Sin PTY'
+        de: 'Kein PTY'
+        it: 'Nessun PTY'
+        pl: 'Brak PTY'
+        ru: 'Нет PTY'
+        zh: '无PTY'
+        hu: 'Nincs PTY'
+        pt: 'Sem PTY'
+      0x01:
+        en: 'News'
+        fr: 'Informations'
+        es: 'Noticias'
+        de: 'Nachrichten'
+        it: 'Notizie'
+        pl: 'Wiadomości'
+        ru: 'Новости'
+        zh: '新闻'
+        hu: 'Hírek'
+        pt: 'Notícias'
+      0x02:
+        en: 'Current affairs'
+        fr: 'Magazine'
+        es: 'Actualidad'
+        de: 'Zeitgeschehen'
+        it: 'Attualità'
+        pl: 'Magazyn'
+        ru: 'Актуальные события'
+        zh: '时事杂志'
+        hu: 'Aktuális magazin'
+        pt: 'Atualidade'
+      0x03:
+        en: 'Information/services'
+        fr: 'Informations/services'
+        es: 'Información/servicios'
+        de: 'Informationen/Dienste'
+        it: 'Informazioni/servizi'
+        pl: 'Informacje/usługi'
+        ru: 'Информация/услуги'
+        zh: '信息/服务'
+        hu: 'Információ/szolgáltatások'
+        pt: 'Informação/serviços'
+      0x04:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x05:
+        en: 'Education'
+        fr: 'Éducation'
+        es: 'Educación'
+        de: 'Bildung'
+        it: 'Istruzione'
+        pl: 'Edukacja'
+        ru: 'Образование'
+        zh: '教育'
+        hu: 'Oktatás'
+        pt: 'Educação'
+      0x06:
+        en: 'Drama'
+        fr: 'Dramatique'
+        es: 'Drama'
+        de: 'Drama'
+        it: 'Dramma'
+        pl: 'Dramat'
+        ru: 'Драма'
+        zh: '剧情'
+        hu: 'Dráma'
+        pt: 'Drama'
+      0x07:
+        en: 'Science/culture'
+        fr: 'Sciences'
+        es: 'Ciencia/cultura'
+        de: 'Wissenschaft/Kultur'
+        it: 'Scienza/cultura'
+        pl: 'Nauka/kultura'
+        ru: 'Наука/культура'
+        zh: '科学/文化'
+        hu: 'Tudomány/kultúra'
+        pt: 'Ciência/cultura'
+      0x09:
+        en: 'Miscellaneous'
+        fr: 'Divers'
+        es: 'Varios'
+        de: 'Verschiedenes'
+        it: 'Vari'
+        pl: 'Różne'
+        ru: 'Разное'
+        zh: '其他'
+        hu: 'Vegyes'
+        pt: 'Diversos'
+      0x0A:
+        en: 'Pop music'
+        fr: 'Pop'
+        es: 'Pop'
+        de: 'Pop'
+        it: 'Pop'
+        pl: 'Pop'
+        ru: 'Поп'
+        zh: '流行'
+        hu: 'Pop'
+        pt: 'Pop'
+      0x0B:
+        en: 'Rock music'
+        fr: 'Rock'
+        es: 'Rock'
+        de: 'Rockmusik'
+        it: 'Rock'
+        pl: 'Rock'
+        ru: 'Рок-музыка'
+        zh: '摇滚乐'
+        hu: 'Rockzene'
+        pt: 'Rock'
+      0x0C:
+        en: 'Easy listening'
+        fr: 'Variétés'
+        es: 'Música fácil de escuchar'
+        de: 'Easy Listening'
+        it: 'Musica leggera'
+        pl: 'Muzyka lekka'
+        ru: 'Лёгкая музыка'
+        zh: '轻音乐'
+        hu: 'Könnyűzene'
+        pt: 'Música ligeira'
+      0x0D:
+        en: 'Light classical'
+        fr: 'Classique léger'
+        es: 'Clásica ligera'
+        de: 'Leichte Klassik'
+        it: 'Classica leggera'
+        pl: 'Lekka klasyczna'
+        ru: 'Лёгкая классика'
+        zh: '轻古典'
+        hu: 'Könnyű klasszikus'
+        pt: 'Clássica ligeira'
+      0x0E:
+        en: 'Serious classical'
+        fr: 'Classique sérieux'
+        es: 'Clásico serio'
+        de: 'Ernste Klassik'
+        it: 'Classico serio'
+        pl: 'Poważna klasyka'
+        ru: 'Серьёзная классика'
+        zh: '严肃古典'
+        hu: 'Komoly klasszikus'
+        pt: 'Clássico sério'
+      0x0F:
+        en: 'Other music'
+        fr: 'Autres musiques'
+        es: 'Otra música'
+        de: 'Andere Musik'
+        it: 'Altra musica'
+        pl: 'Inna muzyka'
+        ru: 'Другая музыка'
+        zh: '其他音乐'
+        hu: 'Egyéb zene'
+        pt: 'Outras músicas'
+      0x1F:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  BROADCAST_PTY:
+    bits: '12.4-12.0'
+    comment:
+      en: 'RDS programme type broadcast by the station listened to'
+      fr: 'Type de programme RDS diffusé par la station écoutée'
+      es: 'Tipo de programa RDS emitido por la emisora escuchada'
+      de: 'Vom gehörten Sender ausgestrahlter RDS-Programmtyp'
+      it: 'Tipo di programma RDS trasmesso dalla stazione ascoltata'
+      pl: 'Typ programu RDS nadawany przez słuchaną stację'
+      ru: 'Тип программы RDS, транслируемый прослушиваемой станцией'
+      zh: '正在收听电台广播的 RDS 节目类型'
+      hu: 'A hallgatott állomás által sugárzott RDS programtípus'
+      pt: 'Tipo de programa RDS emitido pela estação ouvida'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No PTY'
+        fr: 'Pas de PTY'
+        es: 'Sin PTY'
+        de: 'Kein PTY'
+        it: 'Nessun PTY'
+        pl: 'Brak PTY'
+        ru: 'Нет PTY'
+        zh: '无PTY'
+        hu: 'Nincs PTY'
+        pt: 'Sem PTY'
+      0x01:
+        en: 'News'
+        fr: 'Informations'
+        es: 'Noticias'
+        de: 'Nachrichten'
+        it: 'Notizie'
+        pl: 'Wiadomości'
+        ru: 'Новости'
+        zh: '新闻'
+        hu: 'Hírek'
+        pt: 'Notícias'
+      0x02:
+        en: 'Current affairs'
+        fr: 'Magazine'
+        es: 'Actualidad'
+        de: 'Zeitgeschehen'
+        it: 'Attualità'
+        pl: 'Magazyn'
+        ru: 'Актуальные события'
+        zh: '时事杂志'
+        hu: 'Aktuális magazin'
+        pt: 'Atualidade'
+      0x03:
+        en: 'Information/services'
+        fr: 'Informations/services'
+        es: 'Información/servicios'
+        de: 'Informationen/Dienste'
+        it: 'Informazioni/servizi'
+        pl: 'Informacje/usługi'
+        ru: 'Информация/услуги'
+        zh: '信息/服务'
+        hu: 'Információ/szolgáltatások'
+        pt: 'Informação/serviços'
+      0x04:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x05:
+        en: 'Education'
+        fr: 'Éducation'
+        es: 'Educación'
+        de: 'Bildung'
+        it: 'Istruzione'
+        pl: 'Edukacja'
+        ru: 'Образование'
+        zh: '教育'
+        hu: 'Oktatás'
+        pt: 'Educação'
+      0x06:
+        en: 'Drama'
+        fr: 'Dramatique'
+        es: 'Drama'
+        de: 'Drama'
+        it: 'Dramma'
+        pl: 'Dramat'
+        ru: 'Драма'
+        zh: '剧情'
+        hu: 'Dráma'
+        pt: 'Drama'
+      0x07:
+        en: 'Science/culture'
+        fr: 'Sciences'
+        es: 'Ciencia/cultura'
+        de: 'Wissenschaft/Kultur'
+        it: 'Scienza/cultura'
+        pl: 'Nauka/kultura'
+        ru: 'Наука/культура'
+        zh: '科学/文化'
+        hu: 'Tudomány/kultúra'
+        pt: 'Ciência/cultura'
+      0x09:
+        en: 'Miscellaneous'
+        fr: 'Divers'
+        es: 'Varios'
+        de: 'Verschiedenes'
+        it: 'Vari'
+        pl: 'Różne'
+        ru: 'Разное'
+        zh: '其他'
+        hu: 'Vegyes'
+        pt: 'Diversos'
+      0x0A:
+        en: 'Pop music'
+        fr: 'Pop'
+        es: 'Pop'
+        de: 'Pop'
+        it: 'Pop'
+        pl: 'Pop'
+        ru: 'Поп'
+        zh: '流行'
+        hu: 'Pop'
+        pt: 'Pop'
+      0x0B:
+        en: 'Rock music'
+        fr: 'Rock'
+        es: 'Rock'
+        de: 'Rockmusik'
+        it: 'Rock'
+        pl: 'Rock'
+        ru: 'Рок-музыка'
+        zh: '摇滚乐'
+        hu: 'Rockzene'
+        pt: 'Rock'
+      0x0C:
+        en: 'Easy listening'
+        fr: 'Variétés'
+        es: 'Música fácil de escuchar'
+        de: 'Easy Listening'
+        it: 'Musica leggera'
+        pl: 'Muzyka lekka'
+        ru: 'Лёгкая музыка'
+        zh: '轻音乐'
+        hu: 'Könnyűzene'
+        pt: 'Música ligeira'
+      0x0D:
+        en: 'Light classical'
+        fr: 'Classique léger'
+        es: 'Clásica ligera'
+        de: 'Leichte Klassik'
+        it: 'Classica leggera'
+        pl: 'Lekka klasyczna'
+        ru: 'Лёгкая классика'
+        zh: '轻古典'
+        hu: 'Könnyű klasszikus'
+        pt: 'Clássica ligeira'
+      0x0E:
+        en: 'Serious classical'
+        fr: 'Classique sérieux'
+        es: 'Clásico serio'
+        de: 'Ernste Klassik'
+        it: 'Classico serio'
+        pl: 'Poważna klasyka'
+        ru: 'Серьёзная классика'
+        zh: '严肃古典'
+        hu: 'Komoly klasszikus'
+        pt: 'Clássico sério'
+      0x0F:
+        en: 'Other music'
+        fr: 'Autres musiques'
+        es: 'Otra música'
+        de: 'Andere Musik'
+        it: 'Altra musica'
+        pl: 'Inna muzyka'
+        ru: 'Другая музыка'
+        zh: '其他音乐'
+        hu: 'Egyéb zene'
+        pt: 'Outras músicas'
+      0x1F:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  RDS_PROGRAMME_NAME:
+    bits: '13.7-20.0'
+    comment:
+      en: 'RDS programme service name, 8 characters'
+      fr: 'Nom du programme écouté (8 caractères RDS)'
+      es: 'Nombre del servicio de programa RDS, 8 caracteres'
+      de: 'RDS-Programmdienstname, 8 Zeichen'
+      it: 'Nome del servizio di programma RDS, 8 caratteri'
+      pl: 'Nazwa usługi programu RDS, 8 znaków'
+      ru: 'Название программы RDS, 8 символов'
+      zh: 'RDS 节目服务名称，8 个字符'
+      hu: 'RDS műsorszolgáltatás neve, 8 karakter'
+      pt: 'Nome do serviço de programa RDS, 8 carateres'
+    type: 'str'
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+
+  RDS_COUNTRY_CODE:
+    bits: '21.7-21.0'
+    comment:
+      en: 'Country code for the RDS character set'
+      fr: 'Code pays pour l''alphabet RDS'
+      es: 'Código de país para el juego de caracteres RDS'
+      de: 'Ländercode für den RDS-Zeichensatz'
+      it: 'Codice paese per il set di caratteri RDS'
+      pl: 'Kod kraju dla zestawu znaków RDS'
+      ru: 'Код страны для набора символов RDS'
+      zh: 'RDS 字符集国家代码'
+      hu: 'Országkód az RDS karakterkészlethez'
+      pt: 'Código de país para o conjunto de carateres RDS'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD1]
+    values:
+      0x00:
+        en: 'No country'
+        fr: 'Pas de pays'
+        es: 'Sin país'
+        de: 'Kein Land'
+        it: 'Nessun paese'
+        pl: 'Brak kraju'
+        ru: 'Нет страны'
+        zh: '无国家'
+        hu: 'Nincs ország'
+        pt: 'Sem país'
+
+  PRESET_ENTRY_IS_NAME:
+    bits: '3.7'
+    comment:
+      en: 'Text field holds the frequency (0) or the station name (1)'
+      fr: 'Champ texte contenant la fréquence (0) ou le nom de la station (1)'
+      es: 'El campo de texto contiene la frecuencia (0) o el nombre de la emisora (1)'
+      de: 'Textfeld enthält die Frequenz (0) oder den Sendernamen (1)'
+      it: 'Il campo di testo contiene la frequenza (0) o il nome della stazione (1)'
+      pl: 'Pole tekstowe zawiera częstotliwość (0) lub nazwę stacji (1)'
+      ru: 'Текстовое поле содержит частоту (0) или название станции (1)'
+      zh: '文本字段包含频率（0）或电台名称（1）'
+      hu: 'A szövegmező a frekvenciát (0) vagy az állomásnevet (1) tartalmazza'
+      pt: 'O campo de texto contém a frequência (0) ou o nome da estação (1)'
+    type: 'bool'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD3]
+    values:
+      0x00:
+        en: 'Frequency'
+        fr: 'Fréquence'
+        es: 'Frecuencia'
+        de: 'Frequenz'
+        it: 'Frequenza'
+        pl: 'Częstotliwość'
+        ru: 'Частота'
+        zh: '频率'
+        hu: 'Frekvencia'
+        pt: 'Frequência'
+      0x01:
+        en: 'Name'
+        fr: 'Nom'
+        es: 'Nombre'
+        de: 'Name'
+        it: 'Nome'
+        pl: 'Nazwa'
+        ru: 'Имя'
+        zh: '名称'
+        hu: 'Név'
+        pt: 'Nome'
+
+  PRESET_ENTRY_BANK:
+    bits: '3.6-3.4'
+    comment:
+      en: 'Bank of the preset entry'
+      fr: 'Banque de la mémoire consultée'
+      es: 'Banco de la memoria consultada'
+      de: 'Speicherbank des abgefragten Eintrags'
+      it: 'Banco della preselezione consultata'
+      pl: 'Bank przeglądanej stacji zaprogramowanej'
+      ru: 'Банк просматриваемой предустановки'
+      zh: '所查询预设的频段'
+      hu: 'A lekérdezett tárhely bankja'
+      pt: 'Banco da memória consultada'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD3]
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'FM1'
+        fr: 'FM1'
+        es: 'FM1'
+        de: 'FM1'
+        it: 'FM1'
+        pl: 'FM1'
+        ru: 'FM1'
+        zh: 'FM1'
+        hu: 'FM1'
+        pt: 'FM1'
+      0x02:
+        en: 'FM2'
+        fr: 'FM2'
+        es: 'FM2'
+        de: 'FM2'
+        it: 'FM2'
+        pl: 'FM2'
+        ru: 'FM2'
+        zh: 'FM2'
+        hu: 'FM2'
+        pt: 'FM2'
+      0x03:
+        en: 'FM3'
+        fr: 'FM3'
+        es: 'FM3'
+        de: 'FM3'
+        it: 'FM3'
+        pl: 'FM3'
+        ru: 'FM3'
+        zh: 'FM3'
+        hu: 'FM3'
+        pt: 'FM3'
+      0x04:
+        en: 'FMT (auto-stored FM)'
+        fr: 'FMT (FM mémorisée automatiquement)'
+        es: 'FMT (FM memorizada automáticamente)'
+        de: 'FMT (automatisch gespeichertes FM)'
+        it: 'FMT (FM memorizzata automaticamente)'
+        pl: 'FMT (automatycznie zapisane FM)'
+        ru: 'FMT (автоматически сохранённая частота FM)'
+        zh: 'FMT(自动存储的FM)'
+        hu: 'FMT (automatikusan tárolt FM)'
+        pt: 'FMT (FM memorizado automaticamente)'
+      0x05:
+        en: 'MW (or AM)'
+        fr: 'MW (ou AM)'
+        es: 'MW (o AM)'
+        de: 'MW (oder AM)'
+        it: 'MW (o AM)'
+        pl: 'MW (lub AM)'
+        ru: 'MW (или AM)'
+        zh: 'MW（或AM）'
+        hu: 'MW (vagy AM)'
+        pt: 'OM (ou AM)'
+      0x06:
+        en: 'LW'
+        fr: 'LW'
+        es: 'LW'
+        de: 'LW'
+        it: 'LW'
+        pl: 'LW'
+        ru: 'ДВ'
+        zh: 'LW'
+        hu: 'LW'
+        pt: 'LW'
+      0x07:
+        en: 'PTY'
+        fr: 'PTY'
+        es: 'PTY'
+        de: 'PTY'
+        it: 'PTY'
+        pl: 'PTY'
+        ru: 'PTY'
+        zh: 'PTY'
+        hu: 'PTY'
+        pt: 'PTY'
+
+  PRESET_ENTRY_NUMBER:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Preset number of this entry'
+      fr: 'Numéro de la mémoire en accès'
+      es: 'Número de memoria de esta entrada'
+      de: 'Speichernummer dieses Eintrags'
+      it: 'Numero di preselezione di questa voce'
+      pl: 'Numer zaprogramowanej stacji dla tego wpisu'
+      ru: 'Номер предустановки этой записи'
+      zh: '该条目的预设编号'
+      hu: 'Ennek a bejegyzésnek a tárhelyszáma'
+      pt: 'Número de memória desta entrada'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD3]
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Preset 1'
+        fr: 'Mémoire 1'
+        es: 'Memoria 1'
+        de: 'Speicher 1'
+        it: 'Memoria 1'
+        pl: 'Pamięć 1'
+        ru: 'Память 1'
+        zh: '预设1'
+        hu: '1. előre beállított'
+        pt: 'Memória 1'
+      0x0F:
+        en: 'Preset 15 (max)'
+        fr: 'Mémo 15 (max)'
+        es: 'Preajuste 15 (máx.)'
+        de: 'Voreinstellung 15 (max.)'
+        it: 'Preimpostazione 15 (max)'
+        pl: 'Ustawienie wstępne 15 (maks.)'
+        ru: 'Предустановка 15 (макс.)'
+        zh: '预设15（最大）'
+        hu: '15. előbeállítás (max)'
+        pt: 'Preselecção 15 (máx.)'
+
+  PRESET_ENTRY_TEXT:
+    bits: '4.7-11.0'
+    comment:
+      en: 'Preset station name or frequency, 8 ASCII characters'
+      fr: 'Nom ou fréquence en clair, 8 caractères ASCII'
+      es: 'Nombre de la emisora memorizada o frecuencia, 8 caracteres ASCII'
+      de: 'Name des gespeicherten Senders oder Frequenz, 8 ASCII-Zeichen'
+      it: 'Nome della stazione memorizzata o frequenza, 8 caratteri ASCII'
+      pl: 'Nazwa zaprogramowanej stacji lub częstotliwość, 8 znaków ASCII'
+      ru: 'Название предустановленной станции или частота, 8 символов ASCII'
+      zh: '预设电台名称或频率，8 个 ASCII 字符'
+      hu: 'A tárolt állomás neve vagy frekvenciája, 8 ASCII karakter'
+      pt: 'Nome ou frequência em claro, 8 carateres ASCII'
+    type: 'str'
+    mux:
+      selector: 'RADIO_STATUS_ID'
+      values: [0xD3]

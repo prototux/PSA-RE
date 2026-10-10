@@ -1,0 +1,722 @@
+id: 0x385
+name: 'DASHCAM_COMMAND'
+type: 'can'
+length: 6
+comment:
+  en: 'Dashcam playback and recording commands from the telematics/display unit: list navigation, play, accident recording requests.'
+  fr: 'Commandes de lecture et d''enregistrement du dashcam issues du boîtier télématique/écran : navigation dans la liste, lecture, demandes d''enregistrement accident.'
+  es: 'Órdenes de reproducción y grabación del dashcam desde la unidad telemática/pantalla: navegación por la lista, reproducción, solicitudes de grabación de accidente.'
+  de: 'Wiedergabe- und Aufnahmebefehle für die Dashcam von der Telematikeinheit/Display: Listennavigation, Wiedergabe, Unfallaufnahmeanforderungen.'
+  it: 'Comandi di riproduzione e registrazione del dashcam dall''unità telematica/display: navigazione nell''elenco, riproduzione, richieste di registrazione incidente.'
+  pl: 'Polecenia odtwarzania i nagrywania wideorejestratora z jednostki telematycznej/wyświetlacza: nawigacja po liście, odtwarzanie, żądania nagrania wypadku.'
+  ru: 'Команды воспроизведения и записи видеорегистратора от телематического блока/дисплея: навигация по списку, воспроизведение, запросы записи ДТП.'
+  zh: '来自车载通信单元/显示屏的行车记录仪播放与录制命令:列表浏览、播放、事故录制请求。'
+  hu: 'A telematikai egység/kijelző által küldött lejátszási és felvételi parancsok a fedélzeti kamerának: listanavigáció, lejátszás, balesetfelvétel-kérések.'
+  pt: 'Comandos de reprodução e gravação da câmara de bordo provenientes da unidade telemática/ecrã: navegação na lista, reprodução, pedidos de gravação de acidente.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['1000ms', 'trigger']
+senders: ['BTEL', 'OVIP']
+receivers: ['IDVR']
+
+signals:
+  IDVR_LIST_OPEN_REQUEST:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Request to the IDVR to open the list'
+      fr: 'Demande à l''IDVR d''ouvrir la liste'
+      es: 'Solicitud al IDVR de abrir la lista'
+      de: 'Anforderung an das IDVR, die Liste zu öffnen'
+      it: 'Richiesta all''IDVR di aprire l''elenco'
+      pl: 'Żądanie do IDVR otwarcia listy'
+      ru: 'Запрос к IDVR на открытие списка'
+      zh: '请求IDVR打开列表'
+      hu: 'Kérés az IDVR-nek a lista megnyitására'
+      pt: 'Pedido ao IDVR para abrir a lista'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No list requested'
+        fr: 'Aucune liste demandée'
+        es: 'Ninguna lista solicitada'
+        de: 'Keine Liste angefordert'
+        it: 'Nessun elenco richiesto'
+        pl: 'Brak żądanej listy'
+        ru: 'Список не запрошен'
+        zh: '未请求列表'
+        hu: 'Nincs kért lista'
+        pt: 'Nenhuma lista pedida'
+      0x01:
+        en: 'Request to open the daily list'
+        fr: 'Demande d''ouverture de la liste quotidienne'
+        es: 'Solicitud de apertura de la lista diaria'
+        de: 'Anforderung zum Öffnen der Tagesliste'
+        it: 'Richiesta di apertura dell''elenco giornaliero'
+        pl: 'Żądanie otwarcia listy dziennej'
+        ru: 'Запрос на открытие ежедневного списка'
+        zh: '请求打开每日列表'
+        hu: 'A napi lista megnyitási kérése'
+        pt: 'Pedido de abertura da lista diária'
+      0x02:
+        en: 'Ask to open accident record'
+        fr: 'Demande d''ouverture de l''enregistrement d''accident'
+        es: 'Solicitud de apertura del registro de accidente'
+        de: 'Anforderung zum Öffnen des Unfalldatensatzes'
+        it: 'Richiesta di apertura del registro incidente'
+        pl: 'Żądanie otwarcia zapisu wypadku'
+        ru: 'Запрос открытия записи о ДТП'
+        zh: '请求打开事故记录'
+        hu: 'Balesetrekord megnyitásának kérése'
+        pt: 'Pedido de abertura do registo de acidentes'
+      0x03:
+        unused: true
+
+  IDVR_PLAYBACK_COMMAND:
+    bits: '1.5-1.2'
+    comment:
+      en: 'Video command while the IDVR is playing video'
+      fr: 'Commande vidéo pendant la lecture vidéo par l''IDVR'
+      es: 'Comando de vídeo durante la reproducción de vídeo del IDVR'
+      de: 'Videobefehl während der Videowiedergabe des IDVR'
+      it: 'Comando video durante la riproduzione video dell''IDVR'
+      pl: 'Polecenie wideo podczas odtwarzania wideo przez IDVR'
+      ru: 'Видеокоманда во время воспроизведения видео IDVR'
+      zh: 'IDVR播放视频时的视频指令'
+      hu: 'Videóparancs az IDVR videólejátszása közben'
+      pt: 'Comando de vídeo enquanto o IDVR está a reproduzir vídeo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Sin acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Play'
+        fr: 'Play'
+        es: 'Reproducir'
+        de: 'Wiedergabe'
+        it: 'Riproduzione'
+        pl: 'Odtwarzanie'
+        ru: 'Воспроизведение'
+        zh: '播放'
+        hu: 'Lejátszás'
+        pt: 'Reproduzir'
+      0x02:
+        en: 'Paused'
+        fr: 'Pause'
+        es: 'En pausa'
+        de: 'Pausiert'
+        it: 'In pausa'
+        pl: 'Wstrzymane'
+        ru: 'Пауза'
+        zh: '已暂停'
+        hu: 'Szüneteltetve'
+        pt: 'Em pausa'
+      0x03:
+        en: 'Stopped'
+        fr: 'Arrêt'
+        es: 'Detenido'
+        de: 'Gestoppt'
+        it: 'Fermo'
+        pl: 'Zatrzymany'
+        ru: 'Остановлено'
+        zh: '已停止'
+        hu: 'Leállítva'
+        pt: 'Parado'
+      0x04:
+        en: 'Previous track'
+        fr: 'Previous track'
+        es: 'Pista anterior'
+        de: 'Vorheriger Titel'
+        it: 'Traccia precedente'
+        pl: 'Poprzedni utwór'
+        ru: 'Предыдущая дорожка'
+        zh: '上一曲目'
+        hu: 'Előző szám'
+        pt: 'Faixa anterior'
+      0x05:
+        en: 'Reward'
+        fr: 'Récompense'
+        es: 'Recompensa'
+        de: 'Belohnung'
+        it: 'Ricompensa'
+        pl: 'Nagroda'
+        ru: 'Награда'
+        zh: '奖励'
+        hu: 'Jutalom'
+        pt: 'Recompensa'
+      0x06:
+        en: 'Next track'
+        fr: 'Piste suivante'
+        es: 'Pista siguiente'
+        de: 'Nächster Titel'
+        it: 'Traccia successiva'
+        pl: 'Następna ścieżka'
+        ru: 'Следующая дорожка'
+        zh: '下一曲目'
+        hu: 'Következő szám'
+        pt: 'Faixa seguinte'
+      0x07:
+        en: 'Forward'
+        fr: 'Avant'
+        es: 'Adelante'
+        de: 'Vorwärts'
+        it: 'Avanti'
+        pl: 'Do przodu'
+        ru: 'Вперёд'
+        zh: '前进'
+        hu: 'Előre'
+        pt: 'Avançar'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  IDVR_VIDEO_TYPE_REQUEST:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Request to the IDVR to send the video type (Live or ADAS)'
+      fr: 'Demande à l''IDVR d''envoyer le type de vidéo (Live ou ADAS)'
+      es: 'Solicitud al IDVR de enviar el tipo de vídeo (en vivo o ADAS)'
+      de: 'Anforderung an das IDVR, den Videotyp zu senden (Live oder ADAS)'
+      it: 'Richiesta all''IDVR di inviare il tipo di video (Live o ADAS)'
+      pl: 'Żądanie do IDVR wysłania typu wideo (Live lub ADAS)'
+      ru: 'Запрос к IDVR на отправку типа видео (Live или ADAS)'
+      zh: '向IDVR请求发送视频类型(实时或ADAS)'
+      hu: 'Kérés az IDVR-nek a videótípus küldésére (élő vagy ADAS)'
+      pt: 'Pedido ao IDVR para enviar o tipo de vídeo (Live ou ADAS)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Sin acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Live video'
+        fr: 'Vidéo en direct'
+        es: 'Vídeo en directo'
+        de: 'Live-Video'
+        it: 'Video in diretta'
+        pl: 'Wideo na żywo'
+        ru: 'Видео в реальном времени'
+        zh: '实时视频'
+        hu: 'Élő videó'
+        pt: 'Vídeo em direto'
+      0x02:
+        en: 'ADAS camera'
+        fr: 'Caméra ADAS'
+        es: 'Cámara ADAS'
+        de: 'ADAS-Kamera'
+        it: 'Telecamera ADAS'
+        pl: 'Kamera ADAS'
+        ru: 'Камера ADAS'
+        zh: 'ADAS摄像头'
+        hu: 'ADAS kamera'
+        pt: 'Câmara ADAS'
+      0x03:
+        unused: true
+
+  IDVR_KNOB_STEP_COUNTER:
+    bits: '2.7-2.0'
+    comment:
+      en: 'IDVR knob step counter'
+      fr: 'Compteur de pas de la molette IDVR'
+      es: 'Contador de pasos de la rueda IDVR'
+      de: 'Schrittzähler des IDVR-Drehreglers'
+      it: 'Contatore di passi della manopola IDVR'
+      pl: 'Licznik kroków pokrętła IDVR'
+      ru: 'Счётчик шагов ручки IDVR'
+      zh: 'IDVR旋钮步进计数器'
+      hu: 'Az IDVR forgatógomb lépésszámlálója'
+      pt: 'Contador de passos da roda IDVR'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  IDVR_KNOB_SYNC:
+    bits: '3.7'
+    comment:
+      en: 'Knob synchronisation'
+      fr: 'Synchronisation de la molette'
+      es: 'Sincronización de la rueda'
+      de: 'Drehreglersynchronisierung'
+      it: 'Sincronizzazione della manopola'
+      pl: 'Synchronizacja pokrętła'
+      ru: 'Синхронизация ручки'
+      zh: '旋钮同步'
+      hu: 'A forgatógomb szinkronizálása'
+      pt: 'Sincronização do botão rotativo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Synchronization requested'
+        fr: 'Synchronisation demandée'
+        es: 'Sincronización solicitada'
+        de: 'Synchronisation angefordert'
+        it: 'Sincronizzazione richiesta'
+        pl: 'Zażądano synchronizacji'
+        ru: 'Запрошена синхронизация'
+        zh: '请求同步'
+        hu: 'Szinkronizálás kérve'
+        pt: 'Sincronização pedida'
+      0x01:
+        en: 'No synchronization requested'
+        fr: 'Pas de synchronisation demandée'
+        es: 'Sin solicitud de sincronización'
+        de: 'Keine Synchronisierung angefordert'
+        it: 'Nessuna sincronizzazione richiesta'
+        pl: 'Brak żądania synchronizacji'
+        ru: 'Синхронизация не запрошена'
+        zh: '未请求同步'
+        hu: 'Nincs szinkronizálási kérés'
+        pt: 'Sem sincronização pedida'
+
+  DRIVING_RECORDING_MENU_REQUEST:
+    bits: '3.6-3.5'
+    comment:
+      en: 'Menu request for driving recording'
+      fr: 'Demande de menu pour l''enregistrement de conduite'
+      es: 'Solicitud de menú para la grabación de conducción'
+      de: 'Menüanforderung für die Fahraufzeichnung'
+      it: 'Richiesta di menu per la registrazione di guida'
+      pl: 'Żądanie menu nagrywania jazdy'
+      ru: 'Запрос меню записи вождения'
+      zh: '行车录像菜单请求'
+      hu: 'Menükérés a vezetésrögzítéshez'
+      pt: 'Pedido de menu para a gravação de condução'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Not active'
+        fr: 'Non actif'
+        es: 'No activo'
+        de: 'Nicht aktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Nem aktív'
+        pt: 'Não ativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        unused: true
+      0x03:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Sin acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+
+  MANUAL_ACCIDENT_REQUEST_RECORD:
+    bits: '3.4'
+    comment:
+      en: 'Manual accident request on the recorded video display'
+      fr: 'Demande manuelle d''accident sur l''affichage vidéo enregistrée'
+      es: 'Solicitud manual de accidente en la pantalla de vídeo grabado'
+      de: 'Manuelle Unfallanforderung bei aufgezeichneter Videoanzeige'
+      it: 'Richiesta manuale di incidente sulla visualizzazione video registrato'
+      pl: 'Ręczne żądanie wypadku na wyświetlaczu nagranego wideo'
+      ru: 'Ручной запрос ДТП на дисплее записанного видео'
+      zh: '录制视频显示下的手动事故请求'
+      hu: 'Kézi balesetkérés rögzített videómegjelenítés esetén'
+      pt: 'Pedido manual de acidente na visualização de vídeo gravado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Запрос отсутствует'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Accident record requested'
+        fr: 'Enregistrement d''accident demandé'
+        es: 'Registro de accidente solicitado'
+        de: 'Unfalldatensatz angefordert'
+        it: 'Registrazione incidente richiesta'
+        pl: 'Żądanie zapisu wypadku'
+        ru: 'Запрошена запись о ДТП'
+        zh: '请求事故记录'
+        hu: 'Balesetrögzítés kérve'
+        pt: 'Registo de acidente pedido'
+
+  MANUAL_ACCIDENT_REQUEST_LIVE:
+    bits: '3.3'
+    comment:
+      en: 'Manual accident request on the live video display'
+      fr: 'Demande manuelle d''accident sur l''affichage vidéo en direct'
+      es: 'Solicitud manual de accidente en la pantalla de vídeo en directo'
+      de: 'Manuelle Unfallanforderung bei Live-Videoanzeige'
+      it: 'Richiesta manuale di incidente sulla visualizzazione video live'
+      pl: 'Ręczne żądanie wypadku na wyświetlaczu wideo na żywo'
+      ru: 'Ручной запрос ДТП на дисплее видео в реальном времени'
+      zh: '实时视频显示下的手动事故请求'
+      hu: 'Kézi balesetkérés élő videómegjelenítés esetén'
+      pt: 'Pedido manual de acidente na visualização de vídeo em direto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Запрос отсутствует'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Accident record requested'
+        fr: 'Enregistrement d''accident demandé'
+        es: 'Registro de accidente solicitado'
+        de: 'Unfalldatensatz angefordert'
+        it: 'Registrazione incidente richiesta'
+        pl: 'Żądanie zapisu wypadku'
+        ru: 'Запрошена запись о ДТП'
+        zh: '请求事故记录'
+        hu: 'Balesetrögzítés kérve'
+        pt: 'Registo de acidente pedido'
+
+  IDVR_LIST_VALIDATED_ITEM:
+    bits: '3.2-3.0'
+    comment:
+      en: 'Number of the validated item'
+      fr: 'Numéro de l''élément validé'
+      es: 'Número del elemento validado'
+      de: 'Nummer des bestätigten Elements'
+      it: 'Numero dell''elemento convalidato'
+      pl: 'Numer zatwierdzonego elementu'
+      ru: 'Номер подтверждённого элемента'
+      zh: '已确认项目编号'
+      hu: 'A jóváhagyott elem száma'
+      pt: 'Número do elemento validado'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No validation'
+        fr: 'Pas de validation'
+        es: 'Sin validación'
+        de: 'Keine Validierung'
+        it: 'Nessuna convalida'
+        pl: 'Brak walidacji'
+        ru: 'Нет подтверждения'
+        zh: '无验证'
+        hu: 'Nincs érvényesítés'
+        pt: 'Sem validação'
+      0x01:
+        en: 'Validation of 1st item displayed'
+        fr: 'Validation du 1er élément affiché'
+        es: 'Validación del 1er elemento mostrado'
+        de: 'Bestätigung des 1. angezeigten Elements'
+        it: 'Convalida del 1° elemento visualizzato'
+        pl: 'Zatwierdzenie 1. wyświetlonego elementu'
+        ru: 'Подтверждение 1-го отображаемого элемента'
+        zh: '确认显示的第1项'
+        hu: 'Az 1. megjelenített elem megerősítése'
+        pt: 'Validação do 1.º item apresentado'
+      0x02:
+        en: 'Validation of 2nd item displayed'
+        fr: 'Validation du 2e élément affiché'
+        es: 'Validación del 2.º elemento mostrado'
+        de: 'Bestätigung des angezeigten 2. Eintrags'
+        it: 'Convalida del 2° elemento visualizzato'
+        pl: 'Zatwierdzenie 2. wyświetlonego elementu'
+        ru: 'Подтверждение 2-го отображаемого пункта'
+        zh: '第2项显示确认'
+        hu: 'A 2. megjelenített elem jóváhagyása'
+        pt: 'Validação do 2.º elemento apresentado'
+      0x03:
+        en: 'Validation of 3rd item displayed'
+        fr: 'Validation du 3e élément affiché'
+        es: 'Validación del 3.er elemento mostrado'
+        de: 'Bestätigung des 3. angezeigten Elements'
+        it: 'Convalida del 3° elemento visualizzato'
+        pl: 'Potwierdzenie 3. wyświetlonego elementu'
+        ru: 'Подтверждение 3-го отображаемого элемента'
+        zh: '确认第3个显示项目'
+        hu: '3. megjelenített elem megerősítése'
+        pt: 'Validação do 3.º elemento mostrado'
+      0x04:
+        en: 'Validation of 4th item displayed'
+        fr: 'Validation du 4e élément affiché'
+        es: 'Validación del 4.º elemento mostrado'
+        de: 'Bestätigung des 4. angezeigten Elements'
+        it: 'Convalida del 4° elemento visualizzato'
+        pl: 'Zatwierdzenie 4. wyświetlonego elementu'
+        ru: 'Подтверждение 4-го отображаемого элемента'
+        zh: '确认显示的第4项'
+        hu: 'A 4. megjelenített elem megerősítése'
+        pt: 'Validação do 4.º elemento apresentado'
+      0x05:
+        en: 'Validation of the 5th displayed item'
+        fr: 'Validation du 5e élément affiché'
+        es: 'Validación del 5.º elemento mostrado'
+        de: 'Bestätigung des 5. angezeigten Elements'
+        it: 'Convalida del 5° elemento visualizzato'
+        pl: 'Zatwierdzenie 5. wyświetlanego elementu'
+        ru: 'Подтверждение 5-го отображаемого элемента'
+        zh: '第5项显示内容的确认'
+        hu: 'Az 5. megjelenített elem jóváhagyása'
+        pt: 'Validação do 5.º item apresentado'
+      0x06:
+        en: 'Validation of 6th item displayed'
+        fr: 'Validation of 6th item displayed'
+        es: 'Validación del 6.º elemento'
+        de: 'Bestätigung des 6. Elements'
+        it: 'Convalida del 6º elemento'
+        pl: 'Zatwierdzenie 6. elementu'
+        ru: 'Подтверждение 6-го элемента'
+        zh: '第6项验证'
+        hu: 'A 6. elem megerősítése'
+        pt: 'Validação do 6.º elemento apresentado'
+      0x07:
+        unused: true
+
+  LIST_FOCUS_ITEM:
+    bits: '4.7-4.5'
+    comment:
+      en: 'Number of the item that must take focus'
+      fr: 'Numéro de l''élément qui doit prendre le focus'
+      es: 'Número del elemento que debe recibir el foco'
+      de: 'Nummer des Elements, das den Fokus erhalten soll'
+      it: 'Numero dell''elemento che deve ricevere il focus'
+      pl: 'Numer elementu, który ma otrzymać fokus'
+      ru: 'Номер элемента, который должен получить фокус'
+      zh: '需要获得焦点的项目编号'
+      hu: 'A fókuszt megkapó elem száma'
+      pt: 'Número do item que deve receber o foco'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No focus requested'
+        fr: 'Pas de focalisation demandée'
+        es: 'Sin solicitud de enfoque'
+        de: 'Kein Fokus angefordert'
+        it: 'Nessun focus richiesto'
+        pl: 'Brak żądania fokusu'
+        ru: 'Фокус не запрошен'
+        zh: '未请求焦点'
+        hu: 'Nincs fókusz kérve'
+        pt: 'Sem pedido de foco'
+      0x01:
+        en: 'Focus on the 1st item'
+        fr: 'Focus sur le 1er élément'
+        es: 'Enfoque en el 1.er elemento'
+        de: 'Fokus auf das 1. Element'
+        it: 'Focus sul 1° elemento'
+        pl: 'Fokus na 1. elemencie'
+        ru: 'Фокус на 1-м элементе'
+        zh: '聚焦第1项'
+        hu: 'Fókusz az 1. elemen'
+        pt: 'Foco no 1.º elemento'
+      0x02:
+        en: 'focus on the 2nd item'
+        fr: 'focus on the 2nd item'
+        es: 'enfoque en el 2.º elemento'
+        de: 'Fokus auf das 2. Element'
+        it: 'focus sul 2º elemento'
+        pl: 'skupienie na 2. elemencie'
+        ru: 'фокус на 2-м элементе'
+        zh: '聚焦第2项'
+        hu: 'fókusz a 2. elemen'
+        pt: 'foco no 2.º elemento'
+      0x03:
+        en: 'Focus on the 3rd item'
+        fr: 'Focus sur le 3e élément'
+        es: 'Enfoque en el 3.er elemento'
+        de: 'Fokus auf das 3. Element'
+        it: 'Focus sul 3° elemento'
+        pl: 'Fokus na 3. elemencie'
+        ru: 'Фокус на 3-м элементе'
+        zh: '聚焦第3项'
+        hu: 'Fókusz a 3. elemen'
+        pt: 'Foco no 3.º elemento'
+      0x04:
+        en: 'Focus on the 4th item'
+        fr: 'Focus sur le 4ème élément'
+        es: 'Enfoque en el 4.º elemento'
+        de: 'Fokus auf das 4. Element'
+        it: 'Focus sul 4° elemento'
+        pl: 'Skupienie na 4. elemencie'
+        ru: 'Фокус на 4-м элементе'
+        zh: '聚焦于第4项'
+        hu: 'Fókusz a 4. elemen'
+        pt: 'Foco no 4.º elemento'
+      0x05:
+        en: 'Focus on the 5th item'
+        fr: 'Focus sur le 5ème élément'
+        es: 'Enfoque en el 5.º elemento'
+        de: 'Fokus auf das 5. Element'
+        it: 'Focus sul 5° elemento'
+        pl: 'Skupienie na 5. elemencie'
+        ru: 'Фокус на 5-м элементе'
+        zh: '聚焦于第5项'
+        hu: 'Fókusz az 5. elemen'
+        pt: 'Foco no 5.º elemento'
+      0x06:
+        en: 'Focus on the 6th item'
+        fr: 'Focus sur le 6e élément'
+        es: 'Enfoque en el 6.º elemento'
+        de: 'Fokus auf das 6. Element'
+        it: 'Focus sul 6° elemento'
+        pl: 'Fokus na 6. elemencie'
+        ru: 'Фокус на 6-м элементе'
+        zh: '聚焦第6项'
+        hu: 'Fókusz a 6. elemen'
+        pt: 'Foco no 6.º elemento'
+      0x07:
+        unused: true
+
+  IDVR_LIST_LINE_COUNT:
+    bits: '4.4-4.2'
+    comment:
+      en: 'Number of lines that can be displayed on the display'
+      fr: 'Nombre de lignes pouvant être affichées sur l''écran'
+      es: 'Número de líneas que se pueden mostrar en la pantalla'
+      de: 'Anzahl der auf dem Display anzeigbaren Zeilen'
+      it: 'Numero di righe visualizzabili sul display'
+      pl: 'Liczba wierszy możliwych do wyświetlenia na ekranie'
+      ru: 'Количество строк, которые можно отобразить на дисплее'
+      zh: '显示屏可显示的行数'
+      hu: 'A kijelzőn megjeleníthető sorok száma'
+      pt: 'Número de linhas que podem ser mostradas no ecrã'
+    type: 'uint'
+    min: 1
+    max: 6
+    default: 0x01
+
+  AUTO_ACCIDENT_RECORDING_MENU_REQUEST:
+    bits: '4.1-4.0'
+    comment:
+      en: 'Menu request for automatic accident recording'
+      fr: 'Demande de menu pour l''enregistrement automatique d''accident'
+      es: 'Solicitud de menú para la grabación automática de accidentes'
+      de: 'Menüanforderung für die automatische Unfallaufzeichnung'
+      it: 'Richiesta di menu per la registrazione automatica dell''incidente'
+      pl: 'Żądanie menu automatycznego nagrywania wypadku'
+      ru: 'Запрос меню автоматической записи ДТП'
+      zh: '自动事故录像菜单请求'
+      hu: 'Menükérés az automatikus balesetrögzítéshez'
+      pt: 'Pedido de menu para a gravação automática de acidentes'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Not active'
+        fr: 'Non actif'
+        es: 'No activo'
+        de: 'Nicht aktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Nem aktív'
+        pt: 'Não ativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        unused: true
+      0x03:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Sin acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+
+  IDVR_LIST_JUMP:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Jump to item number x in the list'
+      fr: 'Saut à l''élément numéro x de la liste'
+      es: 'Salto al elemento número x de la lista'
+      de: 'Sprung zu Element Nummer x der Liste'
+      it: 'Salto all''elemento numero x dell''elenco'
+      pl: 'Przeskok do elementu numer x na liście'
+      ru: 'Переход к элементу номер x в списке'
+      zh: '跳转至列表中的第x项'
+      hu: 'Ugrás a lista x. sorszámú eleméhez'
+      pt: 'Saltar para o item número x na lista'
+    type: 'uint'
+    min: 0
+    max: 65534
+    default: 0xFFFF

@@ -1,0 +1,641 @@
+id: 0x32D
+name: 'BRAKE_ADAS_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Brake unit data for ADAS: calibrated longitudinal acceleration, ACC deceleration/stop state, brake force and fault flags.'
+  fr: 'Données du calculateur de frein pour l''ADAS : accélération longitudinale calibrée, état de décélération/arrêt ACC, effort de freinage et indicateurs de défaut.'
+  es: 'Datos de la centralita de frenos para el ADAS: aceleración longitudinal calibrada, estado de deceleración/parada del ACC, esfuerzo de frenado e indicadores de fallo.'
+  de: 'Bremssteuergerätdaten für ADAS: kalibrierte Längsbeschleunigung, ACC-Verzögerungs-/Stoppzustand, Bremskraft und Fehlerkennungen.'
+  it: 'Dati della centralina freni per l''ADAS: accelerazione longitudinale calibrata, stato di decelerazione/arresto ACC, forza frenante e indicatori di guasto.'
+  pl: 'Dane sterownika hamulców dla ADAS: skalibrowane przyspieszenie wzdłużne, stan opóźnienia/zatrzymania ACC, siła hamowania oraz flagi usterek.'
+  ru: 'Данные блока управления тормозами для ADAS: калиброванное продольное ускорение, состояние замедления/остановки ACC, тормозное усилие и флаги неисправности.'
+  zh: '用于高级驾驶辅助(ADAS)的制动控制单元数据:标定纵向加速度、ACC减速/停车状态、制动力及故障标志。'
+  hu: 'A fékvezérlő ADAS-adatai: kalibrált hosszirányú gyorsulás, ACC lassítási/megállási állapot, fékerő és hibajelzők.'
+  pt: 'Dados da unidade de travagem para o ADAS: aceleração longitudinal calibrada, estado de desaceleração/paragem do ACC, força de travagem e indicadores de avaria.'
+periodicity: ['20ms']
+senders: ['ABS']
+receivers: ['CMM', 'BSI', 'HCU2', 'CVM', 'ARTIV', 'BVN']
+
+signals:
+  CALIBRATED_LONGITUDINAL_ACCELERATION:
+    bits: '1.7-2.4'
+    comment:
+      en: 'Calibrated longitudinal acceleration'
+      fr: 'Accélération longitudinale calibrée'
+      es: 'Aceleración longitudinal calibrada'
+      de: 'Kalibrierte Längsbeschleunigung'
+      it: 'Accelerazione longitudinale calibrata'
+      pl: 'Skalibrowane przyspieszenie wzdłużne'
+      ru: 'Откалиброванное продольное ускорение'
+      zh: '校准后的纵向加速度'
+      hu: 'Kalibrált hosszirányú gyorsulás'
+      pt: 'Aceleração longitudinal calibrada'
+    type: 'uint'
+    factor: 0.02
+    offset: -40.96
+    min: -40.96
+    max: 40.92
+    units: 'm/s2'
+    invalid: 0xFFF
+    default: 0x800
+
+  FARC_DECELERATION_FUNCTION_STATUS:
+    bits: '2.3-2.2'
+    comment:
+      en: 'FARC (adaptive cruise) deceleration function status'
+      fr: 'État de la fonction de décélération FARC (régulateur adaptatif)'
+      es: 'Estado de la función de deceleración FARC (control de crucero adaptativo)'
+      de: 'Status der FARC-Verzögerungsfunktion (adaptiver Tempomat)'
+      it: 'Stato della funzione di decelerazione FARC (cruise control adattivo)'
+      pl: 'Stan funkcji zwalniania FARC (adaptacyjny tempomat)'
+      ru: 'Статус функции замедления FARC (адаптивный круиз-контроль)'
+      zh: 'FARC(自适应巡航)减速功能状态'
+      hu: 'A FARC (adaptív sebességtartó) lassítási funkciójának állapota'
+      pt: 'Estado da função de desaceleração FARC (regulador adaptativo)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inhibited'
+        fr: 'Inhibé'
+        es: 'Inhibido'
+        de: 'Gesperrt'
+        it: 'Inibito'
+        pl: 'Zablokowany'
+        ru: 'Заблокировано'
+        zh: '已抑制'
+        hu: 'Letiltva'
+        pt: 'Inibido'
+      0x01:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x02:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x03:
+        en: 'Faulty'
+        fr: 'En défaut'
+        es: 'En fallo'
+        de: 'Fehlerhaft'
+        it: 'In guasto'
+        pl: 'Usterka'
+        ru: 'Неисправно'
+        zh: '故障'
+        hu: 'Hibás'
+        pt: 'Em falha'
+
+  BRAKE_FORCE_APPLIED_STATUS:
+    bits: '2.1'
+    comment:
+      en: 'Non-zero braking force status'
+      fr: 'Etat d''effort de freinage non nul'
+      es: 'Estado de fuerza de frenado no nula'
+      de: 'Status ungleich null Bremskraft'
+      it: 'Stato di forza frenante diversa da zero'
+      pl: 'Stan niezerowej siły hamowania'
+      ru: 'Состояние ненулевого тормозного усилия'
+      zh: '非零制动力状态'
+      hu: 'A nullától eltérő fékerő állapota'
+      pt: 'Estado de força de travagem não nula'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No braking force generated'
+        fr: 'Pas d''effort de freinage généré'
+        es: 'Sin fuerza de frenado generada'
+        de: 'Keine Bremskraft erzeugt'
+        it: 'Nessuna forza frenante generata'
+        pl: 'Brak wygenerowanej siły hamowania'
+        ru: 'Тормозное усилие не создано'
+        zh: '未产生制动力'
+        hu: 'Nincs generált fékerő'
+        pt: 'Nenhuma força de travagem gerada'
+      0x01:
+        en: 'Braking force generated'
+        fr: 'Effort de freinage généré'
+        es: 'Fuerza de frenado generada'
+        de: 'Erzeugte Bremskraft'
+        it: 'Forza frenante generata'
+        pl: 'Wygenerowana siła hamowania'
+        ru: 'Тормозное усилие создано'
+        zh: '已产生制动力'
+        hu: 'Fékerő létrehozva'
+        pt: 'Força de travagem gerada'
+
+  YAW_RATE_INFO_VALIDITY:
+    bits: '2.0'
+    comment:
+      en: 'Validity of the yaw rate information'
+      fr: 'Validité de l''information de vitesse de lacet'
+      es: 'Validez de la información de velocidad de guiñada'
+      de: 'Gültigkeit der Gierrateninformation'
+      it: 'Validità dell''informazione di velocità di imbardata'
+      pl: 'Ważność informacji o prędkości odchylania'
+      ru: 'Достоверность информации об угловой скорости рыскания'
+      zh: '横摆角速度信息有效性'
+      hu: 'A legyezési szögsebesség-információ érvényessége'
+      pt: 'Validade da informação de velocidade de guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Valid information'
+        fr: 'Information valide'
+        es: 'Información válida'
+        de: 'Gültige Information'
+        it: 'Informazione valida'
+        pl: 'Prawidłowa informacja'
+        ru: 'Достоверная информация'
+        zh: '信息有效'
+        hu: 'Érvényes információ'
+        pt: 'Informação válida'
+      0x01:
+        en: 'Invalid information'
+        fr: 'Information invalide'
+        es: 'Información no válida'
+        de: 'Ungültige Information'
+        it: 'Informazione non valida'
+        pl: 'Nieprawidłowa informacja'
+        ru: 'Недействительная информация'
+        zh: '信息无效'
+        hu: 'Érvénytelen információ'
+        pt: 'Informação inválida'
+
+  BRAKE_RELEASED_FAILSAFE_STATUS:
+    bits: '3.7'
+    comment:
+      en: 'Message from the ESP informing the perception system that it detected the stationary vehicle slipping and released the brakes; the driver must take back control'
+      fr: 'Message de l''ESP informant le système de perception qu''il a détecté un glissement du véhicule à l''arrêt et relâche donc les freins ; le conducteur doit reprendre le contrôle'
+      es: 'Mensaje del ESP que informa al sistema de percepción de que ha detectado un deslizamiento del vehículo detenido y por tanto suelta los frenos; el conductor debe retomar el control'
+      de: 'Meldung des ESP an das Umfeld-Wahrnehmungssystem, dass ein Rutschen des stehenden Fahrzeugs erkannt und die Bremsen deshalb gelöst wurden; der Fahrer muss die Kontrolle übernehmen'
+      it: 'Messaggio dell''ESP che informa il sistema di percezione di aver rilevato uno slittamento del veicolo fermo e di aver quindi rilasciato i freni; il conducente deve riprendere il controllo'
+      pl: 'Komunikat z ESP informujący system percepcji o wykryciu poślizgu nieruchomego pojazdu, w związku z czym hamulce zostały zwolnione; kierowca musi przejąć kontrolę'
+      ru: 'Сообщение от ESP, информирующее систему восприятия об обнаружении проскальзывания неподвижного автомобиля и об отпускании тормозов; водитель должен взять управление на себя'
+      zh: '来自ESP的消息,告知感知系统检测到静止车辆打滑并因此松开刹车;驾驶员必须重新接管控制'
+      hu: 'Az ESP üzenete, amely tájékoztatja az érzékelő rendszert, hogy az álló jármű megcsúszását észlelte, ezért kiengedte a fékeket; a vezetőnek vissza kell vennie az irányítást'
+      pt: 'Mensagem do ESP a informar o sistema de perceção de que detetou um deslizamento do veículo parado e por isso soltou os travões; o condutor deve retomar o controlo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No need to release the brakes, no skid detected'
+        fr: 'Pas besoin de relâcher les freins, aucun dérapage détecté'
+        es: 'No es necesario soltar los frenos, no se detectó derrape'
+        de: 'Kein Bremsenlösen nötig, kein Rutschen erkannt'
+        it: 'Nessuna necessità di rilasciare i freni, nessuno slittamento rilevato'
+        pl: 'Nie ma potrzeby zwalniania hamulców, nie wykryto poślizgu'
+        ru: 'Нет необходимости отпускать тормоза, занос не обнаружен'
+        zh: '无需松开制动，未检测到打滑'
+        hu: 'Nem szükséges elengedni a fékeket, nincs észlelt megcsúszás'
+        pt: 'Não é necessário soltar os travões, não foi detetada derrapagem'
+      0x01:
+        en: 'ESC releasing the brakes after detecting a skid'
+        fr: 'L''ESC relâche les freins après avoir détecté un dérapage'
+        es: 'El ESC libera los frenos tras detectar un derrape'
+        de: 'Das ESP löst die Bremsen, da es ein Rutschen erkannt hat'
+        it: 'L''ESC rilascia i freni dopo aver rilevato uno slittamento'
+        pl: 'ESC zwalnia hamulce po wykryciu poślizgu'
+        ru: 'ESC отпускает тормоза после обнаружения заноса'
+        zh: 'ESC检测到打滑后松开制动'
+        hu: 'Az ESC megcsúszás észlelése után elengedi a fékeket'
+        pt: 'O ESC liberta os travões após detetar uma derrapagem'
+
+  DYNAMIC_BRAKING_IN_PROGRESS:
+    bits: '3.6'
+    comment:
+      en: 'Dynamic braking in progress'
+      fr: 'Freinage dynamique en cours'
+      es: 'Frenado dinámico en curso'
+      de: 'Dynamisches Bremsen läuft'
+      it: 'Frenata dinamica in corso'
+      pl: 'Trwa hamowanie dynamiczne'
+      ru: 'Выполняется динамическое торможение'
+      zh: '动态制动进行中'
+      hu: 'Dinamikus fékezés folyamatban'
+      pt: 'Travagem dinâmica em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No dynamic braking in progress'
+        fr: 'Pas de freinage dynamique en cours'
+        es: 'Sin frenado dinámico en curso'
+        de: 'Keine dynamische Bremsung im Gange'
+        it: 'Nessuna frenata dinamica in corso'
+        pl: 'Brak trwającego hamowania dynamicznego'
+        ru: 'Нет выполняемого динамического торможения'
+        zh: '无正在进行的动态制动'
+        hu: 'Nincs folyamatban lévő dinamikus fékezés'
+        pt: 'Sem travagem dinâmica em curso'
+      0x01:
+        en: 'Dynamic braking in progress'
+        fr: 'Freinage dynamique en cours'
+        es: 'Frenado dinámico en curso'
+        de: 'Dynamisches Bremsen aktiv'
+        it: 'Frenata dinamica in corso'
+        pl: 'Trwa hamowanie dynamiczne'
+        ru: 'Динамическое торможение выполняется'
+        zh: '动态制动进行中'
+        hu: 'Dinamikus fékezés folyamatban'
+        pt: 'Travagem dinâmica em curso'
+
+  ACC_VEHICLE_STANDSTILL_STATUS:
+    bits: '3.5'
+    comment:
+      en: 'Vehicle detected at standstill for the ACC function'
+      fr: 'Véhicule détecté à l''arrêt pour la fonction ACC'
+      es: 'Vehículo detectado detenido para la función ACC'
+      de: 'Fahrzeug für die ACC-Funktion als stehend erkannt'
+      it: 'Veicolo rilevato fermo per la funzione ACC'
+      pl: 'Pojazd wykryty jako nieruchomy dla funkcji ACC'
+      ru: 'Автомобиль обнаружен неподвижным для функции ACC'
+      zh: 'ACC功能检测到车辆静止'
+      hu: 'Az ACC funkció álló helyzetben lévőnek érzékelte a járművet'
+      pt: 'Veículo detetado parado para a função ACC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Vehicle not at standstill'
+        fr: 'Véhicule non à l''arrêt'
+        es: 'Vehículo no detenido'
+        de: 'Fahrzeug nicht im Stillstand'
+        it: 'Veicolo non fermo'
+        pl: 'Pojazd nie jest zatrzymany'
+        ru: 'Автомобиль не остановлен'
+        zh: '车辆未静止'
+        hu: 'A jármű nincs állóhelyzetben'
+        pt: 'Veículo não parado'
+      0x01:
+        en: 'Vehicle standstill'
+        fr: 'Véhicule à l''arrêt'
+        es: 'Vehículo detenido'
+        de: 'Fahrzeug im Stillstand'
+        it: 'Veicolo fermo'
+        pl: 'Pojazd nieruchomy'
+        ru: 'Автомобиль неподвижен'
+        zh: '车辆静止'
+        hu: 'A jármű áll'
+        pt: 'Veículo parado'
+
+  ACC_DECELERATION_FUNCTION_STATUS:
+    bits: '3.4-3.3'
+    comment:
+      en: 'ACC deceleration function status'
+      fr: 'Etat de la fonction de décélération du régulateur adaptatif (ACC)'
+      es: 'Estado de la función de deceleración del control de crucero adaptativo (ACC)'
+      de: 'Status der Verzögerungsfunktion des Adaptive Cruise Control (ACC)'
+      it: 'Stato della funzione di decelerazione del cruise control adattivo (ACC)'
+      pl: 'Stan funkcji opóźnienia adaptacyjnego tempomatu (ACC)'
+      ru: 'Состояние функции замедления адаптивного круиз-контроля (ACC)'
+      zh: '自适应巡航(ACC)减速功能状态'
+      hu: 'Az adaptív tempomat (ACC) lassítási funkciójának állapota'
+      pt: 'Estado da função de desaceleração do regulador adaptativo (ACC)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inhibited'
+        fr: 'Inhibé'
+        es: 'Inhibido'
+        de: 'Gesperrt'
+        it: 'Inibito'
+        pl: 'Zablokowany'
+        ru: 'Заблокировано'
+        zh: '已抑制'
+        hu: 'Letiltva'
+        pt: 'Inibido'
+      0x01:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x02:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x03:
+        en: 'Faulty'
+        fr: 'En défaut'
+        es: 'En fallo'
+        de: 'Fehlerhaft'
+        it: 'In guasto'
+        pl: 'Usterka'
+        ru: 'Неисправно'
+        zh: '故障'
+        hu: 'Hibás'
+        pt: 'Em falha'
+
+  BRAKE_PREFILL_ACTIVE:
+    bits: '3.2'
+    comment:
+      en: 'Brake prefill active'
+      fr: 'Préremplissage des freins en cours'
+      es: 'Prellenado de los frenos en curso'
+      de: 'Bremsen-Vorbefüllung aktiv'
+      it: 'Preriempimento dei freni in corso'
+      pl: 'Trwa wstępne napełnianie hamulców'
+      ru: 'Активно предварительное наполнение тормозов'
+      zh: '制动预填充进行中'
+      hu: 'Fékrendszer előtöltése folyamatban'
+      pt: 'Pré-enchimento dos travões em curso'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  BRAKE_PEDAL_PRESS_RECONSTRUCTED:
+    bits: '3.1-3.0'
+    comment:
+      en: 'Reconstructed brake pedal press'
+      fr: 'Appui sur la pédale de frein reconstruit'
+      es: 'Pulsación del pedal de freno reconstruida'
+      de: 'Rekonstruierte Bremspedalbetätigung'
+      it: 'Pressione del pedale del freno ricostruita'
+      pl: 'Zrekonstruowane naciśnięcie pedału hamulca'
+      ru: 'Восстановленное нажатие педали тормоза'
+      zh: '重建的刹车踏板按下状态'
+      hu: 'Rekonstruált fékpedál-benyomás'
+      pt: 'Pressão do pedal de travão reconstruída'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Reconstructed brake pedal press signal faulty'
+        fr: 'Signal reconstruit d''appui frein hors service'
+        es: 'Señal reconstruida de pulsación de freno averiada'
+        de: 'Rekonstruiertes Bremspedal-Betätigungssignal fehlerhaft'
+        it: 'Segnale ricostruito di pressione del pedale freno guasto'
+        pl: 'Odtworzony sygnał naciśnięcia pedału hamulca uszkodzony'
+        ru: 'Восстановленный сигнал нажатия педали тормоза неисправен'
+        zh: '重建的刹车踏板按压信号故障'
+        hu: 'Az újraépített fékpedál-nyomás jel hibás'
+        pt: 'Sinal de pressão do pedal do travão reconstruído avariado'
+      0x01:
+        en: 'No brake pedal press'
+        fr: 'Pas d''appui sur la pédale de frein'
+        es: 'Sin pulsación del pedal de freno'
+        de: 'Kein Bremspedaldruck'
+        it: 'Nessuna pressione sul pedale del freno'
+        pl: 'Brak naciśnięcia pedału hamulca'
+        ru: 'Нет нажатия на педаль тормоза'
+        zh: '未踩下刹车踏板'
+        hu: 'Nincs fékpedál-nyomás'
+        pt: 'Sem pressão no pedal do travão'
+      0x02:
+        en: 'Brake pedal pressed'
+        fr: 'Appui pédale de frein'
+        es: 'Pulsación del pedal de freno'
+        de: 'Bremspedal betätigt'
+        it: 'Pressione del pedale del freno'
+        pl: 'Naciśnięcie pedału hamulca'
+        ru: 'Нажатие педали тормоза'
+        zh: '刹车踏板按下'
+        hu: 'Fékpedál megnyomva'
+        pt: 'Pedal do travão premido'
+      0x03:
+        unused: true
+
+  ACC_BRAKE_FAULT:
+    bits: '4.7'
+    comment:
+      en: 'ACC fault as seen from the brake system'
+      fr: 'Défaut ACC vu par le système de freinage'
+      es: 'Fallo del ACC visto por el sistema de frenos'
+      de: 'ACC-Fehler aus Sicht des Bremssystems'
+      it: 'Guasto ACC rilevato dal sistema frenante'
+      pl: 'Usterka ACC widziana przez układ hamulcowy'
+      ru: 'Неисправность ACC с точки зрения тормозной системы'
+      zh: '制动系统检测到的ACC故障'
+      hu: 'Az ACC hibája a fékrendszer szemszögéből'
+      pt: 'Falha do ACC vista pelo sistema de travagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault, as seen by the brake ACC'
+        fr: 'Pas de défaut ACC vu du frein'
+        es: 'Sin fallo ACC visto por el freno'
+        de: 'Kein ACC-Fehler aus Sicht der Bremse'
+        it: 'Nessun guasto ACC visto dal freno'
+        pl: 'Brak usterki ACC z perspektywy hamulca'
+        ru: 'Нет неисправности ACC со стороны тормоза'
+        zh: '从制动系统看ACC无故障'
+        hu: 'Nincs ACC hiba a fék szempontjából'
+        pt: 'Sem avaria, tal como visto pelo ACC de travagem'
+      0x01:
+        en: 'ACC fault seen from the brake system'
+        fr: 'Défaut ACC vu du frein'
+        es: 'Fallo del ACC visto desde el freno'
+        de: 'ACC-Fehler aus Sicht der Bremse'
+        it: 'Guasto ACC visto dal freno'
+        pl: 'Usterka ACC widziana od strony hamulca'
+        ru: 'Неисправность ACC со стороны тормозной системы'
+        zh: '从制动系统视角的ACC故障'
+        hu: 'ACC hiba a fék szemszögéből'
+        pt: 'Falha do ACC vista pelo travão'
+
+  ADAS_VEHICLE_STOP_HOLD_STATUS:
+    bits: '4.6-4.5'
+    comment:
+      en: 'ADAS vehicle stop hold status'
+      fr: 'Etat de maintien à l''arrêt du véhicule par les ADAS'
+      es: 'Estado de retención del vehículo detenido por los ADAS'
+      de: 'Status des Fahrzeug-Stillstandshaltens durch die Fahrerassistenzsysteme (ADAS)'
+      it: 'Stato di mantenimento del veicolo fermo da parte degli ADAS'
+      pl: 'Stan przytrzymania pojazdu w miejscu przez systemy ADAS'
+      ru: 'Состояние удержания автомобиля на месте системами ADAS'
+      zh: 'ADAS车辆驻停保持状态'
+      hu: 'A jármű ADAS általi álló helyzetben tartásának állapota'
+      pt: 'Estado de manutenção do veículo parado pelos ADAS'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No vehicle hold due to ADAS function'
+        fr: 'Pas de maintien à l''arrêt du véhicule par une fonction ADAS'
+        es: 'Sin retención del vehículo por una función ADAS'
+        de: 'Kein Fahrzeughalten durch eine ADAS-Funktion'
+        it: 'Nessun mantenimento del veicolo fermo da parte di una funzione ADAS'
+        pl: 'Brak przytrzymania pojazdu przez funkcję ADAS'
+        ru: 'Удержание автомобиля функцией ADAS не выполняется'
+        zh: '无高级驾驶辅助(ADAS)功能车辆驻停保持'
+        hu: 'Nincs jármű-visszatartás ADAS funkció által'
+        pt: 'Sem retenção do veículo por uma função ADAS'
+      0x01:
+        en: 'Vehicle held stationary for a comfort function'
+        fr: 'Maintien à l''arrêt du véhicule pour une fonction de confort'
+        es: 'Mantenimiento del vehículo detenido para una función de confort'
+        de: 'Fahrzeug im Stillstand gehalten für eine Komfortfunktion'
+        it: 'Veicolo mantenuto fermo per una funzione di comfort'
+        pl: 'Utrzymanie pojazdu w bezruchu dla funkcji komfortu'
+        ru: 'Удержание автомобиля на месте для функции комфорта'
+        zh: '为舒适功能保持车辆静止'
+        hu: 'Jármű mozdulatlanul tartása kényelmi funkcióhoz'
+        pt: 'Veículo mantido parado para uma função de conforto'
+      0x02:
+        en: 'Vehicle hold due to safety function'
+        fr: 'Maintien à l''arrêt du véhicule pour une fonction de sécurité'
+        es: 'Retención del vehículo por una función de seguridad'
+        de: 'Fahrzeughalten durch eine Sicherheitsfunktion'
+        it: 'Mantenimento del veicolo fermo per una funzione di sicurezza'
+        pl: 'Przytrzymanie pojazdu przez funkcję bezpieczeństwa'
+        ru: 'Удержание автомобиля функцией безопасности'
+        zh: '因安全功能而保持车辆驻停'
+        hu: 'Jármű-visszatartás biztonsági funkció miatt'
+        pt: 'Retenção do veículo por uma função de segurança'
+      0x03:
+        unused: true
+
+  BRAKE_FORCE_ERRONEOUS_STATUS:
+    bits: '4.4'
+    comment:
+      en: 'Erroneous non-zero braking force status'
+      fr: 'Etat d''effort de freinage non nul erroné'
+      es: 'Estado erróneo de fuerza de frenado no nula'
+      de: 'Fehlerhafter Status ungleich null Bremskraft'
+      it: 'Stato erroneo di forza frenante diversa da zero'
+      pl: 'Błędny stan niezerowej siły hamowania'
+      ru: 'Ошибочное состояние ненулевого тормозного усилия'
+      zh: '错误的非零制动力状态'
+      hu: 'A nullától eltérő fékerő hibás állapota'
+      pt: 'Estado errado de força de travagem não nula'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No erroneous brake force'
+        fr: 'Pas d''effort de freinage erroné'
+        es: 'Sin fuerza de frenado errónea'
+        de: 'Kein fehlerhaftes Bremsmoment'
+        it: 'Nessuna forza frenante errata'
+        pl: 'Brak błędnej siły hamowania'
+        ru: 'Нет ошибочного тормозного усилия'
+        zh: '无制动力错误'
+        hu: 'Nincs hibás fékerő'
+        pt: 'Sem força de travagem errónea'
+      0x01:
+        en: 'Erroneous braking force'
+        fr: 'Effort de freinage erroné'
+        es: 'Fuerza de frenado errónea'
+        de: 'Fehlerhafte Bremskraft'
+        it: 'Forza frenante errata'
+        pl: 'Błędna siła hamowania'
+        ru: 'Ошибочное тормозное усилие'
+        zh: '错误制动力'
+        hu: 'Hibás fékerő'
+        pt: 'Força de travagem errónea'
+
+  UNUSED_1:
+    bits: '4.3-4.0'
+    unused: true
+
+  RAW_YAW_RATE:
+    bits: '5.7-6.4'
+    comment:
+      en: 'Raw yaw rate (12-bit)'
+      fr: 'Vitesse de lacet brute (12 bits)'
+      es: 'Velocidad de guiñada bruta (12 bits)'
+      de: 'Roher Gierratenwert (12 Bit)'
+      it: 'Velocità di imbardata grezza (12 bit)'
+      pl: 'Surowa prędkość odchylania (12 bitów)'
+      ru: 'Необработанная скорость рыскания (12 бит)'
+      zh: '原始横摆角速度(12位)'
+      hu: 'Nyers legyezési szögsebesség (12 bit)'
+      pt: 'Velocidade de guinada bruta (12 bits)'
+    type: 'uint'
+    factor: 0.08
+    offset: -163.84
+    min: -163.84
+    max: 163.68
+    units: '°/s'
+    invalid: 0xFFF
+    default: 0x800
+
+  UNUSED_2:
+    bits: '6.3-7.0'
+    unused: true
+
+  PROCESS_COUNTER_4BIT:
+    bits: '8.7-8.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM:
+    bits: '8.3-8.0'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'

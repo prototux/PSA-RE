@@ -1,0 +1,113 @@
+id: 0x518
+name: 'ENGINE_ECU_DATA_9'
+type: 'can'
+length: 4
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['100ms']
+senders: ['CMM', 'E_VCU']
+receivers: ['BSI']
+
+signals:
+  POWERTRAIN_COMBINED_POWER:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Power delivered by the powertrain (W)'
+      fr: 'Puissance délivrée par la chaîne de traction (W)'
+      es: 'Potencia suministrada por la cadena cinemática (W)'
+      de: 'Vom Antriebsstrang abgegebene Leistung (W)'
+      it: 'Potenza erogata dal gruppo propulsore (W)'
+      pl: 'Moc dostarczana przez układ napędowy (W)'
+      ru: 'Мощность, развиваемая силовым агрегатом (Вт)'
+      zh: '动力总成输出功率(W)'
+      hu: 'A hajtáslánc által leadott teljesítmény (W)'
+      pt: 'Potência fornecida pela cadeia de tração (W)'
+    type: 'uint'
+    factor: 500
+    offset: -255000
+    min: -255000
+    max: 255000
+    units: 'W'
+    invalid: 0x3FF
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (offset -128000)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (offset -128000)'
+          es: 'También observado con otro escalado (offset -128000)'
+          de: 'Auch mit anderer Skalierung beobachtet (offset -128000)'
+          it: 'Osservato anche con un''altra scala (offset -128000)'
+          pl: 'Obserwowany także z innym skalowaniem (offset -128000)'
+          ru: 'Также наблюдался с другим масштабом (offset -128000)'
+          zh: '也观察到使用另一种缩放（offset -128000）'
+          hu: 'Megfigyelve más skálázással is (offset -128000)'
+          pt: 'Também observado com outra escala (offset -128000)'
+        offset: -128000
+
+  POWERTRAIN_ROLLER_BENCH_MODE:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Powertrain roller test bench mode'
+      fr: 'Mode banc à rouleaux du GMP'
+      es: 'Modo banco de rodillos de la cadena cinemática'
+      de: 'Rollenprüfstandmodus des Antriebsstrangs'
+      it: 'Modalità banco a rulli del powertrain'
+      pl: 'Tryb hamowni rolkowej układu napędowego'
+      ru: 'Режим роликового стенда силового агрегата'
+      zh: '动力总成转毂试验台模式'
+      hu: 'A hajtáslánc görgős fékpad üzemmódja'
+      pt: 'Modo de banco de rolos do GMP'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Motorway mode'
+        fr: 'Mode route'
+        es: 'Modo carretera'
+        de: 'Fernlicht-Modus'
+        it: 'Modalità strada'
+        pl: 'Tryb drogowy'
+        ru: 'Дорожный режим'
+        zh: '公路模式'
+        hu: 'Országúti mód'
+        pt: 'Modo estrada'
+      0x02:
+        en: 'Single-axis rolling road (dyno) mode'
+        fr: 'Mode banc à rouleaux un axe'
+        es: 'Modo banco de rodillos de un eje'
+        de: 'Rollenprüfstand-Modus, eine Achse'
+        it: 'Modalità banco a rulli monoasse'
+        pl: 'Tryb hamowni podwoziowej jednoosiowej'
+        ru: 'Режим одноосного роликового стенда'
+        zh: '单轴滚筒测功模式'
+        hu: 'Egytengelyes görgős fékpad üzemmód'
+        pt: 'Modo de banco de rolos de um eixo'
+      0x03:
+        en: 'Two-axis chassis dynamometer mode'
+        fr: 'Mode banc à rouleaux deux axes'
+        es: 'Modo banco de rodillos de dos ejes'
+        de: 'Modus Zweiachsen-Rollenprüfstand'
+        it: 'Modalità banco a rulli a due assi'
+        pl: 'Tryb hamowni podwoziowej dwuosiowej'
+        ru: 'Режим двухосного роликового стенда'
+        zh: '双轴底盘测功机模式'
+        hu: 'Kéttengelyes görgős fékpad mód'
+        pt: 'Modo de banco dinamométrico de dois eixos'

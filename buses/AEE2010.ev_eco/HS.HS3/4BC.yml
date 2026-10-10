@@ -1,0 +1,248 @@
+id: 0x4BC
+name: 'DIAGNOSTIC_SOCKET_FAULT_EVENT'
+type: 'can'
+length: 8
+comment:
+  en: 'Keyless-entry radio-frequency security box: fault event, logged in the BSI fault log.'
+  fr: 'Boîtier de sécurité radiofréquence (mains libres) : événement défaut, enregistré dans le journal des défauts du BSI.'
+  es: 'Caja de seguridad de radiofrecuencia (manos libres): evento de fallo, registrado en el registro de fallos de la BSI.'
+  de: 'Funksicherheitsbox (Keyless) – Fehlerereignis, im Fehlerspeicher (Fehlerprotokoll) des BSI vermerkt.'
+  it: 'Centralina di sicurezza a radiofrequenza (keyless): evento di guasto, registrato nel registro guasti della BSI.'
+  pl: 'Skrzynka bezpieczeństwa RF (bezkluczykowa) – zdarzenie usterki, zapisywane w dzienniku usterek BSI.'
+  ru: 'Блок радиочастотной безопасности (бесключевой доступ) — событие неисправности, регистрируется в журнале неисправностей BSI.'
+  zh: '无钥匙进入射频安全盒——故障事件,记录在BSI故障日志中。'
+  hu: 'Rádiófrekvenciás biztonsági egység (kulcs nélküli) – hibaesemény, amelyet a BSI hibanaplójába rögzítenek.'
+  pt: 'Caixa de segurança de radiofrequência de acesso sem chave: evento de avaria, registado no registo de avarias da BSI.'
+periodicity: ['trigger']
+senders: ['BSRF']
+receivers: ['BSI']
+
+signals:
+  FRAME_COUNT:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Number of frames'
+      fr: 'Nombre de trames'
+      es: 'Número de tramas'
+      de: 'Anzahl der Frames'
+      it: 'Numero di frame'
+      pl: 'Liczba ramek'
+      ru: 'Количество кадров'
+      zh: '帧数'
+      hu: 'A keretek száma'
+      pt: 'Número de tramas'
+    type: 'enum'
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: '1 frame'
+        fr: '1 trame'
+        es: '1 trama'
+        de: '1 Rahmen'
+        it: '1 trama'
+        pl: '1 ramka'
+        ru: '1 кадр'
+        zh: '1帧'
+        hu: '1 keret'
+        pt: '1 trama'
+      0x02:
+        en: '2 frames'
+        fr: '2 trames'
+        es: '2 tramas'
+        de: '2 Botschaften'
+        it: '2 trame'
+        pl: '2 ramki'
+        ru: '2 кадра'
+        zh: '2帧'
+        hu: '2 üzenet'
+        pt: '2 tramas'
+      0x03:
+        en: '3 frames'
+        fr: '3 trames'
+        es: '3 tramas'
+        de: '3 Rahmen'
+        it: '3 trame'
+        pl: '3 ramki'
+        ru: '3 кадра'
+        zh: '3帧'
+        hu: '3 keret'
+        pt: '3 tramas'
+
+  FRAME_NUMBER:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Frame number'
+      fr: 'Numéro de la trame'
+      es: 'Número de trama'
+      de: 'Framenummer'
+      it: 'Numero del frame'
+      pl: 'Numer ramki'
+      ru: 'Номер кадра'
+      zh: '帧编号'
+      hu: 'Keretszám'
+      pt: 'Número da trama'
+    type: 'enum'
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'First frame'
+        fr: 'Première trame'
+        es: 'Primera trama'
+        de: 'Erster Rahmen'
+        it: 'Prima trama'
+        pl: 'Pierwsza ramka'
+        ru: 'Первый кадр'
+        zh: '第一帧'
+        hu: 'Első keret'
+        pt: 'Primeira trama'
+      0x02:
+        en: 'Second frame'
+        fr: 'Seconde trame'
+        es: 'Segunda trama'
+        de: 'Zweite Botschaft'
+        it: 'Seconda trama'
+        pl: 'Druga ramka'
+        ru: 'Второй кадр'
+        zh: '第二帧'
+        hu: 'Második üzenet'
+        pt: 'Segunda trama'
+      0x03:
+        en: 'Third frame'
+        fr: 'Troisième trame'
+        es: 'Tercera trama'
+        de: 'Dritter Frame'
+        it: 'Terzo frame'
+        pl: 'Trzecia ramka'
+        ru: 'Третий кадр'
+        zh: '第三帧'
+        hu: 'Harmadik keret'
+        pt: 'Terceira trama'
+
+  DTC_STATUS:
+    bits: '1.3'
+    comment:
+      en: 'Fault status transition (to/from permanent)'
+      fr: 'Transition d''état du défaut (vers/depuis permanent)'
+      es: 'Transición del estado del fallo (hacia/desde permanente)'
+      de: 'Statusübergang des Fehlers (zu/von permanent)'
+      it: 'Transizione dello stato del guasto (verso/da permanente)'
+      pl: 'Zmiana stanu usterki (na/z trwałej)'
+      ru: 'Переход состояния неисправности (в постоянное/из постоянного)'
+      zh: '故障状态转换(转为/转出永久性)'
+      hu: 'A hibaállapot átmenete (állandósulásba/-ból)'
+      pt: 'Transição do estado da falha (para/desde permanente)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Transition from PERMANENT fault to INTERMITTENT fault (a previously confirmed failure is no longer detected)'
+        fr: 'Passage de défaut PERMANENT à défaut FUGITIF (non-détection d''une défaillance auparavant confirmée)'
+        es: 'Paso de fallo PERMANENTE a fallo INTERMITENTE (no detección de un fallo previamente confirmado)'
+        de: 'Übergang von DAUERHAFTEM zu SPORADISCHEM Fehler (zuvor bestätigter Fehler wird nicht mehr erkannt)'
+        it: 'Passaggio da guasto PERMANENTE a guasto INTERMITTENTE (mancato rilevamento di un guasto precedentemente confermato)'
+        pl: 'Przejście z usterki TRWAŁEJ do usterki PRZEJŚCIOWEJ (brak wykrycia wcześniej potwierdzonej usterki)'
+        ru: 'Переход от ПОСТОЯННОЙ неисправности к ПЕРЕМЕЖАЮЩЕЙСЯ (ранее подтверждённая неисправность больше не обнаруживается)'
+        zh: '从永久性故障转为间歇性故障(此前确认的故障不再被检测到)'
+        hu: 'Átmenet ÁLLANDÓ hibából ÁTMENETI hibába (korábban megerősített hiba már nem észlelhető)'
+        pt: 'Transição de avaria PERMANENTE para avaria INTERMITENTE (uma falha anteriormente confirmada deixou de ser detetada)'
+      0x01:
+        en: 'Fault changed to permanent'
+        fr: 'Passage du défaut à l''état permanent'
+        es: 'Cambio del fallo a estado permanente'
+        de: 'Übergang des Fehlers in den Zustand „permanent"'
+        it: 'Passaggio del guasto allo stato permanente'
+        pl: 'Przejście usterki w stan trwały'
+        ru: 'Переход неисправности в постоянное состояние'
+        zh: '故障转为永久状态'
+        hu: 'A hiba állandósult állapotba váltása'
+        pt: 'Mudança da falha para estado permanente'
+
+  ECU_AEE2004_COMPLIANCE:
+    bits: '1.1-1.0'
+    comment:
+      en: 'ECU compliance with the AEE2004 fault log standard'
+      fr: 'Conformité du calculateur à la norme de journal de défauts AEE2004'
+      es: 'Conformidad de la unidad de control con la norma de registro de fallos AEE2004'
+      de: 'Konformität des Steuergeräts mit dem Fehlerprotokollstandard AEE2004'
+      it: 'Conformità della centralina allo standard del registro guasti AEE2004'
+      pl: 'Zgodność sterownika ze standardem dziennika usterek AEE2004'
+      ru: 'Соответствие блока управления стандарту журнала неисправностей AEE2004'
+      zh: 'ECU符合AEE2004故障日志标准的情况'
+      hu: 'A vezérlőegység megfelelése az AEE2004 hibanapló-szabványnak'
+      pt: 'Conformidade da unidade de controlo com a norma de registo de falhas AEE2004'
+    type: 'enum'
+    values:
+      0x00:
+        en: '2004 EEA ECU (carried over)'
+        fr: 'Calculateur reconduit AEE2004'
+        es: 'Unidad de control AEE2004 reutilizada'
+        de: 'Übernommenes AEE2004-Steuergerät'
+        it: 'Centralina AEE2004 riportata'
+        pl: 'Sterownik przeniesiony AEE2004'
+        ru: 'Блок управления AEE2004 (перенесённый)'
+        zh: '沿用的AEE2004控制器'
+        hu: 'Átvitt AEE2004 vezérlőegység'
+        pt: 'Unidade de controlo AEE2004 (reconduzida)'
+      0x01:
+        en: 'ECU compliant with AEE2010'
+        fr: 'Calculateur conforme à l''AEE2010'
+        es: 'Unidad de control conforme a AEE2010'
+        de: 'Steuergerät konform mit AEE2010'
+        it: 'Centralina conforme ad AEE2010'
+        pl: 'Sterownik zgodny z AEE2010'
+        ru: 'Блок управления соответствует AEE2010'
+        zh: '符合AEE2010标准的控制单元'
+        hu: 'Az AEE2010-nek megfelelő vezérlőegység'
+        pt: 'Unidade de controlo conforme com a AEE2010'
+      0x02:
+        en: 'ECU compliant with DEH2020'
+        fr: 'Calculateur conforme à DEH2020'
+        es: 'Unidad de control conforme a DEH2020'
+        de: 'Steuergerät gemäß DEH2020'
+        it: 'Centralina conforme a DEH2020'
+        pl: 'Sterownik zgodny z DEH2020'
+        ru: 'Блок управления, соответствующий DEH2020'
+        zh: '符合DEH2020标准的控制器'
+        hu: 'A DEH2020-nak megfelelő vezérlőegység'
+        pt: 'Unidade de controlo conforme com DEH2020'
+
+  FAULT_LOG_ODOMETER:
+    bits: '2.7-4.0'
+    comment:
+      en: 'Absolute distance travelled by the vehicle (matches the value shown to the driver)'
+      fr: 'Distance absolue parcourue par le véhicule (correspond à la valeur affichée au conducteur)'
+      es: 'Distancia absoluta recorrida por el vehículo (coincide con el valor mostrado al conductor)'
+      de: 'Absolut zurückgelegte Strecke des Fahrzeugs (entspricht dem dem Fahrer angezeigten Wert)'
+      it: 'Distanza assoluta percorsa dal veicolo (corrisponde al valore mostrato al conducente)'
+      pl: 'Bezwzględny przebieg pojazdu (zgodny z wartością wyświetlaną kierowcy)'
+      ru: 'Абсолютный пробег автомобиля (соответствует значению, показываемому водителю)'
+      zh: '车辆行驶的绝对里程(与显示给驾驶员的值一致)'
+      hu: 'A jármű által megtett abszolút táv (megegyezik a vezetőnek kijelzett értékkel)'
+      pt: 'Distância absoluta percorrida pelo veículo (corresponde ao valor apresentado ao condutor)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 16777214
+    units: 'km'
+    invalid: 0xFFFFFF
+
+  VEHICLE_TIME_COUNTER:
+    bits: '5.7-8.0'
+    comment:
+      en: 'Vehicle time counter'
+      fr: 'Compteur temporel du véhicule'
+      es: 'Contador de tiempo del vehículo'
+      de: 'Zeitzähler des Fahrzeugs'
+      it: 'Contatore temporale del veicolo'
+      pl: 'Licznik czasu pojazdu'
+      ru: 'Счётчик времени автомобиля'
+      zh: '车辆时间计数器'
+      hu: 'Jármű időszámlálója'
+      pt: 'Contador de tempo do veículo'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 429496729.3
+    units: 's'
+    invalid: 0xFFFFFFFF

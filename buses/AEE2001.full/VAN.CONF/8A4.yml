@@ -1,0 +1,544 @@
+id: 0x8A4
+name: 'BSI_SLOW_DATA'
+type: 'van'
+length: 7
+comment:
+  en: 'Vehicle state broadcast by the body controller: lighting/dimming, power supply state and key position, coolant temperature, odometer, outside temperature.'
+  fr: 'État du véhicule diffusé par la BSI : éclairage/atténuation, état d''alimentation et position de la clé, température liquide de refroidissement, kilométrage, température extérieure.'
+  es: 'Estado del vehículo difundido por la BSI: iluminación/atenuación, estado de alimentación y posición de la llave, temperatura del refrigerante, kilometraje, temperatura exterior.'
+  de: 'Vom BSI gesendeter Fahrzeugstatus: Beleuchtung/Dimmung, Versorgungsstatus und Schlüsselposition, Kühlmitteltemperatur, Kilometerstand, Außentemperatur.'
+  it: 'Stato del veicolo trasmesso dalla BSI: illuminazione/attenuazione, stato di alimentazione e posizione chiave, temperatura del liquido di raffreddamento, chilometraggio, temperatura esterna.'
+  pl: 'Stan pojazdu nadawany przez BSI: oświetlenie/przyciemnianie, stan zasilania i pozycja kluczyka, temperatura płynu chłodzącego, przebieg, temperatura zewnętrzna.'
+  ru: 'Статус автомобиля, транслируемый BSI: освещение/затемнение, состояние питания и положение ключа, температура охлаждающей жидкости, пробег, температура наружного воздуха.'
+  zh: '由BSI广播的车辆状态:照明/调光、供电状态和钥匙位置、冷却液温度、里程、车外温度。'
+  hu: 'A BSI által sugárzott jármű állapot: világítás/fényerő-szabályozás, tápellátás állapota és kulcshelyzet, hűtőfolyadék hőmérséklet, km-óraállás, külső hőmérséklet.'
+  pt: 'Estado do veículo difundido pelo computador de servidão: iluminação/regulação, estado de alimentação e posição da chave, temperatura do líquido de arrefecimento, conta-quilómetros, temperatura exterior.'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['AAS', 'CDC', 'CLIM_AV', 'CMB', 'EMF', 'RAD', 'BTEL']
+van:
+  access: 'write'
+  ack: false
+  rtr: false
+  reply: 'none'
+
+signals:
+  DAY_NIGHT_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Day / night state'
+      fr: 'État jour/nuit'
+      es: 'Estado día/noche'
+      de: 'Tag-/Nachtzustand'
+      it: 'Stato giorno/notte'
+      pl: 'Stan dzień/noc'
+      ru: 'Состояние день/ночь'
+      zh: '昼/夜状态'
+      hu: 'Nappali/éjszakai állapot'
+      pt: 'Estado dia/noite'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Night'
+        fr: 'Nuit'
+        es: 'Noche'
+        de: 'Nacht'
+        it: 'Notte'
+        pl: 'Noc'
+        ru: 'Ночь'
+        zh: '夜间'
+        hu: 'Éjszaka'
+        pt: 'Noite'
+      0x01:
+        en: 'Day'
+        fr: 'Jour'
+        es: 'Día'
+        de: 'Tag'
+        it: 'Giorno'
+        pl: 'Dzień'
+        ru: 'День'
+        zh: '白天'
+        hu: 'Nap'
+        pt: 'Dia'
+
+  DARK_MODE:
+    bits: '1.6'
+    comment:
+      en: 'Black panel (night dimmed) mode'
+      fr: 'Mode "black panel" (extinction nocturne)'
+      es: 'Modo "black panel" (atenuación nocturna)'
+      de: '"Black-Panel"-Modus (Nachtabblendung)'
+      it: 'Modalità "black panel" (attenuazione notturna)'
+      pl: 'Tryb "black panel" (przyciemnienie nocne)'
+      ru: 'Режим "чёрная панель" (ночное затемнение)'
+      zh: '"黑面板"模式(夜间调暗)'
+      hu: '"Black panel" (éjszakai elsötétítés) üzemmód'
+      pt: 'Modo black panel (atenuação noturna)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  UNUSED_1:
+    bits: '1.5'
+    unused: true
+
+  FRONT_WIPERS_STATUS:
+    bits: '1.4'
+    comment:
+      en: 'Front wipers active'
+      fr: 'Essuyage avant actif'
+      es: 'Limpiaparabrisas delantero activo'
+      de: 'Frontscheibenwischer aktiv'
+      it: 'Tergicristallo anteriore attivo'
+      pl: 'Aktywne wycieraczki przednie'
+      ru: 'Передние стеклоочистители активны'
+      zh: '前雨刮工作中'
+      hu: 'Első ablaktörlő aktív'
+      pt: 'Limpa-para-brisas dianteiro ativo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Front wiping inactive'
+        fr: 'Essuyage avant inactif'
+        es: 'Limpieza delantera inactiva'
+        de: 'Vorderer Wischbetrieb inaktiv'
+        it: 'Tergitura anteriore inattiva'
+        pl: 'Wycieranie przednie nieaktywne'
+        ru: 'Стеклоочистка переднего стекла неактивна'
+        zh: '前雨刮未激活'
+        hu: 'Elülső ablaktörlés inaktív'
+        pt: 'Limpeza dianteira inativa'
+      0x01:
+        en: 'Front wiping active'
+        fr: 'Essuyage avant actif'
+        es: 'Limpiaparabrisas delantero activo'
+        de: 'Frontscheibenwischer aktiv'
+        it: 'Tergicristallo anteriore attivo'
+        pl: 'Aktywne wycieraczki przednie'
+        ru: 'Передний стеклоочиститель активен'
+        zh: '前雨刮激活'
+        hu: 'Elülső ablaktörlő aktív'
+        pt: 'Limpeza dianteira ativa'
+
+  DASHBOARD_LIGHTING:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Instrument cluster brightness level (0-15)'
+      fr: 'Niveau de luminosité du combiné d''instruments (0 à 15)'
+      es: 'Nivel de brillo del cuadro de instrumentos (0 a 15)'
+      de: 'Helligkeitsstufe des Kombiinstruments (0-15)'
+      it: 'Livello di luminosità del quadro strumenti (0-15)'
+      pl: 'Poziom jasności zestawu wskaźników (0-15)'
+      ru: 'Уровень яркости приборной панели (0-15)'
+      zh: '仪表盘亮度等级(0-15)'
+      hu: 'Műszerfal fényerőszintje (0-15)'
+      pt: 'Nível de luminosidade do quadrante (0-15)'
+    type: 'enum'
+    default: 0x08
+    values:
+      0x00:
+        en: 'Minimum brightness'
+        fr: 'Luminosité minimum'
+        es: 'Luminosidad mínima'
+        de: 'Minimale Helligkeit'
+        it: 'Luminosità minima'
+        pl: 'Minimalna jasność'
+        ru: 'Минимальная яркость'
+        zh: '最小亮度'
+        hu: 'Minimális fényerő'
+        pt: 'Luminosidade mínima'
+      0x0F:
+        en: 'Maximum brightness'
+        fr: 'Luminosité maximale'
+        es: 'Brillo máximo'
+        de: 'Maximale Helligkeit'
+        it: 'Luminosità massima'
+        pl: 'Maksymalna jasność'
+        ru: 'Максимальная яркость'
+        zh: '最大亮度'
+        hu: 'Maximális fényerő'
+        pt: 'Luminosidade máxima'
+
+  ALARM_STATUS:
+    bits: '2.7'
+    comment:
+      en: 'Alarm armed'
+      fr: 'Alarme activée'
+      es: 'Alarma activada'
+      de: 'Alarmanlage scharf'
+      it: 'Allarme inserito'
+      pl: 'Alarm uzbrojony'
+      ru: 'Сигнализация включена'
+      zh: '防盗报警已布防'
+      hu: 'Riasztó élesítve'
+      pt: 'Alarme ativado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Alarm not active'
+        fr: 'Alarme non activée'
+        es: 'Alarma no activada'
+        de: 'Alarm nicht aktiviert'
+        it: 'Allarme non attivato'
+        pl: 'Alarm nieaktywny'
+        ru: 'Сигнализация не активирована'
+        zh: '报警未激活'
+        hu: 'A riasztó nincs aktiválva'
+        pt: 'Alarme não ativado'
+      0x01:
+        en: 'Alarm active'
+        fr: 'Alarme activée'
+        es: 'Alarma activada'
+        de: 'Alarm aktiv'
+        it: 'Allarme attivo'
+        pl: 'Alarm aktywny'
+        ru: 'Сигнализация активна'
+        zh: '警报已激活'
+        hu: 'Riasztó aktív'
+        pt: 'Alarme ativo'
+
+  TRAILER_STATUS:
+    bits: '2.6'
+    comment:
+      en: 'Factory / customer supply mode'
+      fr: 'Mode d''alimentation usine/client'
+      es: 'Modo de alimentación fábrica/cliente'
+      de: 'Versorgungsmodus Werk/Kunde'
+      it: 'Modalità di alimentazione fabbrica/cliente'
+      pl: 'Tryb zasilania fabryka/klient'
+      ru: 'Режим питания завод/клиент'
+      zh: '工厂/客户供电模式'
+      hu: 'Gyári/ügyfél tápellátási mód'
+      pt: 'Modo de alimentação fábrica/cliente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Customer mode'
+        fr: 'Mode client'
+        es: 'Modo cliente'
+        de: 'Kundenmodus'
+        it: 'Modalità cliente'
+        pl: 'Tryb klienta'
+        ru: 'Клиентский режим'
+        zh: '客户模式'
+        hu: 'Ügyfél mód'
+        pt: 'Modo cliente'
+      0x01:
+        en: 'Factory mode'
+        fr: 'Mode usine'
+        es: 'Modo fábrica'
+        de: 'Werksmodus'
+        it: 'Modalità fabbrica'
+        pl: 'Tryb fabryczny'
+        ru: 'Заводской режим'
+        zh: '工厂模式'
+        hu: 'Gyári üzemmód'
+        pt: 'Modo de fábrica'
+
+  REVERSE_STATUS:
+    bits: '2.5'
+    comment:
+      en: 'Reverse gear engaged'
+      fr: 'Marche arrière enclenchée'
+      es: 'Marcha atrás engranada'
+      de: 'Rückwärtsgang eingelegt'
+      it: 'Retromarcia inserita'
+      pl: 'Włączony bieg wsteczny'
+      ru: 'Включена задняя передача'
+      zh: '倒挡已挂入'
+      hu: 'Hátrameneti fokozat bekapcsolva'
+      pt: 'Marcha-atrás engatada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reverse not engaged'
+        fr: 'Marche arrière non enclenchée'
+        es: 'Marcha atrás no engranada'
+        de: 'Rückwärtsgang nicht eingelegt'
+        it: 'Retromarcia non innestata'
+        pl: 'Bieg wsteczny niewłączony'
+        ru: 'Задняя передача не включена'
+        zh: '倒挡未挂入'
+        hu: 'Hátramenet nincs bekapcsolva'
+        pt: 'Marcha-atrás não engatada'
+      0x01:
+        en: 'Reverse engaged'
+        fr: 'Marche arrière enclenchée'
+        es: 'Marcha atrás engranada'
+        de: 'Rückwärtsgang eingelegt'
+        it: 'Retromarcia innestata'
+        pl: 'Wsteczny włączony'
+        ru: 'Задняя передача включена'
+        zh: '倒挡已挂入'
+        hu: 'Hátramenet bekapcsolva'
+        pt: 'Marcha-atrás engrenada'
+
+  ECO_MODE:
+    bits: '2.4'
+    comment:
+      en: 'Power-saving (economy) mode'
+      fr: 'Mode économie d''énergie'
+      es: 'Modo de ahorro de energía'
+      de: 'Energiesparmodus'
+      it: 'Modalità risparmio energetico'
+      pl: 'Tryb oszczędzania energii'
+      ru: 'Режим энергосбережения'
+      zh: '省电模式'
+      hu: 'Energiatakarékos üzemmód'
+      pt: 'Modo de poupança de energia'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Economy mode inactive'
+        fr: 'Mode économie inactif'
+        es: 'Modo economía inactivo'
+        de: 'Eco-Modus inaktiv'
+        it: 'Modalità economia inattiva'
+        pl: 'Tryb ekonomiczny nieaktywny'
+        ru: 'Экономичный режим неактивен'
+        zh: '经济模式未激活'
+        hu: 'Gazdaságos mód inaktív'
+        pt: 'Modo economia inativo'
+      0x01:
+        en: 'Economy mode active'
+        fr: 'Mode économie actif'
+        es: 'Modo economía activo'
+        de: 'Sparmodus aktiv'
+        it: 'Modalità economica attiva'
+        pl: 'Tryb ekonomiczny aktywny'
+        ru: 'Экономичный режим активен'
+        zh: '经济模式激活'
+        hu: 'Takarékos mód aktív'
+        pt: 'Modo económico ativo'
+
+  STANDBY_MODE:
+    bits: '2.3'
+    comment:
+      en: 'Network going to sleep within 5 seconds'
+      fr: 'Mise en veille du réseau sous 5 secondes'
+      es: 'La red entrará en reposo en 5 segundos'
+      de: 'Bordnetz geht innerhalb von 5 Sekunden in den Ruhezustand'
+      it: 'La rete andrà in standby entro 5 secondi'
+      pl: 'Sieć przejdzie w stan uśpienia w ciągu 5 sekund'
+      ru: 'Сеть перейдёт в спящий режим через 5 секунд'
+      zh: '网络将在 5 秒内进入休眠'
+      hu: 'A hálózat 5 másodpercen belül alvó üzemmódba lép'
+      pt: 'A rede vai entrar em repouso dentro de 5 segundos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sleep mode'
+        fr: 'Pas de mise en veille'
+        es: 'Sin modo de reposo'
+        de: 'Kein Ruhezustand'
+        it: 'Nessuna modalità di sospensione'
+        pl: 'Brak trybu uśpienia'
+        ru: 'Нет спящего режима'
+        zh: '无休眠'
+        hu: 'Nincs alvó üzemmód'
+        pt: 'Sem modo de repouso'
+      0x01:
+        en: 'Sleep within 5 s'
+        fr: 'Mise en veille sous 5 secondes'
+        es: 'Modo reposo en 5 segundos'
+        de: 'Ruhezustand innerhalb von 5 Sekunden'
+        it: 'Standby entro 5 secondi'
+        pl: 'Uśpienie w ciągu 5 sekund'
+        ru: 'Переход в спящий режим в течение 5 с'
+        zh: '5秒内进入休眠'
+        hu: 'Alvó üzemmódba lépés 5 másodpercen belül'
+        pt: 'Entrada em repouso em 5 segundos'
+
+  ENGINE_STATUS:
+    bits: '2.2'
+    comment:
+      en: 'Engine running (generalised to the vehicle''s electrical generator operating, for Stop & Start vehicles)'
+      fr: 'Moteur tournant (généralisé à l''état du générateur électrique du véhicule pour le Stop & Start)'
+      es: 'Motor en marcha (generalizado al estado del generador eléctrico del vehículo para Stop & Start)'
+      de: 'Motor läuft (verallgemeinert auf den Betrieb des Fahrzeuggenerators bei Stop & Start)'
+      it: 'Motore acceso (generalizzato allo stato del generatore elettrico del veicolo per lo Stop & Start)'
+      pl: 'Silnik pracuje (uogólnione do stanu generatora elektrycznego pojazdu w układach Stop & Start)'
+      ru: 'Двигатель работает (обобщённо — работа электрогенератора автомобиля для систем Стоп-Старт)'
+      zh: '发动机运转(对配备 Stop & Start 的车辆,泛指车载发电机运行)'
+      hu: 'Motor jár (Stop&Start rendszerű járműveknél a jármű generátorának üzemére általánosítva)'
+      pt: 'Motor em funcionamento (generalizado ao estado do gerador elétrico do veículo para Stop & Start)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Generator not operating'
+        fr: 'Générateur non opérationnel'
+        es: 'Generador no operativo'
+        de: 'Generator nicht betriebsbereit'
+        it: 'Generatore non operativo'
+        pl: 'Generator niesprawny'
+        ru: 'Генератор не работает'
+        zh: '发电机未运行'
+        hu: 'A generátor nem üzemel'
+        pt: 'Gerador não operacional'
+      0x01:
+        en: 'Generator operating'
+        fr: 'Générateur opérationnel'
+        es: 'Generador operativo'
+        de: 'Generator in Betrieb'
+        it: 'Generatore operativo'
+        pl: 'Generator działa'
+        ru: 'Генератор работает'
+        zh: '发电机运行中'
+        hu: 'Generátor üzemel'
+        pt: 'Gerador em funcionamento'
+
+  KEY_POSITION:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Ignition key position'
+      fr: 'Position de la clé de contact'
+      es: 'Posición de la llave de contacto'
+      de: 'Zündschlüsselstellung'
+      it: 'Posizione della chiave di accensione'
+      pl: 'Pozycja kluczyka w stacyjce'
+      ru: 'Положение ключа зажигания'
+      zh: '点火钥匙位置'
+      hu: 'Gyújtáskulcs helyzete'
+      pt: 'Posição da chave de ignição'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Accessories'
+        fr: 'Accessoires'
+        es: 'Accesorios'
+        de: 'Zubehör'
+        it: 'Accessori'
+        pl: 'Akcesoria'
+        ru: 'Аксессуары'
+        zh: '附件'
+        hu: 'Tartozékok'
+        pt: 'Acessórios'
+      0x02:
+        en: 'Cranking'
+        fr: 'Démarreur en action'
+        es: 'Motor de arranque en marcha'
+        de: 'Anlasser dreht'
+        it: 'Motorino di avviamento in azione'
+        pl: 'Rozrusznik pracuje'
+        ru: 'Стартер вращает двигатель'
+        zh: '起动机运转中'
+        hu: 'Indítómotor forog'
+        pt: 'A rodar (arranque)'
+      0x03:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+
+  COOLANT_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Engine coolant temperature, T = N - 40 °C; invalid when all bits set'
+      fr: 'Température d''eau moteur, T = N - 40 °C ; invalide si tous les bits sont à 1'
+      es: 'Temperatura del refrigerante del motor, T = N - 40 °C; inválido si todos los bits están a 1'
+      de: 'Motorkühlmitteltemperatur, T = N - 40 °C; ungültig bei allen Bits gesetzt'
+      it: 'Temperatura del liquido di raffreddamento motore, T = N - 40 °C; non valido se tutti i bit sono a 1'
+      pl: 'Temperatura płynu chłodzącego silnika, T = N - 40 °C; nieprawidłowa, gdy wszystkie bity ustawione'
+      ru: 'Температура охлаждающей жидкости двигателя, T = N - 40 °C; недействительно, если все биты установлены'
+      zh: '发动机冷却液温度,T = N - 40°C;所有位为 1 时无效'
+      hu: 'Motor hűtőfolyadék-hőmérséklete, T = N - 40 °C; érvénytelen, ha minden bit be van állítva'
+      pt: 'Temperatura do líquido de refrigeração do motor, T = N - 40 °C; inválido se todos os bits estiverem a 1'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFF
+
+  TOTAL_MILEAGE:
+    bits: '4.7-6.0'
+    comment:
+      en: 'Vehicle odometer, 0.1 km per bit; invalid when all bits set'
+      fr: 'Totalisateur kilométrique du véhicule, résolution 0,1 km ; invalide si tous les bits sont à 1'
+      es: 'Cuentakilómetros total del vehículo, resolución 0,1 km; inválido si todos los bits están a 1'
+      de: 'Fahrzeug-Kilometerzähler, Auflösung 0,1 km; ungültig bei allen Bits gesetzt'
+      it: 'Totalizzatore chilometrico del veicolo, risoluzione 0,1 km; non valido se tutti i bit sono a 1'
+      pl: 'Licznik przebiegu pojazdu, rozdzielczość 0,1 km; nieprawidłowy, gdy wszystkie bity ustawione'
+      ru: 'Общий пробег автомобиля, разрешение 0,1 км; недействительно, если все биты установлены'
+      zh: '车辆总里程表,分辨率 0.1 公里;所有位为 1 时无效'
+      hu: 'Jármű összkilométer-számláló, felbontás 0,1 km; érvénytelen, ha minden bit be van állítva'
+      pt: 'Conta-quilómetros do veículo, 0,1 km por bit; inválido quando todos os bits estão definidos'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 1677721.4
+    units: 'km'
+    invalid: 0xFFFFFF
+    default: 0xFFFFFF
+
+  EXTERNAL_TEMPERATURE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Outside temperature, T = N/2 - 40 °C; specific codes indicate sensor absent or unmanaged'
+      fr: 'Température extérieure, T = N/2 - 40 °C ; codes spécifiques pour capteur absent ou code non géré'
+      es: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente o código no gestionado'
+      de: 'Außentemperatur, T = N/2 - 40 °C; spezielle Codes für fehlenden Sensor oder nicht verwalteten Code'
+      it: 'Temperatura esterna, T = N/2 - 40 °C; codici specifici per sensore assente o codice non gestito'
+      pl: 'Temperatura zewnętrzna, T = N/2 - 40 °C; specjalne kody dla braku czujnika lub nieobsługiwanego kodu'
+      ru: 'Наружная температура, T = N/2 - 40 °C; специальные коды для отсутствующего датчика или необработанного кода'
+      zh: '车外温度,T = N/2 - 40°C;特定代码表示传感器缺失或代码未处理'
+      hu: 'Külső hőmérséklet, T = N/2 - 40 °C; külön kódok jelzik a hiányzó érzékelőt vagy a nem kezelt kódot'
+      pt: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente ou código não gerido'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 87
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFF

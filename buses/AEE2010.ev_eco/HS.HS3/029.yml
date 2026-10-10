@@ -1,0 +1,95 @@
+id: 0x029
+name: 'ADDITIVE_PUMP_STATUS_2'
+type: 'can'
+length: 6
+comment:
+  en: 'Turbo boost pressure, brake master cylinder relative pressure and raw yaw rate, sent by the BSI to the telematics gateway.'
+  fr: 'Pression de suralimentation, pression relative du maître-cylindre de frein et vitesse de lacet brute, envoyées par la BSI à la passerelle télématique.'
+  es: 'Presión de sobrealimentación, presión relativa del cilindro maestro de freno y velocidad de guiñada en bruto, enviadas por la BSI a la pasarela telemática.'
+  de: 'Ladedruck, Relativdruck des Bremshauptzylinders und unbearbeitete Gierrate, von der BSI an das Telematik-Gateway gesendet.'
+  it: 'Pressione di sovralimentazione, pressione relativa del cilindro maestro freno e velocità di imbardata grezza, inviate dalla BSI al gateway telematico.'
+  pl: 'Ciśnienie doładowania, ciśnienie względne pompy hamulcowej i surowa prędkość odchylania, wysyłane przez BSI do bramki telematycznej.'
+  ru: 'Давление наддува, относительное давление главного тормозного цилиндра и необработанная скорость рыскания, отправляемые BSI в телематический шлюз.'
+  zh: '增压压力、刹车总泵相对压力及原始横摆角速度，由BSI发送给远程信息处理网关。'
+  hu: 'Feltöltési nyomás, a főfékhenger relatív nyomása és a nyers legyezési szögsebesség, a BSI küldi a telematikai átjárónak.'
+  pt: 'Pressão de sobrealimentação do turbo, pressão relativa do cilindro mestre de travagem e velocidade de guinada em bruto, enviadas pela BSI ao gateway telemático.'
+periodicity: ['20ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  RAW_YAW_RATE:
+    bits: '1.7-2.4'
+    comment:
+      en: 'Raw yaw rate (12-bit)'
+      fr: 'Vitesse de lacet brute (12 bits)'
+      es: 'Velocidad de guiñada bruta (12 bits)'
+      de: 'Roher Gierratenwert (12 Bit)'
+      it: 'Velocità di imbardata grezza (12 bit)'
+      pl: 'Surowa prędkość odchylania (12 bitów)'
+      ru: 'Необработанная скорость рыскания (12 бит)'
+      zh: '原始横摆角速度(12位)'
+      hu: 'Nyers legyezési szögsebesség (12 bit)'
+      pt: 'Velocidade de guinada bruta (12 bits)'
+    type: 'uint'
+    factor: 0.08
+    offset: -163.84
+    min: -163.84
+    max: 163.68
+    invalid: 0xFFF
+
+  SPORT_MODE_DISPLAY_BOOST_PRESSURE_RATIO:
+    bits: '2.3-3.5'
+    comment:
+      en: 'Maximum boost pressure ratio for sport-mode display'
+      fr: 'Ratio de pression de suralimentation maximum pour l''affichage en mode sport'
+      es: 'Relación de presión de sobrealimentación máxima para la pantalla en modo deportivo'
+      de: 'Maximales Ladedruckverhältnis für die Sportmodus-Anzeige'
+      it: 'Rapporto di pressione di sovralimentazione massima per la visualizzazione in modalità sport'
+      pl: 'Maksymalny stosunek ciśnienia doładowania do wyświetlania w trybie sport'
+      ru: 'Максимальное отношение давления наддува для отображения в спортивном режиме'
+      zh: '运动模式显示用的最大增压比'
+      hu: 'Maximális töltőnyomás-arány a sport módú kijelzéshez'
+      pt: 'Relação de pressão de sobrealimentação máxima para a visualização em modo desportivo'
+    type: 'uint'
+    min: 0
+    max: 100
+    invalid: 0x7F
+
+  BOOST_PRESSURE:
+    bits: '3.4-3.0'
+    comment:
+      en: 'Turbocharger boost pressure'
+      fr: 'Pression de suralimentation'
+      es: 'Presión de sobrealimentación'
+      de: 'Ladedruck'
+      it: 'Pressione di sovralimentazione'
+      pl: 'Ciśnienie doładowania'
+      ru: 'Давление наддува'
+      zh: '增压压力'
+      hu: 'Feltöltési nyomás'
+      pt: 'Pressão de sobrealimentação do turbocompressor'
+    type: 'uint'
+    factor: 100
+    min: 0
+    max: 3000
+    invalid: 0x1F
+
+  BRAKE_BOOSTER_RELATIVE_PRESSURE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Brake booster (mastervac) relative pressure'
+      fr: 'Pression relative du servofrein (mastervac)'
+      es: 'Presión relativa del servofreno (mastervac)'
+      de: 'Relativer Bremskraftverstärker-(Mastervac-)Druck'
+      it: 'Pressione relativa del servofreno (mastervac)'
+      pl: 'Ciśnienie względne wspomagania hamulca (mastervac)'
+      ru: 'Относительное давление вакуумного усилителя тормозов (мастервак)'
+      zh: '真空助力器(mastervac)相对压力'
+      hu: 'Fékrásegítő (mastervac) relatív nyomása'
+      pt: 'Pressão relativa da assistência de travagem (mastervac)'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 1200
+    invalid: 0xFF

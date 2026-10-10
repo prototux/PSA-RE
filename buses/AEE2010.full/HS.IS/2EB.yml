@@ -1,0 +1,314 @@
+id: 0x2EB
+name: 'AUTOMATED_PARKING_STEERING_DATA'
+type: 'can'
+length: 5
+comment:
+  en: 'Automated parking steering data: driving-direction request, steering-column control request, angle setpoint, function request and relax request.'
+  fr: 'Données de direction pour le parking automatisé : demande de sens de conduite, demande de contrôle de la colonne de direction, consigne d''angle, demande de fonction et demande de relâchement.'
+  es: 'Datos de dirección para el aparcamiento automatizado: solicitud de sentido de marcha, solicitud de control de la columna de dirección, consigna de ángulo, solicitud de función y solicitud de relajación.'
+  de: 'Lenkdaten für das automatisierte Einparken: Fahrtrichtungsanforderung, Lenksäulen-Kontrollanforderung, Winkelsollwert, Funktionsanforderung und Entspannungsanforderung.'
+  it: 'Dati di sterzata per il parcheggio automatizzato: richiesta di direzione di marcia, richiesta di controllo del piantone dello sterzo, setpoint dell''angolo, richiesta di funzione e richiesta di rilascio.'
+  pl: 'Dane sterowania dla zautomatyzowanego parkowania: żądanie kierunku jazdy, żądanie kontroli kolumny kierownicy, nastawa kąta, żądanie funkcji i żądanie zwolnienia.'
+  ru: 'Данные рулевого управления для автоматизированной парковки: запрос направления движения, запрос управления рулевой колонкой, уставка угла, запрос функции и запрос расслабления.'
+  zh: '自动泊车转向数据:行驶方向请求、转向柱控制请求、角度设定值、功能请求和放松请求。'
+  hu: 'Automatizált parkolási kormányzási adatok: menetirány kérés, kormányoszlop-vezérlési kérés, szögalapjel, funkciókérés és kioldási kérés.'
+  pt: 'Dados de direção do estacionamento automático: pedido de sentido de marcha, pedido de comando da coluna de direção, ponto de ajuste de ângulo, pedido de função e pedido de relaxamento.'
+periodicity: ['20ms']
+senders: ['AAS']
+receivers: ['ESM', 'DAE']
+
+signals:
+  CITYPARK_ANGLE_SETPOINT:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Citypark steering angle setpoint'
+      fr: 'Consigne d''angle de braquage Citypark'
+      es: 'Consigna de ángulo de dirección Citypark'
+      de: 'Citypark-Lenkwinkelsollwert'
+      it: 'Consegna di angolo di sterzata Citypark'
+      pl: 'Zadana wartość kąta skrętu Citypark'
+      ru: 'Заданный угол поворота руля Citypark'
+      zh: 'Citypark 转向角设定值'
+      hu: 'Citypark kormányzási szög alapjele'
+      pt: 'Consigna de ângulo de direção Citypark'
+    type: 'sint'
+    factor: 0.1
+    min: -780
+    max: 780
+    units: '°'
+    invalid: 0x7FFF
+    default: 0x00
+
+  CITYPARK_FUNCTION_REQUEST:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Citypark parking assist function request'
+      fr: 'Demande de la fonction d''aide au stationnement Citypark'
+      es: 'Solicitud de la función de asistencia de aparcamiento Citypark'
+      de: 'Anforderung der Citypark-Einparkhilfe-Funktion'
+      it: 'Richiesta della funzione di assistenza al parcheggio Citypark'
+      pl: 'Żądanie funkcji asystenta parkowania Citypark'
+      ru: 'Запрос функции помощи при парковке Citypark'
+      zh: 'Citypark 泊车辅助功能请求'
+      hu: 'A Citypark parkolássegítő funkció kérése'
+      pt: 'Pedido da função de assistência de estacionamento Citypark'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'SCP6 control request'
+        fr: 'Demande de pilotage SCP6'
+        es: 'Solicitud de control SCP6'
+        de: 'SCP6-Ansteuerungsanforderung'
+        it: 'Richiesta di controllo SCP6'
+        pl: 'Żądanie sterowania SCP6'
+        ru: 'Запрос управления SCP6'
+        zh: 'SCP6控制请求'
+        hu: 'SCP6 vezérlési kérés'
+        pt: 'Pedido de controlo SCP6'
+      0x02:
+        en: 'SCP9 control request'
+        fr: 'Demande de pilotage SCP9'
+        es: 'Solicitud de control SCP9'
+        de: 'Steueranforderung SCP9'
+        it: 'Richiesta di controllo SCP9'
+        pl: 'Żądanie sterowania SCP9'
+        ru: 'Запрос управления SCP9'
+        zh: 'SCP9控制请求'
+        hu: 'SCP9 vezérlési kérés'
+        pt: 'Pedido de comando SCP9'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CITYPARK_RELEASE_REQUEST:
+    bits: '3.5-3.4'
+    comment:
+      en: 'Citypark relax (steering release) request'
+      fr: 'Demande de relâchement (relaxe) Citypark'
+      es: 'Solicitud de relajación (liberación) Citypark'
+      de: 'Citypark-Freigabeanforderung (Entspannung)'
+      it: 'Richiesta di rilascio (relax) Citypark'
+      pl: 'Żądanie zwolnienia (relaksu) Citypark'
+      ru: 'Запрос отпускания (релакс) Citypark'
+      zh: 'Citypark 释放(放松)请求'
+      hu: 'Citypark elengedési (relax) kérés'
+      pt: 'Pedido de relaxamento (libertação) Citypark'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x02:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '3.3'
+    unused: true
+
+  ACPK_DRIVING_DIRECTION_REQUEST:
+    bits: '3.2-3.0'
+    comment:
+      en: 'Driving direction requested by the ACPK automated parking function'
+      fr: 'Sens de marche demandé par la fonction de stationnement automatisé ACPK'
+      es: 'Sentido de marcha solicitado por la función de aparcamiento automatizado ACPK'
+      de: 'Von der automatisierten ACPK-Einparkfunktion angeforderte Fahrtrichtung'
+      it: 'Senso di marcia richiesto dalla funzione di parcheggio automatizzato ACPK'
+      pl: 'Kierunek jazdy żądany przez funkcję zautomatyzowanego parkowania ACPK'
+      ru: 'Направление движения, запрошенное функцией автоматизированной парковки ACPK'
+      zh: 'ACPK 自动泊车功能请求的行驶方向'
+      hu: 'Az ACPK automatizált parkolási funkció által kért haladási irány'
+      pt: 'Sentido de marcha solicitado pela função de estacionamento automatizado ACPK'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'P'
+        fr: 'P'
+        es: 'P'
+        de: 'P'
+        it: 'P'
+        pl: 'P'
+        ru: 'P'
+        zh: 'P'
+        hu: 'P'
+        pt: 'P'
+      0x01:
+        en: 'R'
+        fr: 'R'
+        es: 'R'
+        de: 'R'
+        it: 'R'
+        pl: 'R'
+        ru: 'R'
+        zh: 'R'
+        hu: 'R'
+        pt: 'R'
+      0x02:
+        en: 'N'
+        fr: 'N'
+        es: 'N'
+        de: 'N'
+        it: 'N'
+        pl: 'N'
+        ru: 'N'
+        zh: 'N'
+        hu: 'N'
+        pt: 'N'
+      0x03:
+        en: 'D'
+        fr: 'D'
+        es: 'D'
+        de: 'D'
+        it: 'D'
+        pl: 'D'
+        ru: 'D'
+        zh: 'D'
+        hu: 'D'
+        pt: 'D'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  CITYPARK_FRAME_CHECKSUM:
+    bits: '4.7-4.4'
+    comment:
+      en: 'Citypark ECU frame checksum'
+      fr: 'Somme de contrôle de la trame du calculateur Citypark'
+      es: 'Suma de comprobación de la trama de la ECU Citypark'
+      de: 'Prüfsumme des Citypark-Steuergeräte-Frames'
+      it: 'Checksum del frame della centralina Citypark'
+      pl: 'Suma kontrolna ramki sterownika Citypark'
+      ru: 'Контрольная сумма кадра блока управления Citypark'
+      zh: 'Citypark 控制单元帧校验和'
+      hu: 'A Citypark vezérlő keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama da unidade de controlo Citypark'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '4.3-4.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ACPK_DRIVING_DIRECTION_CONTROL_REQUEST:
+    bits: '5.7-5.6'
+    comment:
+      en: 'ACPK request to regain control of the driving direction'
+      fr: 'Demande de la fonction ACPK de reprendre le contrôle du sens de marche'
+      es: 'Solicitud de la función ACPK para recuperar el control del sentido de marcha'
+      de: 'ACPK-Anforderung zur Rückübernahme der Fahrtrichtungssteuerung'
+      it: 'Richiesta della funzione ACPK di riprendere il controllo del senso di marcia'
+      pl: 'Żądanie funkcji ACPK ponownego przejęcia kontroli nad kierunkiem jazdy'
+      ru: 'Запрос функции ACPK на возврат управления направлением движения'
+      zh: 'ACPK 功能请求重新获得行驶方向控制'
+      hu: 'Az ACPK funkció kérése a haladási irány feletti irányítás visszavételére'
+      pt: 'Pedido da função ACPK para retomar o controlo do sentido de marcha'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active with HMI'
+        fr: 'Actif avec IHM'
+        es: 'Activo con IHM'
+        de: 'Aktiv mit HMI'
+        it: 'Attivo con IHM'
+        pl: 'Aktywne z HMI'
+        ru: 'Активно с HMI'
+        zh: '通过人机界面激活'
+        hu: 'Aktív HMI-vel'
+        pt: 'Ativo com IHM'
+      0x02:
+        en: 'Active without HMI'
+        fr: 'Actif sans IHM'
+        es: 'Activo sin HMI'
+        de: 'Aktiv ohne HMI'
+        it: 'Attivo senza HMI'
+        pl: 'Aktywne bez HMI'
+        ru: 'Активно без HMI'
+        zh: '无人机界面激活'
+        hu: 'Aktív kezelőfelület nélkül'
+        pt: 'Ativo sem IHM'
+      0x03:
+        en: 'Maneuver imminent'
+        fr: 'Maneuver imminent'
+        es: 'Maniobra inminente'
+        de: 'Manöver unmittelbar bevorstehend'
+        it: 'Manovra imminente'
+        pl: 'Manewr nieuchronny'
+        ru: 'Манёвр неизбежен'
+        zh: '即将进行操纵'
+        hu: 'Manőver küszöbön áll'
+        pt: 'Manobra iminente'
+
+  UNUSED_2:
+    bits: '5.5-5.0'
+    unused: true

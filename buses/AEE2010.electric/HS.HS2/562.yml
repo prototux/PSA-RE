@@ -1,0 +1,211 @@
+id: 0x562
+name: 'VCU_DRIVE_MODE_CAPABILITIES_4'
+type: 'can'
+length: 4
+comment:
+  en: 'Vehicle control unit data: available driving modes (normal, sport, eco, snow...), energy modes (hybrid, zero-emission, fuel) and drive-axle modes (auto, front, rear), plus cooling wake-up requests.'
+  fr: 'Données de l''unité de contrôle du véhicule : modes de conduite disponibles (normal, sport, éco, neige...), modes d''énergie (hybride, zéro émission, carburant) et modes d''essieu moteur (auto, avant, arrière), ainsi que les demandes de réveil pour le refroidissement.'
+  es: 'Datos de la unidad de control del vehículo: modos de conducción disponibles (normal, deportivo, eco, nieve...), modos de energía (híbrido, cero emisiones, combustible) y modos de eje motriz (automático, delantero, trasero), además de las solicitudes de activación para refrigeración.'
+  de: 'Daten der Fahrzeugsteuereinheit: verfügbare Fahrmodi (normal, sport, eco, schnee...), Energiemodi (hybrid, emissionsfrei, Kraftstoff) und Antriebsachsenmodi (auto, vorne, hinten), sowie Kühlungs-Weckanforderungen.'
+  it: 'Dati dell''unità di controllo veicolo: modalità di guida disponibili (normale, sport, eco, neve...), modalità energia (ibrida, zero emissioni, carburante) e modalità asse motore (auto, anteriore, posteriore), oltre alle richieste di risveglio per il raffreddamento.'
+  pl: 'Dane jednostki sterującej pojazdem: dostępne tryby jazdy (normalny, sportowy, eco, śnieg...), tryby energii (hybrydowy, zero emisji, paliwo) i tryby osi napędowej (auto, przednia, tylna), a także żądania wybudzenia do chłodzenia.'
+  ru: 'Данные блока управления автомобилем: доступные режимы движения (обычный, спорт, эко, снег...), энергетические режимы (гибрид, нулевые выбросы, топливо) и режимы ведущего моста (авто, передний, задний), а также запросы пробуждения для охлаждения.'
+  zh: '车辆控制单元数据:可用驾驶模式(普通、运动、经济、雪地……)、能量模式(混动、零排放、燃油)和驱动桥模式(自动、前、后),以及冷却唤醒请求。'
+  hu: 'A jármű vezérlőegység adatai: elérhető vezetési módok (normál, sport, eco, hó...), energiamódok (hibrid, nulla emissziós, üzemanyag) és hajtott tengely módok (automata, első, hátsó), valamint hűtési ébresztési kérések.'
+  pt: 'Dados da unidade de controlo do veículo: modos de condução disponíveis (normal, desportivo, eco, neve...), modos de energia (híbrido, emissões zero, combustível) e modos de eixo motor (automático, dianteiro, traseiro), além de pedidos de ativação do arrefecimento.'
+observations:
+  en: 'On state change of: CHARGING_PLUG_STATE'
+  fr: 'Sur changement d''état de : CHARGING_PLUG_STATE'
+  es: 'Al cambiar el estado de: CHARGING_PLUG_STATE'
+  de: 'Bei Statusänderung von: CHARGING_PLUG_STATE'
+  it: 'Al cambiamento di stato di: CHARGING_PLUG_STATE'
+  pl: 'Wysyłane przy zmianie stanu: CHARGING_PLUG_STATE'
+  ru: 'При изменении состояния: CHARGING_PLUG_STATE'
+  zh: '当OBC_PLUG_STATE, OBC_PLUG_VOLT_DIRECTION状态变化时'
+  hu: 'A(z) CHARGING_PLUG_STATE állapotváltozásakor'
+  pt: 'Na mudança de estado de: CHARGING_PLUG_STATE'
+periodicity: ['100ms', 'trigger']
+senders: ['VCU', 'E_VCU']
+receivers: ['BSI', 'LVNSD']
+
+signals:
+  HV_BATTERY_COOLANT_FLOW_RATE:
+    bits: '1.7-1.1'
+    comment:
+      en: 'HV battery coolant flow rate'
+      fr: 'Débit d''eau de refroidissement de la batterie haute tension'
+      es: 'Caudal de refrigerante de la batería de alta tensión'
+      de: 'Kühlmitteldurchflussrate der Hochvoltbatterie'
+      it: 'Portata del liquido di raffreddamento della batteria ad alta tensione'
+      pl: 'Natężenie przepływu chłodziwa akumulatora wysokiego napięcia'
+      ru: 'Расход охлаждающей жидкости высоковольтной батареи'
+      zh: '高压电池冷却液流量'
+      hu: 'A nagyfeszültségű akkumulátor hűtőfolyadék-áramlási sebessége'
+      pt: 'Caudal do líquido de refrigeração da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  CHARGING_PLUG_STATE:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Charging plug connection state'
+      fr: 'État de connexion de la prise de charge'
+      es: 'Estado de conexión de la toma de carga'
+      de: 'Verbindungsstatus des Ladesteckers'
+      it: 'Stato di connessione della presa di ricarica'
+      pl: 'Stan podłączenia wtyczki ładowania'
+      ru: 'Статус подключения зарядного разъёма'
+      zh: '充电插头连接状态'
+      hu: 'A töltőcsatlakozó kapcsolódási állapota'
+      pt: 'Estado de ligação da tomada de carregamento'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Plugged in'
+        fr: 'Branché'
+        es: 'Enchufado'
+        de: 'Eingesteckt'
+        it: 'Collegato'
+        pl: 'Podłączony'
+        ru: 'Подключено'
+        zh: '已插入'
+        hu: 'Csatlakoztatva'
+        pt: 'Ligado à tomada'
+      0x01:
+        en: 'Unplugged'
+        fr: 'Débranché'
+        es: 'Desconectado'
+        de: 'Ausgesteckt'
+        it: 'Scollegato'
+        pl: 'Odłączony'
+        ru: 'Отключено'
+        zh: '已拔出'
+        hu: 'Kihúzva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x03:
+        unused: true
+
+  CHARGING_PLUG_VOLTAGE_DETECTION:
+    bits: '2.5'
+    comment:
+      en: 'Voltage detection at the charging plug'
+      fr: 'Détection de tension au niveau de la prise de charge'
+      es: 'Detección de tensión en la toma de carga'
+      de: 'Spannungserkennung am Ladestecker'
+      it: 'Rilevamento di tensione sulla presa di ricarica'
+      pl: 'Wykrywanie napięcia na wtyczce ładowania'
+      ru: 'Обнаружение напряжения на зарядном разъёме'
+      zh: '充电插头电压检测'
+      hu: 'Feszültségérzékelés a töltőcsatlakozón'
+      pt: 'Deteção de tensão na tomada de carregamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Absent'
+        fr: 'Absent'
+        es: 'Ausente'
+        de: 'Nicht vorhanden'
+        it: 'Assente'
+        pl: 'Brak'
+        ru: 'Отсутствует'
+        zh: '缺失'
+        hu: 'Hiányzik'
+        pt: 'Ausente'
+      0x01:
+        en: 'Present'
+        fr: 'present'
+        es: 'Presente'
+        de: 'Vorhanden'
+        it: 'Presente'
+        pl: 'Obecny'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presente'
+
+  CHARGE_STATE:
+    bits: '2.4-2.3'
+    comment:
+      en: 'Charging state'
+      fr: 'État de la recharge'
+      es: 'Estado de la carga'
+      de: 'Ladezustand'
+      it: 'Stato della ricarica'
+      pl: 'Stan ładowania'
+      ru: 'Статус зарядки'
+      zh: '充电状态'
+      hu: 'A töltés állapota'
+      pt: 'Estado do carregamento'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+      0x01:
+        en: 'OFF not completed'
+        fr: 'OFF non achevé'
+        es: 'OFF no completado'
+        de: 'OFF nicht abgeschlossen'
+        it: 'OFF non completato'
+        pl: 'OFF niezakończone'
+        ru: 'OFF не завершено'
+        zh: 'OFF未完成'
+        hu: 'OFF nincs befejezve'
+        pt: 'OFF não concluído'
+      0x02:
+        en: 'OFF completed'
+        fr: 'OFF achevé'
+        es: 'OFF completado'
+        de: 'OFF abgeschlossen'
+        it: 'OFF completato'
+        pl: 'OFF zakończone'
+        ru: 'OFF завершено'
+        zh: 'OFF已完成'
+        hu: 'OFF befejezve'
+        pt: 'OFF concluído'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  UNUSED_2:
+    bits: '2.2-4.0'
+    unused: true

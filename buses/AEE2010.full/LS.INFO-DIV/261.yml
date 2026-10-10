@@ -1,0 +1,115 @@
+id: 0x261
+name: 'TRIP_SECOND_INFOS'
+type: 'can'
+length: 7
+comment:
+  en: 'Second saved trip data: fuel consumption, distance, duration and average speed.'
+  fr: 'Données du second trajet enregistré : consommation, distance, durée et vitesse moyenne.'
+  es: 'Datos del segundo trayecto guardado: consumo, distancia, duración y velocidad media.'
+  de: 'Daten der zweiten gespeicherten Fahrt: Verbrauch, Strecke, Dauer und Durchschnittsgeschwindigkeit.'
+  it: 'Dati del secondo tragitto salvato: consumo, distanza, durata e velocità media.'
+  pl: 'Dane drugiej zapisanej podróży: zużycie paliwa, dystans, czas trwania i średnia prędkość.'
+  ru: 'Данные второй сохранённой поездки: расход топлива, расстояние, продолжительность и средняя скорость.'
+  zh: '第二次保存行程的数据:油耗、距离、时长及平均车速。'
+  hu: 'A második elmentett út adatai: fogyasztás, távolság, időtartam és átlagsebesség.'
+  pt: 'Dados do segundo trajeto guardado: consumo de combustível, distância, duração e velocidade média.'
+observations:
+  en: 'On state change of: MEAN_CONSUMPTION'
+  fr: 'Sur changement d''état de : MEAN_CONSUMPTION'
+  es: 'Al cambiar el estado de: MEAN_CONSUMPTION'
+  de: 'Bei Statusänderung von: MEAN_CONSUMPTION'
+  it: 'Al cambiamento di stato di: MEAN_CONSUMPTION'
+  pl: 'Wysyłane przy zmianie stanu: MEAN_CONSUMPTION'
+  ru: 'При изменении состояния: MEAN_CONSUMPTION'
+  zh: '当CONSO_TRAJET2状态变化时'
+  hu: 'A(z) MEAN_CONSUMPTION állapotváltozásakor'
+  pt: 'Na mudança de estado de: MEAN_CONSUMPTION'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['EMF', 'CMB', 'BTEL', 'MATT', 'BGP', 'OVIP', 'RAD']
+
+signals:
+  MEAN_SPEED:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Average speed of trip 2'
+      fr: 'Vitesse moyenne du trajet 2'
+      es: 'Velocidad media del trayecto 2'
+      de: 'Durchschnittsgeschwindigkeit von Fahrt 2'
+      it: 'Velocità media del tragitto 2'
+      pl: 'Średnia prędkość trasy 2'
+      ru: 'Средняя скорость маршрута 2'
+      zh: '行程2的平均速度'
+      hu: 'A 2. útvonal átlagsebessége'
+      pt: 'Velocidade média do trajeto 2'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'km/h'
+    invalid: 0xFF
+
+  TOTAL_DISTANCE:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Total distance of trip 2'
+      fr: 'Distance cumulée du trajet 2'
+      es: 'Distancia acumulada del trayecto 2'
+      de: 'Gesamtstrecke der Fahrt 2'
+      it: 'Distanza totale del tragitto 2'
+      pl: 'Łączny dystans trasy 2'
+      ru: 'Общее пройденное расстояние маршрута 2'
+      zh: '行程2的累计距离'
+      hu: 'A 2. útvonal teljes távolsága'
+      pt: 'Distância acumulada do trajeto 2'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 50000
+    units: 'km'
+    invalid: 0xFFFF
+
+  MEAN_CONSUMPTION:
+    bits: '4.7-5.0'
+    comment:
+      en: 'Trip 2 average fuel consumption'
+      fr: 'Consommation moyenne de carburant du trajet 2'
+      es: 'Consumo medio de combustible del trayecto 2'
+      de: 'Durchschnittlicher Kraftstoffverbrauch für Fahrt 2'
+      it: 'Consumo medio di carburante del tragitto 2'
+      pl: 'Średnie zużycie paliwa na trasie 2'
+      ru: 'Средний расход топлива на маршруте 2'
+      zh: '行程2平均油耗'
+      hu: 'A 2. útvonal átlagos üzemanyag-fogyasztása'
+      pt: 'Consumo médio de combustível do trajeto 2'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0xFFFF
+
+  LPG_AVERAGE_CONSUMPTION_TRIP_2:
+    bits: '6.7-7.7'
+    comment:
+      en: 'Average LPG consumption for trip 2'
+      fr: 'Consommation moyenne de GPL sur le trajet 2'
+      es: 'Consumo medio de GLP en el trayecto 2'
+      de: 'Durchschnittlicher LPG-Verbrauch für Fahrt 2'
+      it: 'Consumo medio di GPL nel tragitto 2'
+      pl: 'Średnie zużycie LPG na trasie 2'
+      ru: 'Среднее потребление СНГ на маршруте 2'
+      zh: '行程2的液化石油气平均消耗量'
+      hu: 'Átlagos LPG-fogyasztás a 2. útvonalon'
+      pt: 'Consumo médio de GPL no trajeto 2'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0x1FF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '7.6-7.0'
+    unused: true

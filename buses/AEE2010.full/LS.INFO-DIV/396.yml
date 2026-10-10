@@ -1,0 +1,172 @@
+id: 0x396
+name: 'BSRF_COMMAND_11'
+type: 'can'
+length: 6
+comment:
+  en: 'Remote diagnostics authorisation and auxiliary battery state of charge / voltage, sent by the BSI.'
+  fr: 'Autorisation de télédiagnostic et état de charge/tension de la batterie auxiliaire, envoyés par la BSI.'
+  es: 'Autorización de telediagnóstico y estado de carga/tensión de la batería auxiliar, enviados por la BSI.'
+  de: 'Freigabe der Ferndiagnose und Ladezustand/Spannung der Zusatzbatterie, gesendet von der BSI.'
+  it: 'Autorizzazione alla telediagnosi e stato di carica/tensione della batteria ausiliaria, inviati dalla BSI.'
+  pl: 'Zezwolenie na zdalną diagnostykę oraz stan naładowania/napięcie akumulatora pomocniczego, wysyłane przez BSI.'
+  ru: 'Разрешение удалённой диагностики и состояние заряда/напряжение вспомогательной батареи, отправляемые BSI.'
+  zh: '由BSI发送的远程诊断授权及辅助电池荷电状态/电压。'
+  hu: 'A távdiagnosztika engedélyezése és a segédakkumulátor töltöttségi állapota/feszültsége, a BSI küldi.'
+  pt: 'Autorização de diagnóstico remoto e estado de carga/tensão da bateria auxiliar, enviados pela BSI.'
+periodicity: ['1000880ms']
+senders: ['BSI']
+receivers: ['MDS']
+
+signals:
+  REMOTE_DIAGNOSIS_AUTHORIZATION:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Remote diagnosis (TLDIAG) authorization'
+      fr: 'Autorisation de télédiagnostic (TLDIAG)'
+      es: 'Autorización de telediagnóstico (TLDIAG)'
+      de: 'Freigabe der Ferndiagnose (TLDIAG)'
+      it: 'Autorizzazione alla telediagnosi (TLDIAG)'
+      pl: 'Autoryzacja zdalnej diagnostyki (TLDIAG)'
+      ru: 'Разрешение удалённой диагностики (TLDIAG)'
+      zh: '远程诊断（TLDIAG）授权'
+      hu: 'A távdiagnosztika (TLDIAG) engedélyezése'
+      pt: 'Autorização de diagnóstico remoto (TLDIAG)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not available'
+        fr: 'Non disponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem érhető el'
+        pt: 'Não disponível'
+      0x01:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  UNUSED_1:
+    bits: '1.5-1.0'
+    unused: true
+
+  AUX_BATTERY_VOLTAGE:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Auxiliary (12V) battery voltage'
+      fr: 'Tension de la batterie auxiliaire (12V)'
+      es: 'Tensión de la batería auxiliar (12V)'
+      de: 'Spannung der Zusatzbatterie (12V)'
+      it: 'Tensione della batteria ausiliaria (12V)'
+      pl: 'Napięcie akumulatora pomocniczego (12V)'
+      ru: 'Напряжение вспомогательной батареи (12В)'
+      zh: '辅助（12V）电池电压'
+      hu: 'A segédakkumulátor (12V) feszültsége'
+      pt: 'Tensão da bateria auxiliar (12V)'
+    type: 'uint'
+    factor: 0.1
+    offset: 5.5
+    min: 5.5
+    max: 18.1
+    units: 'V'
+    default: 0x7F
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 0.15)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 0.15)'
+          es: 'También observado con otro escalado (factor 0.15)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 0.15)'
+          it: 'Osservato anche con un''altra scala (factor 0.15)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 0.15)'
+          ru: 'Также наблюдался с другим масштабом (factor 0.15)'
+          zh: '也观察到使用另一种缩放（factor 0.15）'
+          hu: 'Megfigyelve más skálázással is (factor 0.15)'
+          pt: 'Também observado com outra escala (factor 0.15)'
+        factor: 0.15
+      - note:
+          en: 'Also observed with another scaling (factor 5.5)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 5.5)'
+          es: 'También observado con otro escalado (factor 5.5)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 5.5)'
+          it: 'Osservato anche con un''altra scala (factor 5.5)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 5.5)'
+          ru: 'Также наблюдался с другим масштабом (factor 5.5)'
+          zh: '也观察到使用另一种缩放（factor 5.5）'
+          hu: 'Megfigyelve más skálázással is (factor 5.5)'
+          pt: 'Também observado com outra escala (factor 5.5)'
+        factor: 5.5
+
+  UNUSED_2:
+    bits: '2.0'
+    unused: true
+
+  AUX_BATTERY_SOC:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Auxiliary (12V) battery state of charge'
+      fr: 'État de charge de la batterie auxiliaire (12V)'
+      es: 'Estado de carga de la batería auxiliar (12V)'
+      de: 'Ladezustand der Zusatzbatterie (12V)'
+      it: 'Stato di carica della batteria ausiliaria (12V)'
+      pl: 'Stan naładowania akumulatora pomocniczego (12V)'
+      ru: 'Уровень заряда вспомогательной батареи (12В)'
+      zh: '辅助（12V）电池荷电状态'
+      hu: 'A segédakkumulátor (12V) töltöttségi állapota'
+      pt: 'Estado de carga da bateria auxiliar (12V)'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 1000ms'
+      fr: 'Aussi observée avec une période de 1000ms'
+      es: 'También observada con un periodo de 1000ms'
+      de: 'Auch mit einer Periode von 1000ms beobachtet'
+      it: 'Osservata anche con un periodo di 1000ms'
+      pl: 'Obserwowana także z okresem 1000ms'
+      ru: 'Также наблюдалась с периодом 1000ms'
+      zh: '也观察到周期为1000ms'
+      hu: 'Megfigyelve 1000ms periódussal is'
+      pt: 'Também observada com um período de 1000ms'
+    periodicity: ['1000ms']
+  - note:
+      en: 'Also observed with a period of 1000ms'
+      fr: 'Aussi observée avec une période de 1000ms'
+      es: 'También observada con un periodo de 1000ms'
+      de: 'Auch mit einer Periode von 1000ms beobachtet'
+      it: 'Osservata anche con un periodo di 1000ms'
+      pl: 'Obserwowana także z okresem 1000ms'
+      ru: 'Также наблюдалась с периодом 1000ms'
+      zh: '也观察到周期为1000ms'
+      hu: 'Megfigyelve 1000ms periódussal is'
+      pt: 'Também observada com um período de 1000ms'
+    periodicity: ['1000ms']

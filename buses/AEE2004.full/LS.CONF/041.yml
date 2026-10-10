@@ -1,0 +1,446 @@
+id: 0x041
+name: 'REMOTE_CONTROL_OUTPUTS'
+type: 'can'
+length: 3
+comment:
+  en: 'Remote control outputs: button presses, anti-scan protection and locking/unlocking command status'
+  fr: 'Sorties de la télécommande : appuis sur les touches, protection anti-scan et état des commandes de (dé)verrouillage'
+  es: 'Salidas del mando a distancia: pulsaciones de botones, protección antiescaneo y estado de las órdenes de (des)bloqueo'
+  de: 'Ausgänge der Fernbedienung: Tastendrücke, Anti-Scan-Schutz und Status der Ver-/Entriegelungsbefehle'
+  it: 'Uscite del telecomando: pressioni dei tasti, protezione anti-scan e stato dei comandi di (s)blocco'
+  pl: 'Wyjścia pilota: naciśnięcia przycisków, zabezpieczenie anti-scan i stan poleceń (od)blokowania'
+  ru: 'Выходные данные пульта ДУ: нажатия кнопок, защита от сканирования и состояние команд блокировки/разблокировки'
+  zh: '遥控器输出:按键动作、防扫描保护及上锁/解锁指令状态'
+  hu: 'A távirányító kimenetei: gombnyomások, szkennelés elleni védelem és a zárás/nyitás parancsok állapota'
+  pt: 'Saídas do comando à distância: pressões nos botões, proteção antivarrimento e estado do comando de bloqueio/desbloqueio.'
+periodicity: ['50ms', 'trigger']
+senders: []  # TODO: find the sender(s)
+receivers: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7'
+    unused: true
+
+  LOCKING_AUTHORIZED:
+    bits: '1.6'
+    comment:
+      en: 'Status indicating whether vehicle locking is possible'
+      fr: 'État indiquant si la condamnation du véhicule est possible'
+      es: 'Estado que indica si el bloqueo del vehículo es posible'
+      de: 'Status, der anzeigt, ob die Fahrzeugverriegelung möglich ist'
+      it: 'Stato che indica se il bloccaggio del veicolo è possibile'
+      pl: 'Stan wskazujący, czy zablokowanie pojazdu jest możliwe'
+      ru: 'Статус, указывающий, возможна ли блокировка автомобиля'
+      zh: '表示车辆锁止是否可行的状态'
+      hu: 'Állapot, amely jelzi, hogy a jármű zárása lehetséges-e'
+      pt: 'Estado que indica se o bloqueio do veículo é possível'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'If locking is not possible because an active ID is present in the cabin'
+        fr: 'Si la condamnation est impossible car un identifiant actif est présent dans l''habitacle'
+        es: 'Si el bloqueo no es posible porque hay un identificador activo en el habitáculo'
+        de: 'Wenn die Verriegelung nicht möglich ist, weil sich eine aktive Kennung im Innenraum befindet'
+        it: 'Se il blocco non è possibile perché un ID attivo è presente nell''abitacolo'
+        pl: 'Jeśli zablokowanie jest niemożliwe, ponieważ aktywny identyfikator znajduje się w kabinie'
+        ru: 'Если блокировка невозможна из-за наличия активного идентификатора в салоне'
+        zh: '如果因车内存在有效识别码而无法上锁'
+        hu: 'Ha a zárás nem lehetséges, mert aktív azonosító van az utastérben'
+        pt: 'Se a trancagem não for possível porque existe um ID ativo no habitáculo'
+      0x01:
+        en: 'Locking possible (no key detected inside the cabin)'
+        fr: 'Verrouillage possible (aucune clé détectée dans l''habitacle)'
+        es: 'Bloqueo posible (sin llave detectada dentro)'
+        de: 'Verriegeln möglich (kein Schlüssel im Innenraum erkannt)'
+        it: 'Blocco possibile (nessuna chiave rilevata all''interno)'
+        pl: 'Blokada możliwa (brak wykrytego kluczyka w środku)'
+        ru: 'Блокировка возможна (ключ в салоне не обнаружен)'
+        zh: '可锁车(车内未检测到钥匙)'
+        hu: 'Zárás lehetséges (nincs kulcs a belső térben)'
+        pt: 'Trancagem possível (nenhuma chave detetada no interior do habitáculo)'
+
+  REMOTE_KEY_BUTTON_1_CODE:
+    bits: '1.5'
+    comment:
+      en: 'Code for remote key button 1, sent to the locking/unlocking function for processing (remote control action only)'
+      fr: 'Code correspondant à la touche 1 de la télécommande, transmis à la fonction de (dé)condamnation pour traitement (action télécommande uniquement)'
+      es: 'Código correspondiente al botón 1 del mando a distancia, transmitido a la función de (des)bloqueo para su procesamiento (solo acción de mando a distancia)'
+      de: 'Code für Fernbedienungstaste 1, zur Verarbeitung an die Ver-/Entriegelungsfunktion übermittelt (nur Fernbedienungsaktion)'
+      it: 'Codice corrispondente al tasto 1 del telecomando, inviato alla funzione di (s)blocco per l''elaborazione (solo azione telecomando)'
+      pl: 'Kod odpowiadający przyciskowi 1 pilota, przesyłany do funkcji (od)blokowania w celu przetworzenia (tylko działanie pilota)'
+      ru: 'Код, соответствующий кнопке 1 брелока, передаваемый функции блокировки/разблокировки для обработки (только действие брелока)'
+      zh: '遥控器按键1对应的代码,发送给锁止/解锁功能处理(仅遥控器操作时有效)'
+      hu: 'A távirányító 1. gombjának megfelelő kód, amelyet a zárás/nyitás funkció dolgoz fel (csak távirányítós művelet esetén)'
+      pt: 'Código correspondente à tecla 1 do comando à distância, transmitido à função de (des)bloqueio para processamento (apenas ação do comando à distância)'
+    type: 'bool'
+    default: 0x00
+
+  REMOTE_KEY_BUTTON_2_CODE:
+    bits: '1.4'
+    comment:
+      en: 'Code for remote key button 2, sent to the locking/unlocking function for processing (remote control action only)'
+      fr: 'Code correspondant à la touche 2 de la télécommande, transmis à la fonction de (dé)condamnation pour traitement (action télécommande uniquement)'
+      es: 'Código correspondiente al botón 2 del mando a distancia, transmitido a la función de (des)bloqueo para su procesamiento (solo acción de mando a distancia)'
+      de: 'Code für Fernbedienungstaste 2, zur Verarbeitung an die Ver-/Entriegelungsfunktion übermittelt (nur Fernbedienungsaktion)'
+      it: 'Codice corrispondente al tasto 2 del telecomando, inviato alla funzione di (s)blocco per l''elaborazione (solo azione telecomando)'
+      pl: 'Kod odpowiadający przyciskowi 2 pilota, przesyłany do funkcji (od)blokowania w celu przetworzenia (tylko działanie pilota)'
+      ru: 'Код, соответствующий кнопке 2 брелока, передаваемый функции блокировки/разблокировки для обработки (только действие брелока)'
+      zh: '遥控器按键2对应的代码,发送给锁止/解锁功能处理(仅遥控器操作时有效)'
+      hu: 'A távirányító 2. gombjának megfelelő kód, amelyet a zárás/nyitás funkció dolgoz fel (csak távirányítós művelet esetén)'
+      pt: 'Código correspondente à tecla 2 do comando à distância, transmitido à função de (des)bloqueio para processamento (apenas ação do comando à distância)'
+    type: 'bool'
+    default: 0x00
+
+  REMOTE_KEY_BUTTON_3_CODE:
+    bits: '1.3'
+    comment:
+      en: 'Code for remote key button 3, sent to the locking/unlocking function for processing (remote control action only)'
+      fr: 'Code correspondant à la touche 3 de la télécommande, transmis à la fonction de (dé)condamnation pour traitement (action télécommande uniquement)'
+      es: 'Código correspondiente al botón 3 del mando a distancia, transmitido a la función de (des)bloqueo para su procesamiento (solo acción de mando a distancia)'
+      de: 'Code für Fernbedienungstaste 3, zur Verarbeitung an die Ver-/Entriegelungsfunktion übermittelt (nur Fernbedienungsaktion)'
+      it: 'Codice corrispondente al tasto 3 del telecomando, inviato alla funzione di (s)blocco per l''elaborazione (solo azione telecomando)'
+      pl: 'Kod odpowiadający przyciskowi 3 pilota, przesyłany do funkcji (od)blokowania w celu przetworzenia (tylko działanie pilota)'
+      ru: 'Код, соответствующий кнопке 3 брелока, передаваемый функции блокировки/разблокировки для обработки (только действие брелока)'
+      zh: '遥控器按键3对应的代码,发送给锁止/解锁功能处理(仅遥控器操作时有效)'
+      hu: 'A távirányító 3. gombjának megfelelő kód, amelyet a zárás/nyitás funkció dolgoz fel (csak távirányítós művelet esetén)'
+      pt: 'Código correspondente à tecla 3 do comando à distância, transmitido à função de (des)bloqueio para processamento (apenas ação do comando à distância)'
+    type: 'bool'
+    default: 0x00
+
+  REMOTE_KEY_BUTTON_4_CODE:
+    bits: '1.2'
+    comment:
+      en: 'Code for remote key button 4, sent to the locking/unlocking function for processing (remote control action only)'
+      fr: 'Code correspondant à la touche 4 de la télécommande, transmis à la fonction de (dé)condamnation pour traitement (action télécommande uniquement)'
+      es: 'Código correspondiente al botón 4 del mando a distancia, transmitido a la función de (des)bloqueo para su procesamiento (solo acción de mando a distancia)'
+      de: 'Code für Fernbedienungstaste 4, zur Verarbeitung an die Ver-/Entriegelungsfunktion übermittelt (nur Fernbedienungsaktion)'
+      it: 'Codice corrispondente al tasto 4 del telecomando, inviato alla funzione di (s)blocco per l''elaborazione (solo azione telecomando)'
+      pl: 'Kod odpowiadający przyciskowi 4 pilota, przesyłany do funkcji (od)blokowania w celu przetworzenia (tylko działanie pilota)'
+      ru: 'Код, соответствующий кнопке 4 брелока, передаваемый функции блокировки/разблокировки для обработки (только действие брелока)'
+      zh: '遥控器按键4对应的代码,发送给锁止/解锁功能处理(仅遥控器操作时有效)'
+      hu: 'A távirányító 4. gombjának megfelelő kód, amelyet a zárás/nyitás funkció dolgoz fel (csak távirányítós művelet esetén)'
+      pt: 'Código correspondente à tecla 4 do comando à distância, transmitido à função de (des)bloqueio para processamento (apenas ação do comando à distância)'
+    type: 'bool'
+    default: 0x00
+
+  LONG_PRESS_DETECTED:
+    bits: '1.1'
+    comment:
+      en: 'Long button press detected (held more than the threshold duration)'
+      fr: 'Appui long détecté (maintenu plus longtemps que le seuil)'
+      es: 'Pulsación larga detectada (mantenida más tiempo que el umbral)'
+      de: 'Langer Tastendruck erkannt (länger als die Schwellenzeit gehalten)'
+      it: 'Pressione lunga rilevata (mantenuta più a lungo della soglia)'
+      pl: 'Wykryto długie naciśnięcie (przytrzymane dłużej niż próg)'
+      ru: 'Обнаружено долгое нажатие (удерживалось дольше порогового значения)'
+      zh: '检测到长按(按住时间超过阈值)'
+      hu: 'Hosszú gombnyomás észlelve (a küszöbidőnél tovább tartva)'
+      pt: 'Pressão longa detetada (mantida mais tempo do que o limiar)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'If the press is held for less than X ms'
+        fr: 'Si l''appui est maintenu moins de X ms'
+        es: 'Si la pulsación se mantiene menos de X ms'
+        de: 'Wenn die Taste weniger als X ms gedrückt gehalten wird'
+        it: 'Se la pressione è mantenuta per meno di X ms'
+        pl: 'Jeśli naciśnięcie trwa krócej niż X ms'
+        ru: 'Если нажатие удерживается менее X мс'
+        zh: '如果按压保持时间少于X毫秒'
+        hu: 'Ha a nyomás X ms-nél rövidebb ideig tart'
+        pt: 'Se a pressão for mantida por menos de X ms'
+      0x01:
+        en: 'If held for more than X ms'
+        fr: 'Si l''appui est maintenu plus de X ms'
+        es: 'Si se mantiene pulsado más de X ms'
+        de: 'Wenn länger als X ms gedrückt gehalten'
+        it: 'Se premuto per più di X ms'
+        pl: 'Jeśli przytrzymano dłużej niż X ms'
+        ru: 'Если удерживается более X мс'
+        zh: '如果按住超过X毫秒'
+        hu: 'Ha X ms-nél tovább tartják lenyomva'
+        pt: 'Se mantido pressionado durante mais de X ms'
+
+  KEY_LONG_DISTANCE_INFO:
+    bits: '1.0'
+    comment:
+      en: 'Status indicating whether the distance between the key transmitter and the vehicle exceeds the threshold'
+      fr: 'État indiquant si la distance entre l''émetteur de la clé et le véhicule dépasse le seuil'
+      es: 'Estado que indica si la distancia entre el emisor de la llave y el vehículo supera el umbral'
+      de: 'Status, der anzeigt, ob der Abstand zwischen Schlüsselsender und Fahrzeug den Schwellenwert überschreitet'
+      it: 'Stato che indica se la distanza tra il trasmettitore della chiave e il veicolo supera la soglia'
+      pl: 'Stan wskazujący, czy odległość między nadajnikiem kluczyka a pojazdem przekracza próg'
+      ru: 'Статус, указывающий, превышает ли расстояние между передатчиком ключа и автомобилем пороговое значение'
+      zh: '表示钥匙发射器与车辆之间的距离是否超过阈值的状态'
+      hu: 'Állapot, amely jelzi, hogy a kulcsadó és a jármű közötti távolság meghaladja-e a küszöbértéket'
+      pt: 'Estado que indica se a distância entre o transmissor da chave e o veículo excede o limiar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'If the distance between the RF transmitter (remote control) and the vehicle is less than Y m'
+        fr: 'Si la distance entre l''émetteur radiofréquence (télécommande) et le véhicule est inférieure à Y m'
+        es: 'Si la distancia entre el emisor de radiofrecuencia (mando a distancia) y el vehículo es inferior a Y m'
+        de: 'Wenn der Abstand zwischen dem Funksender (Fernbedienung) und dem Fahrzeug weniger als Y m beträgt'
+        it: 'Se la distanza tra il trasmettitore radiofrequenza (telecomando) e il veicolo è inferiore a Y m'
+        pl: 'Jeśli odległość między nadajnikiem radiowym (pilotem) a pojazdem jest mniejsza niż Y m'
+        ru: 'Если расстояние между радиопередатчиком (брелоком) и автомобилем меньше Y м'
+        zh: '若射频发射器(遥控器)与车辆的距离小于 Y 米'
+        hu: 'Ha a rádiófrekvenciás adó (távirányító) és a jármű közti távolság kevesebb mint Y m'
+        pt: 'Se a distância entre o emissor de radiofrequência (comando à distância) e o veículo for inferior a Y m'
+      0x01:
+        en: 'If the distance between the RF transmitter (remote control) and the vehicle exceeds Y m'
+        fr: 'Si la distance entre l''émetteur HF (télécommande) et le véhicule dépasse Y m'
+        es: 'Si la distancia entre el emisor RF (mando a distancia) y el vehículo supera Y m'
+        de: 'Wenn der Abstand zwischen dem HF-Sender (Fernbedienung) und dem Fahrzeug Y m überschreitet'
+        it: 'Se la distanza tra il trasmettitore RF (telecomando) e il veicolo supera Y m'
+        pl: 'Jeśli odległość między nadajnikiem RF (pilotem) a pojazdem przekracza Y m'
+        ru: 'Если расстояние между радиопередатчиком (брелоком) и автомобилем превышает Y м'
+        zh: '如果射频发射器（遥控器）与车辆之间的距离超过Y米'
+        hu: 'Ha a rádiós adó (távirányító) és a jármű közötti távolság meghaladja az Y métert'
+        pt: 'Se a distância entre o emissor RF (comando à distância) e o veículo ultrapassar Y m'
+
+  UNUSED_2:
+    bits: '2.7-2.6'
+    unused: true
+
+  UNLOCK_MULTIPLEXED_COMMAND_1:
+    bits: '2.5'
+    comment:
+      en: 'Multiplexed unlocking command number 1'
+      fr: 'Commande multiplexée de décondamnation n°1'
+      es: 'Mando multiplexado de desbloqueo n.º 1'
+      de: 'Multiplexierter Entriegelungsbefehl Nr. 1'
+      it: 'Comando multiplato di sblocco n. 1'
+      pl: 'Zmultipleksowane polecenie odblokowania nr 1'
+      ru: 'Мультиплексная команда разблокировки №1'
+      zh: '多路复用解锁指令1号'
+      hu: '1. számú multiplexelt nyitási parancs'
+      pt: 'Comando multiplexado de desbloqueio n.º 1'
+    type: 'bool'
+    default: 0x00
+
+  UNLOCK_MULTIPLEXED_COMMAND_2:
+    bits: '2.4'
+    comment:
+      en: 'Multiplexed unlocking command number 2'
+      fr: 'Commande multiplexée de décondamnation n°2'
+      es: 'Mando multiplexado de desbloqueo n.º 2'
+      de: 'Multiplexierter Entriegelungsbefehl Nr. 2'
+      it: 'Comando multiplato di sblocco n. 2'
+      pl: 'Zmultipleksowane polecenie odblokowania nr 2'
+      ru: 'Мультиплексная команда разблокировки №2'
+      zh: '多路复用解锁指令2号'
+      hu: '2. számú multiplexelt nyitási parancs'
+      pt: 'Comando multiplexado de desbloqueio n.º 2'
+    type: 'bool'
+    default: 0x00
+
+  TRUNK_HANDSFREE_UNLOCK_COMMAND:
+    bits: '2.3'
+    comment:
+      en: 'Multiplexed unlocking command for the trunk (hands-free access only)'
+      fr: 'Commande multiplexée de décondamnation du coffre (accès mains libres uniquement)'
+      es: 'Comando multiplexado de desbloqueo del maletero (solo acceso manos libres)'
+      de: 'Multiplexierter Entriegelungsbefehl für den Kofferraum (nur Freihandzugang)'
+      it: 'Comando multiplato di sblocco del bagagliaio (solo accesso mani libere)'
+      pl: 'Zmultipleksowane polecenie odblokowania bagażnika (tylko dostęp bezdotykowy)'
+      ru: 'Мультиплексная команда разблокировки багажника (только доступ без помощи рук)'
+      zh: '行李箱多路复用解锁指令(仅限免提进入)'
+      hu: 'A csomagtartó multiplexelt nyitási parancsa (csak kihands-free hozzáférésnél)'
+      pt: 'Comando multiplexado de desbloqueio da mala (apenas acesso mãos-livres)'
+    type: 'bool'
+    default: 0x00
+
+  REAR_WINDOW_HANDSFREE_UNLOCK_COMMAND:
+    bits: '2.2'
+    comment:
+      en: 'Multiplexed unlocking command for the rear window (hands-free access only)'
+      fr: 'Commande multiplexée de décondamnation de la lunette arrière (accès mains libres uniquement)'
+      es: 'Comando multiplexado de desbloqueo de la luneta trasera (solo acceso manos libres)'
+      de: 'Multiplexierter Entriegelungsbefehl für die Heckscheibe (nur Freihandzugang)'
+      it: 'Comando multiplato di sblocco del lunotto posteriore (solo accesso mani libere)'
+      pl: 'Zmultipleksowane polecenie odblokowania tylnej szyby (tylko dostęp bezdotykowy)'
+      ru: 'Мультиплексная команда разблокировки заднего стекла (только доступ без помощи рук)'
+      zh: '后窗多路复用解锁指令(仅限免提进入)'
+      hu: 'A hátsó ablak multiplexelt nyitási parancsa (csak kihands-free hozzáférésnél)'
+      pt: 'Comando multiplexado de desbloqueio do vidro traseiro (apenas acesso mãos-livres)'
+    type: 'bool'
+    default: 0x00
+
+  UNLOCKING_PERFORMED:
+    bits: '2.1'
+    comment:
+      en: 'Status indicating that an unlocking command was carried out'
+      fr: 'État indiquant qu''une commande de décondamnation a été réalisée'
+      es: 'Estado que indica que se ha realizado un comando de desbloqueo'
+      de: 'Status, der anzeigt, dass ein Entriegelungsbefehl ausgeführt wurde'
+      it: 'Stato che indica che è stato eseguito un comando di sblocco'
+      pl: 'Stan wskazujący, że wykonano polecenie odblokowania'
+      ru: 'Статус, указывающий, что команда разблокировки была выполнена'
+      zh: '表示解锁指令已执行的状态'
+      hu: 'Állapot, amely jelzi, hogy nyitási parancs végrehajtása megtörtént'
+      pt: 'Estado que indica que um comando de desbloqueio foi executado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'If a wired unlocking command was sent to the locks'
+        fr: 'Si une commande de décondamnation filaire a été générée vers les serrures'
+        es: 'Si se generó un comando de desbloqueo por cable hacia las cerraduras'
+        de: 'Wenn ein kabelgebundener Entriegelungsbefehl an die Schlösser gesendet wurde'
+        it: 'Se è stato generato un comando di sblocco via cavo verso le serrature'
+        pl: 'Jeśli do zamków wysłano przewodowe polecenie odblokowania'
+        ru: 'Если на замки была отправлена проводная команда разблокировки'
+        zh: '如果已向门锁发送有线解锁命令'
+        hu: 'Ha vezetékes kioldási parancsot küldtek a zárak felé'
+        pt: 'Se foi enviado um comando de desbloqueio por cabo para as fechaduras'
+
+  HANDS_FREE_LOCKING_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Hands-free locking request'
+      fr: 'Demande de condamnation mains libres'
+      es: 'Solicitud de bloqueo manos libres'
+      de: 'Freihand-Verriegelungsanforderung'
+      it: 'Richiesta di bloccaggio mani libere'
+      pl: 'Żądanie zamknięcia bezdotykowego'
+      ru: 'Запрос блокировки без помощи рук'
+      zh: '免提锁止请求'
+      hu: 'Kihands-free zárási kérés'
+      pt: 'Pedido de bloqueio mãos-livres'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'If the hands-free locking push button was not pressed'
+        fr: 'Si aucun appui sur le bouton de condamnation mains libres n''est généré'
+        es: 'Si no se genera ninguna pulsación del botón de bloqueo manos libres'
+        de: 'Wenn kein Tastendruck auf den Freisprech-Verriegelungstaster erfolgt ist'
+        it: 'Se non viene generata alcuna pressione sul pulsante di blocco mani libere'
+        pl: 'Jeśli nie wygenerowano naciśnięcia przycisku blokowania bezdotykowego'
+        ru: 'Если нажатие кнопки блокировки hands-free не зафиксировано'
+        zh: '如果未生成免提上锁按钮按压'
+        hu: 'Ha nem történt megnyomás a kihangosított zárás gombon'
+        pt: 'Se não for gerada nenhuma pressão no botão de bloqueio mãos-livres'
+      0x01:
+        en: 'Hands-free lock button pressed, or vehicle left the coverage zone'
+        fr: 'Appui sur le bouton de verrouillage mains libres généré, ou sortie de la zone de couverture'
+        es: 'Pulsación del botón de bloqueo manos libres generada, o salida de la zona de cobertura'
+        de: 'Keyless-Verriegelungstaste betätigt oder Fahrzeug hat den Erfassungsbereich verlassen'
+        it: 'Pressione del pulsante di blocco mani libere generata, o uscita dalla zona di copertura'
+        pl: 'Wygenerowano naciśnięcie przycisku blokady bezdotykowej lub opuszczono strefę zasięgu'
+        ru: 'Сгенерировано нажатие кнопки бесключевой блокировки или выход из зоны покрытия'
+        zh: '已触发免钥匙上锁按钮按压,或车辆离开覆盖区域'
+        hu: 'A kulcs nélküli zárógomb megnyomása generálódott, vagy a jármű elhagyta a lefedettségi zónát'
+        pt: 'Botão de trancagem mãos-livres premido, ou veículo saiu da zona de cobertura'
+
+  UNUSED_3:
+    bits: '3.7'
+    unused: true
+
+  KEY_ID_DETECTION_ZONE:
+    bits: '3.6-3.5'
+    comment:
+      en: 'Zone where the key identifier is detected, reported to the BSI'
+      fr: 'Zone où l''identifiant de clé est détecté, transmise à la BSI'
+      es: 'Zona en la que se detecta el identificador de la llave, comunicada a la BSI'
+      de: 'Zone, in der die Schlüsselkennung erkannt wird, an die BSI gemeldet'
+      it: 'Zona in cui viene rilevato l''identificativo della chiave, comunicata alla BSI'
+      pl: 'Strefa, w której wykryto identyfikator kluczyka, przekazywana do BSI'
+      ru: 'Зона обнаружения идентификатора ключа, передаваемая в BSI'
+      zh: '检测到钥匙标识符的区域,报告给BSI'
+      hu: 'A kulcsazonosító érzékelési zónája, a BSI-nek jelentve'
+      pt: 'Zona em que o identificador da chave é detetado, comunicada à BSI'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No ID seen'
+        fr: 'Aucun identifiant vu'
+        es: 'Ningún identificador visto'
+        de: 'Keine Kennung erkannt'
+        it: 'Nessun identificativo rilevato'
+        pl: 'Nie wykryto identyfikatora'
+        ru: 'Идентификатор не обнаружен'
+        zh: '未检测到ID'
+        hu: 'Nem észlelt azonosító'
+        pt: 'Nenhum identificador visto'
+      0x01:
+        en: 'ID seen on driver side (zone 1)'
+        fr: 'ID vu côté conducteur (zone 1)'
+        es: 'ID visto en el lado del conductor (zona 1)'
+        de: 'ID auf Fahrerseite erkannt (Zone 1)'
+        it: 'ID rilevato lato conducente (zona 1)'
+        pl: 'ID wykryte po stronie kierowcy (strefa 1)'
+        ru: 'ID обнаружен со стороны водителя (зона 1)'
+        zh: '在驾驶员侧检测到ID(区域1)'
+        hu: 'ID érzékelve a vezető oldalán (1. zóna)'
+        pt: 'ID visto do lado do condutor (zona 1)'
+      0x02:
+        en: 'ID seen on passenger side (zone 2)'
+        fr: 'ID vu côté passager (zone 2)'
+        es: 'ID visto en el lado del pasajero (zona 2)'
+        de: 'ID auf der Beifahrerseite erkannt (Zone 2)'
+        it: 'ID rilevato lato passeggero (zona 2)'
+        pl: 'ID widoczne po stronie pasażera (strefa 2)'
+        ru: 'ID обнаружен со стороны пассажира (зона 2)'
+        zh: '在乘客侧检测到ID（区域2）'
+        hu: 'ID az utas oldalán észlelve (2. zóna)'
+        pt: 'ID visto do lado do passageiro (zona 2)'
+      0x03:
+        en: 'ID seen on the boot side'
+        fr: 'ID vu côté coffre'
+        es: 'ID visto en el lado del maletero'
+        de: 'ID auf der Kofferraumseite erkannt'
+        it: 'ID visto sul lato bagagliaio'
+        pl: 'Identyfikator widziany po stronie bagażnika'
+        ru: 'ID обнаружен со стороны багажника'
+        zh: '在后备箱一侧检测到ID'
+        hu: 'Azonosító a csomagtér oldalán érzékelve'
+        pt: 'ID visto do lado da bagageira'
+
+  IMMOBILIZER_SUPPLY_STATE:
+    bits: '3.4'
+    comment:
+      en: 'Power supply state of the electronic immobilizer (AVE)'
+      fr: 'État de l''alimentation de l''antivol électrique (AVE)'
+      es: 'Estado de la alimentación del antirrobo eléctrico (AVE)'
+      de: 'Versorgungsstatus der elektrischen Wegfahrsperre (AVE)'
+      it: 'Stato dell''alimentazione dell''antifurto elettrico (AVE)'
+      pl: 'Stan zasilania elektrycznego immobilizera (AVE)'
+      ru: 'Статус питания электрического противоугонного устройства (AVE)'
+      zh: '电子防盗锁(AVE)供电状态'
+      hu: 'Az elektromos indításgátló (AVE) tápellátásának állapota'
+      pt: 'Estado da alimentação do imobilizador eletrónico (AVE)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Power OFF'
+        fr: 'Alimentation coupée'
+        es: 'Alimentación desconectada'
+        de: 'Versorgung aus'
+        it: 'Alimentazione disattivata'
+        pl: 'Zasilanie wyłączone'
+        ru: 'Питание выключено'
+        zh: '电源关闭'
+        hu: 'A táplálás kikapcsolva'
+        pt: 'Alimentação cortada'
+      0x01:
+        en: 'Power supply on'
+        fr: 'Alimentation activée'
+        es: 'Alimentación activada'
+        de: 'Versorgung ein'
+        it: 'Alimentazione attiva'
+        pl: 'Zasilanie włączone'
+        ru: 'Питание включено'
+        zh: '电源开启'
+        hu: 'Tápellátás bekapcsolva'
+        pt: 'Alimentação ligada'
+
+  UNUSED_4:
+    bits: '3.3-3.0'
+    unused: true

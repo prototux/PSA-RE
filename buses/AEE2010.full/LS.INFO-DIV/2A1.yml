@@ -1,0 +1,115 @@
+id: 0x2A1
+name: 'TRIP_FIRST_INFOS'
+type: 'can'
+length: 7
+comment:
+  en: 'First saved trip data: fuel consumption, distance, duration and average speed.'
+  fr: 'Données du premier trajet enregistré : consommation, distance, durée et vitesse moyenne.'
+  es: 'Datos del primer trayecto guardado: consumo, distancia, duración y velocidad media.'
+  de: 'Daten der ersten gespeicherten Fahrt: Verbrauch, Strecke, Dauer und Durchschnittsgeschwindigkeit.'
+  it: 'Dati del primo tragitto salvato: consumo, distanza, durata e velocità media.'
+  pl: 'Dane pierwszej zapisanej podróży: zużycie paliwa, dystans, czas trwania i średnia prędkość.'
+  ru: 'Данные первой сохранённой поездки: расход топлива, расстояние, продолжительность и средняя скорость.'
+  zh: '第一次保存行程的数据:油耗、距离、时长及平均车速。'
+  hu: 'Az első elmentett út adatai: fogyasztás, távolság, időtartam és átlagsebesség.'
+  pt: 'Dados do primeiro trajeto guardado: consumo de combustível, distância, duração e velocidade média.'
+observations:
+  en: 'On state change of: MEAN_CONSUMPTION'
+  fr: 'Sur changement d''état de : MEAN_CONSUMPTION'
+  es: 'Al cambiar el estado de: MEAN_CONSUMPTION'
+  de: 'Bei Statusänderung von: MEAN_CONSUMPTION'
+  it: 'Al cambiamento di stato di: MEAN_CONSUMPTION'
+  pl: 'Wysyłane przy zmianie stanu: MEAN_CONSUMPTION'
+  ru: 'При изменении состояния: MEAN_CONSUMPTION'
+  zh: '当CONSO_TRAJET1状态变化时'
+  hu: 'A(z) MEAN_CONSUMPTION állapotváltozásakor'
+  pt: 'Na mudança de estado de: MEAN_CONSUMPTION'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['BTEL', 'EMF', 'CMB', 'MATT', 'BGP', 'OVIP', 'RAD']
+
+signals:
+  MEAN_SPEED:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Average speed of trip 1'
+      fr: 'Vitesse moyenne du trajet 1'
+      es: 'Velocidad media del trayecto 1'
+      de: 'Durchschnittsgeschwindigkeit von Fahrt 1'
+      it: 'Velocità media del tragitto 1'
+      pl: 'Średnia prędkość trasy 1'
+      ru: 'Средняя скорость маршрута 1'
+      zh: '行程1的平均速度'
+      hu: 'Az 1. útvonal átlagsebessége'
+      pt: 'Velocidade média do trajeto 1'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'km/h'
+    invalid: 0xFF
+
+  TOTAL_DISTANCE:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Total distance of trip 1'
+      fr: 'Distance cumulée du trajet 1'
+      es: 'Distancia acumulada del trayecto 1'
+      de: 'Gesamtstrecke der Fahrt 1'
+      it: 'Distanza totale del tragitto 1'
+      pl: 'Łączny dystans trasy 1'
+      ru: 'Общее пройденное расстояние маршрута 1'
+      zh: '行程1的累计距离'
+      hu: 'Az 1. útvonal teljes távolsága'
+      pt: 'Distância acumulada do trajeto 1'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 50000
+    units: 'km'
+    invalid: 0xFFFF
+
+  MEAN_CONSUMPTION:
+    bits: '4.7-5.0'
+    comment:
+      en: 'Trip 1 average fuel consumption'
+      fr: 'Consommation moyenne de carburant du trajet 1'
+      es: 'Consumo medio de combustible del trayecto 1'
+      de: 'Durchschnittlicher Kraftstoffverbrauch für Fahrt 1'
+      it: 'Consumo medio di carburante del tragitto 1'
+      pl: 'Średnie zużycie paliwa na trasie 1'
+      ru: 'Средний расход топлива на маршруте 1'
+      zh: '行程1平均油耗'
+      hu: 'Az 1. útvonal átlagos üzemanyag-fogyasztása'
+      pt: 'Consumo médio de combustível do trajeto 1'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0xFFFF
+
+  LPG_AVERAGE_CONSUMPTION_TRIP_1:
+    bits: '6.7-7.7'
+    comment:
+      en: 'Average LPG consumption for trip 1'
+      fr: 'Consommation moyenne de GPL sur le trajet 1'
+      es: 'Consumo medio de GLP en el trayecto 1'
+      de: 'Durchschnittlicher LPG-Verbrauch für Fahrt 1'
+      it: 'Consumo medio di GPL nel tragitto 1'
+      pl: 'Średnie zużycie LPG na trasie 1'
+      ru: 'Среднее потребление СНГ на маршруте 1'
+      zh: '行程1的液化石油气平均消耗量'
+      hu: 'Átlagos LPG-fogyasztás az 1. útvonalon'
+      pt: 'Consumo médio de GPL no trajeto 1'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0x1FF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '7.6-7.0'
+    unused: true

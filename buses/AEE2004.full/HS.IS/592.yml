@@ -1,79 +1,703 @@
 id: 0x592
-name: 'GATEWAY_DATA_3'
-length: 6
-comment:
-  en: 'This is data that is gatewated or gathered from/by the BSI and sent into the IS bus'
-  fr: "Il s'agit de données qui sont contrôlées ou collectées depuis/par le BSI et envoyées dans le bus IS"
-  de: 'Diese Daten kommen von anderen Bussen über das BSI in den IS Bus'
+name: 'BSI_DATA_2'
+alt_names: ['GATEWAY_DATA_3']
 type: 'can'
-periodicity: 100 # messured avg 99.98 ms
-senders:
-  - 'BSI'
+length: 8
+comment:
+  en: 'Body controller data 6: battery current gauge, front wiper hill-descent command, radar detection request, stop-start change request, battery charge and wiping state, and AC blower/pump requests.'
+  fr: 'Données BSI 6 : calibre du courant batterie, commande essuie-glace avant en descente, demande de détection radar, demande de changement d''état stop-start, état de charge batterie et d''essuyage, et demandes de débit/pompe climatisation.'
+  es: 'Datos de la BSI 6: calibre de corriente de batería, comando de limpiaparabrisas delantero en bajada, solicitud de detección de radar, solicitud de cambio de estado stop-start, estado de carga de batería y de limpieza, y solicitudes de caudal/bomba de climatización.'
+  de: 'BSI-Daten 6: Batteriestrom-Messbereich, Frontwischerbefehl bei Bergabfahrt, Radar-Erkennungsanforderung, Stopp-Start-Zustandsänderungsanforderung, Batterieladezustand und Wischzustand, sowie Klima-Gebläse-/Pumpenanforderungen.'
+  it: 'Dati BSI 6: portata corrente batteria, comando tergicristallo anteriore in discesa, richiesta di rilevamento radar, richiesta di cambio stato stop-start, stato di carica batteria e di pulizia, e richieste di portata/pompa climatizzazione.'
+  pl: 'Dane BSI 6: zakres prądu akumulatora, polecenie wycieraczki przedniej przy zjeździe, żądanie wykrycia radaru, żądanie zmiany stanu stop-start, stan naładowania akumulatora i wycierania oraz żądania przepływu/pompy klimatyzacji.'
+  ru: 'Данные BSI 6: диапазон тока батареи, команда переднего стеклоочистителя при спуске, запрос обнаружения радаром, запрос смены состояния старт-стоп, состояние заряда батареи и очистки, а также запросы расхода/насоса кондиционера.'
+  zh: 'BSI数据6:电池电流量程、下坡时前雨刮命令、雷达探测请求、启停状态变更请求、电池充电和雨刮状态,以及空调风量/泵请求。'
+  hu: 'BSI adatok 6: akkumulátoráram mérési tartomány, első ablaktörlő parancs lejtőn, radar-észlelési kérés, stop-start állapotváltási kérés, akkumulátor töltési és törlési állapot, valamint klíma légáram-/szivattyú kérések.'
+  pt: 'Dados 6 do computador de servidão: indicador de corrente da bateria, comando do limpa-para-brisas dianteiro em descida, pedido de deteção do radar, pedido de mudança do stop-start, carga da bateria e estado de limpeza, e pedidos do ventilador/bomba do ar condicionado.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['100ms']
+senders: ['BSI']
 receivers:
+  - 'ARTIV'
+  - 'ABS'
   - 'CMM'
+  - 'HCU1'
+  - 'ACC'
+  - 'AMVAR'
+  - 'AR2S'
+  - 'BVA'
+  - 'CAAR'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'CSS'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'BCP'
+  - 'SBW'
+  - 'SCDT'
+  - 'BHI'
+  - 'TBMU'
+  - 'DAE'
 
 signals:
-  BATTERY_CHARGE_STATE: 
+  BATTERY_STATE_OF_CHARGE:
     bits: '1.7-1.0'
+    alt_names: ['BATTERY_CHARGE_STATE']
+    comment:
+      en: 'Battery state of charge'
+      fr: 'État de charge de la batterie'
+      es: 'Estado de carga de la batería'
+      de: 'Ladezustand der Batterie'
+      it: 'Stato di carica della batteria'
+      pl: 'Stan naładowania akumulatora'
+      ru: 'Уровень заряда батареи'
+      zh: '电池荷电状态'
+      hu: 'Az akkumulátor töltöttségi állapota'
+      pt: 'Estado de carga da bateria'
     type: 'uint'
     factor: 1
     min: 0
-    max: 100 # 255 but its in percent
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFE
 
-  TEMPERATURE: 
+  BATTERY_TEMPERATURE:
     bits: '2.7-2.0'
-    type: 'int'
+    alt_names: ['TEMPERATURE']
+    comment:
+      en: 'Battery temperature'
+      fr: 'Température de la batterie'
+      es: 'Temperatura de la batería'
+      de: 'Batterietemperatur'
+      it: 'Temperatura della batteria'
+      pl: 'Temperatura akumulatora'
+      ru: 'Температура батареи'
+      zh: '电池温度'
+      hu: 'Akkumulátor-hőmérséklet'
+      pt: 'Temperatura da bateria'
+    type: 'uint'
     factor: 0.5
     offset: -30
     min: -30
-    max: 97
-  UNKNOWN_1:
-    bits: '3.7'
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFE
 
-  WIPER_STATUS:
-    bits: '3.6-3.4'
+  HYBRID_ADDITIONAL_WATER_PUMP_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Activation request for the additional water pump (hybrid system)'
+      fr: 'Demande d''activation de la pompe à eau additionnelle (système hybride)'
+      es: 'Solicitud de activación de la bomba de agua adicional (sistema híbrido)'
+      de: 'Aktivierungsanforderung der zusätzlichen Wasserpumpe (Hybridsystem)'
+      it: 'Richiesta di attivazione della pompa dell''acqua supplementare (sistema ibrido)'
+      pl: 'Żądanie aktywacji dodatkowej pompy wody (układ hybrydowy)'
+      ru: 'Запрос активации дополнительного водяного насоса (гибридная система)'
+      zh: '附加水泵(混合动力系统)激活请求'
+      hu: 'A kiegészítő vízszivattyú (hibrid rendszer) aktiválási kérése'
+      pt: 'Pedido de ativação da bomba de água adicional (sistema híbrido)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Wipers inactive'
-        fr: 'Essuie-glaces inactifs'
-        de: 'Scheibenwischen nicht aktiv'
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
       0x01:
-        en: 'Automatic Mode'
-        fr: 'Mode automatique'
-        de: 'Automatischer Modus'
-      0x02:
-        en: 'First wiper speed'
-        fr: "Première vitesse d'essuie-glace"
-        de: 'Erstes Interval der Scheibenwischer'
-      0x04:
-        en: 'Seconds wiper speed'
-        fr: "Secondes de vitesse d'essuie-glace"
-        de: 'Zweites Interval der Scheibenwischer'
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
 
-  RAIN_SENSOR_WIPER_ACTIVATION:  
+  HDC_FRONT_WIPER_COMMAND:
+    bits: '3.6-3.4'
+    alt_names: ['WIPER_STATUS']
+    comment:
+      en: 'HDC front windscreen wiper control command'
+      fr: 'Commande HDC de l''essuie-glace avant'
+      es: 'Comando HDC del limpiaparabrisas delantero'
+      de: 'HDC-Steuerbefehl des Frontscheibenwischers'
+      it: 'Comando HDC del tergicristallo anteriore'
+      pl: 'Polecenie HDC wycieraczki przedniej szyby'
+      ru: 'Команда HDC управления передним стеклоочистителем'
+      zh: 'HDC前挡风玻璃雨刷控制指令'
+      hu: 'Az HDC első ablaktörlő vezérlőparancsa'
+      pt: 'Comando HDC do limpa-para-brisas dianteiro'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Pas de commande'
+        es: 'Sin orden'
+        de: 'Kein Befehl'
+        it: 'Nessun comando'
+        pl: 'Brak polecenia'
+        ru: 'Нет команды'
+        zh: '无指令'
+        hu: 'Nincs parancs'
+        pt: 'Sem comando'
+      0x01:
+        en: 'Automatic (with rain sensor) or intermittent'
+        fr: 'Automatique (avec capteur de pluie) ou intermittent'
+        es: 'Automático (con sensor de lluvia) o intermitente'
+        de: 'Automatisch (mit Regensensor) oder Intervall'
+        it: 'Automatico (con sensore pioggia) o intermittente'
+        pl: 'Automatyczne (z czujnikiem deszczu) lub przerywane'
+        ru: 'Автоматический (с датчиком дождя) или прерывистый'
+        zh: '自动(带雨量传感器)或间歇模式'
+        hu: 'Automatikus (esőérzékelővel) vagy szakaszos'
+        pt: 'Automático (com sensor de chuva) ou intermitente'
+      0x02:
+        en: 'First gear (low speed)'
+        fr: 'Première vitesse (petite vitesse)'
+        es: 'Primera marcha (velocidad baja)'
+        de: '1. Gang (niedrige Geschwindigkeit)'
+        it: 'Prima marcia (bassa velocità)'
+        pl: '1. bieg (mała prędkość)'
+        ru: 'Первая передача (низкая скорость)'
+        zh: '1挡（低速）'
+        hu: '1. sebességfokozat (alacsony sebesség)'
+        pt: 'Primeira velocidade (baixa velocidade)'
+      0x03:
+        en: 'Second wiper speed'
+        fr: 'Deuxième vitesse d''essuie-glace'
+        es: 'Segunda velocidad del limpiaparabrisas'
+        de: 'Zweites Interval der Scheibenwischer'
+        it: 'Seconda velocità del tergicristallo'
+        pl: 'Druga prędkość wycieraczek'
+        ru: 'Вторая скорость стеклоочистителя'
+        zh: '雨刮第二速'
+        hu: 'Ablaktörlő második fokozata'
+        pt: 'Segunda velocidade do limpa-para-brisas'
+      0x04:
+        en: 'Second speed (high speed)'
+        fr: 'Deuxième vitesse (grande vitesse)'
+        es: 'Segunda velocidad (alta velocidad)'
+        de: 'Zweite Geschwindigkeit (hohe Geschwindigkeit)'
+        it: 'Seconda velocità (alta velocità)'
+        pl: 'Druga prędkość (wysoka prędkość)'
+        ru: 'Вторая скорость (высокая скорость)'
+        zh: '二挡速度(高速)'
+        hu: 'Második sebesség (nagy sebesség)'
+        pt: 'Segunda velocidade (grande velocidade)'
+      0x05:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x06:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  RAIN_SENSOR_WIPER_STATE:
     bits: '3.3-3.2'
+    alt_names: ['RAIN_SENSOR_WIPER_ACTIVATION']
+    comment:
+      en: 'Wiper state controlled by the rain sensor'
+      fr: 'État de l''essuyage piloté par le capteur de pluie'
+      es: 'Estado del limpiaparabrisas controlado por el sensor de lluvia'
+      de: 'Vom Regensensor gesteuerter Wischerzustand'
+      it: 'Stato del tergicristallo controllato dal sensore pioggia'
+      pl: 'Stan wycieraczek sterowanych czujnikiem deszczu'
+      ru: 'Состояние стеклоочистителя, управляемого датчиком дождя'
+      zh: '雨量传感器控制的雨刷状态'
+      hu: 'Az esőszenzor által vezérelt ablaktörlő állapota'
+      pt: 'Estado da limpeza controlada pelo sensor de chuva'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
         en: 'Stop'
         fr: 'Arrêt'
+        es: 'Parada'
         de: 'Stopp'
+        it: 'Arresto'
+        pl: 'Zatrzymanie'
+        ru: 'Остановка'
+        zh: '停止'
+        hu: 'Leállás'
+        pt: 'Parar'
+      0x01:
+        unused: true
       0x02:
-        en: 'First wiper speed'
-        fr: "Première vitesse d'essuie-glace"
-        de: 'Erstes Interval der Scheibenwischer'
+        en: 'Low speed'
+        fr: 'Petite vitesse'
+        es: 'Velocidad baja'
+        de: 'Niedrige Geschwindigkeit'
+        it: 'Velocità bassa'
+        pl: 'Mała prędkość'
+        ru: 'Низкая скорость'
+        zh: '低速'
+        hu: 'Alacsony sebesség'
+        pt: 'Baixa velocidade'
+      0x03:
+        en: 'High speed'
+        fr: 'Grande vitesse'
+        es: 'Alta velocidad'
+        de: 'Hohe Geschwindigkeit'
+        it: 'Alta velocità'
+        pl: 'Duża prędkość'
+        ru: 'Высокая скорость'
+        zh: '高速'
+        hu: 'Nagy sebesség'
+        pt: 'Alta velocidade'
+
+  EPB_LOCKING_MODE:
+    bits: '3.0'
+    comment:
+      en: 'Electric parking brake (FSE) locking mode'
+      fr: 'Mode de serrage du frein de stationnement électrique (FSE)'
+      es: 'Modo de apriete del freno de estacionamiento eléctrico (FSE)'
+      de: 'Feststellmodus der elektrischen Feststellbremse (FSE)'
+      it: 'Modalità di serraggio del freno di stazionamento elettrico (FSE)'
+      pl: 'Tryb zaciągania elektrycznego hamulca postojowego (FSE)'
+      ru: 'Режим затягивания электрического стояночного тормоза (FSE)'
+      zh: '电子驻车制动器(FSE)夹紧模式'
+      hu: 'Az elektromos rögzítőfék (FSE) záródási módja'
+      pt: 'Modo de aperto do travão de estacionamento elétrico (FSE)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Parking brake in automatic-apply mode'
+        fr: 'Frein de stationnement en mode serrage automatique'
+        es: 'Freno de estacionamiento en modo de apriete automático'
+        de: 'Feststellbremse im automatischen Anzugsmodus'
+        it: 'Freno di stazionamento in modalità serraggio automatico'
+        pl: 'Hamulec postojowy w trybie automatycznego zaciągania'
+        ru: 'Стояночный тормоз в режиме автоматического зажатия'
+        zh: '驻车制动处于自动锁止模式'
+        hu: 'Rögzítőfék automatikus behúzási módban'
+        pt: 'Travão de estacionamento em modo de aplicação automática'
+      0x01:
+        en: 'Parking brake in manual-apply mode'
+        fr: 'Frein de stationnement en mode serrage manuel'
+        es: 'Freno de estacionamiento en modo de apriete manual'
+        de: 'Feststellbremse im manuellen Anzugsmodus'
+        it: 'Freno di stazionamento in modalità serraggio manuale'
+        pl: 'Hamulec postojowy w trybie ręcznego zaciągania'
+        ru: 'Стояночный тормоз в режиме ручного зажатия'
+        zh: '驻车制动处于手动锁止模式'
+        hu: 'Rögzítőfék kézi behúzási módban'
+        pt: 'Travão de estacionamento em modo de aperto manual'
+
+  ALTERNATOR_CONTROL_MODE:
+    bits: '4.7-4.5'
+    comment:
+      en: 'Alternator control mode request'
+      fr: 'Demande de mode de pilotage de l''alternateur'
+      es: 'Solicitud de modo de control del alternador'
+      de: 'Anforderung des Generator-Steuerungsmodus'
+      it: 'Richiesta di modalità di pilotaggio dell''alternatore'
+      pl: 'Żądanie trybu sterowania alternatorem'
+      ru: 'Запрос режима управления генератором'
+      zh: '交流发电机控制模式请求'
+      hu: 'A generátor vezérlési módjának kérése'
+      pt: 'Pedido de modo de controlo do alternador'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Autonomous driving request'
+        fr: 'Demande de pilotage autonome'
+        es: 'Solicitud de conducción autónoma'
+        de: 'Anforderung autonomes Fahren'
+        it: 'Richiesta di guida autonoma'
+        pl: 'Żądanie jazdy autonomicznej'
+        ru: 'Запрос автономного вождения'
+        zh: '自动驾驶请求'
+        hu: 'Autonóm vezetés kérése'
+        pt: 'Pedido de condução autónoma'
+      0x01:
+        en: 'Nominal'
+        fr: 'Nominal'
+        es: 'Nominal'
+        de: 'Nominal'
+        it: 'Nominale'
+        pl: 'Nominalny'
+        ru: 'Номинальный'
+        zh: '标称'
+        hu: 'Névleges'
+        pt: 'Nominal'
+      0x02:
+        en: 'Increase energy production request'
+        fr: 'Demande d''augmentation de la production d''énergie'
+        es: 'Solicitud de aumento de producción de energía'
+        de: 'Anforderung zur Erhöhung der Energieerzeugung'
+        it: 'Richiesta di aumento della produzione di energia'
+        pl: 'Żądanie zwiększenia produkcji energii'
+        ru: 'Запрос увеличения выработки энергии'
+        zh: '请求增加发电量'
+        hu: 'Energiatermelés-növelési kérés'
+        pt: 'Pedido de aumento da produção de energia'
+      0x03:
+        en: 'Forced autonomous driving request'
+        fr: 'Pilotage autonome contraint'
+        es: 'Conducción autónoma forzada'
+        de: 'Erzwungene autonome Fahranforderung'
+        it: 'Guida autonoma forzata'
+        pl: 'Wymuszone żądanie jazdy autonomicznej'
+        ru: 'Принудительный запрос автономного вождения'
+        zh: '强制自动驾驶请求'
+        hu: 'Kényszerített autonóm vezetési kérés'
+        pt: 'Pedido de condução autónoma forçada'
       0x04:
-        en: 'Seconds wiper speed'
-        fr: "Secondes de vitesse d'essuie-glace"
-        de: 'Zweites Interval der Scheibenwischer'
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
 
-  UNKNOWN_2: 
-    bits: '3.1-3.0'
+  BECB_BATTERY_VOLTAGE:
+    bits: '4.4-5.2'
+    comment:
+      en: 'Battery voltage measured by the BECB'
+      fr: 'Tension de la batterie mesurée par le BECB'
+      es: 'Tensión de la batería medida por el BECB'
+      de: 'Vom BECB gemessene Batteriespannung'
+      it: 'Tensione della batteria misurata dal BECB'
+      pl: 'Napięcie akumulatora zmierzone przez BECB'
+      ru: 'Напряжение батареи, измеренное BECB'
+      zh: 'BECB测得的电池电压'
+      hu: 'A BECB által mért akkumulátorfeszültség'
+      pt: 'Tensão da bateria medida pela BECB'
+    type: 'uint'
+    factor: 0.01
+    offset: 5
+    min: 5
+    max: 18
+    units: 'V'
+    invalid: 0x7FF
+    default: 0x7FE
 
-  UNKNOWN_3:
-    bits: '4.7-4.0'
+  ARTIV_DETECTION_REQUEST:
+    bits: '5.1-5.0'
+    comment:
+      en: 'ARTIV (distance radar) detection request status'
+      fr: 'État de la demande de détection ARTIV (radar de distance)'
+      es: 'Estado de la solicitud de detección ARTIV (radar de distancia)'
+      de: 'Status der Erkennungsanforderung des ARTIV (Abstandsradars)'
+      it: 'Stato della richiesta di rilevamento ARTIV (radar di distanza)'
+      pl: 'Stan żądania wykrywania ARTIV (radaru odległości)'
+      ru: 'Статус запроса обнаружения ARTIV (радара дистанции)'
+      zh: 'ARTIV(距离雷达)探测请求状态'
+      hu: 'Az ARTIV (távolságradar) észlelési kérésének állapota'
+      pt: 'Estado do pedido de deteção ARTIV (radar de distância)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Initialisation or detection not requested'
+        fr: 'Initialisation ou détection non demandée'
+        es: 'Inicialización o detección no solicitada'
+        de: 'Initialisierung oder Erkennung nicht angefordert'
+        it: 'Inizializzazione o rilevamento non richiesto'
+        pl: 'Inicjalizacja lub wykrywanie nieżądane'
+        ru: 'Инициализация или обнаружение не запрошены'
+        zh: '未请求初始化或检测'
+        hu: 'Nincs kérve inicializálás vagy észlelés'
+        pt: 'Inicialização ou deteção não pedida'
+      0x01:
+        en: 'Detection requested'
+        fr: 'Détection demandée'
+        es: 'Detección solicitada'
+        de: 'Erkennung angefordert'
+        it: 'Rilevamento richiesto'
+        pl: 'Żądano wykrycia'
+        ru: 'Запрошено обнаружение'
+        zh: '请求检测'
+        hu: 'Érzékelés kérve'
+        pt: 'Deteção pedida'
+      0x02:
+        en: 'Simulation'
+        fr: 'Simulation'
+        es: 'Simulación'
+        de: 'Simulation'
+        it: 'Simulazione'
+        pl: 'Symulacja'
+        ru: 'Симуляция'
+        zh: '仿真'
+        hu: 'Szimuláció'
+        pt: 'Simulação'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
 
-  UNKNOWN_4:
-    bits: '5.7-5.0'
+  CABIN_HEATING_WATER_PUMP_DEMAND:
+    bits: '6.7-6.6'
+    comment:
+      en: 'Cabin heating demand level for the water pump'
+      fr: 'Niveau de besoin de chauffage habitacle pour la pompe à eau'
+      es: 'Nivel de demanda de calefacción del habitáculo para la bomba de agua'
+      de: 'Bedarfsstufe der Innenraumheizung für die Wasserpumpe'
+      it: 'Livello di richiesta di riscaldamento abitacolo per la pompa dell''acqua'
+      pl: 'Poziom zapotrzebowania na ogrzewanie kabiny dla pompy wody'
+      ru: 'Уровень потребности в отоплении салона для водяного насоса'
+      zh: '水泵所需的座舱制热需求等级'
+      hu: 'Az utastér-fűtés vízszivattyú-igényének szintje'
+      pt: 'Nível de necessidade de aquecimento do habitáculo para a bomba de água'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Heating system''s need null'
+        fr: 'Besoin chauffage habitacle nul'
+        es: 'Necesidad de calefacción del habitáculo nula'
+        de: 'Kein Bedarf an Innenraumheizung'
+        it: 'Fabbisogno di riscaldamento abitacolo nullo'
+        pl: 'Zapotrzebowanie na ogrzewanie kabiny zerowe'
+        ru: 'Потребность в отоплении салона отсутствует'
+        zh: '座舱采暖需求为零'
+        hu: 'Az utastér fűtési igénye nulla'
+        pt: 'Necessidade de aquecimento do habitáculo nula'
+      0x01:
+        en: 'Cabin heating need low'
+        fr: 'Besoin de chauffage habitacle faible'
+        es: 'Necesidad de calefacción del habitáculo baja'
+        de: 'Innenraumheizungsbedarf niedrig'
+        it: 'Necessità di riscaldamento abitacolo bassa'
+        pl: 'Niskie zapotrzebowanie na ogrzewanie kabiny'
+        ru: 'Низкая потребность в отоплении салона'
+        zh: '车厢供暖需求低'
+        hu: 'Alacsony utastér-fűtési igény'
+        pt: 'Necessidade de aquecimento do habitáculo baixa'
+      0x02:
+        en: 'Moderate cabin heating demand'
+        fr: 'Besoin de chauffage habitacle modéré'
+        es: 'Demanda de calefacción del habitáculo moderada'
+        de: 'Mäßiger Bedarf an Innenraumheizung'
+        it: 'Richiesta moderata di riscaldamento abitacolo'
+        pl: 'Umiarkowane zapotrzebowanie na ogrzewanie kabiny'
+        ru: 'Умеренная потребность в обогреве салона'
+        zh: '座舱中等供暖需求'
+        hu: 'Mérsékelt utastér-fűtési igény'
+        pt: 'Necessidade moderada de aquecimento do habitáculo'
+      0x03:
+        en: 'High cabin heating demand'
+        fr: 'Besoin de chauffage habitacle important'
+        es: 'Demanda de calefacción del habitáculo alta'
+        de: 'Hoher Bedarf an Innenraumheizung'
+        it: 'Elevata richiesta di riscaldamento abitacolo'
+        pl: 'Duże zapotrzebowanie na ogrzewanie kabiny'
+        ru: 'Высокая потребность в обогреве салона'
+        zh: '座舱高供暖需求'
+        hu: 'Nagy utastér-fűtési igény'
+        pt: 'Necessidade elevada de aquecimento do habitáculo'
 
-  UNKNOWN_5:
-    bits: '6.7-6.0'
+  STOP_START_STATE_CHANGE_REQUEST:
+    bits: '6.5-6.4'
+    comment:
+      en: 'Stop-start (STT) state change request'
+      fr: 'Demande de changement d''état du stop & start (STT)'
+      es: 'Solicitud de cambio de estado del stop & start (STT)'
+      de: 'Anforderung zum Zustandswechsel von Stop & Start (STT)'
+      it: 'Richiesta di cambio stato dello stop & start (STT)'
+      pl: 'Żądanie zmiany stanu funkcji stop & start (STT)'
+      ru: 'Запрос смены состояния системы старт-стоп (STT)'
+      zh: '启停系统(STT)状态切换请求'
+      hu: 'A stop-start (STT) rendszer állapotváltási kérése'
+      pt: 'Pedido de mudança de estado do stop & start (STT)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x02:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+      0x03:
+        en: 'Faulty'
+        fr: 'En défaut'
+        es: 'En fallo'
+        de: 'Fehlerhaft'
+        it: 'In guasto'
+        pl: 'Usterka'
+        ru: 'Неисправно'
+        zh: '故障'
+        hu: 'Hibás'
+        pt: 'Em falha'
+
+  UNUSED_1:
+    bits: '6.3'
+    unused: true
+
+  UNUSED_2:
+    bits: '6.2'
+    unused: true
+
+  BATTERY_CURRENT_MEASUREMENT_RANGE:
+    bits: '6.1-6.0'
+    comment:
+      en: 'Measurement range used for the battery current sensor'
+      fr: 'Gamme de mesure utilisée pour le capteur de courant batterie'
+      es: 'Rango de medición utilizado para el sensor de corriente de la batería'
+      de: 'Für den Batteriestromsensor verwendeter Messbereich'
+      it: 'Intervallo di misura utilizzato per il sensore di corrente della batteria'
+      pl: 'Zakres pomiarowy używany przez czujnik prądu akumulatora'
+      ru: 'Диапазон измерения, используемый датчиком тока батареи'
+      zh: '电池电流传感器所用的量程'
+      hu: 'Az akkumulátor áramérzékelőjéhez használt mérési tartomány'
+      pt: 'Gama de medição utilizada para o sensor de corrente da bateria'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: '[-1A ; +1A]'
+        fr: '[-1A ; +1A]'
+        es: '[-1A ; +1A]'
+        de: '[-1A ; +1A]'
+        it: '[-1A ; +1A]'
+        pl: '[-1A ; +1A]'
+        ru: '[-1А ; +1А]'
+        zh: '[-1A ; +1A]'
+        hu: '[-1A ; +1A]'
+        pt: '[-1A ; +1A]'
+      0x01:
+        en: '[-200A ; +200A]'
+        fr: '[-200A ; +200A]'
+        es: '[-200A ; +200A]'
+        de: '[-200A ; +200A]'
+        it: '[-200A ; +200A]'
+        pl: '[-200A ; +200A]'
+        ru: '[-200A ; +200A]'
+        zh: '[-200A ; +200A]'
+        hu: '[-200A ; +200A]'
+        pt: '[-200A ; +200A]'
+      0x02:
+        en: '[-1500A; +1500A]'
+        fr: '[-1500 A ; +1500 A]'
+        es: '[-1500 A; +1500 A]'
+        de: '[-1500 A; +1500 A]'
+        it: '[-1500 A; +1500 A]'
+        pl: '[-1500 A; +1500 A]'
+        ru: '[-1500 А; +1500 А]'
+        zh: '[-1500A;+1500A]'
+        hu: '[-1500 A; +1500 A]'
+        pt: '[-1500 A; +1500 A]'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  BATTERY_CURRENT:
+    bits: '7.7-8.0'
+    comment:
+      en: 'Battery current'
+      fr: 'Courant de la batterie'
+      es: 'Corriente de la batería'
+      de: 'Batteriestrom'
+      it: 'Corrente della batteria'
+      pl: 'Prąd akumulatora'
+      ru: 'Ток батареи'
+      zh: '电池电流'
+      hu: 'Akkumulátoráram'
+      pt: 'Corrente da bateria'
+    type: 'uint'
+    default: 0xFFFE

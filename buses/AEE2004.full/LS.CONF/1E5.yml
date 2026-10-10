@@ -1,192 +1,567 @@
 id: 0x1E5
 name: 'RADIO_STATUS_AUDIO'
 alt_names: ['ETAT_RADIO_GEN_AUD']
+type: 'can'
 length: 7
 comment:
-  en: 'Audio configuration'
-  fr: 'Configuration audio'
-type: 'can'
-periodicity: ['500ms']
-senders:
-  - 'RAD'
-  - 'BTEL'
-  - 'NG4'
-  - 'RNEG'
-  - 'PASS_ICSV'
-receivers:
-  - 'EMF'
-  - 'AMPLI'
-  - 'CMB_EMF'
-  - 'PASS_ICSV'
+  en: 'Active-setting bits indicating to the display which audio setting is currently being adjusted, plus balance/bass/fader/treble/loudness levels.'
+  fr: 'Bits de réglage actif indiquant à l''afficheur quel réglage audio est en cours d''ajustement, ainsi que les niveaux de balance/graves/fader/aigus/loudness.'
+  es: 'Bits de ajuste activo que indican a la pantalla qué ajuste de audio se está modificando, además de los niveles de balance/graves/fader/agudos/loudness.'
+  de: 'Bits für den aktiven Einstellungsstatus, die dem Display anzeigen, welche Audioeinstellung gerade angepasst wird, sowie Balance-/Bass-/Fader-/Höhen-/Loudness-Pegel.'
+  it: 'Bit di impostazione attiva che indicano al display quale impostazione audio è in fase di regolazione, oltre ai livelli di bilanciamento/bassi/fader/acuti/loudness.'
+  pl: 'Bity aktywnego ustawienia informujące wyświetlacz, które ustawienie audio jest właśnie regulowane, a także poziomy balansu/basów/fadera/tonów wysokich/loudness.'
+  ru: 'Биты активной настройки, указывающие дисплею, какая аудионастройка сейчас регулируется, а также уровни баланса/басов/фейдера/высоких частот/громкости.'
+  zh: '指示显示屏当前正在调整哪项音频设置的激活设置位,以及平衡/低音/前后声道/高音/响度电平。'
+  hu: 'Az aktív beállítást jelző bitek, amelyek jelzik a kijelzőnek, épp mely hangbeállítás van állítás alatt, valamint a balansz/basszus/fader/magas/hangosság szintek.'
+  pt: 'Bits de definição ativa a indicar ao visor qual a definição áudio a ser ajustada, além dos níveis de balanço/graves/fader/agudos/loudness.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['500ms', 'trigger']
+senders: ['RAD', 'BTEL', 'ICSV']
+receivers: ['EMF', 'AMPLI', 'CMB']
 
 signals:
   LEFT_RIGHT_BALANCE_MENU:
-    alt_names: ['RGL_BAL']
     bits: '1.7'
     comment:
-      en: 'Left/Right balance menu display'
-      fr: 'Affichage du menu de balance gauche/droite'
+      en: 'Adjustment of the L/R balance value'
+      fr: 'Réglage de la valeur de la balance G/D'
+      es: 'Ajuste del valor de balance I/D'
+      de: 'Einstellung des L/R-Balance-Werts'
+      it: 'Regolazione del valore di bilanciamento S/D'
+      pl: 'Regulacja wartości balansu L/P'
+      ru: 'Настройка значения баланса Л/П'
+      zh: '左右平衡值调节'
+      hu: 'A bal/jobb hangsúly értékének beállítása'
+      pt: 'Ajuste do valor de balanço E/D'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No menu display'
-        fr: 'Aucun affichage'
+        en: 'Not set'
+        fr: 'Non réglé'
+        es: 'No ajustado'
+        de: 'Nicht eingestellt'
+        it: 'Non regolato'
+        pl: 'Nieustawione'
+        ru: 'Не настроено'
+        zh: '未设置'
+        hu: 'Nincs beállítva'
+        pt: 'Não ajustado'
       0x01:
-        en: 'Display menu'
-        fr: 'Affichage du menu'
+        en: 'Adjustment in progress'
+        fr: 'Réglage en cours'
+        es: 'Ajuste en curso'
+        de: 'Einstellung läuft'
+        it: 'Regolazione in corso'
+        pl: 'Regulacja w toku'
+        ru: 'Регулировка выполняется'
+        zh: '调节进行中'
+        hu: 'Beállítás folyamatban'
+        pt: 'Ajuste em curso'
 
   LEFT_RIGHT_BALANCE_VALUE:
-    alt_names: ['NIV_BAL']
     bits: '1.6-1.0'
     comment:
-      en: 'Left/Right balance value'
-      fr: 'Valeur de balance gauche/droite'
-    type: 'uint'
+      en: 'Current level of setpoint of L / R balance'
+      fr: 'Niveau courant de la consigne de balance G/D'
+      es: 'Nivel actual de la consigna de balance I/D'
+      de: 'Aktueller Sollwert der L/R-Balance'
+      it: 'Livello attuale del setpoint di bilanciamento S/D'
+      pl: 'Bieżący poziom nastawy balansu L/P'
+      ru: 'Текущий уровень заданного значения баланса Л/П'
+      zh: '左右平衡设定当前值'
+      hu: 'A bal/jobb hangsúly aktuális beállított értéke'
+      pt: 'Nível atual da consigna de balanço E/D'
+    type: 'enum'
+    factor: 1
     offset: -63
-    min: -9
-    max: 9
-    resolution: 1
-    invalid:
-    units:
+    default: 0x3F
+    values:
+      0x24:
+        en: 'Right (maximum)'
+        fr: 'Droite (maximum)'
+        es: 'Derecha (máximo)'
+        de: 'Rechts (Maximum)'
+        it: 'Destra (massimo)'
+        pl: 'Prawo (maksimum)'
+        ru: 'Направо (максимум)'
+        zh: '右(最大)'
+        hu: 'Jobbra (maximum)'
+        pt: 'Direita (máximo)'
+      0x30:
+        en: 'Left'
+        fr: 'Gauche'
+        es: 'Izquierda'
+        de: 'Links'
+        it: 'Sinistra'
+        pl: 'Lewo'
+        ru: 'Слева'
+        zh: '左'
+        hu: 'Bal'
+        pt: 'Esquerda'
+      0x3F:
+        en: 'Centre (neutral)'
+        fr: 'Neutre'
+        es: 'Centro (neutro)'
+        de: 'Mitte (neutral)'
+        it: 'Centro (neutro)'
+        pl: 'Środek (neutralny)'
+        ru: 'Центр (нейтраль)'
+        zh: '居中（中立）'
+        hu: 'Középső (semleges)'
+        pt: 'Centro (neutro)'
 
   REAR_FRONT_BALANCF_MENU:
-    alt_names: ['RGL_FAD']
     bits: '2.7'
     comment:
-      en: 'Rear/Front balance menu'
-      fr: 'Menu de balance arrière/avant'
+      en: 'Adjustment of fader setpoint (FRONT/REAR balance)'
+      fr: 'Réglage de la consigne de fader (balance AV/AR)'
+      es: 'Ajuste de la consigna del fader (balance delantero/trasero)'
+      de: 'Einstellung des Fader-Sollwerts (Balance vorne/hinten)'
+      it: 'Regolazione del setpoint del fader (bilanciamento anteriore/posteriore)'
+      pl: 'Regulacja nastawy fadera (balans przód/tył)'
+      ru: 'Настройка заданного значения fader (баланс перед/зад)'
+      zh: 'Fader 设定调节（前后声道平衡）'
+      hu: 'A fader beállított értékének módosítása (első/hátsó hangsúly)'
+      pt: 'Ajuste da consigna do fader (balanço dianteiro/traseiro)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No menu display'
-        fr: 'Aucun affichage'
+        en: 'Not set'
+        fr: 'Non réglé'
+        es: 'No ajustado'
+        de: 'Nicht eingestellt'
+        it: 'Non regolato'
+        pl: 'Nieustawione'
+        ru: 'Не настроено'
+        zh: '未设置'
+        hu: 'Nincs beállítva'
+        pt: 'Não ajustado'
       0x01:
-        en: 'Display menu'
-        fr: 'Affichage du menu'
+        en: 'Adjustment in progress'
+        fr: 'Réglage en cours'
+        es: 'Ajuste en curso'
+        de: 'Einstellung läuft'
+        it: 'Regolazione in corso'
+        pl: 'Regulacja w toku'
+        ru: 'Регулировка выполняется'
+        zh: '调节进行中'
+        hu: 'Beállítás folyamatban'
+        pt: 'Ajuste em curso'
 
   REAR_FRONT_BALANCF_VALUE:
-    alt_names: ['NIV_FAD']
     bits: '2.6-2.0'
     comment:
-      en: 'Rear/Front balance value'
-      fr: 'Valeur de balance arrière/avant'
-    type: 'uint'
+      en: 'Current level of fader setpoint (FRONT/REAR balance)'
+      fr: 'Niveau courant de la consigne de fader (balance AV/AR)'
+      es: 'Nivel actual de la consigna del fader (balance delantero/trasero)'
+      de: 'Aktueller Sollwert des Faders (Balance vorne/hinten)'
+      it: 'Livello attuale del setpoint del fader (bilanciamento anteriore/posteriore)'
+      pl: 'Bieżący poziom nastawy fadera (balans przód/tył)'
+      ru: 'Текущий уровень заданного значения fader (баланс перед/зад)'
+      zh: 'Fader 设定当前值（前后声道平衡）'
+      hu: 'A fader aktuális beállított értéke (első/hátsó hangsúly)'
+      pt: 'Nível atual da consigna de fader (balanço dianteiro/traseiro)'
+    type: 'enum'
+    factor: 1
     offset: -63
-    min: -9
-    max: 9
-    resolution: 1
-    invalid:
-    units:
+    default: 0x3F
+    values:
+      0x24:
+        en: 'Front (maximum)'
+        fr: 'Avant (maximum)'
+        es: 'Delante (máximo)'
+        de: 'Vorne (Maximum)'
+        it: 'Avanti (massimo)'
+        pl: 'Przód (maksimum)'
+        ru: 'Вперёд (максимум)'
+        zh: '前(最大)'
+        hu: 'Elöl (maximum)'
+        pt: 'Dianteira (máximo)'
+      0x30:
+        en: 'Rear (maximum)'
+        fr: 'Arrière (maximum)'
+        es: 'Trasero (máximo)'
+        de: 'Hinten (maximal)'
+        it: 'Posteriore (massimo)'
+        pl: 'Tył (maksimum)'
+        ru: 'Сзади (максимум)'
+        zh: '后部(最大)'
+        hu: 'Hátul (maximum)'
+        pt: 'Traseira (máximo)'
+      0x3F:
+        en: 'Centre (neutral)'
+        fr: 'Neutre'
+        es: 'Centro (neutro)'
+        de: 'Mitte (neutral)'
+        it: 'Centro (neutro)'
+        pl: 'Środek (neutralny)'
+        ru: 'Центр (нейтраль)'
+        zh: '居中（中立）'
+        hu: 'Középső (semleges)'
+        pt: 'Centro (neutro)'
 
   BASS_MENU:
     bits: '3.7'
-    alt_names: ['RGL_BAS']
     comment:
-      en: 'Bass menu display'
-      fr: 'Affichage du menu de bass'
+      en: 'Adjustment of bass setpoint.'
+      fr: 'Réglage de la consigne des basses.'
+      es: 'Ajuste de la consigna de graves'
+      de: 'Einstellung des Bass-Sollwerts'
+      it: 'Regolazione del setpoint dei bassi'
+      pl: 'Regulacja nastawy basów'
+      ru: 'Настройка заданного значения НЧ'
+      zh: '低音设定调节'
+      hu: 'A basszus beállított értékének módosítása'
+      pt: 'Ajuste da consigna de graves.'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No menu display'
-        fr: 'Aucun affichage'
+        en: 'Not set'
+        fr: 'Non réglé'
+        es: 'No ajustado'
+        de: 'Nicht eingestellt'
+        it: 'Non regolato'
+        pl: 'Nieustawione'
+        ru: 'Не настроено'
+        zh: '未设置'
+        hu: 'Nincs beállítva'
+        pt: 'Não ajustado'
       0x01:
-        en: 'Display menu'
-        fr: 'Affichage du menu'
+        en: 'Adjustment in progress'
+        fr: 'Réglage en cours'
+        es: 'Ajuste en curso'
+        de: 'Einstellung läuft'
+        it: 'Regolazione in corso'
+        pl: 'Regulacja w toku'
+        ru: 'Регулировка выполняется'
+        zh: '调节进行中'
+        hu: 'Beállítás folyamatban'
+        pt: 'Ajuste em curso'
 
   BASS_VALUE:
     bits: '3.6-3.0'
-    alt_names: ['NIV_BAS']
     comment:
-      en: 'Bass value'
-      fr: 'Valeur de bass'
-    type: 'uint'
+      en: 'Current level of bass setpoint'
+      fr: 'Niveau courant de la consigne des basses'
+      es: 'Nivel actual de la consigna de graves'
+      de: 'Aktueller Sollwert der Bässe'
+      it: 'Livello attuale del setpoint dei bassi'
+      pl: 'Bieżący poziom nastawy basów'
+      ru: 'Текущий уровень заданного значения НЧ'
+      zh: '低音设定当前值'
+      hu: 'A basszus aktuális beállított értéke'
+      pt: 'Nível atual da consigna de graves'
+    type: 'enum'
+    factor: 1
     offset: -63
-    min: -9
-    max: 9
-    resolution: 1
-    invalid:
-    units:
+    default: 0x3F
+    values:
+      0x36:
+        en: 'Equalizer -9'
+        fr: 'Égaliseur -9'
+        es: 'Ecualizador -9'
+        de: 'Equalizer -9'
+        it: 'Equalizzatore -9'
+        pl: 'Korektor -9'
+        ru: 'Эквалайзер -9'
+        zh: '均衡器-9'
+        hu: 'Hangszínszabályzó -9'
+        pt: 'Equalizador -9'
+      0x3F:
+        en: 'Equalizer 0'
+        fr: 'équalizer à 0'
+        es: 'Ecualizador a 0'
+        de: 'Equalizer bei 0'
+        it: 'Equalizzatore a 0'
+        pl: 'Korektor na 0'
+        ru: 'Эквалайзер 0'
+        zh: '均衡器0'
+        hu: 'Hangszínszabályzó 0'
+        pt: 'Equalizador a 0'
+      0x48:
+        en: 'Equalizer +9'
+        fr: 'Égaliseur à +9'
+        es: 'Ecualizador +9'
+        de: 'Equalizer +9'
+        it: 'Equalizzatore +9'
+        pl: 'Korektor +9'
+        ru: 'Эквалайзер +9'
+        zh: '均衡器+9'
+        hu: 'Equalizer +9'
+        pt: 'Equalizador +9'
 
   MIDRANGE_ADJUSTMENT:
     bits: '4.7'
-    alt_names: ['RGL_MED']
     comment:
-      en: 'Midrange setting in progress'
-      fr: 'Réglage du médium en cours'
+      en: 'Adjustment of midrange setpoint'
+      fr: 'Réglage de la consigne des médiums'
+      es: 'Ajuste de la consigna de medios'
+      de: 'Einstellung des Mitten-Sollwerts'
+      it: 'Regolazione del setpoint dei medi'
+      pl: 'Regulacja nastawy tonów średnich'
+      ru: 'Настройка заданного значения СЧ'
+      zh: '中音设定调节'
+      hu: 'A középhang beállított értékének módosítása'
+      pt: 'Ajuste da consigna de médios'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Not adjusting'
-        fr: 'Aucun réglage'
+        en: 'Not set'
+        fr: 'Non réglé'
+        es: 'No ajustado'
+        de: 'Nicht eingestellt'
+        it: 'Non regolato'
+        pl: 'Nieustawione'
+        ru: 'Не настроено'
+        zh: '未设置'
+        hu: 'Nincs beállítva'
+        pt: 'Não ajustado'
       0x01:
-        en: 'Adjusting'
+        en: 'Adjustment in progress'
         fr: 'Réglage en cours'
+        es: 'Ajuste en curso'
+        de: 'Einstellung läuft'
+        it: 'Regolazione in corso'
+        pl: 'Regulacja w toku'
+        ru: 'Регулировка выполняется'
+        zh: '调节进行中'
+        hu: 'Beállítás folyamatban'
+        pt: 'Ajuste em curso'
 
   MIDRANGE_VALUE:
     bits: '4.6-4.0'
-    alt_names: ['NIV_MED']
     comment:
-      en: 'Midrange value'
-      fr: 'Valeur de médium'
-    type: 'uint'
+      en: 'Current level of midrange setpoint'
+      fr: 'Niveau courant de la consigne des médiums'
+      es: 'Nivel actual de la consigna de medios'
+      de: 'Aktueller Sollwert der Mitten'
+      it: 'Livello attuale del setpoint dei medi'
+      pl: 'Bieżący poziom nastawy tonów średnich'
+      ru: 'Текущий уровень заданного значения СЧ'
+      zh: '中音设定当前值'
+      hu: 'A középhang aktuális beállított értéke'
+      pt: 'Nível atual da consigna de médios'
+    type: 'enum'
+    factor: 1
     offset: -63
-    min: -9
-    max: 9
-    resolution: 1
-    invalid:
-    units:
+    default: 0x3F
+    values:
+      0x36:
+        en: 'Equalizer at -9'
+        fr: 'Equalizer à -9'
+        es: 'Ecualizador a -9'
+        de: 'Equalizer bei -9'
+        it: 'Equalizzatore a -9'
+        pl: 'Korektor na -9'
+        ru: 'Эквалайзер -9'
+        zh: '均衡器-9'
+        hu: 'Hangszínszabályzó -9'
+        pt: 'Equalizador a -9'
+      0x3F:
+        en: 'Equalizer at 0'
+        fr: 'Égaliseur à 0'
+        es: 'Ecualizador a 0'
+        de: 'Equalizer auf 0'
+        it: 'Equalizzatore a 0'
+        pl: 'Korektor na 0'
+        ru: 'Эквалайзер на 0'
+        zh: '均衡器为0'
+        hu: 'Hangszínszabályzó 0-n'
+        pt: 'Equalizador a 0'
+      0x48:
+        en: 'Equalizer at 9'
+        fr: 'Égaliseur à 9'
+        es: 'Ecualizador a 9'
+        de: 'Equalizer auf 9'
+        it: 'Equalizzatore a 9'
+        pl: 'Korektor na 9'
+        ru: 'Эквалайзер на 9'
+        zh: '均衡器设为9'
+        hu: 'Hangszínszabályzó 9-en'
+        pt: 'Equalizador a 9'
 
   TREBLE_MENU:
     bits: '5.7'
-    alt_names: ['RGL_TREB']
     comment:
-      en: 'Treble menu display'
-      fr: 'Affichage du menu des aigus'
+      en: 'Adjustment of treble setpoint'
+      fr: 'Réglage de la consigne des aiguës'
+      es: 'Ajuste de la consigna de agudos'
+      de: 'Einstellung des Höhen-Sollwerts'
+      it: 'Regolazione del setpoint degli acuti'
+      pl: 'Regulacja nastawy tonów wysokich'
+      ru: 'Настройка заданного значения ВЧ'
+      zh: '高音设定调节'
+      hu: 'A magas hang beállított értékének módosítása'
+      pt: 'Ajuste da consigna de agudos'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No menu display'
-        fr: 'Aucun affichage'
+        en: 'Not set'
+        fr: 'Non réglé'
+        es: 'No ajustado'
+        de: 'Nicht eingestellt'
+        it: 'Non regolato'
+        pl: 'Nieustawione'
+        ru: 'Не настроено'
+        zh: '未设置'
+        hu: 'Nincs beállítva'
+        pt: 'Não ajustado'
       0x01:
-        en: 'Display menu'
-        fr: 'Affichage du menu'
+        en: 'Adjustment in progress'
+        fr: 'Réglage en cours'
+        es: 'Ajuste en curso'
+        de: 'Einstellung läuft'
+        it: 'Regolazione in corso'
+        pl: 'Regulacja w toku'
+        ru: 'Регулировка выполняется'
+        zh: '调节进行中'
+        hu: 'Beállítás folyamatban'
+        pt: 'Ajuste em curso'
 
   TREBLE_VALUE:
     bits: '5.6-5.0'
-    alt_names: ['NIV_TREB']
     comment:
-      en: 'Treble value'
-      fr: 'Valeur des aigus'
-    type: 'uint'
+      en: 'Current level of treble setpoint'
+      fr: 'Niveau courant de la consigne des aiguës'
+      es: 'Nivel actual de la consigna de agudos'
+      de: 'Aktueller Sollwert der Höhen'
+      it: 'Livello attuale del setpoint degli acuti'
+      pl: 'Bieżący poziom nastawy tonów wysokich'
+      ru: 'Текущий уровень заданного значения ВЧ'
+      zh: '高音设定当前值'
+      hu: 'A magas hang aktuális beállított értéke'
+      pt: 'Nível atual da consigna de agudos'
+    type: 'enum'
+    factor: 1
     offset: -63
-    min: -9
-    max: 9
-    resolution: 1
-    invalid:
-    units:
+    default: 0x3F
+    values:
+      0x36:
+        en: 'Equalizer at -9'
+        fr: 'Equalizer à -9'
+        es: 'Ecualizador a -9'
+        de: 'Equalizer bei -9'
+        it: 'Equalizzatore a -9'
+        pl: 'Korektor na -9'
+        ru: 'Эквалайзер -9'
+        zh: '均衡器-9'
+        hu: 'Hangszínszabályzó -9'
+        pt: 'Equalizador a -9'
+      0x3F:
+        en: 'Equalizer at 0'
+        fr: 'Égaliseur à 0'
+        es: 'Ecualizador a 0'
+        de: 'Equalizer auf 0'
+        it: 'Equalizzatore a 0'
+        pl: 'Korektor na 0'
+        ru: 'Эквалайзер на 0'
+        zh: '均衡器为0'
+        hu: 'Hangszínszabályzó 0-n'
+        pt: 'Equalizador a 0'
+      0x48:
+        en: 'Equalizer at 9'
+        fr: 'Égaliseur à 9'
+        es: 'Ecualizador a 9'
+        de: 'Equalizer auf 9'
+        it: 'Equalizzatore a 9'
+        pl: 'Korektor na 9'
+        ru: 'Эквалайзер на 9'
+        zh: '均衡器设为9'
+        hu: 'Hangszínszabályzó 9-en'
+        pt: 'Equalizador a 9'
 
   LOUDNESS_MENU:
     bits: '6.7'
-    alt_names: ['RGL_LOUD']
     comment:
-      en: 'Loudness menu display'
-      fr: 'Affichage du menu de loudness'
+      en: 'Adjustment of Loudness'
+      fr: 'Réglage du Loudness'
+      es: 'Ajuste del Loudness'
+      de: 'Einstellung des Loudness'
+      it: 'Regolazione del Loudness'
+      pl: 'Regulacja funkcji Loudness'
+      ru: 'Настройка функции Loudness'
+      zh: 'Loudness 响度调节'
+      hu: 'A Loudness beállítása'
+      pt: 'Ajuste do Loudness'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No menu display'
-        fr: 'Aucun affichage'
+        en: 'Not set'
+        fr: 'Non réglé'
+        es: 'No ajustado'
+        de: 'Nicht eingestellt'
+        it: 'Non regolato'
+        pl: 'Nieustawione'
+        ru: 'Не настроено'
+        zh: '未设置'
+        hu: 'Nincs beállítva'
+        pt: 'Não ajustado'
       0x01:
-        en: 'Display menu'
-        fr: 'Affichage du menu'
+        en: 'Adjustment in progress'
+        fr: 'Réglage en cours'
+        es: 'Ajuste en curso'
+        de: 'Einstellung läuft'
+        it: 'Regolazione in corso'
+        pl: 'Regulacja w toku'
+        ru: 'Регулировка выполняется'
+        zh: '调节进行中'
+        hu: 'Beállítás folyamatban'
+        pt: 'Ajuste em curso'
 
   LOUDNESS_VALUE:
     bits: '6.6'
-    alt_names: ['LOUD_ON']
     comment:
       en: 'Loudness state'
-      fr: 'État de loudness'
+      fr: 'État du loudness'
+      es: 'Estado del loudness'
+      de: 'Status des Loudness'
+      it: 'Stato del loudness'
+      pl: 'Stan funkcji loudness'
+      ru: 'Состояние функции Loudness'
+      zh: 'Loudness 响度状态'
+      hu: 'Loudness állapota'
+      pt: 'Estado do loudness'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'OFF'
-        fr: 'OFF'
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'ON'
-        fr: 'ON'
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
 
   UNUSED_1:
     bits: '6.5'
@@ -194,18 +569,42 @@ signals:
 
   AUTO_VOLUME_ADJUSTMENT:
     bits: '6.4'
-    alt_names: ['RGL_ASS']
     comment:
       en: 'Volume / speed control adjustment'
-      fr: 'Réglage automatique du volume en cours'
-
+      fr: 'Réglage asservissement volume / vitesse'
+      es: 'Ajuste del control de volumen / velocidad'
+      de: 'Einstellung der Lautstärke-/Geschwindigkeitsregelung'
+      it: 'Regolazione del controllo volume / velocità'
+      pl: 'Regulacja sterowania głośnością / prędkością'
+      ru: 'Настройка регулировки громкости/скорости'
+      zh: '音量／车速联动调节'
+      hu: 'Hangerő-/sebességszabályozás beállítása'
+      pt: 'Ajuste do controlo de volume / velocidade'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Not adjusting'
-        fr: 'Aucun réglage'
+        en: 'Not set'
+        fr: 'Non réglé'
+        es: 'No ajustado'
+        de: 'Nicht eingestellt'
+        it: 'Non regolato'
+        pl: 'Nieustawione'
+        ru: 'Не настроено'
+        zh: '未设置'
+        hu: 'Nincs beállítva'
+        pt: 'Não ajustado'
       0x01:
-        en: 'Adjusting'
+        en: 'Adjustment in progress'
         fr: 'Réglage en cours'
+        es: 'Ajuste en curso'
+        de: 'Einstellung läuft'
+        it: 'Regolazione in corso'
+        pl: 'Regulacja w toku'
+        ru: 'Регулировка выполняется'
+        zh: '调节进行中'
+        hu: 'Beállítás folyamatban'
+        pt: 'Ajuste em curso'
 
   UNUSED_2:
     bits: '6.3'
@@ -213,96 +612,328 @@ signals:
 
   AUTO_VOLUME_STATUS:
     bits: '6.2-6.0'
-    alt_names: ['ASS_ON']
     comment:
-      en: 'Auto volume status'
-      fr: 'État du volume automatique'
+      en: 'Status of volume/speed control'
+      fr: 'État de l''asservissement volume/vitesse'
+      es: 'Estado del control de volumen/velocidad'
+      de: 'Status der Lautstärke-/Geschwindigkeitsregelung'
+      it: 'Stato del controllo volume/velocità'
+      pl: 'Stan regulacji głośności/prędkości'
+      ru: 'Состояние регулировки громкости/скорости'
+      zh: '音量／车速联动状态'
+      hu: 'Hangerő-/sebességszabályozás állapota'
+      pt: 'Estado do controlo de volume/velocidade'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'OFF'
-        fr: 'OFF'
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x02:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x03:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x04:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x05:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x06:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
       0x07:
-        en: 'ON'
-        fr: 'ON'
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 6.0'
+          fr: 'Aussi observé aux bits 6.0'
+          es: 'También observado en los bits 6.0'
+          de: 'Auch an den Bits 6.0 beobachtet'
+          it: 'Osservato anche ai bit 6.0'
+          pl: 'Obserwowany także na bitach 6.0'
+          ru: 'Также наблюдался в битах 6.0'
+          zh: '也观察到位于位6.0'
+          hu: 'Megfigyelve a(z) 6.0 biteken is'
+          pt: 'Também observado nos bits 6.0'
+        bits: '6.0'
 
   UNUSED_3:
     bits: '7.7'
+    unused: true
 
-  AMBIANCE_MENU:
+  AMBIANCE_REQUEST:
     bits: '7.6'
-    alt_names: ['RGL_AMB']
+    alt_names: ['AMBIANCE_MENU']
     comment:
-      en: 'Ambiance menu display'
-      fr: 'Affichage du menu d''ambiance'
+      en: 'Choice of a musical environment required'
+      fr: 'Choix d''une ambiance musicale demandé'
+      es: 'Solicitud de elección de un ambiente musical'
+      de: 'Anforderung zur Wahl einer Klangumgebung'
+      it: 'Richiesta di scelta di un ambiente musicale'
+      pl: 'Żądanie wyboru otoczenia muzycznego'
+      ru: 'Запрос выбора музыкальной среды'
+      zh: '音乐环境选择请求'
+      hu: 'Zenei környezet kiválasztásának kérése'
+      pt: 'Solicitação de escolha de um ambiente musical'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No menu display'
-        fr: 'Aucun affichage'
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
       0x01:
-        en: 'Display menu'
-        fr: 'Affichage du menu'
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
 
-  AUDIO_ADJUSTMENT_IMPOSSIBLE:
+  UNUSED_4:
     bits: '7.5'
-    alt_names: ['REG_AUD_IMPOSSIBLE']
-    comment:
-      en: 'Impossible audio adjustment in phone source'
-      fr: 'Réglage audio impossible en source téléphone'
-    values:
-      0x00:
-        en: 'No action'
-        fr: 'Aucune action'
-      0x01:
-        en: 'Action impossible'
-        fr: 'Réglage impossible'
+    unused: true
+    alt_names: ['AUDIO_ADJUSTMENT_IMPOSSIBLE']
 
   AMBIANCE_VALUE:
     bits: '7.4-7.2'
-    alt_names: ['TYPE_AMB']
+    comment:
+      en: 'Type of musical environment chosen.'
+      fr: 'Type d''ambiance musicale choisie.'
+      es: 'Tipo de ambiente musical elegido'
+      de: 'Gewählter Typ der Klangumgebung'
+      it: 'Tipo di ambiente musicale scelto'
+      pl: 'Wybrany rodzaj otoczenia muzycznego'
+      ru: 'Выбранный тип музыкальной среды'
+      zh: '已选音乐环境类型'
+      hu: 'A kiválasztott zenei környezet típusa'
+      pt: 'Tipo de ambiente musical escolhido'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'None'
-        fr: 'Aucune'
+        en: 'None (no longitudinal control)'
+        fr: 'Aucune (pas de régulation longitudinale)'
+        es: 'Ninguna (sin regulación longitudinal)'
+        de: 'Keine (keine Längsregelung)'
+        it: 'Nessuna (nessuna regolazione longitudinale)'
+        pl: 'Brak (brak regulacji podłużnej)'
+        ru: 'Нет (нет продольного регулирования)'
+        zh: '无(无纵向调节)'
+        hu: 'Nincs (nincs hosszirányú szabályozás)'
+        pt: 'Nenhum (sem controlo longitudinal)'
       0x01:
-        en: 'Classical'
+        en: 'Classic'
         fr: 'Classique'
+        es: 'Clásico'
+        de: 'Klassisch'
+        it: 'Classico'
+        pl: 'Klasyczny'
+        ru: 'Классический'
+        zh: '经典'
+        hu: 'Klasszikus'
+        pt: 'Clássico'
       0x02:
-        en: 'Jazz-Blues'
-        fr: 'Jazz-Blues'
+        en: 'Jazz Blues'
+        fr: 'Jazz Blues'
+        es: 'Jazz Blues'
+        de: 'Jazz Blues'
+        it: 'Jazz Blues'
+        pl: 'Jazz Blues'
+        ru: 'Джаз-блюз'
+        zh: '爵士蓝调'
+        hu: 'Jazz Blues'
+        pt: 'Jazz Blues'
       0x03:
-        en: 'Pop-Rock'
-        fr: 'Pop-Rock'
+        en: 'Pop/Rock'
+        fr: 'Pop/Rock'
+        es: 'Pop/Rock'
+        de: 'Pop/Rock'
+        it: 'Pop/Rock'
+        pl: 'Pop/Rock'
+        ru: 'Поп/Рок'
+        zh: '流行/摇滚'
+        hu: 'Pop/Rock'
+        pt: 'Pop/Rock'
       0x04:
-        en: 'Vocal'
-        fr: 'Vocal'
+        en: 'Voice'
+        fr: 'Vocale'
+        es: 'Voz'
+        de: 'Sprache'
+        it: 'Vocale'
+        pl: 'Głosowy'
+        ru: 'Голосовой'
+        zh: '语音'
+        hu: 'Hangos'
+        pt: 'Voz'
       0x05:
         en: 'Techno'
         fr: 'Techno'
+        es: 'Techno'
+        de: 'Techno'
+        it: 'Techno'
+        pl: 'Techno'
+        ru: 'Техно'
+        zh: '科技舞曲'
+        hu: 'Techno'
+        pt: 'Techno'
 
   FADER_ACTIVE:
     bits: '7.1'
-    alt_names: ['FADER_ACT']
     comment:
-      en: 'Fader activated'
-      fr: 'Fader activé'
+      en: 'Fader activated (by configuration in diagnosis session)'
+      fr: 'Fader activé (par configuration en session de diagnostic)'
+      es: 'Fader activado (por configuración en sesión de diagnóstico)'
+      de: 'Fader aktiviert (durch Konfiguration in der Diagnosesitzung)'
+      it: 'Fader attivato (tramite configurazione in sessione di diagnosi)'
+      pl: 'Fader włączony (przez konfigurację w sesji diagnostycznej)'
+      ru: 'Fader включён (настройкой в диагностической сессии)'
+      zh: 'Fader（前后声道平衡）已激活（通过诊断会话配置）'
+      hu: 'Fader aktiválva (diagnosztikai munkamenetben történő konfigurálással)'
+      pt: 'Fader ativado (por configuração em sessão de diagnóstico)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Inactive'
-        fr: 'Inactif'
+        en: 'Deactivated'
+        fr: 'Désactivé'
+        es: 'Desactivado'
+        de: 'Deaktiviert'
+        it: 'Disattivato'
+        pl: 'Wyłączony'
+        ru: 'Отключено'
+        zh: '已停用'
+        hu: 'Letiltva'
+        pt: 'Desativado'
       0x01:
         en: 'Activated'
         fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
 
   SPEED_VOLUME_CONTROL_ACTIVE:
     bits: '7.0'
-    alt_names: ['ASS_ACT']
     comment:
-      en: 'Speed volume control activated'
-      fr: 'Asservissement volume/vitesse activé'
+      en: 'Enabled speed/volume control (by configuration in diagnosis session)'
+      fr: 'Asservissement volume/vitesse activé (par configuration en session diagnostic)'
+      es: 'Control de volumen/velocidad activado (por configuración en sesión de diagnóstico)'
+      de: 'Geschwindigkeits-/Lautstärkeregelung aktiviert (durch Konfiguration in der Diagnosesitzung)'
+      it: 'Controllo volume/velocità attivato (tramite configurazione in sessione di diagnosi)'
+      pl: 'Regulacja głośności/prędkości włączona (przez konfigurację w sesji diagnostycznej)'
+      ru: 'Регулировка громкости/скорости включена (настройкой в диагностической сессии)'
+      zh: '速度/音量联动已激活（通过诊断会话配置）'
+      hu: 'Sebesség-/hangerő-szabályozás aktiválva (diagnosztikai munkamenetben történő konfigurálással)'
+      pt: 'Controlo de volume/velocidade ativado (por configuração em sessão de diagnóstico)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Inactive'
-        fr: 'Inactif'
+        en: 'Deactivated'
+        fr: 'Désactivé'
+        es: 'Desactivado'
+        de: 'Deaktiviert'
+        it: 'Disattivato'
+        pl: 'Wyłączony'
+        ru: 'Отключено'
+        zh: '已停用'
+        hu: 'Letiltva'
+        pt: 'Desativado'
       0x01:
         en: 'Activated'
         fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'

@@ -1,216 +1,532 @@
 id: 0x10B
-name: 'STEERING_WHEEL_ANGLE'
-alt_names: ['IS_DYN_VOL']
-length: 7
+name: 'STEERING_WHEEL_ANGLE_LS'
+alt_names: ['STEERING_WHEEL_ANGLE', 'IS_DYN_VOL']
 type: 'can'
+length: 7
 periodicity: ['100ms']
-senders:
-  - 'PASS_BSI'
-receivers:
-  - 'DEF'
-  - 'SAM'
-  - 'AAS'
+senders: ['BSI']
+receivers: ['DEF', 'SAM', 'AAS']
 
 signals:
   STEERING_WHEEL_ANGLE:
     bits: '1.7-2.0'
     alt_names: ['ANGLE_VOLANT']
     comment:
-      fr: 'Angle volant'
       en: 'Steering wheel angle'
-    type: 'int16'
-    resolution: 0.1
+      fr: 'Angle volant'
+      es: 'Ángulo de volante'
+      de: 'Lenkradwinkel'
+      it: 'Angolo volante'
+      pl: 'Kąt kierownicy'
+      ru: 'Угол поворота руля'
+      zh: '方向盘转角'
+      hu: 'Kormányszög'
+      pt: 'Ângulo do volante'
+    type: 'uint'
+    factor: 0.1
     offset: 0
     min: -780
     max: 780
-    invalid: 0x7FFF
     units: '°'
+    invalid: 0x7FFF
 
   STEERING_WHEEL_ROTATION_SPEED:
     bits: '3.7-3.0'
     alt_names: ['VITESSE_ROT_VOL']
     comment:
-      fr: 'Vitesse rotation volant'
       en: 'Wheel rotation speed'
-    type: 'uint8'
-    resolution: 4
+      fr: 'Vitesse rotation volant'
+      es: 'Velocidad de rotación del volante'
+      de: 'Lenkraddrehgeschwindigkeit'
+      it: 'Velocità di rotazione del volante'
+      pl: 'Prędkość obrotu kierownicy'
+      ru: 'Скорость вращения руля'
+      zh: '方向盘转动速度'
+      hu: 'A kormánykerék forgási sebessége'
+      pt: 'Velocidade de rotação do volante'
+    type: 'uint'
+    factor: 4
     offset: 0
     min: 0
     max: 1016
-    invalid: 0xFF
     units: '°/s'
+    invalid: 0xFF
 
   STEERING_WHEEL_ROTATION_DIRECTION:
     bits: '4.7'
     alt_names: ['SENS_ROT_VOL']
     comment:
-      fr: 'Sens rotation capteur angle volant'
       en: 'Direction of rotation of the wheel angle sensor'
+      fr: 'Sens rotation capteur angle volant'
+      es: 'Sentido de rotación del sensor de ángulo del volante'
+      de: 'Drehrichtung des Lenkradwinkelsensors'
+      it: 'Senso di rotazione del sensore di angolo volante'
+      pl: 'Kierunek obrotu czujnika kąta skrętu kierownicy'
+      ru: 'Направление вращения датчика угла поворота руля'
+      zh: '方向盘转角传感器旋转方向'
+      hu: 'A kormánykerék-szögérzékelő forgásiránya'
+      pt: 'Sentido de rotação do sensor de ângulo do volante'
     values:
       0x00:
-        fr: 'Sens trigonométrique'
         en: 'Counterclockwise direction'
+        fr: 'Sens trigonométrique'
+        es: 'Sentido antihorario'
+        de: 'Gegen den Uhrzeigersinn'
+        it: 'Senso antiorario'
+        pl: 'Kierunek przeciwny do ruchu wskazówek zegara'
+        ru: 'Против часовой стрелки'
+        zh: '逆时针方向'
+        hu: 'Óramutató járásával ellentétes irány'
+        pt: 'Sentido anti-horário'
       0x01:
-        fr: 'Sens horaire'
         en: 'Clockwise direction'
+        fr: 'sens horaire'
+        es: 'sentido horario'
+        de: 'im Uhrzeigersinn'
+        it: 'senso orario'
+        pl: 'zgodnie z ruchem wskazówek zegara'
+        ru: 'по часовой стрелке'
+        zh: '顺时针方向'
+        hu: 'óramutató járásával megegyező irány'
+        pt: 'sentido horário'
 
   STEERING_WHEEL_ANGLE_SENSOR_FAULT_CODE:
     bits: '4.6-4.3'
     alt_names: ['CODE_DEFAUT_VOL']
     comment:
-      fr: 'Code défaut capteur angle volant'
       en: 'Fault code of steering wheel angle sensor'
+      fr: 'Code défaut capteur angle volant'
+      es: 'Código de fallo del sensor de ángulo del volante'
+      de: 'Fehlercode des Lenkradwinkelsensors'
+      it: 'Codice guasto del sensore di angolo volante'
+      pl: 'Kod usterki czujnika kąta skrętu kierownicy'
+      ru: 'Код неисправности датчика угла поворота руля'
+      zh: '方向盘转角传感器故障代码'
+      hu: 'A kormánykerék-szögérzékelő hibakódja'
+      pt: 'Código de falha do sensor de ângulo do volante'
     values:
       0x00:
-        fr: 'Pas ou plus de défaut'
         en: 'No fault or fault cleared'
+        fr: 'Pas ou plus de défaut'
+        es: 'Sin fallo o fallo eliminado'
+        de: 'Kein Fehler oder Fehler behoben'
+        it: 'Nessun guasto o guasto eliminato'
+        pl: 'Brak usterki lub usterka usunięta'
+        ru: 'Нет неисправности или неисправность устранена'
+        zh: '无故障或故障已清除'
+        hu: 'Nincs hiba, vagy a hiba törölve'
+        pt: 'Sem falha ou falha eliminada'
       0x01:
-        fr: 'Incohérence détectée par ESP info vitesse rotation volant'
         en: 'Inconsistency detected by ESP on wheel rotation speed info'
+        fr: 'Incohérence détectée par ESP info vitesse rotation volant'
+        es: 'Incoherencia detectada por el ESP en la información de velocidad de rotación de la rueda'
+        de: 'Vom ESP erkannte Unstimmigkeit bei der Raddrehzahl-Information'
+        it: 'Incoerenza rilevata dall''ESP nell''informazione di velocità di rotazione della ruota'
+        pl: 'Niespójność wykryta przez ESP w informacji o prędkości obrotowej koła'
+        ru: 'Несоответствие, обнаруженное ESP в информации о скорости вращения колеса'
+        zh: 'ESP检测到车轮转速信息不一致'
+        hu: 'Az ESP által észlelt következetlenség a kerékfordulat-szám információjában'
+        pt: 'Incoerência detetada pelo ESP na informação de velocidade de rotação da roda'
       0x02:
-        fr: 'Incohérence détectée par ESP info angle volant'
         en: 'Inconsistency detected by ESP on steering wheel angle info'
+        fr: 'Incohérence détectée par ESP info angle volant'
+        es: 'Incoherencia detectada por el ESP en la información del ángulo del volante'
+        de: 'Vom ESP erkannte Unstimmigkeit bei der Lenkradwinkel-Information'
+        it: 'Incoerenza rilevata dall''ESP nell''informazione di angolo volante'
+        pl: 'Niespójność wykryta przez ESP w informacji o kącie skrętu kierownicy'
+        ru: 'Несоответствие, обнаруженное ESP в информации об угле поворота руля'
+        zh: 'ESP检测到方向盘转角信息不一致'
+        hu: 'Az ESP által észlelt következetlenség a kormánykerék-szög információjában'
+        pt: 'Inconsistência detetada pelo ESP na informação do ângulo do volante'
       0x03:
-        fr: 'Incohérence détectée par ESP info vitesse volant et angle'
         en: 'Inconsistency detected by ESP on wheel speed and angle info'
+        fr: 'Incohérence détectée par ESP info vitesse volant et angle'
+        es: 'Incoherencia detectada por el ESP en la información de velocidad y ángulo del volante'
+        de: 'Vom ESP erkannte Unstimmigkeit bei Lenkradgeschwindigkeit und -winkel'
+        it: 'Incoerenza rilevata dall''ESP sull''informazione di velocità e angolo del volante'
+        pl: 'Niespójność wykryta przez ESP w informacji o prędkości i kącie kierownicy'
+        ru: 'Несоответствие, обнаруженное ESP, в информации о скорости и угле поворота руля'
+        zh: 'ESP检测到方向盘转速和转角信息不一致'
+        hu: 'Az ESP inkonzisztenciát észlelt a kormányszög-sebesség információban'
+        pt: 'Incoerência detetada pelo ESP na informação de velocidade e ângulo do volante'
       0x04:
-        fr: 'Incohérence sur l''info angle volant'
         en: 'Inconsistency on steering wheel angle info'
+        fr: 'Incohérence sur l''info angle volant'
+        es: 'Incoherencia en la información del ángulo de volante'
+        de: 'Unstimmigkeit bei der Lenkradwinkelinformation'
+        it: 'Incoerenza sull''informazione dell''angolo volante'
+        pl: 'Niespójność informacji o kącie kierownicy'
+        ru: 'Несоответствие информации об угле поворота руля'
+        zh: '方向盘转角信息不一致'
+        hu: 'Inkonzisztencia a kormányszög-információban'
+        pt: 'Incoerência na informação do ângulo do volante'
       0x05:
-        fr: 'Incohérence sur l''info vitesse rotation volant'
         en: 'Inconsistency on wheel rotation speed info'
+        fr: 'Incohérence sur l''info vitesse rotation volant'
+        es: 'Incoherencia en la información de velocidad de rotación de la rueda'
+        de: 'Unstimmigkeit bei der Information zur Raddrehzahl'
+        it: 'Incoerenza nell''informazione di velocità di rotazione della ruota'
+        pl: 'Niespójność informacji o prędkości obrotowej koła'
+        ru: 'Несоответствие информации о скорости вращения колеса'
+        zh: '车轮转速信息不一致'
+        hu: 'Következetlenség a kerékfordulat-szám információjában'
+        pt: 'Inconsistência na informação de velocidade de rotação da roda'
       0x06:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x07:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x08:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x09:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x0A:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x0B:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x0C:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x0D:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x0E:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
       0x0F:
-        fr: 'Défauts internes détectés par capteur angle volant'
         en: 'Internal faults detected by steering wheel angle sensor'
+        fr: 'Défauts internes détectés par capteur angle volant'
+        es: 'Fallos internos detectados por el sensor de ángulo de volante'
+        de: 'Interne Fehler, erkannt vom Lenkwinkelsensor'
+        it: 'Guasti interni rilevati dal sensore angolo volante'
+        pl: 'Usterki wewnętrzne wykryte przez czujnik kąta kierownicy'
+        ru: 'Внутренние неисправности, обнаруженные датчиком угла поворота руля'
+        zh: '方向盘转角传感器检测到的内部故障'
+        hu: 'A kormányszög-érzékelő által észlelt belső hibák'
+        pt: 'Falhas internas detetadas pelo sensor de ângulo do volante'
 
   STEERING_WHEEL_ANGLE_SENSOR_ADJUSTMENT_STATUS:
     bits: '4.2'
     alt_names: ['TRIM_VOL']
     comment:
-      fr: 'Capteur angle volant ajusté (Trim). Indication de réglage en usine fournisseur'
       en: 'Trimmed steering wheel angle sensor. Indication of supplier default setting'
+      fr: 'Capteur angle volant ajusté (Trim). Indication de réglage en usine fournisseur'
+      es: 'Sensor de ángulo de volante ajustado. Indicación del ajuste de fábrica del proveedor'
+      de: 'Justierter Lenkradwinkelsensor. Hinweis auf die Werkseinstellung des Lieferanten'
+      it: 'Sensore di angolo volante regolato. Indicazione dell''impostazione di fabbrica del fornitore'
+      pl: 'Wyregulowany czujnik kąta skrętu kierownicy. Wskazanie fabrycznego ustawienia dostawcy'
+      ru: 'Настроенный датчик угла поворота руля. Индикация заводской настройки поставщика'
+      zh: '已调校的方向盘转角传感器。供应商出厂设置指示'
+      hu: 'Beállított kormánykerék-szögérzékelő. A beszállítói gyári beállítás jelzése'
+      pt: 'Sensor do ângulo do volante afinado. Indicação da regulação por defeito do fornecedor'
     values:
       0x00:
-        fr: 'Capteur non ajusté'
         en: 'Sensor not trimmed'
+        fr: 'Capteur non ajusté'
+        es: 'Sensor no ajustado'
+        de: 'Sensor nicht justiert'
+        it: 'Sensore non regolato'
+        pl: 'Czujnik niewyregulowany'
+        ru: 'Датчик не настроен'
+        zh: '传感器未调校'
+        hu: 'Az érzékelő nincs beállítva'
+        pt: 'Sensor não ajustado'
       0x01:
-        fr: 'Capteur ajusté'
         en: 'Sensor trimmed'
+        fr: 'Capteur ajusté'
+        es: 'Sensor ajustado'
+        de: 'Sensor abgeglichen'
+        it: 'Sensore regolato'
+        pl: 'Czujnik wyregulowany'
+        ru: 'Датчик отрегулирован'
+        zh: '传感器已调整'
+        hu: 'Az érzékelő beállítva'
+        pt: 'Sensor ajustado'
 
   STEERING_WHEEL_ANGLE_SENSOR_CALIBRATION:
     bits: '4.1'
     alt_names: ['CALIBRATION_VOL']
     comment:
-      fr: 'Capteur angle volant calibré'
       en: 'Calibrated steering wheel angle sensor'
+      fr: 'Capteur angle volant calibré'
+      es: 'Sensor de ángulo de volante calibrado'
+      de: 'Kalibrierter Lenkradwinkelsensor'
+      it: 'Sensore di angolo volante calibrato'
+      pl: 'Skalibrowany czujnik kąta skrętu kierownicy'
+      ru: 'Откалиброванный датчик угла поворота руля'
+      zh: '已校准的方向盘转角传感器'
+      hu: 'Kalibrált kormánykerék-szögérzékelő'
+      pt: 'Sensor de ângulo de volante calibrado'
     values:
       0x00:
-        fr: 'Capteur non calibré'
         en: 'Sensor not calibrated'
+        fr: 'Capteur non calibré'
+        es: 'Sensor no calibrado'
+        de: 'Sensor nicht kalibriert'
+        it: 'Sensore non calibrato'
+        pl: 'Czujnik niewykalibrowany'
+        ru: 'Датчик не откалиброван'
+        zh: '传感器未校准'
+        hu: 'Az érzékelő nincs kalibrálva'
+        pt: 'Sensor não calibrado'
       0x01:
-        fr: 'Capteur calibré'
         en: 'Sensor calibrated'
+        fr: 'Capteur calibré'
+        es: 'Sensor calibrado'
+        de: 'Sensor kalibriert'
+        it: 'Sensore calibrato'
+        pl: 'Czujnik skalibrowany'
+        ru: 'Датчик откалиброван'
+        zh: '传感器已校准'
+        hu: 'Az érzékelő kalibrálva'
+        pt: 'Sensor calibrado'
 
   STEERING_WHEEL_ANGLE_SENSOR_STATUS:
     bits: '4.0'
     alt_names: ['ETAT_CAPT_VOL']
     comment:
-      fr: 'Status interne capteur angle volant'
       en: 'Internal status of steering wheel angle sensor'
+      fr: 'Status interne capteur angle volant'
+      es: 'Estado interno del sensor de ángulo del volante'
+      de: 'Interner Status des Lenkradwinkelsensors'
+      it: 'Stato interno del sensore di angolo volante'
+      pl: 'Stan wewnętrzny czujnika kąta skrętu kierownicy'
+      ru: 'Внутреннее состояние датчика угла поворота руля'
+      zh: '方向盘转角传感器内部状态'
+      hu: 'A kormánykerék-szögérzékelő belső állapota'
+      pt: 'Estado interno do sensor de ângulo do volante'
     values:
       0x00:
-        fr: 'Capteur en défaut'
         en: 'Sensor fault'
+        fr: 'Capteur en défaut'
+        es: 'Fallo del sensor'
+        de: 'Sensorfehler'
+        it: 'Guasto del sensore'
+        pl: 'Usterka czujnika'
+        ru: 'Неисправность датчика'
+        zh: '传感器故障'
+        hu: 'Érzékelőhiba'
+        pt: 'Falha do sensor'
       0x01:
-        fr: 'Capteur OK'
         en: 'Sensor OK'
+        fr: 'Capteur OK'
+        es: 'Sensor correcto'
+        de: 'Sensor OK'
+        it: 'Sensore OK'
+        pl: 'Czujnik OK'
+        ru: 'Датчик исправен'
+        zh: '传感器正常'
+        hu: 'Érzékelő rendben'
+        pt: 'Sensor correto'
 
   STEERING_WHEEL_ANGLE_CHECKSUM:
     bits: '5.7-5.4'
     alt_names: ['CHKSUM_VOL']
     comment:
-      fr: 'Checksum angle volant'
       en: 'Steering wheel angle checksum'
-    type: 'uint8'
+      fr: 'Checksum angle volant'
+      es: 'Suma de comprobación del ángulo de volante'
+      de: 'Prüfsumme des Lenkradwinkels'
+      it: 'Checksum dell''angolo volante'
+      pl: 'Suma kontrolna kąta kierownicy'
+      ru: 'Контрольная сумма угла поворота руля'
+      zh: '方向盘转角校验和'
+      hu: 'A kormányszög ellenőrző összege'
+      pt: 'Soma de verificação do ângulo do volante'
+    type: 'uint'
 
   STEERING_WHEEL_ANGLE_SENSOR_PROCESS_COUNTER:
     bits: '5.3-5.0'
     alt_names: ['CPT_PROCESS_4B_A_VOL']
     comment:
-      fr: 'Compteur de process 4 bits ESP'
       en: 'ESP 4 bits process counter'
-    type: 'uint8'
+      fr: 'Compteur de process 4 bits ESP'
+      es: 'Contador de proceso ESP de 4 bits'
+      de: '4-Bit-Prozesszähler ESP'
+      it: 'Contatore di processo a 4 bit ESP'
+      pl: '4-bitowy licznik przebiegu procesu ESP'
+      ru: '4-битный счётчик процесса ESP'
+      zh: 'ESP 4位处理计数器'
+      hu: 'ESP 4 bites folyamatszámláló'
+      pt: 'Contador de processo ESP de 4 bits'
+    type: 'uint'
 
   STEERING_WHEEL_ROTATION_SPEED_OPTIMIZED:
     bits: '6.7-6.0'
     alt_names: ['VITESSE_ROT_VOL_OPTIMISE']
     comment:
-      fr: 'Vitesse rotation volant temps de réponse optimisé'
       en: 'Wheel rotation speed, optimized response time'
-    type: 'uint8'
-    resolution: 4
+      fr: 'Vitesse rotation volant temps de réponse optimisé'
+      es: 'Velocidad de rotación de la rueda, tiempo de respuesta optimizado'
+      de: 'Raddrehzahl, optimierte Reaktionszeit'
+      it: 'Velocità di rotazione della ruota, tempo di risposta ottimizzato'
+      pl: 'Prędkość obrotowa koła, zoptymalizowany czas odpowiedzi'
+      ru: 'Скорость вращения колеса, оптимизированное время отклика'
+      zh: '车轮转速,优化响应时间'
+      hu: 'Kerékfordulat-szám, optimalizált válaszidő'
+      pt: 'Velocidade de rotação do volante, tempo de resposta otimizado'
+    type: 'uint'
+    factor: 4
     offset: 0
     min: 0
     max: 1016
-    invalid: 0xFF
     units: '°/s'
+    invalid: 0xFF
 
   STEERING_WHEEL_ANGLE_INITIALIZED:
     bits: '7.7'
     alt_names: ['FLG_INIT_AVOL']
     comment:
-      fr: 'Flag initialisation de l''angle volant'
       en: 'Initialization steering wheel angle flag'
+      fr: 'Flag initialisation de l''angle volant'
+      es: 'Indicador de inicialización del ángulo del volante'
+      de: 'Initialisierungskennzeichen des Lenkradwinkels'
+      it: 'Flag di inizializzazione dell''angolo volante'
+      pl: 'Flaga inicjalizacji kąta skrętu kierownicy'
+      ru: 'Флаг инициализации угла поворота руля'
+      zh: '方向盘转角初始化标志'
+      hu: 'A kormánykerék-szög inicializálási jelzője'
+      pt: 'Indicador de inicialização do ângulo do volante'
     values:
       0x00:
-        fr: 'Angle volant disponible'
         en: 'Steering wheel angle available'
+        fr: 'Angle volant disponible'
+        es: 'Ángulo de volante disponible'
+        de: 'Lenkradwinkel verfügbar'
+        it: 'Angolo volante disponibile'
+        pl: 'Kąt skrętu kierownicy dostępny'
+        ru: 'Угол поворота руля доступен'
+        zh: '方向盘转角可用'
+        hu: 'A kormánykerék-szög elérhető'
+        pt: 'Ângulo do volante disponível'
       0x01:
-        fr: 'Angle volant mémorisé'
         en: 'Steering wheel angle memorized'
+        fr: 'Angle volant mémorisé'
+        es: 'Ángulo de volante memorizado'
+        de: 'Gespeicherter Lenkradwinkel'
+        it: 'Angolo volante memorizzato'
+        pl: 'Zapamiętany kąt kierownicy'
+        ru: 'Запомненный угол поворота руля'
+        zh: '已记忆方向盘转角'
+        hu: 'Elmentett kormányszög'
+        pt: 'Ângulo do volante memorizado'
 
   STEERING_WHEEL_ANGLE_INACCURATE:
     bits: '7.6'
     alt_names: ['FLG_AVOL_ICN']
     comment:
-      fr: 'Flag angle volant incertain'
       en: 'Absolute steering wheel angle unaccurate'
+      fr: 'Flag angle volant incertain'
+      es: 'Indicador de ángulo de volante absoluto impreciso'
+      de: 'Kennzeichen für ungenauen absoluten Lenkradwinkel'
+      it: 'Flag di angolo volante assoluto impreciso'
+      pl: 'Flaga niedokładnego bezwzględnego kąta skrętu kierownicy'
+      ru: 'Флаг неточного абсолютного угла поворота руля'
+      zh: '绝对方向盘转角不准确标志'
+      hu: 'A pontatlan abszolút kormánykerék-szög jelzője'
+      pt: 'Indicador de ângulo de volante absoluto impreciso'
     values:
       0x00:
-        fr: 'Angle volant précis'
         en: 'Accurate steering wheel angle'
+        fr: 'Angle volant précis'
+        es: 'Ángulo de volante preciso'
+        de: 'Präziser Lenkradwinkel'
+        it: 'Angolo volante preciso'
+        pl: 'Dokładny kąt kierownicy'
+        ru: 'Точный угол поворота руля'
+        zh: '精确方向盘转角'
+        hu: 'Pontos kormányszög'
+        pt: 'Ângulo de volante preciso'
       0x01:
-        fr: 'Angle volant incertain'
         en: 'Unaccurate steering wheel angle'
+        fr: 'Angle volant incertain'
+        es: 'Ángulo de volante impreciso'
+        de: 'Ungenauer Lenkradwinkel'
+        it: 'Angolo volante impreciso'
+        pl: 'Niedokładny kąt skrętu kierownicy'
+        ru: 'Неточный угол поворота руля'
+        zh: '方向盘转角不准确'
+        hu: 'Pontatlan kormánykerék-szög'
+        pt: 'Ângulo do volante impreciso'
 
   UNUSED_1:
     bits: '7.5-7.0'
-    alt_names: ['LIBRE_1']
     unused: true
+    alt_names: ['LIBRE_1']

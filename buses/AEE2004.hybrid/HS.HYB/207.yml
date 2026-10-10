@@ -1,0 +1,140 @@
+id: 0x207
+name: 'HCU1_DYNAMIC_DATA_4'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['CMM']
+
+signals:
+  CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ENGINE_TORQUE_SETPOINT:
+    bits: '2.7-3.2'
+    comment:
+      en: 'Engine torque setpoint'
+      fr: 'Consigne de couple moteur'
+      es: 'Consigna de par motor'
+      de: 'Motordrehmoment-Sollwert'
+      it: 'Valore di coppia motore richiesto'
+      pl: 'Zadany moment obrotowy silnika'
+      ru: 'Заданный момент двигателя'
+      zh: '发动机扭矩设定值'
+      hu: 'A motor nyomaték-alapjele'
+      pt: 'Consigna de binário do motor'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  EASY_MOVE_TORQUE_SETPOINT:
+    bits: '3.1-5.4'
+    comment:
+      en: 'Torque setpoint after Easy Move processing'
+      fr: 'Consigne de couple après traitement Easy Move'
+      es: 'Consigna de par tras el procesamiento Easy Move'
+      de: 'Solldrehmoment nach Easy-Move-Verarbeitung'
+      it: 'Valore di coppia richiesto dopo l''elaborazione Easy Move'
+      pl: 'Zadany moment obrotowy po przetworzeniu przez funkcję Easy Move'
+      ru: 'Заданный момент после обработки функцией Easy Move'
+      zh: 'Easy Move处理后的扭矩设定值'
+      hu: 'Nyomaték-alapjel az Easy Move feldolgozás után'
+      pt: 'Consigna de binário após processamento Easy Move'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  DECELERATION_ACTIVATION_FILTERED_TORQUE:
+    bits: '5.3-7.6'
+    comment:
+      en: 'Filtered torque at deceleration activation'
+      fr: 'Couple filtré à l''activation de la décélération'
+      es: 'Par filtrado en la activación de la deceleración'
+      de: 'Gefiltertes Drehmoment bei Aktivierung der Verzögerung'
+      it: 'Coppia filtrata all''attivazione della decelerazione'
+      pl: 'Filtrowany moment obrotowy przy aktywacji opóźnienia'
+      ru: 'Отфильтрованный момент при активации замедления'
+      zh: '减速激活时的滤波扭矩'
+      hu: 'Szűrt nyomaték a lassítás aktiválásakor'
+      pt: 'Binário filtrado na ativação da desaceleração'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  EMOTOR_STATIC_TORQUE_LIMIT:
+    bits: '7.5-8.0'
+    comment:
+      en: 'Static torque limit of the electric machine control (CME)'
+      fr: 'Couple de limitation statique de la commande de la machine électrique (CME)'
+      es: 'Límite de par estático del control de la máquina eléctrica (CME)'
+      de: 'Statische Drehmomentbegrenzung der E-Maschinensteuerung (CME)'
+      it: 'Limite di coppia statico del comando della macchina elettrica (CME)'
+      pl: 'Statyczne ograniczenie momentu obrotowego sterownika maszyny elektrycznej (CME)'
+      ru: 'Статическое ограничение момента блока управления электромашиной (CME)'
+      zh: '电机控制器(CME)静态扭矩限制'
+      hu: 'Az elektromosgép-vezérlő (CME) statikus nyomatékhatára'
+      pt: 'Limite de binário estático do controlo da máquina elétrica (CME)'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40

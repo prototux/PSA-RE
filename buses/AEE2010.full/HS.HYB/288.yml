@@ -1,0 +1,279 @@
+id: 0x288
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_7'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers: ['HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  IDLE_SPEED_FINAL_TARGET:
+    bits: '2.7-3.2'
+    comment:
+      en: 'Final idle speed target'
+      fr: 'Régime de ralenti cible final'
+      es: 'Régimen de ralentí objetivo final'
+      de: 'Endgültiger Leerlaufdrehzahl-Zielwert'
+      it: 'Regime minimo target finale'
+      pl: 'Ostateczna docelowa prędkość obrotowa biegu jałowego'
+      ru: 'Итоговое целевое значение оборотов холостого хода'
+      zh: '最终怠速目标'
+      hu: 'Végleges alapjárati fordulatszám-cél'
+      pt: 'Regime de ralenti alvo final'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 4000
+    units: 'rpm'
+    default: 0x00
+
+  MAX_ENGINE_TORQUE:
+    bits: '3.1-5.4'
+    comment:
+      en: 'Maximum engine torque'
+      fr: 'Couple moteur maximal'
+      es: 'Par de motor máximo'
+      de: 'Maximales Motordrehmoment'
+      it: 'Coppia motore massima'
+      pl: 'Maksymalny moment obrotowy silnika'
+      ru: 'Максимальный крутящий момент двигателя'
+      zh: '最大发动机扭矩'
+      hu: 'Maximális motornyomaték'
+      pt: 'Binário máximo do motor'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  ENGINE_TORQUE_LIMITATION_SYNTHESIS:
+    bits: '5.3-7.6'
+    comment:
+      en: 'Combined synthesis of engine torque limitations'
+      fr: 'Synthèse des limitations de couple moteur'
+      es: 'Síntesis de las limitaciones de par de motor'
+      de: 'Zusammenfassung der Motordrehmomentbegrenzungen'
+      it: 'Sintesi delle limitazioni di coppia motore'
+      pl: 'Zbiorcze zestawienie ograniczeń momentu silnika'
+      ru: 'Сводная информация об ограничениях момента двигателя'
+      zh: '发动机扭矩限值综合值'
+      hu: 'A motornyomaték-korlátozások összesítése'
+      pt: 'Síntese das limitações de binário do motor'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  GEARBOX_BOOST_TORQUE:
+    bits: '7.5-8.0'
+    comment:
+      en: 'Gearbox boosting (re-acceleration) torque'
+      fr: 'Couple de relance de la boîte de vitesses'
+      es: 'Par de reaceleración de la caja de cambios'
+      de: 'Wiederbeschleunigungsmoment des Getriebes'
+      it: 'Coppia di rilancio del cambio'
+      pl: 'Moment doładowania (ponownego przyspieszenia) skrzyni biegów'
+      ru: 'Момент повторного разгона коробки передач'
+      zh: '变速箱重新加速扭矩'
+      hu: 'A váltó újragyorsítási nyomatéka'
+      pt: 'Binário de reaceleração da caixa de velocidades'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['CMM']
+    receivers: ['HCU1']
+    signals:
+      ENGINE_RESISTIVE_TORQUE_AT_0RPM:
+        bits: '1.7-1.1'
+        comment:
+          en: 'Engine resistive torque at the crankshaft at 0 rpm'
+          fr: 'Couple résistant moteur au vilebrequin à 0 tr/min'
+          es: 'Par resistente del motor en el cigüeñal a 0 rpm'
+          de: 'Motorwiderstandsmoment an der Kurbelwelle bei 0 U/min'
+          it: 'Coppia resistente motore all''albero motore a 0 giri/min'
+          pl: 'Moment oporowy silnika na wale korbowym przy 0 obr/min'
+          ru: 'Момент сопротивления двигателя на коленвале при 0 об/мин'
+          zh: '0转/分时曲轴处的发动机阻力矩'
+          hu: 'A motor ellennyomatéka a főtengelyen 0 ford/percnél'
+          pt: 'Binário resistente do motor na cambota a 0 rpm'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 126
+        units: 'Nm'
+        invalid: 0x7F
+        default: 0x00
+      TORQUE_LIMIT_SYNTHESIS:
+        bits: '1.0-3.6'
+        comment:
+          en: 'Synthesis of torque limitations'
+          fr: 'Synthèse des limitations de couple'
+          es: 'Síntesis de las limitaciones de par'
+          de: 'Zusammenfassung der Drehmomentbegrenzungen'
+          it: 'Sintesi delle limitazioni di coppia'
+          pl: 'Zestawienie ograniczeń momentu obrotowego'
+          ru: 'Сводка ограничений крутящего момента'
+          zh: '转矩限制汇总'
+          hu: 'Nyomatékkorlátozások összegzése'
+          pt: 'Síntese das limitações de binário'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      ENGINE_TORQUE_LIMIT_SYNTHESIS_NO_ALT:
+        bits: '3.5-4.3'
+        comment:
+          en: 'Synthesis of the effective engine torque limitations, excluding the electric machine (ALT) torque'
+          fr: 'Synthèse des limitations effectives du couple moteur, hors prise en compte du couple de la machine électrique (ALT)'
+          es: 'Síntesis de las limitaciones efectivas del par motor, sin considerar el par de la máquina eléctrica (ALT)'
+          de: 'Zusammenfassung der effektiven Motordrehmomentbegrenzungen ohne das Drehmoment der E-Maschine (ALT)'
+          it: 'Sintesi delle limitazioni effettive di coppia motore, escluso il momento della macchina elettrica (ALT)'
+          pl: 'Zestawienie efektywnych ograniczeń momentu obrotowego silnika, bez uwzględnienia momentu maszyny elektrycznej (ALT)'
+          ru: 'Сводка действующих ограничений крутящего момента двигателя без учёта момента электромашины (ALT)'
+          zh: '有效发动机转矩限制汇总(不含电机ALT转矩)'
+          hu: 'A tényleges motornyomaték-korlátozások összegzése, az elektromos gép (ALT) nyomatéka nélkül'
+          pt: 'Síntese das limitações efetivas do binário do motor, sem considerar o binário da máquina elétrica (ALT)'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        default: 0x3E8
+      ENGINE_MIN_ACHIEVABLE_TORQUE:
+        bits: '4.2-5.0'
+        comment:
+          en: 'Minimum achievable engine torque'
+          fr: 'Couple moteur minimal réalisable'
+          es: 'Par motor mínimo alcanzable'
+          de: 'Minimal erreichbares Motordrehmoment'
+          it: 'Coppia motore minima ottenibile'
+          pl: 'Minimalny osiągalny moment obrotowy silnika'
+          ru: 'Минимальный достижимый крутящий момент двигателя'
+          zh: '发动机可实现的最小转矩'
+          hu: 'Elérhető minimális motornyomaték'
+          pt: 'Binário mínimo do motor alcançável'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      ENGINE_MIN_TORQUE_LIMIT:
+        bits: '6.7-7.5'
+        comment:
+          en: 'Minimum engine torque limit, excluding the front electric machine'
+          fr: 'Couple moteur limite minimal, hors prise en compte de la machine électrique avant'
+          es: 'Par límite mínimo del motor, sin considerar la máquina eléctrica delantera'
+          de: 'Minimales Motordrehmoment-Limit ohne Berücksichtigung der vorderen E-Maschine'
+          it: 'Coppia motore limite minima, esclusa la macchina elettrica anteriore'
+          pl: 'Minimalny limit momentu obrotowego silnika, bez uwzględnienia przedniej maszyny elektrycznej'
+          ru: 'Минимальный предел крутящего момента двигателя без учёта передней электромашины'
+          zh: '发动机最小转矩限值(不含前电机)'
+          hu: 'Minimális motornyomaték-korlát, az elülső elektromos gép figyelembevétele nélkül'
+          pt: 'Binário limite mínimo do motor, sem considerar a máquina elétrica dianteira'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      FULL_LOAD_TORQUE_LIMIT:
+        bits: '7.4-8.2'
+        comment:
+          en: 'Full-load torque limit'
+          fr: 'Couple limite pleine charge'
+          es: 'Par límite a plena carga'
+          de: 'Drehmomentgrenze bei Volllast'
+          it: 'Coppia limite a pieno carico'
+          pl: 'Limit momentu obrotowego przy pełnym obciążeniu'
+          ru: 'Предел крутящего момента при полной нагрузке'
+          zh: '满负荷转矩限值'
+          hu: 'Teljes terhelésű nyomatékhatár'
+          pt: 'Binário limite a plena carga'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8

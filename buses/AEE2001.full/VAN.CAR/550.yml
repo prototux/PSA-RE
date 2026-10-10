@@ -1,0 +1,735 @@
+id: 0x550
+name: 'TYRE_PRESSURE_STATUS'
+type: 'van'
+length: 17
+comment:
+  en: 'Tyre under-inflation detection data received by the steering column module for up to 5 wheels: transmitter mode, message toggle, pressure and message counter.'
+  fr: 'Détection de sous-gonflage des roues, reçue par le module de colonne de direction pour jusqu''à 5 roues : mode de l''émetteur, bascule de message, pression et compteur de message.'
+  es: 'Datos de detección de baja presión de neumáticos recibidos por el módulo de columna de dirección para hasta 5 ruedas: modo del transmisor, conmutación de mensaje, presión y contador de mensajes.'
+  de: 'Vom Lenksäulenmodul empfangene Reifendruck-Unterdruckerkennungsdaten für bis zu 5 Räder: Sendermodus, Nachrichten-Umschaltung, Druck und Nachrichtenzähler.'
+  it: 'Dati di rilevamento della sottopressione degli pneumatici ricevuti dal modulo piantone per un massimo di 5 ruote: modalità del trasmettitore, commutazione del messaggio, pressione e contatore dei messaggi.'
+  pl: 'Dane wykrywania niedociśnienia opon odbierane przez moduł kolumny kierowniczej dla maks. 5 kół: tryb nadajnika, przełączanie komunikatu, ciśnienie i licznik komunikatów.'
+  ru: 'Данные обнаружения недостаточного давления шин, получаемые модулем рулевой колонки для до 5 колёс: режим передатчика, переключение сообщения, давление и счётчик сообщений.'
+  zh: '转向柱模块接收的最多5个车轮的轮胎欠压检测数据:发射器模式、消息切换、压力及消息计数器。'
+  hu: 'A kormányoszlop-modul által fogadott, legfeljebb 5 kerékre vonatkozó gumiabroncs-alulnyomás érzékelési adatok: adó módja, üzenetváltás, nyomás és üzenetszámláló.'
+  pt: 'Dados de deteção de subinsuflação dos pneus recebidos pelo módulo da coluna de direção para até 5 rodas: modo do transmissor, alternância de mensagem, pressão e contador de mensagens.'
+periodicity: ['1000ms', 'trigger']
+senders: ['HDC']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  WHEEL1_SENSOR_MODE:
+    bits: '2.7-2.3'
+    comment:
+      en: 'Wheel 1 pressure transmitter function code'
+      fr: 'Code fonction émetteur roue 1'
+      es: 'Código de función del transmisor de presión de la rueda 1'
+      de: 'Funktionscode des Drucksenders von Rad 1'
+      it: 'Codice funzione del trasmettitore di pressione della ruota 1'
+      pl: 'Kod funkcji nadajnika ciśnienia koła 1'
+      ru: 'Код функции передатчика давления колеса 1'
+      zh: '车轮 1 压力发射器功能代码'
+      hu: 'A(z) 1. kerék nyomásadójának funkciókódja'
+      pt: 'Código de função do transmissor de pressão da roda 1'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x18:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+      0x19:
+        en: 'Battery low'
+        fr: 'Pile faible'
+        es: 'Pila baja'
+        de: 'Batterie schwach'
+        it: 'Batteria scarica'
+        pl: 'Słaba bateria'
+        ru: 'Батарея разряжена'
+        zh: '电池电量低'
+        hu: 'Elem lemerülőben'
+        pt: 'Bateria fraca'
+      0x1A:
+        unused: true
+      0x1B:
+        en: 'Pressure change'
+        fr: 'Changement de pression'
+        es: 'Cambio de presión'
+        de: 'Druckänderung'
+        it: 'Variazione di pressione'
+        pl: 'Zmiana ciśnienia'
+        ru: 'Изменение давления'
+        zh: '压力变化'
+        hu: 'Nyomásváltozás'
+        pt: 'Mudança de pressão'
+      0x1C:
+        unused: true
+      0x1D:
+        en: 'Wake-up at start of driving'
+        fr: 'Réveil en début de roulage'
+        es: 'Activación al inicio de la marcha'
+        de: 'Aufwachen zu Fahrtbeginn'
+        it: 'Risveglio all''inizio della marcia'
+        pl: 'Wybudzenie na początku jazdy'
+        ru: 'Пробуждение в начале движения'
+        zh: '行驶开始时唤醒'
+        hu: 'Ébresztés a vezetés kezdetén'
+        pt: 'Ativação no início da marcha'
+      0x1E:
+        unused: true
+      0x1F:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+
+  WHEEL1_MESSAGE_TOGGLE:
+    bits: '2.2'
+    comment:
+      en: 'Toggles on each valid message received from wheel 1 transmitter (0 at wake-up)'
+      fr: 'Inversion à chaque réception d''un message valide du transmetteur de la roue 1 (0 au réveil)'
+      es: 'Se invierte con cada mensaje válido recibido del transmisor de la rueda 1 (0 al despertar)'
+      de: 'Wird bei jeder gültigen empfangenen Nachricht des Sendemoduls von Rad 1 invertiert (0 beim Aufwachen)'
+      it: 'Si inverte a ogni messaggio valido ricevuto dal trasmettitore della ruota 1 (0 al risveglio)'
+      pl: 'Zmienia się przy każdej poprawnej wiadomości odebranej od nadajnika koła 1 (0 po wybudzeniu)'
+      ru: 'Инвертируется при каждом достоверном сообщении, принятом от передатчика колеса 1 (0 при пробуждении)'
+      zh: '每次收到车轮 1 发射器的有效消息时翻转（唤醒时为 0）'
+      hu: 'A(z) 1. kerék adójától érkező minden érvényes üzenetnél invertálódik (ébredéskor 0)'
+      pt: 'Inverte a cada receção de uma mensagem válida do transmissor da roda 1 (0 no despertar)'
+    type: 'bool'
+    default: 0x00
+
+  UNUSED_1:
+    bits: '2.1-2.0'
+    unused: true
+
+  WHEEL1_PRESSURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Wheel 1 tyre pressure'
+      fr: 'Pression de la roue 1 (UNM8)'
+      es: 'Presión del neumático de la rueda 1'
+      de: 'Reifendruck von Rad 1'
+      it: 'Pressione del pneumatico della ruota 1'
+      pl: 'Ciśnienie opony koła 1'
+      ru: 'Давление в шине колеса 1'
+      zh: '车轮 1 轮胎压力'
+      hu: 'A(z) 1. kerék abroncsnyomása'
+      pt: 'Pressão do pneu da roda 1'
+    type: 'uint'
+    factor: 14
+    min: 0
+    max: 3570
+    units: 'mbar'
+    default: 0x00
+
+  WHEEL1_FRAME_COUNTER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Wheel 1 transmitter message counter'
+      fr: 'Compteur de mot d''information roue 1 (UNM8)'
+      es: 'Contador de mensajes del transmisor de la rueda 1'
+      de: 'Nachrichtenzähler des Sendemoduls von Rad 1'
+      it: 'Contatore dei messaggi del trasmettitore della ruota 1'
+      pl: 'Licznik komunikatów nadajnika koła 1'
+      ru: 'Счётчик сообщений передатчика колеса 1'
+      zh: '车轮 1 发射器消息计数器'
+      hu: 'A(z) 1. kerék adójának üzenetszámlálója'
+      pt: 'Contador de mensagens do transmissor da roda 1'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  WHEEL2_SENSOR_MODE:
+    bits: '5.7-5.3'
+    comment:
+      en: 'Wheel 2 pressure transmitter function code'
+      fr: 'Code fonction émetteur roue 2'
+      es: 'Código de función del transmisor de presión de la rueda 2'
+      de: 'Funktionscode des Drucksenders von Rad 2'
+      it: 'Codice funzione del trasmettitore di pressione della ruota 2'
+      pl: 'Kod funkcji nadajnika ciśnienia koła 2'
+      ru: 'Код функции передатчика давления колеса 2'
+      zh: '车轮 2 压力发射器功能代码'
+      hu: 'A(z) 2. kerék nyomásadójának funkciókódja'
+      pt: 'Código de função do transmissor de pressão da roda 2'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x18:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+      0x19:
+        en: 'Battery low'
+        fr: 'Pile faible'
+        es: 'Pila baja'
+        de: 'Batterie schwach'
+        it: 'Batteria scarica'
+        pl: 'Słaba bateria'
+        ru: 'Батарея разряжена'
+        zh: '电池电量低'
+        hu: 'Elem lemerülőben'
+        pt: 'Bateria fraca'
+      0x1A:
+        unused: true
+      0x1B:
+        en: 'Pressure change'
+        fr: 'Changement de pression'
+        es: 'Cambio de presión'
+        de: 'Druckänderung'
+        it: 'Variazione di pressione'
+        pl: 'Zmiana ciśnienia'
+        ru: 'Изменение давления'
+        zh: '压力变化'
+        hu: 'Nyomásváltozás'
+        pt: 'Mudança de pressão'
+      0x1C:
+        unused: true
+      0x1D:
+        en: 'Wake-up at start of driving'
+        fr: 'Réveil en début de roulage'
+        es: 'Activación al inicio de la marcha'
+        de: 'Aufwachen zu Fahrtbeginn'
+        it: 'Risveglio all''inizio della marcia'
+        pl: 'Wybudzenie na początku jazdy'
+        ru: 'Пробуждение в начале движения'
+        zh: '行驶开始时唤醒'
+        hu: 'Ébresztés a vezetés kezdetén'
+        pt: 'Ativação no início da marcha'
+      0x1E:
+        unused: true
+      0x1F:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+
+  WHEEL2_MESSAGE_TOGGLE:
+    bits: '5.2'
+    comment:
+      en: 'Toggles on each valid message received from wheel 2 transmitter (0 at wake-up)'
+      fr: 'Inversion à chaque réception d''un message valide du transmetteur de la roue 2 (0 au réveil)'
+      es: 'Se invierte con cada mensaje válido recibido del transmisor de la rueda 2 (0 al despertar)'
+      de: 'Wird bei jeder gültigen empfangenen Nachricht des Sendemoduls von Rad 2 invertiert (0 beim Aufwachen)'
+      it: 'Si inverte a ogni messaggio valido ricevuto dal trasmettitore della ruota 2 (0 al risveglio)'
+      pl: 'Zmienia się przy każdej poprawnej wiadomości odebranej od nadajnika koła 2 (0 po wybudzeniu)'
+      ru: 'Инвертируется при каждом достоверном сообщении, принятом от передатчика колеса 2 (0 при пробуждении)'
+      zh: '每次收到车轮 2 发射器的有效消息时翻转（唤醒时为 0）'
+      hu: 'A(z) 2. kerék adójától érkező minden érvényes üzenetnél invertálódik (ébredéskor 0)'
+      pt: 'Inverte a cada receção de uma mensagem válida do transmissor da roda 2 (0 no despertar)'
+    type: 'bool'
+    default: 0x00
+
+  UNUSED_2:
+    bits: '5.1-5.0'
+    unused: true
+
+  WHEEL2_PRESSURE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Wheel 2 tyre pressure'
+      fr: 'Pression de la roue 2 (UNM8)'
+      es: 'Presión del neumático de la rueda 2'
+      de: 'Reifendruck von Rad 2'
+      it: 'Pressione del pneumatico della ruota 2'
+      pl: 'Ciśnienie opony koła 2'
+      ru: 'Давление в шине колеса 2'
+      zh: '车轮 2 轮胎压力'
+      hu: 'A(z) 2. kerék abroncsnyomása'
+      pt: 'Pressão do pneu da roda 2'
+    type: 'uint'
+    factor: 14
+    min: 0
+    max: 3570
+    units: 'mbar'
+    default: 0x00
+
+  WHEEL2_FRAME_COUNTER:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Wheel 2 transmitter message counter'
+      fr: 'Compteur de mot d''information roue 2 (UNM8)'
+      es: 'Contador de mensajes del transmisor de la rueda 2'
+      de: 'Nachrichtenzähler des Sendemoduls von Rad 2'
+      it: 'Contatore dei messaggi del trasmettitore della ruota 2'
+      pl: 'Licznik komunikatów nadajnika koła 2'
+      ru: 'Счётчик сообщений передатчика колеса 2'
+      zh: '车轮 2 发射器消息计数器'
+      hu: 'A(z) 2. kerék adójának üzenetszámlálója'
+      pt: 'Contador de mensagens do transmissor da roda 2'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  WHEEL3_SENSOR_MODE:
+    bits: '8.7-8.3'
+    comment:
+      en: 'Wheel 3 pressure transmitter function code'
+      fr: 'Code fonction émetteur roue 3'
+      es: 'Código de función del transmisor de presión de la rueda 3'
+      de: 'Funktionscode des Drucksenders von Rad 3'
+      it: 'Codice funzione del trasmettitore di pressione della ruota 3'
+      pl: 'Kod funkcji nadajnika ciśnienia koła 3'
+      ru: 'Код функции передатчика давления колеса 3'
+      zh: '车轮 3 压力发射器功能代码'
+      hu: 'A(z) 3. kerék nyomásadójának funkciókódja'
+      pt: 'Código de função do transmissor de pressão da roda 3'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x18:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+      0x19:
+        en: 'Battery low'
+        fr: 'Pile faible'
+        es: 'Pila baja'
+        de: 'Batterie schwach'
+        it: 'Batteria scarica'
+        pl: 'Słaba bateria'
+        ru: 'Батарея разряжена'
+        zh: '电池电量低'
+        hu: 'Elem lemerülőben'
+        pt: 'Bateria fraca'
+      0x1A:
+        unused: true
+      0x1B:
+        en: 'Pressure change'
+        fr: 'Changement de pression'
+        es: 'Cambio de presión'
+        de: 'Druckänderung'
+        it: 'Variazione di pressione'
+        pl: 'Zmiana ciśnienia'
+        ru: 'Изменение давления'
+        zh: '压力变化'
+        hu: 'Nyomásváltozás'
+        pt: 'Mudança de pressão'
+      0x1C:
+        unused: true
+      0x1D:
+        en: 'Wake-up at start of driving'
+        fr: 'Réveil en début de roulage'
+        es: 'Activación al inicio de la marcha'
+        de: 'Aufwachen zu Fahrtbeginn'
+        it: 'Risveglio all''inizio della marcia'
+        pl: 'Wybudzenie na początku jazdy'
+        ru: 'Пробуждение в начале движения'
+        zh: '行驶开始时唤醒'
+        hu: 'Ébresztés a vezetés kezdetén'
+        pt: 'Ativação no início da marcha'
+      0x1E:
+        unused: true
+      0x1F:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+
+  WHEEL3_MESSAGE_TOGGLE:
+    bits: '8.2'
+    comment:
+      en: 'Toggles on each valid message received from wheel 3 transmitter (0 at wake-up)'
+      fr: 'Inversion à chaque réception d''un message valide du transmetteur de la roue 3 (0 au réveil)'
+      es: 'Se invierte con cada mensaje válido recibido del transmisor de la rueda 3 (0 al despertar)'
+      de: 'Wird bei jeder gültigen empfangenen Nachricht des Sendemoduls von Rad 3 invertiert (0 beim Aufwachen)'
+      it: 'Si inverte a ogni messaggio valido ricevuto dal trasmettitore della ruota 3 (0 al risveglio)'
+      pl: 'Zmienia się przy każdej poprawnej wiadomości odebranej od nadajnika koła 3 (0 po wybudzeniu)'
+      ru: 'Инвертируется при каждом достоверном сообщении, принятом от передатчика колеса 3 (0 при пробуждении)'
+      zh: '每次收到车轮 3 发射器的有效消息时翻转（唤醒时为 0）'
+      hu: 'A(z) 3. kerék adójától érkező minden érvényes üzenetnél invertálódik (ébredéskor 0)'
+      pt: 'Inverte a cada receção de uma mensagem válida do transmissor da roda 3 (0 no despertar)'
+    type: 'bool'
+    default: 0x00
+
+  UNUSED_3:
+    bits: '8.1-8.0'
+    unused: true
+
+  WHEEL3_PRESSURE:
+    bits: '9.7-9.0'
+    comment:
+      en: 'Wheel 3 tyre pressure'
+      fr: 'Pression de la roue 3 (UNM8)'
+      es: 'Presión del neumático de la rueda 3'
+      de: 'Reifendruck von Rad 3'
+      it: 'Pressione del pneumatico della ruota 3'
+      pl: 'Ciśnienie opony koła 3'
+      ru: 'Давление в шине колеса 3'
+      zh: '车轮 3 轮胎压力'
+      hu: 'A(z) 3. kerék abroncsnyomása'
+      pt: 'Pressão do pneu da roda 3'
+    type: 'uint'
+    factor: 14
+    min: 0
+    max: 3570
+    units: 'mbar'
+    default: 0x00
+
+  WHEEL3_FRAME_COUNTER:
+    bits: '10.7-10.0'
+    comment:
+      en: 'Wheel 3 transmitter message counter'
+      fr: 'Compteur de mot d''information roue 3 (UNM8)'
+      es: 'Contador de mensajes del transmisor de la rueda 3'
+      de: 'Nachrichtenzähler des Sendemoduls von Rad 3'
+      it: 'Contatore dei messaggi del trasmettitore della ruota 3'
+      pl: 'Licznik komunikatów nadajnika koła 3'
+      ru: 'Счётчик сообщений передатчика колеса 3'
+      zh: '车轮 3 发射器消息计数器'
+      hu: 'A(z) 3. kerék adójának üzenetszámlálója'
+      pt: 'Contador de mensagens do transmissor da roda 3'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  WHEEL4_SENSOR_MODE:
+    bits: '11.7-11.3'
+    comment:
+      en: 'Wheel 4 pressure transmitter function code'
+      fr: 'Code fonction émetteur roue 4'
+      es: 'Código de función del transmisor de presión de la rueda 4'
+      de: 'Funktionscode des Drucksenders von Rad 4'
+      it: 'Codice funzione del trasmettitore di pressione della ruota 4'
+      pl: 'Kod funkcji nadajnika ciśnienia koła 4'
+      ru: 'Код функции передатчика давления колеса 4'
+      zh: '车轮 4 压力发射器功能代码'
+      hu: 'A(z) 4. kerék nyomásadójának funkciókódja'
+      pt: 'Código de função do transmissor de pressão da roda 4'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x18:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+      0x19:
+        en: 'Battery low'
+        fr: 'Pile faible'
+        es: 'Pila baja'
+        de: 'Batterie schwach'
+        it: 'Batteria scarica'
+        pl: 'Słaba bateria'
+        ru: 'Батарея разряжена'
+        zh: '电池电量低'
+        hu: 'Elem lemerülőben'
+        pt: 'Bateria fraca'
+      0x1A:
+        unused: true
+      0x1B:
+        en: 'Pressure change'
+        fr: 'Changement de pression'
+        es: 'Cambio de presión'
+        de: 'Druckänderung'
+        it: 'Variazione di pressione'
+        pl: 'Zmiana ciśnienia'
+        ru: 'Изменение давления'
+        zh: '压力变化'
+        hu: 'Nyomásváltozás'
+        pt: 'Mudança de pressão'
+      0x1C:
+        unused: true
+      0x1D:
+        en: 'Wake-up at start of driving'
+        fr: 'Réveil en début de roulage'
+        es: 'Activación al inicio de la marcha'
+        de: 'Aufwachen zu Fahrtbeginn'
+        it: 'Risveglio all''inizio della marcia'
+        pl: 'Wybudzenie na początku jazdy'
+        ru: 'Пробуждение в начале движения'
+        zh: '行驶开始时唤醒'
+        hu: 'Ébresztés a vezetés kezdetén'
+        pt: 'Ativação no início da marcha'
+      0x1E:
+        unused: true
+      0x1F:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+
+  WHEEL4_MESSAGE_TOGGLE:
+    bits: '11.2'
+    comment:
+      en: 'Toggles on each valid message received from wheel 4 transmitter (0 at wake-up)'
+      fr: 'Inversion à chaque réception d''un message valide du transmetteur de la roue 4 (0 au réveil)'
+      es: 'Se invierte con cada mensaje válido recibido del transmisor de la rueda 4 (0 al despertar)'
+      de: 'Wird bei jeder gültigen empfangenen Nachricht des Sendemoduls von Rad 4 invertiert (0 beim Aufwachen)'
+      it: 'Si inverte a ogni messaggio valido ricevuto dal trasmettitore della ruota 4 (0 al risveglio)'
+      pl: 'Zmienia się przy każdej poprawnej wiadomości odebranej od nadajnika koła 4 (0 po wybudzeniu)'
+      ru: 'Инвертируется при каждом достоверном сообщении, принятом от передатчика колеса 4 (0 при пробуждении)'
+      zh: '每次收到车轮 4 发射器的有效消息时翻转（唤醒时为 0）'
+      hu: 'A(z) 4. kerék adójától érkező minden érvényes üzenetnél invertálódik (ébredéskor 0)'
+      pt: 'Inverte a cada receção de uma mensagem válida do transmissor da roda 4 (0 no despertar)'
+    type: 'bool'
+    default: 0x00
+
+  UNUSED_4:
+    bits: '11.1-11.0'
+    unused: true
+
+  WHEEL4_PRESSURE:
+    bits: '12.7-12.0'
+    comment:
+      en: 'Wheel 4 tyre pressure'
+      fr: 'Pression de la roue 4 (UNM8)'
+      es: 'Presión del neumático de la rueda 4'
+      de: 'Reifendruck von Rad 4'
+      it: 'Pressione del pneumatico della ruota 4'
+      pl: 'Ciśnienie opony koła 4'
+      ru: 'Давление в шине колеса 4'
+      zh: '车轮 4 轮胎压力'
+      hu: 'A(z) 4. kerék abroncsnyomása'
+      pt: 'Pressão do pneu da roda 4'
+    type: 'uint'
+    factor: 14
+    min: 0
+    max: 3570
+    units: 'mbar'
+    default: 0x00
+
+  WHEEL4_FRAME_COUNTER:
+    bits: '13.7-13.0'
+    comment:
+      en: 'Wheel 4 transmitter message counter'
+      fr: 'Compteur de mot d''information roue 4 (UNM8)'
+      es: 'Contador de mensajes del transmisor de la rueda 4'
+      de: 'Nachrichtenzähler des Sendemoduls von Rad 4'
+      it: 'Contatore dei messaggi del trasmettitore della ruota 4'
+      pl: 'Licznik komunikatów nadajnika koła 4'
+      ru: 'Счётчик сообщений передатчика колеса 4'
+      zh: '车轮 4 发射器消息计数器'
+      hu: 'A(z) 4. kerék adójának üzenetszámlálója'
+      pt: 'Contador de mensagens do transmissor da roda 4'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  WHEEL5_SENSOR_MODE:
+    bits: '14.7-14.3'
+    comment:
+      en: 'Wheel 5 pressure transmitter function code'
+      fr: 'Code fonction émetteur roue 5'
+      es: 'Código de función del transmisor de presión de la rueda 5'
+      de: 'Funktionscode des Drucksenders von Rad 5'
+      it: 'Codice funzione del trasmettitore di pressione della ruota 5'
+      pl: 'Kod funkcji nadajnika ciśnienia koła 5'
+      ru: 'Код функции передатчика давления колеса 5'
+      zh: '车轮 5 压力发射器功能代码'
+      hu: 'A(z) 5. kerék nyomásadójának funkciókódja'
+      pt: 'Código de função do transmissor de pressão da roda 5'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x18:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+      0x19:
+        en: 'Battery low'
+        fr: 'Pile faible'
+        es: 'Pila baja'
+        de: 'Batterie schwach'
+        it: 'Batteria scarica'
+        pl: 'Słaba bateria'
+        ru: 'Батарея разряжена'
+        zh: '电池电量低'
+        hu: 'Elem lemerülőben'
+        pt: 'Bateria fraca'
+      0x1A:
+        unused: true
+      0x1B:
+        en: 'Pressure change'
+        fr: 'Changement de pression'
+        es: 'Cambio de presión'
+        de: 'Druckänderung'
+        it: 'Variazione di pressione'
+        pl: 'Zmiana ciśnienia'
+        ru: 'Изменение давления'
+        zh: '压力变化'
+        hu: 'Nyomásváltozás'
+        pt: 'Mudança de pressão'
+      0x1C:
+        unused: true
+      0x1D:
+        en: 'Wake-up at start of driving'
+        fr: 'Réveil en début de roulage'
+        es: 'Activación al inicio de la marcha'
+        de: 'Aufwachen zu Fahrtbeginn'
+        it: 'Risveglio all''inizio della marcia'
+        pl: 'Wybudzenie na początku jazdy'
+        ru: 'Пробуждение в начале движения'
+        zh: '行驶开始时唤醒'
+        hu: 'Ébresztés a vezetés kezdetén'
+        pt: 'Ativação no início da marcha'
+      0x1E:
+        unused: true
+      0x1F:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+
+  WHEEL5_MESSAGE_TOGGLE:
+    bits: '14.2'
+    comment:
+      en: 'Toggles on each valid message received from wheel 5 transmitter (0 at wake-up)'
+      fr: 'Inversion à chaque réception d''un message valide du transmetteur de la roue 5 (0 au réveil)'
+      es: 'Se invierte con cada mensaje válido recibido del transmisor de la rueda 5 (0 al despertar)'
+      de: 'Wird bei jeder gültigen empfangenen Nachricht des Sendemoduls von Rad 5 invertiert (0 beim Aufwachen)'
+      it: 'Si inverte a ogni messaggio valido ricevuto dal trasmettitore della ruota 5 (0 al risveglio)'
+      pl: 'Zmienia się przy każdej poprawnej wiadomości odebranej od nadajnika koła 5 (0 po wybudzeniu)'
+      ru: 'Инвертируется при каждом достоверном сообщении, принятом от передатчика колеса 5 (0 при пробуждении)'
+      zh: '每次收到车轮 5 发射器的有效消息时翻转（唤醒时为 0）'
+      hu: 'A(z) 5. kerék adójától érkező minden érvényes üzenetnél invertálódik (ébredéskor 0)'
+      pt: 'Inverte a cada receção de uma mensagem válida do transmissor da roda 5 (0 no despertar)'
+    type: 'bool'
+    default: 0x00
+
+  UNUSED_5:
+    bits: '14.1-14.0'
+    unused: true
+
+  WHEEL5_PRESSURE:
+    bits: '15.7-15.0'
+    comment:
+      en: 'Wheel 5 tyre pressure'
+      fr: 'Pression de la roue 5 (UNM8)'
+      es: 'Presión del neumático de la rueda 5'
+      de: 'Reifendruck von Rad 5'
+      it: 'Pressione del pneumatico della ruota 5'
+      pl: 'Ciśnienie opony koła 5'
+      ru: 'Давление в шине колеса 5'
+      zh: '车轮 5 轮胎压力'
+      hu: 'A(z) 5. kerék abroncsnyomása'
+      pt: 'Pressão do pneu da roda 5'
+    type: 'uint'
+    factor: 14
+    min: 0
+    max: 3570
+    units: 'mbar'
+    default: 0x00
+
+  WHEEL5_FRAME_COUNTER:
+    bits: '16.7-16.0'
+    comment:
+      en: 'Wheel 5 transmitter message counter'
+      fr: 'Compteur de mot d''information roue 5 (UNM8)'
+      es: 'Contador de mensajes del transmisor de la rueda 5'
+      de: 'Nachrichtenzähler des Sendemoduls von Rad 5'
+      it: 'Contatore dei messaggi del trasmettitore della ruota 5'
+      pl: 'Licznik komunikatów nadajnika koła 5'
+      ru: 'Счётчик сообщений передатчика колеса 5'
+      zh: '车轮 5 发射器消息计数器'
+      hu: 'A(z) 5. kerék adójának üzenetszámlálója'
+      pt: 'Contador de mensagens do transmissor da roda 5'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  FOOTER:
+    bits: '17.7-17.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

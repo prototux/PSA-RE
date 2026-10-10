@@ -1,0 +1,251 @@
+id: 0x166
+name: 'PARKING_CAMERA_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Electric motor torque limits (nominal and peak, min and max) and service-warning flash request from the motor control unit.'
+  fr: 'Limites de couple du moteur électrique (nominal et crête, min et max) et demande de clignotement du témoin service, issues du calculateur moteur.'
+  es: 'Límites de par del motor eléctrico (nominal y pico, mín. y máx.) y solicitud de parpadeo del testigo de servicio, procedentes de la centralita del motor.'
+  de: 'Drehmomentgrenzen des Elektromotors (Nenn- und Spitzenwert, min. und max.) sowie Blinkanforderung der Service-Warnleuchte vom Motorsteuergerät.'
+  it: 'Limiti di coppia del motore elettrico (nominale e di picco, min. e max.) e richiesta di lampeggio della spia di servizio, dalla centralina motore.'
+  pl: 'Limity momentu obrotowego silnika elektrycznego (nominalny i szczytowy, min. i maks.) oraz żądanie migania lampki serwisowej ze sterownika silnika.'
+  ru: 'Пределы крутящего момента электродвигателя (номинальный и пиковый, мин. и макс.) и запрос мигания сервисной лампы от блока управления двигателем.'
+  zh: '电动机的扭矩限值(额定值和峰值,最小值和最大值)及来自电机控制单元的服务警告灯闪烁请求。'
+  hu: 'Az elektromos motor nyomatékhatárai (névleges és csúcsérték, min. és max.) valamint a szervizfigyelmeztető lámpa villogtatási kérése a motorvezérlő egységtől.'
+  pt: 'Limites de binário do motor elétrico (nominal e de pico, mínimo e máximo) e pedido de pisca de aviso de serviço da unidade de controlo do motor.'
+periodicity: ['10ms']
+senders: ['CMEL']
+receivers: ['CMM']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRONT_EMOTOR_ELECTRIC_POWER:
+    bits: '2.7-3.4'
+    comment:
+      en: 'Front electric machine power'
+      fr: 'Puissance de la machine électrique avant'
+      es: 'Potencia de la máquina eléctrica delantera'
+      de: 'Leistung der vorderen E-Maschine'
+      it: 'Potenza della macchina elettrica anteriore'
+      pl: 'Moc przedniej maszyny elektrycznej'
+      ru: 'Мощность передней электромашины'
+      zh: '前电机功率'
+      hu: 'Az első elektromos gép teljesítménye'
+      pt: 'Potência da máquina elétrica dianteira'
+    type: 'sint'
+    factor: 100
+    min: -130000
+    max: 130000
+    units: 'W'
+    default: 0x00
+
+  UNUSED_1:
+    bits: '3.3'
+    unused: true
+
+  FRONT_EMOTOR_CONTROL_MODE:
+    bits: '3.2-3.0'
+    comment:
+      en: 'Front electric machine control type (speed, torque)'
+      fr: 'Type de contrôle de la machine électrique avant (vitesse, couple)'
+      es: 'Tipo de control de la máquina eléctrica delantera (velocidad, par)'
+      de: 'Regelungsart der vorderen E-Maschine (Drehzahl, Drehmoment)'
+      it: 'Tipo di controllo della macchina elettrica anteriore (velocità, coppia)'
+      pl: 'Rodzaj sterowania przedniej maszyny elektrycznej (prędkość, moment)'
+      ru: 'Тип управления передней электромашиной (скорость, момент)'
+      zh: '前电机控制类型(转速、扭矩)'
+      hu: 'Az első elektromos gép szabályozási típusa (fordulatszám, nyomaték)'
+      pt: 'Tipo de controlo da máquina elétrica dianteira (velocidade, binário)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x01:
+        en: 'Torque control'
+        fr: 'Contrôle par couple'
+        es: 'Control por par'
+        de: 'Drehmomentregelung'
+        it: 'Controllo tramite coppia'
+        pl: 'Sterowanie momentem obrotowym'
+        ru: 'Управление по моменту'
+        zh: '扭矩控制'
+        hu: 'Nyomatékalapú szabályozás'
+        pt: 'Controlo por binário'
+      0x02:
+        en: 'Speed control'
+        fr: 'Contrôle par vitesse'
+        es: 'Control por velocidad'
+        de: 'Geschwindigkeitsregelung'
+        it: 'Controllo tramite velocità'
+        pl: 'Sterowanie na podstawie prędkości'
+        ru: 'Управление по скорости'
+        zh: '速度控制'
+        hu: 'Sebességvezérlés'
+        pt: 'Controlo por velocidade'
+      0x03:
+        en: 'Cut-off'
+        fr: 'Coupure'
+        es: 'Corte'
+        de: 'Abschaltung'
+        it: 'Interruzione'
+        pl: 'Odcięcie'
+        ru: 'Отключение'
+        zh: '切断'
+        hu: 'Megszakítás'
+        pt: 'Corte'
+      0x04:
+        en: 'Active short circuit'
+        fr: 'Court-circuit actif'
+        es: 'Cortocircuito activo'
+        de: 'Aktiver Kurzschluss'
+        it: 'Cortocircuito attivo'
+        pl: 'Aktywne zwarcie'
+        ru: 'Активное короткое замыкание'
+        zh: '主动短路'
+        hu: 'Aktív rövidzárlat'
+        pt: 'Curto-circuito ativo'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  FRONT_EMOTOR_SPEED:
+    bits: '4.7-5.2'
+    comment:
+      en: 'Front electric machine speed'
+      fr: 'Régime de la machine électrique avant'
+      es: 'Régimen de la máquina eléctrica delantera'
+      de: 'Drehzahl der vorderen E-Maschine'
+      it: 'Regime della macchina elettrica anteriore'
+      pl: 'Prędkość obrotowa przedniej maszyny elektrycznej'
+      ru: 'Частота вращения передней электромашины'
+      zh: '前电机转速'
+      hu: 'Az első elektromos gép fordulatszáma'
+      pt: 'Regime da máquina elétrica dianteira'
+    type: 'sint'
+    factor: 1
+    min: -8000
+    max: 8000
+    units: 'rpm'
+    invalid: 0x1FFF
+    default: 0x00
+
+  FRONT_EMOTOR_ACTUAL_TORQUE:
+    bits: '5.1-6.0'
+    comment:
+      en: 'Front electric motor actual torque'
+      fr: 'Couple réel du moteur électrique avant'
+      es: 'Par real del motor eléctrico delantero'
+      de: 'Tatsächliches Drehmoment des vorderen Elektromotors'
+      it: 'Coppia reale del motore elettrico anteriore'
+      pl: 'Rzeczywisty moment obrotowy przedniego silnika elektrycznego'
+      ru: 'Фактический момент переднего электродвигателя'
+      zh: '前电机实际扭矩'
+      hu: 'Az első elektromos motor tényleges nyomatéka'
+      pt: 'Binário real do motor elétrico dianteiro'
+    type: 'sint'
+    factor: 1
+    min: -511
+    max: 511
+    units: 'Nm'
+    invalid: 0x200
+    default: 0x00
+
+  FRONT_EMOTOR_MAX_PEAK_TORQUE_NO_HV_LIMIT:
+    bits: '7.7-8.6'
+    comment:
+      en: 'Front electric machine maximum peak torque without high-voltage limitation'
+      fr: 'Couple crête maximum de la machine électrique avant sans limitation de haute tension'
+      es: 'Par de pico máximo de la máquina eléctrica delantera sin limitación de alta tensión'
+      de: 'Maximales Spitzendrehmoment der vorderen E-Maschine ohne Hochvoltbegrenzung'
+      it: 'Coppia di picco massima della macchina elettrica anteriore senza limitazione di alta tensione'
+      pl: 'Maksymalny moment szczytowy przedniej maszyny elektrycznej bez ograniczenia wysokiego napięcia'
+      ru: 'Максимальный пиковый момент передней электромашины без ограничения по высокому напряжению'
+      zh: '无高压限制时前电机的最大峰值扭矩'
+      hu: 'Az első elektromos gép maximális csúcsnyomatéka nagyfeszültségű korlátozás nélkül'
+      pt: 'Binário de pico máximo da máquina elétrica dianteira sem limitação de alta tensão'
+    type: 'sint'
+    factor: 1
+    min: -511
+    max: 511
+    units: 'Nm'
+    invalid: 0x200
+    default: 0x00
+
+  PEM_HV_VOLTAGE:
+    bits: '8.5-8.1'
+    comment:
+      en: 'Front electric machine (PEM) high-voltage supply voltage (V)'
+      fr: 'Tension d''alimentation haute tension de la machine électrique avant (PEM) (V)'
+      es: 'Tensión de alimentación de alta tensión de la máquina eléctrica delantera (PEM) (V)'
+      de: 'Hochvolt-Versorgungsspannung der vorderen elektrischen Maschine (PEM) (V)'
+      it: 'Tensione di alimentazione ad alta tensione della macchina elettrica anteriore (PEM) (V)'
+      pl: 'Napięcie zasilania wysokiego napięcia przedniej maszyny elektrycznej (PEM) (V)'
+      ru: 'Высоковольтное напряжение питания передней электрической машины (PEM) (В)'
+      zh: '前电机(PEM)高压供电电压(V)'
+      hu: 'Az első elektromos gép (PEM) nagyfeszültségű tápfeszültsége (V)'
+      pt: 'Tensão de alimentação de alta tensão da máquina elétrica dianteira (PEM) (V)'
+    type: 'uint'
+    factor: 20
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1F
+    default: 0x00
+
+  UNUSED_2:
+    bits: '8.0'
+    unused: true

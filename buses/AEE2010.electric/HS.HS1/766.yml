@@ -1,0 +1,474 @@
+id: 0x766
+name: 'FAULT_LOG_HCU2'
+type: 'can'
+length: 8
+comment:
+  en: 'Fault log frame from the MCU node: fault codes, status, mileage, frame index and time reference.'
+  fr: 'Trame du journal des défauts du calculateur MCU : codes défaut, état, kilométrage, index de trame et référence horaire.'
+  es: 'Trama del registro de fallos del nodo MCU: códigos de fallo, estado, kilometraje, índice de trama y referencia horaria.'
+  de: 'fault log-Fehlerspeicher-Rahmen des Steuergeräts MCU: Fehlercodes, Status, Kilometerstand, Rahmenindex und Zeitreferenz.'
+  it: 'Trama del registro guasti del nodo MCU: codici guasto, stato, chilometraggio, indice trama e riferimento orario.'
+  pl: 'Ramka dziennika usterek węzła MCU: kody usterek, stan, przebieg, indeks ramki i odniesienie czasowe.'
+  ru: 'Кадр журнала неисправностей узла MCU: коды неисправностей, статус, пробег, индекс кадра и временная метка.'
+  zh: 'MCU节点的故障日志帧:故障代码、状态、里程、帧索引和时间参考。'
+  hu: 'A MCU csomópont hibanapló kerete: hibakódok, állapot, futásteljesítmény, keretindex és időreferencia.'
+  pt: 'Trama do registo de avarias do nó MCU: códigos de avaria, estado, quilometragem, índice de trama e referência horária.'
+observations:
+  en: 'May be sent event-triggered as 3 groups of 3 frames, 100 ms apart, with different lengths, to the BSI'
+  fr: 'Peut être émise de façon événementielle sous forme de 3 fois 3 trames, espacées de 100 ms, de longueur différente, vers la BSI'
+  es: 'Puede enviarse de forma basada en eventos como 3 series de 3 tramas, separadas 100 ms, de longitud diferente, hacia la BSI'
+  de: 'Kann ereignisgesteuert als 3-mal 3 Frames unterschiedlicher Länge, 100 ms auseinander, an die BSI gesendet werden'
+  it: 'Può essere inviata in modo event-driven come 3 serie di 3 frame, distanziati di 100 ms, di lunghezza diversa, verso la BSI'
+  pl: 'Może być wysyłana zdarzeniowo jako 3 razy po 3 ramki, w odstępie 100 ms, o różnej długości, do BSI'
+  ru: 'Может отправляться по событию в виде 3 групп по 3 кадра с интервалом 100 мс и разной длиной, в адрес BSI'
+  zh: '可事件触发地以3组共3帧的形式发送给BSI,间隔100毫秒,长度各不相同'
+  hu: 'Eseményvezérelten küldhető 3-szor 3 keretként, 100 ms-os időközzel, eltérő hosszúsággal, a BSI felé'
+  pt: 'Pode ser enviada de forma baseada em eventos como 3 grupos de 3 tramas, com 100 ms de intervalo, com comprimentos diferentes, para a BSI'
+periodicity: ['trigger']
+senders: ['VCU']
+receivers: ['BSI']
+
+signals:
+  FRAME_COUNT:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Number of frames'
+      fr: 'Nombre de trames'
+      es: 'Número de tramas'
+      de: 'Anzahl der Frames'
+      it: 'Numero di frame'
+      pl: 'Liczba ramek'
+      ru: 'Количество кадров'
+      zh: '帧数'
+      hu: 'A keretek száma'
+      pt: 'Número de tramas'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'One frame'
+        fr: 'Une trame'
+        es: 'Una trama'
+        de: 'Ein Rahmen'
+        it: 'Un frame'
+        pl: 'Jedna ramka'
+        ru: 'Один кадр'
+        zh: '一帧'
+        hu: 'Egy keret'
+        pt: 'Uma trama'
+      0x02:
+        en: 'Two frames'
+        fr: 'Deux trames'
+        es: 'Dos tramas'
+        de: 'Zwei Rahmen'
+        it: 'Due trame'
+        pl: 'Dwie ramki'
+        ru: 'Два кадра'
+        zh: '两帧'
+        hu: 'Két keret'
+        pt: 'Duas tramas'
+      0x03:
+        en: 'Three frames'
+        fr: 'Trois trames'
+        es: 'Tres tramas'
+        de: 'Drei Frames'
+        it: 'Tre frame'
+        pl: 'Trzy ramki'
+        ru: 'Три кадра'
+        zh: '三帧'
+        hu: 'Három keret'
+        pt: 'Três tramas'
+
+  FRAME_NUMBER:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Frame number'
+      fr: 'Numéro de la trame'
+      es: 'Número de trama'
+      de: 'Framenummer'
+      it: 'Numero del frame'
+      pl: 'Numer ramki'
+      ru: 'Номер кадра'
+      zh: '帧编号'
+      hu: 'Keretszám'
+      pt: 'Número da trama'
+    type: 'enum'
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Frame number 1'
+        fr: 'Trame numéro 1'
+        es: 'Trama número 1'
+        de: 'Rahmen Nummer 1'
+        it: 'Trama numero 1'
+        pl: 'Ramka nr 1'
+        ru: 'Кадр номер 1'
+        zh: '帧编号1'
+        hu: '1. számú keret'
+        pt: 'Trama número 1'
+      0x02:
+        en: 'Frame number 2'
+        fr: 'Trame numéro 2'
+        es: 'Trama número 2'
+        de: 'Rahmen Nummer 2'
+        it: 'Trama numero 2'
+        pl: 'Ramka nr 2'
+        ru: 'Кадр номер 2'
+        zh: '帧编号2'
+        hu: '2. számú keret'
+        pt: 'Trama número 2'
+      0x03:
+        en: 'Frame number 3'
+        fr: 'Trame numéro 3'
+        es: 'Trama número 3'
+        de: 'Rahmen Nummer 3'
+        it: 'Trama numero 3'
+        pl: 'Ramka numer 3'
+        ru: 'Кадр номер 3'
+        zh: '第3帧'
+        hu: '3. keret'
+        pt: 'Trama número 3'
+
+  DTC_STATUS:
+    bits: '1.3'
+    comment:
+      en: 'Fault status transition (to/from permanent)'
+      fr: 'Transition d''état du défaut (vers/depuis permanent)'
+      es: 'Transición del estado del fallo (hacia/desde permanente)'
+      de: 'Statusübergang des Fehlers (zu/von permanent)'
+      it: 'Transizione dello stato del guasto (verso/da permanente)'
+      pl: 'Zmiana stanu usterki (na/z trwałej)'
+      ru: 'Переход состояния неисправности (в постоянное/из постоянного)'
+      zh: '故障状态转换(转为/转出永久性)'
+      hu: 'A hibaállapot átmenete (állandósulásba/-ból)'
+      pt: 'Transição do estado da falha (para/desde permanente)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Transition from permanent fault to transient fault'
+        fr: 'Passage d''un défaut permanent à un défaut fugitif'
+        es: 'Transición de fallo permanente a fallo transitorio'
+        de: 'Übergang von Dauerfehler zu vorübergehendem Fehler'
+        it: 'Passaggio da guasto permanente a guasto transitorio'
+        pl: 'Przejście z usterki trwałej do usterki przejściowej'
+        ru: 'Переход от постоянной неисправности к кратковременной'
+        zh: '从永久故障转为瞬时故障'
+        hu: 'Átmenet állandó hibából átmeneti hibába'
+        pt: 'Transição de falha permanente para falha transitória'
+      0x01:
+        en: 'Fault set to permanent'
+        fr: 'Passage du défaut à permanent'
+        es: 'Paso del fallo a permanente'
+        de: 'Fehler auf dauerhaft gesetzt'
+        it: 'Passaggio del guasto a permanente'
+        pl: 'Zmiana usterki na trwałą'
+        ru: 'Перевод неисправности в постоянную'
+        zh: '故障转为永久性'
+        hu: 'A hiba állandósítva'
+        pt: 'Passagem da falha a permanente'
+
+  UNUSED_1:
+    bits: '1.2'
+    unused: true
+
+  ECU_AEE2004_COMPLIANCE:
+    bits: '1.1-1.0'
+    comment:
+      en: 'ECU compliance with the AEE2004 fault log standard'
+      fr: 'Conformité du calculateur à la norme de journal de défauts AEE2004'
+      es: 'Conformidad de la unidad de control con la norma de registro de fallos AEE2004'
+      de: 'Konformität des Steuergeräts mit dem Fehlerprotokollstandard AEE2004'
+      it: 'Conformità della centralina allo standard del registro guasti AEE2004'
+      pl: 'Zgodność sterownika ze standardem dziennika usterek AEE2004'
+      ru: 'Соответствие блока управления стандарту журнала неисправностей AEE2004'
+      zh: 'ECU符合AEE2004故障日志标准的情况'
+      hu: 'A vezérlőegység megfelelése az AEE2004 hibanapló-szabványnak'
+      pt: 'Conformidade da unidade de controlo com a norma de registo de falhas AEE2004'
+    type: 'enum'
+    values:
+      0x00:
+        en: '2004 EEA ECU (carried over)'
+        fr: 'Calculateur reconduit AEE2004'
+        es: 'Unidad de control AEE2004 reutilizada'
+        de: 'Übernommenes AEE2004-Steuergerät'
+        it: 'Centralina AEE2004 riportata'
+        pl: 'Sterownik przeniesiony AEE2004'
+        ru: 'Блок управления AEE2004 (перенесённый)'
+        zh: '沿用的AEE2004控制器'
+        hu: 'Átvitt AEE2004 vezérlőegység'
+        pt: 'Unidade de controlo AEE2004 (reconduzida)'
+      0x01:
+        en: 'ECU compliant with EU2010'
+        fr: 'Calculateur conforme à la norme EU2010'
+        es: 'Unidad de control conforme a la norma EU2010'
+        de: 'Steuergerät gemäß EU2010-Norm'
+        it: 'Centralina conforme alla norma EU2010'
+        pl: 'Sterownik zgodny z normą EU2010'
+        ru: 'Блок управления, соответствующий норме EU2010'
+        zh: '符合EU2010标准的控制单元'
+        hu: 'EU2010 szabványnak megfelelő vezérlőegység'
+        pt: 'Unidade de controlo conforme com EU2010'
+
+  FAULT_LOG_ODOMETER:
+    bits: '2.7-4.0'
+    comment:
+      en: 'Absolute distance travelled by the vehicle (matches the value shown to the driver)'
+      fr: 'Distance absolue parcourue par le véhicule (correspond à la valeur affichée au conducteur)'
+      es: 'Distancia absoluta recorrida por el vehículo (coincide con el valor mostrado al conductor)'
+      de: 'Absolut zurückgelegte Strecke des Fahrzeugs (entspricht dem dem Fahrer angezeigten Wert)'
+      it: 'Distanza assoluta percorsa dal veicolo (corrisponde al valore mostrato al conducente)'
+      pl: 'Bezwzględny przebieg pojazdu (zgodny z wartością wyświetlaną kierowcy)'
+      ru: 'Абсолютный пробег автомобиля (соответствует значению, показываемому водителю)'
+      zh: '车辆行驶的绝对里程(与显示给驾驶员的值一致)'
+      hu: 'A jármű által megtett abszolút táv (megegyezik a vezetőnek kijelzett értékkel)'
+      pt: 'Distância absoluta percorrida pelo veículo (corresponde ao valor apresentado ao condutor)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 16777214
+    units: 'km'
+    invalid: 0xFFFFFF
+
+  VEHICLE_TIME_COUNTER:
+    bits: '5.7-8.0'
+    comment:
+      en: 'Vehicle time counter'
+      fr: 'Compteur temporel du véhicule'
+      es: 'Contador de tiempo del vehículo'
+      de: 'Zeitzähler des Fahrzeugs'
+      it: 'Contatore temporale del veicolo'
+      pl: 'Licznik czasu pojazdu'
+      ru: 'Счётчик времени автомобиля'
+      zh: '车辆时间计数器'
+      hu: 'Jármű időszámlálója'
+      pt: 'Contador de tempo do veículo'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 429496729.3
+    units: 's'
+    invalid: 0xFFFFFFFF
+    default: 0xFFFFFFFE
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      FRAME_COUNT:
+        bits: '1.7-1.6'
+        comment:
+          en: 'Number of frames'
+          fr: 'Nombre de trames'
+          es: 'Número de tramas'
+          de: 'Anzahl der Frames'
+          it: 'Numero di frame'
+          pl: 'Liczba ramek'
+          ru: 'Количество кадров'
+          zh: '帧数'
+          hu: 'A keretek száma'
+          pt: 'Número de tramas'
+        type: 'enum'
+        default: 0x02
+        values:
+          0x00:
+            unused: true
+          0x01:
+            en: 'One frame'
+            fr: 'Une trame'
+            es: 'Una trama'
+            de: 'Ein Rahmen'
+            it: 'Un frame'
+            pl: 'Jedna ramka'
+            ru: 'Один кадр'
+            zh: '一帧'
+            hu: 'Egy keret'
+            pt: 'Uma trama'
+          0x02:
+            en: 'Two frames'
+            fr: 'Deux trames'
+            es: 'Dos tramas'
+            de: 'Zwei Rahmen'
+            it: 'Due trame'
+            pl: 'Dwie ramki'
+            ru: 'Два кадра'
+            zh: '两帧'
+            hu: 'Két keret'
+            pt: 'Duas tramas'
+          0x03:
+            en: 'Three frames'
+            fr: 'Trois trames'
+            es: 'Tres tramas'
+            de: 'Drei Frames'
+            it: 'Tre frame'
+            pl: 'Trzy ramki'
+            ru: 'Три кадра'
+            zh: '三帧'
+            hu: 'Három keret'
+            pt: 'Três tramas'
+      FRAME_NUMBER:
+        bits: '1.5-1.4'
+        comment:
+          en: 'Frame number'
+          fr: 'Numéro de la trame'
+          es: 'Número de trama'
+          de: 'Framenummer'
+          it: 'Numero del frame'
+          pl: 'Numer ramki'
+          ru: 'Номер кадра'
+          zh: '帧编号'
+          hu: 'Keretszám'
+          pt: 'Número da trama'
+        type: 'enum'
+        values:
+          0x00:
+            unused: true
+          0x01:
+            en: 'Frame number 1'
+            fr: 'Trame numéro 1'
+            es: 'Trama número 1'
+            de: 'Rahmen Nummer 1'
+            it: 'Trama numero 1'
+            pl: 'Ramka nr 1'
+            ru: 'Кадр номер 1'
+            zh: '帧编号1'
+            hu: '1. számú keret'
+            pt: 'Trama número 1'
+          0x02:
+            en: 'Frame number 2'
+            fr: 'Trame numéro 2'
+            es: 'Trama número 2'
+            de: 'Rahmen Nummer 2'
+            it: 'Trama numero 2'
+            pl: 'Ramka nr 2'
+            ru: 'Кадр номер 2'
+            zh: '帧编号2'
+            hu: '2. számú keret'
+            pt: 'Trama número 2'
+          0x03:
+            en: 'Frame number 3'
+            fr: 'Trame numéro 3'
+            es: 'Trama número 3'
+            de: 'Rahmen Nummer 3'
+            it: 'Trama numero 3'
+            pl: 'Ramka numer 3'
+            ru: 'Кадр номер 3'
+            zh: '第3帧'
+            hu: '3. keret'
+            pt: 'Trama número 3'
+      DTC_STATUS:
+        bits: '1.3'
+        comment:
+          en: 'Fault status transition (to/from permanent)'
+          fr: 'Transition d''état du défaut (vers/depuis permanent)'
+          es: 'Transición del estado del fallo (hacia/desde permanente)'
+          de: 'Statusübergang des Fehlers (zu/von permanent)'
+          it: 'Transizione dello stato del guasto (verso/da permanente)'
+          pl: 'Zmiana stanu usterki (na/z trwałej)'
+          ru: 'Переход состояния неисправности (в постоянное/из постоянного)'
+          zh: '故障状态转换(转为/转出永久性)'
+          hu: 'A hibaállapot átmenete (állandósulásba/-ból)'
+          pt: 'Transição do estado da falha (para/desde permanente)'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'Transition from permanent fault to transient fault'
+            fr: 'Passage d''un défaut permanent à un défaut fugitif'
+            es: 'Transición de fallo permanente a fallo transitorio'
+            de: 'Übergang von Dauerfehler zu vorübergehendem Fehler'
+            it: 'Passaggio da guasto permanente a guasto transitorio'
+            pl: 'Przejście z usterki trwałej do usterki przejściowej'
+            ru: 'Переход от постоянной неисправности к кратковременной'
+            zh: '从永久故障转为瞬时故障'
+            hu: 'Átmenet állandó hibából átmeneti hibába'
+            pt: 'Transição de falha permanente para falha transitória'
+          0x01:
+            en: 'Fault set to permanent'
+            fr: 'Passage du défaut à permanent'
+            es: 'Paso del fallo a permanente'
+            de: 'Fehler auf dauerhaft gesetzt'
+            it: 'Passaggio del guasto a permanente'
+            pl: 'Zmiana usterki na trwałą'
+            ru: 'Перевод неисправности в постоянную'
+            zh: '故障转为永久性'
+            hu: 'A hiba állandósítva'
+            pt: 'Passagem da falha a permanente'
+      UNUSED_1:
+        bits: '1.2'
+        unused: true
+      ECU_AEE2004_COMPLIANCE:
+        bits: '1.1-1.0'
+        comment:
+          en: 'ECU compliance with the AEE2004 fault log standard'
+          fr: 'Conformité du calculateur à la norme de journal de défauts AEE2004'
+          es: 'Conformidad de la unidad de control con la norma de registro de fallos AEE2004'
+          de: 'Konformität des Steuergeräts mit dem Fehlerprotokollstandard AEE2004'
+          it: 'Conformità della centralina allo standard del registro guasti AEE2004'
+          pl: 'Zgodność sterownika ze standardem dziennika usterek AEE2004'
+          ru: 'Соответствие блока управления стандарту журнала неисправностей AEE2004'
+          zh: 'ECU符合AEE2004故障日志标准的情况'
+          hu: 'A vezérlőegység megfelelése az AEE2004 hibanapló-szabványnak'
+          pt: 'Conformidade da unidade de controlo com a norma de registo de falhas AEE2004'
+        type: 'enum'
+        values:
+          0x00:
+            en: '2004 EEA ECU (carried over)'
+            fr: 'Calculateur reconduit AEE2004'
+            es: 'Unidad de control AEE2004 reutilizada'
+            de: 'Übernommenes AEE2004-Steuergerät'
+            it: 'Centralina AEE2004 riportata'
+            pl: 'Sterownik przeniesiony AEE2004'
+            ru: 'Блок управления AEE2004 (перенесённый)'
+            zh: '沿用的AEE2004控制器'
+            hu: 'Átvitt AEE2004 vezérlőegység'
+            pt: 'Unidade de controlo AEE2004 (reconduzida)'
+          0x01:
+            en: 'ECU compliant with EU2010'
+            fr: 'Calculateur conforme à la norme EU2010'
+            es: 'Unidad de control conforme a la norma EU2010'
+            de: 'Steuergerät gemäß EU2010-Norm'
+            it: 'Centralina conforme alla norma EU2010'
+            pl: 'Sterownik zgodny z normą EU2010'
+            ru: 'Блок управления, соответствующий норме EU2010'
+            zh: '符合EU2010标准的控制单元'
+            hu: 'EU2010 szabványnak megfelelő vezérlőegység'
+            pt: 'Unidade de controlo conforme com EU2010'
+      FAULT_CODE:
+        bits: '2.7-4.0'
+        comment:
+          en: 'Fault code, encoded per SAE J2012 (byte 1: MSB, byte 2: LSB for KWP, byte 3: LSB for UDS)'
+          fr: 'Code défaut, encodé selon la norme SAE J2012 (octet 1: MSB, octet 2: LSB pour KWP, octet 3: LSB pour UDS)'
+          es: 'Código de fallo, codificado según la norma SAE J2012 (byte 1: MSB, byte 2: LSB para KWP, byte 3: LSB para UDS)'
+          de: 'Fehlercode, kodiert nach SAE J2012 (Byte 1: MSB, Byte 2: LSB für KWP, Byte 3: LSB für UDS)'
+          it: 'Codice guasto, codificato secondo lo standard SAE J2012 (byte 1: MSB, byte 2: LSB per KWP, byte 3: LSB per UDS)'
+          pl: 'Kod usterki zakodowany zgodnie z normą SAE J2012 (bajt 1: MSB, bajt 2: LSB dla KWP, bajt 3: LSB dla UDS)'
+          ru: 'Код неисправности, закодированный по стандарту SAE J2012 (байт 1: MSB, байт 2: LSB для KWP, байт 3: LSB для UDS)'
+          zh: '按SAE J2012标准编码的故障码(字节1:MSB,字节2:LSB用于KWP,字节3:LSB用于UDS)'
+          hu: 'Hibakód, az SAE J2012 szabvány szerint kódolva (1. bájt: MSB, 2. bájt: LSB KWP esetén, 3. bájt: LSB UDS esetén)'
+          pt: 'Código de falha, codificado segundo a norma SAE J2012 (byte 1: MSB, byte 2: LSB para KWP, byte 3: LSB para UDS)'
+        type: 'uint'
+      FAULT_LOG_LIFE_SITUATION:
+        bits: '5.7-7.0'
+        comment:
+          en: 'Fault log life situation, describing the operating context under the hood'
+          fr: 'Situation de vie du journal de défauts, décrivant le contexte de fonctionnement sous le capot'
+          es: 'Situación de funcionamiento del registro de fallos, que describe el contexto bajo el capó'
+          de: 'Betriebssituation des Fehlerprotokolls, die den Betriebskontext im Motorraum beschreibt'
+          it: 'Situazione operativa del registro guasti, che descrive il contesto sotto il cofano'
+          pl: 'Sytuacja eksploatacyjna dziennika usterek, opisująca kontekst pracy pod maską'
+          ru: 'Эксплуатационная ситуация журнала неисправностей, описывающая контекст работы под капотом'
+          zh: '故障日志运行场景,描述发动机舱内的工作背景'
+          hu: 'A hibanapló üzemi helyzete, amely a motortér alatti működési kontextust írja le'
+          pt: 'Situação de funcionamento do registo de falhas, que descreve o contexto de funcionamento sob o capot'
+        type: 'uint'

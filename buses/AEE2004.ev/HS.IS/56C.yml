@@ -1,0 +1,217 @@
+id: 0x56C
+name: 'GAS_SYSTEM_DATA'
+type: 'can'
+length: 2
+comment:
+  en: 'Gas (LPG/CNG) system data: fuel-system adaptation reset, gas-type validity, gas request state, minimum lambda in gas mode, forced-petrol mode.'
+  fr: 'Données système gaz (GPL/GNV) : remise à zéro de l''adaptation carburant, validité du type de gaz, état de la demande gaz, lambda minimal en mode gaz, mode essence forcé.'
+  es: 'Datos del sistema de gas (GLP/GNC): reinicio de adaptación de combustible, validez del tipo de gas, estado de la solicitud de gas, lambda mínimo en modo gas, modo gasolina forzado.'
+  de: 'Gassystemdaten (LPG/CNG): Rücksetzung der Kraftstoffadaption, Gültigkeit des Gastyps, Gasanforderungsstatus, minimales Lambda im Gasbetrieb, erzwungener Benzinbetrieb.'
+  it: 'Dati del sistema gas (GPL/CNG): reset dell''adattamento carburante, validità del tipo di gas, stato della richiesta gas, lambda minimo in modalità gas, modalità benzina forzata.'
+  pl: 'Dane systemu gazowego (LPG/CNG): reset adaptacji paliwa, ważność typu gazu, stan żądania gazu, minimalna lambda w trybie gazowym, wymuszony tryb benzynowy.'
+  ru: 'Данные газовой системы (ГБО/КПГ): сброс адаптации топлива, действительность типа газа, статус запроса газа, минимальная лямбда в газовом режиме, принудительный бензиновый режим.'
+  zh: '燃气系统(LPG/CNG)数据:燃油系统适应复位、燃气类型有效性、燃气请求状态、燃气模式下最小氧传感器值、强制汽油模式。'
+  hu: 'Gázrendszer (LPG/CNG) adatok: üzemanyag-adaptáció visszaállítása, gáztípus érvényessége, gázkérés állapota, minimális lambda gáz üzemmódban, kényszerített benzin üzemmód.'
+  pt: 'Dados do sistema a gás (GPL/GNC): reposição da adaptação do sistema de combustível, validade do tipo de gás, estado do pedido de gás, lambda mínimo em modo gás, modo gasolina forçado.'
+periodicity: ['100ms']
+senders: ['GAS']
+receivers: ['CMM']
+
+signals:
+  CNG_MODE_LAMBDA_MINIMUM:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Minimum lambda value in CNG (natural gas) mode'
+      fr: 'Valeur lambda minimale en mode gaz naturel (GNV)'
+      es: 'Valor lambda mínimo en modo de gas natural (GNV)'
+      de: 'Minimaler Lambdawert im Erdgasmodus (CNG)'
+      it: 'Valore lambda minimo in modalità gas naturale (CNG)'
+      pl: 'Minimalna wartość lambda w trybie gazu ziemnego (CNG)'
+      ru: 'Минимальное значение лямбда в режиме природного газа (КПГ)'
+      zh: '天然气(CNG)模式下的最小λ值'
+      hu: 'A minimális lambdaérték földgáz (CNG) üzemmódban'
+      pt: 'Valor mínimo de lambda em modo GNC (gás natural)'
+    type: 'uint'
+    factor: 0.006
+    offset: 0.5
+    min: 0.5
+    max: 2
+    default: 0x53
+
+  PETROL_MODE_FORCED_BY_GAS_FAULT:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Petrol mode forced due to a CNG (natural gas) system fault'
+      fr: 'Mode essence forcé en raison d''un défaut du système gaz naturel (GNV)'
+      es: 'Modo gasolina forzado debido a un fallo del sistema de gas natural (GNV)'
+      de: 'Erzwungener Benzinmodus aufgrund eines Fehlers im Erdgassystem (CNG)'
+      it: 'Modalità benzina forzata a causa di un guasto del sistema a gas naturale (CNG)'
+      pl: 'Wymuszony tryb benzynowy z powodu usterki układu gazu ziemnego (CNG)'
+      ru: 'Принудительный бензиновый режим из-за неисправности системы природного газа (КПГ)'
+      zh: '因天然气(CNG)系统故障强制切换至汽油模式'
+      hu: 'Kényszerített benzin üzemmód a földgáz (CNG) rendszer hibája miatt'
+      pt: 'Modo gasolina forçado devido a uma falha do sistema de gás natural (GNV)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Minor fault of the stop-and-start function'
+        fr: 'Défaut mineur de la fonction Stop & Start'
+        es: 'Fallo menor de la función Stop & Start'
+        de: 'Kleinerer Fehler der Stop & Start-Funktion'
+        it: 'Guasto minore della funzione Stop & Start'
+        pl: 'Drobna usterka funkcji Stop & Start'
+        ru: 'Незначительная неисправность функции Stop & Start'
+        zh: '启停功能轻微故障'
+        hu: 'Stop & Start funkció kisebb hibája'
+        pt: 'Avaria menor da função stop-and-start'
+      0x02:
+        en: 'Critical failure for the stop-and-start function'
+        fr: 'Défaut majeur de la fonction Stop & Start'
+        es: 'Fallo mayor de la función Stop & Start'
+        de: 'Schwerwiegender Fehler der Stop & Start-Funktion'
+        it: 'Guasto grave della funzione Stop & Start'
+        pl: 'Poważna usterka funkcji Stop & Start'
+        ru: 'Критическая неисправность функции Stop & Start'
+        zh: '启停功能严重故障'
+        hu: 'Stop & Start funkció kritikus hibája'
+        pt: 'Falha crítica da função stop-and-start'
+      0x03:
+        en: 'Severe fault'
+        fr: 'Défaut grave'
+        es: 'Fallo grave'
+        de: 'Schwerwiegender Fehler'
+        it: 'Guasto grave'
+        pl: 'Poważna usterka'
+        ru: 'Серьёзная неисправность'
+        zh: '严重故障'
+        hu: 'Súlyos hiba'
+        pt: 'Avaria grave'
+
+  CNG_MODE_REQUEST_STATE:
+    bits: '2.5'
+    comment:
+      en: 'Status of the request to switch to CNG (natural gas) mode'
+      fr: 'État de la demande de passage en mode gaz naturel (GNV)'
+      es: 'Estado de la solicitud de cambio a modo de gas natural (GNV)'
+      de: 'Status der Anforderung zum Umschalten in den Erdgasmodus (CNG)'
+      it: 'Stato della richiesta di passaggio alla modalità gas naturale (CNG)'
+      pl: 'Stan żądania przełączenia na tryb gazu ziemnego (CNG)'
+      ru: 'Статус запроса на переключение в режим природного газа (КПГ)'
+      zh: '切换至天然气(CNG)模式请求状态'
+      hu: 'A földgáz (CNG) üzemmódra váltás kérésének állapota'
+      pt: 'Estado do pedido de mudança para modo de gás natural (GNV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request to switch to gas mode'
+        fr: 'Pas de demande de passage en mode gaz'
+        es: 'Sin solicitud de paso a modo gas'
+        de: 'Keine Anforderung zum Wechsel in den Gasmodus'
+        it: 'Nessuna richiesta di passaggio in modalità gas'
+        pl: 'Brak żądania przejścia w tryb gazowy'
+        ru: 'Нет запроса перехода в газовый режим'
+        zh: '无切换至燃气模式的请求'
+        hu: 'Nincs kérés a gázüzemmódba váltásra'
+        pt: 'Sem pedido de passagem a modo gás'
+      0x01:
+        en: 'Request to switch to CNG (gas) mode'
+        fr: 'Demande de passage en mode gaz'
+        es: 'Solicitud de cambio a modo gas'
+        de: 'Anforderung zum Umschalten in den Gasmodus'
+        it: 'Richiesta di passaggio alla modalità gas'
+        pl: 'Żądanie przełączenia na tryb gazowy'
+        ru: 'Запрос переключения в газовый режим'
+        zh: '请求切换至燃气模式'
+        hu: 'Gáz üzemmódra váltási kérés'
+        pt: 'Pedido de mudança para modo gás'
+
+  FUEL_SYSTEM_ADAPTATION_RESET_REQUEST:
+    bits: '2.4'
+    comment:
+      en: 'Request to reset the fuel system adaptation values'
+      fr: 'Demande de réinitialisation des valeurs adaptatives du système carburant'
+      es: 'Solicitud de reinicio de los valores adaptativos del sistema de combustible'
+      de: 'Anforderung zum Zurücksetzen der Adaptionswerte des Kraftstoffsystems'
+      it: 'Richiesta di azzeramento dei valori adattivi del sistema carburante'
+      pl: 'Żądanie zresetowania wartości adaptacyjnych układu paliwowego'
+      ru: 'Запрос на сброс адаптивных значений топливной системы'
+      zh: '燃油系统自适应值重置请求'
+      hu: 'Az üzemanyagrendszer adaptív értékeinek visszaállítási kérése'
+      pt: 'Pedido de reinício dos valores adaptativos do sistema de combustível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reset request'
+        fr: 'Demande de reset'
+        es: 'Solicitud de reinicio'
+        de: 'Rücksetzanforderung'
+        it: 'Richiesta di reset'
+        pl: 'Żądanie resetu'
+        ru: 'Запрос сброса'
+        zh: '复位请求'
+        hu: 'Visszaállítási kérés'
+        pt: 'Pedido de reposição'
+      0x01:
+        en: 'Reset request'
+        fr: 'Demande de réinitialisation'
+        es: 'Solicitud de reinicio'
+        de: 'Rücksetzanforderung'
+        it: 'Richiesta di azzeramento'
+        pl: 'Żądanie zerowania'
+        ru: 'Запрос сброса'
+        zh: '复位请求'
+        hu: 'Visszaállítási kérés'
+        pt: 'Pedido de reinicialização'
+
+  CNG_TYPE_ADAPTATION_CONVERGED:
+    bits: '2.3'
+    comment:
+      en: 'Flag indicating that the CNG (natural gas) type adaptation has converged'
+      fr: 'Indicateur de convergence de l''adaptation du type de gaz naturel (GNV)'
+      es: 'Indicador de convergencia de la adaptación del tipo de gas natural (GNV)'
+      de: 'Kennzeichen für die abgeschlossene Anpassung des Erdgastyps (CNG)'
+      it: 'Indicatore di convergenza dell''adattamento del tipo di gas naturale (CNG)'
+      pl: 'Flaga zbieżności adaptacji rodzaju gazu ziemnego (CNG)'
+      ru: 'Флаг завершения адаптации типа природного газа (КПГ)'
+      zh: '天然气(CNG)类型自适应收敛标志'
+      hu: 'A földgáz (CNG) típus adaptációjának konvergencia-jelzője'
+      pt: 'Indicador de convergência da adaptação do tipo de gás natural (GNV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'CNG type not recognized'
+        fr: 'Type GNV non reconnu'
+        es: 'Tipo de GNC no reconocido'
+        de: 'CNG-Typ nicht erkannt'
+        it: 'Tipo di GNC non riconosciuto'
+        pl: 'Nierozpoznany typ CNG'
+        ru: 'Тип CNG не распознан'
+        zh: '未识别的CNG类型'
+        hu: 'Ismeretlen CNG típus'
+        pt: 'Tipo de GNV não reconhecido'
+      0x01:
+        en: 'CNG type recognized'
+        fr: 'Type GNV reconnu'
+        es: 'Tipo de GNC reconocido'
+        de: 'CNG-Typ erkannt'
+        it: 'Tipo GNC riconosciuto'
+        pl: 'Rozpoznano typ CNG'
+        ru: 'Распознан тип КПГ (CNG)'
+        zh: '已识别CNG类型'
+        hu: 'CNG típus felismerve'
+        pt: 'Tipo GNC reconhecido'

@@ -1,0 +1,649 @@
+id: 0x287
+name: 'HCU1_DYNAMIC_DATA_7'
+type: 'can'
+length: 7
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['BVA', 'ABS', 'CMM']
+
+signals:
+  PROCESS_COUNTER:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  CHECKSUM:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  GEARBOX_TARGET_RATIO:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Target gear ratio of the automated manual gearbox (BVMP)'
+      fr: 'Rapport cible de la boîte de vitesses mécanique pilotée (BVMP)'
+      es: 'Relación objetivo de la caja de cambios mecánica pilotada (BVMP)'
+      de: 'Zielgangstufe des automatisierten Schaltgetriebes (BVMP)'
+      it: 'Rapporto obiettivo del cambio manuale automatizzato (BVMP)'
+      pl: 'Docelowe przełożenie zautomatyzowanej skrzyni manualnej (BVMP)'
+      ru: 'Целевое передаточное отношение роботизированной коробки передач (BVMP)'
+      zh: '自动化手动变速箱(BVMP)的目标档位'
+      hu: 'Az automatizált manuális váltó (BVMP) célfokozata'
+      pt: 'Relação-alvo da caixa de velocidades mecânica pilotada (BVMP)'
+    type: 'enum'
+    default: 0x0F
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'R'
+        fr: 'R'
+        es: 'R'
+        de: 'R'
+        it: 'R'
+        pl: 'R'
+        ru: 'R'
+        zh: 'R'
+        hu: 'R'
+        pt: 'R'
+      0x02:
+        en: 'N'
+        fr: 'N'
+        es: 'N'
+        de: 'N'
+        it: 'N'
+        pl: 'N'
+        ru: 'N'
+        zh: 'N'
+        hu: 'N'
+        pt: 'N'
+      0x03:
+        unused: true
+      0x04:
+        en: '4'
+        fr: '4'
+        es: '4'
+        de: '4'
+        it: '4'
+        pl: '4'
+        ru: '4'
+        zh: '4'
+        hu: '4'
+        pt: '4'
+      0x05:
+        en: '3'
+        fr: '3'
+        es: '3'
+        de: '3'
+        it: '3'
+        pl: '3'
+        ru: '3'
+        zh: '3'
+        hu: '3'
+        pt: '3'
+      0x06:
+        en: '2'
+        fr: '2'
+        es: '2'
+        de: '2'
+        it: '2'
+        pl: '2'
+        ru: '2'
+        zh: '2'
+        hu: '2'
+        pt: '2'
+      0x07:
+        en: '1'
+        fr: '1'
+        es: '1'
+        de: '1'
+        it: '1'
+        pl: '1'
+        ru: '1'
+        zh: '1'
+        hu: '1'
+        pt: '1'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        en: '6'
+        fr: '6'
+        es: '6'
+        de: '6'
+        it: '6'
+        pl: '6'
+        ru: '6'
+        zh: '6'
+        hu: '6'
+        pt: '6'
+      0x0D:
+        unused: true
+      0x0E:
+        en: '5'
+        fr: '5'
+        es: '5'
+        de: '5'
+        it: '5'
+        pl: '5'
+        ru: '5'
+        zh: '5'
+        hu: '5'
+        pt: '5'
+      0x0F:
+        en: 'Gear position unknown'
+        fr: 'Rapport incertain'
+        es: 'Marcha indeterminada'
+        de: 'Gangposition unbekannt'
+        it: 'Rapporto incerto'
+        pl: 'Nieznana pozycja biegu'
+        ru: 'Передача не определена'
+        zh: '挡位未知'
+        hu: 'Bizonytalan fokozat'
+        pt: 'Mudança indeterminada'
+
+  GEAR_SHIFT_IN_PROGRESS:
+    bits: '2.3'
+    comment:
+      en: 'Gearbox shifting in progress; can be used to display and/or inhibit other systems'' strategies'
+      fr: 'Changement de rapport en cours dans la boîte de vitesses ; peut servir à l''affichage et/ou à l''inhibition des stratégies d''autres systèmes'
+      es: 'Cambio de marcha en curso en la caja de cambios; puede usarse para mostrar y/o inhibir las estrategias de otros sistemas'
+      de: 'Gangwechsel im Getriebe läuft; kann zur Anzeige und/oder Deaktivierung von Strategien anderer Systeme genutzt werden'
+      it: 'Cambio marcia in corso nel cambio; può essere usato per la visualizzazione e/o la disattivazione delle strategie di altri sistemi'
+      pl: 'Trwa zmiana biegu w skrzyni biegów; może służyć do wyświetlania i/lub blokowania strategii innych systemów'
+      ru: 'Выполняется переключение передачи в коробке передач; может использоваться для индикации и/или блокировки стратегий других систем'
+      zh: '变速箱正在换挡;可用于显示和/或抑制其他系统的策略'
+      hu: 'Fokozatváltás van folyamatban a sebességváltóban; felhasználható más rendszerek stratégiáinak megjelenítésére és/vagy letiltására'
+      pt: 'Mudança de marcha em curso na caixa de velocidades; pode ser utilizado para apresentação e/ou inibição das estratégias de outros sistemas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No change in progress'
+        fr: 'Pas de changement en cours'
+        es: 'Sin cambio en curso'
+        de: 'Kein Wechsel im Gange'
+        it: 'Nessun cambiamento in corso'
+        pl: 'Brak zmiany w toku'
+        ru: 'Изменение не выполняется'
+        zh: '无正在进行的更改'
+        hu: 'Nincs folyamatban lévő váltás'
+        pt: 'Sem mudança em curso'
+      0x01:
+        en: 'Gear shift in progress'
+        fr: 'Changement de rapport en cours'
+        es: 'Cambio de marcha en curso'
+        de: 'Schaltvorgang läuft'
+        it: 'Cambio marcia in corso'
+        pl: 'Trwa zmiana biegu'
+        ru: 'Переключение передачи выполняется'
+        zh: '换挡进行中'
+        hu: 'Fokozatváltás folyamatban'
+        pt: 'Mudança de velocidade em curso'
+
+  CLUTCH_TORQUE_REQUEST:
+    bits: '2.2-3.0'
+    comment:
+      en: 'Clutch torque request'
+      fr: 'Consigne de couple d''embrayage'
+      es: 'Consigna de par de embrague'
+      de: 'Kupplungsdrehmoment-Sollwert'
+      it: 'Richiesta di coppia della frizione'
+      pl: 'Żądany moment obrotowy sprzęgła'
+      ru: 'Заданный момент сцепления'
+      zh: '离合器扭矩请求'
+      hu: 'Kuplung nyomatékigénye'
+      pt: 'Consigna de binário de embraiagem'
+    type: 'uint'
+    factor: 0.5
+    offset: -200
+    min: -200
+    max: 599.5
+    units: 'Nm'
+    invalid: 0x7FF
+
+  GEAR_SHIFT_REQUEST:
+    bits: '4.7-4.6'
+    comment:
+      en: 'Gear shift request from the PTMU'
+      fr: 'Demande de changement de rapport par le PTMU'
+      es: 'Solicitud de cambio de marcha por el PTMU'
+      de: 'Gangwechselanforderung durch die PTMU'
+      it: 'Richiesta di cambio marcia da parte della PTMU'
+      pl: 'Żądanie zmiany biegu zgłoszone przez PTMU'
+      ru: 'Запрос переключения передачи от блока PTMU'
+      zh: 'PTMU发出的换挡请求'
+      hu: 'A PTMU fokozatváltási kérése'
+      pt: 'Pedido de mudança de marcha pelo PTMU'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'No gear-change request'
+        fr: 'Pas de demande de changement de rapport'
+        es: 'Sin solicitud de cambio de marcha'
+        de: 'Keine Anforderung eines Gangwechsels'
+        it: 'Nessuna richiesta di cambio marcia'
+        pl: 'Brak żądania zmiany biegu'
+        ru: 'Нет запроса переключения передачи'
+        zh: '无换挡请求'
+        hu: 'Nincs fokozatváltási kérés'
+        pt: 'Sem pedido de mudança de velocidade'
+      0x02:
+        en: 'Gear shift request'
+        fr: 'Demande de changement de rapport'
+        es: 'Solicitud de cambio de marcha'
+        de: 'Anforderung eines Gangwechsels'
+        it: 'Richiesta di cambio marcia'
+        pl: 'Żądanie zmiany biegu'
+        ru: 'Запрос переключения передачи'
+        zh: '换挡请求'
+        hu: 'Fokozatváltási kérés'
+        pt: 'Pedido de mudança de marcha'
+      0x03:
+        unused: true
+
+  PERFORMANCE_INDEX:
+    bits: '4.5-5.7'
+    comment:
+      en: 'Performance index'
+      fr: 'Indice de performance'
+      es: 'Índice de rendimiento'
+      de: 'Leistungsindex'
+      it: 'Indice di prestazione'
+      pl: 'Wskaźnik wydajności'
+      ru: 'Показатель эффективности'
+      zh: '性能指数'
+      hu: 'Teljesítményindex'
+      pt: 'Índice de desempenho'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 1
+    invalid: 0x7F
+    default: 0x00
+
+  CLUTCH_PHASE:
+    bits: '5.6-5.4'
+    comment:
+      en: 'Clutch operating phase'
+      fr: 'Phase de vie de l''embrayage'
+      es: 'Fase de funcionamiento del embrague'
+      de: 'Betriebsphase der Kupplung'
+      it: 'Fase operativa della frizione'
+      pl: 'Faza pracy sprzęgła'
+      ru: 'Рабочая фаза сцепления'
+      zh: '离合器工作阶段'
+      hu: 'A kuplung üzemi fázisa'
+      pt: 'Fase de funcionamento da embraiagem'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Vehicle stationary'
+        fr: 'Véhicule à l''arrêt'
+        es: 'Vehículo detenido'
+        de: 'Fahrzeug steht'
+        it: 'Veicolo fermo'
+        pl: 'Pojazd zatrzymany'
+        ru: 'Автомобиль неподвижен'
+        zh: '车辆静止'
+        hu: 'Álló jármű'
+        pt: 'Veículo parado'
+      0x01:
+        en: 'Pick up'
+        fr: 'Décollage'
+        es: 'Despegue'
+        de: 'Abheben'
+        it: 'Distacco'
+        pl: 'Oderwanie'
+        ru: 'Отрыв'
+        zh: '起步'
+        hu: 'Elindulás'
+        pt: 'Descolagem'
+      0x02:
+        en: 'Torque cancellation phase with synchronized clutch (no slip)'
+        fr: 'Phase d''annulation de couple avec embrayage synchronisé (sans glissement)'
+        es: 'Fase de anulación de par con embrague sincronizado (sin deslizamiento)'
+        de: 'Drehmoment-Abbauphase mit synchronisierter Kupplung (ohne Schlupf)'
+        it: 'Fase di annullamento coppia con frizione sincronizzata (senza slittamento)'
+        pl: 'Faza zerowania momentu obrotowego przy zsynchronizowanym sprzęgle (bez poślizgu)'
+        ru: 'Фаза снятия момента при синхронизированном сцеплении (без пробуксовки)'
+        zh: '离合器同步(无打滑)时的扭矩清零阶段'
+        hu: 'Nyomatékmegszüntetési fázis szinkronizált kuplunggal (csúszás nélkül)'
+        pt: 'Fase de anulação de binário com embraiagem sincronizada (sem deslizamento)'
+      0x03:
+        en: 'Decrease with clutch slipping'
+        fr: 'Phase d''annulation de couple avec embrayage glissant'
+        es: 'Fase de anulación de par con embrague deslizante'
+        de: 'Phase der Drehmomentaufhebung mit schlupfender Kupplung'
+        it: 'Fase di annullamento della coppia con frizione slittante'
+        pl: 'Faza anulowania momentu obrotowego przy poślizgu sprzęgła'
+        ru: 'Фаза отмены крутящего момента при пробуксовке сцепления'
+        zh: '离合器打滑扭矩取消阶段'
+        hu: 'Nyomatékmegszüntetési fázis csúszó kuplunggal'
+        pt: 'Fase de anulação de binário com embraiagem a deslizar'
+      0x04:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+      0x05:
+        en: 'Torque increase phase with slipping clutch'
+        fr: 'Phase d''augmentation de couple avec embrayage glissant'
+        es: 'Fase de aumento de par con embrague deslizante'
+        de: 'Drehmomentanstiegsphase bei rutschender Kupplung'
+        it: 'Fase di aumento di coppia con frizione slittante'
+        pl: 'Faza zwiększania momentu obrotowego przy poślizgu sprzęgła'
+        ru: 'Фаза увеличения крутящего момента при пробуксовке сцепления'
+        zh: '离合器打滑时的转矩增加阶段'
+        hu: 'Nyomatéknövelési fázis csúszó kuplunggal'
+        pt: 'Fase de aumento de binário com embraiagem a deslizar'
+      0x06:
+        en: 'Torque increase phase with clutch synchronized'
+        fr: 'Phase d''augmentation de couple avec embrayage synchronisé'
+        es: 'Fase de aumento de par con embrague sincronizado'
+        de: 'Drehmomentanstiegsphase bei synchronisierter Kupplung'
+        it: 'Fase di aumento di coppia con frizione sincronizzata'
+        pl: 'Faza zwiększania momentu przy zsynchronizowanym sprzęgle'
+        ru: 'Фаза нарастания момента при синхронизированном сцеплении'
+        zh: '离合器同步时的扭矩上升阶段'
+        hu: 'Nyomatéknövelési fázis szinkronizált tengelykapcsolóval'
+        pt: 'Fase de aumento de binário com embraiagem sincronizada'
+      0x07:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+
+  NEUTRAL_REQUEST:
+    bits: '5.3'
+    comment:
+      en: 'Neutral gear request'
+      fr: 'Demande de point mort'
+      es: 'Solicitud de punto muerto'
+      de: 'Anforderung der Neutralstellung'
+      it: 'Richiesta di folle'
+      pl: 'Żądanie biegu jałowego'
+      ru: 'Запрос нейтрального положения'
+      zh: '空挡请求'
+      hu: 'Üresjárat kérése'
+      pt: 'Pedido de ponto morto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No neutral request'
+        fr: 'Pas de demande de point mort'
+        es: 'Sin solicitud de punto muerto'
+        de: 'Keine Leerlaufanforderung'
+        it: 'Nessuna richiesta di folle'
+        pl: 'Brak żądania luzu'
+        ru: 'Нет запроса нейтрали'
+        zh: '无空挡请求'
+        hu: 'Nincs üresjárat kérés'
+        pt: 'Sem pedido de ponto morto'
+      0x01:
+        en: 'Neutral request'
+        fr: 'Demande de point mort'
+        es: 'Solicitud de punto muerto'
+        de: 'Leerlaufanforderung'
+        it: 'Richiesta di folle'
+        pl: 'Żądanie luzu'
+        ru: 'Запрос нейтрали'
+        zh: '空挡请求'
+        hu: 'Üresjárat kérés'
+        pt: 'Pedido de ponto morto'
+
+  DRIVER_TORQUE_DEMAND:
+    bits: '5.2-7.7'
+    comment:
+      en: 'Driver torque demand information'
+      fr: 'Information de volonté du conducteur'
+      es: 'Información de la demanda de par del conductor'
+      de: 'Information zum Fahrerwunsch-Drehmoment'
+      it: 'Informazione sulla richiesta di coppia del conducente'
+      pl: 'Informacja o żądaniu momentu obrotowego przez kierowcę'
+      ru: 'Информация о запрошенном водителем моменте'
+      zh: '驾驶员扭矩需求信息'
+      hu: 'A vezető nyomatékigényére vonatkozó információ'
+      pt: 'Informação do pedido de binário do condutor'
+    type: 'uint'
+    factor: 5
+    offset: -10000
+    min: -10000
+    max: 6000
+    units: 'Nm'
+    invalid: 0xFFF
+    default: 0x7D0
+
+  CLUTCH_STATUS:
+    bits: '7.6-7.5'
+    comment:
+      en: 'Clutch status'
+      fr: 'Etat de l''embrayage'
+      es: 'Estado del embrague'
+      de: 'Kupplungsstatus'
+      it: 'Stato della frizione'
+      pl: 'Stan sprzęgła'
+      ru: 'Состояние сцепления'
+      zh: '离合器状态'
+      hu: 'A kuplung állapota'
+      pt: 'Estado da embraiagem'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Slip'
+        fr: 'Glissant'
+        es: 'Deslizante'
+        de: 'Rutschig'
+        it: 'Scivoloso'
+        pl: 'Śliski'
+        ru: 'Скользко'
+        zh: '打滑'
+        hu: 'Csúszós'
+        pt: 'Escorregadio'
+      0x01:
+        en: 'Clutch open'
+        fr: 'Débrayé'
+        es: 'Embrague abierto'
+        de: 'Kupplung geöffnet'
+        it: 'Frizione aperta'
+        pl: 'Sprzęgło rozłączone'
+        ru: 'Сцепление разомкнуто'
+        zh: '离合器分离'
+        hu: 'Kuplung nyitva'
+        pt: 'Embraiagem aberta'
+      0x02:
+        en: 'Clutch closed'
+        fr: 'Embrayage fermé'
+        es: 'Embrague cerrado'
+        de: 'Kupplung geschlossen'
+        it: 'Frizione chiusa'
+        pl: 'Sprzęgło zamknięte'
+        ru: 'Сцепление замкнуто'
+        zh: '离合器结合'
+        hu: 'Tengelykapcsoló zárva'
+        pt: 'Embraiagem fechada'
+      0x03:
+        en: 'Synchronized'
+        fr: 'Synchronisé'
+        es: 'Sincronizado'
+        de: 'Synchronisiert'
+        it: 'Sincronizzato'
+        pl: 'Zsynchronizowany'
+        ru: 'Синхронизировано'
+        zh: '已同步'
+        hu: 'Szinkronizálva'
+        pt: 'Sincronizado'
+
+  GEARBOX_LEARNING_REQUEST:
+    bits: '7.4-7.2'
+    comment:
+      en: 'Learning of the closed position and the index point (IO)'
+      fr: 'Apprentissage de la position fermée et du point d''index (IO)'
+      es: 'Aprendizaje de la posición cerrada y del punto de índice (IO)'
+      de: 'Anlernen der Schließposition und des Indexpunkts (IO)'
+      it: 'Apprendimento della posizione chiusa e del punto di indice (IO)'
+      pl: 'Uczenie pozycji zamkniętej i punktu odniesienia (IO)'
+      ru: 'Обучение закрытому положению и опорной точке (IO)'
+      zh: '关闭位置和索引点(IO)的学习'
+      hu: 'A zárt helyzet és az indexpont (IO) betanítása'
+      pt: 'Aprendizagem da posição fechada e do ponto de índice (IO)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'not authorization'
+        fr: 'pas d''autorisation'
+        es: 'sin autorización'
+        de: 'keine Genehmigung'
+        it: 'nessuna autorizzazione'
+        pl: 'brak autoryzacji'
+        ru: 'нет разрешения'
+        zh: '无授权'
+        hu: 'nincs engedélyezve'
+        pt: 'sem autorização'
+      0x01:
+        en: 'I0 learning authorized'
+        fr: 'Autorisation d''apprentissage I0'
+        es: 'Autorización de aprendizaje I0'
+        de: 'Freigabe der I0-Lernfunktion'
+        it: 'Autorizzazione all''apprendimento I0'
+        pl: 'Zezwolenie na uczenie I0'
+        ru: 'Разрешено обучение I0'
+        zh: '允许I0学习'
+        hu: 'I0 tanítás engedélyezve'
+        pt: 'Autorização de aprendizagem I0'
+      0x02:
+        en: 'Closed position learning authorized'
+        fr: 'Autorisation d''apprentissage de la position fermée'
+        es: 'Autorización de aprendizaje de la posición cerrada'
+        de: 'Freigabe zum Anlernen der Schließposition'
+        it: 'Autorizzazione di apprendimento della posizione chiusa'
+        pl: 'Zezwolenie na uczenie pozycji zamkniętej'
+        ru: 'Разрешено обучение закрытому положению'
+        zh: '允许学习关闭位置'
+        hu: 'Zárt pozíció tanulásának engedélyezése'
+        pt: 'Autorização de aprendizagem da posição fechada'
+      0x03:
+        en: 'I0 learning authorized and closed position'
+        fr: 'Autorisation d''apprentissage I0 et position fermée'
+        es: 'Autorización de aprendizaje I0 y posición cerrada'
+        de: 'Anlernen I0 erlaubt und Position geschlossen'
+        it: 'Autorizzazione di apprendimento I0 e posizione chiusa'
+        pl: 'Zezwolenie na uczenie I0 i pozycja zamknięta'
+        ru: 'Разрешение обучения I0 и закрытое положение'
+        zh: '允许I0学习及关闭位置'
+        hu: 'I0 tanulás engedélyezve és zárt pozíció'
+        pt: 'Autorização de aprendizagem I0 e posição fechada'
+      0x04:
+        en: 'Licking-point learning authorized'
+        fr: 'Autorisation d''apprentissage du point de léchage'
+        es: 'Autorización de aprendizaje del punto de contacto'
+        de: 'Freigabe des Lernens des Kupplungsschleifpunkts'
+        it: 'Autorizzazione all''apprendimento del punto di aggancio'
+        pl: 'Zezwolenie na uczenie punktu docisku sprzęgła'
+        ru: 'Разрешение обучения точке схватывания сцепления'
+        zh: '允许学习离合器接触点'
+        hu: 'Kuplungfogási pont tanulásának engedélyezése'
+        pt: 'Aprendizagem do ponto de mordida autorizada'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  STOP_START_OFF_REQUEST:
+    bits: '7.1'
+    comment:
+      en: 'Stop & Start deactivation request'
+      fr: 'Demande de désactivation du système Stop & Start'
+      es: 'Solicitud de desactivación del sistema Stop & Start'
+      de: 'Anforderung zur Deaktivierung des Start-Stopp-Systems'
+      it: 'Richiesta di disattivazione del sistema Stop & Start'
+      pl: 'Żądanie dezaktywacji systemu Stop & Start'
+      ru: 'Запрос отключения системы Старт-Стоп'
+      zh: '起停系统关闭请求'
+      hu: 'A Stop & Start rendszer kikapcsolási kérése'
+      pt: 'Pedido de desativação do sistema Stop & Start'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'not authorization'
+        fr: 'pas d''autorisation'
+        es: 'sin autorización'
+        de: 'keine Genehmigung'
+        it: 'nessuna autorizzazione'
+        pl: 'brak autoryzacji'
+        ru: 'нет разрешения'
+        zh: '无授权'
+        hu: 'nincs engedélyezve'
+        pt: 'sem autorização'
+      0x01:
+        en: 'Authorization'
+        fr: 'Autorisation'
+        es: 'Autorización'
+        de: 'Freigabe'
+        it: 'Autorizzazione'
+        pl: 'Zezwolenie'
+        ru: 'Разрешение'
+        zh: '授权'
+        hu: 'Engedély'
+        pt: 'Autorização'

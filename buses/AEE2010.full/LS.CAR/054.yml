@@ -1,0 +1,247 @@
+id: 0x054
+name: 'AVE_AUTHENTICATION_RESPONSE'
+type: 'can'
+length: 4
+comment:
+  en: 'Authentication response and status from the steering-lock module (AVE): state, encrypted key bytes, decoder command status.'
+  fr: 'Réponse d''authentification et état du module antivol de direction (AVE) : état, octets de clé chiffres, statut de la commande de décodage.'
+  es: 'Respuesta de autenticación y estado del módulo de bloqueo de dirección (AVE): estado, bytes de clave cifrados, estado del comando de decodificación.'
+  de: 'Authentifizierungsantwort und Status des Lenkradschloss-Moduls (AVE): Zustand, verschlüsselte Schlüsselbytes, Decoder-Befehlsstatus.'
+  it: 'Risposta di autenticazione e stato del modulo bloccasterzo (AVE): stato, byte di chiave cifrati, stato del comando di decodifica.'
+  pl: 'Odpowiedź uwierzytelniania i stan modulu blokady kierownicy (AVE): stan, zaszyfrowane bajty klucza, stan polecenia dekodowania.'
+  ru: 'Ответ аутентификации и статус модуля блокировки руля (AVE): состояние, зашифрованные байты ключа, статус команды декодирования.'
+  zh: '转向锁模块(AVE)的身份验证响应及状态:状态、加密密钥字节、解码命令状态。'
+  hu: 'A kormányzár modul (AVE) hitelesítési válasza és állapota: állapot, titkosított kulcsbájtok, dekoderparancs-állapot.'
+  pt: 'Resposta de autenticação e estado do módulo antifurto de direção (AVE): estado, bytes de chave encriptados, estado do comando de descodificação.'
+observations:
+  en: 'Depends on the associated diagnostic class'
+  fr: 'Dépend de la classe de diagnostic associée'
+  es: 'Depende de la clase de diagnóstico asociada'
+  de: 'Abhängig von der zugehörigen Diagnoseklasse'
+  it: 'Dipende dalla classe diagnostica associata'
+  pl: 'Zależy od powiązanej klasy diagnostycznej'
+  ru: 'Зависит от связанного диагностического класса'
+  zh: '取决于相关诊断类别'
+  hu: 'A kapcsolódó diagnosztikai osztálytól függ'
+  pt: 'Depende da classe de diagnóstico associada'
+periodicity: ['trigger']
+senders: ['AVE']
+receivers: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7'
+    unused: true
+
+  IMMOBILIZER_STATE:
+    bits: '1.6-1.4'
+    comment:
+      en: 'Electronic immobilizer (AVE) status'
+      fr: 'État de l''antivol électrique (AVE)'
+      es: 'Estado del antirrobo eléctrico (AVE)'
+      de: 'Status der elektrischen Wegfahrsperre (AVE)'
+      it: 'Stato dell''antifurto elettrico (AVE)'
+      pl: 'Stan elektrycznego immobilizera (AVE)'
+      ru: 'Состояние электрического противоугонного устройства (AVE)'
+      zh: '电子防盗锁(AVE)状态'
+      hu: 'Az elektromos indításgátló (AVE) állapota'
+      pt: 'Estado do imobilizador eletrónico (AVE)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Electric antitheft locked'
+        fr: 'Antivol électrique verrouillé'
+        es: 'Antirrobo eléctrico bloqueado'
+        de: 'Elektrische Diebstahlsicherung verriegelt'
+        it: 'Antifurto elettrico bloccato'
+        pl: 'Elektryczny immobiliser zablokowany'
+        ru: 'Электронная противоугонная система заблокирована'
+        zh: '电子防盗已锁止'
+        hu: 'Elektromos lopásgátló zárolva'
+        pt: 'Antirroubo elétrico trancado'
+      0x01:
+        en: 'Electric antitheft unlocked'
+        fr: 'Antivol électrique déverrouillé'
+        es: 'Antirrobo eléctrico desbloqueado'
+        de: 'Elektrische Wegfahrsperre entriegelt'
+        it: 'Antifurto elettrico sbloccato'
+        pl: 'Elektryczny immobilizer odblokowany'
+        ru: 'Электрическая противоугонная система разблокирована'
+        zh: '电子防盗系统已解锁'
+        hu: 'Az elektromos indításgátló kioldva'
+        pt: 'Antirroubo elétrico desbloqueado'
+      0x02:
+        en: 'Action in progress'
+        fr: 'Action en cours'
+        es: 'Acción en curso'
+        de: 'Aktion läuft'
+        it: 'Azione in corso'
+        pl: 'Trwa akcja'
+        ru: 'Выполняется действие'
+        zh: '操作进行中'
+        hu: 'Művelet folyamatban'
+        pt: 'Ação em curso'
+      0x03:
+        en: 'Retry'
+        fr: 'Nouvelle tentative'
+        es: 'Reintentar'
+        de: 'Wiederholen'
+        it: 'Riprova'
+        pl: 'Ponów'
+        ru: 'Повтор'
+        zh: '重试'
+        hu: 'Újrapróbálkozás'
+        pt: 'Nova tentativa'
+      0x04:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  INFO_CIPHER_STATUS:
+    bits: '1.3'
+    comment:
+      en: 'Status of whether the information is ciphered or not'
+      fr: 'État indiquant si l''information est chiffrée ou non'
+      es: 'Estado que indica si la información está cifrada o no'
+      de: 'Status, ob die Information verschlüsselt ist oder nicht'
+      it: 'Stato che indica se l''informazione è cifrata o meno'
+      pl: 'Stan wskazujący, czy informacja jest zaszyfrowana'
+      ru: 'Статус, зашифрована информация или нет'
+      zh: '指示信息是否加密的状态'
+      hu: 'Az adat titkosítási állapota'
+      pt: 'Estado que indica se a informação está cifrada ou não'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Information not ciphered'
+        fr: 'Information non cryptée'
+        es: 'Información no cifrada'
+        de: 'Information nicht verschlüsselt'
+        it: 'Informazione non cifrata'
+        pl: 'Informacja nieszyfrowana'
+        ru: 'Информация не зашифрована'
+        zh: '信息未加密'
+        hu: 'Nem titkosított információ'
+        pt: 'Informação não cifrada'
+      0x01:
+        en: 'Information ciphered'
+        fr: 'Information cryptée'
+        es: 'Información cifrada'
+        de: 'Information verschlüsselt'
+        it: 'Informazione cifrata'
+        pl: 'Informacja zaszyfrowana'
+        ru: 'Информация зашифрована'
+        zh: '信息已加密'
+        hu: 'Titkosított információ'
+        pt: 'Informação cifrada'
+
+  IMMOBILIZER_COMMAND_DECIPHER_STATUS:
+    bits: '1.2-1.1'
+    comment:
+      en: 'Status of the immobilizer (AVE) command deciphering'
+      fr: 'État du déchiffrement de la commande de l''antivol électrique (AVE)'
+      es: 'Estado del descifrado del comando del antirrobo eléctrico (AVE)'
+      de: 'Status der Entschlüsselung des Befehls der elektrischen Wegfahrsperre (AVE)'
+      it: 'Stato della decifratura del comando dell''antifurto elettrico (AVE)'
+      pl: 'Stan odszyfrowywania polecenia elektrycznego immobilizera (AVE)'
+      ru: 'Статус расшифровки команды электрического противоугонного устройства (AVE)'
+      zh: '电子防盗锁(AVE)命令解密状态'
+      hu: 'Az elektromos indításgátló (AVE) parancsának visszafejtési állapota'
+      pt: 'Estado da decifragem do comando do antirroubo elétrico (AVE)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Status NOK'
+        fr: 'Status NOK'
+        es: 'Estado NOK'
+        de: 'Status NOK'
+        it: 'Stato NOK'
+        pl: 'Stan NOK'
+        ru: 'Статус NOK'
+        zh: '状态NOK'
+        hu: 'Állapot NOK'
+        pt: 'Estado NOK'
+      0x01:
+        en: 'Status OK'
+        fr: 'État OK'
+        es: 'Estado OK'
+        de: 'Status OK'
+        it: 'Stato OK'
+        pl: 'Stan OK'
+        ru: 'Статус ОК'
+        zh: '状态正常'
+        hu: 'Állapot OK'
+        pt: 'Estado OK'
+      0x02:
+        en: 'Status OK, processed'
+        fr: 'Statut OK, traité'
+        es: 'Estado OK, procesado'
+        de: 'Status OK, verarbeitet'
+        it: 'Stato OK, elaborato'
+        pl: 'Stan OK, przetworzone'
+        ru: 'Статус OK, обработано'
+        zh: '状态正常,已处理'
+        hu: 'Állapot OK, feldolgozva'
+        pt: 'Estado OK, processado'
+      0x03:
+        unused: true
+
+  UNUSED_2:
+    bits: '1.0'
+    unused: true
+
+  TRANSPONDER_ENCRYPTED_MEMORY_1:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Encrypted transponder user memory answer, byte 1'
+      fr: 'Réponse chiffrée de la mémoire utilisateur du transpondeur, octet 1'
+      es: 'Respuesta cifrada de la memoria de usuario del transpondedor, byte 1'
+      de: 'Verschlüsselte Antwort des Transponder-Benutzerspeichers, Byte 1'
+      it: 'Risposta cifrata della memoria utente del transponder, byte 1'
+      pl: 'Zaszyfrowana odpowiedź pamięci użytkownika transpondera, bajt 1'
+      ru: 'Зашифрованный ответ пользовательской памяти транспондера, байт 1'
+      zh: '应答器用户存储器加密响应,字节1'
+      hu: 'A transzponder felhasználói memóriájának titkosított válasza, 1. bájt'
+      pt: 'Resposta da memória de utilizador do transponder encriptada, byte 1'
+    type: 'uint'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.7-3.0'
+          fr: 'Aussi observé aux bits 2.7-3.0'
+          es: 'También observado en los bits 2.7-3.0'
+          de: 'Auch an den Bits 2.7-3.0 beobachtet'
+          it: 'Osservato anche ai bit 2.7-3.0'
+          pl: 'Obserwowany także na bitach 2.7-3.0'
+          ru: 'Также наблюдался в битах 2.7-3.0'
+          zh: '也观察到位于位2.7-3.0'
+          hu: 'Megfigyelve a(z) 2.7-3.0 biteken is'
+          pt: 'Também observado nos bits 2.7-3.0'
+        bits: '2.7-3.0'
+
+  TRANSPONDER_ENCRYPTED_MEMORY_2:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Encrypted transponder user memory answer, byte 2'
+      fr: 'Réponse chiffrée de la mémoire utilisateur du transpondeur, octet 2'
+      es: 'Respuesta cifrada de la memoria de usuario del transpondedor, byte 2'
+      de: 'Verschlüsselte Antwort des Transponder-Benutzerspeichers, Byte 2'
+      it: 'Risposta cifrata della memoria utente del transponder, byte 2'
+      pl: 'Zaszyfrowana odpowiedź pamięci użytkownika transpondera, bajt 2'
+      ru: 'Зашифрованный ответ пользовательской памяти транспондера, байт 2'
+      zh: '应答器用户存储器加密响应,字节2'
+      hu: 'A transzponder felhasználói memóriájának titkosított válasza, 2. bájt'
+      pt: 'Resposta da memória de utilizador do transponder encriptada, byte 2'
+    type: 'uint'

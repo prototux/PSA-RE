@@ -1,0 +1,376 @@
+id: 0x22D
+name: 'ESC_EXTERNAL_TARGET_REQUEST_3'
+type: 'can'
+length: 8
+comment:
+  en: 'External stability control target request (e.g. from a driving assistance system), with frame counter and checksum.'
+  fr: 'Requête externe de consigne pour le contrôle de stabilité (ex. aide à la conduite), avec compteur de trame et somme de contrôle.'
+  es: 'Solicitud externa de consigna para el control de estabilidad (p. ej. desde un sistema de asistencia a la conducción), con contador de trama y suma de comprobación.'
+  de: 'Externe Sollwertanforderung für die Stabilitätskontrolle (z. B. von einem Fahrassistenzsystem), mit Rahmenzähler und Prüfsumme.'
+  it: 'Richiesta esterna di setpoint per il controllo di stabilità (ad es. da un sistema di assistenza alla guida), con contatore di trama e checksum.'
+  pl: 'Zewnętrzne żądanie wartości zadanej dla kontroli stabilności (np. z systemu wspomagania jazdy), z licznikiem ramek i sumą kontrolną.'
+  ru: 'Внешний запрос уставки для системы контроля устойчивости (например, от системы помощи водителю), со счётчиком кадров и контрольной суммой.'
+  zh: '来自(例如驾驶辅助系统的)车身稳定控制外部目标请求,含帧计数器和校验和。'
+  hu: 'Külső célérték-kérés a menetstabilizáló rendszer számára (pl. vezetéstámogató rendszertől), keretszámlálóval és ellenőrző összeggel.'
+  pt: 'Pedido de alvo do controlo de estabilidade externo (por exemplo, de um sistema de assistência à condução), com contador de trama e soma de verificação.'
+periodicity: ['20ms']
+senders: ['ABS']
+receivers: ['CMM', 'EBB', 'VCU']
+
+signals:
+  ABS_WHEEL_LOCK_PRESSURE_ESTIMATE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Wheel lock-up pressure estimated by the ESC, so the brake booster avoids applying unnecessary and harmful amplification'
+      fr: 'Pression de blocage des roues estimée par l''ESC, pour éviter que l''amplificateur de freinage applique une amplification inutile et néfaste'
+      es: 'Presión de bloqueo de ruedas estimada por el ESC, para evitar que el servofreno aplique una amplificación innecesaria y perjudicial'
+      de: 'Vom ESC geschätzter Raddruck bei Blockierung, damit der Bremskraftverstärker keine unnötige und schädliche Verstärkung anwendet'
+      it: 'Pressione di bloccaggio ruota stimata dall''ESC, per evitare che il servofreno applichi un''amplificazione inutile e dannosa'
+      pl: 'Ciśnienie blokowania kół szacowane przez ESC, aby wspomaganie hamowania nie stosowało zbędnego i szkodliwego wzmocnienia'
+      ru: 'Давление блокировки колёс, оцениваемое ESC, чтобы усилитель тормозов не применял ненужное и вредное усиление'
+      zh: 'ESC估算的车轮抱死压力,避免制动助力器施加不必要且有害的助力'
+      hu: 'Az ESC által becsült kerékblokkolási nyomás, hogy a fékrásegítő ne alkalmazzon felesleges és káros erősítést'
+      pt: 'Pressão de bloqueio das rodas estimada pelo ESC, para evitar que o amplificador de travagem aplique uma amplificação desnecessária e prejudicial'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'bar'
+
+  REAR_AXLE_TORQUE_REQUEST:
+    bits: '2.7-3.7'
+    comment:
+      en: 'Torque requested by the ESC on the rear axle'
+      fr: 'Couple demandé par l''ESC sur l''essieu arrière'
+      es: 'Par solicitado por el ESC en el eje trasero'
+      de: 'Vom ESC an der Hinterachse angefordertes Drehmoment'
+      it: 'Coppia richiesta dall''ESC sull''assale posteriore'
+      pl: 'Moment obrotowy żądany przez ESC na osi tylnej'
+      ru: 'Момент, запрошенный ESC на задней оси'
+      zh: 'ESC对后轴请求的扭矩'
+      hu: 'Az ESC által a hátsó tengelyen kért nyomaték'
+      pt: 'Binário solicitado pelo ESC no eixo traseiro'
+    type: 'uint'
+    factor: 1
+    offset: -250
+    min: -250
+    max: 250
+    units: 'Nm'
+    invalid: 0x1FE
+    default: 0x00
+
+  ESP_REAR_TORQUE_REQUEST_STATUS:
+    bits: '3.6-3.4'
+    comment:
+      en: 'ESP rear electric machine torque request status'
+      fr: 'Type de pilotage du couple de la machine électrique arrière par l''ESP'
+      es: 'Estado de solicitud de par de la máquina eléctrica trasera por el ESP'
+      de: 'Ansteuerungsart des hinteren E-Maschinen-Drehmoments durch das ESP'
+      it: 'Stato di richiesta di coppia della macchina elettrica posteriore da parte dell''ESP'
+      pl: 'Stan żądania momentu obrotowego tylnej maszyny elektrycznej przez ESP'
+      ru: 'Статус запроса момента задней электромашины от ESP'
+      zh: 'ESP对后电机扭矩请求的状态'
+      hu: 'A hátsó elektromos gép nyomatékigénylésének állapota az ESP-től'
+      pt: 'Estado de pedido de binário da máquina elétrica traseira pelo ESP'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action on torque'
+        fr: 'Pas d''action sur le couple'
+        es: 'Sin acción sobre el par'
+        de: 'Kein Eingriff auf das Drehmoment'
+        it: 'Nessuna azione sulla coppia'
+        pl: 'Brak działania na moment obrotowy'
+        ru: 'Нет воздействия на крутящий момент'
+        zh: '对扭矩无操作'
+        hu: 'Nincs beavatkozás a nyomatékba'
+        pt: 'Sem ação sobre o binário'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        en: 'Reduction request (ASR)'
+        fr: 'Consigne de réduction (ASR)'
+        es: 'Consigna de reducción (ASR)'
+        de: 'Reduktionsanforderung (ASR)'
+        it: 'Richiesta di riduzione (ASR)'
+        pl: 'Żądanie redukcji (ASR)'
+        ru: 'Запрос снижения (ASR)'
+        zh: '降低请求(ASR)'
+        hu: 'Csökkentési kérés (ASR)'
+        pt: 'Consigna de redução (ASR)'
+      0x06:
+        en: 'Increase setpoint (MSR)'
+        fr: 'Consigne d''augmentation (MSR)'
+        es: 'Consigna de aumento (MSR)'
+        de: 'Erhöhungssollwert (MSR)'
+        it: 'Setpoint di aumento (MSR)'
+        pl: 'Wartość zadana zwiększenia (MSR)'
+        ru: 'Уставка увеличения (MSR)'
+        zh: '增加设定值（MSR）'
+        hu: 'Növelési beállított érték (MSR)'
+        pt: 'Consigna de aumento (MSR)'
+      0x07:
+        unused: true
+
+  FRONT_REAR_TORQUE_SPLIT_FREEZE_REQUEST:
+    bits: '3.3'
+    comment:
+      en: 'Request to freeze the static front-rear torque split'
+      fr: 'Demande de figeage de la répartition statique de couple avant-arrière'
+      es: 'Solicitud de congelación del reparto estático de par delantero-trasero'
+      de: 'Anforderung zum Einfrieren der statischen Vorne-Hinten-Drehmomentverteilung'
+      it: 'Richiesta di blocco della ripartizione statica di coppia anteriore-posteriore'
+      pl: 'Żądanie zamrożenia statycznego podziału momentu przód-tył'
+      ru: 'Запрос фиксации статического распределения момента спереди-сзади'
+      zh: '请求锁定前后静态扭矩分配'
+      hu: 'Az első-hátsó statikus nyomatékelosztás lefagyasztásának kérése'
+      pt: 'Pedido de congelamento da repartição estática de binário dianteiro-traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Freeze requested'
+        fr: 'Demande de figeage'
+        es: 'Solicitud de congelación'
+        de: 'Anforderung Einfrieren'
+        it: 'Richiesta di congelamento'
+        pl: 'Żądanie zamrożenia'
+        ru: 'Запрос фиксации'
+        zh: '请求冻结'
+        hu: 'Rögzítési kérés'
+        pt: 'Pedido de congelamento'
+
+  REAR_DECOUPLING_REQUEST:
+    bits: '3.2'
+    comment:
+      en: 'Rear coupling opening (decoupling) request'
+      fr: 'Demande d''ouverture (découplage) du couplage arrière'
+      es: 'Solicitud de apertura (desacoplamiento) del acoplamiento trasero'
+      de: 'Anforderung zum Öffnen (Entkoppeln) der hinteren Kupplung'
+      it: 'Richiesta di apertura (disaccoppiamento) dell''accoppiamento posteriore'
+      pl: 'Żądanie otwarcia (rozłączenia) sprzężenia tylnego'
+      ru: 'Запрос размыкания (расцепления) заднего сцепления'
+      zh: '请求断开(解耦)后耦合'
+      hu: 'A hátsó kapcsolat nyitásának (leválasztásának) kérése'
+      pt: 'Pedido de abertura (desacoplamento) do acoplamento traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Opening requested'
+        fr: 'Demande d''ouverture'
+        es: 'Apertura solicitada'
+        de: 'Öffnen angefordert'
+        it: 'Apertura richiesta'
+        pl: 'Żądanie otwarcia'
+        ru: 'Запрошено открытие'
+        zh: '请求开启'
+        hu: 'Nyitás kérve'
+        pt: 'Abertura pedida'
+
+  REAR_COUPLING_FREEZE_REQUEST:
+    bits: '3.1'
+    comment:
+      en: 'Request to freeze the rear coupling state'
+      fr: 'Demande de figeage de l''état de couplage arrière'
+      es: 'Solicitud de congelación del estado de acoplamiento trasero'
+      de: 'Anforderung zum Einfrieren des hinteren Kopplungszustands'
+      it: 'Richiesta di blocco dello stato di accoppiamento posteriore'
+      pl: 'Żądanie zamrożenia stanu sprzężenia tylnego'
+      ru: 'Запрос фиксации состояния заднего сцепления'
+      zh: '请求锁定后耦合状态'
+      hu: 'A hátsó kapcsolási állapot lefagyasztásának kérése'
+      pt: 'Pedido de congelamento do estado de acoplamento traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Freeze requested'
+        fr: 'Demande de figeage'
+        es: 'Solicitud de congelación'
+        de: 'Anforderung Einfrieren'
+        it: 'Richiesta di congelamento'
+        pl: 'Żądanie zamrożenia'
+        ru: 'Запрос фиксации'
+        zh: '请求冻结'
+        hu: 'Rögzítési kérés'
+        pt: 'Pedido de congelamento'
+
+  REAR_EMACHINE_TORQUE_SAFETY_DISABLE:
+    bits: '3.0'
+    comment:
+      en: 'Safety flag to disable the rear electric machine torque'
+      fr: 'Drapeau de sécurité d''inhibition du couple de la machine électrique arrière'
+      es: 'Indicador de seguridad para desactivar el par de la máquina eléctrica trasera'
+      de: 'Sicherheitsflag zur Deaktivierung des Drehmoments der hinteren E-Maschine'
+      it: 'Flag di sicurezza per disattivare la coppia della macchina elettrica posteriore'
+      pl: 'Flaga bezpieczeństwa wyłączająca moment obrotowy tylnej maszyny elektrycznej'
+      ru: 'Флаг безопасности для отключения момента задней электромашины'
+      zh: '用于禁用后电机扭矩的安全标志'
+      hu: 'A hátsó elektromos gép nyomatékának biztonsági letiltó jelzője'
+      pt: 'Indicador de segurança de inibição do binário da máquina elétrica traseira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Rear torque disable requested'
+        fr: 'Inhibition de couple arrière demandée'
+        es: 'Inhibición de par trasero solicitada'
+        de: 'Deaktivierung des Hinterachsdrehmoments angefordert'
+        it: 'Inibizione della coppia posteriore richiesta'
+        pl: 'Żądane wyłączenie momentu tylnego'
+        ru: 'Запрошено отключение заднего крутящего момента'
+        zh: '请求禁用后部扭矩'
+        hu: 'Hátsó nyomaték letiltása kérve'
+        pt: 'Pedido de desativação de binário traseiro'
+
+  FRAME_CHECKSUM:
+    bits: '4.7-4.4'
+    comment:
+      en: '4-bit frame checksum (init value 0x3)'
+      fr: 'Somme de contrôle de trame sur 4 bits (valeur initiale 0x3)'
+      es: 'Suma de comprobación de trama de 4 bits (valor inicial 0x3)'
+      de: '4-Bit-Frame-Prüfsumme (Anfangswert 0x3)'
+      it: 'Checksum del frame a 4 bit (valore iniziale 0x3)'
+      pl: '4-bitowa suma kontrolna ramki (wartość początkowa 0x3)'
+      ru: '4-битная контрольная сумма кадра (начальное значение 0x3)'
+      zh: '4位帧校验和(初始值0x3)'
+      hu: '4 bites keret-ellenőrzőösszeg (kezdőérték 0x3)'
+      pt: 'Soma de verificação de trama de 4 bits (valor inicial 0x3)'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '4.3-4.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process sur 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  VEHICLE_SPEED_FOR_EBB:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Vehicle speed used by the EBB (electronic brake booster)'
+      fr: 'Vitesse véhicule utilisée par l''EBB (amplificateur de freinage électronique)'
+      es: 'Velocidad del vehículo utilizada por el EBB (servofreno electrónico)'
+      de: 'Vom EBB (elektronischer Bremskraftverstärker) verwendete Fahrzeuggeschwindigkeit'
+      it: 'Velocità del veicolo utilizzata dall''EBB (servofreno elettronico)'
+      pl: 'Prędkość pojazdu wykorzystywana przez EBB (elektroniczny wspomagacz hamowania)'
+      ru: 'Скорость автомобиля, используемая EBB (электронным усилителем тормозов)'
+      zh: 'EBB(电子制动助力器)使用的车速'
+      hu: 'Az EBB (elektronikus fékrásegítő) által használt járműsebesség'
+      pt: 'Velocidade do veículo utilizada pelo EBB (servofreio eletrónico)'
+    type: 'uint'
+    factor: 0.392
+    min: 0
+    max: 99.176
+    invalid: 0xFF
+    default: 0xFE
+
+  DRIVER_BRAKE_TORQUE_REQUEST:
+    bits: '6.7-6.1'
+    comment:
+      en: 'Braking torque requested by the driver'
+      fr: 'Couple de freinage demandé par le conducteur'
+      es: 'Par de frenado solicitado por el conductor'
+      de: 'Vom Fahrer angefordertes Bremsmoment'
+      it: 'Coppia frenante richiesta dal conducente'
+      pl: 'Moment hamowania żądany przez kierowcę'
+      ru: 'Тормозной момент, запрошенный водителем'
+      zh: '驾驶员请求的制动扭矩'
+      hu: 'A vezető által kért fékezőnyomaték'
+      pt: 'Binário de travagem solicitado pelo condutor'
+    type: 'uint'
+    factor: 20
+    offset: -2500
+    min: -2500
+    max: 0
+    units: 'Nm'
+    invalid: 0x7F
+    default: 0x7D
+
+  UNUSED_1:
+    bits: '6.0'
+    unused: true
+
+  REAR_WHEELS_SPEED:
+    bits: '7.7-8.0'
+    comment:
+      en: 'Average rear wheel rotation speed'
+      fr: 'Vitesse moyenne de rotation des roues arrière'
+      es: 'Velocidad media de rotación de las ruedas traseras'
+      de: 'Mittlere Drehzahl der Hinterräder'
+      it: 'Velocità media di rotazione delle ruote posteriori'
+      pl: 'Średnia prędkość obrotowa tylnych kół'
+      ru: 'Средняя частота вращения задних колёс'
+      zh: '后轮平均转速'
+      hu: 'A hátsó kerekek átlagos forgási sebessége'
+      pt: 'Velocidade média de rotação das rodas traseiras'
+    type: 'uint'
+    factor: 0.04
+    min: 0
+    max: 2621
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0xFFFE

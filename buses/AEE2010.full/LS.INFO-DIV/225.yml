@@ -1,0 +1,820 @@
+id: 0x225
+name: 'RADIO_STATUS_TUNER'
+type: 'can'
+length: 6
+comment:
+  en: 'Tuner status: bank/preset number, search direction, frequency, PTY list validity/content, manual tuning and search state.'
+  fr: 'État du tuner : numéro de banque/préréglage, sens de recherche, fréquence, validité/contenu de la liste PTY, syntonisation manuelle et état de recherche.'
+  es: 'Estado del sintonizador: número de banco/preajuste, sentido de búsqueda, frecuencia, validez/contenido de la lista PTY, sintonización manual y estado de búsqueda.'
+  de: 'Tuner-Status: Bank-/Presetnummer, Suchrichtung, Frequenz, Gültigkeit/Inhalt der PTY-Liste, manuelle Abstimmung und Suchstatus.'
+  it: 'Stato del sintonizzatore: numero di banco/preset, direzione di ricerca, frequenza, validità/contenuto dell''elenco PTY, sintonizzazione manuale e stato di ricerca.'
+  pl: 'Stan tunera: numer banku/ustawienia zaprogramowanego, kierunek wyszukiwania, częstotliwość, ważność/zawartość listy PTY, strojenie ręczne i stan wyszukiwania.'
+  ru: 'Статус тюнера: номер банка/предустановки, направление поиска, частота, достоверность/содержимое списка PTY, ручная настройка и статус поиска.'
+  zh: '调谐器状态:波段/预设编号、搜索方向、频率、PTY列表有效性/内容、手动调谐及搜索状态。'
+  hu: 'A tuner állapota: bank/előre beállított szám, keresési irány, frekvencia, PTY-lista érvényessége/tartalma, manuális hangolás és keresési állapot.'
+  pt: 'Estado do sintonizador: banco/número de predefinição, sentido de procura, frequência, validade/conteúdo da lista PTY, sintonização manual e estado de procura.'
+observations:
+  en: 'On state change of: SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+  fr: 'Sur changement d''état de : SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+  es: 'Al cambiar el estado de: SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+  de: 'Bei Statusänderung von: SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+  it: 'Al cambiamento di stato di: SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+  pl: 'Wysyłane przy zmianie stanu: SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+  ru: 'При изменении состояния: SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+  zh: '当SRCH_TUN, CURRENT_MEMORY, BAND, FREQUENCY, NIV_TUN状态变化时'
+  hu: 'A(z) SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL állapotváltozásakor'
+  pt: 'Na mudança de estado de: SEARCH_STATUS, CURRENT_MEMORY, BAND, FREQUENCY, TUNER_LEVEL'
+periodicity: ['500ms', 'trigger']
+senders: ['RAD', 'ICSV']
+receivers: ['CRT', 'FMUX', 'EMF']
+
+signals:
+  SEARCH_STATUS:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Station research ordering'
+      fr: 'Commande de recherche de station'
+      es: 'Orden de búsqueda de emisoras'
+      de: 'Befehl zur Sendersuche'
+      it: 'Comando di ricerca stazioni'
+      pl: 'Polecenie wyszukiwania stacji'
+      ru: 'Команда поиска станций'
+      zh: '电台搜索指令'
+      hu: 'Állomáskeresési parancs'
+      pt: 'Comando de procura de estação'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Idle (listening)'
+        fr: 'Repos (écoute)'
+        es: 'Reposo (escucha)'
+        de: 'Ruhe (Zuhören)'
+        it: 'Riposo (ascolto)'
+        pl: 'Spoczynek (nasłuch)'
+        ru: 'Ожидание (прослушивание)'
+        zh: '空闲(监听)'
+        hu: 'Nyugalmi (figyelés)'
+        pt: 'Inativo (a ouvir)'
+      0x01:
+        en: 'Manual frequency search'
+        fr: 'Recherche manuelle de fréquence'
+        es: 'Búsqueda manual de frecuencia'
+        de: 'Manuelle Frequenzsuche'
+        it: 'Ricerca manuale della frequenza'
+        pl: 'Ręczne wyszukiwanie częstotliwości'
+        ru: 'Ручной поиск частоты'
+        zh: '手动搜索频率'
+        hu: 'Kézi frekvenciakeresés'
+        pt: 'Procura manual de frequência'
+      0x02:
+        en: 'Automatic frequency search'
+        fr: 'Recherche automatique de fréquence'
+        es: 'Búsqueda automática de frecuencia'
+        de: 'Automatische Frequenzsuche'
+        it: 'Ricerca automatica della frequenza'
+        pl: 'Automatyczne wyszukiwanie częstotliwości'
+        ru: 'Автоматический поиск частоты'
+        zh: '自动频率搜索'
+        hu: 'Automatikus frekvenciakeresés'
+        pt: 'Procura automática de frequência'
+      0x03:
+        en: 'Station list update'
+        fr: 'Mise à jour de la liste des stations'
+        es: 'Actualización de la lista de emisoras'
+        de: 'Aktualisierung der Senderliste'
+        it: 'Aggiornamento dell''elenco delle stazioni'
+        pl: 'Aktualizacja listy stacji'
+        ru: 'Обновление списка радиостанций'
+        zh: '电台列表更新'
+        hu: 'Állomáslista frissítése'
+        pt: 'Atualização da lista de estações'
+      0x04:
+        en: 'TA announcement switch'
+        fr: 'Basculement annonce TA'
+        es: 'Conmutación de anuncio TA'
+        de: 'Umschaltung TA-Durchsage'
+        it: 'Commutazione annuncio TA'
+        pl: 'Przełączenie zapowiedzi TA'
+        ru: 'Переключение сообщения TA'
+        zh: 'TA播报切换'
+        hu: 'TA bemondás váltás'
+        pt: 'Comutador de anúncio TA'
+      0x05:
+        en: 'AF switch'
+        fr: 'Basculement AF'
+        es: 'Conmutación AF'
+        de: 'AF-Umschaltung'
+        it: 'Commutazione AF'
+        pl: 'Przełączenie AF'
+        ru: 'Переключение AF'
+        zh: 'AF 切换'
+        hu: 'AF váltás'
+        pt: 'Comutador AF'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        en: 'Frequency scan'
+        fr: 'Exploration de fréquence'
+        es: 'Exploración de frecuencia'
+        de: 'Frequenzabtastung'
+        it: 'Scansione di frequenza'
+        pl: 'Skanowanie częstotliwości'
+        ru: 'Сканирование частоты'
+        zh: '频率扫描'
+        hu: 'Frekvenciapásztázás'
+        pt: 'Procura de frequência'
+      0x09:
+        en: 'Memory recall'
+        fr: 'Rappel mémoire'
+        es: 'Recuperación de memoria'
+        de: 'Speicherabruf'
+        it: 'Richiamo memoria'
+        pl: 'Przywołanie pamięci'
+        ru: 'Вызов из памяти'
+        zh: '记忆位置调用'
+        hu: 'Memóriahívás'
+        pt: 'Recuperação de memória'
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'No station found'
+        fr: 'Pas de station trouvée'
+        es: 'No se encontró emisora'
+        de: 'Kein Sender gefunden'
+        it: 'Nessuna stazione trovata'
+        pl: 'Nie znaleziono stacji'
+        ru: 'Станция не найдена'
+        zh: '未找到电台'
+        hu: 'Nem található állomás'
+        pt: 'Nenhuma estação encontrada'
+
+  CURRENT_MEMORY:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Number of active memory'
+      fr: 'Numéro de la mémoire active'
+      es: 'Número de memoria activa'
+      de: 'Nummer des aktiven Speichers'
+      it: 'Numero della memoria attiva'
+      pl: 'Numer aktywnej pamięci'
+      ru: 'Номер активной памяти'
+      zh: '当前存储编号'
+      hu: 'Az aktív tárhely száma'
+      pt: 'Número da memória ativa'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  BAND:
+    bits: '2.7-2.5'
+    comment:
+      en: 'Selected memory bank'
+      fr: 'Banque mémoire choisie'
+      es: 'Banco de memoria seleccionado'
+      de: 'Ausgewählte Speicherbank'
+      it: 'Banco di memoria selezionato'
+      pl: 'Wybrany bank pamięci'
+      ru: 'Выбранный банк памяти'
+      zh: '已选存储频段'
+      hu: 'Kiválasztott tárbank'
+      pt: 'Banco de memória escolhido'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'Undetermined'
+        fr: 'Indéterminé'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未确定'
+        hu: 'Meghatározatlan'
+        pt: 'Indeterminado'
+      0x01:
+        en: 'FM1'
+        fr: 'FM1'
+        es: 'FM1'
+        de: 'FM1'
+        it: 'FM1'
+        pl: 'FM1'
+        ru: 'FM1'
+        zh: 'FM1'
+        hu: 'FM1'
+        pt: 'FM1'
+      0x02:
+        en: 'FM2'
+        fr: 'FM2'
+        es: 'FM2'
+        de: 'FM2'
+        it: 'FM2'
+        pl: 'FM2'
+        ru: 'FM2'
+        zh: 'FM2'
+        hu: 'FM2'
+        pt: 'FM2'
+      0x03:
+        en: 'DAB'
+        fr: 'DAB'
+        es: 'DAB'
+        de: 'DAB'
+        it: 'DAB'
+        pl: 'DAB'
+        ru: 'DAB'
+        zh: 'DAB数字广播'
+        hu: 'DAB'
+        pt: 'DAB'
+      0x04:
+        en: 'FM autostore'
+        fr: 'FM autostore'
+        es: 'FM autostore'
+        de: 'FM autostore'
+        it: 'FM autostore'
+        pl: 'FM autostore'
+        ru: 'FM autostore'
+        zh: 'FM autostore'
+        hu: 'FM autostore'
+        pt: 'FM autostore'
+      0x05:
+        en: 'MW (AM)'
+        fr: 'MW (AM)'
+        es: 'OM (AM)'
+        de: 'MW (AM)'
+        it: 'MW (AM)'
+        pl: 'MW (AM)'
+        ru: 'СВ (AM)'
+        zh: '中波（AM）'
+        hu: 'KH (AM)'
+        pt: 'OM (AM)'
+      0x06:
+        en: 'LW (AM)'
+        fr: 'LW (AM)'
+        es: 'LW (AM)'
+        de: 'LW (AM)'
+        it: 'LW (AM)'
+        pl: 'LW (AM)'
+        ru: 'LW (AM)'
+        zh: 'LW (AM)'
+        hu: 'LW (AM)'
+        pt: 'LW (AM)'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_1:
+    bits: '2.4-2.3'
+    unused: true
+
+  FREQUENCY:
+    bits: '2.2-3.0'
+    comment:
+      en: 'Controlling the number of steps in relation to the starting frequency'
+      fr: 'Commande du nombre de pas par rapport à la fréquence de base'
+      es: 'Mando del número de pasos respecto a la frecuencia base'
+      de: 'Steuerung der Schrittanzahl bezogen auf die Basisfrequenz'
+      it: 'Comando del numero di passi rispetto alla frequenza di base'
+      pl: 'Sterowanie liczbą kroków względem częstotliwości bazowej'
+      ru: 'Управление числом шагов относительно базовой частоты'
+      zh: '相对于基础频率的步进数控制'
+      hu: 'A lépésszám vezérlése az alapfrekvenciához képest'
+      pt: 'Controlo do número de passos em relação à frequência inicial'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2045
+    units: 'frequency step'
+    invalid: 0x7FF
+    default: 0x7FF
+
+  TUNER_LEVEL:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Tuner level'
+      fr: 'Niveau tuner'
+      es: 'Nivel del sintonizador'
+      de: 'Tunerpegel'
+      it: 'Livello del sintonizzatore'
+      pl: 'Poziom tunera'
+      ru: 'Уровень тюнера'
+      zh: '调谐器电平'
+      hu: 'Tuner szintje'
+      pt: 'Nível do sintonizador'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  AUDIO_STREAM_BITRATE:
+    bits: '5.7-5.4'
+    comment:
+      en: 'Audio stream rate'
+      fr: 'Débit du flux audio'
+      es: 'Velocidad del flujo de audio'
+      de: 'Bitrate des Audiostreams'
+      it: 'Bitrate del flusso audio'
+      pl: 'Przepływność strumienia audio'
+      ru: 'Скорость аудиопотока'
+      zh: '音频流速率'
+      hu: 'A hangfolyam bitrátája'
+      pt: 'Taxa do fluxo áudio'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: '32 kbps'
+        fr: '32 kbit/s'
+        es: '32 kbps'
+        de: '32 kbit/s'
+        it: '32 kbps'
+        pl: '32 kb/s'
+        ru: '32 кбит/с'
+        zh: '32 kbps'
+        hu: '32 kbps'
+        pt: '32 kbps'
+      0x02:
+        en: '48 kbps'
+        fr: '48 kbit/s'
+        es: '48 kbit/s'
+        de: '48 kbit/s'
+        it: '48 kbit/s'
+        pl: '48 kbit/s'
+        ru: '48 кбит/с'
+        zh: '48 kbps'
+        hu: '48 kbit/s'
+        pt: '48 kbit/s'
+      0x03:
+        en: '56 kbps'
+        fr: '56 kbps'
+        es: '56 kbps'
+        de: '56 kbps'
+        it: '56 kbps'
+        pl: '56 kbps'
+        ru: '56 кбит/с'
+        zh: '56 kbps'
+        hu: '56 kbps'
+        pt: '56 kbps'
+      0x04:
+        en: '64 kbps'
+        fr: '64 kbit/s'
+        es: '64 kbit/s'
+        de: '64 kbit/s'
+        it: '64 kbit/s'
+        pl: '64 kb/s'
+        ru: '64 кбит/с'
+        zh: '64 kbps'
+        hu: '64 kbit/s'
+        pt: '64 kbit/s'
+      0x05:
+        en: '80 kbps'
+        fr: '80 kbps'
+        es: '80 kbps'
+        de: '80 kbps'
+        it: '80 kbps'
+        pl: '80 kb/s'
+        ru: '80 кбит/с'
+        zh: '80 kbps'
+        hu: '80 kbps'
+        pt: '80 kbps'
+      0x06:
+        en: '96 kbps'
+        fr: '96 kbit/s'
+        es: '96 kbps'
+        de: '96 kbit/s'
+        it: '96 kbps'
+        pl: '96 kb/s'
+        ru: '96 кбит/с'
+        zh: '96 kbps'
+        hu: '96 kbps'
+        pt: '96 kbit/s'
+      0x07:
+        en: '112 kbps'
+        fr: '112 kbit/s'
+        es: '112 kbit/s'
+        de: '112 kbit/s'
+        it: '112 kbit/s'
+        pl: '112 kb/s'
+        ru: '112 кбит/с'
+        zh: '112 kbps'
+        hu: '112 kbit/s'
+        pt: '112 kbit/s'
+      0x08:
+        en: '128 kbps'
+        fr: '128 kbit/s'
+        es: '128 kbps'
+        de: '128 kbit/s'
+        it: '128 kbps'
+        pl: '128 kb/s'
+        ru: '128 кбит/с'
+        zh: '128 kbps'
+        hu: '128 kbps'
+        pt: '128 kbps'
+      0x09:
+        en: '160 kbps'
+        fr: '160 kbit/s'
+        es: '160 kbps'
+        de: '160 kbit/s'
+        it: '160 kbps'
+        pl: '160 kb/s'
+        ru: '160 кбит/с'
+        zh: '160 kbps'
+        hu: '160 kbps'
+        pt: '160 kbps'
+      0x0A:
+        en: '192 kbps'
+        fr: '192 kbit/s'
+        es: '192 kbps'
+        de: '192 kbit/s'
+        it: '192 kbps'
+        pl: '192 kb/s'
+        ru: '192 кбит/с'
+        zh: '192 kbps'
+        hu: '192 kbps'
+        pt: '192 kbps'
+      0x0B:
+        en: '224 kbps'
+        fr: '224 kbps'
+        es: '224 kbps'
+        de: '224 kbit/s'
+        it: '224 kbps'
+        pl: '224 kb/s'
+        ru: '224 кбит/с'
+        zh: '224 kbps'
+        hu: '224 kbps'
+        pt: '224 kbps'
+      0x0C:
+        en: '256 kbps'
+        fr: '256 kbps'
+        es: '256 kbps'
+        de: '256 kbps'
+        it: '256 kbps'
+        pl: '256 kbps'
+        ru: '256 кбит/с'
+        zh: '256 kbps'
+        hu: '256 kbps'
+        pt: '256 kbps'
+      0x0D:
+        en: '320 kbps'
+        fr: '320 kbit/s'
+        es: '320 kbit/s'
+        de: '320 kbit/s'
+        it: '320 kbit/s'
+        pl: '320 kb/s'
+        ru: '320 кбит/с'
+        zh: '320 kbps'
+        hu: '320 kb/s'
+        pt: '320 kbps'
+      0x0E:
+        en: '384 kbps'
+        fr: '384 kbps'
+        es: '384 kbps'
+        de: '384 kbps'
+        it: '384 kbps'
+        pl: '384 kb/s'
+        ru: '384 кбит/с'
+        zh: '384 kbps'
+        hu: '384 kbps'
+        pt: '384 kbps'
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  STEREO_TYPE:
+    bits: '5.3-5.1'
+    comment:
+      en: 'Type of stereo'
+      fr: 'Type de stéréo'
+      es: 'Tipo de estéreo'
+      de: 'Stereo-Typ'
+      it: 'Tipo di stereo'
+      pl: 'Typ stereo'
+      ru: 'Тип стерео'
+      zh: '立体声类型'
+      hu: 'Sztereó típusa'
+      pt: 'Tipo de estéreo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Mono'
+        fr: 'Mono'
+        es: 'Mono'
+        de: 'Mono'
+        it: 'Mono'
+        pl: 'Mono'
+        ru: 'Моно'
+        zh: '单声道'
+        hu: 'Mono'
+        pt: 'Mono'
+      0x02:
+        en: 'Stereo'
+        fr: 'Stéréo'
+        es: 'Estéreo'
+        de: 'Stereo'
+        it: 'Stereo'
+        pl: 'Stereo'
+        ru: 'Стерео'
+        zh: '立体声'
+        hu: 'Sztereó'
+        pt: 'Estéreo'
+      0x03:
+        en: 'Joint stereo'
+        fr: 'Stéréo jointe'
+        es: 'Estéreo conjunto'
+        de: 'Joint-Stereo'
+        it: 'Stereo congiunto'
+        pl: 'Stereo łączone (joint stereo)'
+        ru: 'Совместное стерео (joint stereo)'
+        zh: '联合立体声'
+        hu: 'Egyesített sztereó (joint stereo)'
+        pt: 'Estéreo conjunto'
+      0x04:
+        en: 'Dual channel: 1'
+        fr: 'Double canal : 1'
+        es: 'Doble canal: 1'
+        de: 'Doppelkanal: 1'
+        it: 'Doppio canale: 1'
+        pl: 'Podwójny kanał: 1'
+        ru: 'Двойной канал: 1'
+        zh: '双通道:1'
+        hu: 'Kettős csatorna: 1'
+        pt: 'Canal duplo: 1'
+      0x05:
+        en: 'Double channel: 2'
+        fr: 'Double canal : 2'
+        es: 'Doble canal: 2'
+        de: 'Doppelkanal: 2'
+        it: 'Doppio canale: 2'
+        pl: 'Podwójny kanał: 2'
+        ru: 'Двойной канал: 2'
+        zh: '双通道：2'
+        hu: 'Kettős csatorna: 2'
+        pt: 'Canal duplo: 2'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_2:
+    bits: '5.0'
+    unused: true
+
+  ENCODING_FORMAT:
+    bits: '6.7-6.4'
+    comment:
+      en: 'Encoding format'
+      fr: 'Format de l''encodage'
+      es: 'Formato de codificación'
+      de: 'Kodierungsformat'
+      it: 'Formato di codifica'
+      pl: 'Format kodowania'
+      ru: 'Формат кодирования'
+      zh: '编码格式'
+      hu: 'Kódolási formátum'
+      pt: 'Formato de codificação'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'MPEG1 layer II'
+        fr: 'MPEG1 layer II'
+        es: 'MPEG1 layer II'
+        de: 'MPEG1 layer II'
+        it: 'MPEG1 layer II'
+        pl: 'MPEG1 layer II'
+        ru: 'MPEG1 layer II'
+        zh: 'MPEG1 layer II'
+        hu: 'MPEG1 layer II'
+        pt: 'MPEG1 layer II'
+      0x02:
+        en: 'MPEG2 ACC'
+        fr: 'MPEG2 ACC'
+        es: 'MPEG2 ACC'
+        de: 'MPEG2 ACC'
+        it: 'MPEG2 ACC'
+        pl: 'MPEG2 ACC'
+        ru: 'MPEG2 ACC'
+        zh: 'MPEG2 ACC'
+        hu: 'MPEG2 ACC'
+        pt: 'MPEG2 ACC'
+      0x03:
+        en: 'MPEG4 ACC+'
+        fr: 'MPEG4 ACC+'
+        es: 'MPEG4 ACC+'
+        de: 'MPEG4 ACC+'
+        it: 'MPEG4 ACC+'
+        pl: 'MPEG4 ACC+'
+        ru: 'MPEG4 ACC+'
+        zh: 'MPEG4 ACC+'
+        hu: 'MPEG4 ACC+'
+        pt: 'MPEG4 ACC+'
+      0x04:
+        en: 'MPEG4 ER-BSAC'
+        fr: 'MPEG4 ER-BSAC'
+        es: 'MPEG4 ER-BSAC'
+        de: 'MPEG4 ER-BSAC'
+        it: 'MPEG4 ER-BSAC'
+        pl: 'MPEG4 ER-BSAC'
+        ru: 'MPEG4 ER-BSAC'
+        zh: 'MPEG4 ER-BSAC'
+        hu: 'MPEG4 ER-BSAC'
+        pt: 'MPEG4 ER-BSAC'
+      0x05:
+        en: 'MPEG4 CELP'
+        fr: 'MPEG4 CELP'
+        es: 'MPEG4 CELP'
+        de: 'MPEG4 CELP'
+        it: 'MPEG4 CELP'
+        pl: 'MPEG4 CELP'
+        ru: 'MPEG4 CELP'
+        zh: 'MPEG4 CELP'
+        hu: 'MPEG4 CELP'
+        pt: 'MPEG4 CELP'
+      0x06:
+        en: 'MPEG4 HVX C'
+        fr: 'MPEG4 HVX C'
+        es: 'MPEG4 HVX C'
+        de: 'MPEG4 HVX C'
+        it: 'MPEG4 HVX C'
+        pl: 'MPEG4 HVX C'
+        ru: 'MPEG4 HVX C'
+        zh: 'MPEG4 HVX C'
+        hu: 'MPEG4 HVX C'
+        pt: 'MPEG4 HVX C'
+      0x07:
+        en: 'SBR / PS-SBR'
+        fr: 'SBR / PS-SBR'
+        es: 'SBR / PS-SBR'
+        de: 'SBR / PS-SBR'
+        it: 'SBR / PS-SBR'
+        pl: 'SBR / PS-SBR'
+        ru: 'SBR / PS-SBR'
+        zh: 'SBR / PS-SBR'
+        hu: 'SBR / PS-SBR'
+        pt: 'SBR / PS-SBR'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  STATION_MEMORIZATION_STATUS:
+    bits: '6.3-6.2'
+    comment:
+      en: 'Radio station memorization status'
+      fr: 'État de la station radio mémorisée'
+      es: 'Estado de memorización de la emisora de radio'
+      de: 'Speicherstatus des Radiosenders'
+      it: 'Stato di memorizzazione della stazione radio'
+      pl: 'Stan zapisu stacji radiowej'
+      ru: 'Состояние сохранения радиостанции'
+      zh: '电台存储状态'
+      hu: 'A rádióállomás tárolási állapota'
+      pt: 'Estado da estação de rádio memorizada'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not active'
+        fr: 'Non actif'
+        es: 'No activo'
+        de: 'Nicht aktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Nem aktív'
+        pt: 'Não ativo'
+      0x01:
+        en: 'In progress'
+        fr: 'En cours'
+        es: 'En curso'
+        de: 'Läuft'
+        it: 'In corso'
+        pl: 'W toku'
+        ru: 'Выполняется'
+        zh: '进行中'
+        hu: 'Folyamatban'
+        pt: 'Em curso'
+      0x02:
+        en: 'Validate'
+        fr: 'Valider'
+        es: 'Validar'
+        de: 'Bestätigen'
+        it: 'Convalida'
+        pl: 'Zatwierdź'
+        ru: 'Подтвердить'
+        zh: '确认'
+        hu: 'Jóváhagyás'
+        pt: 'Validar'
+      0x03:
+        unused: true
+
+  LIST_STATUS:
+    bits: '6.1'
+    comment:
+      en: 'list status'
+      fr: 'list status'
+      es: 'Estado de la lista'
+      de: 'Listenstatus'
+      it: 'Stato dell''elenco'
+      pl: 'Stan listy'
+      ru: 'Состояние списка'
+      zh: '列表状态'
+      hu: 'Lista állapota'
+      pt: 'Estado da lista'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not active'
+        fr: 'Non actif'
+        es: 'No activo'
+        de: 'Nicht aktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Nem aktív'
+        pt: 'Não ativo'
+      0x01:
+        en: 'In progress'
+        fr: 'En cours'
+        es: 'En curso'
+        de: 'Läuft'
+        it: 'In corso'
+        pl: 'W toku'
+        ru: 'Выполняется'
+        zh: '进行中'
+        hu: 'Folyamatban'
+        pt: 'Em curso'
+
+  UNUSED_3:
+    bits: '6.0'
+    unused: true

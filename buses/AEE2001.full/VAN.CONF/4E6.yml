@@ -1,0 +1,375 @@
+id: 0x4E6
+name: 'TRIP_COMPUTER_UNIT_STATUS'
+type: 'van'
+length: 4
+comment:
+  en: 'Keypad and settings state of the optional trip-computer keypad/display unit, polled by the instrument cluster.'
+  fr: 'État du clavier et des réglages du boîtier optionnel ordinateur de bord/écran, interrogé par le combiné.'
+  es: 'Estado del teclado y de los ajustes de la unidad opcional de teclado/pantalla del ordenador de a bordo, consultada por el cuadro de instrumentos.'
+  de: 'Tastatur- und Einstellungsstatus der optionalen Bordcomputer-Tastatur-/Anzeigeeinheit, vom Kombiinstrument abgefragt.'
+  it: 'Stato della tastiera e delle impostazioni dell''unità opzionale tastiera/display del computer di bordo, interrogata dal quadro strumenti.'
+  pl: 'Stan klawiatury i ustawień opcjonalnej jednostki klawiatury/wyświetlacza komputera pokładowego, odpytywanej przez zestaw wskaźników.'
+  ru: 'Состояние клавиатуры и настроек опционального блока клавиатуры/дисплея бортового компьютера, опрашиваемого комбинацией приборов.'
+  zh: '可选行车电脑按键/显示单元的按键及设置状态,由仪表组轮询。'
+  hu: 'Az opcionális fedélzeti számítógép billentyűzet/kijelző egységének billentyű- és beállításállapota, amelyet a műszeregység lekérdez.'
+  pt: 'Estado do teclado e das definições da unidade opcional de teclado/ecrã do computador de bordo, interrogada pelo quadrante.'
+periodicity: ['50ms']
+senders: ['BCD']
+receivers: ['CMB']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['CMB']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '2.7-2.6'
+    unused: true
+
+  IMPERIAL_UNITS_SELECTED:
+    bits: '2.5'
+    comment:
+      en: 'Display units chosen by the user (metric or imperial)'
+      fr: 'Unités d''affichage choisies par l''utilisateur (métriques ou impériales)'
+      es: 'Unidades de visualización elegidas por el usuario (métricas o imperiales)'
+      de: 'Vom Benutzer gewählte Anzeigeeinheiten (metrisch oder imperial)'
+      it: 'Unità di visualizzazione scelte dall''utente (metriche o imperiali)'
+      pl: 'Jednostki wyświetlania wybrane przez użytkownika (metryczne lub anglosaskie)'
+      ru: 'Единицы отображения, выбранные пользователем (метрические или британские)'
+      zh: '用户选择的显示单位(公制或英制)'
+      hu: 'A felhasználó által választott megjelenítési mértékegység (metrikus vagy angolszász)'
+      pt: 'Unidades de visualização escolhidas pelo utilizador (métricas ou imperiais)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'km and litres'
+        fr: 'km et litres'
+        es: 'km y litros'
+        de: 'km und Liter'
+        it: 'km e litri'
+        pl: 'km i litry'
+        ru: 'км и литры'
+        zh: '公里和升'
+        hu: 'km és liter'
+        pt: 'km e litros'
+      0x01:
+        en: 'Miles and gallons'
+        fr: 'Miles et gallons'
+        es: 'Millas y galones'
+        de: 'Meilen und Gallonen'
+        it: 'Miglia e galloni'
+        pl: 'Mile i galony'
+        ru: 'Мили и галлоны'
+        zh: '英里与加仑'
+        hu: 'Mérföld és gallon'
+        pt: 'Milhas e galões'
+
+  SERVICE_RESET_REQUEST:
+    bits: '2.4'
+    comment:
+      en: 'Service interval reset requested'
+      fr: 'Réinitialisation de la maintenance demandée'
+      es: 'Reinicio del mantenimiento solicitado'
+      de: 'Rücksetzung des Wartungsintervalls angefordert'
+      it: 'Richiesto il reset della manutenzione'
+      pl: 'Zażądano resetu przeglądu okresowego'
+      ru: 'Запрошен сброс интервала обслуживания'
+      zh: '请求重置保养提醒'
+      hu: 'Szervizidőköz visszaállítása kérve'
+      pt: 'Reinicialização da manutenção solicitada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandée'
+        es: 'No solicitada'
+        de: 'Nicht angefordert'
+        it: 'Non richiesta'
+        pl: 'Nie zażądano'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitada'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandée'
+        es: 'Solicitada'
+        de: 'Angefordert'
+        it: 'Richiesta'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitada'
+
+  BRIGHTNESS_LEVEL:
+    bits: '2.3-2.0'
+    comment:
+      en: 'BTO unit brightness level (0-15)'
+      fr: 'Niveau de luminosité de l''unité BTO (0-15)'
+      es: 'Nivel de brillo de la unidad BTO (0-15)'
+      de: 'Helligkeitsstufe der BTO-Einheit (0-15)'
+      it: 'Livello di luminosità dell''unità BTO (0-15)'
+      pl: 'Poziom jasności jednostki BTO (0-15)'
+      ru: 'Уровень яркости блока BTO (0-15)'
+      zh: 'BTO单元亮度等级(0-15)'
+      hu: 'A BTO egység fényerőszintje (0-15)'
+      pt: 'Nível de luminosidade da unidade BTO (0-15)'
+    type: 'enum'
+    default: 0x08
+    values:
+      0x00:
+        en: 'Minimum'
+        fr: 'Minimum'
+        es: 'Mínimo'
+        de: 'Minimum'
+        it: 'Minimo'
+        pl: 'Minimum'
+        ru: 'Минимум'
+        zh: '最小值'
+        hu: 'Minimum'
+        pt: 'Mínimo'
+      0x0F:
+        en: 'Maximum'
+        fr: 'Maximum'
+        es: 'Máximo'
+        de: 'Maximum'
+        it: 'Massimo'
+        pl: 'Maksimum'
+        ru: 'Максимум'
+        zh: '最大'
+        hu: 'Maximum'
+        pt: 'Máximo'
+
+  UNUSED_2:
+    bits: '3.7-3.5'
+    unused: true
+
+  BLACK_PANEL_KEY:
+    bits: '3.4'
+    comment:
+      en: 'Black-panel key pressed'
+      fr: 'Touche Black-Panel appuyée'
+      es: 'Botón de panel negro pulsado'
+      de: 'Black-Panel-Taste gedrückt'
+      it: 'Pulsante Black-Panel premuto'
+      pl: 'Naciśnięto przycisk Black-Panel'
+      ru: 'Нажата кнопка «чёрная панель»'
+      zh: '"黑屏(Black-Panel)"按键按下'
+      hu: 'Black-Panel gomb megnyomva'
+      pt: 'Tecla Black-Panel pressionada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  CHECK_KEY:
+    bits: '3.3'
+    comment:
+      en: 'Check key pressed'
+      fr: 'Touche Check appuyée'
+      es: 'Botón Check pulsado'
+      de: 'Check-Taste gedrückt'
+      it: 'Pulsante Check premuto'
+      pl: 'Naciśnięto przycisk Check'
+      ru: 'Нажата кнопка Check'
+      zh: 'Check按键按下'
+      hu: 'Check gomb megnyomva'
+      pt: 'Tecla Check pressionada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  MINUS_KEY:
+    bits: '3.2'
+    comment:
+      en: '''-'' key pressed'
+      fr: 'Touche « - » appuyée'
+      es: 'Botón «-» pulsado'
+      de: '„-“-Taste gedrückt'
+      it: 'Pulsante «-» premuto'
+      pl: 'Naciśnięto przycisk „-”'
+      ru: 'Нажата кнопка «-»'
+      zh: '"-"按键按下'
+      hu: '„-” gomb megnyomva'
+      pt: 'Tecla "-" pressionada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  PLUS_KEY:
+    bits: '3.1'
+    comment:
+      en: '''+'' key pressed'
+      fr: 'Touche « + » appuyée'
+      es: 'Botón «+» pulsado'
+      de: '„+“-Taste gedrückt'
+      it: 'Pulsante «+» premuto'
+      pl: 'Naciśnięto przycisk „+”'
+      ru: 'Нажата кнопка «+»'
+      zh: '"+"按键按下'
+      hu: '„+” gomb megnyomva'
+      pt: 'Tecla "+" pressionada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  RESET_KEY:
+    bits: '3.0'
+    comment:
+      en: 'Reset key pressed'
+      fr: 'Touche de réinitialisation appuyée'
+      es: 'Botón de reinicio pulsado'
+      de: 'Reset-Taste gedrückt'
+      it: 'Pulsante di reset premuto'
+      pl: 'Naciśnięto przycisk resetu'
+      ru: 'Нажата кнопка сброса'
+      zh: '复位按键按下'
+      hu: 'Reset gomb megnyomva'
+      pt: 'Tecla de reinicialização pressionada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  FOOTER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

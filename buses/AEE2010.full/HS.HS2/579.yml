@@ -1,0 +1,390 @@
+id: 0x579
+name: 'ACCEL_SENSOR_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Tri-sensor (accelerometer) data 2: characterisation bytes and internal pointer/offset.'
+  fr: 'Données tricapteur (accéléromètre) 2 : octets de caractérisation et pointeur/offset interne.'
+  es: 'Datos del tricaptador (acelerómetro) 2: bytes de caracterización y puntero/offset interno.'
+  de: 'Trisensor-(Beschleunigungssensor-)Daten 2: Charakterisierungsbytes und interner Zeiger/Offset.'
+  it: 'Dati del tricaptatore (accelerometro) 2: byte di caratterizzazione e puntatore/offset interno.'
+  pl: 'Dane triczujnika (akcelerometru) 2: bajty charakteryzujące oraz wewnętrzny wskaźnik/offset.'
+  ru: 'Данные трёхдатчика (акселерометра) 2: байты характеризации и внутренний указатель/смещение.'
+  zh: '三传感器(加速度计)数据2:特征字节和内部指针/偏移量。'
+  hu: 'Háromtengelyes érzékelő (gyorsulásmérő) 2. adatai: karakterizációs bájtok és belső mutató/eltolás.'
+  pt: 'Dados 2 do tri-sensor (acelerómetro): bytes de caracterização e ponteiro/offset interno.'
+observations:
+  en: 'Sent in response to the ESP'
+  fr: 'Trame émise pour répondre à l''ESP'
+  es: 'Enviada en respuesta al ESP'
+  de: 'Gesendet als Antwort an das ESP'
+  it: 'Inviata in risposta all''ESP'
+  pl: 'Wysyłane w odpowiedzi dla ESP'
+  ru: 'Отправляется в ответ на запрос ESP'
+  zh: '响应ESP时发送'
+  hu: 'Az ESP-nek adott válaszként küldve'
+  pt: 'Enviada em resposta ao ESP'
+periodicity: ['trigger']
+senders: ['ACCEL_SENSOR']
+receivers: ['ABS']
+
+signals:
+  BLOCK_OFFSET_RB:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Data block offset'
+      fr: 'Décalage du bloc de données'
+      es: 'Desplazamiento del bloque de datos'
+      de: 'Versatz des Datenblocks'
+      it: 'Offset del blocco dati'
+      pl: 'Przesunięcie bloku danych'
+      ru: 'Смещение блока данных'
+      zh: '数据块偏移量'
+      hu: 'Adatblokk eltolása'
+      pt: 'Desvio do bloco de dados'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  SENSOR_TYPE_RB:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Sensor type'
+      fr: 'Type de capteur'
+      es: 'Tipo de sensor'
+      de: 'Sensortyp'
+      it: 'Tipo di sensore'
+      pl: 'Typ czujnika'
+      ru: 'Тип датчика'
+      zh: '传感器类型'
+      hu: 'Érzékelő típusa'
+      pt: 'Tipo de sensor'
+    type: 'enum'
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'MM 3.7K'
+        fr: 'MM 3.7K'
+        es: 'MM 3.7K'
+        de: 'MM 3.7K'
+        it: 'MM 3.7K'
+        pl: 'MM 3.7K'
+        ru: 'MM 3.7K'
+        zh: 'MM 3.7K'
+        hu: 'MM 3.7K'
+        pt: 'MM 3.7K'
+      0x02:
+        en: 'MM 3.8K'
+        fr: 'MM 3.8K'
+        es: 'MM 3.8K'
+        de: 'MM 3.8K'
+        it: 'MM 3.8K'
+        pl: 'MM 3.8K'
+        ru: 'MM 3.8K'
+        zh: 'MM 3.8K'
+        hu: 'MM 3.8K'
+        pt: 'MM 3.8K'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  TRISENSOR_INFO_POINTER:
+    bits: '2.3-2.0'
+    comment:
+      en: 'Tri-sensor information pointer'
+      fr: 'Pointeur de l''information tricapteur'
+      es: 'Puntero de la información del tri-sensor'
+      de: 'Zeiger auf die Dreifachsensor-Information'
+      it: 'Puntatore dell''informazione del tri-sensore'
+      pl: 'Wskaźnik informacji z czujnika trójosiowego'
+      ru: 'Указатель информации трёхкомпонентного датчика'
+      zh: '三传感器信息指针'
+      hu: 'Háromérzékelős információ mutatója'
+      pt: 'Ponteiro da informação do tri-sensor'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Serial number'
+        fr: 'Numéro de série'
+        es: 'Número de serie'
+        de: 'Seriennummer'
+        it: 'Numero di serie'
+        pl: 'Numer seryjny'
+        ru: 'Серийный номер'
+        zh: '序列号'
+        hu: 'Sorozatszám'
+        pt: 'Número de série'
+      0x01:
+        en: 'Customer part number'
+        fr: 'Numéro de pièce client'
+        es: 'Número de pieza del cliente'
+        de: 'Kunden-Teilenummer'
+        it: 'Numero di parte cliente'
+        pl: 'Numer części klienta'
+        ru: 'Номер детали заказчика'
+        zh: '客户零件号'
+        hu: 'Ügyfél alkatrészszám'
+        pt: 'Número de peça do cliente'
+      0x02:
+        en: 'RB part number'
+        fr: 'Numéro de pièce Bosch'
+        es: 'Número de pieza Bosch'
+        de: 'Bosch-Teilenummer'
+        it: 'Numero di parte Bosch'
+        pl: 'Numer części Bosch'
+        ru: 'Номер детали Bosch'
+        zh: '博世零件编号'
+        hu: 'Bosch alkatrészszám'
+        pt: 'Número de peça Bosch'
+      0x03:
+        en: 'Vehicle modification index'
+        fr: 'Indice de modification véhicule'
+        es: 'Índice de modificación del vehículo'
+        de: 'Fahrzeugänderungsindex'
+        it: 'Indice di modifica del veicolo'
+        pl: 'Indeks modyfikacji pojazdu'
+        ru: 'Индекс модификации автомобиля'
+        zh: '车辆改装索引'
+        hu: 'Jármű-módosítási index'
+        pt: 'Índice de modificação do veículo'
+      0x04:
+        en: 'Sensor software version'
+        fr: 'Version du logiciel du capteur'
+        es: 'Versión del software del sensor'
+        de: 'Softwareversion des Sensors'
+        it: 'Versione software del sensore'
+        pl: 'Wersja oprogramowania czujnika'
+        ru: 'Версия ПО датчика'
+        zh: '传感器软件版本'
+        hu: 'Az érzékelő szoftververziója'
+        pt: 'Versão do software do sensor'
+      0x05:
+        en: 'Sensor software identification'
+        fr: 'Identification logicielle du capteur'
+        es: 'Identificación del software del sensor'
+        de: 'Software-Identifikation des Sensors'
+        it: 'Identificazione software del sensore'
+        pl: 'Identyfikacja oprogramowania czujnika'
+        ru: 'Идентификация ПО датчика'
+        zh: '传感器软件标识'
+        hu: 'Az érzékelő szoftverazonosítója'
+        pt: 'Identificação de software do sensor'
+      0x06:
+        en: 'Sensor hardware version'
+        fr: 'Version matérielle du capteur'
+        es: 'Versión de hardware del sensor'
+        de: 'Hardware-Version des Sensors'
+        it: 'Versione hardware del sensore'
+        pl: 'Wersja sprzętowa czujnika'
+        ru: 'Аппаратная версия датчика'
+        zh: '传感器硬件版本'
+        hu: 'Az érzékelő hardververziója'
+        pt: 'Versão de hardware do sensor'
+      0x07:
+        en: 'Manufacturing date'
+        fr: 'Date de fabrication'
+        es: 'Fecha de fabricación'
+        de: 'Herstellungsdatum'
+        it: 'Data di fabbricazione'
+        pl: 'Data produkcji'
+        ru: 'Дата изготовления'
+        zh: '生产日期'
+        hu: 'Gyártási dátum'
+        pt: 'Data de fabrico'
+      0x08:
+        en: 'Bosch modification index'
+        fr: 'Indice de modification Bosch'
+        es: 'Índice de modificación Bosch'
+        de: 'Bosch-Änderungsindex'
+        it: 'Indice di modifica Bosch'
+        pl: 'Indeks modyfikacji Bosch'
+        ru: 'Индекс модификации Bosch'
+        zh: '博世修改索引'
+        hu: 'Bosch módosítási index'
+        pt: 'Índice de modificação Bosch'
+      0x09:
+        en: 'Name of producer'
+        fr: 'Nom du fabricant'
+        es: 'Nombre del fabricante'
+        de: 'Name des Herstellers'
+        it: 'Nome del produttore'
+        pl: 'Nazwa producenta'
+        ru: 'Название производителя'
+        zh: '制造商名称'
+        hu: 'Gyártó neve'
+        pt: 'Nome do produtor'
+      0x0A:
+        en: 'Manufacturer process index'
+        fr: 'Indice de process fabricant'
+        es: 'Índice de proceso del fabricante'
+        de: 'Herstellerprozessindex'
+        it: 'Indice di processo del produttore'
+        pl: 'Indeks procesu producenta'
+        ru: 'Индекс производственного процесса'
+        zh: '制造商工艺索引'
+        hu: 'Gyártói folyamatindex'
+        pt: 'Índice de processo do fabricante'
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Transmission of all valid info blocks (0000 to 1010)'
+        fr: 'Émission de tous les blocs d''infos valides (0000 à 1010)'
+        es: 'Transmisión de todos los bloques de información válidos (0000 a 1010)'
+        de: 'Übertragung aller gültigen Infoblöcke (0000 bis 1010)'
+        it: 'Trasmissione di tutti i blocchi informativi validi (0000-1010)'
+        pl: 'Transmisja wszystkich ważnych bloków informacji (0000-1010)'
+        ru: 'Передача всех действительных информационных блоков (0000–1010)'
+        zh: '所有有效信息块的发送(0000至1010)'
+        hu: 'Minden érvényes információs blokk átvitele (0000–1010)'
+        pt: 'Transmissão de todos os blocos de informação válidos (0000 a 1010)'
+
+  CHARACTER_7_RB:
+    bits: '3.7-3.2'
+    comment:
+      en: 'Character 7 (raw sensor data)'
+      fr: 'Caractère 7 (donnée brute capteur)'
+      es: 'Carácter 7 (dato bruto del sensor)'
+      de: 'Zeichen 7 (Rohdaten des Sensors)'
+      it: 'Carattere 7 (dato grezzo del sensore)'
+      pl: 'Znak 7 (surowe dane czujnika)'
+      ru: 'Символ 7 (необработанные данные датчика)'
+      zh: '字符7(传感器原始数据)'
+      hu: '7. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 7 (dado bruto do sensor)'
+    type: 'uint'
+
+  CHARACTER_6_RB:
+    bits: '3.1-4.4'
+    comment:
+      en: 'Character 6 (raw sensor data)'
+      fr: 'Caractère 6 (donnée brute capteur)'
+      es: 'Carácter 6 (dato bruto del sensor)'
+      de: 'Zeichen 6 (Rohdaten des Sensors)'
+      it: 'Carattere 6 (dato grezzo del sensore)'
+      pl: 'Znak 6 (surowe dane czujnika)'
+      ru: 'Символ 6 (необработанные данные датчика)'
+      zh: '字符6(传感器原始数据)'
+      hu: '6. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 6 (dado bruto do sensor)'
+    type: 'uint'
+
+  CHARACTER_5_RB:
+    bits: '4.3-5.6'
+    comment:
+      en: 'Character 5 (raw sensor data)'
+      fr: 'Caractère 5 (donnée brute capteur)'
+      es: 'Carácter 5 (dato bruto del sensor)'
+      de: 'Zeichen 5 (Rohdaten des Sensors)'
+      it: 'Carattere 5 (dato grezzo del sensore)'
+      pl: 'Znak 5 (surowe dane czujnika)'
+      ru: 'Символ 5 (необработанные данные датчика)'
+      zh: '字符5(传感器原始数据)'
+      hu: '5. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 5 (dado bruto do sensor)'
+    type: 'uint'
+
+  CHARACTER_4_RB:
+    bits: '5.5-5.0'
+    comment:
+      en: 'Character 4 (raw sensor data)'
+      fr: 'Caractère 4 (donnée brute capteur)'
+      es: 'Carácter 4 (dato bruto del sensor)'
+      de: 'Zeichen 4 (Rohdaten des Sensors)'
+      it: 'Carattere 4 (dato grezzo del sensore)'
+      pl: 'Znak 4 (surowe dane czujnika)'
+      ru: 'Символ 4 (необработанные данные датчика)'
+      zh: '字符4(传感器原始数据)'
+      hu: '4. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 4 (dado bruto do sensor)'
+    type: 'uint'
+
+  CHARACTER_3_RB:
+    bits: '6.7-6.2'
+    comment:
+      en: 'Character 3 (raw sensor data)'
+      fr: 'Caractère 3 (donnée brute capteur)'
+      es: 'Carácter 3 (dato bruto del sensor)'
+      de: 'Zeichen 3 (Rohdaten des Sensors)'
+      it: 'Carattere 3 (dato grezzo del sensore)'
+      pl: 'Znak 3 (surowe dane czujnika)'
+      ru: 'Символ 3 (необработанные данные датчика)'
+      zh: '字符3(传感器原始数据)'
+      hu: '3. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 3 (dado bruto do sensor)'
+    type: 'uint'
+
+  CHARACTER_2_RB:
+    bits: '6.1-7.4'
+    comment:
+      en: 'Character 2 (raw sensor data)'
+      fr: 'Caractère 2 (donnée brute capteur)'
+      es: 'Carácter 2 (dato bruto del sensor)'
+      de: 'Zeichen 2 (Rohdaten des Sensors)'
+      it: 'Carattere 2 (dato grezzo del sensore)'
+      pl: 'Znak 2 (surowe dane czujnika)'
+      ru: 'Символ 2 (необработанные данные датчика)'
+      zh: '字符2(传感器原始数据)'
+      hu: '2. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 2 (dado bruto do sensor)'
+    type: 'uint'
+
+  CHARACTER_1_RB:
+    bits: '7.3-8.6'
+    comment:
+      en: 'Character 1 (raw sensor data)'
+      fr: 'Caractère 1 (donnée brute capteur)'
+      es: 'Carácter 1 (dato bruto del sensor)'
+      de: 'Zeichen 1 (Rohdaten des Sensors)'
+      it: 'Carattere 1 (dato grezzo del sensore)'
+      pl: 'Znak 1 (surowe dane czujnika)'
+      ru: 'Символ 1 (необработанные данные датчика)'
+      zh: '字符1(传感器原始数据)'
+      hu: '1. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 1 (dado bruto do sensor)'
+    type: 'uint'
+
+  CHARACTER_0_RB:
+    bits: '8.5-8.0'
+    comment:
+      en: 'Character 0 (raw sensor data)'
+      fr: 'Caractère 0 (donnée brute capteur)'
+      es: 'Carácter 0 (dato bruto del sensor)'
+      de: 'Zeichen 0 (Rohdaten des Sensors)'
+      it: 'Carattere 0 (dato grezzo del sensore)'
+      pl: 'Znak 0 (surowe dane czujnika)'
+      ru: 'Символ 0 (необработанные данные датчика)'
+      zh: '字符0(传感器原始数据)'
+      hu: '0. karakter (érzékelő nyers adata)'
+      pt: 'Carácter 0 (dado bruto do sensor)'
+    type: 'uint'

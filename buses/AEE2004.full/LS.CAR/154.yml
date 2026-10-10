@@ -1,0 +1,226 @@
+id: 0x154
+name: 'IMMOBILIZER_AUTHENTICATION_RESPONSE'
+type: 'can'
+length: 5
+comment:
+  en: 'Transponder authentication response: encrypted key bytes and attempt counter, sent by the immobiliser reader.'
+  fr: 'Réponse d''authentification transpondeur : octets de clé chiffres et compteur d''essais, envoyés par le lecteur antidémarrage.'
+  es: 'Respuesta de autenticación del transpondedor: bytes de clave cifrados y contador de intentos, enviados por el lector del inmovilizador.'
+  de: 'Transponder-Authentifizierungsantwort: verschlüsselte Schlüsselbytes und Versuchszähler, vom Wegfahrsperren-Leser gesendet.'
+  it: 'Risposta di autenticazione del transponder: byte di chiave cifrati e contatore dei tentativi, inviati dal lettore dell''immobilizzatore.'
+  pl: 'Odpowiedź uwierzytelniania transpondera: zaszyfrowane bajty klucza i licznik prób, wysyłane przez czytnik immobilizera.'
+  ru: 'Ответ аутентификации транспондера: зашифрованные байты ключа и счётчик попыток, отправляемые считывателем иммобилайзера.'
+  zh: '应答器身份验证响应:由防盗锁定读取器发送的加密密钥字节及尝试次数计数。'
+  hu: 'Transzponder hitelesítési válasz: titkosított kulcsbájtok és próbálkozásszámláló, az indításgátló-olvasó által küldve.'
+  pt: 'Resposta de autenticação do transponder: bytes de chave encriptados e contador de tentativas, enviados pelo leitor do imobilizador.'
+periodicity: ['trigger']
+senders: ['HDC']
+receivers: ['BSI']
+
+signals:
+  CRYPTO_RESPONSE_PRESENT:
+    bits: '1.7'
+    comment:
+      en: 'Encrypted transponder response available'
+      fr: 'Réponse cryptée du transpondeur disponible'
+      es: 'Respuesta cifrada del transpondedor disponible'
+      de: 'Verschlüsselte Transponderantwort verfügbar'
+      it: 'Risposta cifrata del transponder disponibile'
+      pl: 'Dostępna zaszyfrowana odpowiedź transpondera'
+      ru: 'Доступен зашифрованный ответ транспондера'
+      zh: '应答器加密响应可用'
+      hu: 'A titkosított transzponderválasz elérhető'
+      pt: 'Resposta cifrada do transponder disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No encrypted response'
+        fr: 'Pas de réponse cryptée'
+        es: 'Sin respuesta cifrada'
+        de: 'Keine verschlüsselte Antwort'
+        it: 'Nessuna risposta cifrata'
+        pl: 'Brak zaszyfrowanej odpowiedzi'
+        ru: 'Нет зашифрованного ответа'
+        zh: '无加密响应'
+        hu: 'Nincs titkosított válasz'
+        pt: 'Sem resposta cifrada'
+      0x01:
+        en: 'Encrypted response present'
+        fr: 'Réponse cryptée présente'
+        es: 'Respuesta cifrada presente'
+        de: 'Verschlüsselte Antwort vorhanden'
+        it: 'Risposta cifrata presente'
+        pl: 'Obecna zaszyfrowana odpowiedź'
+        ru: 'Присутствует зашифрованный ответ'
+        zh: '加密响应存在'
+        hu: 'Titkosított válasz jelen van'
+        pt: 'Resposta encriptada presente'
+
+  AUTHENTICATION_PROGRESS:
+    bits: '1.6'
+    comment:
+      en: 'Authentication progress status'
+      fr: 'État d''avancement de l''authentification'
+      es: 'Estado de progreso de la autenticación'
+      de: 'Fortschrittsstatus der Authentifizierung'
+      it: 'Stato di avanzamento dell''autenticazione'
+      pl: 'Stan postępu uwierzytelniania'
+      ru: 'Статус хода аутентификации'
+      zh: '认证进度状态'
+      hu: 'A hitelesítés folyamatának állapota'
+      pt: 'Estado de progresso da autenticação'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No authentication in progress'
+        fr: 'Aucune authentification en cours'
+        es: 'Ninguna autenticación en curso'
+        de: 'Keine Authentifizierung im Gange'
+        it: 'Nessuna autenticazione in corso'
+        pl: 'Brak trwającego uwierzytelniania'
+        ru: 'Аутентификация не выполняется'
+        zh: '无正在进行的身份验证'
+        hu: 'Nincs folyamatban lévő hitelesítés'
+        pt: 'Sem autenticação em curso'
+      0x01:
+        en: 'Authentication in progress'
+        fr: 'Authentification en cours'
+        es: 'Autenticación en curso'
+        de: 'Authentifizierung läuft'
+        it: 'Autenticazione in corso'
+        pl: 'Trwa uwierzytelnianie'
+        ru: 'Аутентификация выполняется'
+        zh: '正在认证'
+        hu: 'Hitelesítés folyamatban'
+        pt: 'Autenticação em curso'
+
+  TRANSPONDER_TEST_NUMBER:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Number of the communication with the transponder test'
+      fr: 'Numéro de l''essai de communication avec le transpondeur'
+      es: 'Número del ensayo de comunicación con el transpondedor'
+      de: 'Nummer des Kommunikationstests mit dem Transponder'
+      it: 'Numero del test di comunicazione con il transponder'
+      pl: 'Numer testu komunikacji z transponderem'
+      ru: 'Номер теста связи с транспондером'
+      zh: '与应答器通信测试编号'
+      hu: 'A transzponderrel folytatott kommunikációs teszt száma'
+      pt: 'Número do ensaio de comunicação com o transponder'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: '1st attempt'
+        fr: '1er essai'
+        es: '1.er intento'
+        de: '1. Versuch'
+        it: '1° tentativo'
+        pl: '1. próba'
+        ru: '1-я попытка'
+        zh: '第1次尝试'
+        hu: '1. próbálkozás'
+        pt: '1.ª tentativa'
+      0x01:
+        en: '2nd attempt'
+        fr: '2e essai'
+        es: '2.º intento'
+        de: '2. Versuch'
+        it: '2° tentativo'
+        pl: '2. próba'
+        ru: '2-я попытка'
+        zh: '第 2 次尝试'
+        hu: '2. próbálkozás'
+        pt: '2.ª tentativa'
+      0x02:
+        en: '3rd attempt'
+        fr: '3e essai'
+        es: '3.er intento'
+        de: '3. Versuch'
+        it: '3° tentativo'
+        pl: '3. próba'
+        ru: '3-я попытка'
+        zh: '第3次尝试'
+        hu: '3. próbálkozás'
+        pt: '3.ª tentativa'
+      0x03:
+        en: 'Undefined'
+        fr: 'Indéfini'
+        es: 'Indefinido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Meghatározatlan'
+        pt: 'Indefinido'
+
+  UNUSED_1:
+    bits: '1.3-1.0'
+    unused: true
+
+  TRANSPONDER_ENCRYPTED_MEMORY_1:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Encrypted transponder user memory answer, byte 1'
+      fr: 'Réponse chiffrée de la mémoire utilisateur du transpondeur, octet 1'
+      es: 'Respuesta cifrada de la memoria de usuario del transpondedor, byte 1'
+      de: 'Verschlüsselte Antwort des Transponder-Benutzerspeichers, Byte 1'
+      it: 'Risposta cifrata della memoria utente del transponder, byte 1'
+      pl: 'Zaszyfrowana odpowiedź pamięci użytkownika transpondera, bajt 1'
+      ru: 'Зашифрованный ответ пользовательской памяти транспондера, байт 1'
+      zh: '应答器用户存储器加密响应,字节1'
+      hu: 'A transzponder felhasználói memóriájának titkosított válasza, 1. bájt'
+      pt: 'Resposta da memória de utilizador do transponder encriptada, byte 1'
+    type: 'uint'
+    default: 0x00
+
+  TRANSPONDER_ENCRYPTED_MEMORY_2:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Encrypted transponder user memory answer, byte 2'
+      fr: 'Réponse chiffrée de la mémoire utilisateur du transpondeur, octet 2'
+      es: 'Respuesta cifrada de la memoria de usuario del transpondedor, byte 2'
+      de: 'Verschlüsselte Antwort des Transponder-Benutzerspeichers, Byte 2'
+      it: 'Risposta cifrata della memoria utente del transponder, byte 2'
+      pl: 'Zaszyfrowana odpowiedź pamięci użytkownika transpondera, bajt 2'
+      ru: 'Зашифрованный ответ пользовательской памяти транспондера, байт 2'
+      zh: '应答器用户存储器加密响应,字节2'
+      hu: 'A transzponder felhasználói memóriájának titkosított válasza, 2. bájt'
+      pt: 'Resposta da memória de utilizador do transponder encriptada, byte 2'
+    type: 'uint'
+    default: 0x00
+
+  TRANSPONDER_ENCRYPTED_MEMORY_3:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Encrypted transponder user memory answer, byte 3'
+      fr: 'Réponse chiffrée de la mémoire utilisateur du transpondeur, octet 3'
+      es: 'Respuesta cifrada de la memoria de usuario del transpondedor, byte 3'
+      de: 'Verschlüsselte Antwort des Transponder-Benutzerspeichers, Byte 3'
+      it: 'Risposta cifrata della memoria utente del transponder, byte 3'
+      pl: 'Zaszyfrowana odpowiedź pamięci użytkownika transpondera, bajt 3'
+      ru: 'Зашифрованный ответ пользовательской памяти транспондера, байт 3'
+      zh: '应答器用户存储器加密响应,字节3'
+      hu: 'A transzponder felhasználói memóriájának titkosított válasza, 3. bájt'
+      pt: 'Resposta da memória de utilizador do transponder encriptada, byte 3'
+    type: 'uint'
+    default: 0x00
+
+  TRANSPONDER_ENCRYPTED_MEMORY_4:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Encrypted transponder user memory answer, byte 4'
+      fr: 'Réponse chiffrée de la mémoire utilisateur du transpondeur, octet 4'
+      es: 'Respuesta cifrada de la memoria de usuario del transpondedor, byte 4'
+      de: 'Verschlüsselte Antwort des Transponder-Benutzerspeichers, Byte 4'
+      it: 'Risposta cifrata della memoria utente del transponder, byte 4'
+      pl: 'Zaszyfrowana odpowiedź pamięci użytkownika transpondera, bajt 4'
+      ru: 'Зашифрованный ответ пользовательской памяти транспондера, байт 4'
+      zh: '应答器用户存储器加密响应,字节4'
+      hu: 'A transzponder felhasználói memóriájának titkosított válasza, 4. bájt'
+      pt: 'Resposta da memória de utilizador do transponder encriptada, byte 4'
+    type: 'uint'
+    default: 0x00

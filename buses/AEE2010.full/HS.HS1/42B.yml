@@ -1,0 +1,299 @@
+id: 0x42B
+name: 'LEFT_LANE_LINE_INFO'
+type: 'can-tp'
+comment:
+  en: 'Left lane line detection data from the front camera: curvature, heading angle, line type and detection status for lane keeping and departure warning.'
+  fr: 'Données de détection de la ligne de voie gauche par la caméra avant : courbure, angle de cap, type de ligne et état de détection pour l''aide au maintien de voie et l''alerte de franchissement.'
+  es: 'Datos de detección de la línea del carril izquierdo por la cámara delantera: curvatura, ángulo de rumbo, tipo de línea y estado de detección para la asistencia de mantenimiento de carril y la alerta de salida.'
+  de: 'Erkennungsdaten der linken Fahrspurlinie durch die Frontkamera: Krümmung, Kurswinkel, Linientyp und Erkennungsstatus für Spurhalteassistent und Spurverlassenswarnung.'
+  it: 'Dati di rilevamento della linea di corsia sinistra dalla telecamera anteriore: curvatura, angolo di rotta, tipo di linea e stato di rilevamento per il mantenimento di corsia e l''avviso di superamento.'
+  pl: 'Dane wykrywania lewej linii pasa ruchu z przedniej kamery: krzywizna, kąt kursu, typ linii i stan wykrywania dla wspomagania utrzymania pasa i ostrzegania o zjeździe.'
+  ru: 'Данные обнаружения левой линии полосы движения передней камерой: кривизна, курсовой угол, тип линии и статус обнаружения для удержания в полосе и предупреждения о выезде.'
+  zh: '前置摄像头的左车道线检测数据：曲率、航向角、车道线类型和用于车道保持辅助与偏离预警的检测状态。'
+  hu: 'A bal sávvonal érzékelési adatai az első kamerából: görbület, iránypontosság, vonaltípus és érzékelési állapot a sávtartáshoz és a lesodródás-figyelmeztetéshez.'
+  pt: 'Dados de deteção da linha de faixa esquerda da câmara dianteira: curvatura, ângulo de rumo, tipo de linha e estado de deteção para manutenção de faixa e aviso de saída de faixa.'
+periodicity: ['50ms']
+senders: ['CVM']
+receivers: ['BSI']
+isotp:
+  addressing: 'normal'
+
+signals:
+  LEFT_LINE_ESTIMATED_CURVATURE:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Estimated curvature of the left lane line'
+      fr: 'Courbure estimée de la ligne gauche'
+      es: 'Curvatura estimada de la línea izquierda'
+      de: 'Geschätzte Krümmung der linken Fahrbahnlinie'
+      it: 'Curvatura stimata della linea di corsia sinistra'
+      pl: 'Szacowana krzywizna lewej linii pasa'
+      ru: 'Оценочная кривизна левой линии полосы'
+      zh: '左侧车道线的估算曲率'
+      hu: 'A bal oldali sávvonal becsült görbülete'
+      pt: 'Curvatura estimada da linha esquerda'
+    type: 'sint'
+    factor: 2.0e-06
+    min: -0.05
+    max: 0.05
+    units: 'm-1'
+    invalid: 0x7FFF
+    default: 0x7FFE
+
+  LEFT_LINE_CURVATURE_DERIVATIVE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Derivative of the road curvature, estimated from the left lane line'
+      fr: 'Dérivée de la courbure de la route, estimée à partir de la ligne gauche'
+      es: 'Derivada de la curvatura de la carretera, estimada a partir de la línea izquierda'
+      de: 'Ableitung der Straßenkrümmung, geschätzt aus der linken Fahrbahnlinie'
+      it: 'Derivata della curvatura della strada, stimata dalla linea di corsia sinistra'
+      pl: 'Pochodna krzywizny drogi, szacowana na podstawie lewej linii pasa'
+      ru: 'Производная кривизны дороги, оценённая по левой линии полосы'
+      zh: '根据左侧车道线估算的道路曲率导数'
+      hu: 'Az útgörbület deriváltja, a bal oldali sávvonalból becsülve'
+      pt: 'Derivada da curvatura da estrada, estimada a partir da linha esquerda'
+    type: 'sint'
+    factor: 4.0e-09
+    min: -0.00012
+    max: 0.00012
+    invalid: 0x7FFF
+    default: 0x7FFE
+
+  LEFT_LINE_HEADING_ANGLE:
+    bits: '5.7-6.4'
+    comment:
+      en: 'Vehicle heading angle relative to the left lane line'
+      fr: 'Angle de cap du véhicule par rapport à la ligne gauche'
+      es: 'Ángulo de rumbo del vehículo respecto a la línea izquierda'
+      de: 'Kurswinkel des Fahrzeugs relativ zur linken Fahrbahnlinie'
+      it: 'Angolo di direzione del veicolo rispetto alla linea di corsia sinistra'
+      pl: 'Kąt kursu pojazdu względem lewej linii pasa'
+      ru: 'Курсовой угол автомобиля относительно левой линии полосы'
+      zh: '车辆相对左侧车道线的航向角'
+      hu: 'A jármű haladási szöge a bal oldali sávvonalhoz képest'
+      pt: 'Ângulo de rumo do veículo em relação à linha de faixa esquerda'
+    type: 'sint'
+    factor: 0.015
+    min: -30
+    max: 30
+    units: '°'
+    invalid: 0x7FF
+    default: 0x7FE
+
+  LEFT_LINE_TYPE:
+    bits: '6.3-6.1'
+    comment:
+      en: 'Type of left lane line seen by the camera'
+      fr: 'Type de ligne gauche vue par la caméra'
+      es: 'Tipo de línea izquierda vista por la cámara'
+      de: 'Art der von der Kamera erkannten linken Fahrbahnlinie'
+      it: 'Tipo di linea di corsia sinistra rilevata dalla telecamera'
+      pl: 'Rodzaj lewej linii pasa widzianej przez kamerę'
+      ru: 'Тип левой линии полосы, распознанной камерой'
+      zh: '摄像头识别的左侧车道线类型'
+      hu: 'A kamera által érzékelt bal oldali sávvonal típusa'
+      pt: 'Tipo de linha de faixa esquerda vista pela câmara'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Undetermined'
+        fr: 'Indéterminé'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未确定'
+        hu: 'Meghatározatlan'
+        pt: 'Indeterminado'
+      0x01:
+        en: 'Solid line detected'
+        fr: 'Ligne continue détectée'
+        es: 'Línea continua detectada'
+        de: 'Durchgezogene Linie erkannt'
+        it: 'Linea continua rilevata'
+        pl: 'Wykryto linię ciągłą'
+        ru: 'Обнаружена сплошная линия'
+        zh: '检测到实线'
+        hu: 'Folytonos vonal érzékelve'
+        pt: 'Linha contínua detetada'
+      0x02:
+        en: 'Dotted line detected'
+        fr: 'Ligne pointillée détectée'
+        es: 'Línea discontinua detectada'
+        de: 'Gestrichelte Linie erkannt'
+        it: 'Linea tratteggiata rilevata'
+        pl: 'Wykryto linię przerywaną'
+        ru: 'Обнаружена прерывистая линия'
+        zh: '检测到虚线'
+        hu: 'Szaggatott vonal észlelve'
+        pt: 'Linha descontínua detetada'
+      0x03:
+        en: 'Double solid line detected'
+        fr: 'Double ligne continue détectée'
+        es: 'Doble línea continua detectada'
+        de: 'Doppelte durchgezogene Linie erkannt'
+        it: 'Doppia linea continua rilevata'
+        pl: 'Wykryto podwójną linię ciągłą'
+        ru: 'Обнаружена двойная сплошная линия'
+        zh: '检测到双实线'
+        hu: 'Dupla folytonos vonal érzékelve'
+        pt: 'Linha dupla contínua detetada'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Road Edge detected'
+        fr: 'Road Edge detected'
+        es: 'Borde de carretera detectado'
+        de: 'Fahrbahnrand erkannt'
+        it: 'Bordo strada rilevato'
+        pl: 'Wykryto krawędź drogi'
+        ru: 'Обнаружена кромка дороги'
+        zh: '检测到路缘'
+        hu: 'Útszél érzékelve'
+        pt: 'Borda da estrada detetada'
+      0x06:
+        en: 'Barrier detected'
+        fr: 'Barrière détectée'
+        es: 'Barrera detectada'
+        de: 'Schranke erkannt'
+        it: 'Barriera rilevata'
+        pl: 'Wykryto barierę'
+        ru: 'Обнаружен барьер'
+        zh: '检测到护栏'
+        hu: 'Korlát észlelve'
+        pt: 'Barreira detetada'
+      0x07:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+
+  LEFT_LINE_VALIDITY_DAA:
+    bits: '6.0'
+    comment:
+      en: 'Validity of the left lane line as seen by the camera, for the DAA function'
+      fr: 'Validité de la ligne gauche vue par la caméra, pour la fonction DAA'
+      es: 'Validez de la línea izquierda vista por la cámara, para la función DAA'
+      de: 'Gültigkeit der von der Kamera erkannten linken Fahrbahnlinie für die DAA-Funktion'
+      it: 'Validità della linea di corsia sinistra rilevata dalla telecamera, per la funzione DAA'
+      pl: 'Ważność lewej linii pasa widzianej przez kamerę, dla funkcji DAA'
+      ru: 'Достоверность левой линии полосы, распознанной камерой, для функции DAA'
+      zh: '用于DAA功能的摄像头左侧车道线有效性'
+      hu: 'A kamera által érzékelt bal oldali sávvonal érvényessége a DAA funkcióhoz'
+      pt: 'Validade da linha de faixa esquerda vista pela câmara, para a função DAA'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  LEFT_LINE_VALIDITY_LKA:
+    bits: '8.5'
+    comment:
+      en: 'Validity of the left lane line as seen by the camera, for the LKA function'
+      fr: 'Validité de la ligne gauche vue par la caméra, pour la fonction LKA'
+      es: 'Validez de la línea izquierda vista por la cámara, para la función LKA'
+      de: 'Gültigkeit der von der Kamera erkannten linken Fahrbahnlinie für die LKA-Funktion'
+      it: 'Validità della linea di corsia sinistra rilevata dalla telecamera, per la funzione LKA'
+      pl: 'Ważność lewej linii pasa widzianej przez kamerę, dla funkcji LKA'
+      ru: 'Достоверность левой линии полосы, распознанной камерой, для функции LKA'
+      zh: '用于LKA功能的摄像头左侧车道线有效性'
+      hu: 'A kamera által érzékelt bal oldali sávvonal érvényessége az LKA funkcióhoz'
+      pt: 'Validade da linha de faixa esquerda vista pela câmara, para a função LKA'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not valid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Nicht gültig'
+        it: 'Non valido'
+        pl: 'Nieważne'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+      0x01:
+        en: 'Enter'
+        fr: 'Valider'
+        es: 'Validar'
+        de: 'Bestätigen'
+        it: 'Conferma'
+        pl: 'Zatwierdź'
+        ru: 'Подтвердить'
+        zh: '确认'
+        hu: 'Megerősít'
+        pt: 'Validar'
+
+  LKA_CAMERA_FAULT:
+    bits: '8.4'
+    comment:
+      en: 'Camera module fault status for the lane keeping assist (LKA) function'
+      fr: 'État de défaut du module caméra pour la fonction d''aide au maintien dans la voie (LKA)'
+      es: 'Estado de fallo del módulo de cámara para la función de asistencia de mantenimiento de carril (LKA)'
+      de: 'Fehlerstatus des Kameramoduls für die Spurhalteassistenzfunktion (LKA)'
+      it: 'Stato di guasto del modulo telecamera per la funzione di assistenza al mantenimento di corsia (LKA)'
+      pl: 'Stan usterki modułu kamery dla funkcji asystenta utrzymania pasa ruchu (LKA)'
+      ru: 'Состояние неисправности модуля камеры для функции удержания в полосе (LKA)'
+      zh: '车道保持辅助（LKA）功能摄像头模块的故障状态'
+      hu: 'A sávtartó asszisztens (LKA) funkció kameramoduljának hibaállapota'
+      pt: 'Estado de avaria do módulo de câmara para a função de assistência de manutenção de faixa (LKA)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  UNUSED_1:
+    bits: '8.3-8.0'
+    unused: true

@@ -1,0 +1,332 @@
+id: 0x222
+name: 'VCU_POWERTRAIN_STATE'
+type: 'can'
+length: 5
+comment:
+  en: 'Hybrid powertrain state from the vehicle control unit.'
+  fr: 'État du groupe motopropulseur hybride, issu du calculateur de contrôle du véhicule (VCU).'
+  es: 'Estado del grupo motopropulsor híbrido, procedente de la centralita de control del vehículo (VCU).'
+  de: 'Zustand des Hybridantriebsstrangs vom Fahrzeugsteuergerät (VCU).'
+  it: 'Stato del gruppo propulsore ibrido, dalla centralina di controllo del veicolo (VCU).'
+  pl: 'Stan hybrydowego układu napędowego z jednostki sterującej pojazdem (VCU).'
+  ru: 'Состояние гибридного силового агрегата от блока управления автомобилем (VCU).'
+  zh: '来自整车控制单元(VCU)的混合动力总成状态。'
+  hu: 'A hibrid hajtáslánc állapota a jármű vezérlőegységétől (VCU).'
+  pt: 'Estado do grupo motopropulsor híbrido da unidade de controlo do veículo.'
+periodicity: ['10ms']
+senders: ['E_VCU', 'VCU']
+receivers: ['BSI', 'AVAS', 'EBB', 'ABS', 'CMM', 'ARTIV', 'BVA', 'LVNSD']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  REAR_EMOTOR_SPEED_REDUCED_RANGE:
+    bits: '2.7-3.4'
+    comment:
+      en: 'Rear electric machine speed (reduced value range)'
+      fr: 'Régime de la machine électrique arrière (plage de valeurs réduite)'
+      es: 'Régimen de la máquina eléctrica trasera (rango de valores reducido)'
+      de: 'Drehzahl der hinteren E-Maschine (reduzierter Wertebereich)'
+      it: 'Regime della macchina elettrica posteriore (intervallo di valori ridotto)'
+      pl: 'Prędkość obrotowa tylnej maszyny elektrycznej (zawężony zakres wartości)'
+      ru: 'Частота вращения задней электромашины (суженный диапазон значений)'
+      zh: '后电机转速(缩减取值范围)'
+      hu: 'A hátsó elektromos gép fordulatszáma (szűkített értéktartomány)'
+      pt: 'Regime da máquina elétrica traseira (intervalo de valores reduzido)'
+    type: 'sint'
+    factor: 10
+    min: -16000
+    max: 16000
+    units: 'rpm'
+    invalid: 0x7FF
+    default: 0x640
+
+  HYBRID_POWERTRAIN_OPERATING_STATE:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Hybrid powertrain operating state'
+      fr: 'État de fonctionnement du GMP hybride'
+      es: 'Estado de funcionamiento de la cadena cinemática híbrida'
+      de: 'Betriebszustand des Hybridantriebsstrangs'
+      it: 'Stato di funzionamento del powertrain ibrido'
+      pl: 'Stan pracy hybrydowego układu napędowego'
+      ru: 'Рабочее состояние гибридного силового агрегата'
+      zh: '混合动力总成运行状态'
+      hu: 'A hibrid hajtáslánc üzemi állapota'
+      pt: 'Estado de funcionamento da cadeia cinemática híbrida'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Powertrain inactive'
+        fr: 'Groupe motopropulseur inactif'
+        es: 'Grupo motopropulsor inactivo'
+        de: 'Antriebsstrang inaktiv'
+        it: 'Gruppo propulsore inattivo'
+        pl: 'Zespół napędowy nieaktywny'
+        ru: 'Силовой агрегат неактивен'
+        zh: '动力总成未激活'
+        hu: 'Erőátviteli rendszer inaktív'
+        pt: 'Grupo motopropulsor inativo'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        en: 'Powertrain activation'
+        fr: 'Activation du groupe motopropulseur'
+        es: 'Activación del grupo motopropulsor'
+        de: 'Aktivierung des Antriebsstrangs'
+        it: 'Attivazione del gruppo propulsore'
+        pl: 'Aktywacja układu napędowego'
+        ru: 'Активация силового агрегата'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktiválása'
+        pt: 'Ativação do grupo motopropulsor'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        en: 'Powertrain active'
+        fr: 'Groupe motopropulseur actif'
+        es: 'Grupo motopropulsor activo'
+        de: 'Antriebsstrang aktiv'
+        it: 'Gruppo propulsore attivo'
+        pl: 'Zespół napędowy aktywny'
+        ru: 'Силовой агрегат активен'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktív'
+        pt: 'Grupo motopropulsor ativo'
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Powertrain deactivation'
+        fr: 'désactivation_GMP'
+        es: 'Desactivación del GMP'
+        de: 'Deaktivierung des Antriebsstrangs'
+        it: 'Disattivazione del GMP'
+        pl: 'Dezaktywacja układu napędowego'
+        ru: 'Деактивация силового агрегата'
+        zh: '动力总成停用'
+        hu: 'Hajtáslánc kikapcsolása'
+        pt: 'Desativação do GMP'
+      0x0B:
+        unused: true
+      0x0C:
+        en: 'Powertrain held after deactivation'
+        fr: 'Maintien du groupe motopropulseur après désactivation'
+        es: 'Retención del grupo motopropulsor tras la desactivación'
+        de: 'Antriebsstrang gehalten nach Deaktivierung'
+        it: 'Gruppo propulsore mantenuto dopo la disattivazione'
+        pl: 'Podtrzymanie układu napędowego po dezaktywacji'
+        ru: 'Удержание силового агрегата после деактивации'
+        zh: '动力总成停用后保持'
+        hu: 'Hajtáslánc tartva kikapcsolás után'
+        pt: 'Manutenção do grupo motopropulsor após desativação'
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Powertrain at rest'
+        fr: 'Groupe motopropulseur au repos'
+        es: 'Grupo motopropulsor en reposo'
+        de: 'Antriebsstrang im Ruhezustand'
+        it: 'Gruppo propulsore a riposo'
+        pl: 'Zespół napędowy w spoczynku'
+        ru: 'Силовой агрегат в состоянии покоя'
+        zh: '动力总成静止'
+        hu: 'Hajtáslánc nyugalmi állapotban'
+        pt: 'Grupo motopropulsor em repouso'
+      0x0F:
+        unused: true
+
+  DRIVER_TORQUE_DEMAND_REDUCED_RANGE:
+    bits: '4.7-5.7'
+    comment:
+      en: 'Driver torque demand information (reduced value range)'
+      fr: 'Information de volonté du conducteur (plage de valeurs réduite)'
+      es: 'Información de la demanda de par del conductor (rango de valores reducido)'
+      de: 'Information zum Fahrerwunsch-Drehmoment (reduzierter Wertebereich)'
+      it: 'Informazione sulla richiesta di coppia del conducente (intervallo di valori ridotto)'
+      pl: 'Informacja o żądaniu momentu obrotowego przez kierowcę (zawężony zakres wartości)'
+      ru: 'Информация о запрошенном водителем моменте (суженный диапазон значений)'
+      zh: '驾驶员扭矩需求信息(缩减取值范围)'
+      hu: 'A vezető nyomatékigényére vonatkozó információ (szűkített értéktartomány)'
+      pt: 'Informação do pedido de binário do condutor (gama de valores reduzida)'
+    type: 'uint'
+    factor: 20
+    offset: -2500
+    min: -2500
+    max: 6000
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0x7D
+
+  HILL_ASSIST_DEACTIVATION_REQUEST_CRAWLING:
+    bits: '5.6'
+    comment:
+      en: 'Hill assist deactivation request due to crawling'
+      fr: 'Demande de désactivation du régulateur de descente par le rampage'
+      es: 'Solicitud de desactivación del asistente de pendiente por marcha lenta'
+      de: 'Deaktivierungsanforderung der Berganfahrhilfe durch Kriechen'
+      it: 'Richiesta di disattivazione dell''Hill Assist per avanzamento lento'
+      pl: 'Żądanie dezaktywacji asystenta zjazdu ze wzgórza z powodu pełzania'
+      ru: 'Запрос деактивации ассистента спуска из-за ползучего движения'
+      zh: '因蠕行导致的坡道辅助停用请求'
+      hu: 'A hegyi lejtő-asszisztens kikapcsolási kérése kúszás miatt'
+      pt: 'Pedido de desativação do assistente de descida por marcha lenta'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No deactivation request'
+        fr: 'Pas de demande de désactivation'
+        es: 'Sin solicitud de desactivación'
+        de: 'Keine Deaktivierungsanforderung'
+        it: 'Nessuna richiesta di disattivazione'
+        pl: 'Brak żądania dezaktywacji'
+        ru: 'Нет запроса деактивации'
+        zh: '无停用请求'
+        hu: 'Nincs kikapcsolási kérés'
+        pt: 'Sem pedido de desativação'
+      0x01:
+        en: 'Deactivation request'
+        fr: 'Demande de désactivation'
+        es: 'Solicitud de desactivación'
+        de: 'Deaktivierungsanforderung'
+        it: 'Richiesta di disattivazione'
+        pl: 'Żądanie dezaktywacji'
+        ru: 'Запрос деактивации'
+        zh: '停用请求'
+        hu: 'Kikapcsolási kérés'
+        pt: 'Pedido de desativação'
+
+  BRAKE_MODE_CONFIGURATION:
+    bits: '5.5'
+    comment:
+      en: 'Brake mode configuration'
+      fr: 'Configuration du mode frein'
+      es: 'Configuración del modo de freno'
+      de: 'Konfiguration des Bremsmodus'
+      it: 'Configurazione della modalità freno'
+      pl: 'Konfiguracja trybu hamowania'
+      ru: 'Конфигурация тормозного режима'
+      zh: '制动模式配置'
+      hu: 'A fékmód konfigurációja'
+      pt: 'Configuração do modo de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No brake mode'
+        fr: 'Pas de mode frein'
+        es: 'Sin modo de freno'
+        de: 'Kein Bremsmodus'
+        it: 'Nessuna modalità freno'
+        pl: 'Brak trybu hamowania'
+        ru: 'Нет тормозного режима'
+        zh: '无制动模式'
+        hu: 'Nincs fékmód'
+        pt: 'Sem modo de travagem'
+      0x01:
+        en: 'Brake mode'
+        fr: 'Mode frein'
+        es: 'Modo freno'
+        de: 'Bremsmodus'
+        it: 'Modalità freno'
+        pl: 'Tryb hamowania'
+        ru: 'Тормозной режим'
+        zh: '制动模式'
+        hu: 'Fék üzemmód'
+        pt: 'Modo travão'
+
+  POWERTRAIN_START_AUTHORIZATION_STATUS:
+    bits: '5.4-5.3'
+    comment:
+      en: 'Powertrain start authorization status'
+      fr: 'Etat de l''autorisation de démarrage du groupe motopropulseur'
+      es: 'Estado de la autorización de arranque del grupo motopropulsor'
+      de: 'Status der Startfreigabe des Antriebsstrangs'
+      it: 'Stato dell''autorizzazione all''avviamento del gruppo propulsore'
+      pl: 'Stan zezwolenia na uruchomienie układu napędowego'
+      ru: 'Состояние разрешения на запуск силового агрегата'
+      zh: '动力总成起动授权状态'
+      hu: 'A hajtáslánc indítási engedélyezésének állapota'
+      pt: 'Estado da autorização de arranque do grupo motopropulsor'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Powertrain activation forbidden'
+        fr: 'Activation du groupe motopropulseur interdite'
+        es: 'Activación del grupo motopropulsor prohibida'
+        de: 'Aktivierung des Antriebsstrangs verboten'
+        it: 'Attivazione del gruppo propulsore vietata'
+        pl: 'Aktywacja zespołu napędowego zabroniona'
+        ru: 'Активация силового агрегата запрещена'
+        zh: '禁止动力总成激活'
+        hu: 'Erőátviteli rendszer aktiválása tiltva'
+        pt: 'Ativação do grupo motopropulsor proibida'
+      0x01:
+        en: 'Powertrain activation authorized'
+        fr: 'Activation du groupe motopropulseur autorisée'
+        es: 'Activación del grupo motopropulsor autorizada'
+        de: 'Aktivierung des Antriebsstrangs zulässig'
+        it: 'Attivazione del gruppo propulsore autorizzata'
+        pl: 'Aktywacja zespołu napędowego dozwolona'
+        ru: 'Активация силового агрегата разрешена'
+        zh: '允许动力总成激活'
+        hu: 'Erőátviteli rendszer aktiválása engedélyezve'
+        pt: 'Ativação do grupo motopropulsor autorizada'
+      0x02:
+        en: 'Powertrain activation in progress'
+        fr: 'Activation du GMP en cours'
+        es: 'Activación del grupo motopropulsor en curso'
+        de: 'Antriebsstrangaktivierung läuft'
+        it: 'Attivazione del gruppo motopropulsore in corso'
+        pl: 'Trwa aktywacja zespołu napędowego'
+        ru: 'Активация силового агрегата выполняется'
+        zh: '动力总成激活进行中'
+        hu: 'Hajtáslánc aktiválása folyamatban'
+        pt: 'Ativação do grupo motopropulsor em curso'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '5.2-5.0'
+    unused: true

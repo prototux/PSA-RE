@@ -1,0 +1,266 @@
+id: 0x844
+name: 'TLM3_COMMAND'
+type: 'van'
+length: 9
+comment:
+  en: 'Vehicle data for the telematic unit: distance to service, oil temperature and level, fuel and LPG level, plus the stalk end push buttons.'
+  fr: 'Données véhicule pour le boîtier télématique : distance avant entretien, température et niveau d''huile, niveaux carburant et GPL, ainsi que les boutons-poussoirs en bout de commodo.'
+  es: 'Datos del vehículo para la unidad telemática: distancia de mantenimiento, temperatura y nivel de aceite, niveles de combustible y GLP, además de los pulsadores del extremo de la palanca.'
+  de: 'Fahrzeugdaten für das Telematikgerät: Wartungsdistanz, Öltemperatur und -stand, Kraftstoff- und Autogasstand sowie die Taster am Lenkstockhebel.'
+  it: 'Dati veicolo per l''unità telematica: distanza al tagliando, temperatura e livello olio, livelli carburante e GPL, oltre ai pulsanti in punta alla leva.'
+  pl: 'Dane pojazdu dla jednostki telematycznej: dystans do przeglądu, temperatura i poziom oleju, poziomy paliwa i LPG oraz przyciski na końcu manetki.'
+  ru: 'Данные автомобиля для телематического блока: пробег до обслуживания, температура и уровень масла, уровни топлива и ГБО, а также кнопки на концах подрулевых переключателей.'
+  zh: '提供给车载通信单元的车辆数据:保养里程、机油温度和油位、燃油和液化气油位,以及转向杆末端按钮。'
+  hu: 'Jármű adatok a telematikai egységnek: szervizig hátralévő táv, olajhőmérséklet és -szint, üzemanyag- és LPG-szint, valamint a kormánykapcsoló végén lévő nyomógombok.'
+  pt: 'Dados do veículo para a unidade telemática: distância até à revisão, temperatura e nível de óleo, nível de combustível e GPL, além dos botões nas extremidades dos comutadores.'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['BTEL']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  MAINTENANCE_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Sign of the distance to next service (negative = service overdue)'
+      fr: 'Signe de la distance avant la prochaine maintenance (négatif = maintenance dépassée)'
+      es: 'Signo de la distancia hasta el próximo mantenimiento (negativo = mantenimiento vencido)'
+      de: 'Vorzeichen der Strecke bis zum nächsten Service (negativ = Service überfällig)'
+      it: 'Segno della distanza prima della prossima manutenzione (negativo = manutenzione scaduta)'
+      pl: 'Znak dystansu do następnego przeglądu (ujemny = przegląd przeterminowany)'
+      ru: 'Знак расстояния до следующего ТО (отрицательный = ТО просрочено)'
+      zh: '距下次保养里程的符号(负=保养已过期)'
+      hu: 'A következő szervizig hátralévő táv előjele (negatív = szerviz esedékessége lejárt)'
+      pt: 'Sinal da distância até à próxima manutenção (negativo = manutenção em atraso)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Service overdue'
+        fr: 'Entretien dépassé'
+        es: 'Mantenimiento vencido'
+        de: 'Wartung überfällig'
+        it: 'Manutenzione scaduta'
+        pl: 'Przekroczony termin przeglądu'
+        ru: 'Просрочено техобслуживание'
+        zh: '保养已超期'
+        hu: 'Karbantartás esedékes'
+        pt: 'Revisão em atraso'
+
+  MILEAGE_BEFORE_MAINTENANCE:
+    bits: '1.6-2.0'
+    comment:
+      en: 'Distance remaining before next service (magnitude, 20 km per unit, max 140000 km; invalid = default)'
+      fr: 'Distance restante avant la prochaine maintenance (magnitude, pas de 20 km, max 140000 km; invalide = valeur par défaut)'
+      es: 'Distancia restante hasta el próximo mantenimiento (magnitud, paso de 20 km, máx. 140000 km; inválido = valor por defecto)'
+      de: 'Verbleibende Strecke bis zum nächsten Service (Betrag, Schrittweite 20 km, max. 140000 km; ungültig = Standardwert)'
+      it: 'Distanza rimanente prima della prossima manutenzione (valore assoluto, passo di 20 km, max 140000 km; non valido = valore predefinito)'
+      pl: 'Pozostały dystans do następnego przeglądu (wartość bezwzględna, krok 20 km, maks. 140000 km; nieprawidłowa = wartość domyślna)'
+      ru: 'Оставшееся расстояние до следующего ТО (модуль, шаг 20 км, макс. 140000 км; недействительное значение = по умолчанию)'
+      zh: '距下次保养的剩余里程(数值,单位20公里,最大140000公里;无效值=默认值)'
+      hu: 'A következő szervizig hátralévő táv (abszolút érték, 20 km-es lépésekben, max. 140000 km; érvénytelen = alapérték)'
+      pt: 'Distância restante até à próxima manutenção (magnitude, 20 km por unidade, máx. 140000 km; inválido = predefinição)'
+    type: 'uint'
+    factor: 20
+    min: 0
+    max: 140000
+    units: 'km'
+    invalid: 0x7FFF
+    default: 0x7FFF
+
+  ENGINE_OIL_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Engine oil temperature'
+      fr: 'Température d''huile moteur'
+      es: 'Temperatura del aceite del motor'
+      de: 'Motoröltemperatur'
+      it: 'Temperatura dell''olio motore'
+      pl: 'Temperatura oleju silnikowego'
+      ru: 'Температура моторного масла'
+      zh: '发动机机油温度'
+      hu: 'Motorolaj-hőmérséklet'
+      pt: 'Temperatura do óleo do motor'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFF
+
+  FILTERED_FUEL_LEVEL:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Filtered fuel level'
+      fr: 'Niveau de carburant filtré'
+      es: 'Nivel de combustible filtrado'
+      de: 'Gefilterter Kraftstoffstand'
+      it: 'Livello di carburante filtrato'
+      pl: 'Filtrowany poziom paliwa'
+      ru: 'Отфильтрованный уровень топлива'
+      zh: '滤波后的燃油液位'
+      hu: 'Szűrt üzemanyagszint'
+      pt: 'Nível de combustível filtrado'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  ENGINE_OIL_LEVEL:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Engine oil level (can exceed 100% to signal overfill)'
+      fr: 'Niveau d''huile moteur (peut dépasser 100% pour signaler un surplus)'
+      es: 'Nivel de aceite del motor (puede superar el 100% para indicar exceso)'
+      de: 'Motorölstand (kann 100% übersteigen, um Überfüllung anzuzeigen)'
+      it: 'Livello dell''olio motore (può superare il 100% per segnalare un eccesso)'
+      pl: 'Poziom oleju silnikowego (może przekroczyć 100%, sygnalizując nadmiar)'
+      ru: 'Уровень моторного масла (может превышать 100% для сигнализации перелива)'
+      zh: '发动机机油液位(可超过100%以指示加注过量)'
+      hu: 'Motorolajszint (meghaladhatja a 100%-ot túltöltés jelzésére)'
+      pt: 'Nível de óleo do motor (pode ultrapassar 100% para indicar excesso)'
+    type: 'enum'
+    factor: 1
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+    values:
+      0xFE:
+        en: 'Measurement in progress'
+        fr: 'Mesure en cours'
+        es: 'Medición en curso'
+        de: 'Messung läuft'
+        it: 'Misurazione in corso'
+        pl: 'Trwa pomiar'
+        ru: 'Идёт измерение'
+        zh: '测量进行中'
+        hu: 'Mérés folyamatban'
+        pt: 'Medição em curso'
+
+  FILTERED_LPG_FUEL_LEVEL:
+    bits: '6.7-6.0'
+    alt_names: ['LPG_FUEL_LEVEL', 'NIV_GPL']
+    comment:
+      en: 'Filtered LPG tank level'
+      fr: 'Niveau de GPL filtré'
+      es: 'Nivel de GLP filtrado'
+      de: 'Gefilterter LPG-Füllstand'
+      it: 'Livello di GPL filtrato'
+      pl: 'Filtrowany poziom LPG'
+      ru: 'Отфильтрованный уровень LPG'
+      zh: '滤波后的LPG液位'
+      hu: 'Szűrt LPG-szint'
+      pt: 'Nível filtrado do depósito de GPL'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  LEFT_BUTTON_STATUS:
+    bits: '7.7'
+    comment:
+      en: 'Left push-button activation (steering column module state)'
+      fr: 'Activation de la touche Push gauche (état défini dans la trame du module haut de colonne)'
+      es: 'Activación del botón Push izquierdo (estado del módulo de la columna de dirección)'
+      de: 'Betätigung der linken Push-Taste (Zustand des Lenksäulenmoduls)'
+      it: 'Attivazione del pulsante Push sinistro (stato del modulo del piantone dello sterzo)'
+      pl: 'Aktywacja lewego przycisku Push (stan modułu kolumny kierownicy)'
+      ru: 'Активация левой кнопки Push (состояние модуля рулевой колонки)'
+      zh: '左侧Push按钮激活(转向柱模块状态)'
+      hu: 'Bal Push gomb aktiválása (kormányoszlop-modul állapota)'
+      pt: 'Ativação do botão Push esquerdo (estado do módulo da coluna de direção)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Command not activated'
+        fr: 'Commande non activée'
+        es: 'Comando no activado'
+        de: 'Befehl nicht aktiviert'
+        it: 'Comando non attivato'
+        pl: 'Polecenie nieaktywowane'
+        ru: 'Команда не активирована'
+        zh: '指令未激活'
+        hu: 'Parancs nincs aktiválva'
+        pt: 'Comando não ativado'
+      0x01:
+        en: 'Command active'
+        fr: 'Commande activée'
+        es: 'Orden activada'
+        de: 'Befehl aktiv'
+        it: 'Comando attivo'
+        pl: 'Polecenie aktywne'
+        ru: 'Команда активна'
+        zh: '指令激活'
+        hu: 'Parancs aktív'
+        pt: 'Comando ativo'
+
+  RIGHT_BUTTON_STATUS:
+    bits: '7.6'
+    comment:
+      en: 'Right push-button activation (steering column module state)'
+      fr: 'Activation de la touche Push droite (état défini dans la trame du module haut de colonne)'
+      es: 'Activación del botón Push derecho (estado del módulo de la columna de dirección)'
+      de: 'Betätigung der rechten Push-Taste (Zustand des Lenksäulenmoduls)'
+      it: 'Attivazione del pulsante Push destro (stato del modulo del piantone dello sterzo)'
+      pl: 'Aktywacja prawego przycisku Push (stan modułu kolumny kierownicy)'
+      ru: 'Активация правой кнопки Push (состояние модуля рулевой колонки)'
+      zh: '右侧Push按钮激活(转向柱模块状态)'
+      hu: 'Jobb Push gomb aktiválása (kormányoszlop-modul állapota)'
+      pt: 'Ativação do botão Push direito (estado do módulo da coluna de direção)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Command not activated'
+        fr: 'Commande non activée'
+        es: 'Comando no activado'
+        de: 'Befehl nicht aktiviert'
+        it: 'Comando non attivato'
+        pl: 'Polecenie nieaktywowane'
+        ru: 'Команда не активирована'
+        zh: '指令未激活'
+        hu: 'Parancs nincs aktiválva'
+        pt: 'Comando não ativado'
+      0x01:
+        en: 'Command active'
+        fr: 'Commande activée'
+        es: 'Orden activada'
+        de: 'Befehl aktiv'
+        it: 'Comando attivo'
+        pl: 'Polecenie aktywne'
+        ru: 'Команда активна'
+        zh: '指令激活'
+        hu: 'Parancs aktív'
+        pt: 'Comando ativo'
+
+  UNUSED_1:
+    bits: '7.5-7.0'
+    unused: true
+
+  UNUSED_2:
+    bits: '8.7-9.0'
+    unused: true

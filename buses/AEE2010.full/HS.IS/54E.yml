@@ -1,0 +1,102 @@
+id: 0x54E
+name: 'BSI_CABIN_DATA_13'
+type: 'can'
+length: 8
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+periodicity: ['1000ms']
+senders: ['BSI']
+
+signals:
+  ODOMETER_PARTIAL:
+    bits: '1.7-3.0'
+    comment:
+      en: 'Partial odometer (trip meter)'
+      fr: 'Odomètre partiel (compteur journalier)'
+      es: 'Cuentakilómetros parcial (contador de viaje)'
+      de: 'Tageskilometerzähler'
+      it: 'Contachilometri parziale (contatore di viaggio)'
+      pl: 'Licznik dzienny (przebieg cząstkowy)'
+      ru: 'Суточный счётчик пробега'
+      zh: '分段里程表(行程表)'
+      hu: 'Részleges kilométeróra (útszámláló)'
+      pt: 'Conta-quilómetros parcial (diário de viagem)'
+    type: 'uint'
+    factor: 0.001
+    min: 0
+    max: 16777.214
+    units: 'km'
+    invalid: 0xFFFFFF
+    default: 0x00
+
+  TOTAL_MILEAGE:
+    bits: '4.7-6.0'
+    comment:
+      en: 'Vehicle odometer, 0.1 km per bit; invalid when all bits set'
+      fr: 'Totalisateur kilométrique du véhicule, résolution 0,1 km ; invalide si tous les bits sont à 1'
+      es: 'Cuentakilómetros total del vehículo, resolución 0,1 km; inválido si todos los bits están a 1'
+      de: 'Fahrzeug-Kilometerzähler, Auflösung 0,1 km; ungültig bei allen Bits gesetzt'
+      it: 'Totalizzatore chilometrico del veicolo, risoluzione 0,1 km; non valido se tutti i bit sono a 1'
+      pl: 'Licznik przebiegu pojazdu, rozdzielczość 0,1 km; nieprawidłowy, gdy wszystkie bity ustawione'
+      ru: 'Общий пробег автомобиля, разрешение 0,1 км; недействительно, если все биты установлены'
+      zh: '车辆总里程表,分辨率 0.1 公里;所有位为 1 时无效'
+      hu: 'Jármű összkilométer-számláló, felbontás 0,1 km; érvénytelen, ha minden bit be van állítva'
+      pt: 'Conta-quilómetros do veículo, 0,1 km por bit; inválido quando todos os bits estão definidos'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 1677721.4
+    units: 'km'
+    invalid: 0xFFFFFF
+    default: 0xFFFFFF
+
+  FILTERED_FUEL_LEVEL:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Filtered fuel level'
+      fr: 'Niveau de carburant filtré'
+      es: 'Nivel de combustible filtrado'
+      de: 'Gefilterter Kraftstoffstand'
+      it: 'Livello di carburante filtrato'
+      pl: 'Filtrowany poziom paliwa'
+      ru: 'Отфильтрованный уровень топлива'
+      zh: '滤波后的燃油液位'
+      hu: 'Szűrt üzemanyagszint'
+      pt: 'Nível de combustível filtrado'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  ECO_TIME:
+    bits: '8.7-8.0'
+    comment:
+      en: 'ECO time'
+      fr: 'Temps ECO'
+      es: 'Tiempo ECO'
+      de: 'ECO-Zeit'
+      it: 'Tempo ECO'
+      pl: 'Czas ECO'
+      ru: 'Время ECO'
+      zh: 'ECO时间'
+      hu: 'ECO idő'
+      pt: 'Tempo ECO'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00

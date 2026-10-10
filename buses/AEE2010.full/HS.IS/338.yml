@@ -1,0 +1,589 @@
+id: 0x338
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_15'
+type: 'can'
+length: 3
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['20ms']
+senders: ['CMM']
+receivers: ['IHU']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  IHU_OPERATING_MODE_REQUEST:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Head unit (IHU) operating mode request'
+      fr: 'Demande de mode de fonctionnement de l''unité multimédia (IHU)'
+      es: 'Solicitud de modo de funcionamiento de la unidad multimedia (IHU)'
+      de: 'Betriebsmodusanforderung der Infotainment-Einheit (IHU)'
+      it: 'Richiesta di modalità operativa dell''unità multimediale (IHU)'
+      pl: 'Żądanie trybu pracy jednostki multimedialnej (IHU)'
+      ru: 'Запрос режима работы мультимедийного блока (IHU)'
+      zh: '车载主机(IHU)工作模式请求'
+      hu: 'A fejegység (IHU) üzemmódjának kérése'
+      pt: 'Pedido de modo de funcionamento da unidade multimédia (IHU)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Keep current state'
+        fr: 'Conserver l''état actuel'
+        es: 'Mantener el estado actual'
+        de: 'Aktuellen Zustand beibehalten'
+        it: 'Mantenere lo stato attuale'
+        pl: 'Zachowaj bieżący stan'
+        ru: 'Сохранить текущее состояние'
+        zh: '保持当前状态'
+        hu: 'Az aktuális állapot megtartása'
+        pt: 'Manter o estado atual'
+      0x01:
+        en: 'Standby request'
+        fr: 'Demande de mise en veille'
+        es: 'Solicitud de puesta en espera'
+        de: 'Anforderung Standby'
+        it: 'Richiesta di standby'
+        pl: 'Żądanie trybu czuwania'
+        ru: 'Запрос перехода в режим ожидания'
+        zh: '待机请求'
+        hu: 'Készenléti kérés'
+        pt: 'Pedido de standby'
+      0x02:
+        en: 'Wake-up requested'
+        fr: 'Demande de réveil'
+        es: 'Solicitud de despertar'
+        de: 'Weckanforderung'
+        it: 'Richiesta di risveglio'
+        pl: 'Żądanie wybudzenia'
+        ru: 'Запрошено пробуждение'
+        zh: '已请求唤醒'
+        hu: 'Ébresztés kérve'
+        pt: 'Pedido de despertar'
+      0x03:
+        en: 'Clear errors'
+        fr: 'Effacer les erreurs'
+        es: 'Borrar errores'
+        de: 'Fehler löschen'
+        it: 'Cancella errori'
+        pl: 'Skasuj błędy'
+        ru: 'Очистить ошибки'
+        zh: '清除错误'
+        hu: 'Hibák törlése'
+        pt: 'Limpar erros'
+      0x04:
+        en: 'Request for the IHU software version'
+        fr: 'Demande de la version logicielle de l''IHU'
+        es: 'Solicitud de la versión de software del IHU'
+        de: 'Anforderung der Softwareversion der IHU'
+        it: 'Richiesta della versione software dell''IHU'
+        pl: 'Żądanie wersji oprogramowania IHU'
+        ru: 'Запрос версии ПО IHU'
+        zh: '请求IHU软件版本'
+        hu: 'Az IHU szoftververziójának lekérése'
+        pt: 'Pedido da versão de software do IHU'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  HEATER_CHANNEL_1_REQUEST:
+    bits: '2.3'
+    comment:
+      en: 'Heater channel 1 activation request'
+      fr: 'Demande d''activation du chauffage, canal 1'
+      es: 'Solicitud de activación de la calefacción, canal 1'
+      de: 'Aktivierungsanforderung der Heizung, Kanal 1'
+      it: 'Richiesta di attivazione del riscaldamento, canale 1'
+      pl: 'Żądanie aktywacji ogrzewania, kanał 1'
+      ru: 'Запрос активации нагрева, канал 1'
+      zh: '1号加热通道激活请求'
+      hu: '1. csatorna fűtésének aktiválási kérése'
+      pt: 'Pedido de ativação do aquecimento, canal 1'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Heating requested'
+        fr: 'Demande de chauffage'
+        es: 'Solicitud de calefacción'
+        de: 'Heizung angefordert'
+        it: 'Riscaldamento richiesto'
+        pl: 'Żądanie ogrzewania'
+        ru: 'Запрос обогрева'
+        zh: '请求加热'
+        hu: 'Fűtés kérve'
+        pt: 'Pedido de aquecimento'
+
+  HEATER_CHANNEL_2_REQUEST:
+    bits: '2.2'
+    comment:
+      en: 'Heater channel 2 activation request'
+      fr: 'Demande d''activation du chauffage, canal 2'
+      es: 'Solicitud de activación de la calefacción, canal 2'
+      de: 'Aktivierungsanforderung der Heizung, Kanal 2'
+      it: 'Richiesta di attivazione del riscaldamento, canale 2'
+      pl: 'Żądanie aktywacji ogrzewania, kanał 2'
+      ru: 'Запрос активации нагрева, канал 2'
+      zh: '2号加热通道激活请求'
+      hu: '2. csatorna fűtésének aktiválási kérése'
+      pt: 'Pedido de ativação do aquecimento, canal 2'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Heating requested'
+        fr: 'Demande de chauffage'
+        es: 'Solicitud de calefacción'
+        de: 'Heizung angefordert'
+        it: 'Riscaldamento richiesto'
+        pl: 'Żądanie ogrzewania'
+        ru: 'Запрос обогрева'
+        zh: '请求加热'
+        hu: 'Fűtés kérve'
+        pt: 'Pedido de aquecimento'
+
+  HEATER_CHANNEL_3_REQUEST:
+    bits: '2.1'
+    comment:
+      en: 'Heater channel 3 activation request'
+      fr: 'Demande d''activation du chauffage, canal 3'
+      es: 'Solicitud de activación de la calefacción, canal 3'
+      de: 'Aktivierungsanforderung der Heizung, Kanal 3'
+      it: 'Richiesta di attivazione del riscaldamento, canale 3'
+      pl: 'Żądanie aktywacji ogrzewania, kanał 3'
+      ru: 'Запрос активации нагрева, канал 3'
+      zh: '3号加热通道激活请求'
+      hu: '3. csatorna fűtésének aktiválási kérése'
+      pt: 'Pedido de ativação do aquecimento, canal 3'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Heating requested'
+        fr: 'Demande de chauffage'
+        es: 'Solicitud de calefacción'
+        de: 'Heizung angefordert'
+        it: 'Riscaldamento richiesto'
+        pl: 'Żądanie ogrzewania'
+        ru: 'Запрос обогрева'
+        zh: '请求加热'
+        hu: 'Fűtés kérve'
+        pt: 'Pedido de aquecimento'
+
+  HEATER_CHANNEL_4_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Heater channel 4 activation request'
+      fr: 'Demande d''activation du chauffage, canal 4'
+      es: 'Solicitud de activación de la calefacción, canal 4'
+      de: 'Aktivierungsanforderung der Heizung, Kanal 4'
+      it: 'Richiesta di attivazione del riscaldamento, canale 4'
+      pl: 'Żądanie aktywacji ogrzewania, kanał 4'
+      ru: 'Запрос активации нагрева, канал 4'
+      zh: '4号加热通道激活请求'
+      hu: '4. csatorna fűtésének aktiválási kérése'
+      pt: 'Pedido de ativação do aquecimento, canal 4'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Heating requested'
+        fr: 'Demande de chauffage'
+        es: 'Solicitud de calefacción'
+        de: 'Heizung angefordert'
+        it: 'Riscaldamento richiesto'
+        pl: 'Żądanie ogrzewania'
+        ru: 'Запрос обогрева'
+        zh: '请求加热'
+        hu: 'Fűtés kérve'
+        pt: 'Pedido de aquecimento'
+
+  POWER_REDUCTION_REQUEST:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Power reduction request'
+      fr: 'Demande de réduction de puissance'
+      es: 'Solicitud de reducción de potencia'
+      de: 'Leistungsreduzierungsanforderung'
+      it: 'Richiesta di riduzione di potenza'
+      pl: 'Żądanie redukcji mocy'
+      ru: 'Запрос снижения мощности'
+      zh: '功率降低请求'
+      hu: 'Teljesítménycsökkentési kérés'
+      pt: 'Pedido de redução de potência'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'All commands off'
+        fr: 'Toute commande désactivée'
+        es: 'Todos los mandos desactivados'
+        de: 'Alle Befehle aus'
+        it: 'Tutti i comandi disattivati'
+        pl: 'Wszystkie polecenia wyłączone'
+        ru: 'Все команды выключены'
+        zh: '所有指令关闭'
+        hu: 'Minden parancs kikapcsolva'
+        pt: 'Todos os comandos desligados'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        en: '1 channel at 0%'
+        fr: '1 canal à 0%'
+        es: '1 canal al 0%'
+        de: '1 Kanal bei 0%'
+        it: '1 canale allo 0%'
+        pl: '1 kanał przy 0%'
+        ru: '1 канал на 0%'
+        zh: '1个通道0%'
+        hu: '1 csatorna 0%-on'
+        pt: '1 canal a 0%'
+      0x0B:
+        en: '1 channel at 25%'
+        fr: '1 canal à 25%'
+        es: '1 canal al 25%'
+        de: '1 Kanal bei 25%'
+        it: '1 canale al 25%'
+        pl: '1 kanał przy 25%'
+        ru: '1 канал на 25%'
+        zh: '1个通道25%'
+        hu: '1 csatorna 25%-on'
+        pt: '1 canal a 25%'
+      0x0C:
+        en: '1 channel at 50%'
+        fr: '1 canal à 50 %'
+        es: '1 canal al 50 %'
+        de: '1 Kanal bei 50 %'
+        it: '1 canale al 50%'
+        pl: '1 kanał na 50%'
+        ru: '1 канал на 50%'
+        zh: '1通道50%'
+        hu: '1 csatorna 50%-on'
+        pt: '1 canal a 50%'
+      0x0D:
+        en: '1 channel at 75%'
+        fr: '1 canal à 75 %'
+        es: '1 canal al 75 %'
+        de: '1 Kanal bei 75 %'
+        it: '1 canale al 75%'
+        pl: '1 kanał na 75%'
+        ru: '1 канал на 75%'
+        zh: '1通道75%'
+        hu: '1 csatorna 75%-on'
+        pt: '1 canal a 75%'
+      0x0E:
+        en: '1 channel at 100%'
+        fr: '1 canal à 100 %'
+        es: '1 canal al 100 %'
+        de: '1 Kanal bei 100 %'
+        it: '1 canale al 100%'
+        pl: '1 kanał 100%'
+        ru: '1 канал на 100%'
+        zh: '1个通道100%'
+        hu: '1 csatorna 100%-on'
+        pt: '1 canal a 100%'
+      0x0F:
+        unused: true
+      0x10:
+        unused: true
+      0x11:
+        unused: true
+      0x12:
+        unused: true
+      0x13:
+        unused: true
+      0x14:
+        en: '2 channels at 0%'
+        fr: '2 canaux à 0 %'
+        es: '2 canales al 0 %'
+        de: '2 Kanäle bei 0 %'
+        it: '2 canali allo 0%'
+        pl: '2 kanały na 0%'
+        ru: '2 канала на 0%'
+        zh: '2个通道为0%'
+        hu: '2 csatorna 0%-on'
+        pt: '2 canais a 0 %'
+      0x15:
+        en: '2 channels at 50%'
+        fr: '2 canaux à 50 %'
+        es: '2 canales al 50%'
+        de: '2 Kanäle bei 50 %'
+        it: '2 canali al 50%'
+        pl: '2 kanały przy 50%'
+        ru: '2 канала на 50%'
+        zh: '2个通道50%'
+        hu: '2 csatorna 50%-on'
+        pt: '2 canais a 50%'
+      0x16:
+        en: '2 channels at 100%'
+        fr: '2 canaux à 100 %'
+        es: '2 canales al 100 %'
+        de: '2 Kanäle bei 100 %'
+        it: '2 canali al 100%'
+        pl: '2 kanały na 100%'
+        ru: '2 канала на 100%'
+        zh: '2个通道100%'
+        hu: '2 csatorna 100%-on'
+        pt: '2 canais a 100%'
+      0x17:
+        unused: true
+      0x18:
+        unused: true
+      0x19:
+        unused: true
+      0x1A:
+        unused: true
+      0x1B:
+        unused: true
+      0x1C:
+        unused: true
+      0x1D:
+        unused: true
+      0x1E:
+        en: '3 channels at 0%'
+        fr: '3 canaux à 0 %'
+        es: '3 canales al 0 %'
+        de: '3 Kanäle bei 0 %'
+        it: '3 canali allo 0%'
+        pl: '3 kanały na 0%'
+        ru: '3 канала на 0%'
+        zh: '3个通道为0%'
+        hu: '3 csatorna 0%-on'
+        pt: '3 canais a 0%'
+      0x1F:
+        en: '3 channels at 33%'
+        fr: '3 canaux à 33 %'
+        es: '3 canales al 33 %'
+        de: '3 Kanäle bei 33 %'
+        it: '3 canali al 33%'
+        pl: '3 kanały na 33%'
+        ru: '3 канала на 33%'
+        zh: '3通道33%'
+        hu: '3 csatorna 33%-on'
+        pt: '3 canais a 33%'
+      0x20:
+        en: '3 channels at 66%'
+        fr: '3 canaux à 66 %'
+        es: '3 canales al 66 %'
+        de: '3 Kanäle bei 66 %'
+        it: '3 canali al 66%'
+        pl: '3 kanały przy 66%'
+        ru: '3 канала на 66 %'
+        zh: '3通道66%'
+        hu: '3 csatorna 66%-on'
+        pt: '3 canais a 66%'
+      0x21:
+        en: '3 channels at 100%'
+        fr: '3 canaux à 100 %'
+        es: '3 canales al 100 %'
+        de: '3 Kanäle bei 100 %'
+        it: '3 canali al 100%'
+        pl: '3 kanały przy 100%'
+        ru: '3 канала на 100%'
+        zh: '3通道100%'
+        hu: '3 csatorna 100%-on'
+        pt: '3 canais a 100%'
+      0x22:
+        unused: true
+      0x23:
+        unused: true
+      0x24:
+        unused: true
+      0x25:
+        unused: true
+      0x26:
+        unused: true
+      0x27:
+        unused: true
+      0x28:
+        en: '4 channels at 0%'
+        fr: '4 canaux à 0 %'
+        es: '4 canales al 0 %'
+        de: '4 Kanäle bei 0 %'
+        it: '4 canali allo 0%'
+        pl: '4 kanały przy 0%'
+        ru: '4 канала на 0%'
+        zh: '4通道均为0%'
+        hu: '4 csatorna 0%-on'
+        pt: '4 canais a 0%'
+      0x29:
+        en: '4 channels at 25%'
+        fr: '4 canaux à 25 %'
+        es: '4 canales al 25 %'
+        de: '4 Kanäle bei 25 %'
+        it: '4 canali al 25%'
+        pl: '4 kanały przy 25%'
+        ru: '4 канала на 25%'
+        zh: '4通道均为25%'
+        hu: '4 csatorna 25%-on'
+        pt: '4 canais a 25%'
+      0x2A:
+        en: '4 channels at 50%'
+        fr: '4 canaux à 50 %'
+        es: '4 canales al 50 %'
+        de: '4 Kanäle bei 50 %'
+        it: '4 canali al 50%'
+        pl: '4 kanały przy 50%'
+        ru: '4 канала на 50%'
+        zh: '4 通道50%'
+        hu: '4 csatorna 50%-on'
+        pt: '4 canais a 50%'
+      0x2B:
+        en: '4 channels at 75%'
+        fr: '4 canaux à 75 %'
+        es: '4 canales al 75 %'
+        de: '4 Kanäle bei 75 %'
+        it: '4 canali al 75%'
+        pl: '4 kanały przy 75%'
+        ru: '4 канала на 75 %'
+        zh: '4通道75%'
+        hu: '4 csatorna 75%-on'
+        pt: '4 canais a 75%'
+      0x2C:
+        en: '4 channels at 100%'
+        fr: '4 canaux à 100 %'
+        es: '4 canales al 100 %'
+        de: '4 Kanäle bei 100 %'
+        it: '4 canali al 100%'
+        pl: '4 kanały na 100%'
+        ru: '4 канала на 100 %'
+        zh: '4通道100%'
+        hu: '4 csatorna 100%-on'
+        pt: '4 canais a 100%'
+      0x2D:
+        unused: true
+      0x2E:
+        unused: true
+      0x2F:
+        unused: true
+      0x30:
+        unused: true
+      0x31:
+        unused: true
+      0x32:
+        unused: true
+      0x33:
+        unused: true
+      0x34:
+        unused: true
+      0x35:
+        unused: true

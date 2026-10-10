@@ -1,0 +1,232 @@
+id: 0x398
+name: 'CAAR_SINGLE_SENSOR_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Sent only on vehicles fitted with a single ride-height sensor: compensation state and operating mode of the self-levelling suspension.'
+  fr: 'Émise uniquement sur les véhicules équipés d''un seul capteur de hauteur : état de compensation et mode de fonctionnement de la suspension auto-nivelante.'
+  es: 'Enviada solo en vehículos equipados con un único sensor de altura: estado de compensación y modo de funcionamiento de la suspensión autonivelante.'
+  de: 'Nur bei Fahrzeugen mit einem einzelnen Höhensensor gesendet: Kompensationsstatus und Betriebsmodus der selbstnivellierenden Federung.'
+  it: 'Inviata solo sui veicoli dotati di un unico sensore di altezza: stato di compensazione e modalità operativa della sospensione autolivellante.'
+  pl: 'Wysyłana tylko w pojazdach wyposażonych w jeden czujnik wysokości: stan kompensacji i tryb pracy zawieszenia samopoziomującego.'
+  ru: 'Отправляется только на автомобилях с одним датчиком высоты: статус компенсации и режим работы самовыравнивающейся подвески.'
+  zh: '仅在配备单一高度传感器的车辆上发送:自动调平悬挂的补偿状态和工作模式。'
+  hu: 'Csak egyetlen magasságérzékelővel felszerelt járműveken kerül elküldésre: az önszintező felfüggesztés kompenzációs állapota és üzemmódja.'
+  pt: 'Enviada apenas em veículos equipados com um único sensor de altura: estado de compensação e modo de funcionamento da suspensão autonivelante.'
+periodicity: ['20ms']
+senders: ['CAAR']
+receivers: ['ABS', 'BSI']
+
+signals:
+  REAR_SUSPENSION_TRAVEL_HEIGHT:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Rear suspension travel height'
+      fr: 'Hauteur de débattement de la suspension arrière'
+      es: 'Altura de recorrido de la suspensión trasera'
+      de: 'Federweghöhe hinten'
+      it: 'Altezza di escursione della sospensione posteriore'
+      pl: 'Wysokość skoku zawieszenia tylnego'
+      ru: 'Высота хода задней подвески'
+      zh: '后悬架行程高度'
+      hu: 'Hátsó futómű lengésmagassága'
+      pt: 'Altura de curso da suspensão traseira'
+    type: 'sint'
+    factor: 2
+    min: -254
+    max: 254
+    units: 'mm'
+    invalid: 0x80
+
+  SUSPENSION_TRAVEL_ANGLE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Suspension travel angle'
+      fr: 'Angle de débattement de la suspension'
+      es: 'Ángulo de recorrido de la suspensión'
+      de: 'Federwegwinkel'
+      it: 'Angolo di escursione della sospensione'
+      pl: 'Kąt skoku zawieszenia'
+      ru: 'Угол хода подвески'
+      zh: '悬架行程角度'
+      hu: 'Futómű lengésszöge'
+      pt: 'Ângulo de curso da suspensão'
+    type: 'sint'
+    factor: 0.5
+    min: -63.5
+    max: 63.5
+    units: '°'
+    invalid: 0x80
+    default: 0x00
+
+  PROCESS_COUNTER_4BIT:
+    bits: '3.7-3.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  CAAR_FRAME_CHECKSUM:
+    bits: '3.3-3.0'
+    comment:
+      en: 'CAAR (rear suspension) frame checksum'
+      fr: 'Somme de contrôle de la trame CAAR (suspension arrière)'
+      es: 'Suma de comprobación de la trama CAAR (suspensión trasera)'
+      de: 'Prüfsumme des CAAR-Frames (Hinterachsfederung)'
+      it: 'Checksum del frame CAAR (sospensione posteriore)'
+      pl: 'Suma kontrolna ramki CAAR (zawieszenie tylne)'
+      ru: 'Контрольная сумма кадра CAAR (задняя подвеска)'
+      zh: 'CAAR(后悬架)帧校验和'
+      hu: 'A CAAR (hátsó futómű) keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama CAAR (suspensão traseira)'
+    type: 'uint'
+
+  CAAR_COMPRESSOR_STATUS:
+    bits: '4.7-4.6'
+    comment:
+      en: 'Rear suspension (CAAR) compressor status'
+      fr: 'État du compresseur de suspension arrière (CAAR)'
+      es: 'Estado del compresor de suspensión trasera (CAAR)'
+      de: 'Status des Kompressors der Hinterachsfederung (CAAR)'
+      it: 'Stato del compressore della sospensione posteriore (CAAR)'
+      pl: 'Stan sprężarki tylnego zawieszenia (CAAR)'
+      ru: 'Статус компрессора задней подвески (CAAR)'
+      zh: '后悬架(CAAR)压缩机状态'
+      hu: 'A hátsó futómű (CAAR) kompresszorának állapota'
+      pt: 'Estado do compressor de suspensão traseira (CAAR)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Compressor OFF'
+        fr: 'Compresseur OFF'
+        es: 'Compresor OFF'
+        de: 'Kompressor AUS'
+        it: 'Compressore OFF'
+        pl: 'Sprężarka WYŁ'
+        ru: 'Компрессор ВЫКЛ'
+        zh: '压缩机关闭'
+        hu: 'Kompresszor KI'
+        pt: 'Compressor DESLIGADO'
+      0x01:
+        en: 'Compressor ON'
+        fr: 'Compresseur en marche'
+        es: 'Compresor en marcha'
+        de: 'Kompressor EIN'
+        it: 'Compressore in funzione'
+        pl: 'Sprężarka włączona'
+        ru: 'Компрессор включён'
+        zh: '压缩机开启'
+        hu: 'Kompresszor BE'
+        pt: 'Compressor LIGADO'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+
+  CAAR_OPERATING_MODE:
+    bits: '4.5-4.3'
+    comment:
+      en: 'CAAR (rear suspension) system operating mode'
+      fr: 'Mode de fonctionnement du système de suspension arrière (CAAR)'
+      es: 'Modo de funcionamiento del sistema de suspensión trasera (CAAR)'
+      de: 'Betriebsmodus des Hinterachsfederungssystems (CAAR)'
+      it: 'Modalità di funzionamento del sistema di sospensione posteriore (CAAR)'
+      pl: 'Tryb pracy systemu zawieszenia tylnego (CAAR)'
+      ru: 'Режим работы системы задней подвески (CAAR)'
+      zh: '后悬架系统(CAAR)工作模式'
+      hu: 'A hátsó futómű rendszer (CAAR) üzemmódja'
+      pt: 'Modo de funcionamento do sistema de suspensão traseira (CAAR)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'CAAR function inactive'
+        fr: 'Fonction CAAR inactive'
+        es: 'Función CAAR inactiva'
+        de: 'CAAR-Funktion inaktiv'
+        it: 'Funzione CAAR inattiva'
+        pl: 'Funkcja CAAR nieaktywna'
+        ru: 'Функция CAAR неактивна'
+        zh: 'CAAR功能未激活'
+        hu: 'A CAAR funkció inaktív'
+        pt: 'Função CAAR inativa'
+      0x01:
+        en: 'Automatic correction'
+        fr: 'Correction automatique'
+        es: 'Corrección automática'
+        de: 'Automatische Korrektur'
+        it: 'Correzione automatica'
+        pl: 'Automatyczna korekta'
+        ru: 'Автоматическая коррекция'
+        zh: '自动校正'
+        hu: 'Automatikus korrekció'
+        pt: 'Correção automática'
+      0x02:
+        en: 'Manual correction'
+        fr: 'Correction manuelle'
+        es: 'Corrección manual'
+        de: 'Manuelle Korrektur'
+        it: 'Correzione manuale'
+        pl: 'Korekta ręczna'
+        ru: 'Ручная коррекция'
+        zh: '手动校正'
+        hu: 'Kézi korrekció'
+        pt: 'Correção manual'
+      0x03:
+        en: 'Inflation'
+        fr: 'Gonflage'
+        es: 'Inflado'
+        de: 'Aufpumpen'
+        it: 'Gonfiaggio'
+        pl: 'Pompowanie'
+        ru: 'Накачивание'
+        zh: '充气'
+        hu: 'Felfújás'
+        pt: 'Insuflação'
+      0x04:
+        en: 'CAAR inhibited'
+        fr: 'CAAR inhibé'
+        es: 'CAAR inhibido'
+        de: 'CAAR gesperrt'
+        it: 'CAAR inibito'
+        pl: 'CAAR zablokowany'
+        ru: 'CAAR заблокирован'
+        zh: 'CAAR已禁用'
+        hu: 'CAAR letiltva'
+        pt: 'CAAR inibido'
+      0x05:
+        en: 'Reservoir filling (CAAR)'
+        fr: 'Remplissage du réservoir (CAAR)'
+        es: 'Llenado del depósito (CAAR)'
+        de: 'Behälterbefüllung (CAAR)'
+        it: 'Riempimento del serbatoio (CAAR)'
+        pl: 'Napełnianie zbiornika (CAAR)'
+        ru: 'Заполнение резервуара (CAAR)'
+        zh: '储液罐加注（CAAR）'
+        hu: 'Tartály feltöltése (CAAR)'
+        pt: 'Enchimento do depósito (CAAR)'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'

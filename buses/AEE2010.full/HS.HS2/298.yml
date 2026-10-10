@@ -1,0 +1,181 @@
+id: 0x298
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_8'
+type: 'can'
+length: 6
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['20ms']
+senders: ['CMM', 'E_VCU']
+receivers: ['ABS', 'VCU', 'BVA']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  DRIVER_REAR_TORQUE_REQUEST_RAW:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Rear axle torque requested by the driver, before processing'
+      fr: 'Couple demandé par le conducteur sur l''essieu arrière, avant traitement'
+      es: 'Par solicitado por el conductor en el eje trasero, antes del procesamiento'
+      de: 'Vom Fahrer angefordertes Drehmoment an der Hinterachse, vor der Verarbeitung'
+      it: 'Coppia richiesta dal conducente sull''assale posteriore, prima dell''elaborazione'
+      pl: 'Moment żądany przez kierowcę na osi tylnej, przed przetworzeniem'
+      ru: 'Момент, запрошенный водителем на задней оси, до обработки'
+      zh: '驾驶员对后轴请求的扭矩(处理前)'
+      hu: 'A vezető által kért hátsó tengelyű nyomaték, feldolgozás előtt'
+      pt: 'Binário solicitado pelo condutor no eixo traseiro, antes do processamento'
+    type: 'uint'
+    factor: 2
+    offset: -250
+    min: -250
+    max: 250
+    units: 'Nm'
+    default: 0x7D
+
+  DRIVER_FRONT_TORQUE_REQUEST_RAW:
+    bits: '3.7-4.7'
+    comment:
+      en: 'Front axle torque requested by the driver, before processing'
+      fr: 'Couple demandé par le conducteur sur l''essieu avant, avant traitement'
+      es: 'Par solicitado por el conductor en el eje delantero, antes del procesamiento'
+      de: 'Vom Fahrer angefordertes Drehmoment an der Vorderachse, vor der Verarbeitung'
+      it: 'Coppia richiesta dal conducente sull''assale anteriore, prima dell''elaborazione'
+      pl: 'Moment żądany przez kierowcę na osi przedniej, przed przetworzeniem'
+      ru: 'Момент, запрошенный водителем на передней оси, до обработки'
+      zh: '驾驶员对前轴请求的扭矩(处理前)'
+      hu: 'A vezető által kért első tengelyű nyomaték, feldolgozás előtt'
+      pt: 'Binário solicitado pelo condutor no eixo dianteiro, antes do processamento'
+    type: 'uint'
+    factor: 2
+    offset: -400
+    min: -400
+    max: 400
+    units: 'Nm'
+    default: 0xC8
+
+  VEHICLE_REGEN_BRAKING_POTENTIAL:
+    bits: '4.6-5.6'
+    comment:
+      en: 'Overall vehicle regenerative braking torque potential'
+      fr: 'Potentiel de couple de freinage récupératif global du véhicule'
+      es: 'Potencial global de par de frenado regenerativo del vehículo'
+      de: 'Gesamtes Rekuperationsbrems-Drehmomentpotenzial des Fahrzeugs'
+      it: 'Potenziale globale di coppia frenante rigenerativa del veicolo'
+      pl: 'Całkowity potencjał momentu hamowania odzyskowego pojazdu'
+      ru: 'Общий потенциал момента рекуперативного торможения автомобиля'
+      zh: '整车再生制动扭矩总潜力'
+      hu: 'A jármű teljes regeneratív fékezési nyomatékpotenciálja'
+      pt: 'Potencial global de binário de travagem regenerativa do veículo'
+    type: 'uint'
+    factor: 5
+    offset: -2500
+    min: -2500
+    max: 0
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0x1F4
+
+  REGENERATIVE_BRAKING_STATUS:
+    bits: '5.5'
+    comment:
+      en: 'Regenerative braking function status (OK/not OK)'
+      fr: 'État de la fonction de freinage récupératif (OK/défaut)'
+      es: 'Estado de la función de frenado regenerativo (OK/fallo)'
+      de: 'Status der Rekuperationsbremsfunktion (OK/Fehler)'
+      it: 'Stato della funzione di frenata rigenerativa (OK/guasto)'
+      pl: 'Stan funkcji hamowania odzyskowego (OK/usterka)'
+      ru: 'Статус функции рекуперативного торможения (норма/неисправность)'
+      zh: '再生制动功能状态(正常/故障)'
+      hu: 'A regeneratív fékezés funkció állapota (OK/hiba)'
+      pt: 'Estado da função de travagem regenerativa (OK/falha)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'NOK'
+        fr: 'NOK'
+        es: 'NOK'
+        de: 'NOK'
+        it: 'NOK'
+        pl: 'NOK'
+        ru: 'NOK'
+        zh: 'NOK'
+        hu: 'NOK'
+        pt: 'NOK'
+
+  FRONT_REGEN_BRAKE_TORQUE_POTENTIAL:
+    bits: '5.4-6.4'
+    comment:
+      en: 'Regenerative braking torque potential of the front electric machine'
+      fr: 'Potentiel de couple de freinage récupératif de la machine électrique avant'
+      es: 'Potencial de par de frenado regenerativo de la máquina eléctrica delantera'
+      de: 'Rekuperationsbrems-Drehmomentpotenzial der vorderen E-Maschine'
+      it: 'Potenziale di coppia frenante rigenerativa della macchina elettrica anteriore'
+      pl: 'Potencjał momentu hamowania odzyskowego przedniej maszyny elektrycznej'
+      ru: 'Потенциал момента рекуперативного торможения передней электромашины'
+      zh: '前电机再生制动扭矩潜力'
+      hu: 'Az elülső villanymotor regeneratív fékezési nyomatékpotenciálja'
+      pt: 'Potencial de binário de travagem regenerativa da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 5
+    offset: -2500
+    min: -2500
+    max: 0
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0x1F4
+
+  UNUSED_1:
+    bits: '6.3-6.0'
+    unused: true

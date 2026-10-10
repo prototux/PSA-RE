@@ -1,0 +1,825 @@
+id: 0x4F4
+name: 'HV_BATTERY_MANAGEMENT_DATA_5'
+type: 'can'
+length: 8
+comment:
+  en: 'HV battery management data: engine auto-stop authorisation, warning-lamp reset command and request, climate-control inhibition, engine action request, and battery state of charge/state of health.'
+  fr: 'Données de gestion batterie HT : autorisation d''arrêt automatique moteur, commande et demande de remise à zéro du voyant, inhibition climatisation, demande d''action moteur, et état de charge/état de santé de la batterie.'
+  es: 'Datos de gestión de batería de alta tensión: autorización de parada automática del motor, comando y solicitud de reinicio del testigo, inhibición de la climatización, solicitud de acción del motor, y estado de carga/estado de salud de la batería.'
+  de: 'Hochvoltbatterie-Managementdaten: Freigabe des automatischen Motorstopps, Rücksetzbefehl und -anforderung der Kontrollleuchte, Klimaanlagensperre, Motoraktionsanforderung sowie Ladezustand/Alterungszustand der Batterie.'
+  it: 'Dati di gestione batteria AT: autorizzazione arresto automatico motore, comando e richiesta di reset spia, inibizione climatizzazione, richiesta di azione motore, e stato di carica/stato di salute della batteria.'
+  pl: 'Dane zarządzania akumulatorem WN: autoryzacja automatycznego zatrzymania silnika, polecenie i żądanie kasowania kontrolki, blokada klimatyzacji, żądanie działania silnika oraz stan naładowania/stan zdrowia akumulatora.'
+  ru: 'Данные управления высоковольтной батареей: разрешение автоматической остановки двигателя, команда и запрос сброса индикатора, блокировка кондиционера, запрос действия двигателя, а также уровень заряда/состояние батареи.'
+  zh: '高压电池管理数据:发动机自动停止授权、警示灯复位命令和请求、空调抑制、发动机动作请求,以及电池充电状态/健康状态。'
+  hu: 'Nagyfeszültségű akkumulátor kezelési adatok: motor automatikus leállásának engedélyezése, jelzőlámpa visszaállítási parancs és kérés, klíma letiltása, motorművelet kérése, valamint az akkumulátor töltöttségi/állapotszintje.'
+  pt: 'Dados de gestão da bateria de alta tensão: autorização de paragem automática do motor, comando e pedido de reposição da luz avisadora, inibição da climatização, pedido de ação do motor, e estado de carga/estado de saúde da bateria.'
+periodicity: ['100ms']
+senders: ['TBMU']
+receivers: ['CMM', 'HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum (somma di controllo) del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和(checksum)'
+      hu: 'Keretellenőrző összeg (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de processus 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  HV_BATTERY_AVERAGE_TEMPERATURE:
+    bits: '2.7-3.7'
+    comment:
+      en: 'HV battery average temperature'
+      fr: 'Température moyenne de la batterie HT'
+      es: 'Temperatura media de la batería de alta tensión'
+      de: 'Durchschnittliche Temperatur der HV-Batterie'
+      it: 'Temperatura media della batteria HT'
+      pl: 'Średnia temperatura akumulatora wysokiego napięcia'
+      ru: 'Средняя температура ВВ батареи'
+      zh: '高压电池平均温度'
+      hu: 'A nagyfeszültségű akkumulátor átlaghőmérséklete'
+      pt: 'Temperatura média da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.3
+    offset: -40
+    min: -40
+    max: 100
+    units: '°C'
+    invalid: 0x1FF
+    default: 0xD8
+
+  MIL_ON_COUNTER_RESET_REQUEST:
+    bits: '3.3'
+    comment:
+      en: 'Request to reset the MIL-ON distance counters'
+      fr: 'Demande de remise à zéro des compteurs de distance voyant MIL allumé'
+      es: 'Solicitud de reinicio de los contadores de distancia con testigo MIL encendido'
+      de: 'Anforderung zum Zurücksetzen der Kilometerzähler bei aktiver MIL-Warnleuchte'
+      it: 'Richiesta di azzeramento dei contatori di distanza con spia MIL accesa'
+      pl: 'Żądanie zerowania liczników przebiegu przy zapalonej kontrolce MIL'
+      ru: 'Запрос на сброс счётчиков пробега при включенной лампе MIL'
+      zh: 'MIL指示灯点亮里程计数器复位请求'
+      hu: 'A MIL jelzőlámpa világítása alatti távolságszámlálók nullázási kérése'
+      pt: 'Pedido de reinicialização dos contadores de distância com luz avisadora MIL acesa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'MIL-on distance counter increment'
+        fr: 'Incrémentation du compteur de distance avec voyant MIL allumé'
+        es: 'Incremento del contador de distancia con testigo MIL encendido'
+        de: 'Erhöhung des Kilometerzählers bei eingeschalteter MIL-Leuchte'
+        it: 'Incremento del contatore di distanza con spia MIL accesa'
+        pl: 'Zwiększenie licznika dystansu przy zapalonej lampce MIL'
+        ru: 'Увеличение счётчика пробега при включённой лампе MIL'
+        zh: 'MIL灯亮起时的里程计数器递增'
+        hu: 'A távolságszámláló növelése a MIL lámpa világítása mellett'
+        pt: 'Incremento do contador de distância com testemunho MIL aceso'
+      0x01:
+        en: 'Km counter reset possible'
+        fr: 'Réinitialisation possible du compteur km'
+        es: 'Reinicio posible del contador km'
+        de: 'Kilometerzähler-Reset möglich'
+        it: 'Reset possibile del contachilometri'
+        pl: 'Możliwe zresetowanie licznika km'
+        ru: 'Возможен сброс счётчика км'
+        zh: '可重置公里计数器'
+        hu: 'Km-számláló visszaállítása lehetséges'
+        pt: 'Reinicialização possível do conta-quilómetros'
+
+  MIL_LAMP_REQUEST:
+    bits: '3.2'
+    comment:
+      en: 'Request to illuminate the MIL warning lamp continuously'
+      fr: 'Demande d''allumage fixe du témoin MIL'
+      es: 'Solicitud de encendido fijo del testigo MIL'
+      de: 'Anforderung zum dauerhaften Einschalten der MIL-Warnleuchte'
+      it: 'Richiesta di accensione fissa della spia MIL'
+      pl: 'Żądanie ciągłego zapalenia kontrolki MIL'
+      ru: 'Запрос на постоянное включение лампы MIL'
+      zh: '请求持续点亮MIL故障灯'
+      hu: 'A MIL jelzőlámpa folyamatos világításának kérése'
+      pt: 'Pedido de acendimento fixo da luz avisadora MIL'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'MIL lamp continuous lighting request'
+        fr: 'Demande d''allumage continu du témoin MIL'
+        es: 'Solicitud de encendido continuo del testigo MIL'
+        de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte'
+        it: 'Richiesta di accensione continua della spia MIL'
+        pl: 'Żądanie ciągłego świecenia kontrolki MIL'
+        ru: 'Запрос постоянного включения индикатора MIL'
+        zh: 'MIL 灯常亮请求'
+        hu: 'MIL lámpa folyamatos világításának kérése'
+        pt: 'Pedido de acendimento contínuo da luz MIL'
+
+  HV_BATTERY_SOH:
+    bits: '3.0-4.0'
+    comment:
+      en: 'HV battery state of health'
+      fr: 'État de santé de la batterie haute tension'
+      es: 'Estado de salud de la batería de alta tensión'
+      de: 'Alterungszustand (SOH) der Hochvoltbatterie'
+      it: 'Stato di salute della batteria ad alta tensione'
+      pl: 'Stan zdrowia akumulatora wysokiego napięcia'
+      ru: 'Состояние работоспособности (SOH) высоковольтной батареи'
+      zh: '高压电池健康状态(SOH)'
+      hu: 'A nagyfeszültségű akkumulátor állapota (SOH)'
+      pt: 'Estado de saúde da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x1FF
+    default: 0x118
+
+  ENGINE_START_REQUEST:
+    bits: '5.7'
+    comment:
+      en: 'Thermal engine start request'
+      fr: 'Demande de démarrage du moteur thermique'
+      es: 'Solicitud de arranque del motor térmico'
+      de: 'Anforderung zum Start des Verbrennungsmotors'
+      it: 'Richiesta di avviamento del motore termico'
+      pl: 'Żądanie rozruchu silnika spalinowego'
+      ru: 'Запрос на запуск теплового двигателя'
+      zh: '内燃机起动请求'
+      hu: 'A belső égésű motor indítási kérése'
+      pt: 'Pedido de arranque do motor térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  AC_RECIRCULATION_INHIBIT:
+    bits: '5.6'
+    comment:
+      en: 'Inhibits air recirculation by opening the AC flaps'
+      fr: 'Inhibe le recyclage d''air en ouvrant les volets de climatisation'
+      es: 'Inhibe la recirculación de aire abriendo las trampillas del climatizador'
+      de: 'Deaktiviert die Umluftfunktion durch Öffnen der Klimaklappen'
+      it: 'Inibisce il ricircolo dell''aria aprendo le clapet del climatizzatore'
+      pl: 'Blokuje recyrkulację powietrza poprzez otwarcie klap klimatyzacji'
+      ru: 'Отключает рециркуляцию воздуха путём открытия заслонок кондиционера'
+      zh: '通过打开空调风门禁用内循环'
+      hu: 'A légkondicionáló klapnijainak nyitásával letiltja a légkeringetést'
+      pt: 'Inibe a recirculação de ar ao abrir os obturadores do ar condicionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  ENGINE_STOP_AUTHORIZATION:
+    bits: '5.5'
+    comment:
+      en: 'Engine stop authorization issued by the battery thermal management (TBMU)'
+      fr: 'Autorisation d''arrêt moteur émise par la gestion thermique de la batterie (TBMU)'
+      es: 'Autorización de parada del motor emitida por la gestión térmica de la batería (TBMU)'
+      de: 'Freigabe zum Abstellen des Motors durch das Batterie-Thermomanagement (TBMU)'
+      it: 'Autorizzazione allo spegnimento del motore emessa dalla gestione termica della batteria (TBMU)'
+      pl: 'Autoryzacja zatrzymania silnika wydana przez zarządzanie termiczne akumulatora (TBMU)'
+      ru: 'Разрешение на остановку двигателя, выдаваемое системой термического управления батареей (TBMU)'
+      zh: '由电池热管理系统(TBMU)发出的发动机停机授权'
+      hu: 'A motorleállítás engedélyezése az akkumulátor hőkezelő rendszere (TBMU) által'
+      pt: 'Autorização de paragem do motor emitida pela gestão térmica da bateria (TBMU)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'not authorization'
+        fr: 'pas d''autorisation'
+        es: 'sin autorización'
+        de: 'keine Genehmigung'
+        it: 'nessuna autorizzazione'
+        pl: 'brak autoryzacji'
+        ru: 'нет разрешения'
+        zh: '无授权'
+        hu: 'nincs engedélyezve'
+        pt: 'sem autorização'
+      0x01:
+        en: 'Authorization'
+        fr: 'Autorisation'
+        es: 'Autorización'
+        de: 'Freigabe'
+        it: 'Autorizzazione'
+        pl: 'Zezwolenie'
+        ru: 'Разрешение'
+        zh: '授权'
+        hu: 'Engedély'
+        pt: 'Autorização'
+
+  READINESS_CODE_STATUS:
+    bits: '5.4'
+    comment:
+      en: 'Completion status of on-board diagnostic readiness code tests'
+      fr: 'État d''achèvement des tests du code de disponibilité (Readiness Code) du diagnostic embarqué'
+      es: 'Estado de finalización de las pruebas del código de disponibilidad (Readiness Code) del diagnóstico a bordo'
+      de: 'Abschlussstatus der Readiness-Code-Tests der On-Board-Diagnose'
+      it: 'Stato di completamento dei test del codice di disponibilità (Readiness Code) della diagnosi di bordo'
+      pl: 'Stan ukończenia testów kodu gotowości (Readiness Code) diagnostyki pokładowej'
+      ru: 'Статус завершения тестов кода готовности (Readiness Code) бортовой диагностики'
+      zh: '车载诊断就绪代码(Readiness Code)测试完成状态'
+      hu: 'A fedélzeti diagnosztika készenléti kód (Readiness Code) teszteinek befejezési állapota'
+      pt: 'Estado de conclusão dos testes do código de disponibilidade (Readiness Code) do diagnóstico de bordo'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Done'
+        fr: 'Fait'
+        es: 'Hecho'
+        de: 'Erledigt'
+        it: 'Fatto'
+        pl: 'Wykonano'
+        ru: 'Выполнено'
+        zh: '已完成'
+        hu: 'Kész'
+        pt: 'Concluído'
+      0x01:
+        en: 'Not done'
+        fr: 'Non réalisé'
+        es: 'No realizado'
+        de: 'Nicht durchgeführt'
+        it: 'Non eseguito'
+        pl: 'Niewykonane'
+        ru: 'Не выполнено'
+        zh: '未完成'
+        hu: 'Nem végezték el'
+        pt: 'Não realizado'
+
+  HV_BATTERY_SOC:
+    bits: '5.3-6.3'
+    comment:
+      en: 'HV battery state of charge'
+      fr: 'État de charge de la batterie haute tension'
+      es: 'Estado de carga de la batería de alta tensión'
+      de: 'Ladezustand der Hochvoltbatterie'
+      it: 'Stato di carica della batteria ad alta tensione'
+      pl: 'Stan naładowania akumulatora wysokiego napięcia'
+      ru: 'Уровень заряда высоковольтной батареи'
+      zh: '高压电池荷电状态(SOC)'
+      hu: 'A nagyfeszültségű akkumulátor töltöttségi állapota'
+      pt: 'Estado de carga da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x1FF
+    default: 0x118
+
+  HV_BATTERY_OUTLET_AIR_TEMPERATURE:
+    bits: '6.1-7.1'
+    comment:
+      en: 'HV battery cooling air outlet temperature'
+      fr: 'Température de l''air en sortie du refroidissement de la batterie HT'
+      es: 'Temperatura del aire de salida de refrigeración de la batería de alta tensión'
+      de: 'Luftaustrittstemperatur der HV-Batteriekühlung'
+      it: 'Temperatura dell''aria in uscita dal raffreddamento della batteria HT'
+      pl: 'Temperatura powietrza wylotowego chłodzenia akumulatora wysokiego napięcia'
+      ru: 'Температура воздуха на выходе охлаждения ВВ батареи'
+      zh: '高压电池冷却出气温度'
+      hu: 'A nagyfeszültségű akkumulátor hűtő levegőjének kilépő hőmérséklete'
+      pt: 'Temperatura do ar à saída da refrigeração da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.3
+    offset: -40
+    min: -40
+    max: 100
+    units: '°C'
+    invalid: 0x1FF
+    default: 0xD8
+
+  HV_BATTERY_INLET_AIR_TEMPERATURE:
+    bits: '7.0-8.0'
+    comment:
+      en: 'HV battery cooling air inlet temperature'
+      fr: 'Température de l''air en entrée du refroidissement de la batterie HT'
+      es: 'Temperatura del aire de entrada de refrigeración de la batería de alta tensión'
+      de: 'Lufteintrittstemperatur der HV-Batteriekühlung'
+      it: 'Temperatura dell''aria in ingresso al raffreddamento della batteria HT'
+      pl: 'Temperatura powietrza wlotowego chłodzenia akumulatora wysokiego napięcia'
+      ru: 'Температура воздуха на входе охлаждения ВВ батареи'
+      zh: '高压电池冷却进气温度'
+      hu: 'A nagyfeszültségű akkumulátor hűtő levegőjének belépő hőmérséklete'
+      pt: 'Temperatura do ar à entrada da refrigeração da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.3
+    offset: -40
+    min: -40
+    max: 100
+    units: '°C'
+    invalid: 0x1FF
+    default: 0xD8
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['100ms', 'trigger']
+    senders: ['TBMU']
+    receivers: ['CMM', 'OBC', 'VCU', 'CMEL', 'ERAD']
+    signals:
+      FRAME_CHECKSUM:
+        bits: '1.7-1.4'
+        comment:
+          en: 'Frame checksum'
+          fr: 'Somme de contrôle (checksum) de la trame'
+          es: 'Suma de comprobación (checksum) de la trama'
+          de: 'Prüfsumme (Checksum) des Frames'
+          it: 'Checksum (somma di controllo) del frame'
+          pl: 'Suma kontrolna (checksum) ramki'
+          ru: 'Контрольная сумма кадра'
+          zh: '帧校验和(checksum)'
+          hu: 'Keretellenőrző összeg (checksum)'
+          pt: 'Soma de verificação da trama'
+        type: 'uint'
+      PROCESS_COUNTER_4BIT:
+        bits: '1.3-1.0'
+        comment:
+          en: '4-bit process counter'
+          fr: 'Compteur de processus 4 bits'
+          es: 'Contador de proceso de 4 bits'
+          de: '4-Bit-Prozesszähler'
+          it: 'Contatore di processo a 4 bit'
+          pl: '4-bitowy licznik procesu'
+          ru: '4-битный счётчик процесса'
+          zh: '4位处理计数器'
+          hu: '4 bites folyamatszámláló'
+          pt: 'Contador de processo de 4 bits'
+        type: 'uint'
+        min: 0
+        max: 15
+        default: 0x00
+      HV_BATTERY_SOC_2:
+        bits: '2.7-3.6'
+        comment:
+          en: 'HV battery state of charge (%)'
+          fr: 'État de charge (SOC) de la batterie haute tension (%)'
+          es: 'Estado de carga (SOC) de la batería de alta tensión (%)'
+          de: 'Ladezustand (SOC) der Hochvoltbatterie (%)'
+          it: 'Stato di carica (SOC) della batteria ad alta tensione (%)'
+          pl: 'Stan naładowania (SOC) akumulatora wysokiego napięcia (%)'
+          ru: 'Уровень заряда (SOC) высоковольтной батареи (%)'
+          zh: '高压电池荷电状态(SOC)(%)'
+          hu: 'A nagyfeszültségű akkumulátor töltöttségi állapota (SOC) (%)'
+          pt: 'Estado de carga da bateria de alta tensão (%)'
+        type: 'uint'
+        factor: 0.1
+        min: 0
+        max: 100
+        units: '%'
+        invalid: 0x3FF
+        default: 0x3FE
+      HV_BATTERY_CONTACTOR_STATUS:
+        bits: '3.5-3.4'
+        comment:
+          en: 'High-voltage battery contactors status'
+          fr: 'Etat des contacteurs de la batterie haute tension'
+          es: 'Estado de los contactores de la batería de alta tensión'
+          de: 'Status der Hochvoltbatterie-Schütze'
+          it: 'Stato dei contattori della batteria ad alta tensione'
+          pl: 'Stan styczników akumulatora wysokiego napięcia'
+          ru: 'Состояние контакторов высоковольтной батареи'
+          zh: '高压电池接触器状态'
+          hu: 'A nagyfeszültségű akkumulátor kontaktorainak állapota'
+          pt: 'Estado dos contactores da bateria de alta tensão'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Contactor open'
+            fr: 'Discontacteur ouvert'
+            es: 'Contactor abierto'
+            de: 'Schütz offen'
+            it: 'Contattore aperto'
+            pl: 'Stycznik otwarty'
+            ru: 'Контактор разомкнут'
+            zh: '接触器断开'
+            hu: 'Kontaktor nyitva'
+            pt: 'Contactor aberto'
+          0x01:
+            en: 'Contactor pre-load'
+            fr: 'Précharge des discontacteurs'
+            es: 'Precarga de los contactores'
+            de: 'Vorladung der Schütze'
+            it: 'Precarica dei contattori'
+            pl: 'Doładowanie wstępne styczników'
+            ru: 'Предзаряд контакторов'
+            zh: '接触器预充电'
+            hu: 'Kontaktorok előtöltése'
+            pt: 'Pré-carga do contactor'
+          0x02:
+            en: 'Contactor closed'
+            fr: 'Discontacteur fermé'
+            es: 'Contactor cerrado'
+            de: 'Schütz geschlossen'
+            it: 'Contattore chiuso'
+            pl: 'Zamknięty stycznik'
+            ru: 'Контактор замкнут'
+            zh: '接触器已闭合'
+            hu: 'A kontaktor zárva'
+            pt: 'Contactor fechado'
+          0x03:
+            unused: true
+      HV_BATTERY_CRASH_MEMORIZED:
+        bits: '3.3'
+        comment:
+          en: 'HV battery crash event memorized'
+          fr: 'Choc mémorisé par la batterie haute tension'
+          es: 'Impacto registrado en la batería de alta tensión'
+          de: 'Von der Hochvoltbatterie gespeicherter Unfall'
+          it: 'Urto memorizzato dalla batteria ad alta tensione'
+          pl: 'Zdarzenie zderzeniowe zapisane w pamięci akumulatora wysokiego napięcia'
+          ru: 'Событие удара, зафиксированное высоковольтной батареей'
+          zh: '高压电池已记录碰撞事件'
+          hu: 'A nagyfeszültségű akkumulátor által rögzített ütközés'
+          pt: 'Evento de colisão da bateria de alta tensão memorizado'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No crash detected'
+            fr: 'Pas de choc détecté'
+            es: 'Sin colisión detectada'
+            de: 'Kein Aufprall erkannt'
+            it: 'Nessun urto rilevato'
+            pl: 'Nie wykryto zderzenia'
+            ru: 'Столкновение не обнаружено'
+            zh: '未检测到碰撞'
+            hu: 'Nincs ütközés érzékelve'
+            pt: 'Sem colisão detetada'
+          0x01:
+            en: 'Crash detected'
+            fr: 'Choc détecté'
+            es: 'Impacto detectado'
+            de: 'Aufprall erkannt'
+            it: 'Urto rilevato'
+            pl: 'Wykryto zderzenie'
+            ru: 'Обнаружено столкновение'
+            zh: '检测到碰撞'
+            hu: 'Ütközés észlelve'
+            pt: 'Colisão detetada'
+      HV_BATTERY_COLD_CRANK_MODE_ACK:
+        bits: '3.2'
+        comment:
+          en: 'HV battery cold-crank performance mode acknowledgment'
+          fr: 'Acquittement du mode de performance de démarrage à froid de la batterie haute tension'
+          es: 'Confirmación del modo de rendimiento de arranque en frío de la batería de alta tensión'
+          de: 'Quittierung des Kaltstart-Leistungsmodus der Hochvoltbatterie'
+          it: 'Conferma della modalità di prestazione per l''avviamento a freddo della batteria ad alta tensione'
+          pl: 'Potwierdzenie trybu osiągów zimnego rozruchu akumulatora wysokiego napięcia'
+          ru: 'Подтверждение режима производительности холодного пуска высоковольтной батареи'
+          zh: '高压电池冷启动性能模式确认'
+          hu: 'A nagyfeszültségű akkumulátor hidegindítási teljesítménymódjának nyugtázása'
+          pt: 'Confirmação do modo de desempenho de arranque a frio da bateria de alta tensão'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Nominal mode acknowledged'
+            fr: 'Mode nominal acquitté'
+            es: 'Modo nominal confirmado'
+            de: 'Nennbetrieb bestätigt'
+            it: 'Modalità nominale confermata'
+            pl: 'Potwierdzony tryb nominalny'
+            ru: 'Номинальный режим подтверждён'
+            zh: '额定模式已确认'
+            hu: 'Névleges üzemmód nyugtázva'
+            pt: 'Modo nominal confirmado'
+          0x01:
+            en: 'Cold cranking mode acknowledgment'
+            fr: 'Mode démarrage à froid acquitté'
+            es: 'Modo de arranque en frío confirmado'
+            de: 'Kaltstartmodus bestätigt'
+            it: 'Modalità di avviamento a freddo confermata'
+            pl: 'Potwierdzono tryb rozruchu na zimno'
+            ru: 'Подтверждён режим холодного пуска'
+            zh: '冷启动模式已确认'
+            hu: 'Hidegindítási üzemmód nyugtázva'
+            pt: 'Modo de arranque a frio confirmado'
+      HV_BATTERY_CHARGE_NEED:
+        bits: '3.1'
+        comment:
+          en: 'HV battery charge need'
+          fr: 'Besoin de charge de la batterie haute tension'
+          es: 'Necesidad de carga de la batería de alta tensión'
+          de: 'Ladebedarf der Hochvoltbatterie'
+          it: 'Necessità di ricarica della batteria ad alta tensione'
+          pl: 'Zapotrzebowanie na ładowanie akumulatora wysokiego napięcia'
+          ru: 'Потребность в зарядке высоковольтной батареи'
+          zh: '高压电池充电需求'
+          hu: 'A nagyfeszültségű akkumulátor töltési igénye'
+          pt: 'Necessidade de carga da bateria de alta tensão'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No need'
+            fr: 'Pas de besoin'
+            es: 'Sin necesidad'
+            de: 'Kein Bedarf'
+            it: 'Nessuna necessità'
+            pl: 'Brak potrzeby'
+            ru: 'Нет потребности'
+            zh: '无需求'
+            hu: 'Nincs igény'
+            pt: 'Sem necessidade'
+          0x01:
+            en: 'Need'
+            fr: 'Besoin'
+            es: 'Necesidad'
+            de: 'Bedarf'
+            it: 'Necessità'
+            pl: 'Zapotrzebowanie'
+            ru: 'Потребность'
+            zh: '需求'
+            hu: 'Igény'
+            pt: 'Necessidade'
+      HV_BATTERY_PREDICTED_CHARGE_VOLTAGE_LIMIT_10S:
+        bits: '3.0-4.0'
+        comment:
+          en: 'Predicted HV battery charge voltage limit at 10 s'
+          fr: 'Limite de tension de charge prévisionnelle de la batterie haute tension à 10 s'
+          es: 'Límite previsto de tensión de carga de la batería de alta tensión a 10 s'
+          de: 'Prognostizierte Ladespannungsgrenze der Hochvoltbatterie bei 10 s'
+          it: 'Limite previsto della tensione di carica della batteria ad alta tensione a 10 s'
+          pl: 'Przewidywany limit napięcia ładowania akumulatora wysokiego napięcia po 10 s'
+          ru: 'Прогнозируемый предел напряжения заряда высоковольтной батареи через 10 с'
+          zh: '高压电池10秒预测充电电压限值'
+          hu: 'A nagyfeszültségű akkumulátor előre jelzett töltőfeszültség-korlátja 10 s-nál'
+          pt: 'Limite previsto da tensão de carga da bateria de alta tensão a 10 s'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 500
+        units: 'V'
+        invalid: 0x1FF
+        default: 0x00
+      HV_BATTERY_PREDICTED_CHARGE_CURRENT_LIMIT_10S:
+        bits: '5.7-5.0'
+        comment:
+          en: 'Predicted HV battery charge current limit at 10 s'
+          fr: 'Limite de courant de charge prévisionnelle de la batterie haute tension à 10 s'
+          es: 'Límite previsto de corriente de carga de la batería de alta tensión a 10 s'
+          de: 'Prognostizierte Ladestromgrenze der Hochvoltbatterie bei 10 s'
+          it: 'Limite previsto della corrente di carica della batteria ad alta tensione a 10 s'
+          pl: 'Przewidywany limit prądu ładowania akumulatora wysokiego napięcia po 10 s'
+          ru: 'Прогнозируемый предел тока заряда высоковольтной батареи через 10 с'
+          zh: '高压电池10秒预测充电电流限值'
+          hu: 'A nagyfeszültségű akkumulátor előre jelzett töltőáram-korlátja 10 s-nál'
+          pt: 'Limite previsto da corrente de carga da bateria de alta tensão a 10 s'
+        type: 'uint'
+        factor: 0.5
+        offset: -120
+        min: -120
+        max: 0
+        units: 'A'
+        invalid: 0xFF
+        default: 0xF0
+      HV_BATTERY_GENERATED_HEAT:
+        bits: '6.7-7.7'
+        comment:
+          en: 'Heat generated by the HV battery'
+          fr: 'Chaleur générée par la batterie haute tension'
+          es: 'Calor generado por la batería de alta tensión'
+          de: 'Von der Hochvoltbatterie erzeugte Wärme'
+          it: 'Calore generato dalla batteria ad alta tensione'
+          pl: 'Ciepło wytwarzane przez akumulator wysokiego napięcia'
+          ru: 'Тепло, выделяемое высоковольтной батареей'
+          zh: '高压电池产生的热量'
+          hu: 'A nagyfeszültségű akkumulátor által termelt hő'
+          pt: 'Calor gerado pela bateria de alta tensão'
+        type: 'uint'
+        factor: 100
+        min: 0
+        max: 50000
+        units: 'W'
+        invalid: 0x1FF
+        default: 0x00
+      HV_BATTERY_STATE_OF_ENERGY:
+        bits: '7.6-8.4'
+        comment:
+          en: 'HV battery state of energy'
+          fr: 'Niveau d''énergie de la batterie haute tension'
+          es: 'Nivel de energía de la batería de alta tensión'
+          de: 'Energiezustand der Hochvoltbatterie'
+          it: 'Livello di energia della batteria ad alta tensione'
+          pl: 'Poziom energii akumulatora wysokiego napięcia'
+          ru: 'Уровень энергии высоковольтной батареи'
+          zh: '高压电池能量状态'
+          hu: 'A nagyfeszültségű akkumulátor energiaszintje'
+          pt: 'Estado de energia da bateria de alta tensão'
+        type: 'uint'
+        factor: 16
+        min: 0
+        max: 32720
+        units: 'Wh'
+        invalid: 0x7FF
+        default: 0x00
+      HV_BATTERY_CONTACTOR_OPENING_IMMINENT:
+        bits: '8.3'
+        comment:
+          en: 'HV battery contactor opening imminent warning'
+          fr: 'Alerte d''ouverture imminente des contacteurs de la batterie haute tension'
+          es: 'Aviso de apertura inminente de los contactores de la batería de alta tensión'
+          de: 'Warnung: Bevorstehendes Öffnen der Hochvoltbatterie-Schütze'
+          it: 'Avviso di apertura imminente dei contattori della batteria ad alta tensione'
+          pl: 'Ostrzeżenie o zbliżającym się otwarciu styczników akumulatora wysokiego napięcia'
+          ru: 'Предупреждение о скором размыкании контакторов высоковольтной батареи'
+          zh: '高压电池接触器即将断开警告'
+          hu: 'Figyelmeztetés a nagyfeszültségű akkumulátor érintkezőinek küszöbön álló nyitására'
+          pt: 'Aviso de abertura iminente do contactor da bateria de alta tensão'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No alert'
+            fr: 'Pas d''alerte'
+            es: 'Sin alerta'
+            de: 'Keine Warnung'
+            it: 'Nessun avviso'
+            pl: 'Brak alertu'
+            ru: 'Нет предупреждения'
+            zh: '无警报'
+            hu: 'Nincs riasztás'
+            pt: 'Sem alerta'
+          0x01:
+            en: 'Alert'
+            fr: 'Alerte'
+            es: 'Alerta'
+            de: 'Warnung'
+            it: 'Allarme'
+            pl: 'Alarm'
+            ru: 'Предупреждение'
+            zh: '警报'
+            hu: 'Riasztás'
+            pt: 'Alerta'
+      MIL_STEADY_ILLUMINATION_REQUEST:
+        bits: '8.2'
+        comment:
+          en: 'Steady MIL warning lamp request'
+          fr: 'Demande d''allumage fixe du témoin MIL'
+          es: 'Solicitud de encendido fijo del testigo MIL'
+          de: 'Anforderung für dauerhaft leuchtende MIL-Kontrollleuchte'
+          it: 'Richiesta di accensione fissa della spia MIL'
+          pl: 'Żądanie stałego zapalenia lampki MIL'
+          ru: 'Запрос на постоянное включение лампы MIL'
+          zh: '请求MIL故障灯常亮显示'
+          hu: 'MIL jelzőlámpa folyamatos világításának kérése'
+          pt: 'Pedido de acendimento fixo da luz avisadora MIL'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request'
+            fr: 'Pas de demande'
+            es: 'Sin solicitud'
+            de: 'Keine Anforderung'
+            it: 'Nessuna richiesta'
+            pl: 'Brak żądania'
+            ru: 'Нет запроса'
+            zh: '无请求'
+            hu: 'Nincs kérés'
+            pt: 'Sem pedido'
+          0x01:
+            en: 'MIL lamp continuous lighting request'
+            fr: 'Demande d''allumage continu du témoin MIL'
+            es: 'Solicitud de encendido continuo del testigo MIL'
+            de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte'
+            it: 'Richiesta di accensione continua della spia MIL'
+            pl: 'Żądanie ciągłego świecenia kontrolki MIL'
+            ru: 'Запрос постоянного включения индикатора MIL'
+            zh: 'MIL 灯常亮请求'
+            hu: 'MIL lámpa folyamatos világításának kérése'
+            pt: 'Pedido de acendimento contínuo da luz MIL'
+      STOP_SERVICE_LAMP_BLINK_REQUEST:
+        bits: '8.1'
+        comment:
+          en: 'Request to blink the stop/service warning lamp on the display'
+          fr: 'Demande de clignotement du témoin d''arrêt et de service sur l''afficheur'
+          es: 'Solicitud de parpadeo del testigo de parada y servicio en la pantalla'
+          de: 'Anforderung zum Blinken der Stopp-/Service-Kontrollleuchte im Display'
+          it: 'Richiesta di lampeggio della spia di stop e servizio sul display'
+          pl: 'Żądanie migania lampki zatrzymania i serwisu na wyświetlaczu'
+          ru: 'Запрос на мигание индикатора остановки и обслуживания на дисплее'
+          zh: '请求显示屏上的停止/维修警示灯闪烁'
+          hu: 'A leállás/szerviz jelzőlámpa villogtatásának kérése a kijelzőn'
+          pt: 'Pedido de intermitência da luz avisadora de paragem e serviço no visor'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request'
+            fr: 'Pas de demande'
+            es: 'Sin solicitud'
+            de: 'Keine Anforderung'
+            it: 'Nessuna richiesta'
+            pl: 'Brak żądania'
+            ru: 'Нет запроса'
+            zh: '无请求'
+            hu: 'Nincs kérés'
+            pt: 'Sem pedido'
+          0x01:
+            en: 'Requested'
+            fr: 'Demandé'
+            es: 'Solicitado'
+            de: 'Angefordert'
+            it: 'Richiesto'
+            pl: 'Żądane'
+            ru: 'Запрошено'
+            zh: '已请求'
+            hu: 'Kérve'
+            pt: 'Pedido'
+      UNUSED_1:
+        bits: '8.0'
+        unused: true

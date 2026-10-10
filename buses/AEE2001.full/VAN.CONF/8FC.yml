@@ -1,0 +1,76 @@
+id: 0x8FC
+name: 'CLUSTER_ODOMETER_READBACK'
+alt_names: ['MILEAGE_IN_ODOMETER']
+type: 'van'
+length: 5
+comment:
+  en: 'Odometer value saved in the instrument cluster, read back by a blank (replacement) body controller to restore the vehicle mileage.'
+  fr: 'Valeur du kilométrage sauvegardée dans le combiné d''instruments, relue par une BSI vierge (de remplacement) pour restaurer le kilométrage du véhicule.'
+  es: 'Valor del odómetro guardado en el cuadro de instrumentos, releído por una unidad de carrocería en blanco (de repuesto) para restaurar el kilometraje del vehículo.'
+  de: 'Im Kombiinstrument gespeicherter Kilometerstand, von einem leeren (Ersatz-)Karosseriesteuergerät zurückgelesen, um den Fahrzeugkilometerstand wiederherzustellen.'
+  it: 'Valore del contachilometri salvato nel quadro strumenti, riletto da una centralina carrozzeria vergine (di ricambio) per ripristinare il chilometraggio del veicolo.'
+  pl: 'Wartość przebiegu zapisana w zestawie wskaźników, odczytywana przez pusty (zamienny) sterownik nadwozia w celu przywrócenia przebiegu pojazdu.'
+  ru: 'Значение пробега, сохранённое в приборной панели, считываемое пустым (заменённым) блоком кузовной электроники для восстановления пробега автомобиля.'
+  zh: '保存在仪表组中的里程表数值,由空白(更换后)车身控制器读回以恢复车辆里程。'
+  hu: 'A műszerfalban tárolt kilométeróra-állás, amelyet egy üres (csere-) karosszériavezérlő olvas vissza a jármű futásteljesítményének helyreállításához.'
+  pt: 'Valor da quilometragem guardado no quadrante, relido por uma BSI em branco (de substituição) para restaurar a quilometragem do veículo.'
+periodicity: ['trigger', 'request']
+senders: ['CMB']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  REAR_RIGHT_WHEEL_SPEED:
+    bits: '2.7-4.0'
+    comment:
+      en: 'Odometer value saved in the instrument cluster, saved at least every 10 km (km)'
+      fr: 'Kilométrage sauvegardé dans le combiné, enregistré au moins tous les 10 km (km)'
+      es: 'Kilometraje guardado en el cuadro de instrumentos, guardado al menos cada 10 km (km)'
+      de: 'Im Kombiinstrument gespeicherter Kilometerstand, mindestens alle 10 km gespeichert (km)'
+      it: 'Chilometraggio salvato nel quadro strumenti, salvato almeno ogni 10 km (km)'
+      pl: 'Przebieg zapisany w zestawie wskaźników, zapisywany co najmniej co 10 km (km)'
+      ru: 'Пробег, сохранённый в комбинации приборов, сохраняется не реже чем через каждые 10 км (км)'
+      zh: '保存在仪表组中的里程值,至少每10公里保存一次(km)'
+      hu: 'A műszeregységben tárolt kilométeróra-érték, legalább 10 km-enként mentve (km)'
+      pt: 'Valor do conta-quilómetros guardado no quadrante, guardado pelo menos a cada 10 km (km)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 1677721.4
+    units: 'km'
+    default: 0x00
+
+  FOOTER:
+    bits: '5.7-5.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

@@ -1,0 +1,449 @@
+id: 0x9D4
+name: 'TELEMATICS_REMOTE_CONTROL_STATUS'
+type: 'van'
+length: 5
+comment:
+  en: 'Buttons and scroll-wheel state of the telematics remote control unit, polled by the telematics unit (in-frame reply).'
+  fr: 'État des boutons et de la molette de la commande déportée télématique, interrogé par le boîtier télématique (réponse dans la trame).'
+  es: 'Estado de los botones y de la rueda de desplazamiento del mando a distancia telemático, consultado por la unidad telemática (respuesta en la trama).'
+  de: 'Tasten- und Scrollrad-Status der telematischen Fernbedienung, von der Telematikeinheit abgefragt (Antwort im selben Rahmen).'
+  it: 'Stato dei pulsanti e della rotella di scorrimento del telecomando telematico, interrogato dall''unità telematica (risposta nella trama).'
+  pl: 'Stan przycisków i pokrętła zdalnego sterowania telematycznego, odpytywany przez jednostkę telematyczną (odpowiedź w tej samej ramce).'
+  ru: 'Состояние кнопок и колеса прокрутки телематического пульта дистанционного управления, опрашиваемого телематическим блоком (ответ в том же кадре).'
+  zh: '车载通信单元轮询的远程遥控器按钮及滚轮状态(同帧应答)。'
+  hu: 'A telematikai távvezérlő gombjainak és görgőjének állapota, amelyet a telematikai egység kérdez le (válasz ugyanabban a keretben).'
+  pt: 'Estado dos botões e da roda de deslocamento do comando à distância telemático, interrogado pela unidade telemática (resposta na trama).'
+periodicity: ['50ms']
+senders: ['CRT']
+receivers: ['BTEL']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BTEL']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  MENU_BUTTON:
+    bits: '2.7'
+    comment:
+      en: 'Remote control menu button'
+      fr: 'Touche Menu de la télécommande'
+      es: 'Botón de menú del mando a distancia'
+      de: 'Menütaste der Fernbedienung'
+      it: 'Pulsante menu del telecomando'
+      pl: 'Przycisk menu pilota'
+      ru: 'Кнопка «меню» пульта дистанционного управления'
+      zh: '遥控器菜单按键'
+      hu: 'A távirányító menü gombja'
+      pt: 'Botão de menu do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Menu button not pressed'
+        fr: 'Bouton Menu non actionné'
+        es: 'Botón Menú no pulsado'
+        de: 'Menütaste nicht betätigt'
+        it: 'Pulsante Menu non premuto'
+        pl: 'Przycisk Menu nie naciśnięty'
+        ru: 'Кнопка Меню не нажата'
+        zh: '菜单按钮未按下'
+        hu: 'Menü gomb nincs megnyomva'
+        pt: 'Botão Menu não acionado'
+      0x01:
+        en: 'Menu button pressed'
+        fr: 'Commande menu activée'
+        es: 'Botón de menú pulsado'
+        de: 'Menütaste gedrückt'
+        it: 'Pulsante menu premuto'
+        pl: 'Naciśnięto przycisk menu'
+        ru: 'Нажата кнопка меню'
+        zh: '菜单按钮已按下'
+        hu: 'Menü gomb megnyomva'
+        pt: 'Botão de menu premido'
+
+  PHONE_BUTTON:
+    bits: '2.6'
+    comment:
+      en: 'Remote control phone button; this button wakes up the network'
+      fr: 'Touche Téléphone de la télécommande ; cette touche réveille le réseau'
+      es: 'Botón de teléfono del mando a distancia; este botón activa la red'
+      de: 'Telefontaste der Fernbedienung; diese Taste weckt das Netzwerk auf'
+      it: 'Pulsante telefono del telecomando; questo pulsante risveglia la rete'
+      pl: 'Przycisk telefonu pilota; ten przycisk wybudza sieć'
+      ru: 'Кнопка «телефон» пульта дистанционного управления; эта кнопка пробуждает сеть'
+      zh: '遥控器电话按键;按下该键可唤醒网络'
+      hu: 'A távirányító telefon gombja; ez a gomb ébreszti fel a hálózatot'
+      pt: 'Botão Telefone do comando à distância; este botão desperta a rede'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Phone button not pressed'
+        fr: 'Bouton Téléphone non appuyé'
+        es: 'Botón de teléfono no pulsado'
+        de: 'Telefontaste nicht gedrückt'
+        it: 'Pulsante telefono non premuto'
+        pl: 'Nienaciśnięty przycisk telefonu'
+        ru: 'Кнопка «телефон» не нажата'
+        zh: '电话按钮未按下'
+        hu: 'Telefon gomb nincs megnyomva'
+        pt: 'Botão do telefone não premido'
+      0x01:
+        en: 'Phone button pressed'
+        fr: 'Bouton téléphone activé'
+        es: 'Botón de teléfono pulsado'
+        de: 'Telefontaste gedrückt'
+        it: 'Pulsante telefono premuto'
+        pl: 'Wciśnięty przycisk telefonu'
+        ru: 'Нажата кнопка телефона'
+        zh: '电话按钮已按下'
+        hu: 'A telefon gomb megnyomva'
+        pt: 'Botão de telefone premido'
+
+  NAVIGATION_BUTTON:
+    bits: '2.5'
+    comment:
+      en: 'Remote control navigation button'
+      fr: 'Touche Navigation de la télécommande'
+      es: 'Botón de navegación del mando a distancia'
+      de: 'Navigationstaste der Fernbedienung'
+      it: 'Pulsante di navigazione del telecomando'
+      pl: 'Przycisk nawigacji pilota'
+      ru: 'Кнопка навигации пульта дистанционного управления'
+      zh: '遥控器导航按键'
+      hu: 'A távirányító navigációs gombja'
+      pt: 'Botão de navegação do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Navigation button not pressed'
+        fr: 'Commande de navigation non actionnée'
+        es: 'Mando de navegación no accionado'
+        de: 'Navigationstaste nicht betätigt'
+        it: 'Comando di navigazione non azionato'
+        pl: 'Przycisk nawigacji nienaciśnięty'
+        ru: 'Кнопка навигации не нажата'
+        zh: '导航控件未按下'
+        hu: 'Navigációs vezérlő nincs megnyomva'
+        pt: 'Comando de navegação não acionado'
+      0x01:
+        en: 'Navigation button pressed'
+        fr: 'Commande Navigation activée'
+        es: 'Botón de navegación pulsado'
+        de: 'Navigationstaste gedrückt'
+        it: 'Pulsante Navigazione premuto'
+        pl: 'Naciśnięto przycisk Nawigacja'
+        ru: 'Кнопка навигации нажата'
+        zh: '导航按钮已按下'
+        hu: 'Navigáció gomb megnyomva'
+        pt: 'Botão de navegação pressionado'
+
+  MODE_BUTTON:
+    bits: '2.4'
+    comment:
+      en: 'Remote control mode button'
+      fr: 'Touche Mode de la télécommande'
+      es: 'Botón de modo del mando a distancia'
+      de: 'Modustaste der Fernbedienung'
+      it: 'Pulsante modalità del telecomando'
+      pl: 'Przycisk trybu pilota'
+      ru: 'Кнопка «режим» пульта дистанционного управления'
+      zh: '遥控器模式按键'
+      hu: 'A távirányító mód gombja'
+      pt: 'Botão de modo do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Mode button not pressed'
+        fr: 'Commande Mode non activée'
+        es: 'Mando de modo no activado'
+        de: 'Modustaste nicht betätigt'
+        it: 'Comando Modalità non attivato'
+        pl: 'Przycisk trybu nieaktywny'
+        ru: 'Кнопка режима не нажата'
+        zh: '模式按钮未按下'
+        hu: 'A Mód gomb nincs megnyomva'
+        pt: 'Comando de modo não ativado'
+      0x01:
+        en: 'Mode button pressed'
+        fr: 'Commande mode activée'
+        es: 'Botón de modo pulsado'
+        de: 'Modustaste gedrückt'
+        it: 'Pulsante modalità premuto'
+        pl: 'Naciśnięto przycisk trybu'
+        ru: 'Нажата кнопка режима'
+        zh: '模式按钮已按下'
+        hu: 'Mód gomb megnyomva'
+        pt: 'Comando de modo ativado'
+
+  MAIN_BUTTON:
+    bits: '2.3'
+    comment:
+      en: 'Remote control main button'
+      fr: 'Touche Main de la télécommande'
+      es: 'Botón principal del mando a distancia'
+      de: 'Haupttaste der Fernbedienung'
+      it: 'Pulsante principale del telecomando'
+      pl: 'Przycisk główny pilota'
+      ru: 'Главная кнопка пульта дистанционного управления'
+      zh: '遥控器主按键'
+      hu: 'A távirányító fő gombja'
+      pt: 'Botão principal do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Main button not pressed'
+        fr: 'Bouton principal non actionné'
+        es: 'Botón principal no pulsado'
+        de: 'Haupttaste nicht betätigt'
+        it: 'Pulsante principale non premuto'
+        pl: 'Przycisk główny nie naciśnięty'
+        ru: 'Главная кнопка не нажата'
+        zh: '主按钮未按下'
+        hu: 'Fő gomb nincs megnyomva'
+        pt: 'Botão principal não pressionado'
+      0x01:
+        en: 'Main button pressed'
+        fr: 'Commande principale activée'
+        es: 'Mando principal activado'
+        de: 'Haupttaster betätigt'
+        it: 'Comando principale attivato'
+        pl: 'Główne polecenie aktywowane'
+        ru: 'Основная команда активирована'
+        zh: '主控制已激活'
+        hu: 'A fő vezérlés aktiválva'
+        pt: 'Comando principal ativado'
+
+  AUDIO_BUTTON:
+    bits: '2.2'
+    comment:
+      en: 'Remote control audio button'
+      fr: 'Touche Audio de la télécommande'
+      es: 'Botón de audio del mando a distancia'
+      de: 'Audio-Taste der Fernbedienung'
+      it: 'Pulsante audio del telecomando'
+      pl: 'Przycisk audio pilota'
+      ru: 'Кнопка «аудио» пульта дистанционного управления'
+      zh: '遥控器音频按键'
+      hu: 'A távirányító audio gombja'
+      pt: 'Botão de áudio do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Audio command not activated'
+        fr: 'Commande audio non activée'
+        es: 'Mando de audio no activado'
+        de: 'Audiobefehl nicht aktiviert'
+        it: 'Comando audio non attivato'
+        pl: 'Polecenie audio nieaktywowane'
+        ru: 'Аудиокоманда не активирована'
+        zh: '音频命令未激活'
+        hu: 'Audioparancs nincs aktiválva'
+        pt: 'Comando áudio não ativado'
+      0x01:
+        en: 'Audio button pressed'
+        fr: 'Bouton Audio appuyé'
+        es: 'Botón de audio pulsado'
+        de: 'Audio-Taste gedrückt'
+        it: 'Pulsante audio premuto'
+        pl: 'Naciśnięto przycisk audio'
+        ru: 'Кнопка «аудио» нажата'
+        zh: '音频按钮已按下'
+        hu: 'Audio gomb megnyomva'
+        pt: 'Botão de áudio premido'
+
+  ESCAPE_BUTTON:
+    bits: '2.1'
+    comment:
+      en: 'Remote control escape button'
+      fr: 'Touche Escape de la télécommande'
+      es: 'Botón Escape del mando a distancia'
+      de: 'Escape-Taste der Fernbedienung'
+      it: 'Pulsante Escape del telecomando'
+      pl: 'Przycisk Escape pilota'
+      ru: 'Кнопка «отмена» пульта дистанционного управления'
+      zh: '遥控器返回(Escape)按键'
+      hu: 'A távirányító Escape gombja'
+      pt: 'Tecla Escape do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Escape command not activated'
+        fr: 'Commande Escape non activée'
+        es: 'Comando Escape no activado'
+        de: 'Escape-Befehl nicht aktiviert'
+        it: 'Comando Escape non attivato'
+        pl: 'Polecenie Escape nieaktywowane'
+        ru: 'Команда Escape не активирована'
+        zh: 'Escape指令未激活'
+        hu: 'Escape parancs nincs aktiválva'
+        pt: 'Comando Escape não ativado'
+      0x01:
+        en: 'Escape command activated'
+        fr: 'Commande Échap activée'
+        es: 'Comando Escape activado'
+        de: 'Escape-Befehl aktiviert'
+        it: 'Comando Escape attivato'
+        pl: 'Aktywowano polecenie Escape'
+        ru: 'Активирована команда Escape'
+        zh: 'Escape 指令已激活'
+        hu: 'Escape parancs aktiválva'
+        pt: 'Comando de escape ativado'
+
+  UNUSED_1:
+    bits: '2.0'
+    unused: true
+
+  VALIDATION_BUTTON:
+    bits: '3.7'
+    comment:
+      en: 'Remote control validation (enter) button'
+      fr: 'Touche Validation (Entrée) de la télécommande'
+      es: 'Botón de validación (Enter) del mando a distancia'
+      de: 'Bestätigungstaste (Enter) der Fernbedienung'
+      it: 'Pulsante di conferma (Invio) del telecomando'
+      pl: 'Przycisk zatwierdzenia (Enter) pilota'
+      ru: 'Кнопка подтверждения (Enter) пульта дистанционного управления'
+      zh: '遥控器确认(回车)按键'
+      hu: 'A távirányító megerősítő (Enter) gombja'
+      pt: 'Tecla de validação (Enter) do comando à distância'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Validation control not pressed'
+        fr: 'Commande de validation non activée'
+        es: 'Mando de validación no accionado'
+        de: 'Bestätigungstaste nicht gedrückt'
+        it: 'Comando di convalida non premuto'
+        pl: 'Przycisk zatwierdzenia niewciśnięty'
+        ru: 'Кнопка подтверждения не нажата'
+        zh: '确认控制未按下'
+        hu: 'Megerősítő gomb nincs megnyomva'
+        pt: 'Controlo de validação não premido'
+      0x01:
+        en: 'Validation button pressed'
+        fr: 'Commande validation activée'
+        es: 'Botón de validación pulsado'
+        de: 'Bestätigungstaste gedrückt'
+        it: 'Pulsante di convalida premuto'
+        pl: 'Naciśnięto przycisk zatwierdzenia'
+        ru: 'Нажата кнопка подтверждения'
+        zh: '确认按钮已按下'
+        hu: 'Jóváhagyás gomb megnyomva'
+        pt: 'Comando de validação ativado'
+
+  SCAN_WHEEL_OVERFLOW_UP:
+    bits: '3.6'
+    comment:
+      en: 'Scan-wheel counter positive overflow, toggles each time the counter wraps from 255 to 128; cleared at network power-up and on entering local mode'
+      fr: 'Débordement positif du compteur de la molette, change d''état à chaque passage de 255 à 128 ; remis à 0 à la mise sous tension du réseau et à l''entrée en mode local'
+      es: 'Desbordamiento positivo del contador de la rueda, cambia de estado cada vez que pasa de 255 a 128; se reinicia al encender la red y al entrar en modo local'
+      de: 'Positiver Überlauf des Radzählers, wechselt bei jedem Übergang von 255 auf 128; wird beim Einschalten des Netzwerks und beim Wechsel in den lokalen Modus zurückgesetzt'
+      it: 'Overflow positivo del contatore della rotellina, cambia stato a ogni passaggio da 255 a 128; azzerato all''accensione della rete e all''ingresso in modalità locale'
+      pl: 'Dodatnie przepełnienie licznika pokrętła, zmienia stan przy każdym przejściu z 255 na 128; zerowany przy załączeniu sieci i wejściu w tryb lokalny'
+      ru: 'Положительное переполнение счётчика колёсика, меняет состояние при каждом переходе с 255 на 128; сбрасывается при включении сети и переходе в локальный режим'
+      zh: '滚轮计数器正向溢出,每次计数从255跳变到128时状态翻转;网络上电及进入本地模式时清零'
+      hu: 'A görgőszámláló pozitív túlcsordulása, állapotot vált minden 255-ről 128-ra váltáskor; a hálózat bekapcsolásakor és helyi módba lépéskor törlődik'
+      pt: 'Estouro positivo do contador do botão rotativo, muda de estado sempre que o contador passa de 255 para 128; reposto a 0 ao ligar a rede e ao entrar em modo local'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Positive counter overflow'
+        fr: 'Débordement positif du compteur'
+        es: 'Desbordamiento positivo del contador'
+        de: 'Positiver Zählerüberlauf'
+        it: 'Overflow positivo del contatore'
+        pl: 'Dodatnie przepełnienie licznika'
+        ru: 'Положительное переполнение счётчика'
+        zh: '计数器正向溢出'
+        hu: 'Pozitív számlálótúlcsordulás'
+        pt: 'Estouro positivo do contador'
+
+  SCAN_WHEEL_OVERFLOW_DOWN:
+    bits: '3.5'
+    comment:
+      en: 'Scan-wheel counter negative overflow, toggles each time the counter wraps from 0 to 128'
+      fr: 'Débordement négatif du compteur de la molette, change d''état à chaque passage de 0 à 128'
+      es: 'Desbordamiento negativo del contador de la rueda, cambia de estado cada vez que pasa de 0 a 128'
+      de: 'Negativer Überlauf des Radzählers, wechselt bei jedem Übergang von 0 auf 128'
+      it: 'Overflow negativo del contatore della rotellina, cambia stato a ogni passaggio da 0 a 128'
+      pl: 'Ujemne przepełnienie licznika pokrętła, zmienia stan przy każdym przejściu z 0 na 128'
+      ru: 'Отрицательное переполнение счётчика колёсика, меняет состояние при каждом переходе с 0 на 128'
+      zh: '滚轮计数器负向溢出,每次计数从0跳变到128时状态翻转'
+      hu: 'A görgőszámláló negatív túlcsordulása, állapotot vált minden 0-ról 128-ra váltáskor'
+      pt: 'Estouro negativo do contador do botão rotativo, muda de estado sempre que o contador passa de 0 para 128'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Counter negative overflow'
+        fr: 'Débordement négatif du compteur'
+        es: 'Desbordamiento negativo del contador'
+        de: 'Negativer Zählerüberlauf'
+        it: 'Overflow negativo del contatore'
+        pl: 'Ujemne przepełnienie licznika'
+        ru: 'Отрицательное переполнение счётчика'
+        zh: '计数器负向溢出'
+        hu: 'Számláló negatív túlcsordulása'
+        pt: 'Saturação negativa do contador'
+
+  UNUSED_2:
+    bits: '3.4-3.0'
+    unused: true
+
+  SCAN_WHEEL_COUNTER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Scroll-wheel step counter (0-255); reset to 0x80 at network power-up and on entering local mode, then incremented/decremented by wheel steps'
+      fr: 'Compteur de pas de la molette (0-255) ; réinitialisé à 0x80 à la mise sous tension du réseau et à l''entrée en mode local, puis incrémenté/décrémenté par pas de molette'
+      es: 'Contador de pasos de la rueda (0-255); reiniciado a 0x80 al encender la red y al entrar en modo local, luego incrementado/decrementado por pasos de la rueda'
+      de: 'Schrittzähler des Scrollrads (0-255); wird beim Einschalten des Netzwerks und beim Wechsel in den lokalen Modus auf 0x80 zurückgesetzt, danach je nach Raddrehung erhöht/verringert'
+      it: 'Contatore dei passi della rotellina (0-255); reimpostato a 0x80 all''accensione della rete e all''ingresso in modalità locale, poi incrementato/decrementato in base ai passi della rotellina'
+      pl: 'Licznik kroków pokrętła (0-255); resetowany do 0x80 przy załączeniu sieci i wejściu w tryb lokalny, następnie zwiększany/zmniejszany wraz z krokami pokrętła'
+      ru: 'Счётчик шагов колёсика прокрутки (0-255); сбрасывается на 0x80 при включении сети и переходе в локальный режим, затем увеличивается/уменьшается по шагам колёсика'
+      zh: '滚轮步进计数器(0-255);网络上电及进入本地模式时复位为0x80,随后随滚轮转动递增/递减'
+      hu: 'Görgő lépésszámláló (0-255); a hálózat bekapcsolásakor és helyi módba lépéskor 0x80-ra áll vissza, majd a görgő elforgatásával nő/csökken'
+      pt: 'Contador de passos da roda (0-255); reiniciado para 0x80 ao ligar a rede e ao entrar em modo local, depois incrementado/decrementado por passos da roda'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x80
+
+  FOOTER:
+    bits: '5.7-5.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

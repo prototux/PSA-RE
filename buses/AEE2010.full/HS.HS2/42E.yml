@@ -1,0 +1,330 @@
+id: 0x42E
+name: 'BSI_CABIN_DATA_5'
+type: 'can'
+length: 6
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+observations:
+  en: 'On state change of: HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+  fr: 'Sur changement d''état de : HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+  es: 'Al cambiar el estado de: HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+  de: 'Bei Statusänderung von: HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+  it: 'Al cambiamento di stato di: HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+  pl: 'Wysyłane przy zmianie stanu: HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+  ru: 'При изменении состояния: HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+  zh: '当CHARGE_HV_BATT_NEED, PLUGIN_CHARGE_TYPE_SYNTH状态变化时'
+  hu: 'A(z) HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS állapotváltozásakor'
+  pt: 'Na mudança de estado de: HV_BATTERY_CHARGE_NEED_STATUS, CHARGE_MODE_SYNTHESIS'
+periodicity: ['100ms', 'trigger']
+senders: ['BSI']
+receivers: ['VCU', 'ABS', 'CMM', 'E_VCU']
+
+signals:
+  ESP_MODE_REQUEST:
+    bits: '1.7-1.5'
+    comment:
+      en: 'ESP mode requested (normal, snow, mud, sand)'
+      fr: 'Mode ESP demandé (normal, neige, boue, sable)'
+      es: 'Modo ESP solicitado (normal, nieve, barro, arena)'
+      de: 'Angeforderter ESP-Modus (normal, Schnee, Schlamm, Sand)'
+      it: 'Modalità ESP richiesta (normale, neve, fango, sabbia)'
+      pl: 'Żądany tryb ESP (normalny, śnieg, błoto, piasek)'
+      ru: 'Запрошенный режим ESP (нормальный, снег, грязь, песок)'
+      zh: '请求的ESP模式(普通、雪地、泥地、沙地)'
+      hu: 'Kért ESP mód (normál, hó, sár, homok)'
+      pt: 'Modo ESP solicitado (normal, neve, lama, areia)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Snow'
+        fr: 'Neige'
+        es: 'Nieve'
+        de: 'Schnee'
+        it: 'Neve'
+        pl: 'Śnieg'
+        ru: 'Снег'
+        zh: '雪'
+        hu: 'Hó'
+        pt: 'Neve'
+      0x02:
+        en: 'Mud'
+        fr: 'Boue'
+        es: 'Barro'
+        de: 'Schlamm'
+        it: 'Fango'
+        pl: 'Błoto'
+        ru: 'Грязь'
+        zh: '泥地'
+        hu: 'Sár'
+        pt: 'Lama'
+      0x03:
+        en: 'Sand'
+        fr: 'Sable'
+        es: 'Arena'
+        de: 'Sand'
+        it: 'Sabbia'
+        pl: 'Piasek'
+        ru: 'Песок'
+        zh: '沙地'
+        hu: 'Homok'
+        pt: 'Areia'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  CHILLER_SOLENOID_VALVE_COMMAND:
+    bits: '1.4'
+    comment:
+      en: 'Control of the two-way chiller solenoid valve'
+      fr: 'Pilotage de l''électrovanne deux voies du chiller'
+      es: 'Control de la electroválvula de dos vías del chiller'
+      de: 'Ansteuerung des 2-Wege-Magnetventils des Chillers'
+      it: 'Comando dell''elettrovalvola a due vie del chiller'
+      pl: 'Sterowanie dwudrogowym zaworem elektromagnetycznym chłodnicy czynnika (chiller)'
+      ru: 'Управление двухходовым электромагнитным клапаном чиллера'
+      zh: '冷却器(chiller)双向电磁阀的控制'
+      hu: 'A hűtőegység (chiller) kétutas mágnesszelepének vezérlése'
+      pt: 'Controlo da eletroválvula de duas vias do chiller'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+      0x01:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+
+  ELECTRIC_COMPRESSOR_SOLENOID_VALVE_COMMAND:
+    bits: '1.3'
+    comment:
+      en: 'Control of the two-way solenoid valve of the electric air conditioning compressor'
+      fr: 'Pilotage de l''électrovanne deux voies du compresseur de climatisation électrique'
+      es: 'Control de la electroválvula de dos vías del compresor de aire acondicionado eléctrico'
+      de: 'Ansteuerung des 2-Wege-Magnetventils des elektrischen Klimakompressors'
+      it: 'Comando dell''elettrovalvola a due vie del compressore del climatizzatore elettrico'
+      pl: 'Sterowanie dwudrogowym zaworem elektromagnetycznym elektrycznej sprężarki klimatyzacji'
+      ru: 'Управление двухходовым электромагнитным клапаном электрического компрессора кондиционера'
+      zh: '电动空调压缩机双向电磁阀的控制'
+      hu: 'Az elektromos klímakompresszor kétutas mágnesszelepének vezérlése'
+      pt: 'Controlo da eletroválvula de duas vias do compressor de ar condicionado elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+      0x01:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+
+  HV_BATTERY_CHARGE_NEED_STATUS:
+    bits: '1.2-1.1'
+    comment:
+      en: 'High-voltage battery charge need status'
+      fr: 'État du besoin de charge de la batterie haute tension'
+      es: 'Estado de la necesidad de carga de la batería de alta tensión'
+      de: 'Ladebedarfsstatus der Hochvoltbatterie'
+      it: 'Stato dell''esigenza di ricarica della batteria ad alta tensione'
+      pl: 'Stan zapotrzebowania na ładowanie akumulatora wysokiego napięcia'
+      ru: 'Статус потребности в зарядке высоковольтной батареи'
+      zh: '高压电池充电需求状态'
+      hu: 'A nagyfeszültségű akkumulátor töltési igényének állapota'
+      pt: 'Estado da necessidade de carga da bateria de alta tensão'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Charging needs to start'
+        fr: 'Besoin de démarrer la charge'
+        es: 'Necesidad de iniciar la carga'
+        de: 'Ladestart erforderlich'
+        it: 'Necessità di avviare la ricarica'
+        pl: 'Konieczność rozpoczęcia ładowania'
+        ru: 'Необходимость начать зарядку'
+        zh: '需要启动充电'
+        hu: 'Töltés indítása szükséges'
+        pt: 'Necessidade de iniciar o carregamento'
+      0x01:
+        en: 'Charge stop needed'
+        fr: 'Nécessité d''arrêt de charge'
+        es: 'Necesidad de detener la carga'
+        de: 'Ladeabbruch erforderlich'
+        it: 'Necessità di interruzione della ricarica'
+        pl: 'Konieczność zatrzymania ładowania'
+        ru: 'Необходимость остановки зарядки'
+        zh: '需要停止充电'
+        hu: 'Töltés leállítása szükséges'
+        pt: 'Necessidade de parar a carga'
+      0x02:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  AC_ELECTRIC_POWER_CONSUMPTION:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Power consumed by the air conditioning components (electric compressor and high-voltage water heater)'
+      fr: 'Puissance consommée par les organes de climatisation (compresseur électrique et chauffage électrique de l''eau haute tension)'
+      es: 'Potencia consumida por los componentes de climatización (compresor eléctrico y calentador de agua de alta tensión)'
+      de: 'Von den Klimakomponenten verbrauchte Leistung (elektrischer Kompressor und Hochvolt-Wasserheizer)'
+      it: 'Potenza consumata dai componenti di climatizzazione (compressore elettrico e riscaldatore d''acqua ad alta tensione)'
+      pl: 'Moc pobierana przez elementy klimatyzacji (sprężarka elektryczna i grzałka wody wysokiego napięcia)'
+      ru: 'Мощность, потребляемая компонентами кондиционера (электрический компрессор и высоковольтный водяной нагреватель)'
+      zh: '空调部件(电动压缩机和高压水加热器)消耗的功率'
+      hu: 'A klímaberendezés elemei (elektromos kompresszor és nagyfeszültségű vízmelegítő) által fogyasztott teljesítmény'
+      pt: 'Potência consumida pelos componentes de climatização (compressor elétrico e aquecedor elétrico de água de alta tensão)'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 12000
+    units: 'W'
+    invalid: 0xFF
+    default: 0xFE
+
+  CHARGE_MODE_SYNTHESIS:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Summary of the charging mode (waiting, deferred, immediate)'
+      fr: 'Synthèse du mode de recharge (attente, différé, immédiat)'
+      es: 'Resumen del modo de carga (espera, diferido, inmediato)'
+      de: 'Zusammenfassung des Lademodus (Warten, verzögert, sofort)'
+      it: 'Sintesi della modalità di ricarica (attesa, differita, immediata)'
+      pl: 'Podsumowanie trybu ładowania (oczekiwanie, opóźnione, natychmiastowe)'
+      ru: 'Сводка режима зарядки (ожидание, отложенная, немедленная)'
+      zh: '充电模式汇总(等待、延迟、立即)'
+      hu: 'A töltési mód összefoglalása (várakozás, késleltetett, azonnali)'
+      pt: 'Resumo do modo de carregamento (espera, diferido, imediato)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Waiting'
+        fr: 'En attente'
+        es: 'En espera'
+        de: 'Wartend'
+        it: 'In attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Em espera'
+      0x01:
+        en: 'Delayed'
+        fr: 'Différé'
+        es: 'Diferido'
+        de: 'Verzögert'
+        it: 'Differito'
+        pl: 'Opóźniony'
+        ru: 'Отложено'
+        zh: '延迟'
+        hu: 'Késleltetve'
+        pt: 'Diferido'
+      0x02:
+        en: 'Immediat'
+        fr: 'Immediat'
+        es: 'Inmediato'
+        de: 'Sofort'
+        it: 'Immediato'
+        pl: 'Natychmiastowy'
+        ru: 'Немедленно'
+        zh: '立即'
+        hu: 'Azonnali'
+        pt: 'Imediato'
+      0x03:
+        unused: true
+
+  UNUSED_2:
+    bits: '3.5-3.3'
+    unused: true
+
+  HV_BATTERY_ENERGY_SAVER_DELTA_SOE:
+    bits: '3.2-4.0'
+    comment:
+      en: 'State-of-energy (SoE) delta requested by the high-voltage battery energy saver function'
+      fr: 'Delta d''état d''énergie (SoE) demandé par la fonction d''économie d''énergie de la batterie haute tension'
+      es: 'Delta de estado de energía (SoE) solicitado por la función de ahorro de energía de la batería de alta tensión'
+      de: 'Von der Energiesparfunktion der Hochvoltbatterie angeforderte Energiezustandsdifferenz (SoE)'
+      it: 'Delta dello stato di energia (SoE) richiesto dalla funzione di risparmio energetico della batteria ad alta tensione'
+      pl: 'Delta stanu energii (SoE) żądana przez funkcję oszczędzania energii akumulatora wysokiego napięcia'
+      ru: 'Дельта уровня энергии (SoE), запрашиваемая функцией энергосбережения высоковольтной батареи'
+      zh: '高压电池节能功能请求的能量状态(SoE)增量'
+      hu: 'A nagyfeszültségű akkumulátor energiatakarékos funkciója által kért energiaállapot- (SoE) különbség'
+      pt: 'Delta de estado de energia (SoE) solicitado pela função de poupança de energia da bateria de alta tensão'
+    type: 'uint'
+    factor: 16
+    min: 0
+    max: 32752
+    units: 'Wh'
+    default: 0x00

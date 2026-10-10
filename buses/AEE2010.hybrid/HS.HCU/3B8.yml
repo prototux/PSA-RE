@@ -1,0 +1,136 @@
+id: 0x3B8
+name: 'ENGINE_COASTING_DATA'
+type: 'can'
+length: 7
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['40ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  ENGINE_SPEED_COMPLEMENT:
+    bits: '1.7-2.0'
+    comment:
+      en: 'One''s complement of the engine speed, for functional safety'
+      fr: 'Complément à 1 du régime moteur, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del régimen del motor, para la seguridad funcional'
+      de: 'Einerkomplement der Motordrehzahl, für die Betriebssicherheit'
+      it: 'Complemento a 1 del regime motore, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 obrotów silnika, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 оборотов двигателя, для функциональной безопасности'
+      zh: '发动机转速的反码,用于功能安全'
+      hu: 'A motorfordulatszám egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do regime do motor, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 65535
+    invalid: 0x00
+    default: 0x00
+
+  ACTUAL_TORQUE_COMPLEMENT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'One''s complement of the actual torque, for functional safety'
+      fr: 'Complément à 1 du couple réel, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del par real, para la seguridad funcional'
+      de: 'Einerkomplement des tatsächlichen Drehmoments, für die Betriebssicherheit'
+      it: 'Complemento a 1 della coppia reale, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 rzeczywistego momentu obrotowego, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 фактического момента, для функциональной безопасности'
+      zh: '实际扭矩的反码,用于功能安全'
+      hu: 'A tényleges nyomaték egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do binário real, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 255
+    invalid: 0x00
+    default: 0xCD
+
+  DRIVER_DEMAND_COMPLEMENT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'One''s complement of the driver demand, for functional safety'
+      fr: 'Complément à 1 de la volonté du conducteur, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 de la demanda del conductor, para la seguridad funcional'
+      de: 'Einerkomplement des Fahrerwunschs, für die Betriebssicherheit'
+      it: 'Complemento a 1 della richiesta del conducente, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 żądania kierowcy, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 запроса водителя, для функциональной безопасности'
+      zh: '驾驶员需求的反码,用于功能安全'
+      hu: 'A vezetői igény egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 da vontade do condutor, para a segurança funcional'
+    type: 'uint'
+    min: 55
+    max: 255
+    invalid: 0x00
+    default: 0xFF
+
+  DRIVER_POTENTIAL_TORQUE_REQUEST_PROCESSED_COMPLEMENT:
+    bits: '5.7-5.0'
+    comment:
+      en: 'One''s complement of the driver potential torque request after processing, for functional safety'
+      fr: 'Complément à 1 du couple potentiel demandé par le conducteur après traitement, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del par potencial solicitado por el conductor tras el procesamiento, para la seguridad funcional'
+      de: 'Einerkomplement des potenziellen fahrerangeforderten Drehmoments nach der Verarbeitung, für die Betriebssicherheit'
+      it: 'Complemento a 1 della coppia potenziale richiesta dal conducente dopo l''elaborazione, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 potencjalnego momentu żądanego przez kierowcę po przetworzeniu, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 потенциального момента, запрошенного водителем после обработки, для функциональной безопасности'
+      zh: '驾驶员潜在扭矩请求(已处理)的反码,用于功能安全'
+      hu: 'A vezető által kért, feldolgozott potenciális nyomaték egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do binário potencial solicitado pelo condutor após processamento, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 255
+    invalid: 0x00
+    default: 0xCD
+
+  DRIVER_TORQUE_REQUEST_PROCESSED_COMPLEMENT:
+    bits: '6.7-6.0'
+    comment:
+      en: 'One''s complement of the driver torque request after processing, for functional safety'
+      fr: 'Complément à 1 du couple demandé par le conducteur après traitement, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del par solicitado por el conductor tras el procesamiento, para la seguridad funcional'
+      de: 'Einerkomplement des fahrerangeforderten Drehmoments nach der Verarbeitung, für die Betriebssicherheit'
+      it: 'Complemento a 1 della coppia richiesta dal conducente dopo l''elaborazione, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 momentu żądanego przez kierowcę po przetworzeniu, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 запрошенного водителем момента после обработки, для функциональной безопасности'
+      zh: '驾驶员请求扭矩(已处理)的反码,用于功能安全'
+      hu: 'A vezető által kért, feldolgozott nyomaték egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do binário solicitado pelo condutor após processamento, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 255
+    invalid: 0x00
+    default: 0xCD
+
+  PROCESS_COUNTER:
+    bits: '7.7-7.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  UNUSED_1:
+    bits: '7.3-7.0'
+    unused: true

@@ -1,0 +1,392 @@
+id: 0x41E
+name: 'CAMERA_LANE_TRACKING_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Camera lane-tracking data: lead-vehicle lane-crossing flags, cluster angle/distance left and right, minimum cluster distance/angle and perception status.'
+  fr: 'Données de suivi de voie de la caméra : indicateurs de franchissement de voie du véhicule leader, angle/distance de cluster gauche et droite, distance/angle minimal du cluster et état de perception.'
+  es: 'Datos de seguimiento de carril de la cámara: indicadores de cruce de carril del vehículo líder, ángulo/distancia del clúster izquierdo y derecho, distancia/ángulo mínimo del clúster y estado de percepción.'
+  de: 'Spurführungsdaten der Kamera: Fahrspurüberquerungskennzeichen des vorausfahrenden Fahrzeugs, Cluster-Winkel/-Abstand links und rechts, minimaler Cluster-Abstand/-Winkel und Wahrnehmungsstatus.'
+  it: 'Dati di tracciamento corsia della telecamera: indicatori di attraversamento corsia del veicolo che precede, angolo/distanza del cluster sinistro e destro, distanza/angolo minimo del cluster e stato di percezione.'
+  pl: 'Dane śledzenia pasa ruchu z kamery: flagi przekroczenia pasa przez pojazd poprzedzający, kąt/odległość klastra lewego i prawego, minimalna odległość/kąt klastra i stan percepcji.'
+  ru: 'Данные слежения за полосой от камеры: флаги пересечения полосы ведущим автомобилем, угол/расстояние кластера слева и справа, минимальное расстояние/угол кластера и статус восприятия.'
+  zh: '摄像头车道追踪数据:前车压线标志、左右聚类角度/距离、最小聚类距离/角度和感知状态。'
+  hu: 'A kamera sávkövetési adatai: az előttünk haladó jármű sávelhagyási jelzői, bal és jobb oldali klaszterszög/-távolság, minimális klasztertávolság/-szög és érzékelési állapot.'
+  pt: 'Dados de seguimento de faixa da câmara: indicadores de cruzamento de faixa do veículo da frente, ângulo/distância do agrupamento à esquerda e à direita, distância/ângulo mínimo do agrupamento e estado de perceção.'
+periodicity: ['50ms']
+senders: ['BCP']
+receivers: ['LED_DRIVER']
+
+signals:
+  CLUSTER_LEFT_EDGE_DISTANCE:
+    bits: '1.7-2.7'
+    comment:
+      en: 'Horizontal distance to the far-left edge of the detected vehicle in the camera''s field of view (m)'
+      fr: 'Distance horizontale du bord extrême gauche du véhicule détecté dans le champ de vision de la caméra (m)'
+      es: 'Distancia horizontal del borde extremo izquierdo del vehículo detectado en el campo de visión de la cámara (m)'
+      de: 'Horizontalabstand zum äußersten linken Rand des im Kamerasichtfeld erkannten Fahrzeugs (m)'
+      it: 'Distanza orizzontale dal bordo estremo sinistro del veicolo rilevato nel campo visivo della telecamera (m)'
+      pl: 'Odległość pozioma do skrajnie lewej krawędzi pojazdu wykrytego w polu widzenia kamery (m)'
+      ru: 'Горизонтальное расстояние до крайнего левого края обнаруженного автомобиля в поле зрения камеры (м)'
+      zh: '摄像头视野中检测到车辆最左边缘的水平距离(m)'
+      hu: 'A kamera látómezejében észlelt jármű bal szélének vízszintes távolsága (m)'
+      pt: 'Distância horizontal até ao extremo esquerdo do veículo detetado no campo de visão da câmara (m)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 600
+    units: 'm'
+    invalid: 0x1FF
+    default: 0x00
+
+  CLUSTER_LEFT_EDGE_ANGLE:
+    bits: '2.6-3.6'
+    comment:
+      en: 'Horizontal angle to the far-left edge of the detected vehicle in the camera''s field of view (°)'
+      fr: 'Angle horizontal du bord extrême gauche du véhicule détecté dans le champ de vision de la caméra (°)'
+      es: 'Ángulo horizontal del borde extremo izquierdo del vehículo detectado en el campo de visión de la cámara (°)'
+      de: 'Horizontalwinkel zum äußersten linken Rand des im Kamerasichtfeld erkannten Fahrzeugs (°)'
+      it: 'Angolo orizzontale del bordo estremo sinistro del veicolo rilevato nel campo visivo della telecamera (°)'
+      pl: 'Kąt poziomy do skrajnie lewej krawędzi pojazdu wykrytego w polu widzenia kamery (°)'
+      ru: 'Горизонтальный угол до крайнего левого края обнаруженного автомобиля в поле зрения камеры (°)'
+      zh: '摄像头视野中检测到车辆最左边缘的水平角度(°)'
+      hu: 'A kamera látómezejében észlelt jármű bal szélének vízszintes szöge (°)'
+      pt: 'Ângulo horizontal até ao extremo esquerdo do veículo detetado no campo de visão da câmara (°)'
+    type: 'sint'
+    factor: 0.1
+    min: -25
+    max: 25
+    units: '°'
+    invalid: 0xFF
+    default: 0x00
+
+  LEFT_LEAD_VEHICLE_CROSS_STATE:
+    bits: '3.5-3.4'
+    comment:
+      en: 'Orientation of the vehicle detected at the far left of the camera''s field of view (approaching or moving away)'
+      fr: 'Orientation du véhicule détecté à l''extrême gauche du champ de vision de la caméra (s''approchant ou s''éloignant)'
+      es: 'Orientación del vehículo detectado en el extremo izquierdo del campo de visión de la cámara (acercándose o alejándose)'
+      de: 'Ausrichtung des am äußersten linken Rand des Kamerasichtfelds erkannten Fahrzeugs (sich nähernd oder entfernend)'
+      it: 'Orientamento del veicolo rilevato all''estrema sinistra del campo visivo della telecamera (in avvicinamento o allontanamento)'
+      pl: 'Orientacja pojazdu wykrytego na skrajnie lewej krawędzi pola widzenia kamery (zbliżający się lub oddalający)'
+      ru: 'Ориентация транспортного средства, обнаруженного на крайнем левом краю поля зрения камеры (приближается или удаляется)'
+      zh: '摄像头视野最左侧检测到的车辆朝向(接近或远离)'
+      hu: 'A kamera látómezejének bal szélén észlelt jármű iránya (közeledik vagy távolodik)'
+      pt: 'Orientação do veículo detetado no extremo esquerdo do campo de visão da câmara (a aproximar-se ou a afastar-se)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Leading vehicle'
+        fr: 'Véhicule précédent'
+        es: 'Vehículo precedente'
+        de: 'Vorausfahrendes Fahrzeug'
+        it: 'Veicolo che precede'
+        pl: 'Pojazd poprzedzający'
+        ru: 'Впереди идущий автомобиль'
+        zh: '前车'
+        hu: 'Előttünk haladó jármű'
+        pt: 'Veículo precedente'
+      0x01:
+        en: 'Oncoming vehicle'
+        fr: 'Véhicule venant en sens inverse'
+        es: 'Vehículo en sentido contrario'
+        de: 'Entgegenkommendes Fahrzeug'
+        it: 'Veicolo proveniente in senso opposto'
+        pl: 'Pojazd nadjeżdżający z naprzeciwka'
+        ru: 'Встречный автомобиль'
+        zh: '对向来车'
+        hu: 'Szembejövő jármű'
+        pt: 'Veículo em sentido contrário'
+      0x02:
+        en: 'No vehicle'
+        fr: 'Aucun véhicule'
+        es: 'Ningún vehículo'
+        de: 'Kein Fahrzeug'
+        it: 'Nessun veicolo'
+        pl: 'Brak pojazdu'
+        ru: 'Нет автомобиля'
+        zh: '无车辆'
+        hu: 'Nincs jármű'
+        pt: 'Nenhum veículo'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  CLUSTER_RIGHT_EDGE_DISTANCE:
+    bits: '3.3-4.3'
+    comment:
+      en: 'Horizontal distance to the far-right edge of the detected vehicle in the camera''s field of view (m)'
+      fr: 'Distance horizontale du bord extrême droit du véhicule détecté dans le champ de vision de la caméra (m)'
+      es: 'Distancia horizontal del borde extremo derecho del vehículo detectado en el campo de visión de la cámara (m)'
+      de: 'Horizontalabstand zum äußersten rechten Rand des im Kamerasichtfeld erkannten Fahrzeugs (m)'
+      it: 'Distanza orizzontale dal bordo estremo destro del veicolo rilevato nel campo visivo della telecamera (m)'
+      pl: 'Odległość pozioma do skrajnie prawej krawędzi pojazdu wykrytego w polu widzenia kamery (m)'
+      ru: 'Горизонтальное расстояние до крайнего правого края обнаруженного автомобиля в поле зрения камеры (м)'
+      zh: '摄像头视野中检测到车辆最右边缘的水平距离(m)'
+      hu: 'A kamera látómezejében észlelt jármű jobb szélének vízszintes távolsága (m)'
+      pt: 'Distância horizontal até ao extremo direito do veículo detetado no campo de visão da câmara (m)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 600
+    units: 'm'
+    invalid: 0x1FF
+    default: 0x00
+
+  CLUSTER_RIGHT_EDGE_ANGLE:
+    bits: '4.2-5.2'
+    comment:
+      en: 'Horizontal angle to the far-right edge of the detected vehicle in the camera''s field of view (°)'
+      fr: 'Angle horizontal du bord extrême droit du véhicule détecté dans le champ de vision de la caméra (°)'
+      es: 'Ángulo horizontal del borde extremo derecho del vehículo detectado en el campo de visión de la cámara (°)'
+      de: 'Horizontalwinkel zum äußersten rechten Rand des im Kamerasichtfeld erkannten Fahrzeugs (°)'
+      it: 'Angolo orizzontale del bordo estremo destro del veicolo rilevato nel campo visivo della telecamera (°)'
+      pl: 'Kąt poziomy do skrajnie prawej krawędzi pojazdu wykrytego w polu widzenia kamery (°)'
+      ru: 'Горизонтальный угол до крайнего правого края обнаруженного автомобиля в поле зрения камеры (°)'
+      zh: '摄像头视野中检测到车辆最右边缘的水平角度(°)'
+      hu: 'A kamera látómezejében észlelt jármű jobb szélének vízszintes szöge (°)'
+      pt: 'Ângulo horizontal até ao extremo direito do veículo detetado no campo de visão da câmara (°)'
+    type: 'sint'
+    factor: 0.1
+    min: -25
+    max: 25
+    units: '°'
+    invalid: 0xFF
+    default: 0x00
+
+  RIGHT_LEAD_VEHICLE_CROSS_STATE:
+    bits: '5.1-5.0'
+    comment:
+      en: 'Orientation of the vehicle detected at the far right of the camera''s field of view (approaching or moving away)'
+      fr: 'Orientation du véhicule détecté à l''extrême droite du champ de vision de la caméra (s''approchant ou s''éloignant)'
+      es: 'Orientación del vehículo detectado en el extremo derecho del campo de visión de la cámara (acercándose o alejándose)'
+      de: 'Ausrichtung des am äußersten rechten Rand des Kamerasichtfelds erkannten Fahrzeugs (sich nähernd oder entfernend)'
+      it: 'Orientamento del veicolo rilevato all''estrema destra del campo visivo della telecamera (in avvicinamento o allontanamento)'
+      pl: 'Orientacja pojazdu wykrytego na skrajnie prawej krawędzi pola widzenia kamery (zbliżający się lub oddalający)'
+      ru: 'Ориентация транспортного средства, обнаруженного на крайнем правом краю поля зрения камеры (приближается или удаляется)'
+      zh: '摄像头视野最右侧检测到的车辆朝向(接近或远离)'
+      hu: 'A kamera látómezejének jobb szélén észlelt jármű iránya (közeledik vagy távolodik)'
+      pt: 'Orientação do veículo detetado no extremo direito do campo de visão da câmara (a aproximar-se ou a afastar-se)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Leading vehicle'
+        fr: 'Véhicule précédent'
+        es: 'Vehículo precedente'
+        de: 'Vorausfahrendes Fahrzeug'
+        it: 'Veicolo che precede'
+        pl: 'Pojazd poprzedzający'
+        ru: 'Впереди идущий автомобиль'
+        zh: '前车'
+        hu: 'Előttünk haladó jármű'
+        pt: 'Veículo precedente'
+      0x01:
+        en: 'Oncoming vehicle'
+        fr: 'Véhicule venant en sens inverse'
+        es: 'Vehículo en sentido contrario'
+        de: 'Entgegenkommendes Fahrzeug'
+        it: 'Veicolo proveniente in senso opposto'
+        pl: 'Pojazd nadjeżdżający z naprzeciwka'
+        ru: 'Встречный автомобиль'
+        zh: '对向来车'
+        hu: 'Szembejövő jármű'
+        pt: 'Veículo em sentido contrário'
+      0x02:
+        en: 'No vehicle'
+        fr: 'Aucun véhicule'
+        es: 'Ningún vehículo'
+        de: 'Kein Fahrzeug'
+        it: 'Nessun veicolo'
+        pl: 'Brak pojazdu'
+        ru: 'Нет автомобиля'
+        zh: '无车辆'
+        hu: 'Nincs jármű'
+        pt: 'Nenhum veículo'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  CLUSTER_MIN_VERTICAL_ANGLE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Vertical angle of the closest detected vehicle in the camera''s field of view (%rad)'
+      fr: 'Angle vertical du véhicule détecté le plus proche dans le champ de vision de la caméra (%rad)'
+      es: 'Ángulo vertical del vehículo detectado más cercano en el campo de visión de la cámara (%rad)'
+      de: 'Vertikalwinkel des nächstgelegenen im Kamerasichtfeld erkannten Fahrzeugs (%rad)'
+      it: 'Angolo verticale del veicolo rilevato più vicino nel campo visivo della telecamera (%rad)'
+      pl: 'Kąt pionowy najbliższego pojazdu wykrytego w polu widzenia kamery (%rad)'
+      ru: 'Вертикальный угол ближайшего обнаруженного автомобиля в поле зрения камеры (%rad)'
+      zh: '摄像头视野中最近检测到车辆的垂直角度(%rad)'
+      hu: 'A kamera látómezejében észlelt legközelebbi jármű függőleges szöge (%rad)'
+      pt: 'Ângulo vertical do veículo detetado mais próximo no campo de visão da câmara (%rad)'
+    type: 'sint'
+    factor: 0.1
+    min: -12
+    max: 12
+    units: '%rad'
+    invalid: 0x7F
+    default: 0x00
+
+  CENTER_LEAD_VEHICLE_CROSS_STATE:
+    bits: '7.7-7.6'
+    comment:
+      en: 'Orientation of the vehicle detected at the far right of the camera''s field of view (approaching or moving away)'
+      fr: 'Orientation du véhicule détecté à l''extrême droite du champ de vision de la caméra (s''approchant ou s''éloignant)'
+      es: 'Orientación del vehículo detectado en el extremo derecho del campo de visión de la cámara (acercándose o alejándose)'
+      de: 'Ausrichtung des am äußersten rechten Rand des Kamerasichtfelds erkannten Fahrzeugs (sich nähernd oder entfernend)'
+      it: 'Orientamento del veicolo rilevato all''estrema destra del campo visivo della telecamera (in avvicinamento o allontanamento)'
+      pl: 'Orientacja pojazdu wykrytego na skrajnie prawej krawędzi pola widzenia kamery (zbliżający się lub oddalający)'
+      ru: 'Ориентация транспортного средства, обнаруженного на крайнем правом краю поля зрения камеры (приближается или удаляется)'
+      zh: '摄像头视野最右侧检测到的车辆朝向(接近或远离)'
+      hu: 'A kamera látómezejének jobb szélén észlelt jármű iránya (közeledik vagy távolodik)'
+      pt: 'Orientação do veículo detetado no extremo direito do campo de visão da câmara (a aproximar-se ou a afastar-se)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Leading vehicle'
+        fr: 'Véhicule précédent'
+        es: 'Vehículo precedente'
+        de: 'Vorausfahrendes Fahrzeug'
+        it: 'Veicolo che precede'
+        pl: 'Pojazd poprzedzający'
+        ru: 'Впереди идущий автомобиль'
+        zh: '前车'
+        hu: 'Előttünk haladó jármű'
+        pt: 'Veículo precedente'
+      0x01:
+        en: 'Oncoming vehicle'
+        fr: 'Véhicule venant en sens inverse'
+        es: 'Vehículo en sentido contrario'
+        de: 'Entgegenkommendes Fahrzeug'
+        it: 'Veicolo proveniente in senso opposto'
+        pl: 'Pojazd nadjeżdżający z naprzeciwka'
+        ru: 'Встречный автомобиль'
+        zh: '对向来车'
+        hu: 'Szembejövő jármű'
+        pt: 'Veículo em sentido contrário'
+      0x02:
+        en: 'No vehicle'
+        fr: 'Aucun véhicule'
+        es: 'Ningún vehículo'
+        de: 'Kein Fahrzeug'
+        it: 'Nessun veicolo'
+        pl: 'Brak pojazdu'
+        ru: 'Нет автомобиля'
+        zh: '无车辆'
+        hu: 'Nincs jármű'
+        pt: 'Nenhum veículo'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  CLUSTER_MIN_DISTANCE:
+    bits: '7.5-8.5'
+    comment:
+      en: 'Minimum horizontal distance to the closest detected vehicle in the camera''s field of view (m)'
+      fr: 'Distance horizontale minimale du véhicule détecté le plus proche dans le champ de vision de la caméra (m)'
+      es: 'Distancia horizontal mínima al vehículo detectado más cercano en el campo de visión de la cámara (m)'
+      de: 'Minimaler Horizontalabstand zum nächstgelegenen im Kamerasichtfeld erkannten Fahrzeug (m)'
+      it: 'Distanza orizzontale minima dal veicolo rilevato più vicino nel campo visivo della telecamera (m)'
+      pl: 'Minimalna odległość pozioma do najbliższego pojazdu wykrytego w polu widzenia kamery (m)'
+      ru: 'Минимальное горизонтальное расстояние до ближайшего обнаруженного автомобиля в поле зрения камеры (м)'
+      zh: '摄像头视野中最近检测到车辆的最小水平距离(m)'
+      hu: 'A kamera látómezejében észlelt legközelebbi jármű minimális vízszintes távolsága (m)'
+      pt: 'Distância horizontal mínima até ao veículo detetado mais próximo no campo de visão da câmara (m)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 600
+    units: 'm'
+    default: 0x00
+
+  MATRIX_BEAM_PERCEPTION_STATUS:
+    bits: '8.4-8.3'
+    comment:
+      en: 'Matrix LED beam perception function status'
+      fr: 'État de la fonction de perception pour les feux Matrix LED'
+      es: 'Estado de la función de percepción para los faros Matrix LED'
+      de: 'Status der Erkennungsfunktion für Matrix-LED-Scheinwerfer'
+      it: 'Stato della funzione di percezione per i fari Matrix LED'
+      pl: 'Stan funkcji percepcji dla świateł Matrix LED'
+      ru: 'Статус функции распознавания для матричных светодиодных фар'
+      zh: '矩阵LED大灯感知功能状态'
+      hu: 'A Matrix LED fényszóró érzékelési funkciójának állapota'
+      pt: 'Estado da função de perceção para os faróis Matrix LED'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x01:
+        en: 'Paused'
+        fr: 'Pause'
+        es: 'En pausa'
+        de: 'Pausiert'
+        it: 'In pausa'
+        pl: 'Wstrzymane'
+        ru: 'Пауза'
+        zh: '已暂停'
+        hu: 'Szüneteltetve'
+        pt: 'Em pausa'
+      0x02:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_1:
+    bits: '8.2-8.0'
+    unused: true

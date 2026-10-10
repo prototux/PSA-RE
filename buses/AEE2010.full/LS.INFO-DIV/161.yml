@@ -1,0 +1,144 @@
+id: 0x161
+name: 'BSI_GAUGES'
+type: 'can'
+length: 7
+comment:
+  en: 'Fuel level, oil level and oil temperature gauges from the BSI.'
+  fr: 'Niveaux de carburant et d''huile, température huile, transmis par la BSI.'
+  es: 'Niveles de combustible y de aceite, temperatura del aceite, transmitidos por la BSI.'
+  de: 'Kraftstoff- und Ölstand, Öltemperatur, von der BSI übermittelt.'
+  it: 'Livelli di carburante e olio, temperatura olio, trasmessi dalla BSI.'
+  pl: 'Poziomy paliwa i oleju, temperatura oleju, przesyłane przez BSI.'
+  ru: 'Уровень топлива и масла, температура масла, передаваемые BSI.'
+  zh: '由BSI传输的燃油液位、机油液位及机油温度。'
+  hu: 'Üzemanyag- és olajszint, olajhőmérséklet, a BSI-től.'
+  pt: 'Indicadores de nível de combustível, nível de óleo e temperatura de óleo da BSI.'
+periodicity: ['50040ms']
+senders: ['BSI']
+receivers: ['CMB', 'MDS', 'BTEL', 'MATT', 'BGP', 'OVIP', 'RAD']
+
+signals:
+  OIL_LEVEL_RESTART:
+    bits: '1.7'
+    comment:
+      en: 'Oil level display restart request'
+      fr: 'Demande de relance de l''affichage du niveau d''huile'
+      es: 'Solicitud de reinicio de la visualización del nivel de aceite'
+      de: 'Anforderung zum Neustart der Ölstandsanzeige'
+      it: 'Richiesta di riavvio della visualizzazione del livello dell''olio'
+      pl: 'Żądanie ponownego uruchomienia wyświetlania poziomu oleju'
+      ru: 'Запрос перезапуска индикации уровня масла'
+      zh: '机油液位显示重启请求'
+      hu: 'Az olajszintkijelzés újraindításának kérése'
+      pt: 'Pedido de repetição da visualização do nível de óleo'
+    type: 'bool'
+    default: 0x00
+
+  UNUSED_1:
+    bits: '1.6-2.0'
+    unused: true
+
+  ENGINE_OIL_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Engine oil temperature'
+      fr: 'Température d''huile moteur'
+      es: 'Temperatura del aceite del motor'
+      de: 'Motoröltemperatur'
+      it: 'Temperatura dell''olio motore'
+      pl: 'Temperatura oleju silnikowego'
+      ru: 'Температура моторного масла'
+      zh: '发动机机油温度'
+      hu: 'Motorolaj-hőmérséklet'
+      pt: 'Temperatura do óleo do motor'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  FILTERED_FUEL_LEVEL:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Filtered fuel level'
+      fr: 'Niveau de carburant filtré'
+      es: 'Nivel de combustible filtrado'
+      de: 'Gefilterter Kraftstoffstand'
+      it: 'Livello di carburante filtrato'
+      pl: 'Filtrowany poziom paliwa'
+      ru: 'Отфильтрованный уровень топлива'
+      zh: '滤波后的燃油液位'
+      hu: 'Szűrt üzemanyagszint'
+      pt: 'Nível de combustível filtrado'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  FUEL_TANK_VOLUME:
+    bits: '5.7-5.1'
+    comment:
+      en: 'Fuel tank volume'
+      fr: 'Volume du réservoir de carburant'
+      es: 'Volumen del depósito de combustible'
+      de: 'Kraftstofftankvolumen'
+      it: 'Volume del serbatoio carburante'
+      pl: 'Pojemność zbiornika paliwa'
+      ru: 'Объём топливного бака'
+      zh: '燃油箱容积'
+      hu: 'Az üzemanyagtartály térfogata'
+      pt: 'Volume do depósito de combustível'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 127
+    units: 'L'
+    default: 0x7F
+
+  UNUSED_2:
+    bits: '5.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '6.7-6.0'
+    unused: true
+
+  ENGINE_OIL_LEVEL:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Engine oil level (can exceed 100% to signal overfill)'
+      fr: 'Niveau d''huile moteur (peut dépasser 100% pour signaler un surplus)'
+      es: 'Nivel de aceite del motor (puede superar el 100% para indicar exceso)'
+      de: 'Motorölstand (kann 100% übersteigen, um Überfüllung anzuzeigen)'
+      it: 'Livello dell''olio motore (può superare il 100% per segnalare un eccesso)'
+      pl: 'Poziom oleju silnikowego (może przekroczyć 100%, sygnalizując nadmiar)'
+      ru: 'Уровень моторного масла (может превышать 100% для сигнализации перелива)'
+      zh: '发动机机油液位(可超过100%以指示加注过量)'
+      hu: 'Motorolajszint (meghaladhatja a 100%-ot túltöltés jelzésére)'
+      pt: 'Nível de óleo do motor (pode ultrapassar 100% para indicar excesso)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: '%'
+    invalid: 0xFF
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 500ms'
+      fr: 'Aussi observée avec une période de 500ms'
+      es: 'También observada con un periodo de 500ms'
+      de: 'Auch mit einer Periode von 500ms beobachtet'
+      it: 'Osservata anche con un periodo di 500ms'
+      pl: 'Obserwowana także z okresem 500ms'
+      ru: 'Также наблюдалась с периодом 500ms'
+      zh: '也观察到周期为500ms'
+      hu: 'Megfigyelve 500ms periódussal is'
+      pt: 'Também observada com um período de 500ms'
+    periodicity: ['500ms']

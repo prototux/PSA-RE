@@ -1,0 +1,117 @@
+id: 0x207
+name: 'GEARBOX_SPEED_RELAY'
+type: 'can'
+length: 7
+comment:
+  en: 'Vehicle speed and distance from the gearbox, relayed to the inter-system bus by the body computer (BSI) gateway.'
+  fr: 'Vitesse et distance véhicule issues de la boîte de vitesses, relayées sur le bus inter-système par la passerelle BSI.'
+  es: 'Velocidad y distancia del vehículo desde la caja de cambios, retransmitidas al bus intersistema por la pasarela BSI.'
+  de: 'Fahrzeuggeschwindigkeit und -strecke vom Getriebe, vom BSI-Gateway an den Inter-System-Bus weitergeleitet.'
+  it: 'Velocità e distanza del veicolo dal cambio, inoltrate al bus inter-sistema dal gateway BSI.'
+  pl: 'Prędkość i dystans pojazdu ze skrzyni biegów, przekazywane do magistrali międzysystemowej przez bramkę BSI.'
+  ru: 'Скорость и пройденное расстояние автомобиля от коробки передач, ретранслируемые в межсистемную шину шлюзом BSI.'
+  zh: '由车身控制器(BSI)网关转发到系统间总线的、来自变速箱的车速及行驶距离数据。'
+  hu: 'A váltótól származó járműsebesség és -távolság, amelyet a BSI átjáró továbbít a rendszerközi buszra.'
+  pt: 'Velocidade e distância do veículo provenientes da caixa de velocidades, retransmitidas no barramento intersistema pela gateway da BSI.'
+periodicity: ['20010ms']
+senders: ['BSI']
+receivers: ['BSM']
+
+signals:
+  VEHICLE_SPEED_GEARBOX:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Vehicle speed, measured at the gearbox output (average of the driven wheel speeds)'
+      fr: 'Vitesse du véhicule, mesurée en sortie de boîte de vitesses (moyenne des vitesses des roues motrices)'
+      es: 'Velocidad del vehículo, medida a la salida de la caja de cambios (media de las velocidades de las ruedas motrices)'
+      de: 'Fahrzeuggeschwindigkeit, am Getriebeausgang gemessen (Mittelwert der Antriebsraddrehzahlen)'
+      it: 'Velocità del veicolo, misurata in uscita dal cambio (media delle velocità delle ruote motrici)'
+      pl: 'Prędkość pojazdu, mierzona na wyjściu skrzyni biegów (średnia prędkości kół napędzanych)'
+      ru: 'Скорость автомобиля, измеренная на выходе коробки передач (среднее значение скоростей ведущих колёс)'
+      zh: '在变速箱输出端测得的车速(驱动轮速度平均值)'
+      hu: 'Járműsebesség, a váltó kimenetén mérve (a hajtott kerekek sebességének átlaga)'
+      pt: 'Velocidade do veículo, medida à saída da caixa de velocidades (média das velocidades das rodas motrizes)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  ODOMETER_GEARBOX:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Odometer distance, measured at the gearbox output'
+      fr: 'Distance odométrique, mesurée en sortie de boîte de vitesses'
+      es: 'Distancia odométrica, medida a la salida de la caja de cambios'
+      de: 'Odometerstrecke, am Getriebeausgang gemessen'
+      it: 'Distanza odometrica, misurata in uscita dal cambio'
+      pl: 'Odległość odometryczna, mierzona na wyjściu skrzyni biegów'
+      ru: 'Одометрическое расстояние, измеренное на выходе коробки передач'
+      zh: '在变速箱输出端测得的里程距离'
+      hu: 'Kilométeróra-távolság, a váltó kimenetén mérve'
+      pt: 'Distância odométrica, medida à saída da caixa de velocidades'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6553.5
+    units: 'm'
+    default: 0x00
+
+  LONGITUDINAL_ACCELERATION_GEARBOX:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Longitudinal acceleration, measured at the gearbox output'
+      fr: 'Accélération longitudinale, mesurée en sortie de boîte de vitesses'
+      es: 'Aceleración longitudinal, medida a la salida de la caja de cambios'
+      de: 'Längsbeschleunigung, am Getriebeausgang gemessen'
+      it: 'Accelerazione longitudinale, misurata in uscita dal cambio'
+      pl: 'Przyspieszenie wzdłużne, mierzone na wyjściu skrzyni biegów'
+      ru: 'Продольное ускорение, измеренное на выходе коробки передач'
+      zh: '在变速箱输出端测得的纵向加速度'
+      hu: 'Hosszirányú gyorsulás, a váltó kimenetén mérve'
+      pt: 'Aceleração longitudinal, medida à saída da caixa de velocidades'
+    type: 'uint'
+    factor: 0.08
+    offset: -14
+    min: -14
+    max: 6.32
+    units: 'm/s2'
+    invalid: 0xFF
+    default: 0xFF
+
+  VEHICLE_SPEED_GEARBOX_UNFILTERED:
+    bits: '6.7-7.0'
+    comment:
+      en: 'Vehicle speed, measured at the gearbox output, unfiltered'
+      fr: 'Vitesse du véhicule, mesurée en sortie de boîte de vitesses, non filtrée'
+      es: 'Velocidad del vehículo, medida a la salida de la caja de cambios, sin filtrar'
+      de: 'Fahrzeuggeschwindigkeit, am Getriebeausgang gemessen, ungefiltert'
+      it: 'Velocità del veicolo, misurata in uscita dal cambio, non filtrata'
+      pl: 'Prędkość pojazdu, mierzona na wyjściu skrzyni biegów, niefiltrowana'
+      ru: 'Скорость автомобиля, измеренная на выходе коробки передач, нефильтрованная'
+      zh: '在变速箱输出端测得的车速(未滤波)'
+      hu: 'Járműsebesség, a váltó kimenetén mérve, szűretlen'
+      pt: 'Velocidade do veículo, medida à saída da caixa de velocidades, não filtrada'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 200ms'
+      fr: 'Aussi observée avec une période de 200ms'
+      es: 'También observada con un periodo de 200ms'
+      de: 'Auch mit einer Periode von 200ms beobachtet'
+      it: 'Osservata anche con un periodo di 200ms'
+      pl: 'Obserwowana także z okresem 200ms'
+      ru: 'Также наблюдалась с периодом 200ms'
+      zh: '也观察到周期为200ms'
+      hu: 'Megfigyelve 200ms periódussal is'
+      pt: 'Também observada com um período de 200ms'
+    periodicity: ['200ms']

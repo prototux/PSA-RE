@@ -1,0 +1,210 @@
+id: 0x1A7
+name: 'HCU1_DYNAMIC_DATA_3'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  HV_BATTERY_MIN_VOLTAGE_LIMIT:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Minimum voltage limit of the high-voltage battery'
+      fr: 'Limite de tension minimale de la batterie haute tension'
+      es: 'Límite de tensión mínima de la batería de alta tensión'
+      de: 'Minimale Spannungsgrenze der Hochvoltbatterie'
+      it: 'Limite di tensione minima della batteria ad alta tensione'
+      pl: 'Dolny limit napięcia akumulatora wysokiego napięcia'
+      ru: 'Предел минимального напряжения высоковольтной батареи'
+      zh: '高压电池最小电压限值'
+      hu: 'A nagyfeszültségű akkumulátor minimális feszültséghatára'
+      pt: 'Limite mínimo de tensão da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.0078125
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0xFFFF
+    default: 0xFA00
+
+  HV_BATTERY_MAX_VOLTAGE_LIMIT:
+    bits: '4.7-5.0'
+    comment:
+      en: 'Maximum voltage limit of the high-voltage battery'
+      fr: 'Limite de tension maximale de la batterie haute tension'
+      es: 'Límite de tensión máxima de la batería de alta tensión'
+      de: 'Maximale Spannungsgrenze der Hochvoltbatterie'
+      it: 'Limite di tensione massima della batteria ad alta tensione'
+      pl: 'Górny limit napięcia akumulatora wysokiego napięcia'
+      ru: 'Предел максимального напряжения высоковольтной батареи'
+      zh: '高压电池最大电压限值'
+      hu: 'A nagyfeszültségű akkumulátor maximális feszültséghatára'
+      pt: 'Limite máximo de tensão da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.0078125
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0xFFFF
+    default: 0xFA00
+
+  REAR_ASR_MSR_REGULATION_STATUS_SAFETY:
+    bits: '6.6-6.4'
+    comment:
+      en: 'Rear ASR/MSR regulation status at the safety level'
+      fr: 'Etat de régulation ASR/MSR arrière au niveau de sécurité'
+      es: 'Estado de regulación ASR/MSR trasero en el nivel de seguridad'
+      de: 'ASR/MSR-Regelungsstatus hinten auf der Sicherheitsebene'
+      it: 'Stato di regolazione ASR/MSR posteriore a livello di sicurezza'
+      pl: 'Stan regulacji ASR/MSR tylnej na poziomie bezpieczeństwa'
+      ru: 'Состояние регулирования ASR/MSR (заднего) на уровне безопасности'
+      zh: '安全层的后部ASR/MSR调节状态'
+      hu: 'A hátsó ASR/MSR szabályozás állapota a biztonsági szinten'
+      pt: 'Estado de regulação ASR/MSR traseiro ao nível de segurança'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Pas d''action'
+        es: 'Sin acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Sem ação'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        en: 'ASR'
+        fr: 'ASR'
+        es: 'ASR'
+        de: 'ASR'
+        it: 'ASR'
+        pl: 'ASR'
+        ru: 'ASR'
+        zh: 'ASR'
+        hu: 'ASR'
+        pt: 'ASR'
+      0x06:
+        en: 'MSR'
+        fr: 'MSR'
+        es: 'MSR'
+        de: 'MSR'
+        it: 'MSR'
+        pl: 'MSR'
+        ru: 'MSR'
+        zh: 'MSR'
+        hu: 'MSR'
+        pt: 'MSR'
+      0x07:
+        unused: true
+
+  SAFETY_CREEP_ACTIVATION:
+    bits: '6.3'
+    comment:
+      en: 'Activation of the safety creep (ramping) mode'
+      fr: 'Activation du mode de rampage de la safety'
+      es: 'Activación del modo de arrastre (ramping) de seguridad'
+      de: 'Aktivierung des Sicherheits-Kriechmodus'
+      it: 'Attivazione della modalità di trascinamento (ramping) di sicurezza'
+      pl: 'Aktywacja trybu pełzania bezpieczeństwa'
+      ru: 'Активация режима безопасного плавного трогания'
+      zh: '安全蠕行(斜坡)模式激活'
+      hu: 'A biztonsági kúszó (ramping) üzemmód aktiválása'
+      pt: 'Ativação do modo de arrasto (ramping) de segurança'
+    type: 'bool'
+
+  SAFETY_WHEEL_TORQUE_REQUEST:
+    bits: '6.2-7.0'
+    comment:
+      en: 'Wheel torque request from the safety supervisor'
+      fr: 'Consigne de couple à la roue émise par le superviseur de sécurité'
+      es: 'Consigna de par en la rueda emitida por el supervisor de seguridad'
+      de: 'Vom Sicherheitssupervisor angeforderter Raddrehmoment-Sollwert'
+      it: 'Richiesta di coppia alla ruota dal supervisore di sicurezza'
+      pl: 'Żądany moment obrotowy na kole zgłoszony przez nadzorcę bezpieczeństwa'
+      ru: 'Заданный момент на колесе от супервизора безопасности'
+      zh: '安全监控器发出的车轮扭矩请求'
+      hu: 'A biztonsági felügyelő által kért keréknyomaték'
+      pt: 'Consigna de binário na roda emitida pelo supervisor de segurança'
+    type: 'uint'
+    factor: 8
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    default: 0x1F4
+
+  HV_SIDE_MAX_CURRENT:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Maximum current on the high-voltage side'
+      fr: 'Courant maximum côté haute tension'
+      es: 'Corriente máxima en el lado de alta tensión'
+      de: 'Maximalstrom auf der Hochvoltseite'
+      it: 'Corrente massima lato alta tensione'
+      pl: 'Maksymalny prąd po stronie wysokiego napięcia'
+      ru: 'Максимальный ток на стороне высокого напряжения'
+      zh: '高压侧最大电流'
+      hu: 'Maximális áram a nagyfeszültségű oldalon'
+      pt: 'Corrente máxima no lado de alta tensão'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 50
+    units: 'A'
+    default: 0x00

@@ -1,0 +1,83 @@
+id: 0x758
+name: 'RAIN_LIGHT_SENSOR_RESTORE'
+type: 'van'
+length: 8
+comment:
+  en: 'Restores to the rain/light sensor, when accessory power returns, the calibration data it handed over at switch-off (avoids an initialisation wipe), plus interior temperature and parked duration.'
+  fr: 'Restitue au capteur de pluie/luminosité, au retour de l''alimentation accessoires, les données sauvegardées à la coupure (pour éviter un balayage d''initialisation), ainsi que la température intérieure et la durée d''arrêt.'
+  es: 'Devuelve al sensor de lluvia/luminosidad, al volver la alimentación de accesorios, los datos guardados al apagar (para evitar un barrido de inicialización), además de la temperatura interior y el tiempo de parada.'
+  de: 'Stellt dem Regen-/Lichtsensor beim Rückkehr der Zubehörspannung die beim Ausschalten gesicherten Daten wieder her (vermeidet einen Initialisierungswischvorgang), zusammen mit Innentemperatur und Standzeit.'
+  it: 'Ripristina al sensore pioggia/luce, al ritorno dell''alimentazione accessori, i dati salvati allo spegnimento (per evitare una spazzolata di inizializzazione), oltre alla temperatura interna e alla durata di sosta.'
+  pl: 'Przywraca czujnikowi deszczu/światła, po powrocie zasilania akcesoriów, dane zapisane przy wyłączeniu (aby uniknąć inicjalizacyjnego przetarcia), a także temperaturę wewnętrzną i czas postoju.'
+  ru: 'Восстанавливает датчику дождя/света, при возврате питания аксессуаров, данные, сохранённые при выключении (во избежание инициализационного взмаха дворников), а также внутреннюю температуру и время стоянки.'
+  zh: '在附件电源恢复时，将关闭时保存的数据恢复给雨量/光线传感器（避免初始化雨刷动作），并提供室内温度及停车时长。'
+  hu: 'A kiegészítő tápellátás visszatérésekor visszaadja az eső-/fényérzékelőnek a kikapcsoláskor mentett adatokat (elkerülve az inicializáló törlést), valamint a beltéri hőmérsékletet és az állásidőt.'
+  pt: 'Restitui ao sensor de chuva/luz, quando a alimentação dos acessórios regressa, os dados de calibração que este entregou ao desligar (evita uma limpeza de inicialização), além da temperatura interior e do tempo estacionado.'
+periodicity: ['trigger']
+senders: ['BSI']
+receivers: ['CDPL']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  SENSOR_CALIBRATION_DATA:
+    bits: '1.7-6.0'
+    comment:
+      en: 'Supplier-specific rain/light sensor calibration data (echo of saved sensor data)'
+      fr: 'Données de calibration spécifiques au fournisseur du capteur pluie/luminosité (écho des données enregistrées)'
+      es: 'Datos de calibración específicos del proveedor del sensor de lluvia/luz (eco de los datos guardados)'
+      de: 'Lieferantenspezifische Kalibrierdaten des Regen-/Lichtsensors (Rückmeldung der gespeicherten Sensordaten)'
+      it: 'Dati di calibrazione specifici del fornitore del sensore pioggia/luce (eco dei dati salvati)'
+      pl: 'Dane kalibracyjne czujnika deszczu/światła specyficzne dla dostawcy (echo zapisanych danych)'
+      ru: 'Специфичные для поставщика калибровочные данные датчика дождя/света (отражение сохранённых данных)'
+      zh: '供应商专用的雨量/光线传感器校准数据(已保存传感器数据的回传)'
+      hu: 'A gyártóra jellemző eső-/fényérzékelő kalibrációs adatok (a mentett érzékelőadatok visszaigazolása)'
+      pt: 'Dados de calibração específicos do fornecedor do sensor de chuva/luminosidade (eco dos dados guardados)'
+    type: 'bytes'
+    default: 0x00
+
+  INTERIOR_TEMPERATURE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Interior temperature when the frame is sent'
+      fr: 'Température intérieure au moment de l''envoi de la trame'
+      es: 'Temperatura interior en el momento del envío de la trama'
+      de: 'Innenraumtemperatur zum Sendezeitpunkt des Frames'
+      it: 'Temperatura interna al momento dell''invio del frame'
+      pl: 'Temperatura wewnętrzna w chwili wysłania ramki'
+      ru: 'Температура салона в момент отправки кадра'
+      zh: '发送该帧时的车内温度'
+      hu: 'Belső hőmérséklet a keret elküldésének pillanatában'
+      pt: 'Temperatura interior no momento do envio da trama'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 87
+    units: '°C'
+    invalid: 0xFF
+    default: 0x00
+
+  PARKED_TIME:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Time the vehicle has been parked since the VAN supply was cut (saturates at 254 min)'
+      fr: 'Temps d''arrêt du véhicule depuis la coupure du +VAN (saturé à 254 min)'
+      es: 'Tiempo de parada del vehículo desde el corte del +VAN (saturado a 254 min)'
+      de: 'Standzeit des Fahrzeugs seit Abschaltung der VAN-Versorgung (Sättigung bei 254 min)'
+      it: 'Tempo di sosta del veicolo dal distacco del +VAN (saturo a 254 min)'
+      pl: 'Czas postoju pojazdu od odcięcia zasilania +VAN (nasycenie przy 254 min)'
+      ru: 'Время простоя автомобиля с момента отключения питания VAN (насыщение на 254 мин)'
+      zh: '自+VAN供电切断以来车辆停放时间(封顶254分钟)'
+      hu: 'A jármű leállási ideje a +VAN tápellátás megszakadása óta (254 percnél telítődik)'
+      pt: 'Tempo de estacionamento do veículo desde o corte do +VAN (satura em 254 min)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'min'
+    invalid: 0xFF
+    default: 0x00

@@ -1,0 +1,117 @@
+id: 0x266
+name: 'HCU2_DYNAMIC_DATA_4'
+type: 'can'
+length: 6
+comment:
+  en: 'Front electric-motor current and fault states (short circuit, mode, performance), from the hybrid control unit.'
+  fr: 'Courant et états de défaut (court-circuit, mode, performance) du moteur électrique avant, issus du calculateur hybride.'
+  es: 'Corriente y estados de fallo (cortocircuito, modo, rendimiento) del motor eléctrico delantero, procedentes de la centralita híbrida.'
+  de: 'Strom und Fehlerzustände (Kurzschluss, Modus, Leistung) des vorderen Elektromotors vom Hybridsteuergerät.'
+  it: 'Corrente e stati di guasto (cortocircuito, modalità, prestazioni) del motore elettrico anteriore, dalla centralina ibrida.'
+  pl: 'Prąd i stany usterek (zwarcie, tryb, wydajność) przedniego silnika elektrycznego z hybrydowego sterownika.'
+  ru: 'Ток и статусы неисправностей (короткое замыкание, режим, производительность) переднего электродвигателя от гибридного блока управления.'
+  zh: '前置电动机的电流及故障状态(短路、模式、性能),来自混合动力控制单元。'
+  hu: 'Az első elektromos motor árama és hibaállapotai (rövidzárlat, üzemmód, teljesítmény) a hibrid vezérlőegységtől.'
+  pt: 'Corrente e estados de avaria (curto-circuito, modo, desempenho) do motor elétrico dianteiro, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU2']
+receivers: ['HCU1']
+
+signals:
+  CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRONT_EMOTOR_SPEED:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Front electric machine speed'
+      fr: 'Régime de la machine électrique avant'
+      es: 'Régimen de la máquina eléctrica delantera'
+      de: 'Drehzahl der vorderen E-Maschine'
+      it: 'Regime della macchina elettrica anteriore'
+      pl: 'Prędkość obrotowa przedniej maszyny elektrycznej'
+      ru: 'Частота вращения передней электромашины'
+      zh: '前电机转速'
+      hu: 'Az első elektromos gép fordulatszáma'
+      pt: 'Regime da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 32000
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0x00
+
+  FRONT_EMOTOR_ESTIMATED_TORQUE:
+    bits: '4.7-5.2'
+    comment:
+      en: 'Front electric machine estimated torque'
+      fr: 'Couple estimé de la machine électrique avant'
+      es: 'Par estimado de la máquina eléctrica delantera'
+      de: 'Geschätztes Drehmoment der vorderen E-Maschine'
+      it: 'Coppia stimata della macchina elettrica anteriore'
+      pl: 'Szacowany moment obrotowy przedniej maszyny elektrycznej'
+      ru: 'Оценочный момент передней электромашины'
+      zh: '前电机估算扭矩'
+      hu: 'Az első elektromos gép becsült nyomatéka'
+      pt: 'Binário estimado da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  DCDC_HV_CURRENT:
+    bits: '5.1-6.1'
+    comment:
+      en: 'DC/DC converter current, high-voltage side'
+      fr: 'Courant du convertisseur DC/DC, côté haute tension'
+      es: 'Corriente del convertidor DC/DC, lado de alta tensión'
+      de: 'Strom des DC/DC-Wandlers, Hochvoltseite'
+      it: 'Corrente del convertitore DC/DC, lato alta tensione'
+      pl: 'Prąd przetwornicy DC/DC, strona wysokiego napięcia'
+      ru: 'Ток DC/DC-преобразователя, сторона высокого напряжения'
+      zh: 'DC/DC转换器高压侧电流'
+      hu: 'A DC/DC átalakító árama, nagyfeszültségű oldal'
+      pt: 'Corrente do conversor DC/DC, lado de alta tensão'
+    type: 'uint'
+    factor: 0.25
+    offset: -50
+    min: -50
+    max: 50
+    units: 'A'
+    invalid: 0x1FF
+    default: 0xC8

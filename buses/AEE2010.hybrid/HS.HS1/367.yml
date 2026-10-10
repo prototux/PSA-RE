@@ -1,0 +1,374 @@
+id: 0x367
+name: 'RADIO_STATUS_ACK_REP'
+type: 'can'
+length: 3
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['40ms']
+senders: ['HCU1']
+receivers: ['CMM', 'BVA', 'BSI']
+
+signals:
+  STARTER_COMMAND_FEEDBACK:
+    bits: '1.7'
+    comment:
+      en: 'Starter command feedback'
+      fr: 'Recopie de la commande du démarreur'
+      es: 'Confirmación del mando del motor de arranque'
+      de: 'Rückmeldung des Anlasserbefehls'
+      it: 'Riscontro del comando del motorino di avviamento'
+      pl: 'Potwierdzenie sterowania rozrusznikiem'
+      ru: 'Обратная связь команды стартера'
+      zh: '起动机指令反馈'
+      hu: 'Az indítómotor vezérlésének visszajelzése'
+      pt: 'Confirmação do comando do motor de arranque'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'The starter is not rotating'
+        fr: 'Démarreur non tournant'
+        es: 'El motor de arranque no gira'
+        de: 'Anlasser dreht nicht'
+        it: 'Il motorino di avviamento non gira'
+        pl: 'Rozrusznik się nie obraca'
+        ru: 'Стартер не вращается'
+        zh: '起动机未转动'
+        hu: 'Az indítómotor nem forog'
+        pt: 'O motor de arranque não está a rodar'
+      0x01:
+        en: 'Starter motor rotating'
+        fr: 'Démarreur en rotation'
+        es: 'Motor de arranque girando'
+        de: 'Anlasser dreht'
+        it: 'Motorino di avviamento in rotazione'
+        pl: 'Rozrusznik się obraca'
+        ru: 'Стартер вращается'
+        zh: '起动机正在转动'
+        hu: 'Az indítómotor forog'
+        pt: 'Motor de arranque a rodar'
+
+  BRAKE_PEDAL_SECONDARY_SWITCH_UNCERTAIN:
+    bits: '1.6'
+    comment:
+      en: 'Brake pedal secondary switch signal uncertain'
+      fr: 'Contact secondaire de la pédale de frein incertain'
+      es: 'Señal del contacto secundario del pedal de freno incierta'
+      de: 'Signal des sekundären Bremspedalschalters unsicher'
+      it: 'Segnale del contatto secondario del pedale del freno incerto'
+      pl: 'Niepewny sygnał drugiego wyłącznika pedału hamulca'
+      ru: 'Ненадёжный сигнал вторичного выключателя педали тормоза'
+      zh: '刹车踏板辅助开关信号不确定'
+      hu: 'A fékpedál másodlagos kapcsolójának jele bizonytalan'
+      pt: 'Sinal do contacto secundário do pedal de travão incerto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Secondary contact OK'
+        fr: 'Contact secondaire OK'
+        es: 'Contacto secundario OK'
+        de: 'Sekundärkontakt OK'
+        it: 'Contatto secondario OK'
+        pl: 'Styk wtórny OK'
+        ru: 'Вторичный контакт в норме'
+        zh: '次接触点正常'
+        hu: 'Másodlagos érintkező OK'
+        pt: 'Contacto secundário OK'
+      0x01:
+        en: 'Uncertain brake secondary contact'
+        fr: 'Contact secondaire de frein incertain'
+        es: 'Contacto secundario de freno incierto'
+        de: 'Unsicherer sekundärer Bremskontakt'
+        it: 'Contatto secondario del freno incerto'
+        pl: 'Niepewny styk wtórny hamulca'
+        ru: 'Ненадёжный вторичный контакт тормоза'
+        zh: '制动辅助触点状态不确定'
+        hu: 'Bizonytalan fék másodlagos érintkező'
+        pt: 'Contacto secundário do travão incerto'
+
+  STARTER_PROTECTION_STATUS:
+    bits: '1.5'
+    comment:
+      en: 'The engine ECU cannot execute the start request because the engine is already running'
+      fr: 'Le calculateur moteur ne peut pas exécuter la demande de démarrage car le moteur tourne déjà'
+      es: 'La centralita del motor no puede ejecutar la solicitud de arranque porque el motor ya está girando'
+      de: 'Das Motorsteuergerät kann die Startanforderung nicht ausführen, da der Motor bereits läuft'
+      it: 'La centralina motore non può eseguire la richiesta di avviamento perché il motore è già in rotazione'
+      pl: 'Sterownik silnika nie może wykonać żądania uruchomienia, ponieważ silnik już pracuje'
+      ru: 'Блок управления двигателем не может выполнить запрос запуска, так как двигатель уже вращается'
+      zh: '由于发动机已在运转,发动机ECU无法执行起动请求'
+      hu: 'A motorvezérlő nem tudja végrehajtani az indítási kérést, mert a motor már forog'
+      pt: 'A ECU do motor não pode executar o pedido de arranque porque o motor já está a funcionar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Starter protection disabled'
+        fr: 'Protection démarreur désactivée'
+        es: 'Protección del motor de arranque desactivada'
+        de: 'Anlasserschutz deaktiviert'
+        it: 'Protezione motorino di avviamento disattivata'
+        pl: 'Zabezpieczenie rozrusznika wyłączone'
+        ru: 'Защита стартера отключена'
+        zh: '起动机保护已禁用'
+        hu: 'Indítómotor-védelem letiltva'
+        pt: 'Proteção do motor de arranque desativada'
+      0x01:
+        en: 'Starter protection enabled'
+        fr: 'Protection démarreur activée'
+        es: 'Protección del motor de arranque activada'
+        de: 'Anlasserschutz aktiviert'
+        it: 'Protezione motorino di avviamento attivata'
+        pl: 'Aktywowana ochrona rozrusznika'
+        ru: 'Защита стартера активирована'
+        zh: '起动机保护已启用'
+        hu: 'Az indítómotor-védelem aktiválva'
+        pt: 'Proteção do motor de arranque ativada'
+
+  START_AUTHORIZATION_STATUS:
+    bits: '1.4-1.3'
+    comment:
+      en: 'Start authorization status'
+      fr: 'Etat de l''autorisation de démarrage'
+      es: 'Estado de la autorización de arranque'
+      de: 'Status der Startfreigabe'
+      it: 'Stato dell''autorizzazione all''avviamento'
+      pl: 'Stan zezwolenia na uruchomienie'
+      ru: 'Состояние разрешения на запуск'
+      zh: '起动授权状态'
+      hu: 'Az indítás engedélyezésének állapota'
+      pt: 'Estado da autorização de arranque'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Start authorization'
+        fr: 'Autorisation de démarrage'
+        es: 'Autorización de arranque'
+        de: 'Startfreigabe'
+        it: 'Autorizzazione all''avviamento'
+        pl: 'Zezwolenie na rozruch'
+        ru: 'Разрешение запуска'
+        zh: '起动授权'
+        hu: 'Indítási engedély'
+        pt: 'Autorização de arranque'
+      0x02:
+        en: 'Starting in progress'
+        fr: 'Démarrage en cours'
+        es: 'Arranque en curso'
+        de: 'Start läuft'
+        it: 'Avviamento in corso'
+        pl: 'Rozruch w toku'
+        ru: 'Запуск выполняется'
+        zh: '启动中'
+        hu: 'Indítás folyamatban'
+        pt: 'Arranque em curso'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  GENERATOR_PRODUCTION_LEVEL:
+    bits: '1.2-1.0'
+    comment:
+      en: 'Generator production level'
+      fr: 'Niveau de production du générateur'
+      es: 'Nivel de producción del generador'
+      de: 'Erzeugungsniveau des Generators'
+      it: 'Livello di produzione del generatore'
+      pl: 'Poziom produkcji generatora'
+      ru: 'Уровень выработки генератора'
+      zh: '发电机发电水平'
+      hu: 'A generátor termelési szintje'
+      pt: 'Nível de produção do gerador'
+    type: 'enum'
+    default: 0x06
+    values:
+      0x00:
+        en: 'Low'
+        fr: 'Bas'
+        es: 'Bajo'
+        de: 'Niedrig'
+        it: 'Basso'
+        pl: 'Niski'
+        ru: 'Низкий'
+        zh: '低'
+        hu: 'Alacsony'
+        pt: 'Baixo'
+      0x01:
+        en: 'Medium'
+        fr: 'Modéré'
+        es: 'Moderado'
+        de: 'Mittel'
+        it: 'Moderato'
+        pl: 'Umiarkowany'
+        ru: 'Умеренный'
+        zh: '中等'
+        hu: 'Közepes'
+        pt: 'Moderado'
+      0x02:
+        en: 'High'
+        fr: 'Haut'
+        es: 'Alto'
+        de: 'Hoch'
+        it: 'Alto'
+        pl: 'Wysoki'
+        ru: 'Высокий'
+        zh: '高'
+        hu: 'Magas'
+        pt: 'Alto'
+      0x03:
+        en: 'Full load'
+        fr: 'Pleine charge'
+        es: 'Carga completa'
+        de: 'Volllast'
+        it: 'Carico pieno'
+        pl: 'Pełne obciążenie'
+        ru: 'Полная нагрузка'
+        zh: '满载'
+        hu: 'Teljes terhelés'
+        pt: 'Carga total'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  ALTERNATOR_VOLTAGE_SETPOINT:
+    bits: '2.7-2.2'
+    comment:
+      en: 'Alternator voltage setpoint'
+      fr: 'Consigne de tension de l''alternateur'
+      es: 'Consigna de tensión del alternador'
+      de: 'Sollspannung der Lichtmaschine'
+      it: 'Valore di tensione richiesto dell''alternatore'
+      pl: 'Zadane napięcie alternatora'
+      ru: 'Заданное напряжение генератора'
+      zh: '发电机电压设定值'
+      hu: 'A generátor feszültség-alapjele'
+      pt: 'Consigna de tensão do alternador'
+    type: 'uint'
+    factor: 0.1
+    offset: 10.6
+    min: 10.6
+    max: 16
+    units: 'V'
+    invalid: 0x3F
+    default: 0x00
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 0.11)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 0.11)'
+          es: 'También observado con otro escalado (factor 0.11)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 0.11)'
+          it: 'Osservato anche con un''altra scala (factor 0.11)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 0.11)'
+          ru: 'Также наблюдался с другим масштабом (factor 0.11)'
+          zh: '也观察到使用另一种缩放（factor 0.11）'
+          hu: 'Megfigyelve más skálázással is (factor 0.11)'
+          pt: 'Também observado com outra escala (factor 0.11)'
+        factor: 0.11
+
+  START_PROHIBITION_PLUGIN:
+    bits: '2.1'
+    comment:
+      en: 'Combustion engine start prohibited due to plug-in charging'
+      fr: 'Interdiction de démarrage du moteur thermique pour cause de charge (plug-in)'
+      es: 'Prohibición de arranque del motor térmico por carga (plug-in)'
+      de: 'Verbrennungsmotorstart wegen Plug-in-Ladung gesperrt'
+      it: 'Divieto di avviamento del motore termico per ricarica plug-in'
+      pl: 'Zakaz uruchomienia silnika spalinowego z powodu ładowania (plug-in)'
+      ru: 'Запрет запуска двигателя внутреннего сгорания из-за подзарядки (plug-in)'
+      zh: '由于插电充电而禁止内燃机起动'
+      hu: 'A belső égésű motor indításának tiltása plug-in töltés miatt'
+      pt: 'Arranque do motor de combustão proibido devido ao carregamento plug-in'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'MEA not forbidden due to plug-in'
+        fr: 'MEA non interdite pour cause de recharge (plug-in)'
+        es: 'MEA no prohibida por causa de conexión (plug-in)'
+        de: 'MEA nicht gesperrt wegen Plug-in-Laden'
+        it: 'MEA non vietata per ricarica (plug-in)'
+        pl: 'MEA niezablokowana z powodu ładowania (plug-in)'
+        ru: 'MEA не запрещена из-за подключения (plug-in)'
+        zh: '因插电原因未禁止 MEA'
+        hu: 'MEA nincs letiltva a plug-in töltés miatt'
+        pt: 'MEA não proibido por ligação à tomada'
+      0x01:
+        en: 'MEA forbidden due to plug-in'
+        fr: 'MEA interdite en raison du plug-in'
+        es: 'MEA prohibida debido al plug-in'
+        de: 'MEA aufgrund des Plug-in-Betriebs untersagt'
+        it: 'MEA vietata a causa del plug-in'
+        pl: 'MEA zabronione z powodu plug-in'
+        ru: 'MEA запрещено из-за режима plug-in'
+        zh: '因插电模式而禁止MEA'
+        hu: 'A MEA tiltva a plug-in miatt'
+        pt: 'MEA proibida devido ao plug-in'
+
+  UNUSED_1:
+    bits: '2.0-3.6'
+    unused: true
+
+  ENGINE_TORQUE_RATE_INDEX:
+    bits: '3.5-3.0'
+    comment:
+      en: 'Engine torque rate index'
+      fr: 'Indice de la pente de couple moteur'
+      es: 'Índice de la pendiente de par motor'
+      de: 'Index der Motordrehmoment-Anstiegsrate'
+      it: 'Indice della pendenza di coppia motore'
+      pl: 'Wskaźnik nachylenia momentu obrotowego silnika'
+      ru: 'Показатель скорости изменения момента двигателя'
+      zh: '发动机扭矩变化率指数'
+      hu: 'A motornyomaték-lejtés indexe'
+      pt: 'Índice de taxa de binário do motor'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x3F
+    default: 0x00

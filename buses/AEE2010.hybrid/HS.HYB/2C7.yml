@@ -1,0 +1,246 @@
+id: 0x2C7
+name: 'FRONT_FOG_LIGHT_COMMAND'
+type: 'can'
+length: 6
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2', 'TBMU']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  AC_BLOWER_SPEED:
+    bits: '2.6-2.0'
+    comment:
+      en: 'Current air conditioning blower speed'
+      fr: 'Vitesse actuelle du pulseur de climatisation'
+      es: 'Velocidad actual del ventilador de climatización'
+      de: 'Aktuelle Drehzahl des Klimaanlagengebläses'
+      it: 'Velocità attuale del ventilatore del climatizzatore'
+      pl: 'Aktualna prędkość dmuchawy klimatyzacji'
+      ru: 'Текущая скорость вентилятора кондиционера'
+      zh: '空调鼓风机当前转速'
+      hu: 'A klíma fúvómotorjának aktuális sebessége'
+      pt: 'Velocidade atual do ventilador de climatização'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  BATTERY_SOC_EXTENDED:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Extended state of charge (SOC) of the battery'
+      fr: 'Etat de charge (SOC) étendu de la batterie'
+      es: 'Estado de carga (SOC) extendido de la batería'
+      de: 'Erweiterter Ladezustand (SOC) der Batterie'
+      it: 'Stato di carica (SOC) esteso della batteria'
+      pl: 'Rozszerzony stan naładowania (SOC) akumulatora'
+      ru: 'Расширенное значение заряда (SOC) батареи'
+      zh: '电池扩展荷电状态(SOC)'
+      hu: 'Az akkumulátor kiterjesztett töltöttségi szintje (SOC)'
+      pt: 'Estado de carga (SOC) alargado da bateria'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Normal value (WH)'
+        fr: 'Valeur normale (WH)'
+        es: 'Valor normal (WH)'
+        de: 'Normalwert (WH)'
+        it: 'Valore normale (WH)'
+        pl: 'Wartość normalna (WH)'
+        ru: 'Нормальное значение (WH)'
+        zh: '正常值（WH）'
+        hu: 'Normál érték (WH)'
+        pt: 'Valor normal (WH)'
+      0x02:
+        en: 'Extended value (WH)'
+        fr: 'Valeur élargie (WH)'
+        es: 'Valor ampliado (WH)'
+        de: 'Erweiterter Wert (WH)'
+        it: 'Valore esteso (WH)'
+        pl: 'Wartość rozszerzona (WH)'
+        ru: 'Расширенное значение (WH)'
+        zh: '扩展值(WH)'
+        hu: 'Kiterjesztett érték (WH)'
+        pt: 'Valor ampliado (Wh)'
+      0x03:
+        unused: true
+
+  HV_BATTERY_CONTACTOR_REQUEST:
+    bits: '3.4'
+    comment:
+      en: 'Request to open or close the high-voltage battery contactors'
+      fr: 'Consigne d''ouverture/fermeture des contacteurs de la batterie haute tension'
+      es: 'Consigna de apertura/cierre de los contactores de la batería de alta tensión'
+      de: 'Anforderung zum Öffnen/Schließen der Hochvoltbatterie-Schütze'
+      it: 'Richiesta di apertura/chiusura dei contattori della batteria ad alta tensione'
+      pl: 'Żądanie otwarcia/zamknięcia styczników akumulatora wysokiego napięcia'
+      ru: 'Запрос на размыкание/замыкание контакторов высоковольтной батареи'
+      zh: '高压电池接触器开闭请求'
+      hu: 'A nagyfeszültségű akkumulátor kontaktorainak nyitási/zárási kérése'
+      pt: 'Consigna de abertura/fecho dos contactores da bateria de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+      0x01:
+        en: 'Closing'
+        fr: 'Fermeture'
+        es: 'Cierre'
+        de: 'Schließen'
+        it: 'Chiusura'
+        pl: 'Zamykanie'
+        ru: 'Закрытие'
+        zh: '关闭中'
+        hu: 'Zárás'
+        pt: 'A fechar'
+
+  PERFORMANCE_MODE_STATUS:
+    bits: '3.3'
+    comment:
+      en: 'Performance mode status'
+      fr: 'Etat du mode performance'
+      es: 'Estado del modo de rendimiento'
+      de: 'Status des Performance-Modus'
+      it: 'Stato della modalità prestazioni'
+      pl: 'Stan trybu wydajności'
+      ru: 'Состояние спортивного режима'
+      zh: '性能模式状态'
+      hu: 'A teljesítménymód állapota'
+      pt: 'Estado do modo de desempenho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Performance mode disabled'
+        fr: 'Mode performance désactivé'
+        es: 'Modo de rendimiento desactivado'
+        de: 'Performance-Modus deaktiviert'
+        it: 'Modalità prestazioni disattivata'
+        pl: 'Tryb osiągów wyłączony'
+        ru: 'Спортивный режим отключён'
+        zh: '性能模式已禁用'
+        hu: 'Teljesítménymód letiltva'
+        pt: 'Modo de desempenho desativado'
+      0x01:
+        en: 'Performance mode activated'
+        fr: 'Mode performance activé'
+        es: 'Modo rendimiento activado'
+        de: 'Leistungsmodus aktiviert'
+        it: 'Modalità prestazioni attivata'
+        pl: 'Tryb wydajności aktywowany'
+        ru: 'Режим производительности активирован'
+        zh: '性能模式已激活'
+        hu: 'Teljesítmény üzemmód aktiválva'
+        pt: 'Modo de desempenho ativado'
+
+  DEMISTING_REQUEST:
+    bits: '3.2-3.1'
+    comment:
+      en: 'Demisting request'
+      fr: 'Demande de désembuage'
+      es: 'Solicitud de desempañado'
+      de: 'Anforderung der Scheibenentfeuchtung'
+      it: 'Richiesta di disappannamento'
+      pl: 'Żądanie odparowania szyb'
+      ru: 'Запрос осушения (антизапотевания)'
+      zh: '除雾请求'
+      hu: 'Páramentesítési kérés'
+      pt: 'Pedido de desembaciamento'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'

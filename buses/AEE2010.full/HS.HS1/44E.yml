@@ -1,0 +1,80 @@
+id: 0x44E
+name: 'BSI_CABIN_DATA_7'
+type: 'can'
+length: 3
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['E_VCU']
+
+signals:
+  REAR_EVAPORATOR_SENSOR_TEMPERATURE_SETPOINT:
+    bits: '1.7-2.5'
+    comment:
+      en: 'Rear evaporator outlet air temperature setpoint'
+      fr: 'Consigne de température d''air en sortie de l''évaporateur arrière'
+      es: 'Consigna de temperatura del aire a la salida del evaporador trasero'
+      de: 'Sollwert der Luftaustrittstemperatur des hinteren Verdampfers'
+      it: 'Valore di riferimento della temperatura dell''aria in uscita dall''evaporatore posteriore'
+      pl: 'Wartość zadana temperatury powietrza na wyjściu tylnego parownika'
+      ru: 'Заданная температура воздуха на выходе заднего испарителя'
+      zh: '后蒸发器出风口温度设定值'
+      hu: 'A hátsó párologtató kimeneti levegő-hőmérsékletének alapjele'
+      pt: 'Consigna de temperatura do ar à saída do evaporador traseiro'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0x7FF
+
+  EVAPORATOR_ADDITIONAL_SENSOR_TEMPERATURE:
+    bits: '2.4-2.0'
+    comment:
+      en: 'Air temperature measured at the evaporator outlet by the additional sensor'
+      fr: 'Température d''air mesurée en sortie d''évaporateur par le capteur additionnel'
+      es: 'Temperatura del aire medida a la salida del evaporador por el sensor adicional'
+      de: 'Vom Zusatzsensor gemessene Lufttemperatur am Verdampferausgang'
+      it: 'Temperatura dell''aria misurata all''uscita dell''evaporatore dal sensore aggiuntivo'
+      pl: 'Temperatura powietrza zmierzona na wyjściu parownika przez czujnik dodatkowy'
+      ru: 'Температура воздуха на выходе испарителя, измеренная дополнительным датчиком'
+      zh: '附加传感器测得的蒸发器出口空气温度'
+      hu: 'A párologtató kimenetén a kiegészítő érzékelővel mért levegőhőmérséklet'
+      pt: 'Temperatura do ar medida à saída do evaporador pelo sensor adicional'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 15
+    units: '°C'
+    invalid: 0x1F
+
+  REAR_HEATER_CORE_INLET_WATER_SETPOINT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Rear heater core inlet water temperature setpoint'
+      fr: 'Consigne de température d''eau à l''entrée du réchauffeur arrière'
+      es: 'Consigna de temperatura del agua a la entrada del calentador trasero'
+      de: 'Sollwert der Wassereintrittstemperatur des hinteren Heizkörpers'
+      it: 'Valore di riferimento della temperatura dell''acqua in ingresso al riscaldatore posteriore'
+      pl: 'Wartość zadana temperatury wody na wejściu tylnej nagrzewnicy'
+      ru: 'Заданная температура воды на входе заднего радиатора отопителя'
+      zh: '后暖风芯体入水口水温设定值'
+      hu: 'A hátsó fűtőradiátor bemeneti vízhőmérsékletének alapjele'
+      pt: 'Consigna da temperatura da água à entrada do núcleo do aquecedor traseiro'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 70
+    units: '°C'
+    invalid: 0xFF

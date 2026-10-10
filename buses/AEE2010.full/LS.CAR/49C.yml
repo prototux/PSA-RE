@@ -1,0 +1,276 @@
+id: 0x49C
+name: 'ANTITHEFT_ALARM_FAULT_EVENT'
+type: 'can'
+length: 8
+comment:
+  en: 'Ultrasonic antitheft alarm: fault event, logged in the BSI fault log.'
+  fr: 'Alarme antivol à ultrasons : événement défaut, enregistré dans le journal des défauts du BSI.'
+  es: 'Alarma antirrobo por ultrasonidos: evento de fallo, registrado en el registro de fallos de la BSI.'
+  de: 'Ultraschall-Diebstahlalarm – Fehlerereignis, im Fehlerspeicher (Fehlerprotokoll) des BSI vermerkt.'
+  it: 'Allarme antifurto a ultrasuoni: evento di guasto, registrato nel registro guasti della BSI.'
+  pl: 'Alarm antywłamaniowy ultradźwiękowy – zdarzenie usterki, zapisywane w dzienniku usterek BSI.'
+  ru: 'Ультразвуковая противоугонная сигнализация — событие неисправности, регистрируется в журнале неисправностей BSI.'
+  zh: '超声波防盗报警器——故障事件,记录在BSI故障日志中。'
+  hu: 'Ultrahangos riasztó – hibaesemény, amelyet a BSI hibanaplójába rögzítenek.'
+  pt: 'Alarme antirroubo ultrassónico: evento de avaria, registado no registo de avarias da BSI.'
+observations:
+  en: 'Timing defined by the diagnostic procedure'
+  fr: 'Périodicité définie par la procédure de diagnostic'
+  es: 'Temporización definida por el procedimiento de diagnóstico'
+  de: 'Zeitverhalten durch das Diagnoseverfahren festgelegt'
+  it: 'Tempistica definita dalla procedura diagnostica'
+  pl: 'Zgodnie z procedurą diagnostyczną'
+  ru: 'Периодичность определяется диагностической процедурой'
+  zh: '由诊断程序定义发送时机'
+  hu: 'Az időzítést a diagnosztikai eljárás határozza meg'
+  pt: 'Temporização definida pelo procedimento de diagnóstico'
+periodicity: ['trigger']
+senders: ['ALARM']
+receivers: ['BSI']
+
+signals:
+  HEADER_BITS_1:
+    bits: '1.7-1.4'
+    comment:
+      en: 'First 4 header bits'
+      fr: '4 premiers bits de l''en-tête'
+      es: '4 primeros bits de la cabecera'
+      de: 'Erste 4 Header-Bits'
+      it: 'Primi 4 bit dell''intestazione'
+      pl: 'Pierwsze 4 bity nagłówka'
+      ru: 'Первые 4 бита заголовка'
+      zh: '帧头前4位'
+      hu: 'A fejléc első 4 bitje'
+      pt: '4 primeiros bits do cabeçalho'
+    type: 'uint'
+
+  EVENT_TYPE:
+    bits: '1.3'
+    comment:
+      en: 'Event type'
+      fr: 'Type d''événement'
+      es: 'Tipo de evento'
+      de: 'Ereignistyp'
+      it: 'Tipo di evento'
+      pl: 'Typ zdarzenia'
+      ru: 'Тип события'
+      zh: '事件类型'
+      hu: 'Eseménytípus'
+      pt: 'Tipo de evento'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Disappearance'
+        fr: 'Disparition'
+        es: 'Desaparición'
+        de: 'Verschwinden'
+        it: 'Scomparsa'
+        pl: 'Zanik'
+        ru: 'Исчезновение'
+        zh: '消失'
+        hu: 'Eltűnés'
+        pt: 'Desaparecimento'
+      0x01:
+        en: 'Appearance'
+        fr: 'Apparition'
+        es: 'Aparición'
+        de: 'Erscheinen'
+        it: 'Comparsa'
+        pl: 'Pojawienie się'
+        ru: 'Появление'
+        zh: '出现'
+        hu: 'Megjelenés'
+        pt: 'Aparência'
+
+  HEADER_BITS_2:
+    bits: '1.2-1.0'
+    comment:
+      en: 'Last bits of the header'
+      fr: 'Derniers bits de l''en-tête'
+      es: 'Últimos bits de la cabecera'
+      de: 'Letzte Header-Bits'
+      it: 'Ultimi bit dell''intestazione'
+      pl: 'Ostatnie bity nagłówka'
+      ru: 'Последние биты заголовка'
+      zh: '帧头末位'
+      hu: 'A fejléc utolsó bitjei'
+      pt: 'Últimos bits do cabeçalho'
+    type: 'uint'
+
+  FAULT_CODE_GENERIC:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Fault code'
+      fr: 'Code de défaut'
+      es: 'Código de fallo'
+      de: 'Fehlercode'
+      it: 'Codice guasto'
+      pl: 'Kod usterki'
+      ru: 'Код неисправности'
+      zh: '故障码'
+      hu: 'Hibakód'
+      pt: 'Código de falha'
+    type: 'uint'
+
+  EXTENDED_CONTEXT_TYPE:
+    bits: '4.7'
+    comment:
+      en: 'Type of extended context'
+      fr: 'Type de contexte étendu'
+      es: 'Tipo de contexto extendido'
+      de: 'Typ des erweiterten Kontexts'
+      it: 'Tipo di contesto esteso'
+      pl: 'Typ rozszerzonego kontekstu'
+      ru: 'Тип расширенного контекста'
+      zh: '扩展上下文类型'
+      hu: 'Kibővített kontextus típusa'
+      pt: 'Tipo de contexto alargado'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Local contexts'
+        fr: 'Contextes locaux'
+        es: 'Contextos locales'
+        de: 'Lokale Kontexte'
+        it: 'Contesti locali'
+        pl: 'Konteksty lokalne'
+        ru: 'Локальные контексты'
+        zh: '本地上下文'
+        hu: 'Helyi kontextusok'
+        pt: 'Contextos locais'
+      0x01:
+        en: 'BSI context'
+        fr: 'Contexte BSI'
+        es: 'Contexto BSI'
+        de: 'BSI-Kontext'
+        it: 'Contesto BSI'
+        pl: 'Kontekst BSI'
+        ru: 'Контекст BSI'
+        zh: 'BSI 上下文'
+        hu: 'BSI kontextus'
+        pt: 'Contexto BSI'
+
+  DEGRADED_MODE_NUMBER:
+    bits: '4.6-4.0'
+    comment:
+      en: 'Degraded mode number'
+      fr: 'Numéro de mode dégradé'
+      es: 'Número de modo degradado'
+      de: 'Nummer des Degradationsmodus'
+      it: 'Numero della modalità degradata'
+      pl: 'Numer trybu ograniczonego'
+      ru: 'Номер деградированного режима'
+      zh: '降级模式编号'
+      hu: 'Korlátozott üzemmód száma'
+      pt: 'Número do modo degradado'
+    type: 'uint'
+    min: 0
+    max: 126
+
+  CONTEXT_PARAM_1:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Additional context parameter 1'
+      fr: 'Paramètre de contexte supplémentaire 1'
+      es: 'Parámetro de contexto adicional 1'
+      de: 'Zusätzlicher Kontextparameter 1'
+      it: 'Parametro di contesto aggiuntivo 1'
+      pl: 'Dodatkowy parametr kontekstu 1'
+      ru: 'Дополнительный параметр контекста 1'
+      zh: '附加上下文参数1'
+      hu: '1. kiegészítő kontextusparaméter'
+      pt: 'Parâmetro de contexto adicional 1'
+    type: 'enum'
+    values:
+      0xFF:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CONTEXT_PARAM_2:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Additional context parameter 2'
+      fr: 'Paramètre de contexte supplémentaire 2'
+      es: 'Parámetro de contexto adicional 2'
+      de: 'Zusätzlicher Kontextparameter 2'
+      it: 'Parametro di contesto aggiuntivo 2'
+      pl: 'Dodatkowy parametr kontekstu 2'
+      ru: 'Дополнительный параметр контекста 2'
+      zh: '附加上下文参数2'
+      hu: '2. kiegészítő kontextusparaméter'
+      pt: 'Parâmetro de contexto adicional 2'
+    type: 'enum'
+    values:
+      0xFF:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CONTEXT_PARAM_3:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Additional context parameter 3'
+      fr: 'Paramètre de contexte supplémentaire 3'
+      es: 'Parámetro de contexto adicional 3'
+      de: 'Zusätzlicher Kontextparameter 3'
+      it: 'Parametro di contesto aggiuntivo 3'
+      pl: 'Dodatkowy parametr kontekstu 3'
+      ru: 'Дополнительный параметр контекста 3'
+      zh: '附加上下文参数3'
+      hu: '3. kiegészítő kontextusparaméter'
+      pt: 'Parâmetro de contexto adicional 3'
+    type: 'enum'
+    values:
+      0xFF:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CONTEXT_PARAM_4:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Additional context parameter 4'
+      fr: 'Paramètre de contexte supplémentaire 4'
+      es: 'Parámetro de contexto adicional 4'
+      de: 'Zusätzlicher Kontextparameter 4'
+      it: 'Parametro di contesto aggiuntivo 4'
+      pl: 'Dodatkowy parametr kontekstu 4'
+      ru: 'Дополнительный параметр контекста 4'
+      zh: '附加上下文参数4'
+      hu: '4. kiegészítő kontextusparaméter'
+      pt: 'Parâmetro de contexto adicional 4'
+    type: 'enum'
+    values:
+      0xFF:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'

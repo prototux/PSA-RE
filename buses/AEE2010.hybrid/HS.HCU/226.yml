@@ -1,0 +1,194 @@
+id: 0x226
+name: 'HCU2_DYNAMIC_DATA_2'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor current and fault states (short circuit, mode, performance), from the hybrid control unit.'
+  fr: 'Courant et états de défaut (court-circuit, mode, performance) du moteur électrique avant, issus du calculateur hybride.'
+  es: 'Corriente y estados de fallo (cortocircuito, modo, rendimiento) del motor eléctrico delantero, procedentes de la centralita híbrida.'
+  de: 'Strom und Fehlerzustände (Kurzschluss, Modus, Leistung) des vorderen Elektromotors vom Hybridsteuergerät.'
+  it: 'Corrente e stati di guasto (cortocircuito, modalità, prestazioni) del motore elettrico anteriore, dalla centralina ibrida.'
+  pl: 'Prąd i stany usterek (zwarcie, tryb, wydajność) przedniego silnika elektrycznego z hybrydowego sterownika.'
+  ru: 'Ток и статусы неисправностей (короткое замыкание, режим, производительность) переднего электродвигателя от гибридного блока управления.'
+  zh: '前置电动机的电流及故障状态(短路、模式、性能),来自混合动力控制单元。'
+  hu: 'Az első elektromos motor árama és hibaállapotai (rövidzárlat, üzemmód, teljesítmény) a hibrid vezérlőegységtől.'
+  pt: 'Corrente e estados de avaria (curto-circuito, modo, desempenho) do motor elétrico dianteiro, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU2']
+receivers: ['HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  INVERTER_DC_LINK_VOLTAGE:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Actual intermediate DC link voltage of the inverter'
+      fr: 'Tension actuelle du bus continu intermédiaire de l''onduleur'
+      es: 'Tensión actual del bus de continua intermedio del inversor'
+      de: 'Aktuelle Zwischenkreisspannung des Wechselrichters'
+      it: 'Tensione attuale del bus in continua intermedio dell''inverter'
+      pl: 'Aktualne napięcie pośredniego obwodu DC falownika'
+      ru: 'Текущее напряжение промежуточного звена постоянного тока инвертора'
+      zh: '逆变器中间直流母线的实际电压'
+      hu: 'Az inverter közbenső egyenáramú körének aktuális feszültsége'
+      pt: 'Tensão atual do barramento contínuo intermédio do inversor'
+    type: 'uint'
+    factor: 0.0078125
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0xFFFF
+    default: 0x00
+
+  FRONT_EMOTOR_MAX_TORQUE_AN0:
+    bits: '4.7-5.3'
+    comment:
+      en: 'Front electric machine maximum torque at speed AN0'
+      fr: 'Couple maximal de la machine électrique avant au régime AN0'
+      es: 'Par máximo de la máquina eléctrica delantera en el régimen AN0'
+      de: 'Maximales Drehmoment der vorderen E-Maschine bei Drehzahl AN0'
+      it: 'Coppia massima della macchina elettrica anteriore al regime AN0'
+      pl: 'Maksymalny moment obrotowy przedniej maszyny elektrycznej przy prędkości AN0'
+      ru: 'Максимальный момент передней электромашины при частоте вращения AN0'
+      zh: '前电机在AN0转速下的最大扭矩'
+      hu: 'Az első elektromos gép maximális nyomatéka AN0 fordulatszámon'
+      pt: 'Binário máximo da máquina elétrica dianteira no regime AN0'
+    type: 'uint'
+    factor: 0.0625
+    min: 0
+    max: 500
+    units: 'Nm'
+    invalid: 0x1FFF
+    default: 0x00
+
+  FRONT_EMOTOR_MAX_TORQUE_AN1:
+    bits: '5.2-7.6'
+    comment:
+      en: 'Front electric machine maximum torque at speed AN1'
+      fr: 'Couple maximal de la machine électrique avant au régime AN1'
+      es: 'Par máximo de la máquina eléctrica delantera en el régimen AN1'
+      de: 'Maximales Drehmoment der vorderen E-Maschine bei Drehzahl AN1'
+      it: 'Coppia massima della macchina elettrica anteriore al regime AN1'
+      pl: 'Maksymalny moment obrotowy przedniej maszyny elektrycznej przy prędkości AN1'
+      ru: 'Максимальный момент передней электромашины при частоте вращения AN1'
+      zh: '前电机在AN1转速下的最大扭矩'
+      hu: 'Az első elektromos gép maximális nyomatéka AN1 fordulatszámon'
+      pt: 'Binário máximo da máquina elétrica dianteira no regime AN1'
+    type: 'uint'
+    factor: 0.0625
+    min: 0
+    max: 500
+    units: 'Nm'
+    invalid: 0x1FFF
+    default: 0x00
+
+  FRONT_EMOTOR_LOSSES:
+    bits: '7.5-8.7'
+    comment:
+      en: 'Front electric machine losses'
+      fr: 'Pertes de la machine électrique avant'
+      es: 'Pérdidas de la máquina eléctrica delantera'
+      de: 'Verluste der vorderen E-Maschine'
+      it: 'Perdite della macchina elettrica anteriore'
+      pl: 'Straty przedniej maszyny elektrycznej'
+      ru: 'Потери передней электромашины'
+      zh: '前电机损耗'
+      hu: 'Az első elektromos gép veszteségei'
+      pt: 'Perdas da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 200
+    min: 0
+    max: 20000
+    units: 'W'
+    invalid: 0x7F
+    default: 0x00
+
+  EDTS_STANDBY_REQUEST_EMERGENCY:
+    bits: '8.4'
+    comment:
+      en: 'Emergency request to put the EDTS on standby via BASS'
+      fr: 'Demande de mise en veille de l''EDTS par le BASS en cas d''urgence'
+      es: 'Solicitud de urgencia de puesta en espera del EDTS por el BASS'
+      de: 'Notfallanforderung zur Versetzung des EDTS in den Standby-Modus über BASS'
+      it: 'Richiesta di emergenza di messa in standby dell''EDTS tramite BASS'
+      pl: 'Żądanie awaryjne przejścia EDTS w stan gotowości przez BASS'
+      ru: 'Аварийный запрос перевода EDTS в режим ожидания через BASS'
+      zh: 'BASS发出的紧急请求,使EDTS进入待机'
+      hu: 'Vészhelyzeti kérés az EDTS készenléti állapotba helyezésére a BASS-on keresztül'
+      pt: 'Pedido de urgência de colocação em repouso do EDTS pelo BASS'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  FRONT_EMOTOR_ROTOR_POSITION:
+    bits: '8.3-8.0'
+    comment:
+      en: 'Front electric machine rotor position'
+      fr: 'Position du rotor de la machine électrique avant'
+      es: 'Posición del rotor de la máquina eléctrica delantera'
+      de: 'Rotorposition der vorderen E-Maschine'
+      it: 'Posizione del rotore della macchina elettrica anteriore'
+      pl: 'Położenie wirnika przedniej maszyny elektrycznej'
+      ru: 'Положение ротора передней электромашины'
+      zh: '前电机转子位置'
+      hu: 'Az első elektromos gép rotorhelyzete'
+      pt: 'Posição do rotor da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 360
+    units: '°'

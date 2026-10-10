@@ -1,0 +1,222 @@
+id: 0x318
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_14'
+type: 'can'
+length: 5
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['20ms']
+senders: ['CMM']
+receivers: ['CVM', 'ARTIV', 'ABS']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.0'
+    unused: true
+
+  CRUISE_CONTROL_PRECOORDINATION_TORQUE_SETPOINT:
+    bits: '2.7-3.2'
+    comment:
+      en: 'Powertrain wheel torque setpoint, pre-coordination for cruise/speed control (XVV)'
+      fr: 'Consigne de couple roue du groupe motopropulseur, pré-coordination pour le régulateur/limiteur de vitesse (XVV)'
+      es: 'Consigna de par en rueda del grupo motopropulsor, precoordinación para el regulador/limitador de velocidad (XVV)'
+      de: 'Radmoment-Sollwert des Antriebsstrangs, Vorkoordination für Tempomat/-begrenzer (XVV)'
+      it: 'Consegna di coppia ruota del gruppo motopropulsore, pre-coordinamento per regolatore/limitatore di velocità (XVV)'
+      pl: 'Zadana wartość momentu na kole zespołu napędowego, wstępna koordynacja dla tempomatu/ogranicznika prędkości (XVV)'
+      ru: 'Заданный момент на колесе силового агрегата, предварительная координация для круиз-контроля/ограничителя скорости (XVV)'
+      zh: '动力总成车轮扭矩设定值,巡航/限速功能(XVV)预协调'
+      hu: 'Az erőátviteli rendszer kerék-nyomatékalapjele, előegyeztetés a sebességtartó/korlátozó (XVV) számára'
+      pt: 'Consigna de binário na roda do grupo motopropulsor, pré-coordenação para o regulador/limitador de velocidade (XVV)'
+    type: 'uint'
+    factor: 1
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    default: 0x3A98
+
+  CRUISE_TORQUE_SOURCE_POWERTRAIN_ACTIVE:
+    bits: '3.1'
+    comment:
+      en: 'Wheel torque availability for cruise control, source 1 (powertrain active)'
+      fr: 'Disponibilité de couple roue pour le régulateur de vitesse, source 1 (groupe motopropulseur actif)'
+      es: 'Disponibilidad de par en rueda para el control de crucero, fuente 1 (grupo motopropulsor activo)'
+      de: 'Radmomentverfügbarkeit für den Tempomaten, Quelle 1 (Antriebsstrang aktiv)'
+      it: 'Disponibilità di coppia ruota per il cruise control, fonte 1 (gruppo motopropulsore attivo)'
+      pl: 'Dostępność momentu na kole dla tempomatu, źródło 1 (zespół napędowy aktywny)'
+      ru: 'Доступность момента на колесе для круиз-контроля, источник 1 (силовой агрегат активен)'
+      zh: '巡航控制车轮扭矩可用性,来源1(动力总成激活)'
+      hu: 'Kerék-nyomaték elérhetősége a sebességtartóhoz, 1. forrás (erőátviteli rendszer aktív)'
+      pt: 'Disponibilidade de binário na roda para o regulador de velocidade, fonte 1 (grupo motopropulsor ativo)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non activé'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  CRUISE_TORQUE_SOURCE_GEARBOX_ENGAGED:
+    bits: '3.0'
+    comment:
+      en: 'Wheel torque availability for cruise control, source 2 (gearbox engaged)'
+      fr: 'Disponibilité de couple roue pour le régulateur de vitesse, source 2 (boîte de vitesses en prise)'
+      es: 'Disponibilidad de par en rueda para el control de crucero, fuente 2 (caja de cambios engranada)'
+      de: 'Radmomentverfügbarkeit für den Tempomaten, Quelle 2 (Getriebe eingekuppelt)'
+      it: 'Disponibilità di coppia ruota per il cruise control, fonte 2 (cambio innestato)'
+      pl: 'Dostępność momentu na kole dla tempomatu, źródło 2 (skrzynia biegów włączona)'
+      ru: 'Доступность момента на колесе для круиз-контроля, источник 2 (коробка передач включена)'
+      zh: '巡航控制车轮扭矩可用性,来源2(变速箱已挂挡)'
+      hu: 'Kerék-nyomaték elérhetősége a sebességtartóhoz, 2. forrás (váltó bekapcsolva)'
+      pt: 'Disponibilidade de binário na roda para o regulador de velocidade, fonte 2 (caixa de velocidades engrenada)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non activé'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  POWERTRAIN_WHEEL_TORQUE_ACTUAL:
+    bits: '4.7-5.2'
+    comment:
+      en: 'Actual powertrain wheel torque'
+      fr: 'Couple roue réel du groupe motopropulseur'
+      es: 'Par en rueda real del grupo motopropulsor'
+      de: 'Tatsächliches Radmoment des Antriebsstrangs'
+      it: 'Coppia ruota reale del gruppo motopropulsore'
+      pl: 'Rzeczywisty moment na kole zespołu napędowego'
+      ru: 'Фактический момент на колесе силового агрегата'
+      zh: '动力总成实际车轮扭矩'
+      hu: 'Az erőátviteli rendszer tényleges kerék-nyomatéka'
+      pt: 'Binário real na roda do grupo motopropulsor'
+    type: 'uint'
+    factor: 1
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x00
+
+  CRUISE_TORQUE_SOURCE_TRACTION_CHAIN_CLOSED:
+    bits: '5.1'
+    comment:
+      en: 'Wheel torque availability for cruise control, source 3 (traction chain closed)'
+      fr: 'Disponibilité de couple roue pour le régulateur de vitesse, source 3 (chaîne de traction fermée)'
+      es: 'Disponibilidad de par en rueda para el control de crucero, fuente 3 (cadena de tracción cerrada)'
+      de: 'Radmomentverfügbarkeit für den Tempomaten, Quelle 3 (Antriebsstrang geschlossen)'
+      it: 'Disponibilità di coppia ruota per il cruise control, fonte 3 (catena di trazione chiusa)'
+      pl: 'Dostępność momentu na kole dla tempomatu, źródło 3 (łańcuch napędowy zamknięty)'
+      ru: 'Доступность момента на колесе для круиз-контроля, источник 3 (тяговая цепь замкнута)'
+      zh: '巡航控制车轮扭矩可用性,来源3(牵引链闭合)'
+      hu: 'Kerék-nyomaték elérhetősége a sebességtartóhoz, 3. forrás (hajtáslánc zárva)'
+      pt: 'Disponibilidade de binário na roda para o regulador de velocidade, fonte 3 (cadeia de tração fechada)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non activé'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  ACC_TORQUE_EFFECTIVE_STATUS:
+    bits: '5.0'
+    comment:
+      en: 'Whether the torque requested by the ACC (adaptive cruise) is effectively applied'
+      fr: 'Effectivité du couple demandé par le régulateur adaptatif (ACC)'
+      es: 'Efectividad del par solicitado por el control de crucero adaptativo (ACC)'
+      de: 'Wirksamkeit des vom adaptiven Tempomaten (ACC) angeforderten Drehmoments'
+      it: 'Effettività della coppia richiesta dal cruise control adattivo (ACC)'
+      pl: 'Skuteczność momentu żądanego przez adaptacyjny tempomat (ACC)'
+      ru: 'Эффективность момента, запрошенного адаптивным круиз-контролем (ACC)'
+      zh: '自适应巡航(ACC)请求扭矩的生效状态'
+      hu: 'Az adaptív sebességtartó (ACC) által kért nyomaték érvényesülése'
+      pt: 'Efetividade do binário solicitado pelo regulador adaptativo (ACC)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'The torque requested by the ACC is not achieved (driver torque achieved)'
+        fr: 'Le couple demandé par le régulateur de vitesse adaptatif n''est pas réalisé (couple conducteur réalisé)'
+        es: 'El par solicitado por el control de crucero adaptativo no se logra (par del conductor logrado)'
+        de: 'Das vom ACC angeforderte Drehmoment wird nicht erreicht (Fahrerdrehmoment erreicht)'
+        it: 'La coppia richiesta dal cruise control adattivo non è raggiunta (coppia del conducente raggiunta)'
+        pl: 'Moment żądany przez adaptacyjny tempomat nie jest osiągany (moment kierowcy osiągnięty)'
+        ru: 'Крутящий момент, запрошенный адаптивным круиз-контролем, не достигнут (момент водителя достигнут)'
+        zh: '自适应巡航请求的扭矩未实现（驾驶员扭矩已实现）'
+        hu: 'Az adaptív tempomat által kért nyomaték nem valósul meg (a vezetői nyomaték megvalósul)'
+        pt: 'O binário pedido pelo regulador de velocidade adaptativo não é alcançado (binário do condutor alcançado)'
+      0x01:
+        en: 'The torque requested by the MDD is achieved'
+        fr: 'Le couple demandé par le MDD est réalisé'
+        es: 'El par solicitado por el MDD se ha alcanzado'
+        de: 'Das vom MDD angeforderte Drehmoment ist erreicht'
+        it: 'La coppia richiesta dal MDD è realizzata'
+        pl: 'Moment obrotowy żądany przez MDD został osiągnięty'
+        ru: 'Момент, запрошенный MDD, достигнут'
+        zh: 'MDD请求的扭矩已实现'
+        hu: 'Az MDD által kért nyomaték elérve'
+        pt: 'O binário pedido pela MDD é atingido'

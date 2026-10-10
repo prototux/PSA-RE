@@ -1,0 +1,199 @@
+id: 0x31A
+name: 'ZEV_TRIP_INFO'
+type: 'can'
+length: 8
+comment:
+  en: 'Zero-emission driving trip-computer data: range, instant/average consumption in electric mode and charging time remaining.'
+  fr: 'Données de l''ordinateur de bord en conduite zéro émission : autonomie, consommation instantanée/moyenne en mode électrique et temps de charge restant.'
+  es: 'Datos del ordenador de a bordo en conducción de cero emisiones: autonomía, consumo instantáneo/medio en modo eléctrico y tiempo de carga restante.'
+  de: 'Bordcomputerdaten für emissionsfreies Fahren: Reichweite, momentaner/durchschnittlicher Verbrauch im Elektromodus und verbleibende Ladezeit.'
+  it: 'Dati del computer di bordo in guida a zero emissioni: autonomia, consumo istantaneo/medio in modalità elettrica e tempo di ricarica residuo.'
+  pl: 'Dane komputera pokładowego w jeździe zeroemisyjnej: zasięg, chwilowe/średnie zużycie w trybie elektrycznym i pozostały czas ładowania.'
+  ru: 'Данные бортового компьютера при движении с нулевыми выбросами: запас хода, мгновенный/средний расход в электрорежиме и оставшееся время зарядки.'
+  zh: '零排放行驶行车电脑数据:续航里程、电动模式下瞬时/平均能耗及剩余充电时间。'
+  hu: 'A fedélzeti számítógép zéró kibocsátású vezetési adatai: hatótávolság, pillanatnyi/átlagos fogyasztás elektromos üzemmódban és hátralévő töltési idő.'
+  pt: 'Dados do computador de bordo em condução zero emissões: autonomia, consumo instantâneo/médio em modo elétrico e tempo de carga restante.'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  ZEV_RANGE_DISPLAY:
+    bits: '1.7-2.7'
+    comment:
+      en: 'Zero-emission (ZEV) driving range to display (km)'
+      fr: 'Autonomie en mode tout électrique (ZEV) à afficher (km)'
+      es: 'Autonomía en modo totalmente eléctrico (ZEV) a mostrar (km)'
+      de: 'Anzuzeigende Reichweite im Nullemissionsmodus (ZEV) (km)'
+      it: 'Autonomia in modalità a zero emissioni (ZEV) da visualizzare (km)'
+      pl: 'Zasięg w trybie bezemisyjnym (ZEV) do wyświetlenia (km)'
+      ru: 'Отображаемый запас хода в электрическом (ZEV) режиме (км)'
+      zh: '待显示的纯电动(ZEV)续航里程(km)'
+      hu: 'A megjelenítendő ZEV (tisztán elektromos) hatótávolság (km)'
+      pt: 'Autonomia em modo totalmente elétrico (ZEV) a mostrar (km)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 1000
+    units: 'km'
+    invalid: 0x1FF
+
+  ZEV_PERCENTAGE:
+    bits: '2.6-2.0'
+    comment:
+      en: 'Percentage of driving in ZEV mode'
+      fr: 'Pourcentage de conduite en mode ZEV'
+      es: 'Porcentaje de conducción en modo ZEV'
+      de: 'Prozentsatz der Fahrt im ZEV-Modus'
+      it: 'Percentuale di guida in modalità ZEV'
+      pl: 'Procent jazdy w trybie ZEV'
+      ru: 'Процент движения в режиме ZEV'
+      zh: 'ZEV模式行驶百分比'
+      hu: 'A ZEV üzemmódban megtett út százaléka'
+      pt: 'Percentagem de condução em modo ZEV'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  ZEV_AVERAGE_CONSUMPTION_TRIP_1:
+    bits: '3.7-4.7'
+    comment:
+      en: 'Average ZEV-mode consumption for trip 1'
+      fr: 'Consommation moyenne en mode ZEV sur le trajet 1'
+      es: 'Consumo medio en modo ZEV en el trayecto 1'
+      de: 'Durchschnittlicher Verbrauch im ZEV-Modus für Fahrt 1'
+      it: 'Consumo medio in modalità ZEV nel tragitto 1'
+      pl: 'Średnie zużycie w trybie ZEV na trasie 1'
+      ru: 'Среднее потребление в режиме ZEV на маршруте 1'
+      zh: '行程1的ZEV模式平均消耗量'
+      hu: 'Átlagos ZEV üzemmódú fogyasztás az 1. útvonalon'
+      pt: 'Consumo médio em modo ZEV no trajeto 1'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 50
+    units: 'kWh/100km'
+    invalid: 0x1FF
+
+  ZEV_AVERAGE_CONSUMPTION_TRIP_2:
+    bits: '4.6-5.6'
+    comment:
+      en: 'Average ZEV-mode consumption for trip 2'
+      fr: 'Consommation moyenne en mode ZEV sur le trajet 2'
+      es: 'Consumo medio en modo ZEV en el trayecto 2'
+      de: 'Durchschnittlicher Verbrauch im ZEV-Modus für Fahrt 2'
+      it: 'Consumo medio in modalità ZEV nel tragitto 2'
+      pl: 'Średnie zużycie w trybie ZEV na trasie 2'
+      ru: 'Среднее потребление в режиме ZEV на маршруте 2'
+      zh: '行程2的ZEV模式平均消耗量'
+      hu: 'Átlagos ZEV üzemmódú fogyasztás a 2. útvonalon'
+      pt: 'Consumo médio em modo ZEV no trajeto 2'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 50
+    units: 'kWh/100km'
+    invalid: 0x1FF
+
+  ZEV_INSTANT_CONSUMPTION:
+    bits: '5.5-6.5'
+    comment:
+      en: 'Instantaneous consumption in ZEV mode'
+      fr: 'Consommation instantanée en mode ZEV'
+      es: 'Consumo instantáneo en modo ZEV'
+      de: 'Momentaner Verbrauch im ZEV-Modus'
+      it: 'Consumo istantaneo in modalità ZEV'
+      pl: 'Chwilowe zużycie w trybie ZEV'
+      ru: 'Мгновенный расход в режиме ZEV'
+      zh: 'ZEV模式瞬时消耗量'
+      hu: 'Pillanatnyi fogyasztás ZEV módban'
+      pt: 'Consumo instantâneo em modo ZEV'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 50
+    units: 'kWh/100km'
+    invalid: 0x1FF
+
+  CHARGE_REMAINING_TIME:
+    bits: '6.4-7.6'
+    comment:
+      en: 'Remaining electric charging time'
+      fr: 'Durée de charge électrique restante'
+      es: 'Tiempo restante de carga eléctrica'
+      de: 'Verbleibende Ladezeit'
+      it: 'Tempo di ricarica elettrica rimanente'
+      pl: 'Pozostały czas ładowania elektrycznego'
+      ru: 'Оставшееся время электрической зарядки'
+      zh: '剩余电动充电时间'
+      hu: 'Hátralévő elektromos töltési idő'
+      pt: 'Tempo restante de carregamento elétrico'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 630
+    units: 'min'
+
+  SCHEDULED_CHARGING_START_TIME:
+    bits: '7.5-8.3'
+    comment:
+      en: 'Scheduled charging start time'
+      fr: 'Heure de début de recharge programmée'
+      es: 'Hora de inicio de la carga programada'
+      de: 'Geplante Ladestart-Uhrzeit'
+      it: 'Ora di inizio della ricarica programmata'
+      pl: 'Zaplanowana godzina rozpoczęcia ładowania'
+      ru: 'Запланированное время начала зарядки'
+      zh: '预约充电开始时间'
+      hu: 'A programozott töltés kezdési ideje'
+      pt: 'Hora de início do carregamento programado'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 1440
+    units: 'min'
+
+  CHARGING_TYPE:
+    bits: '8.2'
+    comment:
+      en: 'Charging type: immediate or postponed'
+      fr: 'Type de recharge : immédiate ou différée'
+      es: 'Tipo de carga: inmediata o diferida'
+      de: 'Ladeart: sofort oder verzögert'
+      it: 'Tipo di ricarica: immediata o differita'
+      pl: 'Rodzaj ładowania: natychmiastowe lub opóźnione'
+      ru: 'Тип зарядки: немедленная или отложенная'
+      zh: '充电类型:立即充电或延迟充电'
+      hu: 'Töltés típusa: azonnali vagy késleltetett'
+      pt: 'Tipo de carregamento: imediato ou diferido'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Immediate'
+        fr: 'Immédiate'
+        es: 'Inmediato'
+        de: 'Sofort'
+        it: 'Immediato'
+        pl: 'Natychmiastowe'
+        ru: 'Немедленно'
+        zh: '立即'
+        hu: 'Azonnali'
+        pt: 'Imediato'
+      0x01:
+        en: 'Postponed'
+        fr: 'Reporté'
+        es: 'Pospuesto'
+        de: 'Verschoben'
+        it: 'Rinviato'
+        pl: 'Odroczone'
+        ru: 'Отложено'
+        zh: '已推迟'
+        hu: 'Elhalasztva'
+        pt: 'Adiado'
+
+  UNUSED_1:
+    bits: '8.1-8.0'
+    unused: true

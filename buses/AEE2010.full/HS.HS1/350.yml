@@ -1,0 +1,144 @@
+id: 0x350
+name: 'CSS_SUSPENSION_STATUS'
+type: 'can'
+length: 4
+comment:
+  en: 'Sport mode state and suspension warning-lamp request from the CSS node.'
+  fr: 'État du mode sport et demande de voyant suspension du module CSS.'
+  es: 'Estado del modo deportivo y solicitud de testigo de suspensión del módulo CSS.'
+  de: 'Sportmodus-Zustand und Anforderung der Fahrwerks-Kontrollleuchte vom CSS-Modul.'
+  it: 'Stato della modalità sport e richiesta spia sospensioni dal modulo CSS.'
+  pl: 'Stan trybu sportowego i żądanie kontrolki zawieszenia z modułu CSS.'
+  ru: 'Состояние спортивного режима и запрос индикатора подвески от модуля CSS.'
+  zh: '来自CSS模块的运动模式状态和悬挂警示灯请求。'
+  hu: 'A CSS modul sport üzemmód állapota és felfüggesztés jelzőlámpa-kérése.'
+  pt: 'Estado do modo desportivo e pedido da luz avisadora da suspensão do nó CSS.'
+periodicity: ['40ms']
+senders: ['CSS']
+receivers: ['BSI', 'BCP']
+
+signals:
+  VEHICLE_ATTITUDE:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Vehicle attitude (pitch angle) (°)'
+      fr: 'Assiette du véhicule (°)'
+      es: 'Actitud del vehículo (°)'
+      de: 'Fahrzeugneigung (Nickwinkel) (°)'
+      it: 'Assetto del veicolo (°)'
+      pl: 'Pochylenie pojazdu (°)'
+      ru: 'Продольный крен (дифферент) автомобиля (°)'
+      zh: '车辆姿态角(俯仰角)(°)'
+      hu: 'A jármű dőlésszöge (°)'
+      pt: 'Atitude do veículo (ângulo de inclinação) (°)'
+    type: 'sint'
+    factor: 0.006
+    min: -3
+    max: 3
+    units: '°'
+    invalid: 0x1FF
+    default: 0x00
+
+  VARIABLE_DAMPER_MODE:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Variable damper suspension mode (normal, dynamic, comfort, fault)'
+      fr: 'Mode de la suspension à amortissement variable (normal, dynamique, confort, défaut)'
+      es: 'Modo de la suspensión de amortiguación variable (normal, dinámico, confort, fallo)'
+      de: 'Modus der Fahrwerksdämpfung mit variabler Dämpfkraft (normal, dynamisch, komfort, fehler)'
+      it: 'Modalità della sospensione ad ammortizzazione variabile (normale, dinamica, comfort, guasto)'
+      pl: 'Tryb zawieszenia o zmiennym tłumieniu (normalny, dynamiczny, komfort, usterka)'
+      ru: 'Режим подвески с изменяемым демпфированием (нормальный, динамичный, комфортный, неисправность)'
+      zh: '可变阻尼悬架模式(标准、运动、舒适、故障)'
+      hu: 'A változtatható lengéscsillapítású futómű üzemmódja (normál, dinamikus, komfort, hiba)'
+      pt: 'Modo da suspensão de amortecimento variável (normal, dinâmico, conforto, falha)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Dynamic mode'
+        fr: 'Mode dynamique'
+        es: 'Modo dinámico'
+        de: 'Dynamischer Modus'
+        it: 'Modalità dinamica'
+        pl: 'Tryb dynamiczny'
+        ru: 'Динамический режим'
+        zh: '动态模式'
+        hu: 'Dinamikus üzemmód'
+        pt: 'Modo dinâmico'
+      0x02:
+        en: 'Comfort mode'
+        fr: 'Mode confort'
+        es: 'Modo confort'
+        de: 'Komfortmodus'
+        it: 'Modalità comfort'
+        pl: 'Tryb komfortowy'
+        ru: 'Комфортный режим'
+        zh: '舒适模式'
+        hu: 'Komfort mód'
+        pt: 'Modo conforto'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  AMVAR_LEGACY_FAULT:
+    bits: '2.3'
+    comment:
+      en: 'AMVAR variable damping system fault'
+      fr: 'Défaut du système d''amortissement variable AMVAR'
+      es: 'Fallo del sistema de amortiguación variable AMVAR'
+      de: 'Störung des variablen Dämpfungssystems AMVAR'
+      it: 'Guasto del sistema di ammortizzazione variabile AMVAR'
+      pl: 'Usterka systemu zmiennego tłumienia AMVAR'
+      ru: 'Неисправность системы изменяемого демпфирования AMVAR'
+      zh: 'AMVAR 可变阻尼系统故障'
+      hu: 'Az AMVAR változtatható csillapítású rendszer hibája'
+      pt: 'Falha do sistema de amortecimento variável AMVAR'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'AMVAR faulty'
+        fr: 'AMVAR en défaut'
+        es: 'AMVAR con fallo'
+        de: 'AMVAR fehlerhaft'
+        it: 'AMVAR guasto'
+        pl: 'Usterka AMVAR'
+        ru: 'Неисправность AMVAR'
+        zh: 'AMVAR故障'
+        hu: 'AMVAR hibás'
+        pt: 'AMVAR com falha'
+
+  UNUSED_1:
+    bits: '2.2-4.0'
+    unused: true

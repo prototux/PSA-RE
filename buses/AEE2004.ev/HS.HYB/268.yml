@@ -1,0 +1,345 @@
+id: 0x268
+name: 'ENGINE_DYNAMIC_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine dynamic data 1: start authorisation, idle-regulation torque setpoint, safety pedal derivative and engagement, hard-point crossing, and engine speed.'
+  fr: 'Données dynamiques moteur 1 : autorisation de démarrage, consigne de couple de régulation ralenti, dérivée et engagement de la pédale de sécurité, franchissement de point dur, et régime moteur.'
+  es: 'Datos dinámicos del motor 1: autorización de arranque, consigna de par de regulación de ralentí, derivada y accionamiento del pedal de seguridad, cruce de punto duro, y régimen motor.'
+  de: 'Motor-Dynamikdaten 1: Startfreigabe, Leerlaufregelungs-Drehmomentsollwert, Ableitung und Betätigung des Sicherheitspedals, Überschreiten des Kraftpunkts, und Motordrehzahl.'
+  it: 'Dati dinamici motore 1: autorizzazione di avviamento, setpoint di coppia di regolazione del minimo, derivata e azionamento del pedale di sicurezza, superamento del punto duro, e regime motore.'
+  pl: 'Dane dynamiczne silnika 1: autoryzacja rozruchu, nastawa momentu regulacji biegu jałowego, pochodna i zaangażowanie pedału bezpieczeństwa, przekroczenie punktu twardego, i obroty silnika.'
+  ru: 'Динамические данные двигателя 1: разрешение запуска, уставка крутящего момента регулирования холостого хода, производная и нажатие предохранительной педали, пересечение жёсткой точки, и обороты двигателя.'
+  zh: '发动机动态数据1:启动授权、怠速调节扭矩设定值、安全踏板导数和啮合、硬点跨越,以及发动机转速。'
+  hu: 'Motor dinamikus adatok 1: indítás engedélyezése, alapjárat-szabályozási nyomaték alapjel, biztonsági pedál deriváltja és bekapcsolása, keménypont átlépése, és motorfordulatszám.'
+  pt: 'Dados dinâmicos 1 do motor: autorização de arranque, ponto de ajuste de binário da regulação do ralenti, derivada e engate do pedal de segurança, passagem por ponto crítico, e velocidade do motor.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers: ['TBMU', 'HCU1']
+
+signals:
+  CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  SECURE_PEDAL_POSITION_VALID:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Validity of the secured accelerator pedal position'
+      fr: 'Validité de la position sécurisée de la pédale d''accélérateur'
+      es: 'Validez de la posición segura del pedal del acelerador'
+      de: 'Gültigkeit der abgesicherten Fahrpedalstellung'
+      it: 'Validità della posizione sicura del pedale dell''acceleratore'
+      pl: 'Ważność zabezpieczonej pozycji pedału przyspieszenia'
+      ru: 'Достоверность защищённого положения педали акселератора'
+      zh: '安全加速踏板位置有效性'
+      hu: 'A biztonságos gázpedál-helyzet érvényessége'
+      pt: 'Validade da posição segura do pedal do acelerador'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal physical measurement'
+        fr: 'Mesure physique normale'
+        es: 'Medición física normal'
+        de: 'Normale physikalische Messung'
+        it: 'Misura fisica normale'
+        pl: 'Normalny pomiar fizyczny'
+        ru: 'Нормальное физическое измерение'
+        zh: '正常物理测量'
+        hu: 'Normál fizikai mérés'
+        pt: 'Medição física normal'
+      0x01:
+        en: 'Physical measurement degraded'
+        fr: 'Mesure physique dégradée'
+        es: 'Medida física degradada'
+        de: 'Physikalische Messung beeinträchtigt'
+        it: 'Misura fisica degradata'
+        pl: 'Pomiar fizyczny zdegradowany'
+        ru: 'Физическое измерение ухудшено'
+        zh: '物理测量值降级'
+        hu: 'A fizikai mérés minősége romlott'
+        pt: 'Medição física degradada'
+      0x02:
+        en: 'Replacement model'
+        fr: 'Modèle de remplacement'
+        es: 'Modelo de repuesto'
+        de: 'Ersatzmodell'
+        it: 'Modello sostitutivo'
+        pl: 'Model zastępczy'
+        ru: 'Модель замены'
+        zh: '替代型号'
+        hu: 'Csereminta'
+        pt: 'Modelo de substituição'
+      0x03:
+        unused: true
+
+  SECURE_PEDAL_POSITION:
+    bits: '2.5-3.4'
+    comment:
+      en: 'Secured accelerator pedal position'
+      fr: 'Position sécurisée de la pédale d''accélérateur'
+      es: 'Posición segura del pedal del acelerador'
+      de: 'Abgesicherte Fahrpedalstellung'
+      it: 'Posizione sicura del pedale dell''acceleratore'
+      pl: 'Zabezpieczona pozycja pedału przyspieszenia'
+      ru: 'Защищённое положение педали акселератора'
+      zh: '安全加速踏板位置'
+      hu: 'A biztonságos gázpedál-helyzet'
+      pt: 'Posição segura do pedal do acelerador'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x3FF
+    default: 0x00
+
+  SECURE_KICKDOWN_POINT_STATUS:
+    bits: '3.3'
+    comment:
+      en: 'Secured kickdown (hard) point status'
+      fr: 'État sécurisé du point dur (kickdown)'
+      es: 'Estado seguro del punto duro (kickdown)'
+      de: 'Abgesicherter Status des Kickdown-Punkts'
+      it: 'Stato sicuro del punto duro (kickdown)'
+      pl: 'Zabezpieczony stan punktu oporowego (kickdown)'
+      ru: 'Защищённый статус точки кикдауна'
+      zh: '安全阻力点(急加速点)状态'
+      hu: 'A kickdown pont biztonságos állapota'
+      pt: 'Estado seguro do ponto duro (kickdown)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Hard point not exceeded'
+        fr: 'Point dur non franchi'
+        es: 'Punto duro no superado'
+        de: 'Härtepunkt nicht überschritten'
+        it: 'Punto duro non superato'
+        pl: 'Punkt oporu nieprzekroczony'
+        ru: 'Точка сопротивления не пройдена'
+        zh: '未超过硬点'
+        hu: 'Keménypont nincs átlépve'
+        pt: 'Ponto crítico não excedido'
+      0x01:
+        en: 'Hard point exceeded'
+        fr: 'Point dur franchi'
+        es: 'Punto duro superado'
+        de: 'Druckpunkt überschritten'
+        it: 'Punto duro superato'
+        pl: 'Przekroczony punkt oporowy'
+        ru: 'Точка сопротивления пройдена'
+        zh: '已超过硬点'
+        hu: 'A keménypont átlépve'
+        pt: 'Ponto duro ultrapassado'
+
+  SECURE_KICKDOWN_POINT_VALID:
+    bits: '3.2'
+    comment:
+      en: 'Validity of the secured kickdown point information'
+      fr: 'Validité de l''information de point dur sécurisé'
+      es: 'Validez de la información del punto duro seguro'
+      de: 'Gültigkeit der Kickdown-Punkt-Information'
+      it: 'Validità dell''informazione sul punto duro sicuro'
+      pl: 'Ważność informacji o zabezpieczonym punkcie oporowym'
+      ru: 'Достоверность информации о защищённой точке кикдауна'
+      zh: '安全阻力点信息有效性'
+      hu: 'A biztonságos kickdown pont információjának érvényessége'
+      pt: 'Validade da informação do ponto duro seguro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No failure'
+        fr: 'Pas de défaillance'
+        es: 'Sin fallo'
+        de: 'Kein Ausfall'
+        it: 'Nessun guasto'
+        pl: 'Brak awarii'
+        ru: 'Нет отказа'
+        zh: '无故障'
+        hu: 'Nincs meghibásodás'
+        pt: 'Sem falha'
+      0x01:
+        en: 'Failure'
+        fr: 'Défaillance'
+        es: 'Fallo'
+        de: 'Ausfall'
+        it: 'Guasto'
+        pl: 'Awaria'
+        ru: 'Отказ'
+        zh: '失效'
+        hu: 'Meghibásodás'
+        pt: 'Falha'
+
+  SECURE_PEDAL_DERIVATIVE:
+    bits: '3.1-4.0'
+    comment:
+      en: 'Rate of change of the secured pedal position'
+      fr: 'Dérivée de la position sécurisée de la pédale'
+      es: 'Derivada de la posición segura del pedal'
+      de: 'Ableitung der abgesicherten Pedalstellung'
+      it: 'Derivata della posizione sicura del pedale'
+      pl: 'Pochodna zabezpieczonej pozycji pedału'
+      ru: 'Производная защищённого положения педали'
+      zh: '安全踏板位置的变化率'
+      hu: 'A biztonságos pedálhelyzet deriváltja'
+      pt: 'Derivada da posição segura do pedal'
+    type: 'uint'
+    factor: 0.1
+    offset: -50
+    min: -50
+    max: 50
+    units: '%'
+    invalid: 0x3FF
+    default: 0x1F4
+
+  KICKDOWN_POINT_CROSSED:
+    bits: '5.7'
+    comment:
+      en: 'Kickdown (hard) point crossed'
+      fr: 'Point dur (kickdown) franchi'
+      es: 'Punto duro (kickdown) superado'
+      de: 'Kickdown-Punkt überschritten'
+      it: 'Punto duro (kickdown) superato'
+      pl: 'Przekroczony punkt oporowy (kickdown)'
+      ru: 'Пройдена точка кикдауна'
+      zh: '已越过阻力点(急加速点)'
+      hu: 'A kickdown pont átlépve'
+      pt: 'Ponto duro (kickdown) ultrapassado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Threshold not exceeded'
+        fr: 'Seuil non franchi'
+        es: 'Umbral no superado'
+        de: 'Schwelle nicht überschritten'
+        it: 'Soglia non superata'
+        pl: 'Próg nieprzekroczony'
+        ru: 'Порог не превышен'
+        zh: '未超过阈值'
+        hu: 'A küszöbérték nincs túllépve'
+        pt: 'Limiar não ultrapassado'
+      0x01:
+        en: 'Exceeded'
+        fr: 'Franchi'
+        es: 'Superado'
+        de: 'Überschritten'
+        it: 'Superato'
+        pl: 'Przekroczony'
+        ru: 'Превышено'
+        zh: '超出'
+        hu: 'Túllépve'
+        pt: 'Ultrapassado'
+
+  CRANK_ENABLE:
+    bits: '5.6'
+    comment:
+      en: 'Engine cranking enable'
+      fr: 'Autorisation de démarrage du moteur'
+      es: 'Autorización de arranque del motor'
+      de: 'Freigabe des Motoranlassens'
+      it: 'Abilitazione all''avviamento del motore'
+      pl: 'Zezwolenie na rozruch silnika'
+      ru: 'Разрешение запуска двигателя'
+      zh: '发动机起动允许'
+      hu: 'Motorindítás engedélyezése'
+      pt: 'Autorização de arranque do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Crank disabled'
+        fr: 'Pas d''autorisation de démarrage'
+        es: 'Sin autorización de arranque'
+        de: 'Keine Startfreigabe'
+        it: 'Nessuna autorizzazione di avviamento'
+        pl: 'Brak zezwolenia na rozruch'
+        ru: 'Нет разрешения на запуск'
+        zh: '无起动许可'
+        hu: 'Nincs indítási engedély'
+        pt: 'Arranque desativado'
+      0x01:
+        en: 'Crank enabled'
+        fr: 'Démarrage autorisé'
+        es: 'Arranque autorizado'
+        de: 'Anlassen freigegeben'
+        it: 'Avviamento abilitato'
+        pl: 'Rozruch dozwolony'
+        ru: 'Прокрутка разрешена'
+        zh: '允许起动'
+        hu: 'Indítás engedélyezve'
+        pt: 'Arranque ativado'
+
+  EMACHINE_TORQUE_REQUEST_RAW:
+    bits: '5.5-6.0'
+    comment:
+      en: 'e-machine torque request before processing'
+      fr: 'Couple demandé pour la machine électrique avant traitement'
+      es: 'Par solicitado para la máquina eléctrica antes del procesamiento'
+      de: 'Angefordertes Drehmoment der E-Maschine vor Verarbeitung'
+      it: 'Coppia richiesta per la macchina elettrica prima dell''elaborazione'
+      pl: 'Żądany moment obrotowy maszyny elektrycznej przed przetworzeniem'
+      ru: 'Запрошенный момент электромашины до обработки'
+      zh: '处理前的电机扭矩请求'
+      hu: 'Az e-motor nyomatékigénye feldolgozás előtt'
+      pt: 'Binário solicitado para a máquina elétrica antes do processamento'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+
+  ENGINE_SPEED:
+    bits: '7.7-8.0'
+    comment:
+      en: 'Engine speed (16-bit)'
+      fr: 'Régime moteur (16 bits)'
+      es: 'Régimen del motor (16 bits)'
+      de: 'Motordrehzahl (16 Bit)'
+      it: 'Regime motore (16 bit)'
+      pl: 'Obroty silnika (16 bitów)'
+      ru: 'Обороты двигателя (16 бит)'
+      zh: '发动机转速(16位)'
+      hu: 'Motorfordulatszám (16 bites)'
+      pt: 'Regime do motor (16 bits)'
+    type: 'uint'
+    factor: 0.125
+    min: 0
+    max: 8191.75
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0xFFFF

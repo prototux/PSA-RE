@@ -1,0 +1,170 @@
+id: 0x264
+name: 'NOX_SENSOR'
+type: 'can'
+length: 4
+comment:
+  en: 'Radio/media tuner frequency, station and playback timer, sent by the infotainment system.'
+  fr: 'Fréquence du tuner radio/média, station et minuteur de lecture, envoyés par le système multimédia.'
+  es: 'Frecuencia del sintonizador de radio/media, emisora y temporizador de reproducción, enviados por el sistema multimedia.'
+  de: 'Radio-/Medien-Tunerfrequenz, Sender und Wiedergabe-Timer, gesendet vom Infotainmentsystem.'
+  it: 'Frequenza del sintonizzatore radio/media, stazione e timer di riproduzione, inviati dal sistema multimediale.'
+  pl: 'Częstotliwość tunera radiowego/multimedialnego, stacja i licznik czasu odtwarzania, wysyłane przez system multimedialny.'
+  ru: 'Частота радио/медиа-тюнера, станция и таймер воспроизведения, передаются мультимедийной системой.'
+  zh: '由信息娱乐系统发送的收音机/媒体调谐频率、电台及播放计时。'
+  hu: 'A rádió-/média-tuner frekvenciája, állomása és lejátszási ideje, a multimédia rendszer által küldve.'
+  pt: 'Frequência do sintonizador de rádio/media, estação e temporizador de reprodução, enviados pelo sistema de infoentretenimento.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['1000ms', 'trigger']
+senders: ['OVIP', 'BTEL']
+receivers: ['CMB']
+
+signals:
+  MEDIA_PLAYBACK_TIMER:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Media playback timer.'
+      fr: 'Minuteur de lecture média.'
+      es: 'Temporizador de reproducción multimedia.'
+      de: 'Medienwiedergabe-Timer.'
+      it: 'Timer di riproduzione multimediale.'
+      pl: 'Zegar odtwarzania multimediów.'
+      ru: 'Таймер воспроизведения медиа.'
+      zh: '媒体播放计时器。'
+      hu: 'A médialejátszás időzítője.'
+      pt: 'Temporizador de reprodução multimédia.'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 65500
+    units: 's'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  FREQUENCY:
+    bits: '3.7-4.5'
+    comment:
+      en: 'Controlling the number of steps in relation to the starting frequency'
+      fr: 'Commande du nombre de pas par rapport à la fréquence de base'
+      es: 'Mando del número de pasos respecto a la frecuencia base'
+      de: 'Steuerung der Schrittanzahl bezogen auf die Basisfrequenz'
+      it: 'Comando del numero di passi rispetto alla frequenza di base'
+      pl: 'Sterowanie liczbą kroków względem częstotliwości bazowej'
+      ru: 'Управление числом шагов относительно базовой частоты'
+      zh: '相对于基础频率的步进数控制'
+      hu: 'A lépésszám vezérlése az alapfrekvenciához képest'
+      pt: 'Controlo do número de passos em relação à frequência inicial'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2045
+    units: 'frequency step'
+    invalid: 0x7FF
+    default: 0x7FF
+
+  TUNER_MEMORY_BANK:
+    bits: '4.4-4.1'
+    comment:
+      en: 'Selected tuner memory bank (FM, AM, DAB).'
+      fr: 'Banque mémoire du tuner sélectionnée (FM, AM, DAB).'
+      es: 'Banco de memoria del sintonizador seleccionado (FM, AM, DAB).'
+      de: 'Ausgewählte Tuner-Speicherbank (FM, AM, DAB).'
+      it: 'Banco di memoria del sintonizzatore selezionato (FM, AM, DAB).'
+      pl: 'Wybrany bank pamięci tunera (FM, AM, DAB).'
+      ru: 'Выбранный банк памяти тюнера (FM, AM, DAB).'
+      zh: '已选的调谐器存储库（FM、AM、DAB）。'
+      hu: 'A kiválasztott tuner-memóriabank (FM, AM, DAB).'
+      pt: 'Banco de memória do sintonizador selecionado (FM, AM, DAB).'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'unspecified'
+        fr: 'indeterminé'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślony'
+        ru: 'Неопределённо'
+        zh: '不确定'
+        hu: 'Meghatározatlan'
+        pt: 'indeterminado'
+      0x01:
+        en: 'FM'
+        fr: 'FM'
+        es: 'FM'
+        de: 'FM'
+        it: 'FM'
+        pl: 'FM'
+        ru: 'FM'
+        zh: '调频'
+        hu: 'FM'
+        pt: 'FM'
+      0x02:
+        en: 'AM'
+        fr: 'AM'
+        es: 'AM'
+        de: 'AM'
+        it: 'AM'
+        pl: 'AM'
+        ru: 'АМ'
+        zh: 'AM'
+        hu: 'AM'
+        pt: 'AM'
+      0x03:
+        en: 'DAB'
+        fr: 'DAB'
+        es: 'DAB'
+        de: 'DAB'
+        it: 'DAB'
+        pl: 'DAB'
+        ru: 'DAB'
+        zh: 'DAB数字广播'
+        hu: 'DAB'
+        pt: 'DAB'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_1:
+    bits: '4.0'
+    unused: true

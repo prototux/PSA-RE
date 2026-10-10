@@ -1,0 +1,208 @@
+id: 0x598
+name: 'ENGINE_DATA_2'
+type: 'can'
+length: 4
+comment:
+  en: 'Engine data 2: oil pressure alert, additive pump control, warning LED commands, software fault, water pump status, stop-start state, eco-driving indicator and oil level.'
+  fr: 'Données moteur 2 : alerte pression d''huile, commande pompe additif, commandes LED d''avertissement, défaut logiciel, état pompe à eau, état stop-start, indicateur éco-conduite et niveau d''huile.'
+  es: 'Datos del motor 2: alerta de presión de aceite, control de bomba de aditivo, comandos de LED de advertencia, fallo de software, estado de la bomba de agua, estado stop-start, indicador de conducción económica y nivel de aceite.'
+  de: 'Motordaten 2: Öldruckwarnung, Additivpumpensteuerung, Warn-LED-Befehle, Softwarefehler, Wasserpumpenstatus, Stopp-Start-Zustand, Eco-Fahranzeige und Ölstand.'
+  it: 'Dati motore 2: allarme pressione olio, comando pompa additivo, comandi LED di avviso, guasto software, stato pompa acqua, stato stop-start, indicatore guida ecologica e livello olio.'
+  pl: 'Dane silnika 2: alarm ciśnienia oleju, sterowanie pompą dodatku, polecenia diod ostrzegawczych, usterka oprogramowania, stan pompy wody, stan stop-start, wskaźnik eko-jazdy i poziom oleju.'
+  ru: 'Данные двигателя 2: сигнал давления масла, управление насосом присадки, команды предупреждающих светодиодов, программный сбой, статус водяного насоса, состояние старт-стоп, индикатор экономичного вождения и уровень масла.'
+  zh: '发动机数据2:机油压力警报、添加剂泵控制、警示LED命令、软件故障、水泵状态、启停状态、经济驾驶指示和机油油位。'
+  hu: 'Motoradatok 2: olajnyomás riasztás, adalékszivattyú vezérlés, figyelmeztető LED parancsok, szoftverhiba, vízszivattyú állapot, stop-start állapot, eco-vezetés jelző és olajszint.'
+  pt: 'Dados 2 do motor: alerta de pressão de óleo, comando da bomba de aditivo, comandos do LED avisador, avaria de software, estado da bomba de água, estado do stop-start, indicador de condução económica e nível de óleo.'
+observations:
+  en: 'On state change of: FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+  fr: 'Sur changement d''état de : FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+  es: 'Al cambiar el estado de: FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+  de: 'Bei Statusänderung von: FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+  it: 'Al cambiamento di stato di: FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+  pl: 'Wysyłane przy zmianie stanu: FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+  ru: 'При изменении состояния: FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+  zh: '当AUTHOR_EJECT_FUEL_FLAP, DIAG_CATALYST_HEATER状态变化时'
+  hu: 'A(z) FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE állapotváltozásakor'
+  pt: 'Na mudança de estado de: FUEL_FLAP_OPEN_AUTHORIZED, CATALYST_HEATER_DIAG_ENABLE'
+periodicity: ['1000ms', 'trigger']
+senders: ['CMM', 'E_VCU']
+receivers: ['ABS', 'BVA', 'BSI', 'HCU1', 'MDS']
+
+signals:
+  ATMOSPHERIC_PRESSURE_HIGH_ALTITUDE:
+    bits: '1.7-1.3'
+    comment:
+      en: 'Atmospheric pressure at high altitude (hPa)'
+      fr: 'Pression atmosphérique en haute altitude (hPa)'
+      es: 'Presión atmosférica a gran altitud (hPa)'
+      de: 'Atmosphärendruck in großer Höhe (hPa)'
+      it: 'Pressione atmosferica ad alta quota (hPa)'
+      pl: 'Ciśnienie atmosferyczne na dużej wysokości (hPa)'
+      ru: 'Атмосферное давление на большой высоте (гПа)'
+      zh: '高海拔大气压力(hPa)'
+      hu: 'Légköri nyomás nagy magasságban (hPa)'
+      pt: 'Pressão atmosférica a grande altitude (hPa)'
+    type: 'uint'
+    factor: 20
+    offset: 685
+    min: 540
+    max: 1120
+    units: 'hPa'
+    invalid: 0x1F
+    default: 0x1E
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 20685)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 20685)'
+          es: 'También observado con otro escalado (factor 20685)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 20685)'
+          it: 'Osservato anche con un''altra scala (factor 20685)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 20685)'
+          ru: 'Также наблюдался с другим масштабом (factor 20685)'
+          zh: '也观察到使用另一种缩放（factor 20685）'
+          hu: 'Megfigyelve más skálázással is (factor 20685)'
+          pt: 'Também observado com outra escala (factor 20685)'
+        factor: 20685
+
+  COOLANT_TEMP_SENSOR_DIAG:
+    bits: '1.2-1.1'
+    comment:
+      en: 'Coolant temperature sensor diagnostic'
+      fr: 'Diagnostic du capteur de température d''eau moteur'
+      es: 'Diagnóstico del sensor de temperatura del refrigerante'
+      de: 'Diagnose des Kühlmitteltemperatursensors'
+      it: 'Diagnosi del sensore di temperatura del liquido di raffreddamento'
+      pl: 'Diagnostyka czujnika temperatury płynu chłodzącego'
+      ru: 'Диагностика датчика температуры охлаждающей жидкости'
+      zh: '冷却液温度传感器诊断'
+      hu: 'Hűtőfolyadék-hőmérséklet érzékelő diagnosztikája'
+      pt: 'Diagnóstico do sensor de temperatura do líquido de refrigeração do motor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No engine coolant temperature sensor fault'
+        fr: 'Pas de défaut du capteur de température du liquide de refroidissement moteur'
+        es: 'Sin fallo del sensor de temperatura del líquido refrigerante del motor'
+        de: 'Kein Fehler des Kühlmitteltemperatursensors'
+        it: 'Nessun guasto del sensore di temperatura del liquido di raffreddamento motore'
+        pl: 'Brak usterki czujnika temperatury płynu chłodzącego silnika'
+        ru: 'Нет неисправности датчика температуры охлаждающей жидкости'
+        zh: '无发动机冷却液温度传感器故障'
+        hu: 'Nincs motorhűtőfolyadék-hőmérséklet érzékelő hiba'
+        pt: 'Sem falha do sensor de temperatura do líquido de refrigeração do motor'
+      0x01:
+        en: 'Invalid engine coolant temperature sensor'
+        fr: 'Capteur de température d''eau moteur invalide'
+        es: 'Sensor de temperatura del agua del motor no válido'
+        de: 'Ungültiger Kühlmitteltemperatursensor'
+        it: 'Sensore di temperatura dell''acqua motore non valido'
+        pl: 'Nieprawidłowy czujnik temperatury cieczy chłodzącej silnika'
+        ru: 'Недействительный датчик температуры охлаждающей жидкости'
+        zh: '发动机冷却水温度传感器无效'
+        hu: 'Érvénytelen motorhűtőfolyadék-hőmérséklet-érzékelő'
+        pt: 'Sensor de temperatura do líquido de arrefecimento do motor inválido'
+      0x02:
+        en: 'Engine coolant temperature sensor short-circuited to ground'
+        fr: 'Capteur de température d''eau moteur en court-circuit à la masse'
+        es: 'Sensor de temperatura del líquido refrigerante del motor en cortocircuito a masa'
+        de: 'Kühlmitteltemperatursensor Kurzschluss nach Masse'
+        it: 'Sensore temperatura acqua motore in cortocircuito a massa'
+        pl: 'Zwarcie czujnika temperatury cieczy chłodzącej silnika do masy'
+        ru: 'Короткое замыкание датчика температуры охлаждающей жидкости на массу'
+        zh: '发动机冷却液温度传感器对地短路'
+        hu: 'A motor hűtőfolyadék-hőmérséklet érzékelője testzárlatos'
+        pt: 'Sensor de temperatura do líquido de refrigeração do motor em curto-circuito à massa'
+      0x03:
+        en: 'Engine coolant temperature sensor open circuit'
+        fr: 'Circuit ouvert du capteur de température d''eau moteur'
+        es: 'Circuito abierto del sensor de temperatura del refrigerante del motor'
+        de: 'Unterbrechung des Motorkühlmitteltemperatursensors'
+        it: 'Circuito aperto del sensore di temperatura del liquido di raffreddamento motore'
+        pl: 'Przerwa w obwodzie czujnika temperatury płynu chłodzącego silnika'
+        ru: 'Обрыв цепи датчика температуры охлаждающей жидкости двигателя'
+        zh: '发动机冷却液温度传感器断路'
+        hu: 'Motor hűtőfolyadék-hőmérséklet érzékelő szakadása'
+        pt: 'Circuito aberto do sensor de temperatura do líquido de refrigeração do motor'
+
+  FUEL_FLAP_OPEN_AUTHORIZED:
+    bits: '1.0'
+    comment:
+      en: 'Fuel flap opening authorized'
+      fr: 'Autorisation d''ouverture de la trappe à carburant'
+      es: 'Apertura de la tapa de combustible autorizada'
+      de: 'Freigabe zum Öffnen der Tankklappe'
+      it: 'Autorizzazione all''apertura dello sportello del carburante'
+      pl: 'Zezwolenie na otwarcie klapki wlewu paliwa'
+      ru: 'Разрешение на открытие лючка топливного бака'
+      zh: '油箱盖开启已授权'
+      hu: 'Üzemanyag-betöltő ajtó nyitása engedélyezve'
+      pt: 'Abertura da tampa do depósito de combustível autorizada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x01:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+
+  CATALYST_HEATER_DIAG_ENABLE:
+    bits: '2.7'
+    comment:
+      en: 'Catalytic converter heating strategy diagnostic activation'
+      fr: 'Activation du diagnostic de la stratégie de chauffe du catalyseur'
+      es: 'Activación del diagnóstico de la estrategia de calentamiento del catalizador'
+      de: 'Aktivierung der Diagnose der Katalysator-Aufheizstrategie'
+      it: 'Attivazione della diagnosi della strategia di riscaldamento del catalizzatore'
+      pl: 'Aktywacja diagnostyki strategii podgrzewania katalizatora'
+      ru: 'Активация диагностики стратегии прогрева катализатора'
+      zh: '催化转化器加热策略诊断激活'
+      hu: 'Katalizátor fűtési stratégia diagnosztikájának aktiválása'
+      pt: 'Ativação do diagnóstico da estratégia de aquecimento do catalisador'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: '0: Disabling diagnosis of the catalyst heater shift strategy'
+        fr: '0 : désactivation du diagnostic de la loi de passage chauffe catalyseur'
+        es: '0: desactivación del diagnóstico de la estrategia de calentamiento del catalizador'
+        de: '0: Deaktivierung der Diagnose der Katalysator-Heizstrategie'
+        it: '0: disattivazione della diagnosi della strategia di riscaldamento del catalizzatore'
+        pl: '0: wyłączenie diagnostyki strategii nagrzewania katalizatora'
+        ru: '0: отключение диагностики стратегии прогрева катализатора'
+        zh: '0:禁用催化器加热策略诊断'
+        hu: '0: a katalizátorfűtési stratégia diagnosztikájának letiltása'
+        pt: '0: Desativação do diagnóstico da estratégia de mudança do aquecedor do catalisador'
+      0x01:
+        en: 'Enabling diagnosis of the catalyst heater'
+        fr: 'Activation du diagnostic de la loi de chauffe du catalyseur'
+        es: 'Activación del diagnóstico de la ley de calentamiento del catalizador'
+        de: 'Aktivierung der Diagnose der Katalysator-Aufheizstrategie'
+        it: 'Attivazione della diagnosi della strategia di riscaldamento del catalizzatore'
+        pl: 'Aktywacja diagnostyki strategii nagrzewania katalizatora'
+        ru: 'Активация диагностики стратегии прогрева катализатора'
+        zh: '启用催化器加热策略诊断'
+        hu: 'A katalizátor fűtési stratégiájának diagnosztikája aktiválva'
+        pt: 'Ativação do diagnóstico do aquecedor do catalisador'
+
+  UNUSED_1:
+    bits: '2.6-4.0'
+    unused: true

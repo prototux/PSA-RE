@@ -1,0 +1,193 @@
+id: 0x19
+name: 'CLIMATE_CONTROL_INFO'
+type: 'lin'
+length: 7
+comment:
+  en: 'Climate control information: sun sensors, blower fault, CO/NOx levels, evaporator temperature.'
+  fr: 'Informations de climatisation : capteurs de soleil, défaut pulseur, niveaux CO/NOx, température évaporateur.'
+  es: 'Información de climatización: sensores de sol, fallo del ventilador, niveles de CO/NOx, temperatura del evaporador'
+  de: 'Klimatisierungsinformationen: Sonnensensoren, Gebläsefehler, CO/NOx-Werte, Verdampfertemperatur'
+  it: 'Informazioni di climatizzazione: sensori solari, guasto ventola, livelli CO/NOx, temperatura evaporatore'
+  pl: 'Informacje o klimatyzacji: czujniki nasłonecznienia, usterka dmuchawy, poziomy CO/NOx, temperatura parownika'
+  ru: 'Информация о климат-контроле: датчики солнца, неисправность вентилятора, уровни CO/NOx, температура испарителя'
+  zh: '空调信息：日照传感器、鼓风机故障、CO/NOx 水平、蒸发器温度'
+  hu: 'Klímarendszer információ: napérzékelők, fúvómotor hiba, CO/NOx szint, párologtató hőmérséklete'
+  pt: 'Informação de climatização: sensores de sol, avaria do ventilador, níveis de CO/NOx, temperatura do evaporador.'
+periodicity: ['trigger']
+senders: ['CLIM_AV']
+receivers: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  CO_POLLUTANT_LEVEL_NEW:
+    bits: '1.7-1.0'
+    comment:
+      en: 'CO pollutant level (new technology)'
+      fr: 'Niveau de polluant CO (nouvelle technologie)'
+      es: 'Nivel de contaminante CO (nueva tecnología)'
+      de: 'CO-Schadstoffgehalt (neue Technologie)'
+      it: 'Livello di inquinante CO (nuova tecnologia)'
+      pl: 'Poziom zanieczyszczenia CO (nowa technologia)'
+      ru: 'Уровень загрязнения CO (новая технология)'
+      zh: 'CO污染物水平(新技术)'
+      hu: 'CO szennyezőanyag szintje (új technológia)'
+      pt: 'Nível do poluente CO (nova tecnologia)'
+    type: 'uint'
+    factor: 0.4
+    min: 0
+    max: 40
+    units: '%'
+    invalid: 0xFF
+
+  NOX_POLLUTANT_LEVEL_NEW:
+    bits: '2.7-2.0'
+    comment:
+      en: 'NOx pollutant level (new technology)'
+      fr: 'Niveau de polluant NOx (nouvelle technologie)'
+      es: 'Nivel de contaminante NOx (nueva tecnología)'
+      de: 'NOx-Schadstoffgehalt (neue Technologie)'
+      it: 'Livello di inquinante NOx (nuova tecnologia)'
+      pl: 'Poziom zanieczyszczenia NOx (nowa technologia)'
+      ru: 'Уровень загрязнения NOx (новая технология)'
+      zh: 'NOx污染物水平(新技术)'
+      hu: 'NOx szennyezőanyag szintje (új technológia)'
+      pt: 'Nível do poluente NOx (nova tecnologia)'
+    type: 'uint'
+    factor: 0.4
+    min: 0
+    max: 40
+    units: '%'
+    invalid: 0xFF
+
+  LEFT_SUNLIGHT_MEASUREMENT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Left-side sunlight measurement'
+      fr: 'Mesure d''ensoleillement côté gauche'
+      es: 'Medición de luz solar lado izquierdo'
+      de: 'Sonnenlichtmessung linke Seite'
+      it: 'Misurazione dell''irraggiamento solare lato sinistro'
+      pl: 'Pomiar nasłonecznienia po lewej stronie'
+      ru: 'Измерение солнечного освещения слева'
+      zh: '左侧日照测量'
+      hu: 'Bal oldali napfénymérés'
+      pt: 'Medição de luz solar do lado esquerdo'
+    type: 'uint'
+    min: 0
+    max: 100
+    invalid: 0xFF
+
+  RIGHT_SUNLIGHT_MEASUREMENT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Right-side sunlight measurement'
+      fr: 'Mesure d''ensoleillement côté droit'
+      es: 'Medición de luz solar lado derecho'
+      de: 'Sonnenlichtmessung rechte Seite'
+      it: 'Misurazione dell''irraggiamento solare lato destro'
+      pl: 'Pomiar nasłonecznienia po prawej stronie'
+      ru: 'Измерение солнечного освещения справа'
+      zh: '右侧日照测量'
+      hu: 'Jobb oldali napfénymérés'
+      pt: 'Medição de luz solar do lado direito'
+    type: 'uint'
+    min: 0
+    max: 100
+    invalid: 0xFF
+
+  EVAPORATOR_SENSOR_TEMPERATURE:
+    bits: '5.0-6.7'
+    comment:
+      en: 'Evaporator sensor temperature'
+      fr: 'Température de la sonde évaporateur'
+      es: 'Temperatura de la sonda del evaporador'
+      de: 'Temperatur des Verdampferfühlers'
+      it: 'Temperatura della sonda dell''evaporatore'
+      pl: 'Temperatura czujnika parownika'
+      ru: 'Температура датчика испарителя'
+      zh: '蒸发器传感器温度'
+      hu: 'Párologtató érzékelő hőmérséklete'
+      pt: 'Temperatura da sonda do evaporador'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -44
+    max: -31.5
+    units: '°C'
+
+  CLIMATE_SERVICE_REQUEST_ERROR_RESPONSE:
+    bits: '7.1'
+    comment:
+      en: 'Response to a service request, indicating whether an error was detected'
+      fr: 'Réponse à une requête de service, indiquant si une erreur a été détectée'
+      es: 'Respuesta a una solicitud de servicio, indicando si se ha detectado un error'
+      de: 'Antwort auf eine Serviceanfrage, die anzeigt, ob ein Fehler erkannt wurde'
+      it: 'Risposta a una richiesta di servizio, che indica se è stato rilevato un errore'
+      pl: 'Odpowiedź na żądanie serwisowe, wskazująca, czy wykryto błąd'
+      ru: 'Ответ на сервисный запрос, указывающий, была ли обнаружена ошибка'
+      zh: '对服务请求的响应,指示是否检测到错误'
+      hu: 'Válasz egy szervizkérésre, jelezve, hogy történt-e hibaészlelés'
+      pt: 'Resposta a um pedido de serviço, indicando se foi detetado um erro'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No error detected'
+        fr: 'Aucune erreur détectée'
+        es: 'No se ha detectado ningún error'
+        de: 'Kein Fehler erkannt'
+        it: 'Nessun errore rilevato'
+        pl: 'Nie wykryto błędu'
+        ru: 'Ошибок не обнаружено'
+        zh: '未检测到错误'
+        hu: 'Nincs hiba észlelve'
+        pt: 'Nenhum erro detetado'
+      0x01:
+        en: 'Error detected'
+        fr: 'Erreur détectée'
+        es: 'Error detectado'
+        de: 'Fehler erkannt'
+        it: 'Errore rilevato'
+        pl: 'Wykryto błąd'
+        ru: 'Обнаружена ошибка'
+        zh: '检测到错误'
+        hu: 'Hiba érzékelve'
+        pt: 'Erro detetado'
+
+  FRONT_BLOWER_MOTOR_FAULT:
+    bits: '7.0'
+    comment:
+      en: 'Front blower motor fault'
+      fr: 'Défaut du moteur du pulseur d''air avant'
+      es: 'Fallo del motor del ventilador delantero'
+      de: 'Fehler des vorderen Gebläsemotors'
+      it: 'Guasto del motore del ventilatore anteriore'
+      pl: 'Usterka silnika dmuchawy przedniej'
+      ru: 'Неисправность мотора переднего вентилятора отопителя'
+      zh: '前鼓风机电机故障'
+      hu: 'Az első fűtésventilátor-motor hibája'
+      pt: 'Falha do motor do ventilador de ar dianteiro'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Défaut absent'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Guasto assente'
+        pl: 'Brak usterki'
+        ru: 'Неисправность отсутствует'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Falha ausente'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'

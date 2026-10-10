@@ -1,0 +1,773 @@
+id: 0x0C6
+name: 'BSX_RELIABILITY_PARAMETERS'
+type: 'can'
+length: 8
+comment:
+  en: 'Reliability parameters for BSX nodes: backup modes, LIN wake-up and equipment lists, pump and gearbox type, plus checksum bytes.'
+  fr: 'Paramètres de fiabilisation pour les nœuds BSX : modes de secours, réveil LIN et listes d''équipements, type de pompe et de boîte de vitesses, ainsi que les octets de somme de contrôle.'
+  es: 'Parámetros de fiabilidad para los nodos BSX: modos de emergencia, activación LIN y listas de equipos, tipo de bomba y de caja de cambios, además de los bytes de suma de comprobación.'
+  de: 'Zuverlässigkeitsparameter für BSX-Knoten: Rückfallmodi, LIN-Weckung und Geräteliste, Pumpen- und Getriebetyp sowie Prüfsummenbytes.'
+  it: 'Parametri di affidabilità per i nodi BSX: modalità di riserva, risveglio LIN ed elenchi apparecchiature, tipo di pompa e cambio, oltre ai byte di checksum.'
+  pl: 'Parametry niezawodności węzłów BSX: tryby awaryjne, wybudzanie LIN i listy urządzeń, typ pompy i skrzyni biegów oraz bajty sumy kontrolnej.'
+  ru: 'Параметры надёжности узлов BSX: резервные режимы, пробуждение LIN и списки оборудования, тип насоса и коробки передач, а также байты контрольной суммы.'
+  zh: 'BSX节点的可靠性参数:备用模式、LIN唤醒和设备列表、泵和变速箱类型,以及校验和字节。'
+  hu: 'A BSX csomópontok megbízhatósági paraméterei: tartalék üzemmódok, LIN ébresztés és eszközlisták, szivattyú- és váltótípus, valamint ellenőrzőösszeg-bájtok.'
+  pt: 'Parâmetros de fiabilidade dos nós BSX: modos de recurso, listas de ativação LIN e de equipamento, tipo de bomba e de caixa de velocidades, além de bytes de soma de verificação.'
+observations:
+  en: 'On state change of: LIN_WAKEUP_COMMAND'
+  fr: 'Sur changement d''état de : LIN_WAKEUP_COMMAND'
+  es: 'Al cambiar el estado de: LIN_WAKEUP_COMMAND'
+  de: 'Bei Statusänderung von: LIN_WAKEUP_COMMAND'
+  it: 'Al cambiamento di stato di: LIN_WAKEUP_COMMAND'
+  pl: 'Wysyłane przy zmianie stanu: LIN_WAKEUP_COMMAND'
+  ru: 'При изменении состояния: LIN_WAKEUP_COMMAND'
+  zh: '当REVEIL_LIN状态变化时'
+  hu: 'A(z) LIN_WAKEUP_COMMAND állapotváltozásakor'
+  pt: 'Na mudança de estado de: LIN_WAKEUP_COMMAND'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['BSC', 'BSM', 'BSR']
+
+signals:
+  BSM_LABEL_REQUEST:
+    bits: '1.7'
+    comment:
+      en: 'BSM label request'
+      fr: 'Demande d''étiquette BSM'
+      es: 'Solicitud de etiqueta BSM'
+      de: 'Anforderung des BSM-Etiketts'
+      it: 'Richiesta dell''etichetta BSM'
+      pl: 'Żądanie etykiety BSM'
+      ru: 'Запрос метки BSM'
+      zh: 'BSM标签请求'
+      hu: 'BSM címke kérése'
+      pt: 'Pedido de etiqueta BSM'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  BSM_FAILSAFE_MODE_ENABLE:
+    bits: '1.6'
+    comment:
+      en: 'BSM failsafe mode enable/inhibit (communication loss)'
+      fr: 'Activation ou inhibition du mode secours de la BSM (perte de communication)'
+      es: 'Activación o inhibición del modo de emergencia de la BSM (pérdida de comunicación)'
+      de: 'Aktivierung oder Sperrung des BSM-Notlaufmodus (Kommunikationsverlust)'
+      it: 'Attivazione o inibizione della modalità di emergenza della BSM (perdita di comunicazione)'
+      pl: 'Aktywacja lub zablokowanie trybu awaryjnego BSM (utrata komunikacji)'
+      ru: 'Активация или блокировка аварийного режима BSM (потеря связи)'
+      zh: 'BSM故障保护模式启用/禁止(通信丢失)'
+      hu: 'BSM vészüzemmódjának aktiválása vagy tiltása (kommunikációvesztés)'
+      pt: 'Ativação ou inibição do modo de emergência da BSM (perda de comunicação)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  UNUSED_1:
+    bits: '1.5'
+    unused: true
+
+  LIN_WAKEUP_COMMAND:
+    bits: '1.4'
+    comment:
+      en: 'LIN network wake-up and sleep command'
+      fr: 'Commande de réveil et de mise en sommeil du réseau LIN'
+      es: 'Comando de activación y reposo de la red LIN'
+      de: 'Befehl zum Aufwecken und Einschlafen des LIN-Netzwerks'
+      it: 'Comando di risveglio e messa in sospensione della rete LIN'
+      pl: 'Polecenie wybudzania i usypiania sieci LIN'
+      ru: 'Команда пробуждения и перевода в сон сети LIN'
+      zh: 'LIN网络唤醒和休眠指令'
+      hu: 'LIN hálózat ébresztési és alvó módba léptetési parancsa'
+      pt: 'Comando de ativação e repouso da rede LIN'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'LIN network asleep'
+        fr: 'Réseau LIN endormi'
+        es: 'Red LIN dormida'
+        de: 'LIN-Netzwerk im Ruhezustand'
+        it: 'Rete LIN in stato di riposo'
+        pl: 'Sieć LIN uśpiona'
+        ru: 'Сеть LIN в спящем режиме'
+        zh: 'LIN网络休眠'
+        hu: 'LIN hálózat alvó állapotban'
+        pt: 'Rede LIN adormecida'
+      0x01:
+        en: 'LIN network woken up'
+        fr: 'Réseau LIN réveillé'
+        es: 'Red LIN activada'
+        de: 'LIN-Netzwerk aufgeweckt'
+        it: 'Rete LIN risvegliata'
+        pl: 'Sieć LIN wybudzona'
+        ru: 'Сеть LIN разбужена'
+        zh: 'LIN网络已唤醒'
+        hu: 'A LIN hálózat felébresztve'
+        pt: 'Rede LIN ativada'
+
+  BSM_LIN_DEVICE_1_ID:
+    bits: '1.3-1.0'
+    comment:
+      en: 'ECU number bits of the 1st LIN device connected to the BSM'
+      fr: 'Bits du numéro d''UCE du 1er équipement LIN connecté au BSM'
+      es: 'Bits del número de ECU del 1er equipo LIN conectado al BSM'
+      de: 'Bits der Steuergerätenummer des 1. am BSM angeschlossenen LIN-Geräts'
+      it: 'Bit del numero di centralina del 1° dispositivo LIN collegato al BSM'
+      pl: 'Bity numeru sterownika 1. urządzenia LIN podłączonego do BSM'
+      ru: 'Биты номера блока управления 1-го устройства LIN, подключённого к BSM'
+      zh: '连接到BSM的第1个LIN设备的ECU编号位'
+      hu: 'Az BSM-hez csatlakozó 1. LIN eszköz vezérlőegység-számának bitjei'
+      pt: 'Bits do número da ECU do 1.º dispositivo LIN ligado ao BSM'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Equipment absent'
+        fr: 'Équipement absent'
+        es: 'Equipo ausente'
+        de: 'Ausrüstung fehlt'
+        it: 'Equipaggiamento assente'
+        pl: 'Brak wyposażenia'
+        ru: 'Оборудование отсутствует'
+        zh: '设备缺失'
+        hu: 'Felszerelés hiányzik'
+        pt: 'Equipamento ausente'
+
+  BSM_LIN_DEVICE_2_ID:
+    bits: '2.7-2.4'
+    comment:
+      en: 'ECU number bits of the 2nd LIN device connected to the BSM'
+      fr: 'Bits du numéro d''UCE du 2e équipement LIN connecté au BSM'
+      es: 'Bits del número de ECU del 2º equipo LIN conectado al BSM'
+      de: 'Bits der Steuergerätenummer des 2. am BSM angeschlossenen LIN-Geräts'
+      it: 'Bit del numero di centralina del 2° dispositivo LIN collegato al BSM'
+      pl: 'Bity numeru sterownika 2. urządzenia LIN podłączonego do BSM'
+      ru: 'Биты номера блока управления 2-го устройства LIN, подключённого к BSM'
+      zh: '连接到BSM的第2个LIN设备的ECU编号位'
+      hu: 'Az BSM-hez csatlakozó 2. LIN eszköz vezérlőegység-számának bitjei'
+      pt: 'Bits do número da ECU do 2.º dispositivo LIN ligado ao BSM'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Equipment absent'
+        fr: 'Équipement absent'
+        es: 'Equipo ausente'
+        de: 'Ausrüstung fehlt'
+        it: 'Equipaggiamento assente'
+        pl: 'Brak wyposażenia'
+        ru: 'Оборудование отсутствует'
+        zh: '设备缺失'
+        hu: 'Felszerelés hiányzik'
+        pt: 'Equipamento ausente'
+
+  BSM_LIN_DEVICE_3_ID:
+    bits: '2.3-2.0'
+    comment:
+      en: 'ECU number bits of the 3rd LIN device connected to the BSM'
+      fr: 'Bits du numéro d''UCE du 3e équipement LIN connecté au BSM'
+      es: 'Bits del número de ECU del 3er equipo LIN conectado al BSM'
+      de: 'Bits der Steuergerätenummer des 3. am BSM angeschlossenen LIN-Geräts'
+      it: 'Bit del numero di centralina del 3° dispositivo LIN collegato al BSM'
+      pl: 'Bity numeru sterownika 3. urządzenia LIN podłączonego do BSM'
+      ru: 'Биты номера блока управления 3-го устройства LIN, подключённого к BSM'
+      zh: '连接到BSM的第3个LIN设备的ECU编号位'
+      hu: 'Az BSM-hez csatlakozó 3. LIN eszköz vezérlőegység-számának bitjei'
+      pt: 'Bits do número da ECU do 3.º dispositivo LIN ligado ao BSM'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Equipment absent'
+        fr: 'Équipement absent'
+        es: 'Equipo ausente'
+        de: 'Ausrüstung fehlt'
+        it: 'Equipaggiamento assente'
+        pl: 'Brak wyposażenia'
+        ru: 'Оборудование отсутствует'
+        zh: '设备缺失'
+        hu: 'Felszerelés hiányzik'
+        pt: 'Equipamento ausente'
+
+  BSC_LABEL_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'BSC label request'
+      fr: 'Demande d''étiquette BSC'
+      es: 'Solicitud de etiqueta BSC'
+      de: 'Anforderung des BSC-Etiketts'
+      it: 'Richiesta dell''etichetta BSC'
+      pl: 'Żądanie etykiety BSC'
+      ru: 'Запрос метки BSC'
+      zh: 'BSC标签请求'
+      hu: 'BSC címke kérése'
+      pt: 'Pedido de etiqueta BSC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  BSC_FAILSAFE_MODE_ENABLE:
+    bits: '3.6'
+    comment:
+      en: 'BSC failsafe mode enable/inhibit (communication loss)'
+      fr: 'Activation ou inhibition du mode secours de la BSC (perte de communication)'
+      es: 'Activación o inhibición del modo de emergencia de la BSC (pérdida de comunicación)'
+      de: 'Aktivierung oder Sperrung des BSC-Notlaufmodus (Kommunikationsverlust)'
+      it: 'Attivazione o inibizione della modalità di emergenza della BSC (perdita di comunicazione)'
+      pl: 'Aktywacja lub zablokowanie trybu awaryjnego BSC (utrata komunikacji)'
+      ru: 'Активация или блокировка аварийного режима BSC (потеря связи)'
+      zh: 'BSC故障保护模式启用/禁止(通信丢失)'
+      hu: 'BSC vészüzemmódjának aktiválása vagy tiltása (kommunikációvesztés)'
+      pt: 'Ativação ou inibição do modo de emergência da BSC (perda de comunicação)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  BSC_WAKEUP_ENABLE:
+    bits: '3.5'
+    comment:
+      en: 'BSC wake-up function enable/inhibit'
+      fr: 'Activation ou inhibition de la fonction réveil de la BSC'
+      es: 'Activación o inhibición de la función de despertar de la BSC'
+      de: 'Aktivierung oder Sperrung der BSC-Weckfunktion'
+      it: 'Attivazione o inibizione della funzione di risveglio della BSC'
+      pl: 'Aktywacja lub zablokowanie funkcji wybudzania BSC'
+      ru: 'Активация или блокировка функции пробуждения BSC'
+      zh: 'BSC唤醒功能启用/禁止'
+      hu: 'BSC ébresztési funkció aktiválása vagy tiltása'
+      pt: 'Ativação/inibição da função de despertar do BSC'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  REAR_SIDELIGHT_COUNT_1:
+    bits: '3.4-3.3'
+    comment:
+      en: 'Rear sidelight bulb count (for load diagnostics)'
+      fr: 'Nombre de lanternes arrière (pour le diagnostic de charge)'
+      es: 'Número de luces traseras (para el diagnóstico de carga)'
+      de: 'Anzahl der hinteren Begrenzungsleuchten (für die Lastdiagnose)'
+      it: 'Numero di luci di posizione posteriori (per la diagnosi del carico)'
+      pl: 'Liczba tylnych świateł pozycyjnych (do diagnostyki obciążenia)'
+      ru: 'Количество задних габаритных ламп (для диагностики нагрузки)'
+      zh: '后示宽灯数量(用于负载诊断)'
+      hu: 'Hátsó helyzetjelző lámpák száma (terhelésdiagnosztikához)'
+      pt: 'Número de luzes de presença traseiras (para diagnóstico de carga)'
+    type: 'enum'
+    values:
+      0x00:
+        en: '3×5 W per side'
+        fr: '3×5 W par côté'
+        es: '3×5 W por lado'
+        de: '3×5 W pro Seite'
+        it: '3×5 W per lato'
+        pl: '3×5 W na stronę'
+        ru: '3×5 Вт на сторону'
+        zh: '每侧3×5瓦'
+        hu: '3×5 W oldalanként'
+        pt: '3×5 W por lado'
+      0x01:
+        en: '2×5 W per side'
+        fr: '2*5 W par côté'
+        es: '2*5 W por lado'
+        de: '2×5 W pro Seite'
+        it: '2*5 W per lato'
+        pl: '2*5 W na stronę'
+        ru: '2×5 Вт на сторону'
+        zh: '每侧2*5瓦'
+        hu: '2×5 W oldalanként'
+        pt: '2×5 W por lado'
+      0x02:
+        en: '1×5 W per side'
+        fr: '1*5w par côté'
+        es: '1×5 W por lado'
+        de: '1×5 W pro Seite'
+        it: '1×5 W per lato'
+        pl: '1×5 W na stronę'
+        ru: '1×5 Вт на сторону'
+        zh: '每侧1×5瓦'
+        hu: '1×5 W oldalanként'
+        pt: '1×5 W por lado'
+
+  UNUSED_2:
+    bits: '3.2-3.0'
+    unused: true
+
+  BSR_LABEL_REQUEST:
+    bits: '4.7'
+    comment:
+      en: 'BSR label request'
+      fr: 'Demande d''étiquette BSR'
+      es: 'Solicitud de etiqueta BSR'
+      de: 'Anforderung des BSR-Etiketts'
+      it: 'Richiesta dell''etichetta BSR'
+      pl: 'Żądanie etykiety BSR'
+      ru: 'Запрос метки BSR'
+      zh: 'BSR标签请求'
+      hu: 'BSR címke kérése'
+      pt: 'Pedido de etiqueta BSR'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  BSR_FAILSAFE_MODE_ENABLE:
+    bits: '4.6'
+    comment:
+      en: 'BSR failsafe mode enable/inhibit (communication loss)'
+      fr: 'Activation ou inhibition du mode secours de la BSR (perte de communication)'
+      es: 'Activación o inhibición del modo de emergencia de la BSR (pérdida de comunicación)'
+      de: 'Aktivierung oder Sperrung des BSR-Notlaufmodus (Kommunikationsverlust)'
+      it: 'Attivazione o inibizione della modalità di emergenza della BSR (perdita di comunicazione)'
+      pl: 'Aktywacja lub zablokowanie trybu awaryjnego BSR (utrata komunikacji)'
+      ru: 'Активация или блокировка аварийного режима BSR (потеря связи)'
+      zh: 'BSR故障保护模式启用/禁止(通信丢失)'
+      hu: 'BSR vészüzemmódjának aktiválása vagy tiltása (kommunikációvesztés)'
+      pt: 'Ativação ou inibição do modo de emergência da BSR (perda de comunicação)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  BSR_WAKEUP_ENABLE:
+    bits: '4.5'
+    comment:
+      en: 'BSR wake-up function enable/inhibit'
+      fr: 'Activation ou inhibition de la fonction réveil de la BSR'
+      es: 'Activación o inhibición de la función de despertar de la BSR'
+      de: 'Aktivierung oder Sperrung der BSR-Weckfunktion'
+      it: 'Attivazione o inibizione della funzione di risveglio della BSR'
+      pl: 'Aktywacja lub zablokowanie funkcji wybudzania BSR'
+      ru: 'Активация или блокировка функции пробуждения BSR'
+      zh: 'BSR唤醒功能启用/禁止'
+      hu: 'BSR ébresztési funkció aktiválása vagy tiltása'
+      pt: 'Ativação/inibição da função de despertar do BSR'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  REAR_SIDELIGHT_COUNT_2:
+    bits: '4.4-4.3'
+    comment:
+      en: 'Rear sidelight bulb count (for load diagnostics)'
+      fr: 'Nombre de lanternes arrière (pour le diagnostic de charge)'
+      es: 'Número de luces traseras (para el diagnóstico de carga)'
+      de: 'Anzahl der hinteren Begrenzungsleuchten (für die Lastdiagnose)'
+      it: 'Numero di luci di posizione posteriori (per la diagnosi del carico)'
+      pl: 'Liczba tylnych świateł pozycyjnych (do diagnostyki obciążenia)'
+      ru: 'Количество задних габаритных ламп (для диагностики нагрузки)'
+      zh: '后示宽灯数量(用于负载诊断)'
+      hu: 'Hátsó helyzetjelző lámpák száma (terhelésdiagnosztikához)'
+      pt: 'Número de luzes de presença traseiras (para diagnóstico de carga)'
+    type: 'enum'
+    values:
+      0x00:
+        en: '3×5 W per side'
+        fr: '3×5 W par côté'
+        es: '3×5 W por lado'
+        de: '3×5 W pro Seite'
+        it: '3×5 W per lato'
+        pl: '3×5 W na stronę'
+        ru: '3×5 Вт на сторону'
+        zh: '每侧3×5瓦'
+        hu: '3×5 W oldalanként'
+        pt: '3×5 W por lado'
+      0x01:
+        en: '2×5 W per side'
+        fr: '2*5 W par côté'
+        es: '2*5 W por lado'
+        de: '2×5 W pro Seite'
+        it: '2*5 W per lato'
+        pl: '2*5 W na stronę'
+        ru: '2×5 Вт на сторону'
+        zh: '每侧2*5瓦'
+        hu: '2×5 W oldalanként'
+        pt: '2×5 W por lado'
+      0x02:
+        en: '1×5 W per side'
+        fr: '1*5w par côté'
+        es: '1×5 W por lado'
+        de: '1×5 W pro Seite'
+        it: '1×5 W per lato'
+        pl: '1×5 W na stronę'
+        ru: '1×5 Вт на сторону'
+        zh: '每侧1×5瓦'
+        hu: '1×5 W oldalanként'
+        pt: '1×5 W por lado'
+
+  UNUSED_3:
+    bits: '4.2-4.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '5.7-5.0'
+    unused: true
+
+  GEARBOX_TYPE:
+    bits: '6.7'
+    comment:
+      en: 'Gearbox type definition'
+      fr: 'Définition du type de boîte de vitesses'
+      es: 'Definición del tipo de caja de cambios'
+      de: 'Festlegung des Getriebetyps'
+      it: 'Definizione del tipo di cambio'
+      pl: 'Określenie typu skrzyni biegów'
+      ru: 'Определение типа коробки передач'
+      zh: '变速箱类型定义'
+      hu: 'Váltó típusának meghatározása'
+      pt: 'Definição do tipo de caixa de velocidades'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Manual gearbox'
+        fr: 'Boîte manuelle'
+        es: 'Caja manual'
+        de: 'Schaltgetriebe'
+        it: 'Cambio manuale'
+        pl: 'Skrzynia manualna'
+        ru: 'Механическая коробка передач'
+        zh: '手动变速箱'
+        hu: 'Manuális váltó'
+        pt: 'Caixa manual'
+      0x01:
+        en: 'Automatic or robotised gearbox'
+        fr: 'BVA ou BVMP'
+        es: 'Caja automática o BVMP'
+        de: 'Automatik- oder BVMP-Getriebe'
+        it: 'Cambio automatico o BVMP'
+        pl: 'Skrzynia automatyczna lub BVMP'
+        ru: 'Автоматическая или роботизированная коробка передач (BVA/BVMP)'
+        zh: '自动变速箱或BVMP变速箱'
+        hu: 'Automata vagy robotizált sebességváltó (BVA/BVMP)'
+        pt: 'Caixa de velocidades automática ou robotizada'
+
+  START_FUNCTION_TYPE:
+    bits: '6.6'
+    comment:
+      en: 'Starter function type definition'
+      fr: 'Définition du type de fonction de démarrage'
+      es: 'Definición del tipo de función de arranque'
+      de: 'Festlegung des Starterfunktionstyps'
+      it: 'Definizione del tipo di funzione di avviamento'
+      pl: 'Określenie typu funkcji rozruchu'
+      ru: 'Определение типа функции запуска'
+      zh: '起动功能类型定义'
+      hu: 'Indítási funkció típusának meghatározása'
+      pt: 'Definição do tipo de função de arranque'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Start-up held'
+        fr: 'Démarrage maintenu'
+        es: 'Arranque mantenido'
+        de: 'Start gehalten'
+        it: 'Avviamento mantenuto'
+        pl: 'Rozruch podtrzymany'
+        ru: 'Запуск удерживается'
+        zh: '启动保持'
+        hu: 'Indítás tartva'
+        pt: 'Arranque mantido'
+      0x01:
+        en: 'Pulse start-up'
+        fr: 'Démarrage impulsionnel'
+        es: 'Arranque por impulso'
+        de: 'Impulsstart'
+        it: 'Avviamento a impulsi'
+        pl: 'Rozruch impulsowy'
+        ru: 'Импульсный запуск'
+        zh: '脉冲启动'
+        hu: 'Impulzusos indítás'
+        pt: 'Arranque por impulso'
+
+  AIR_PUMP_FUNCTION_TYPE:
+    bits: '6.5'
+    comment:
+      en: 'Function type assigned to the BSM air pump output'
+      fr: 'Définition du type de fonction assurée par la sortie pompe à air du BSM'
+      es: 'Definición del tipo de función de la salida de la bomba de aire del BSM'
+      de: 'Festlegung der Funktion des Luftpumpenausgangs des BSM'
+      it: 'Definizione del tipo di funzione dell''uscita pompa dell''aria del BSM'
+      pl: 'Określenie typu funkcji wyjścia pompy powietrza BSM'
+      ru: 'Определение функции выхода воздушного насоса BSM'
+      zh: 'BSM空气泵输出功能类型定义'
+      hu: 'A BSM levegőszivattyú kimenetének funkciótípusa'
+      pt: 'Definição do tipo de função assegurada pela saída da bomba de ar do BSM'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Air pump'
+        fr: 'Pompe à air'
+        es: 'Bomba de aire'
+        de: 'Luftpumpe'
+        it: 'Pompa dell''aria'
+        pl: 'Pompa powietrza'
+        ru: 'Воздушный насос'
+        zh: '空气泵'
+        hu: 'Levegőszivattyú'
+        pt: 'Bomba de ar'
+      0x01:
+        en: 'RTE/VVT'
+        fr: 'RTE/VVT'
+        es: 'RTE/VVT'
+        de: 'RTE/VVT'
+        it: 'RTE/VVT'
+        pl: 'RTE/VVT'
+        ru: 'RTE/VVT'
+        zh: 'RTE/VVT'
+        hu: 'RTE/VVT'
+        pt: 'RTE/VVT'
+
+  START_ENABLED:
+    bits: '6.4'
+    comment:
+      en: 'Engine start authorization'
+      fr: 'Autorisation du démarrage'
+      es: 'Autorización de arranque'
+      de: 'Startfreigabe'
+      it: 'Autorizzazione all''avviamento'
+      pl: 'Zezwolenie na rozruch'
+      ru: 'Разрешение запуска двигателя'
+      zh: '发动机起动授权'
+      hu: 'Indítás engedélyezése'
+      pt: 'Autorização de arranque'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Start-up inhibited'
+        fr: 'Démarrage inhibé'
+        es: 'Arranque inhibido'
+        de: 'Start gesperrt'
+        it: 'Avviamento inibito'
+        pl: 'Rozruch zablokowany'
+        ru: 'Запуск заблокирован'
+        zh: '启动被禁止'
+        hu: 'Indítás letiltva'
+        pt: 'Arranque inibido'
+      0x01:
+        en: 'Crank enabled'
+        fr: 'Démarrage autorisé'
+        es: 'Arranque autorizado'
+        de: 'Anlassen freigegeben'
+        it: 'Avviamento abilitato'
+        pl: 'Rozruch dozwolony'
+        ru: 'Прокрутка разрешена'
+        zh: '允许起动'
+        hu: 'Indítás engedélyezve'
+        pt: 'Arranque ativado'
+
+  UNUSED_5:
+    bits: '6.3-6.0'
+    unused: true
+
+  UNUSED_6:
+    bits: '7.7-7.0'
+    unused: true
+
+  CONFIG_CHECKSUM:
+    bits: '8.7-8.4'
+    comment:
+      en: '4-bit configuration checksum'
+      fr: 'Somme de contrôle sur 4 bits'
+      es: 'Suma de comprobación de 4 bits'
+      de: '4-Bit-Prüfsumme'
+      it: 'Checksum a 4 bit'
+      pl: 'Suma kontrolna 4-bitowa'
+      ru: '4-битная контрольная сумма'
+      zh: '4位校验和'
+      hu: '4 bites ellenőrző összeg'
+      pt: 'Soma de verificação de configuração de 4 bits'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '8.3-8.0'
+    comment:
+      en: '4-bit process counter, modulo 16'
+      fr: 'Compteur de process sur 4 bits, modulo 16'
+      es: 'Contador de proceso de 4 bits, módulo 16'
+      de: '4-Bit-Prozesszähler, Modulo 16'
+      it: 'Contatore di processo a 4 bit, modulo 16'
+      pl: '4-bitowy licznik procesu, modulo 16'
+      ru: '4-битный счётчик процесса по модулю 16'
+      zh: '4位处理计数器,模16'
+      hu: '4 bites folyamatszámláló, modulo 16'
+      pt: 'Contador de processo de 4 bits, módulo 16'
+    type: 'uint'
+    default: 0x00

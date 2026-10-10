@@ -1,0 +1,452 @@
+id: 0x5F9
+name: 'FRONT_LIGHTING_COMMAND'
+type: 'van'
+length: 6
+comment:
+  en: 'Front lighting unit bulb commands (side lamps, low/high beams, front fogs, left and right) plus I/O expander port configuration.'
+  fr: 'Commandes des ampoules de l''unité d''éclairage avant (lanternes, feux de croisement/route, antibrouillards avant, gauche et droite) et configuration des ports de l''extenseur d''E/S.'
+  es: 'Órdenes de las bombillas de la unidad de alumbrado delantero (luces de posición, cruce/carretera, antiniebla delanteros, izquierda y derecha) y configuración de los puertos del expansor de E/S.'
+  de: 'Lampenbefehle der vorderen Beleuchtungseinheit (Standlicht, Abblend-/Fernlicht, Frontnebelscheinwerfer, links und rechts) sowie Portkonfiguration des E/A-Erweiterungsmoduls.'
+  it: 'Comandi delle lampadine dell''unità di illuminazione anteriore (luci di posizione, anabbaglianti/abbaglianti, fendinebbia anteriori, sinistra e destra) e configurazione delle porte dell''espansore I/O.'
+  pl: 'Polecenia żarówek przedniego modułu oświetlenia (światła pozycyjne, mijania/drogowe, przednie przeciwmgielne, lewe i prawe) oraz konfiguracja portów ekspandera we/wy.'
+  ru: 'Команды ламп передних осветительных приборов (габариты, ближний/дальний свет, передние противотуманные фары, левая и правая сторона) и конфигурация портов расширителя ввода-вывода.'
+  zh: '前照明单元灯泡指令（示宽灯、近光/远光灯、前雾灯，左右两侧）及I/O扩展端口配置。'
+  hu: 'Az elülső világítóegység izzóinak parancsai (helyzetjelző, tompított/távolsági fény, elülső ködfényszóró, bal és jobb oldal) és az I/O bővítő portjainak konfigurációja.'
+  pt: 'Comandos das lâmpadas do bloco ótico dianteiro (luzes de presença, médios/máximos, nevoeiro dianteiro, esquerdo e direito) e configuração das portas do expansor de E/S.'
+periodicity: ['50ms']
+senders: ['BSI']
+receivers: ['BOP']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  RIGHT_LOW_BEAM_COMMAND:
+    bits: '1.7'
+    comment:
+      en: 'Right low beam bulb command'
+      fr: 'Commande de l''ampoule de code droit'
+      es: 'Comando de la bombilla de la luz de cruce derecha'
+      de: 'Ansteuerung der rechten Abblendlichtlampe'
+      it: 'Comando della lampadina anabbagliante destra'
+      pl: 'Sterowanie żarówką prawego światła mijania'
+      ru: 'Управление лампой правого ближнего света'
+      zh: '右近光灯灯泡控制'
+      hu: 'A jobb tompított fényszóró izzójának vezérlése'
+      pt: 'Comando da lâmpada da luz de cruzamento direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  LEFT_HIGH_BEAM_COMMAND:
+    bits: '1.6'
+    comment:
+      en: 'Left high beam bulb command'
+      fr: 'Commande de l''ampoule de phare gauche'
+      es: 'Comando de la bombilla de la luz de carretera izquierda'
+      de: 'Ansteuerung der linken Fernlichtlampe'
+      it: 'Comando della lampadina abbagliante sinistra'
+      pl: 'Sterowanie żarówką lewego światła drogowego'
+      ru: 'Управление лампой левого дальнего света'
+      zh: '左远光灯灯泡控制'
+      hu: 'A bal távolsági fényszóró izzójának vezérlése'
+      pt: 'Comando da lâmpada do farol de máximos esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  LEFT_FRONT_FOG_COMMAND:
+    bits: '1.5'
+    comment:
+      en: 'Left front fog lamp bulb command'
+      fr: 'Commande de l''ampoule du feu antibrouillard avant gauche'
+      es: 'Comando de la bombilla del faro antiniebla delantero izquierdo'
+      de: 'Ansteuerung der linken vorderen Nebelscheinwerferlampe'
+      it: 'Comando della lampadina del fendinebbia anteriore sinistro'
+      pl: 'Sterowanie żarówką lewego przedniego światła przeciwmgielnego'
+      ru: 'Управление лампой левой передней противотуманной фары'
+      zh: '左前雾灯灯泡控制'
+      hu: 'A bal első ködlámpa izzójának vezérlése'
+      pt: 'Comando da lâmpada do farol antinevoeiro dianteiro esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  LEFT_SIDE_LAMP_COMMAND:
+    bits: '1.4'
+    comment:
+      en: 'Left side (position) lamp bulb command'
+      fr: 'Commande de l''ampoule de lanterne gauche'
+      es: 'Comando de la bombilla de la luz de posición izquierda'
+      de: 'Ansteuerung der linken Standlichtlampe'
+      it: 'Comando della lampadina della luce di posizione sinistra'
+      pl: 'Sterowanie żarówką lewego światła pozycyjnego'
+      ru: 'Управление лампой левого габаритного огня'
+      zh: '左示廓灯灯泡控制'
+      hu: 'A bal helyzetjelző lámpa izzójának vezérlése'
+      pt: 'Comando da lâmpada de presença esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  RIGHT_HIGH_BEAM_COMMAND:
+    bits: '1.3'
+    comment:
+      en: 'Right high beam bulb command'
+      fr: 'Commande de l''ampoule de phare droit'
+      es: 'Comando de la bombilla de la luz de carretera derecha'
+      de: 'Ansteuerung der rechten Fernlichtlampe'
+      it: 'Comando della lampadina abbagliante destra'
+      pl: 'Sterowanie żarówką prawego światła drogowego'
+      ru: 'Управление лампой правого дальнего света'
+      zh: '右远光灯灯泡控制'
+      hu: 'A jobb távolsági fényszóró izzójának vezérlése'
+      pt: 'Comando da lâmpada do farol de máximos direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  RIGHT_FRONT_FOG_COMMAND:
+    bits: '1.2'
+    comment:
+      en: 'Right front fog lamp bulb command'
+      fr: 'Commande de l''ampoule du feu antibrouillard avant droit'
+      es: 'Comando de la bombilla del faro antiniebla delantero derecho'
+      de: 'Ansteuerung der rechten vorderen Nebelscheinwerferlampe'
+      it: 'Comando della lampadina del fendinebbia anteriore destro'
+      pl: 'Sterowanie żarówką prawego przedniego światła przeciwmgielnego'
+      ru: 'Управление лампой правой передней противотуманной фары'
+      zh: '右前雾灯灯泡控制'
+      hu: 'A jobb első ködlámpa izzójának vezérlése'
+      pt: 'Comando da lâmpada do farol antinevoeiro dianteiro direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  RIGHT_SIDE_LAMP_COMMAND:
+    bits: '1.1'
+    comment:
+      en: 'Right side (position) lamp bulb command'
+      fr: 'Commande de l''ampoule de lanterne droite'
+      es: 'Comando de la bombilla de la luz de posición derecha'
+      de: 'Ansteuerung der rechten Standlichtlampe'
+      it: 'Comando della lampadina della luce di posizione destra'
+      pl: 'Sterowanie żarówką prawego światła pozycyjnego'
+      ru: 'Управление лампой правого габаритного огня'
+      zh: '右示廓灯灯泡控制'
+      hu: 'A jobb helyzetjelző lámpa izzójának vezérlése'
+      pt: 'Comando da lâmpada de presença direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  LEFT_LOW_BEAM_COMMAND:
+    bits: '1.0'
+    comment:
+      en: 'Left low beam bulb command'
+      fr: 'Commande de l''ampoule de code gauche'
+      es: 'Comando de la bombilla de la luz de cruce izquierda'
+      de: 'Ansteuerung der linken Abblendlichtlampe'
+      it: 'Comando della lampadina anabbagliante sinistra'
+      pl: 'Sterowanie żarówką lewego światła mijania'
+      ru: 'Управление лампой левого ближнего света'
+      zh: '左近光灯灯泡控制'
+      hu: 'A bal tompított fényszóró izzójának vezérlése'
+      pt: 'Comando da lâmpada da luz de cruzamento esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Bulb off'
+        fr: 'Ampoule éteinte'
+        es: 'Bombilla apagada'
+        de: 'Lampe aus'
+        it: 'Lampadina spenta'
+        pl: 'Żarówka wyłączona'
+        ru: 'Лампа выключена'
+        zh: '灯泡熄灭'
+        hu: 'Izzó kikapcsolva'
+        pt: 'Lâmpada apagada'
+      0x01:
+        en: 'Bulb on'
+        fr: 'Ampoule allumée'
+        es: 'Bombilla encendida'
+        de: 'Lampe eingeschaltet'
+        it: 'Lampadina accesa'
+        pl: 'Żarówka włączona'
+        ru: 'Лампа включена'
+        zh: '灯泡已点亮'
+        hu: 'Izzó bekapcsolva'
+        pt: 'Lâmpada acesa'
+
+  PORT_A_DIRECTION:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Data direction register of I/O port A (fixed value 0xFF)'
+      fr: 'Registre de direction des données du port d''E/S A (valeur fixe 0xFF)'
+      es: 'Registro de dirección de datos del puerto de E/S A (valor fijo 0xFF)'
+      de: 'Datenrichtungsregister von I/O-Port A (fester Wert 0xFF)'
+      it: 'Registro di direzione dati della porta I/O A (valore fisso 0xFF)'
+      pl: 'Rejestr kierunku danych portu wejścia/wyjścia A (wartość stała 0xFF)'
+      ru: 'Регистр направления данных порта ввода-вывода A (фиксированное значение 0xFF)'
+      zh: 'I/O端口A的数据方向寄存器（固定值0xFF）'
+      hu: 'Az A I/O port adatirány-regisztere (rögzített érték 0xFF)'
+      pt: 'Registo de direção dos dados do porto de E/S A (valor fixo 0xFF)'
+    type: 'enum'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'Port A direction value'
+        fr: 'Valeur de direction du port A'
+        es: 'Valor de dirección del puerto A'
+        de: 'Richtungswert Port A'
+        it: 'Valore di direzione della porta A'
+        pl: 'Wartość kierunku portu A'
+        ru: 'Значение направления порта A'
+        zh: 'A端口方向值'
+        hu: 'A port iránya érték'
+        pt: 'Valor de direção da porta A'
+
+  PORT_A_OPTION:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Option register of I/O port A (fixed value 0x00)'
+      fr: 'Registre d''options du port d''E/S A (valeur fixe 0x00)'
+      es: 'Registro de opciones del puerto de E/S A (valor fijo 0x00)'
+      de: 'Optionsregister von I/O-Port A (fester Wert 0x00)'
+      it: 'Registro opzioni della porta I/O A (valore fisso 0x00)'
+      pl: 'Rejestr opcji portu wejścia/wyjścia A (wartość stała 0x00)'
+      ru: 'Регистр опций порта ввода-вывода A (фиксированное значение 0x00)'
+      zh: 'I/O端口A的选项寄存器（固定值0x00）'
+      hu: 'Az A I/O port opciós regisztere (rögzített érték 0x00)'
+      pt: 'Registo de opções da porta E/S A (valor fixo 0x00)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Port A option value'
+        fr: 'Valeur d''option du port A'
+        es: 'Valor de opción del puerto A'
+        de: 'Optionswert Port A'
+        it: 'Valore opzione della porta A'
+        pl: 'Wartość opcji portu A'
+        ru: 'Значение опции порта A'
+        zh: 'A端口选项值'
+        hu: 'Az A port opcióértéke'
+        pt: 'Valor de opção do porto A'
+
+  UNUSED_1:
+    bits: '4.7-4.0'
+    unused: true
+
+  PORT_B_DIRECTION:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Data direction register of I/O port B (fixed value 0x00)'
+      fr: 'Registre de direction des données du port d''E/S B (valeur fixe 0x00)'
+      es: 'Registro de dirección de datos del puerto de E/S B (valor fijo 0x00)'
+      de: 'Datenrichtungsregister von I/O-Port B (fester Wert 0x00)'
+      it: 'Registro di direzione dati della porta I/O B (valore fisso 0x00)'
+      pl: 'Rejestr kierunku danych portu wejścia/wyjścia B (wartość stała 0x00)'
+      ru: 'Регистр направления данных порта ввода-вывода B (фиксированное значение 0x00)'
+      zh: 'I/O端口B的数据方向寄存器（固定值0x00）'
+      hu: 'A B I/O port adatirány-regisztere (rögzített érték 0x00)'
+      pt: 'Registo de direção dos dados do porto de E/S B (valor fixo 0x00)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Port B direction value'
+        fr: 'Valeur de direction du port B'
+        es: 'Valor de dirección del puerto B'
+        de: 'Richtungswert von Port B'
+        it: 'Valore di direzione della porta B'
+        pl: 'Wartość kierunku portu B'
+        ru: 'Значение направления порта B'
+        zh: 'B端口方向值'
+        hu: 'B port irányértéke'
+        pt: 'Valor de direção da porta B'
+
+  PORT_B_OPTION:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Option register of I/O port B (fixed value 0x00)'
+      fr: 'Registre d''options du port d''E/S B (valeur fixe 0x00)'
+      es: 'Registro de opciones del puerto de E/S B (valor fijo 0x00)'
+      de: 'Optionsregister von I/O-Port B (fester Wert 0x00)'
+      it: 'Registro opzioni della porta I/O B (valore fisso 0x00)'
+      pl: 'Rejestr opcji portu wejścia/wyjścia B (wartość stała 0x00)'
+      ru: 'Регистр опций порта ввода-вывода B (фиксированное значение 0x00)'
+      zh: 'I/O端口B的选项寄存器（固定值0x00）'
+      hu: 'A B I/O port opciós regisztere (rögzített érték 0x00)'
+      pt: 'Registo de opções da porta E/S B (valor fixo 0x00)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Port B option value'
+        fr: 'Valeur d''option du port B'
+        es: 'Valor de opción del puerto B'
+        de: 'Optionswert von Port B'
+        it: 'Valore opzione porta B'
+        pl: 'Wartość opcji portu B'
+        ru: 'Значение опции порта B'
+        zh: 'B端口选项值'
+        hu: 'B port opcióértéke'
+        pt: 'Valor da opção da porta B'

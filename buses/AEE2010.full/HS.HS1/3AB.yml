@@ -1,0 +1,213 @@
+id: 0x3AB
+name: 'AUTOMATED_PARKING_STEERING_DATA_2'
+type: 'can'
+length: 4
+comment:
+  en: 'Automated parking steering data: driving-direction request, steering-column control request, angle setpoint, function request and relax request.'
+  fr: 'Données de direction pour le parking automatisé : demande de sens de conduite, demande de contrôle de la colonne de direction, consigne d''angle, demande de fonction et demande de relâchement.'
+  es: 'Datos de dirección para el aparcamiento automatizado: solicitud de sentido de marcha, solicitud de control de la columna de dirección, consigna de ángulo, solicitud de función y solicitud de relajación.'
+  de: 'Lenkdaten für das automatisierte Einparken: Fahrtrichtungsanforderung, Lenksäulen-Kontrollanforderung, Winkelsollwert, Funktionsanforderung und Entspannungsanforderung.'
+  it: 'Dati di sterzata per il parcheggio automatizzato: richiesta di direzione di marcia, richiesta di controllo del piantone dello sterzo, setpoint dell''angolo, richiesta di funzione e richiesta di rilascio.'
+  pl: 'Dane sterowania dla zautomatyzowanego parkowania: żądanie kierunku jazdy, żądanie kontroli kolumny kierownicy, nastawa kąta, żądanie funkcji i żądanie zwolnienia.'
+  ru: 'Данные рулевого управления для автоматизированной парковки: запрос направления движения, запрос управления рулевой колонкой, уставка угла, запрос функции и запрос расслабления.'
+  zh: '自动泊车转向数据:行驶方向请求、转向柱控制请求、角度设定值、功能请求和放松请求。'
+  hu: 'Automatizált parkolási kormányzási adatok: menetirány kérés, kormányoszlop-vezérlési kérés, szögalapjel, funkciókérés és kioldási kérés.'
+  pt: 'Dados de direção do estacionamento automático: pedido de sentido de marcha, pedido de comando da coluna de direção, ponto de ajuste de ângulo, pedido de função e pedido de relaxamento.'
+periodicity: ['40ms']
+senders: ['AAS']
+receivers: ['ABS']
+
+signals:
+  AAS_FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'AAS ECU frame checksum'
+      fr: 'Somme de contrôle de la trame du calculateur AAS'
+      es: 'Suma de comprobación de la trama de la ECU AAS'
+      de: 'Prüfsumme des AAS-Steuergeräte-Frames'
+      it: 'Checksum del frame della centralina AAS'
+      pl: 'Suma kontrolna ramki sterownika AAS'
+      ru: 'Контрольная сумма кадра блока управления AAS'
+      zh: 'AAS 控制单元帧校验和'
+      hu: 'Az AAS vezérlő keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama da unidade de controlo AAS'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ACPK_LONGITUDINAL_CONTROL_REQUEST:
+    bits: '2.7'
+    comment:
+      en: 'Request for longitudinal control during an ACPK automated parking manoeuvre'
+      fr: 'Demande de contrôle longitudinal pour une manœuvre de stationnement automatisé ACPK'
+      es: 'Solicitud de control longitudinal durante una maniobra de aparcamiento automatizado ACPK'
+      de: 'Anforderung der Längsregelung während eines automatisierten ACPK-Einparkmanövers'
+      it: 'Richiesta di controllo longitudinale durante una manovra di parcheggio automatizzato ACPK'
+      pl: 'Żądanie sterowania wzdłużnego podczas zautomatyzowanego manewru parkowania ACPK'
+      ru: 'Запрос продольного управления при автоматизированном манёвре парковки ACPK'
+      zh: 'ACPK 自动泊车动作期间的纵向控制请求'
+      hu: 'Hosszirányú vezérlés kérése az ACPK automatizált parkolási manőver alatt'
+      pt: 'Pedido de controlo longitudinal para uma manobra de estacionamento automatizado ACPK'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  ACPK_REMAINING_DISTANCE_TO_STOP:
+    bits: '2.6-3.5'
+    comment:
+      en: 'Remaining distance before the vehicle stops, during longitudinal control'
+      fr: 'Distance restante avant l''arrêt du véhicule, en contrôle longitudinal'
+      es: 'Distancia restante antes de detener el vehículo, en control longitudinal'
+      de: 'Verbleibende Strecke bis zum Fahrzeugstillstand während der Längsregelung'
+      it: 'Distanza residua prima dell''arresto del veicolo, durante il controllo longitudinale'
+      pl: 'Pozostały dystans do zatrzymania pojazdu podczas sterowania wzdłużnego'
+      ru: 'Оставшееся расстояние до остановки автомобиля при продольном управлении'
+      zh: '纵向控制期间车辆停止前的剩余距离'
+      hu: 'A jármű megállásáig hátralévő távolság a hosszirányú vezérlés alatt'
+      pt: 'Distância restante antes de o veículo parar, em controlo longitudinal'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 1023
+    units: 'cm'
+    default: 0x00
+
+  ACPK_EPB_APPLY_REQUEST:
+    bits: '3.4'
+    comment:
+      en: 'Request to apply the electric parking brake (EPB)'
+      fr: 'Demande de serrage du frein de stationnement électrique (FSE)'
+      es: 'Solicitud de aplicación del freno de estacionamiento eléctrico (EPB)'
+      de: 'Anforderung zum Anziehen der elektrischen Feststellbremse (EPB)'
+      it: 'Richiesta di azionamento del freno di stazionamento elettrico (EPB)'
+      pl: 'Żądanie zaciągnięcia elektrycznego hamulca postojowego (EPB)'
+      ru: 'Запрос включения электрического стояночного тормоза (EPB)'
+      zh: '电子驻车制动器(EPB)拉紧请求'
+      hu: 'Az elektromos rögzítőfék (EPB) behúzási kérése'
+      pt: 'Pedido de aplicação do travão de estacionamento elétrico (EPB)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No tightening request'
+        fr: 'Pas de demande de serrage'
+        es: 'Sin solicitud de apriete'
+        de: 'Keine Anforderung zum Straffen'
+        it: 'Nessuna richiesta di serraggio'
+        pl: 'Brak żądania dokręcenia'
+        ru: 'Нет запроса на затягивание'
+        zh: '无收紧请求'
+        hu: 'Nincs meghúzási kérés'
+        pt: 'Sem pedido de aperto'
+      0x01:
+        en: 'Locking request'
+        fr: 'Demande de verrouillage'
+        es: 'Solicitud de bloqueo'
+        de: 'Verriegelungsanforderung'
+        it: 'Richiesta di blocco'
+        pl: 'Żądanie zablokowania'
+        ru: 'Запрос блокировки'
+        zh: '锁止请求'
+        hu: 'Zárási kérés'
+        pt: 'Pedido de trancagem'
+
+  ACPK_VELOCITY_LIMIT:
+    bits: '3.3-4.4'
+    comment:
+      en: 'Maximum vehicle speed for braking control during longitudinal control'
+      fr: 'Vitesse maximale du véhicule pour le contrôle du freinage en contrôle longitudinal'
+      es: 'Velocidad máxima del vehículo para el control de frenado en control longitudinal'
+      de: 'Maximale Fahrzeuggeschwindigkeit für die Bremsregelung während der Längsregelung'
+      it: 'Velocità massima del veicolo per il controllo della frenata durante il controllo longitudinale'
+      pl: 'Maksymalna prędkość pojazdu dla sterowania hamowaniem podczas sterowania wzdłużnego'
+      ru: 'Максимальная скорость автомобиля для управления торможением при продольном управлении'
+      zh: '纵向控制期间制动控制的最大车速'
+      hu: 'A fékvezérléshez tartozó maximális járműsebesség a hosszirányú vezérlés alatt'
+      pt: 'Velocidade máxima do veículo para o controlo de travagem em controlo longitudinal'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.5
+    units: 'km/h'
+    default: 0x00
+
+  ACPK_MANOEUVRE_IMMINENT:
+    bits: '4.3'
+    comment:
+      en: 'ACPK parking manoeuvre imminent'
+      fr: 'Manœuvre de stationnement ACPK imminente'
+      es: 'Maniobra de aparcamiento ACPK inminente'
+      de: 'Bevorstehendes ACPK-Einparkmanöver'
+      it: 'Manovra di parcheggio ACPK imminente'
+      pl: 'Zbliżający się manewr parkowania ACPK'
+      ru: 'Скорый манёвр парковки ACPK'
+      zh: 'ACPK 泊车动作即将开始'
+      hu: 'Küszöbön álló ACPK parkolási manőver'
+      pt: 'Manobra de estacionamento ACPK iminente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No ACPK operation incoming'
+        fr: 'Aucune opération ACPK à venir'
+        es: 'No hay operación ACPK entrante'
+        de: 'Keine ACPK-Operation ausstehend'
+        it: 'Nessuna operazione ACPK in arrivo'
+        pl: 'Brak nadchodzącej operacji ACPK'
+        ru: 'Нет предстоящей операции ACPK'
+        zh: '无即将到来的ACPK操作'
+        hu: 'Nincs bejövő ACPK művelet'
+        pt: 'Sem operação ACPK a chegar'
+      0x01:
+        en: 'ACPK operation incoming'
+        fr: 'Opération ACPK à venir'
+        es: 'Operación ACPK próxima'
+        de: 'ACPK-Vorgang steht bevor'
+        it: 'Operazione ACPK in arrivo'
+        pl: 'Nadchodząca operacja ACPK'
+        ru: 'Предстоящая операция ACPK'
+        zh: '即将进行ACPK操作'
+        hu: 'Küszöbön álló ACPK művelet'
+        pt: 'Operação ACPK a chegar'
+
+  UNUSED_1:
+    bits: '4.2-4.0'
+    unused: true

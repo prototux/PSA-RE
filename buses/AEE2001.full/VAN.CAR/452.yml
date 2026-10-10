@@ -1,0 +1,586 @@
+id: 0x452
+name: 'DRIVING_SCHOOL_MODULE_STATUS'
+type: 'van'
+length: 8
+comment:
+  en: 'Driving-school module push-button states (instructor lighting, indicator, fog, horn controls and dual-pedal activation), debounced.'
+  fr: 'États débruités des boutons poussoirs du module auto-école (commandes éclairage, clignotant, antibrouillard, avertisseur moniteur et activation double pédale).'
+  es: 'Estados filtrados de los pulsadores del módulo de autoescuela (mandos de iluminación, intermitente, antiniebla, claxon del instructor y activación de doble pedal).'
+  de: 'Entprellte Tasterzustände des Fahrschulmoduls (Licht-, Blinker-, Nebelschlussleuchten- und Hupensteuerung des Fahrlehrers sowie Doppelpedalaktivierung).'
+  it: 'Stati filtrati dei pulsanti del modulo autoscuola (comandi luci, indicatori, fendinebbia, clacson istruttore e attivazione doppio pedale).'
+  pl: 'Odfiltrowane stany przycisków modułu nauki jazdy (sterowanie światłami, kierunkowskazem, światłami przeciwmgielnymi, klaksonem instruktora i aktywacją podwójnego pedału).'
+  ru: 'Отфильтрованные состояния кнопок модуля автошколы (управление светом, указателями поворота, противотуманными фарами, звуковым сигналом инструктора и активацией сдвоенной педали).'
+  zh: '驾校模块按钮状态(经消抖处理):教练灯光、转向灯、雾灯、喇叭控制及双踏板激活。'
+  hu: 'Az autósiskola-modul nyomógombjainak (zajszűrt) állapotai: oktatói világítás-, index-, ködlámpa- és kürtvezérlés, valamint duplapedál-aktiválás.'
+  pt: 'Estados dos botões do módulo de duplo comando (auto-escola) (iluminação do instrutor, comandos de pisca, nevoeiro, buzina e ativação do pedal duplo), com filtragem antirrebentos.'
+periodicity: ['50ms']
+senders: ['MAE']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  SIDE_LAMPS_BUTTON:
+    bits: '2.7'
+    comment:
+      en: 'Side lamps button'
+      fr: 'Commande de lanternes activée'
+      es: 'Botón de luces de posición'
+      de: 'Standlichttaste'
+      it: 'Pulsante luci di posizione'
+      pl: 'Przycisk świateł postojowych'
+      ru: 'Кнопка габаритных огней'
+      zh: '示宽灯按钮'
+      hu: 'Parkolólámpa gomb'
+      pt: 'Botão de luzes de presença'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  LOW_BEAM_BUTTON:
+    bits: '2.6'
+    comment:
+      en: 'Low beam button'
+      fr: 'Commande de codes activée'
+      es: 'Botón de luces de cruce'
+      de: 'Abblendlichttaste'
+      it: 'Pulsante anabbaglianti'
+      pl: 'Przycisk świateł mijania'
+      ru: 'Кнопка ближнего света'
+      zh: '近光灯按钮'
+      hu: 'Tompított fény gomb'
+      pt: 'Botão de luzes de cruzamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  HIGH_BEAM_BUTTON:
+    bits: '2.5'
+    comment:
+      en: 'High beam button'
+      fr: 'Commande de phares activée'
+      es: 'Botón de luces de carretera'
+      de: 'Fernlichttaste'
+      it: 'Pulsante abbaglianti'
+      pl: 'Przycisk świateł drogowych'
+      ru: 'Кнопка дальнего света'
+      zh: '远光灯按钮'
+      hu: 'Távolsági fény gomb'
+      pt: 'Botão de luzes de máximos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  LIGHTS_OFF_BUTTON:
+    bits: '2.4'
+    comment:
+      en: 'Lights-off button'
+      fr: 'Commande extinction feux activée'
+      es: 'Botón de apagado de luces'
+      de: 'Taste Licht aus'
+      it: 'Pulsante spegnimento luci'
+      pl: 'Przycisk wyłączenia świateł'
+      ru: 'Кнопка выключения света'
+      zh: '灯光关闭按钮'
+      hu: 'Fényszóró kikapcsoló gomb'
+      pt: 'Botão de desligar luzes'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  RIGHT_INDICATOR_BUTTON:
+    bits: '2.3'
+    comment:
+      en: 'Right indicator button'
+      fr: 'Commande clignotant droit activée'
+      es: 'Botón de intermitente derecho'
+      de: 'Taste rechter Blinker'
+      it: 'Pulsante indicatore destro'
+      pl: 'Przycisk prawego kierunkowskazu'
+      ru: 'Кнопка правого указателя поворота'
+      zh: '右转向灯按钮'
+      hu: 'Jobb index gomb'
+      pt: 'Botão de pisca direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  LEFT_INDICATOR_BUTTON:
+    bits: '2.2'
+    comment:
+      en: 'Left indicator button'
+      fr: 'Commande clignotant gauche activée'
+      es: 'Botón de intermitente izquierdo'
+      de: 'Taste linker Blinker'
+      it: 'Pulsante indicatore sinistro'
+      pl: 'Przycisk lewego kierunkowskazu'
+      ru: 'Кнопка левого указателя поворота'
+      zh: '左转向灯按钮'
+      hu: 'Bal index gomb'
+      pt: 'Botão de pisca esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  INDICATORS_OFF_BUTTON:
+    bits: '2.1'
+    comment:
+      en: 'Indicators-off button'
+      fr: 'Commande extinction clignotants activée'
+      es: 'Botón de apagado de intermitentes'
+      de: 'Taste Blinker aus'
+      it: 'Pulsante spegnimento indicatori'
+      pl: 'Przycisk wyłączenia kierunkowskazów'
+      ru: 'Кнопка выключения указателей поворота'
+      zh: '转向灯关闭按钮'
+      hu: 'Index kikapcsoló gomb'
+      pt: 'Botão de desligar piscas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  UNUSED_1:
+    bits: '2.0'
+    unused: true
+
+  FOG_LAMPS_BUTTON:
+    bits: '3.7'
+    comment:
+      en: 'Fog lamps button'
+      fr: 'Commande d''antibrouillards activée'
+      es: 'Botón de luces antiniebla'
+      de: 'Nebelscheinwerfertaste'
+      it: 'Pulsante fendinebbia'
+      pl: 'Przycisk świateł przeciwmgielnych'
+      ru: 'Кнопка противотуманных фар'
+      zh: '雾灯按钮'
+      hu: 'Ködlámpa gomb'
+      pt: 'Botão de luzes antinevoeiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  FOG_OFF_BUTTON:
+    bits: '3.6'
+    comment:
+      en: 'Fog-lamps-off button'
+      fr: 'Commande d''extinction antibrouillards activée'
+      es: 'Botón de apagado de antiniebla'
+      de: 'Taste Nebelscheinwerfer aus'
+      it: 'Pulsante spegnimento fendinebbia'
+      pl: 'Przycisk wyłączenia świateł przeciwmgielnych'
+      ru: 'Кнопка выключения противотуманных фар'
+      zh: '雾灯关闭按钮'
+      hu: 'Ködlámpa kikapcsoló gomb'
+      pt: 'Botão de desligar antinevoeiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  HEADLAMP_FLASH_BUTTON:
+    bits: '3.5'
+    comment:
+      en: 'Headlamp flash button'
+      fr: 'Commande appel de phares activée'
+      es: 'Botón de ráfagas de luces'
+      de: 'Lichthupentaste'
+      it: 'Pulsante lampeggio abbaglianti'
+      pl: 'Przycisk błysku świateł drogowych'
+      ru: 'Кнопка светового сигнала'
+      zh: '灯光闪烁按钮'
+      hu: 'Fényvillogtató gomb'
+      pt: 'Botão de chamada de luzes'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  HORN_BUTTON:
+    bits: '3.4'
+    comment:
+      en: 'Horn button'
+      fr: 'Commande avertisseur sonore activée'
+      es: 'Botón de claxon'
+      de: 'Hupentaste'
+      it: 'Pulsante avvisatore acustico'
+      pl: 'Przycisk klaksonu'
+      ru: 'Кнопка звукового сигнала'
+      zh: '喇叭按钮'
+      hu: 'Dudagomb'
+      pt: 'Botão de buzina'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  PEDALS_ACTIVATION:
+    bits: '3.3'
+    comment:
+      en: 'Instructor pedals activation'
+      fr: 'Commande d''activation des pédales instructeur'
+      es: 'Activación de los pedales del instructor'
+      de: 'Aktivierung der Fahrlehrerpedale'
+      it: 'Attivazione dei pedali istruttore'
+      pl: 'Aktywacja pedałów instruktora'
+      ru: 'Активация педалей инструктора'
+      zh: '教练踏板激活'
+      hu: 'Az oktatói pedálok aktiválása'
+      pt: 'Ativação dos pedais do instrutor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  PEDALS_DETECTION_ON:
+    bits: '3.2'
+    comment:
+      en: 'Pedal activation detection switched on'
+      fr: 'Détection d''activation pédales activée'
+      es: 'Detección de activación de pedales activada'
+      de: 'Erkennung der Pedalaktivierung eingeschaltet'
+      it: 'Rilevamento attivazione pedali attivato'
+      pl: 'Wykrywanie aktywacji pedałów włączone'
+      ru: 'Обнаружение активации педалей включено'
+      zh: '踏板激活检测已开启'
+      hu: 'A pedálaktiválás-érzékelés bekapcsolva'
+      pt: 'Deteção de ativação dos pedais ativada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Non activée'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Actionnée'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Acionado'
+
+  UNUSED_2:
+    bits: '3.1-3.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '4.7-4.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '5.7-5.0'
+    unused: true
+
+  UNUSED_5:
+    bits: '6.7-6.0'
+    unused: true
+
+  UNUSED_6:
+    bits: '7.7-7.0'
+    unused: true
+
+  FOOTER:
+    bits: '8.7-8.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

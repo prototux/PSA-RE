@@ -1,0 +1,116 @@
+id: 0x1CD
+name: 'ESC_SPEED_REGULATION_DATA'
+type: 'can'
+length: 3
+comment:
+  en: 'Traction-control speed regulation requests from the ESC/ABS control unit.'
+  fr: 'Demandes de régulation de vitesse pour l''antipatinage, issues du calculateur ESC/ABS.'
+  es: 'Solicitudes de regulación de velocidad para el control de tracción, procedentes de la centralita ESC/ABS.'
+  de: 'Anforderungen zur Geschwindigkeitsregelung der Antriebsschlupfregelung vom ESC/ABS-Steuergerät.'
+  it: 'Richieste di regolazione della velocità per il controllo di trazione, provenienti dalla centralina ESC/ABS.'
+  pl: 'Żądania regulacji prędkości układu kontroli trakcji ze sterownika ESC/ABS.'
+  ru: 'Запросы регулирования скорости противобуксовочной системы от блока управления ESC/ABS.'
+  zh: '来自ESC/ABS控制单元的牵引力控制车速调节请求。'
+  hu: 'A kipörgésgátló sebességszabályozási kérései az ESC/ABS vezérlőegységtől.'
+  pt: 'Pedidos de regulação de velocidade do controlo de tração da unidade de controlo ESC/ABS.'
+periodicity: ['10ms']
+senders: ['ABS']
+receivers: ['E_VCU']
+
+signals:
+  CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process sur 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRONT_EMACHINE_SPEED_REQUEST_ASR:
+    bits: '2.7-3.5'
+    comment:
+      en: 'Front electric machine speed requested by the ESC (traction control)'
+      fr: 'Régime de la machine électrique avant demandé par l''ESC (antipatinage)'
+      es: 'Régimen de la máquina eléctrica delantera solicitado por el ESC (control de tracción)'
+      de: 'Von der ESC (Antriebsschlupfregelung) angeforderte Drehzahl der vorderen E-Maschine'
+      it: 'Regime della macchina elettrica anteriore richiesto dall''ESC (controllo di trazione)'
+      pl: 'Obroty przedniej maszyny elektrycznej żądane przez ESC (kontrolę trakcji)'
+      ru: 'Частота вращения передней электромашины, запрошенная ESC (антипробуксовочной системой)'
+      zh: 'ESC(牵引力控制)请求的前电机转速'
+      hu: 'Az ESC (kipörgésgátló) által kért első elektromos gép fordulatszáma'
+      pt: 'Regime da máquina elétrica dianteira solicitado pelo ESC (controlo de tração)'
+    type: 'uint'
+    factor: 10
+    min: 0
+    max: 16000
+    units: 'rpm'
+    invalid: 0x7FF
+    default: 0x00
+
+  FRONT_EMACHINE_PRECONTROL_DEACTIVATE_REQUEST:
+    bits: '3.4'
+    comment:
+      en: 'Deactivation flag of the front electric machine speed precontrol'
+      fr: 'Drapeau de désactivation du précontrôle en régime de la machine électrique avant'
+      es: 'Indicador de desactivación del precontrol de régimen de la máquina eléctrica delantera'
+      de: 'Deaktivierungsflag der Drehzahl-Vorsteuerung der vorderen E-Maschine'
+      it: 'Flag di disattivazione del precontrollo di regime della macchina elettrica anteriore'
+      pl: 'Flaga dezaktywacji wstępnej kontroli obrotów przedniej maszyny elektrycznej'
+      ru: 'Флаг деактивации предварительного контроля частоты вращения передней электромашины'
+      zh: '前电机转速预控制停用标志'
+      hu: 'Az első elektromos gép fordulatszám-előszabályozásának kikapcsolási jelzője'
+      pt: 'Indicador de desativação do pré-controlo de regime da máquina elétrica dianteira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No deactivation request'
+        fr: 'Pas de demande de désactivation'
+        es: 'Sin solicitud de desactivación'
+        de: 'Keine Deaktivierungsanforderung'
+        it: 'Nessuna richiesta di disattivazione'
+        pl: 'Brak żądania dezaktywacji'
+        ru: 'Нет запроса деактивации'
+        zh: '无停用请求'
+        hu: 'Nincs kikapcsolási kérés'
+        pt: 'Sem pedido de desativação'
+      0x01:
+        en: 'Deactivation request'
+        fr: 'Demande de désactivation'
+        es: 'Solicitud de desactivación'
+        de: 'Deaktivierungsanforderung'
+        it: 'Richiesta di disattivazione'
+        pl: 'Żądanie dezaktywacji'
+        ru: 'Запрос деактивации'
+        zh: '停用请求'
+        hu: 'Kikapcsolási kérés'
+        pt: 'Pedido de desativação'
+
+  UNUSED_1:
+    bits: '3.3-3.0'
+    unused: true

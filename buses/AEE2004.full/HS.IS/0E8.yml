@@ -1,0 +1,180 @@
+id: 0x0E8
+name: 'RAPID_ALERTS'
+type: 'can'
+length: 5
+comment:
+  en: 'Engine ECU status sent to a client control unit, for the engine-immobiliser unlocking function.'
+  fr: 'État du calculateur moteur envoyé à un calculateur client, pour la fonction de déverrouillage antidémarrage.'
+  es: 'Estado de la centralita del motor enviado a una centralita cliente, para la función de desbloqueo del inmovilizador.'
+  de: 'An ein Client-Steuergerät gesendeter Motorsteuergerätestatus für die Wegfahrsperren-Entriegelungsfunktion.'
+  it: 'Stato della centralina motore inviato a una centralina client, per la funzione di sblocco dell''immobilizzatore.'
+  pl: 'Stan sterownika silnika wysyłany do sterownika klienckiego, dla funkcji odblokowania immobilizera.'
+  ru: 'Статус блока управления двигателем, отправляемый в клиентский блок управления, для функции разблокировки иммобилайзера.'
+  zh: '发送给客户端控制单元的发动机控制单元状态,用于发动机防盗锁止解锁功能。'
+  hu: 'A motorvezérlő állapota, amelyet egy kliens vezérlőegységnek küld az indításgátló feloldási funkcióhoz.'
+  pt: 'Estado da unidade de controlo do motor enviado a uma unidade de controlo cliente, para a função de destrancagem do imobilizador do motor.'
+observations:
+  en: 'Event defined by the ADC MUX protocol, sent by the CMM, then periodically every 100 ms except while identical RQD frames are being sent'
+  fr: 'Événement défini par le protocole ADC MUX, émis par the CMM, puis périodiquement toutes les 100 ms sauf pendant l''émission des trames RQD de même identifiant'
+  es: 'Evento definido por el protocolo ADC MUX, enviado por the CMM, luego periódicamente cada 100 ms salvo durante el envío de tramas RQD del mismo identificador'
+  de: 'Durch das ADC-MUX-Protokoll definiertes Ereignis, gesendet von the CMM, danach periodisch alle 100 ms außer während der Übertragung identischer RQD-Frames'
+  it: 'Evento definito dal protocollo ADC MUX, inviato da the CMM, poi periodicamente ogni 100 ms tranne durante l''invio di frame RQD con lo stesso identificatore'
+  pl: 'Zdarzenie zdefiniowane przez protokół ADC MUX, wysyłane przez the CMM, następnie okresowo co 100 ms z wyjątkiem czasu wysyłania ramek RQD o tym samym identyfikatorze'
+  ru: 'Событие определяется протоколом ADC MUX, отправляется the CMM, затем периодически каждые 100 мс, кроме времени передачи кадров RQD с тем же идентификатором'
+  zh: '由ADC MUX协议定义的事件,由the CMM发送,此后每100毫秒周期发送,发送相同标识符的RQD帧期间除外'
+  hu: 'Az ADC MUX protokoll által meghatározott esemény, a the CMM küldi, majd 100 ms-onként periodikusan, kivéve az azonos azonosítójú RQD keretek küldése közben'
+  pt: 'Evento definido pelo protocolo ADC MUX, enviado pela CMM, depois periodicamente a cada 100 ms, exceto enquanto são enviadas tramas RQD idênticas'
+periodicity: ['trigger']
+senders: ['CMM']
+
+signals:
+  ECU_STATE_SEND_COMMAND:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Command to inform the BSI that the ECU state is being sent'
+      fr: 'Commande pour informer le BSI de l''envoi de l''état du calculateur'
+      es: 'Comando para informar al BSI del envío del estado de la centralita'
+      de: 'Befehl zur Information des BSI über die Übertragung des Steuergerätestatus'
+      it: 'Comando per informare il BSI dell''invio dello stato della centralina'
+      pl: 'Polecenie informujące BSI o wysłaniu stanu sterownika'
+      ru: 'Команда для информирования BSI об отправке состояния блока управления'
+      zh: '通知BSI正在发送ECU状态的命令'
+      hu: 'Parancs a BSI tájékoztatására a vezérlőegység állapotának elküldéséről'
+      pt: 'Comando para informar a BSI do envio do estado da unidade de controlo'
+    type: 'uint'
+
+  ECU_LOCK_STATUS:
+    bits: '2.7-2.0'
+    comment:
+      en: 'ECU lock status for the immobilizer function'
+      fr: 'Etat de verrouillage du calculateur pour la fonction antidémarrage'
+      es: 'Estado de bloqueo de la centralita para la función antiarranque'
+      de: 'Sperrstatus des Steuergeräts für die Wegfahrsperrenfunktion'
+      it: 'Stato di blocco della centralina per la funzione immobilizzatore'
+      pl: 'Stan blokady sterownika dla funkcji immobilizera'
+      ru: 'Состояние блокировки блока управления для функции иммобилайзера'
+      zh: '防盗锁止功能的ECU锁定状态'
+      hu: 'A vezérlőegység zárolási állapota az indításgátló funkcióhoz'
+      pt: 'Estado de bloqueio da unidade de controlo para a função imobilizador'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Unlocked'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
+        de: 'Entriegelt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueado'
+      0x01:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+
+  UNUSED_1:
+    bits: '3.7-3.0'
+    unused: true
+
+  UNUSED_2:
+    bits: '4.7-4.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '5.7-5.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['trigger']
+    senders: ['CMM']
+    signals:
+      HCU_UNLOCK_REQUEST:
+        bits: '1.7-1.0'
+        comment:
+          en: 'Unlocking request sent from the hybrid control unit (HCU) to the BSI'
+          fr: 'Demande de déverrouillage envoyée du calculateur hybride (HCU) vers la BSI'
+          es: 'Solicitud de desbloqueo enviada del calculador híbrido (HCU) a la BSI'
+          de: 'Entriegelungsanforderung vom Hybridsteuergerät (HCU) an die BSI'
+          it: 'Richiesta di sblocco inviata dalla centralina ibrida (HCU) alla BSI'
+          pl: 'Żądanie odblokowania wysyłane ze sterownika hybrydowego (HCU) do BSI'
+          ru: 'Запрос разблокировки, отправляемый от гибридного блока управления (HCU) к BSI'
+          zh: '从混合动力控制单元(HCU)发送到BSI的解锁请求'
+          hu: 'A hibrid vezérlőegység (HCU) által a BSI-nek küldött nyitási kérés'
+          pt: 'Pedido de desbloqueio enviado da unidade de controlo híbrida (HCU) ao BSI'
+        type: 'uint'
+      SECURITY_SEED_HIGHEST_BYTE:
+        bits: '2.7-2.0'
+        comment:
+          en: 'Security access seed value, highest byte'
+          fr: 'Valeur de graine (seed) d''accès sécurisé, octet de poids le plus fort'
+          es: 'Valor de semilla (seed) de acceso seguro, byte de mayor peso absoluto'
+          de: 'Seed-Wert des Sicherheitszugriffs, höchstwertiges Byte'
+          it: 'Valore seed di accesso sicuro, byte più significativo in assoluto'
+          pl: 'Wartość ziarna (seed) dostępu zabezpieczonego, bajt najstarszy'
+          ru: 'Значение seed безопасного доступа, самый старший байт'
+          zh: '安全访问种子值,最高字节'
+          hu: 'A biztonsági hozzáférés seed-értéke, legmagasabb bájt'
+          pt: 'Valor da semente (seed) de acesso seguro, byte de maior peso absoluto'
+        type: 'uint'
+      SECURITY_SEED_HIGH_BYTE:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Security access seed value, high byte'
+          fr: 'Valeur de graine (seed) d''accès sécurisé, octet de poids fort'
+          es: 'Valor de semilla (seed) de acceso seguro, byte de mayor peso'
+          de: 'Seed-Wert des Sicherheitszugriffs, höherwertiges Byte'
+          it: 'Valore seed di accesso sicuro, byte più significativo'
+          pl: 'Wartość ziarna (seed) dostępu zabezpieczonego, bajt starszy'
+          ru: 'Значение seed безопасного доступа, старший байт'
+          zh: '安全访问种子值,高字节'
+          hu: 'A biztonsági hozzáférés seed-értéke, magas bájt'
+          pt: 'Valor da semente (seed) de acesso seguro, byte de maior peso'
+        type: 'uint'
+      SECURITY_SEED_LOW_BYTE:
+        bits: '4.7-4.0'
+        comment:
+          en: 'Security access seed value, low byte'
+          fr: 'Valeur de graine (seed) d''accès sécurisé, octet de poids faible'
+          es: 'Valor de semilla (seed) de acceso seguro, byte de menor peso'
+          de: 'Seed-Wert des Sicherheitszugriffs, niederwertiges Byte'
+          it: 'Valore seed di accesso sicuro, byte meno significativo'
+          pl: 'Wartość ziarna (seed) dostępu zabezpieczonego, bajt młodszy'
+          ru: 'Значение seed безопасного доступа, младший байт'
+          zh: '安全访问种子值,低字节'
+          hu: 'A biztonsági hozzáférés seed-értéke, alacsony bájt'
+          pt: 'Valor da semente (seed) de acesso seguro, byte de menor peso'
+        type: 'uint'
+      SECURITY_SEED_LOWEST_BYTE:
+        bits: '5.7-5.0'
+        comment:
+          en: 'Security access seed value, lowest byte'
+          fr: 'Valeur de graine (seed) d''accès sécurisé, octet de poids le plus faible'
+          es: 'Valor de semilla (seed) de acceso seguro, byte de menor peso absoluto'
+          de: 'Seed-Wert des Sicherheitszugriffs, niedrigstwertiges Byte'
+          it: 'Valore seed di accesso sicuro, byte meno significativo in assoluto'
+          pl: 'Wartość ziarna (seed) dostępu zabezpieczonego, bajt najmłodszy'
+          ru: 'Значение seed безопасного доступа, самый младший байт'
+          zh: '安全访问种子值,最低字节'
+          hu: 'A biztonsági hozzáférés seed-értéke, legalacsonyabb bájt'
+          pt: 'Valor da semente (seed) de acesso seguro, byte de menor peso absoluto'
+        type: 'uint'

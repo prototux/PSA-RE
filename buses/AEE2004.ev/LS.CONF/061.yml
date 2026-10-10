@@ -1,0 +1,315 @@
+id: 0x061
+name: 'ELECTRIC_VEHICLE_INFO'
+type: 'can'
+length: 8
+comment:
+  en: 'Electric vehicle general information: auxiliary battery range, energy counter, turtle (limp-home) mode request and battery state of charge.'
+  fr: 'Informations générales véhicule électrique : autonomie batterie auxiliaire, compteur d''énergie, demande de mode tortue et état de charge de la batterie.'
+  es: 'Información general del vehículo eléctrico: autonomía de la batería auxiliar, contador de energía, solicitud de modo tortuga y estado de carga de la batería.'
+  de: 'Allgemeine Elektrofahrzeuginformationen: Reichweite der Hilfsbatterie, Energiezähler, Schildkrötenmodusanforderung und Batterieladezustand.'
+  it: 'Informazioni generali del veicolo elettrico: autonomia della batteria ausiliaria, contatore di energia, richiesta di modalità tartaruga e stato di carica della batteria.'
+  pl: 'Ogólne informacje o pojeździe elektrycznym: zasięg akumulatora pomocniczego, licznik energii, żądanie trybu żółwia i stan naładowania akumulatora.'
+  ru: 'Общая информация об электромобиле: запас хода вспомогательной батареи, счётчик энергии, запрос черепашьего режима и уровень заряда батареи.'
+  zh: '电动车通用信息:辅助电池续航、电能计数器、龟速(跛行)模式请求及电池荷电状态。'
+  hu: 'Az elektromos jármű általános információi: segédakkumulátor hatótávolsága, energiaszámláló, teknős (vészüzem) mód kérése és akkumulátor töltöttségi állapota.'
+  pt: 'Informação geral do veículo elétrico: autonomia da bateria auxiliar, contador de energia, pedido de modo tartaruga e estado de carga da bateria.'
+periodicity: ['200ms']
+senders: ['BSI']
+receivers: ['MDS', 'CMB', 'BTEL', 'EMF']
+
+signals:
+  BATTERY_STATUS:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Battery state of charge'
+      fr: 'État de charge de la batterie'
+      es: 'Estado de carga de la batería'
+      de: 'Batterieladezustand'
+      it: 'Stato di carica della batteria'
+      pl: 'Stan naładowania akumulatora'
+      ru: 'Уровень заряда батареи'
+      zh: '电池充电状态'
+      hu: 'Az akkumulátor töltöttségi állapota'
+      pt: 'Estado de carga da bateria'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  ZEV_RANGE_WITHOUT_AUX:
+    bits: '2.7-3.6'
+    comment:
+      en: 'ZEV range without auxiliary consumers'
+      fr: 'Autonomie en mode ZEV sans consommateurs auxiliaires'
+      es: 'Autonomía en modo ZEV sin consumidores auxiliares'
+      de: 'ZEV-Reichweite ohne Nebenverbraucher'
+      it: 'Autonomia in modalità ZEV senza utenze ausiliarie'
+      pl: 'Zasięg w trybie ZEV bez odbiorników pomocniczych'
+      ru: 'Запас хода в режиме ZEV без вспомогательных потребителей'
+      zh: '无辅助负载时的ZEV续航里程'
+      hu: 'ZEV hatótávolság a kiegészítő fogyasztók nélkül'
+      pt: 'Autonomia em modo ZEV sem consumidores auxiliares'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 1022
+    units: 'km'
+    invalid: 0x3FF
+    default: 0x00
+
+  PLUG_IN_STATE:
+    bits: '3.5-3.4'
+    comment:
+      en: 'Charging plug connected state'
+      fr: 'État de la prise branchée'
+      es: 'Estado del enchufe conectado'
+      de: 'Steckerzustand (eingesteckt)'
+      it: 'Stato della presa collegata'
+      pl: 'Stan podłączonej wtyczki'
+      ru: 'Состояние подключённой вилки зарядки'
+      zh: '充电插头连接状态'
+      hu: 'A töltőcsatlakozó bedugott állapota'
+      pt: 'Estado da tomada ligada'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Steady'
+        fr: 'Fixe'
+        es: 'Fijo'
+        de: 'Dauerlicht'
+        it: 'Fisso'
+        pl: 'Ciągłe'
+        ru: 'Постоянно'
+        zh: '常亮'
+        hu: 'Folyamatos'
+        pt: 'Fixo'
+      0x02:
+        en: 'Flashing'
+        fr: 'Clignotant'
+        es: 'Intermitente'
+        de: 'Blinkend'
+        it: 'Lampeggiante'
+        pl: 'Migający'
+        ru: 'Мигающий'
+        zh: '闪烁'
+        hu: 'Villogó'
+        pt: 'Intermitente'
+      0x03:
+        en: 'Value not used'
+        fr: 'Valeur non utilisée'
+        es: 'Valor no utilizado'
+        de: 'Nicht verwendeter Wert'
+        it: 'Valore non utilizzato'
+        pl: 'Nieużywana wartość'
+        ru: 'Неиспользуемое значение'
+        zh: '未使用的值'
+        hu: 'Nem használt érték'
+        pt: 'Valor não utilizado'
+
+  TURTLE_MODE_REQUEST:
+    bits: '3.3'
+    comment:
+      en: 'Request to light the ''turtle mode'' warning lamp'
+      fr: 'Demande d''allumage du témoin mode tortue'
+      es: 'Solicitud de encendido del testigo modo tortuga'
+      de: 'Anforderung zum Einschalten der „Schildkrötenmodus“-Kontrollleuchte'
+      it: 'Richiesta di accensione della spia modalità tartaruga'
+      pl: 'Żądanie zapalenia kontrolki trybu żółwia'
+      ru: 'Запрос включения индикатора «черепашьего режима»'
+      zh: '"龟速模式"指示灯点亮请求'
+      hu: 'A „teknős üzemmód” jelzőlámpa bekapcsolási kérése'
+      pt: 'Pedido de acendimento da luz avisadora do modo tartaruga'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  MAJOR_ELECTRIC_FAULT:
+    bits: '3.2'
+    comment:
+      en: 'Major electric fault'
+      fr: 'Défaut électrique majeur'
+      es: 'Fallo eléctrico grave'
+      de: 'Schwerer elektrischer Fehler'
+      it: 'Guasto elettrico grave'
+      pl: 'Poważna usterka elektryczna'
+      ru: 'Серьёзная электрическая неисправность'
+      zh: '严重电气故障'
+      hu: 'Súlyos elektromos hiba'
+      pt: 'Avaria elétrica major'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  MINOR_ELECTRIC_FAULT:
+    bits: '3.1'
+    comment:
+      en: 'Minor electric fault'
+      fr: 'Défaut électrique mineur'
+      es: 'Fallo eléctrico leve'
+      de: 'Geringfügiger elektrischer Fehler'
+      it: 'Guasto elettrico minore'
+      pl: 'Drobna usterka elektryczna'
+      ru: 'Незначительная электрическая неисправность'
+      zh: '轻微电气故障'
+      hu: 'Kisebb elektromos hiba'
+      pt: 'Avaria elétrica menor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  UNUSED_1:
+    bits: '3.0'
+    unused: true
+
+  RANGE_GAIN_WITHOUT_AUX:
+    bits: '4.7-5.6'
+    comment:
+      en: 'Range gain from not using the auxiliary consumers'
+      fr: 'Gain d''autonomie lié à la non-consommation des auxiliaires'
+      es: 'Ganancia de autonomía por no consumir los auxiliares'
+      de: 'Reichweitengewinn durch Nichtnutzung der Nebenverbraucher'
+      it: 'Guadagno di autonomia dovuto al mancato consumo delle utenze ausiliarie'
+      pl: 'Zysk zasięgu z tytułu braku zużycia odbiorników pomocniczych'
+      ru: 'Прирост запаса хода за счёт отключения вспомогательных потребителей'
+      zh: '不使用辅助负载所获得的续航增益'
+      hu: 'Hatótávolság-nyereség a kiegészítő fogyasztók kikapcsolásából'
+      pt: 'Ganho de autonomia por não utilização dos consumidores auxiliares'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 1022
+    units: 'km'
+    invalid: 0x3FF
+    default: 0x00
+
+  UNUSED_2:
+    bits: '5.5-5.0'
+    unused: true
+
+  KW_COUNTER:
+    bits: '6.7-7.7'
+    comment:
+      en: 'Kilowatt counter'
+      fr: 'Compteur en kW'
+      es: 'Contador en kW'
+      de: 'kW-Zähler'
+      it: 'Contatore in kW'
+      pl: 'Licznik kW'
+      ru: 'Счётчик кВт'
+      zh: '千瓦计数器'
+      hu: 'kW számláló'
+      pt: 'Contador em kW'
+    type: 'uint'
+    factor: 1
+    offset: -100
+    min: -100
+    max: 200
+    units: '%'
+    invalid: 0x1FF
+    default: 0x00
+
+  UNUSED_3:
+    bits: '7.6-7.0'
+    unused: true
+
+  AC_AUXILIARY_WATTAGE:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Air conditioning auxiliary power consumption'
+      fr: 'Consommation des auxiliaires de climatisation'
+      es: 'Consumo de los auxiliares del aire acondicionado'
+      de: 'Stromverbrauch der Klimaanlagen-Nebenverbraucher'
+      it: 'Consumo delle utenze ausiliarie del climatizzatore'
+      pl: 'Zużycie energii przez odbiorniki pomocnicze klimatyzacji'
+      ru: 'Потребление энергии вспомогательными устройствами кондиционера'
+      zh: '空调辅助设备耗电量'
+      hu: 'A klíma kiegészítő fogyasztóinak energiafogyasztása'
+      pt: 'Consumo dos auxiliares de climatização'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 10160
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00

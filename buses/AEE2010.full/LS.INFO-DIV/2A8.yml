@@ -1,0 +1,150 @@
+id: 0x2A8
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_9'
+type: 'can'
+length: 1
+comment:
+  en: 'Additional cruise control display status: automatic activation prompt, overspeed warning and toggle switch position.'
+  fr: 'État d''affichage complémentaire du régulateur de vitesse : incitation à l''activation automatique, alerte de dépassement de vitesse et position du basculeur.'
+  es: 'Estado de visualización adicional del regulador de velocidad: incitación a la activación automática, alerta de exceso de velocidad y posición del selector.'
+  de: 'Zusätzlicher Anzeigestatus des Tempomaten: Aufforderung zur automatischen Aktivierung, Geschwindigkeitsüberschreitungswarnung und Wippschalterstellung.'
+  it: 'Stato di visualizzazione aggiuntivo del regolatore di velocità: invito all''attivazione automatica, avviso di superamento velocità e posizione del bilanciere.'
+  pl: 'Dodatkowy stan wyświetlania tempomatu: zachęta do automatycznej aktywacji, ostrzeżenie o przekroczeniu prędkości i pozycja przełącznika.'
+  ru: 'Дополнительное состояние отображения круиз-контроля: предложение автоматической активации, предупреждение о превышении скорости и положение переключателя.'
+  zh: '巡航控制的附加显示状态：自动激活提示、超速警告和拨杆位置。'
+  hu: 'A sebességtartó kiegészítő kijelzési állapota: automatikus aktiválásra felszólítás, sebességtúllépés-figyelmeztetés és a billenőkapcsoló helyzete.'
+  pt: 'Estado adicional de visualização do regulador de velocidade: aviso de ativação automática, aviso de excesso de velocidade e posição do interruptor basculante.'
+observations:
+  en: 'On state change of: CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+  fr: 'Sur changement d''état de : CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+  es: 'Al cambiar el estado de: CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+  de: 'Bei Statusänderung von: CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+  it: 'Al cambiamento di stato di: CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+  pl: 'Wysyłane przy zmianie stanu: CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+  ru: 'При изменении состояния: CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+  zh: '当POSITION_BASCULE, ALERTE_DEP_VIT_ADVCNP状态变化时'
+  hu: 'A(z) CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT állapotváltozásakor'
+  pt: 'Na mudança de estado de: CRUISE_CONTROL_TYPE_SWITCH_POSITION, ADVCNP_OVERSPEED_ALERT'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['OVIP', 'BTEL', 'CMB', 'MATT', 'RAD']
+
+signals:
+  CRUISE_CONTROL_TYPE_SWITCH_POSITION:
+    bits: '1.7'
+    comment:
+      en: 'Position of the cruise control / adaptive cruise control selector switch'
+      fr: 'Position du sélecteur cruise control/adaptive cruise control'
+      es: 'Posición del selector cruise control/adaptive cruise control'
+      de: 'Stellung des cruise control/adaptive cruise control-Wahlschalters'
+      it: 'Posizione del selettore cruise control/adaptive cruise control'
+      pl: 'Pozycja przełącznika cruise control/adaptive cruise control'
+      ru: 'Положение переключателя cruise control/adaptive cruise control'
+      zh: 'cruise control/RVVi选择开关位置'
+      hu: 'Az cruise control/adaptive cruise control választókapcsoló állása'
+      pt: 'Posição do seletor cruise control/adaptive cruise control'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Cruise control selected'
+        fr: 'RVV_SELECTIONNE'
+        es: 'cruise control SELECCIONADO'
+        de: 'cruise control AUSGEWÄHLT'
+        it: 'cruise control SELEZIONATO'
+        pl: 'cruise control WYBRANY'
+        ru: 'cruise control ВЫБРАН'
+        zh: 'RVV已选择'
+        hu: 'cruise control KIVÁLASZTVA'
+        pt: 'cruise control SELECIONADO'
+      0x01:
+        en: 'Adaptive cruise control selected'
+        fr: 'adaptive cruise control sélectionné'
+        es: 'adaptive cruise control seleccionado'
+        de: 'adaptive cruise control ausgewählt'
+        it: 'adaptive cruise control selezionato'
+        pl: 'Wybrano adaptive cruise control'
+        ru: 'adaptive cruise control выбран'
+        zh: '已选择RVVi'
+        hu: 'adaptive cruise control kiválasztva'
+        pt: 'adaptive cruise control selecionado'
+
+  ADVCNP_OVERSPEED_ALERT:
+    bits: '1.6'
+    comment:
+      en: 'ADVCNP (speed-limit assist) overspeed alert'
+      fr: 'Alerte de dépassement de vitesse ADVCNP'
+      es: 'Alerta de exceso de velocidad ADVCNP'
+      de: 'ADVCNP-Geschwindigkeitsüberschreitungswarnung'
+      it: 'Allarme di superamento velocità ADVCNP'
+      pl: 'Alert przekroczenia prędkości ADVCNP'
+      ru: 'Предупреждение о превышении скорости ADVCNP'
+      zh: 'ADVCNP超速警报'
+      hu: 'ADVCNP sebességtúllépési riasztás'
+      pt: 'Alerta de excesso de velocidade ADVCNP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  ACC_RESUME_DRIVING_PROMPT:
+    bits: '1.5'
+    comment:
+      en: 'Pop-up prompting the driver to resume driving'
+      fr: 'Pop-up incitant le conducteur à redémarrer'
+      es: 'Ventana emergente que invita al conductor a reanudar la marcha'
+      de: 'Pop-up zur Aufforderung an den Fahrer, weiterzufahren'
+      it: 'Pop-up che invita il conducente a ripartire'
+      pl: 'Okno wyskakujące zachęcające kierowcę do ponownego ruszenia'
+      ru: 'Всплывающее сообщение с предложением водителю тронуться с места'
+      zh: '提示驾驶员重新起步的弹出提示'
+      hu: 'Felugró üzenet, amely a vezetőt továbbindulásra szólítja fel'
+      pt: 'Janela emergente a incentivar o condutor a retomar a marcha'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  UNUSED_1:
+    bits: '1.4-1.0'
+    unused: true

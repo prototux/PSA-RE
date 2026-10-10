@@ -1,0 +1,163 @@
+id: 0x394
+name: 'HV_BATTERY_POWER_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'HV battery power data: nominal and peak charge/discharge power, and real-time power.'
+  fr: 'Données de puissance batterie HT : puissance de charge/décharge nominale et crête, et puissance en temps réel.'
+  es: 'Datos de potencia de la batería de alta tensión: potencia nominal y máxima de carga/descarga, y potencia en tiempo real.'
+  de: 'Hochvoltbatterie-Leistungsdaten: nominale und Spitzenladeleistung/-entladeleistung sowie Echtzeitleistung.'
+  it: 'Dati di potenza batteria AT: potenza nominale e di picco di carica/scarica, e potenza in tempo reale.'
+  pl: 'Dane mocy akumulatora WN: nominalna i szczytowa moc ładowania/rozładowania oraz moc rzeczywista.'
+  ru: 'Данные мощности высоковольтной батареи: номинальная и пиковая мощность заряда/разряда, а также мощность в реальном времени.'
+  zh: '高压电池功率数据:标称和峰值充/放电功率,以及实时功率。'
+  hu: 'Nagyfeszültségű akkumulátor teljesítményadatok: névleges és csúcs töltési/kisütési teljesítmény, valamint valós idejű teljesítmény.'
+  pt: 'Dados de potência da bateria de alta tensão: potência nominal e de pico de carga/descarga, e potência em tempo real.'
+periodicity: ['40ms']
+senders: ['TBMU']
+receivers: ['OBC', 'CMM', 'VCU']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  HV_BATTERY_NOMINAL_CHARGE_POWER:
+    bits: '2.7-3.6'
+    comment:
+      en: 'Nominal charging power of the high-voltage battery'
+      fr: 'Puissance de charge nominale de la batterie haute tension'
+      es: 'Potencia de carga nominal de la batería de alta tensión'
+      de: 'Nennladeleistung der Hochvoltbatterie'
+      it: 'Potenza di carica nominale della batteria ad alta tensione'
+      pl: 'Znamionowa moc ładowania akumulatora wysokiego napięcia'
+      ru: 'Номинальная мощность зарядки высоковольтной батареи'
+      zh: '高压电池额定充电功率'
+      hu: 'A nagyfeszültségű akkumulátor névleges töltőteljesítménye'
+      pt: 'Potência nominal de carregamento da bateria de alta tensão'
+    type: 'uint'
+    factor: 250
+    offset: -150000
+    min: -150000
+    max: 0
+    units: 'W'
+    invalid: 0x3FF
+    default: 0x258
+
+  HV_BATTERY_PEAK_CHARGE_POWER:
+    bits: '3.5-4.3'
+    comment:
+      en: 'Peak charging power of the high-voltage battery'
+      fr: 'Puissance de charge maximale (crête) de la batterie haute tension'
+      es: 'Potencia de carga máxima (pico) de la batería de alta tensión'
+      de: 'Spitzenladeleistung der Hochvoltbatterie'
+      it: 'Potenza di carica di picco della batteria ad alta tensione'
+      pl: 'Szczytowa moc ładowania akumulatora wysokiego napięcia'
+      ru: 'Пиковая мощность зарядки высоковольтной батареи'
+      zh: '高压电池峰值充电功率'
+      hu: 'A nagyfeszültségű akkumulátor csúcs töltőteljesítménye'
+      pt: 'Potência de pico de carregamento da bateria de alta tensão'
+    type: 'uint'
+    factor: 100
+    offset: -150000
+    min: -150000
+    max: 0
+    units: 'W'
+    invalid: 0x7FF
+    default: 0x5DC
+
+  HV_BATTERY_PEAK_DISCHARGE_POWER:
+    bits: '4.2-5.0'
+    comment:
+      en: 'Peak discharge power of the high-voltage battery'
+      fr: 'Puissance de décharge maximale (crête) de la batterie haute tension'
+      es: 'Potencia de descarga máxima (pico) de la batería de alta tensión'
+      de: 'Spitzenentladeleistung der Hochvoltbatterie'
+      it: 'Potenza di scarica di picco della batteria ad alta tensione'
+      pl: 'Szczytowa moc rozładowania akumulatora wysokiego napięcia'
+      ru: 'Пиковая мощность разрядки высоковольтной батареи'
+      zh: '高压电池峰值放电功率'
+      hu: 'A nagyfeszültségű akkumulátor csúcs kisütési teljesítménye'
+      pt: 'Potência de pico de descarga da bateria de alta tensão'
+    type: 'uint'
+    factor: 100
+    min: 0
+    max: 150000
+    units: 'W'
+    invalid: 0x7FF
+    default: 0x00
+
+  HV_BATTERY_ACTUAL_POWER:
+    bits: '6.7-7.4'
+    comment:
+      en: 'Actual power of the high-voltage battery (charge and discharge)'
+      fr: 'Puissance réelle de la batterie haute tension (charge et décharge)'
+      es: 'Potencia real de la batería de alta tensión (carga y descarga)'
+      de: 'Tatsächliche Leistung der Hochvoltbatterie (Laden und Entladen)'
+      it: 'Potenza reale della batteria ad alta tensione (carica e scarica)'
+      pl: 'Rzeczywista moc akumulatora wysokiego napięcia (ładowanie i rozładowanie)'
+      ru: 'Фактическая мощность высоковольтной батареи (заряд и разряд)'
+      zh: '高压电池实际功率(充电和放电)'
+      hu: 'A nagyfeszültségű akkumulátor tényleges teljesítménye (töltés és kisütés)'
+      pt: 'Potência real da bateria de alta tensão (carga e descarga)'
+    type: 'sint'
+    factor: 100
+    min: -150000
+    max: 150000
+    units: 'W'
+    invalid: 0x7FF
+    default: 0x00
+
+  HV_BATTERY_NOMINAL_DISCHARGE_POWER:
+    bits: '7.3-8.2'
+    comment:
+      en: 'Maximum discharge power of the high-voltage battery'
+      fr: 'Puissance de décharge maximale de la batterie haute tension'
+      es: 'Potencia de descarga máxima de la batería de alta tensión'
+      de: 'Maximale Entladeleistung der Hochvoltbatterie'
+      it: 'Potenza di scarica massima della batteria ad alta tensione'
+      pl: 'Maksymalna moc rozładowania akumulatora wysokiego napięcia'
+      ru: 'Максимальная мощность разрядки высоковольтной батареи'
+      zh: '高压电池最大放电功率'
+      hu: 'A nagyfeszültségű akkumulátor maximális kisütési teljesítménye'
+      pt: 'Potência máxima de descarga da bateria de alta tensão'
+    type: 'uint'
+    factor: 200
+    min: 0
+    max: 150000
+    units: 'W'
+    invalid: 0x3FF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '8.1-8.0'
+    unused: true

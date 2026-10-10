@@ -1,0 +1,149 @@
+id: 0x3D8
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_17'
+type: 'can'
+length: 3
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+observations:
+  en: 'On state change of: AFTERSALES_COOLANT_FILL_MODE'
+  fr: 'Sur changement d''état de : AFTERSALES_COOLANT_FILL_MODE'
+  es: 'Al cambiar el estado de: AFTERSALES_COOLANT_FILL_MODE'
+  de: 'Bei Statusänderung von: AFTERSALES_COOLANT_FILL_MODE'
+  it: 'Al cambiamento di stato di: AFTERSALES_COOLANT_FILL_MODE'
+  pl: 'Wysyłane przy zmianie stanu: AFTERSALES_COOLANT_FILL_MODE'
+  ru: 'При изменении состояния: AFTERSALES_COOLANT_FILL_MODE'
+  zh: '当AFTERSALE_FILLIN_MODE状态变化时'
+  hu: 'A(z) AFTERSALES_COOLANT_FILL_MODE állapotváltozásakor'
+  pt: 'Na mudança de estado de: AFTERSALES_COOLANT_FILL_MODE'
+periodicity: ['40ms', 'trigger']
+senders: ['CMM']
+receivers: ['OBC']
+
+signals:
+  DCDC_VOLTAGE_SETPOINT:
+    bits: '1.7-1.2'
+    comment:
+      en: 'DC/DC converter supervisor voltage setpoint'
+      fr: 'Consigne de tension du superviseur du convertisseur DC/DC'
+      es: 'Consigna de tensión del supervisor del convertidor DC/DC'
+      de: 'Spannungssollwert des DC/DC-Wandler-Supervisors'
+      it: 'Consegna di tensione del supervisore del convertitore DC/DC'
+      pl: 'Zadana wartość napięcia nadzorcy przetwornicy DC/DC'
+      ru: 'Заданное значение напряжения супервизора преобразователя DC/DC'
+      zh: 'DC/DC 变换器监控器电压设定值'
+      hu: 'A DC/DC átalakító felügyeletének feszültség-alapjele'
+      pt: 'Consigna de tensão do supervisor do conversor DC/DC'
+    type: 'uint'
+    factor: 0.1
+    offset: 10.6
+    min: 10.6
+    max: 16
+    units: 'V'
+    invalid: 0x3F
+    default: 0x00
+
+  DCDC_CURRENT_SETPOINT:
+    bits: '1.1-2.3'
+    comment:
+      en: 'DC/DC converter supervisor current setpoint'
+      fr: 'Consigne de courant du superviseur du convertisseur DC/DC'
+      es: 'Consigna de corriente del supervisor del convertidor DC/DC'
+      de: 'Stromsollwert des DC/DC-Wandler-Supervisors'
+      it: 'Consegna di corrente del supervisore del convertitore DC/DC'
+      pl: 'Zadana wartość prądu nadzorcy przetwornicy DC/DC'
+      ru: 'Заданное значение тока супервизора преобразователя DC/DC'
+      zh: 'DC/DC 变换器监控器电流设定值'
+      hu: 'A DC/DC átalakító felügyeletének áram-alapjele'
+      pt: 'Consigna de corrente do supervisor do conversor DC/DC'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 180
+    units: 'A'
+    invalid: 0x7F
+    default: 0x00
+
+  AFTERSALES_COOLANT_FILL_MODE:
+    bits: '2.2'
+    comment:
+      en: 'After-sales mode for filling the cooling loops'
+      fr: 'Mode après-vente de remplissage des circuits de refroidissement'
+      es: 'Modo de posventa para el llenado de los circuitos de refrigeración'
+      de: 'Kundendienstmodus zum Befüllen der Kühlkreisläufe'
+      it: 'Modalità post-vendita per il riempimento dei circuiti di raffreddamento'
+      pl: 'Tryb serwisowy napełniania obiegów chłodzenia'
+      ru: 'Сервисный режим заполнения контуров охлаждения'
+      zh: '冷却回路加注的售后模式'
+      hu: 'Vevőszolgálati mód a hűtőkörök feltöltéséhez'
+      pt: 'Modo de pós-venda para enchimento dos circuitos de arrefecimento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  UNUSED_1:
+    bits: '2.1-2.0'
+    unused: true
+
+  FRAME_CHECKSUM:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '3.3-3.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00

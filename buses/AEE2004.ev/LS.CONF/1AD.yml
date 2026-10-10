@@ -1,0 +1,307 @@
+id: 0x1AD
+name: 'REAR_CLIMATE_MOTOR_COMMAND'
+type: 'can'
+length: 3
+comment:
+  en: 'Control of the rear climate-control module motors: blower and air-distribution flaps.'
+  fr: 'Commande des moteurs du module de climatisation arrière : pulseur et volets de distribution d''air.'
+  es: 'Control de los motores del módulo de climatización trasero: motor de ventilación y compuertas de distribución.'
+  de: 'Ansteuerung der Motoren des hinteren Klimamoduls: Gebläse und Luftverteilklappen.'
+  it: 'Controllo dei motori del modulo di climatizzazione posteriore: ventola e serrande di distribuzione aria.'
+  pl: 'Sterowanie silnikami tylnego modułu klimatyzacji: dmuchawa i klapy rozdziału powietrza.'
+  ru: 'Управление моторами заднего модуля климат-контроля: вентилятор и заслонки распределения воздуха.'
+  zh: '后排空调模块电机控制:鼓风机和风门分配挡板。'
+  hu: 'A hátsó klímamodul motorjainak vezérlése: fűtőventilátor és légelosztó terelőlapok.'
+  pt: 'Comando dos motores do módulo de climatização traseira: ventilador e comportas de distribuição de ar.'
+observations:
+  en: 'On state change of: REAR_AC_ENABLED'
+  fr: 'Sur changement d''état de : REAR_AC_ENABLED'
+  es: 'Al cambiar el estado de: REAR_AC_ENABLED'
+  de: 'Bei Statusänderung von: REAR_AC_ENABLED'
+  it: 'Al cambiamento di stato di: REAR_AC_ENABLED'
+  pl: 'Wysyłane przy zmianie stanu: REAR_AC_ENABLED'
+  ru: 'При изменении состояния: REAR_AC_ENABLED'
+  zh: '当AUTOR_CLIM_AR状态变化时'
+  hu: 'A(z) REAR_AC_ENABLED állapotváltozásakor'
+  pt: 'Na mudança de estado de: REAR_AC_ENABLED'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['CLIM_AR']
+
+signals:
+  REAR_BLOWER_MOTOR_SETPOINT:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Rear blower motor setpoint'
+      fr: 'Consigne du moteur de pulseur arrière'
+      es: 'Consigna del motor del ventilador trasero'
+      de: 'Sollwert des hinteren Gebläsemotors'
+      it: 'Setpoint del motore ventola posteriore'
+      pl: 'Wartość zadana silnika dmuchawy tylnej'
+      ru: 'Задание привода вентилятора отопителя сзади'
+      zh: '后排鼓风机电机设定值'
+      hu: 'Hátsó fűtőventilátor motor alapjele'
+      pt: 'Consigna do motor do ventilador traseiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  REAR_DISTRIBUTION_MOTOR_SETPOINT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Rear air distribution motor setpoint'
+      fr: 'Consigne du moteur de distribution d''air arrière'
+      es: 'Consigna del motor de distribución de aire trasero'
+      de: 'Sollwert des hinteren Luftverteilungsmotors'
+      it: 'Setpoint del motore di distribuzione aria posteriore'
+      pl: 'Wartość zadana silnika rozdziału powietrza tylnego'
+      ru: 'Задание привода заслонки распределения воздуха сзади'
+      zh: '后排空气分配电机设定值'
+      hu: 'Hátsó légelosztó motor alapjele'
+      pt: 'Consigna do motor de distribuição de ar traseiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  REAR_AC_ENABLED:
+    bits: '3.7'
+    comment:
+      en: 'Rear air conditioning enabled'
+      fr: 'Autorisation de fonctionnement de la climatisation arrière'
+      es: 'Aire acondicionado trasero habilitado'
+      de: 'Freigabe der Fondklimatisierung'
+      it: 'Climatizzatore posteriore abilitato'
+      pl: 'Zezwolenie na działanie klimatyzacji tylnej'
+      ru: 'Разрешение работы задней климатической установки'
+      zh: '后排空调启用'
+      hu: 'Hátsó klíma engedélyezve'
+      pt: 'Ar condicionado traseiro habilitado'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x01:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+
+  SOLENOID_VALVE_COMMAND:
+    bits: '3.6'
+    comment:
+      en: 'Solenoid valve control'
+      fr: 'Commande de l''électrovanne'
+      es: 'Control de electroválvula'
+      de: 'Magnetventilsteuerung'
+      it: 'Comando elettrovalvola'
+      pl: 'Sterowanie elektrozaworem'
+      ru: 'Управление электромагнитным клапаном'
+      zh: '电磁阀控制'
+      hu: 'Mágnesszelep vezérlése'
+      pt: 'Comando da eletroválvula'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  COLD_LOOP_SOLENOID_VALVE_COMMAND:
+    bits: '3.5'
+    comment:
+      en: 'Cold loop solenoid valve control'
+      fr: 'Commande de l''électrovanne de boucle froide'
+      es: 'Control de electroválvula del circuito frío'
+      de: 'Magnetventilsteuerung Kaltkreis'
+      it: 'Comando elettrovalvola circuito freddo'
+      pl: 'Sterowanie elektrozaworem obiegu zimnego'
+      ru: 'Управление электромагнитным клапаном холодного контура'
+      zh: '冷回路电磁阀控制'
+      hu: 'Hideg kör mágnesszelepének vezérlése'
+      pt: 'Comando da eletroválvula do circuito frio'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  HOT_LOOP_SOLENOID_VALVE_COMMAND:
+    bits: '3.4'
+    comment:
+      en: 'Hot loop solenoid valve control'
+      fr: 'Commande de l''électrovanne de boucle chaude'
+      es: 'Control de electroválvula del circuito caliente'
+      de: 'Magnetventilsteuerung Warmkreis'
+      it: 'Comando elettrovalvola circuito caldo'
+      pl: 'Sterowanie elektrozaworem obiegu ciepłego'
+      ru: 'Управление электромагнитным клапаном горячего контура'
+      zh: '热回路电磁阀控制'
+      hu: 'Meleg kör mágnesszelepének vezérlése'
+      pt: 'Comando da eletroválvula do circuito quente'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  HOT_LOOP_WATER_PUMP_VALVE_COMMAND:
+    bits: '3.3'
+    comment:
+      en: 'Hot loop water pump solenoid valve control'
+      fr: 'Commande de l''électrovanne de la pompe à eau de boucle chaude'
+      es: 'Control de electroválvula de la bomba de agua del circuito caliente'
+      de: 'Magnetventilsteuerung der Wasserpumpe im Warmkreis'
+      it: 'Comando elettrovalvola della pompa acqua del circuito caldo'
+      pl: 'Sterowanie elektrozaworem pompy wody obiegu ciepłego'
+      ru: 'Управление электромагнитным клапаном водяного насоса горячего контура'
+      zh: '热回路水泵电磁阀控制'
+      hu: 'Meleg kör vízszivattyú mágnesszelepének vezérlése'
+      pt: 'Comando da eletroválvula da bomba de água do circuito quente'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  REAR_GROUP_OFF_FORCE_REQUEST:
+    bits: '3.2'
+    comment:
+      en: 'Rear group forced-off request'
+      fr: 'Demande de forçage du groupe arrière en mode arrêt'
+      es: 'Solicitud de forzado a apagado del grupo trasero'
+      de: 'Anforderung Zwangsabschaltung der hinteren Gruppe'
+      it: 'Richiesta di spegnimento forzato del gruppo posteriore'
+      pl: 'Żądanie wymuszonego wyłączenia zespołu tylnego'
+      ru: 'Запрос принудительного отключения задней группы'
+      zh: '后排机组强制关闭请求'
+      hu: 'Hátsó egység kényszerített kikapcsolásának kérése'
+      pt: 'Pedido de desligamento forçado do grupo traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'OFF-mode forcing not requested'
+        fr: 'Forçage en mode OFF non demandé'
+        es: 'Forzado a modo OFF no solicitado'
+        de: 'Erzwingen des AUS-Modus nicht angefordert'
+        it: 'Forzatura in modalità OFF non richiesta'
+        pl: 'Nie zażądano wymuszenia trybu OFF'
+        ru: 'Принудительный режим OFF не запрошен'
+        zh: '未请求强制OFF模式'
+        hu: 'OFF mód kényszerítése nincs kérve'
+        pt: 'Forçagem para modo OFF não solicitada'
+      0x01:
+        en: 'OFF-mode forcing requested'
+        fr: 'Forçage en mode OFF demandé'
+        es: 'Forzado en modo OFF solicitado'
+        de: 'Erzwingen des OFF-Modus angefordert'
+        it: 'Forzatura in modalità OFF richiesta'
+        pl: 'Zażądano wymuszenia trybu OFF'
+        ru: 'Запрошено принудительное включение режима OFF'
+        zh: '请求强制OFF模式'
+        hu: 'OFF mód kényszerítése kérve'
+        pt: 'Forçagem do modo DESLIGADO pedida'
+
+  UNUSED_1:
+    bits: '3.1-3.0'
+    unused: true

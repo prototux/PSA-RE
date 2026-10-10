@@ -1,0 +1,403 @@
+id: 0x5C8
+name: 'ENGINE_ECU_DATA_17'
+type: 'can'
+length: 6
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['1000ms']
+senders: ['CMM']
+receivers: ['SCR']
+
+signals:
+  VEHICLE_SPEED:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Vehicle speed (km/h)'
+      fr: 'Vitesse du véhicule (km/h)'
+      es: 'Velocidad del vehículo (km/h)'
+      de: 'Fahrzeuggeschwindigkeit (km/h)'
+      it: 'Velocità del veicolo (km/h)'
+      pl: 'Prędkość pojazdu (km/h)'
+      ru: 'Скорость автомобиля (км/ч)'
+      zh: '车速(km/h)'
+      hu: 'Járműsebesség (km/h)'
+      pt: 'Velocidade do veículo (km/h)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0x00
+
+  OUTSIDE_AIR_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Outside air temperature (°C)'
+      fr: 'Température d''air extérieur (°C)'
+      es: 'Temperatura del aire exterior (°C)'
+      de: 'Außenlufttemperatur (°C)'
+      it: 'Temperatura dell''aria esterna (°C)'
+      pl: 'Temperatura powietrza zewnętrznego (°C)'
+      ru: 'Температура наружного воздуха (°C)'
+      zh: '车外空气温度(°C)'
+      hu: 'Külső levegő hőmérséklete (°C)'
+      pt: 'Temperatura do ar exterior (°C)'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFC
+
+  SCR_HEATING_AUTHORIZATION:
+    bits: '3.7'
+    comment:
+      en: 'Authorization to activate the SCR liquid heating system'
+      fr: 'Autorisation d''activation du système de réchauffage du liquide SCR'
+      es: 'Autorización para activar el sistema de calentamiento del líquido SCR'
+      de: 'Freigabe zur Aktivierung der SCR-Flüssigkeitsheizung'
+      it: 'Autorizzazione all''attivazione del riscaldamento del liquido SCR'
+      pl: 'Zezwolenie na aktywację ogrzewania płynu SCR'
+      ru: 'Разрешение на включение подогрева жидкости SCR'
+      zh: '允许激活SCR液体加热系统'
+      hu: 'Az SCR-folyadék fűtésének aktiválási engedélye'
+      pt: 'Autorização para ativar o sistema de aquecimento do líquido SCR'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reheating forbidden'
+        fr: 'Chauffage interdit'
+        es: 'Recalentamiento prohibido'
+        de: 'Nachheizen untersagt'
+        it: 'Riscaldamento vietato'
+        pl: 'Dogrzewanie zabronione'
+        ru: 'Подогрев запрещён'
+        zh: '禁止再加热'
+        hu: 'Az utófűtés tilos'
+        pt: 'Reaquecimento proibido'
+      0x01:
+        en: 'Heating authorized'
+        fr: 'Chauffage autorisé'
+        es: 'Calefacción autorizada'
+        de: 'Heizung freigegeben'
+        it: 'Riscaldamento autorizzato'
+        pl: 'Ogrzewanie dozwolone'
+        ru: 'Обогрев разрешён'
+        zh: '加热已授权'
+        hu: 'Fűtés engedélyezve'
+        pt: 'Aquecimento autorizado'
+
+  UREA_LINE_HEATING_REQUEST:
+    bits: '3.6-3.0'
+    comment:
+      en: 'Heating request for the urea line between the pump and the injector (%)'
+      fr: 'Demande de réchauffage de la canalisation d''urée entre la pompe et l''injecteur (%)'
+      es: 'Solicitud de calentamiento de la tubería de urea entre la bomba y el inyector (%)'
+      de: 'Anforderung zur Beheizung der Harnstoffleitung zwischen Pumpe und Injektor (%)'
+      it: 'Richiesta di riscaldamento della linea urea tra la pompa e l''iniettore (%)'
+      pl: 'Żądanie ogrzewania przewodu mocznika między pompą a wtryskiwaczem (%)'
+      ru: 'Запрос подогрева магистрали мочевины между насосом и форсункой (%)'
+      zh: '泵与喷嘴之间尿素管路加热请求(%)'
+      hu: 'A szivattyú és az injektor közötti AdBlue-vezeték fűtési kérése (%)'
+      pt: 'Pedido de aquecimento da tubagem de ureia entre a bomba e o injetor (%)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x00
+
+  HEATING_POWER_LIMIT_SETPOINT:
+    bits: '4.7-4.2'
+    comment:
+      en: 'Power consumption limitation setpoint for the heating systems (%)'
+      fr: 'Consigne de limitation de la puissance consommable par les systèmes de réchauffage (%)'
+      es: 'Consigna de limitación de la potencia consumible por los sistemas de calentamiento (%)'
+      de: 'Sollwert der Leistungsbegrenzung für die Heizsysteme (%)'
+      it: 'Valore di riferimento di limitazione della potenza assorbibile dai sistemi di riscaldamento (%)'
+      pl: 'Nastawa ograniczenia mocy pobieranej przez systemy grzewcze (%)'
+      ru: 'Заданное значение ограничения потребляемой мощности для систем подогрева (%)'
+      zh: '加热系统功耗限制设定值(%)'
+      hu: 'A fűtőrendszerek felvehető teljesítményének korlátozási alapjele (%)'
+      pt: 'Consigna de limitação da potência consumível pelos sistemas de aquecimento (%)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x00
+
+  SCR_ACTIVATION_REQUEST:
+    bits: '4.1-4.0'
+    comment:
+      en: 'Request to activate the SCR system'
+      fr: 'Demande de mise en fonctionnement du système SCR'
+      es: 'Solicitud de puesta en funcionamiento del sistema SCR'
+      de: 'Anforderung zur Inbetriebnahme des SCR-Systems'
+      it: 'Richiesta di attivazione del sistema SCR'
+      pl: 'Żądanie uruchomienia układu SCR'
+      ru: 'Запрос на включение системы SCR'
+      zh: 'SCR系统启动请求'
+      hu: 'Az SCR rendszer üzembe helyezési kérése'
+      pt: 'Pedido de colocação em funcionamento do sistema SCR'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Activation requested'
+        fr: 'Demande d''activation'
+        es: 'Solicitud de activación'
+        de: 'Aktivierungsanforderung'
+        it: 'Richiesta di attivazione'
+        pl: 'Żądanie aktywacji'
+        ru: 'Запрос активации'
+        zh: '请求激活'
+        hu: 'Aktiválás kérve'
+        pt: 'Ativação pedida'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+
+  PUMP_COMMAND_STATE:
+    bits: '5.7-5.4'
+    comment:
+      en: 'Pump control state'
+      fr: 'État de commande de la pompe'
+      es: 'Estado de mando de la bomba'
+      de: 'Ansteuerzustand der Pumpe'
+      it: 'Stato di comando della pompa'
+      pl: 'Stan sterowania pompą'
+      ru: 'Состояние управления насосом'
+      zh: '泵控制状态'
+      hu: 'A szivattyú vezérlési állapota'
+      pt: 'Estado de comando da bomba'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Tryb czuwania'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x01:
+        en: 'Line filling'
+        fr: 'Remplissage de la ligne'
+        es: 'Llenado de la línea'
+        de: 'Leitungsbefüllung'
+        it: 'Riempimento della linea'
+        pl: 'Napełnianie przewodu'
+        ru: 'Заполнение магистрали'
+        zh: '管路充填'
+        hu: 'Vezeték feltöltés'
+        pt: 'Enchimento da linha'
+      0x02:
+        en: 'Pressurizing'
+        fr: 'Mise en pression'
+        es: 'Puesta en presión'
+        de: 'Druckaufbau'
+        it: 'Messa in pressione'
+        pl: 'Podnoszenie ciśnienia'
+        ru: 'Наддув давления'
+        zh: '加压中'
+        hu: 'Nyomás alá helyezés'
+        pt: 'Colocação em pressão'
+      0x03:
+        en: 'Pressure maintained'
+        fr: 'Maintien de la pression'
+        es: 'Mantenimiento de la presión'
+        de: 'Druckhaltung'
+        it: 'Mantenimento della pressione'
+        pl: 'Utrzymanie ciśnienia'
+        ru: 'Поддержание давления'
+        zh: '压力保持'
+        hu: 'Nyomástartás'
+        pt: 'Manutenção da pressão'
+      0x04:
+        en: 'Nominal bleed'
+        fr: 'Purge nominale'
+        es: 'Purga nominal'
+        de: 'Nominale Entlüftung'
+        it: 'Spurgo nominale'
+        pl: 'Odpowietrzanie nominalne'
+        ru: 'Номинальная продувка'
+        zh: '标准放气'
+        hu: 'Névleges légtelenítés'
+        pt: 'Purga nominal'
+      0x05:
+        en: 'Depressurisation'
+        fr: 'Dépressurisation'
+        es: 'Despresurización'
+        de: 'Druckentlastung'
+        it: 'Depressurizzazione'
+        pl: 'Depresuryzacja'
+        ru: 'Сброс давления'
+        zh: '泄压'
+        hu: 'Nyomáscsökkentés'
+        pt: 'Despressurização'
+      0x06:
+        en: 'Heating'
+        fr: 'Chauffage'
+        es: 'Calefacción'
+        de: 'Heizung'
+        it: 'Riscaldamento'
+        pl: 'Ogrzewanie'
+        ru: 'Отопление'
+        zh: '加热'
+        hu: 'Fűtés'
+        pt: 'Aquecimento'
+      0x07:
+        en: 'pressure maintenance low consumption'
+        fr: 'Maintien de pression basse consommation'
+        es: 'Mantenimiento de presión de bajo consumo'
+        de: 'Druckerhaltung mit niedrigem Verbrauch'
+        it: 'Mantenimento della pressione a basso consumo'
+        pl: 'Utrzymywanie ciśnienia o niskim zużyciu'
+        ru: 'Поддержание давления с низким потреблением'
+        zh: '低消耗压力保持'
+        hu: 'Alacsony fogyasztású nyomástartás'
+        pt: 'Manutenção de pressão de baixo consumo'
+      0x08:
+        en: 'High-consumption pressure maintenance'
+        fr: 'Maintien de pression à haute consommation'
+        es: 'Mantenimiento de presión de alto consumo'
+        de: 'Druckhaltung mit hohem Verbrauch'
+        it: 'Mantenimento della pressione ad alto consumo'
+        pl: 'Utrzymanie ciśnienia przy wysokim zużyciu'
+        ru: 'Поддержание давления с высоким потреблением'
+        zh: '高消耗压力维持'
+        hu: 'Nagy fogyasztású nyomástartás'
+        pt: 'Manutenção de pressão de alto consumo'
+      0x09:
+        en: 'High-consumption very-high-pressure hold'
+        fr: 'Maintien de la pression très haute, forte consommation'
+        es: 'Mantenimiento de la presión muy alta, alto consumo'
+        de: 'Haltung des sehr hohen Drucks, hoher Verbrauch'
+        it: 'Mantenimento della pressione molto alta, elevato consumo'
+        pl: 'Utrzymanie bardzo wysokiego ciśnienia, wysokie zużycie'
+        ru: 'Поддержание очень высокого давления, высокое потребление'
+        zh: '极高压力保持,高消耗'
+        hu: 'Nagyon magas nyomás tartása, magas fogyasztás'
+        pt: 'Manutenção da pressão muito alta, elevado consumo'
+      0x0A:
+        en: 'Very low consumption pressure maintenance'
+        fr: 'Maintien de pression à très basse consommation'
+        es: 'Mantenimiento de presión de muy bajo consumo'
+        de: 'Druckhaltung mit sehr geringem Verbrauch'
+        it: 'Mantenimento della pressione a consumo molto basso'
+        pl: 'Podtrzymanie ciśnienia o bardzo niskim zużyciu'
+        ru: 'Поддержание давления с очень низким энергопотреблением'
+        zh: '极低功耗保压'
+        hu: 'Nagyon alacsony fogyasztású nyomástartás'
+        pt: 'Manutenção de pressão de consumo muito baixo'
+      0x0B:
+        en: 'Intrusive diagnosis, low flow'
+        fr: 'Diagnostic intrusif, faible débit'
+        es: 'Diagnóstico intrusivo, caudal bajo'
+        de: 'Eingreifende Diagnose, geringer Durchfluss'
+        it: 'Diagnosi intrusiva, portata bassa'
+        pl: 'Diagnostyka ingerująca, niski przepływ'
+        ru: 'Инвазивная диагностика, низкий расход'
+        zh: '侵入式诊断,低流量'
+        hu: 'Beavatkozó diagnosztika, alacsony áramlás'
+        pt: 'Diagnóstico intrusivo, caudal baixo'
+      0x0C:
+        en: 'Silent purge protection'
+        fr: 'Purge silencieuse (protection bruit)'
+        es: 'Purga silenciosa (protección de ruido)'
+        de: 'Geräuscharme Entlüftung (Lärmschutz)'
+        it: 'Spurgo silenzioso (protezione rumore)'
+        pl: 'Ciche odpowietrzanie (ochrona przed hałasem)'
+        ru: 'Бесшумная продувка (защита от шума)'
+        zh: '静音排放（噪音保护）'
+        hu: 'Csendes leürítés (zajvédelem)'
+        pt: 'Purga silenciosa (proteção de ruído)'
+      0x0D:
+        en: 'Aftersales command (APV)'
+        fr: 'Commande après-vente (APV)'
+        es: 'Comando de posventa (APV)'
+        de: 'Kundendienstbefehl (APV)'
+        it: 'Comando post-vendita (APV)'
+        pl: 'Polecenie serwisowe (APV)'
+        ru: 'Сервисная команда (APV)'
+        zh: '售后命令(APV)'
+        hu: 'Értékesítés utáni parancs (APV)'
+        pt: 'Comando de pós-venda (APV)'
+      0x0E:
+        en: 'Forced pressure activation'
+        fr: 'Activation forcée de la pression'
+        es: 'Activación forzada de la presión'
+        de: 'Erzwungene Druckaktivierung'
+        it: 'Attivazione forzata della pressione'
+        pl: 'Wymuszona aktywacja ciśnienia'
+        ru: 'Принудительная активация давления'
+        zh: '强制压力激活'
+        hu: 'Kényszerített nyomásaktiválás'
+        pt: 'Ativação forçada da pressão'
+      0x0F:
+        en: 'Silent pressure hold mode'
+        fr: 'Mode silencieux de maintien de pression'
+        es: 'Modo silencioso de mantenimiento de presión'
+        de: 'Geräuscharmer Druckhaltemodus'
+        it: 'Modalità silenziosa di mantenimento della pressione'
+        pl: 'Cichy tryb podtrzymania ciśnienia'
+        ru: 'Бесшумный режим поддержания давления'
+        zh: '静音保压模式'
+        hu: 'Csendes nyomástartási üzemmód'
+        pt: 'Modo silencioso de manutenção de pressão'
+
+  ATMOSPHERIC_PRESSURE_HIGH_ALTITUDE:
+    bits: '5.3-6.7'
+    comment:
+      en: 'Atmospheric pressure at high altitude (hPa)'
+      fr: 'Pression atmosphérique en haute altitude (hPa)'
+      es: 'Presión atmosférica a gran altitud (hPa)'
+      de: 'Atmosphärendruck in großer Höhe (hPa)'
+      it: 'Pressione atmosferica ad alta quota (hPa)'
+      pl: 'Ciśnienie atmosferyczne na dużej wysokości (hPa)'
+      ru: 'Атмосферное давление на большой высоте (гПа)'
+      zh: '高海拔大气压力(hPa)'
+      hu: 'Légköri nyomás nagy magasságban (hPa)'
+      pt: 'Pressão atmosférica a grande altitude (hPa)'
+    type: 'uint'
+    factor: 20
+    offset: 685
+    min: 540
+    max: 1120
+    units: 'hPa'
+    invalid: 0x1F
+    default: 0x1E
+
+  UNUSED_1:
+    bits: '6.6-6.0'
+    unused: true

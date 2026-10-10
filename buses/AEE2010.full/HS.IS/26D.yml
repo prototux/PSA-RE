@@ -1,0 +1,140 @@
+id: 0x26D
+name: 'STEERING_BRAKE_COUPLING_DATA'
+type: 'can'
+length: 3
+comment:
+  en: 'Sent by the ABS unit once the steering/brake coupling is established: checksum, process counter, steering-torque delta and coupling regulation.'
+  fr: 'Émise par le calculateur ABS dès l''établissement du couplage direction/frein : somme de contrôle, compteur de process, écart de couple direction et régulation du couplage.'
+  es: 'Enviada por la unidad ABS una vez establecido el acoplamiento dirección/freno: suma de comprobación, contador de proceso, desviación de par de dirección y regulación del acoplamiento.'
+  de: 'Vom ABS-Steuergerät gesendet, sobald die Lenkungs-/Bremsenkopplung aufgebaut ist: Prüfsumme, Prozesszähler, Lenkmoment-Abweichung und Kopplungsregelung.'
+  it: 'Inviata dall''unità ABS una volta stabilito l''accoppiamento sterzo/freno: checksum, contatore di processo, scostamento di coppia sterzo e regolazione dell''accoppiamento.'
+  pl: 'Wysyłana przez sterownik ABS po ustanowieniu sprzężenia kierownica/hamulec: suma kontrolna, licznik procesu, odchylenie momentu kierownicy i regulacja sprzężenia.'
+  ru: 'Отправляется блоком ABS после установления связи рулевого управления/тормозов: контрольная сумма, счётчик процесса, отклонение момента руля и регулирование связи.'
+  zh: '由ABS单元在转向/制动耦合建立后发送:校验和、处理计数器、转向扭矩偏差和耦合调节。'
+  hu: 'Az ABS egység küldi a kormányzás/fék csatolás létrejötte után: ellenőrzőösszeg, folyamatszámláló, kormányzási nyomaték eltérés és csatolási szabályozás.'
+  pt: 'Enviada pela unidade ABS assim que o acoplamento direção/travão está estabelecido: soma de verificação, contador de processo, delta de binário de direção e regulação do acoplamento.'
+periodicity: ['10ms']
+senders: ['ABS']
+receivers: ['DAE']
+
+signals:
+  BRAKE_DYNAMIC5_FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Brake ECU dynamic frame 5 checksum'
+      fr: 'Somme de contrôle de la trame dynamique 5 du calculateur frein'
+      es: 'Suma de comprobación de la trama dinámica 5 de la ECU de freno'
+      de: 'Prüfsumme des dynamischen Frames 5 des Bremssteuergeräts'
+      it: 'Checksum del frame dinamico 5 della centralina freni'
+      pl: 'Suma kontrolna ramki dynamicznej 5 sterownika hamulców'
+      ru: 'Контрольная сумма динамического кадра 5 блока управления тормозами'
+      zh: '制动控制单元动态帧5校验和'
+      hu: 'A fékvezérlő 5. dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica 5 da unidade de controlo de travão'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  STEERING_DELTA_TORQUE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Steering delta torque (SSP)'
+      fr: 'Couple différentiel de direction (SSP)'
+      es: 'Par diferencial de dirección (SSP)'
+      de: 'Differenzdrehmoment der Lenkung (SSP)'
+      it: 'Coppia differenziale dello sterzo (SSP)'
+      pl: 'Różnicowy moment obrotowy układu kierowniczego (SSP)'
+      ru: 'Дифференциальный момент рулевого управления (SSP)'
+      zh: '转向差动扭矩 (SSP)'
+      hu: 'Kormányzási differenciál-nyomaték (SSP)'
+      pt: 'Binário diferencial de direção (SSP)'
+    type: 'sint'
+    factor: 0.1
+    min: -10
+    max: 10
+    units: 'Nm'
+    invalid: 0x7F
+    default: 0x00
+
+  STEERING_REGULATION_STATUS:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Steering regulation (SSP) active'
+      fr: 'Régulation de direction (SSP) active'
+      es: 'Regulación de dirección (SSP) activa'
+      de: 'Lenkregelung (SSP) aktiv'
+      it: 'Regolazione dello sterzo (SSP) attiva'
+      pl: 'Regulacja układu kierowniczego (SSP) aktywna'
+      ru: 'Регулирование рулевого управления (SSP) активно'
+      zh: '转向调节 (SSP) 激活'
+      hu: 'Kormányzásszabályozás (SSP) aktív'
+      pt: 'Regulação de direção (SSP) ativa'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        unused: true
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        en: 'No SSP regulation'
+        fr: 'Pas de régulation SSP'
+        es: 'Sin regulación SSP'
+        de: 'Keine SSP-Regelung'
+        it: 'Nessuna regolazione SSP'
+        pl: 'Brak regulacji SSP'
+        ru: 'Нет регулирования SSP'
+        zh: '无SSP调节'
+        hu: 'Nincs SSP szabályozás'
+        pt: 'Sem regulação SSP'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'SSP1a regulation active'
+        fr: 'SSP1a en régulation'
+        es: 'SSP1a en regulación'
+        de: 'SSP1a in Regelung'
+        it: 'SSP1a in regolazione'
+        pl: 'SSP1a w regulacji'
+        ru: 'SSP1a в режиме регулирования'
+        zh: 'SSP1a调节中'
+        hu: 'SSP1a szabályozás alatt'
+        pt: 'Regulação SSP1a ativa'
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true

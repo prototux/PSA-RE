@@ -1,0 +1,714 @@
+id: 0x4DC
+name: 'AC_INFORMATION'
+type: 'van'
+length: 7
+comment:
+  en: 'Information and authorisations from the body computer to the air conditioning unit: authorisation, compressor state, load shedding, auxiliary heaters, refrigerant pressure, evaporator temperature and sunshine sensors.'
+  fr: 'Informations et autorisations du BSI vers la climatisation : autorisation, état compresseur, délestage, chauffages additionnels, pression réfrigérant, température évaporateur et capteurs d''ensoleillement.'
+  es: 'Información y autorizaciones de la BSI al climatizador: autorización, estado del compresor, deslastre, calefacciones auxiliares, presión del refrigerante, temperatura del evaporador y sensores de sol.'
+  de: 'Informationen und Freigaben vom BSI an die Klimaanlage: Freigabe, Kompressorstatus, Lastabwurf, Zuheizer, Kältemitteldruck, Verdampfertemperatur und Sonnensensoren.'
+  it: 'Informazioni e autorizzazioni dal BSI al climatizzatore: autorizzazione, stato compressore, distacco carico, riscaldatori ausiliari, pressione refrigerante, temperatura evaporatore e sensori di soleggiamento.'
+  pl: 'Informacje i zezwolenia z BSI do klimatyzacji: zezwolenie, stan sprężarki, redukcja obciążenia, nagrzewnice dodatkowe, ciśnienie czynnika, temperatura parownika i czujniki nasłonecznienia.'
+  ru: 'Информация и разрешения от BSI кондиционеру: разрешение, состояние компрессора, сброс нагрузки, дополнительные обогреватели, давление хладагента, температура испарителя и датчики солнца.'
+  zh: '由车身控制器发送给空调单元的信息与授权:授权、压缩机状态、负载脱扣、辅助加热器、制冷剂压力、蒸发器温度及日照传感器。'
+  hu: 'A BSI által a klímának küldött információk és engedélyek: engedély, kompresszor állapota, terheléscsökkentés, kiegészítő fűtések, hűtőközeg-nyomás, párologtató hőmérséklete és napsugárzás-érzékelők.'
+  pt: 'Informações e autorizações da BSI para o climatizador: autorização, estado do compressor, corte de carga, aquecedores auxiliares, pressão do refrigerante, temperatura do evaporador e sensores de luminosidade.'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['CLIM_AV']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  AIR_CONDITIONER_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Climate control functional state (activated)'
+      fr: 'État fonctionnel de la climatisation (activée)'
+      es: 'Estado funcional de la climatización (activada)'
+      de: 'Funktionsstatus der Klimaanlage (aktiviert)'
+      it: 'Stato funzionale della climatizzazione (attivata)'
+      pl: 'Stan funkcjonalny klimatyzacji (aktywna)'
+      ru: 'Функциональное состояние климат-контроля (активирован)'
+      zh: '空调功能状态(已激活)'
+      hu: 'A klíma funkcionális állapota (aktiválva)'
+      pt: 'Estado funcional do ar condicionado (ativado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  AC_ENABLED_STATUS:
+    bits: '1.6'
+    comment:
+      en: 'A/C compressor authorisation (AC/OUT)'
+      fr: 'Autorisation du compresseur de climatisation (AC/OUT)'
+      es: 'Autorización del compresor de A/C (AC/OUT)'
+      de: 'Freigabe des Klimakompressors (AC/OUT)'
+      it: 'Autorizzazione del compressore A/C (AC/OUT)'
+      pl: 'Zezwolenie sprężarki klimatyzacji (AC/OUT)'
+      ru: 'Разрешение компрессора кондиционера (AC/OUT)'
+      zh: '空调压缩机授权(AC/OUT)'
+      hu: 'A klímakompresszor engedélyezése (AC/OUT)'
+      pt: 'Autorização do compressor de ar condicionado (AC/OUT)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x01:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+
+  REAR_WINDOW_HEATING_STATUS:
+    bits: '1.5'
+    comment:
+      en: 'Heated rear window operating state'
+      fr: 'État de fonctionnement de la lunette arrière chauffante'
+      es: 'Estado de funcionamiento de la luneta térmica trasera'
+      de: 'Betriebsstatus der Heckscheibenheizung'
+      it: 'Stato di funzionamento del lunotto termico posteriore'
+      pl: 'Stan działania ogrzewanej tylnej szyby'
+      ru: 'Рабочее состояние обогрева заднего стекла'
+      zh: '后窗加热运行状态'
+      hu: 'A fűthető hátsó ablak üzemi állapota'
+      pt: 'Estado de funcionamento do vidro traseiro térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  LOAD_SCHEDDING_LEVEL1_STATUS:
+    bits: '1.4'
+    comment:
+      en: 'Load shedding level 1 requested'
+      fr: 'Délestage niveau 1 demandé'
+      es: 'Reducción de carga nivel 1 solicitada'
+      de: 'Lastabwurf Stufe 1 angefordert'
+      it: 'Distacco carico livello 1 richiesto'
+      pl: 'Zażądano redukcji obciążenia poziomu 1'
+      ru: 'Запрошен сброс нагрузки уровня 1'
+      zh: '已请求1级负载削减'
+      hu: '1. szintű terheléscsökkentés kérve'
+      pt: 'Deslastre de nível 1 solicitado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
+
+  LOAD_SCHEDDING_LEVEL2_STATUS:
+    bits: '1.3'
+    comment:
+      en: 'Load shedding level 2 requested'
+      fr: 'Délestage niveau 2 demandé'
+      es: 'Reducción de carga nivel 2 solicitada'
+      de: 'Lastabwurf Stufe 2 angefordert'
+      it: 'Distacco carico livello 2 richiesto'
+      pl: 'Zażądano redukcji obciążenia poziomu 2'
+      ru: 'Запрошен сброс нагрузки уровня 2'
+      zh: '已请求2级负载削减'
+      hu: '2. szintű terheléscsökkentés kérve'
+      pt: 'Deslastre de nível 2 solicitado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
+
+  LOAD_SCHEDDING_LEVEL3_STATUS:
+    bits: '1.2'
+    comment:
+      en: 'Load shedding level 3 requested'
+      fr: 'Délestage niveau 3 demandé'
+      es: 'Reducción de carga nivel 3 solicitada'
+      de: 'Lastabwurf Stufe 3 angefordert'
+      it: 'Distacco carico livello 3 richiesto'
+      pl: 'Zażądano redukcji obciążenia poziomu 3'
+      ru: 'Запрошен сброс нагрузки уровня 3'
+      zh: '已请求3级负载削减'
+      hu: '3. szintű terheléscsökkentés kérve'
+      pt: 'Deslastre de nível 3 solicitado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
+
+  HEATING_MATRIX_STATUS:
+    bits: '1.1'
+    comment:
+      en: 'Auxiliary (fuel) burner heater engaged'
+      fr: 'Brûleur additionnel enclenché'
+      es: 'Quemador auxiliar (de combustible) activado'
+      de: 'Zusatzbrenner eingeschaltet'
+      it: 'Bruciatore ausiliario (a combustibile) inserito'
+      pl: 'Włączony dodatkowy palnik paliwowy'
+      ru: 'Включена дополнительная топливная горелка'
+      zh: '辅助(燃油)燃烧器已启动'
+      hu: 'A kiegészítő (tüzelőanyagos) égő bekapcsolva'
+      pt: 'Queimador auxiliar (a combustível) ativado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not engaged'
+        fr: 'Non enclenché'
+        es: 'No engranado'
+        de: 'Nicht eingelegt'
+        it: 'Non innestato'
+        pl: 'Niewłączony'
+        ru: 'Не включено'
+        zh: '未接合'
+        hu: 'Nincs bekapcsolva'
+        pt: 'Não engrenado'
+      0x01:
+        en: 'Engaged'
+        fr: 'Enclenché'
+        es: 'Engranado'
+        de: 'Eingelegt'
+        it: 'Innestato'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '已接合'
+        hu: 'Bekapcsolva'
+        pt: 'Engatado'
+
+  COMPRESSOR_STATUS:
+    bits: '1.0'
+    comment:
+      en: 'A/C compressor engaged'
+      fr: 'Compresseur de climatisation enclenché'
+      es: 'Compresor de A/C activado'
+      de: 'Klimakompressor eingeschaltet'
+      it: 'Compressore A/C inserito'
+      pl: 'Włączona sprężarka klimatyzacji'
+      ru: 'Включён компрессор кондиционера'
+      zh: '空调压缩机已启动'
+      hu: 'A klímakompresszor bekapcsolva'
+      pt: 'Compressor de ar condicionado engatado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not engaged'
+        fr: 'Non enclenché'
+        es: 'No engranado'
+        de: 'Nicht eingelegt'
+        it: 'Non innestato'
+        pl: 'Niewłączony'
+        ru: 'Не включено'
+        zh: '未接合'
+        hu: 'Nincs bekapcsolva'
+        pt: 'Não engrenado'
+      0x01:
+        en: 'Engaged'
+        fr: 'Enclenché'
+        es: 'Engranado'
+        de: 'Eingelegt'
+        it: 'Innestato'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '已接合'
+        hu: 'Bekapcsolva'
+        pt: 'Engatado'
+
+  HEATING_STATUS:
+    bits: '2.7-2.5'
+    comment:
+      en: 'Additional (electric) heater state; also informs the climate unit to start the blower when the burner runs, and lets the body controller disable the volumetric alarm for a programmable burner'
+      fr: 'État du chauffage additionnel (électrique) ; informe également la climatisation pour démarrer le pulseur lorsque le brûleur fonctionne, et permet à la BSI de désactiver l''alarme volumétrique pour un brûleur programmable'
+      es: 'Estado de la calefacción adicional (eléctrica); también informa a la climatización para arrancar el ventilador cuando funciona el quemador, y permite a la BSI desactivar la alarma volumétrica en caso de quemador programable'
+      de: 'Status der elektrischen Zusatzheizung; informiert auch die Klimaanlage, das Gebläse beim Brennerbetrieb zu starten, und ermöglicht dem BSI, den volumetrischen Alarm bei einem programmierbaren Brenner zu deaktivieren'
+      it: 'Stato del riscaldatore ausiliario (elettrico); informa anche il climatizzatore di avviare il ventilatore quando il bruciatore è in funzione, e consente alla BSI di disattivare l''allarme volumetrico per un bruciatore programmabile'
+      pl: 'Stan dodatkowego ogrzewania (elektrycznego); informuje również klimatyzację o uruchomieniu dmuchawy podczas pracy palnika oraz umożliwia BSI wyłączenie alarmu wolumetrycznego dla programowalnego palnika'
+      ru: 'Состояние дополнительного (электрического) отопителя; также информирует климат-контроль о запуске вентилятора при работе горелки и позволяет BSI отключать объёмную сигнализацию для программируемой горелки'
+      zh: '辅助(电加热)状态;还会通知空调系统在燃烧器运行时启动鼓风机,并允许BSI在可编程燃烧器情况下禁用空间报警'
+      hu: 'A kiegészítő (elektromos) fűtés állapota; a klímaegységet is tájékoztatja az égő működésekor a fűtőventilátor indításáról, és lehetővé teszi a BSI számára a térfogati riasztás letiltását programozható égő esetén'
+      pt: 'Estado do aquecimento adicional (elétrico); também informa a climatização para arrancar o ventilador quando o queimador funciona, e permite à BSI desativar o alarme volumétrico no caso de um queimador programável'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No heating'
+        fr: 'Pas de chauffage'
+        es: 'Sin calefacción'
+        de: 'Keine Heizung'
+        it: 'Nessun riscaldamento'
+        pl: 'Brak ogrzewania'
+        ru: 'Без подогрева'
+        zh: '无加热'
+        hu: 'Nincs fűtés'
+        pt: 'Sem aquecimento'
+      0x01:
+        en: 'Output 1 active'
+        fr: 'Sortie 1 active'
+        es: 'Salida 1 activa'
+        de: 'Ausgang 1 aktiv'
+        it: 'Uscita 1 attiva'
+        pl: 'Wyjście 1 aktywne'
+        ru: 'Выход 1 активен'
+        zh: '输出1已激活'
+        hu: '1. kimenet aktív'
+        pt: 'Saída 1 ativa'
+      0x02:
+        en: 'Output 2 active'
+        fr: 'Sortie 2 active'
+        es: 'Salida 2 activa'
+        de: 'Ausgang 2 aktiv'
+        it: 'Uscita 2 attiva'
+        pl: 'Aktywne wyjście 2'
+        ru: 'Выход 2 активен'
+        zh: '输出2激活'
+        hu: '2. kimenet aktív'
+        pt: 'Saída 2 ativa'
+      0x03:
+        en: 'Outputs 1 and 2 active'
+        fr: 'Sorties 1 et 2 actives'
+        es: 'Salidas 1 y 2 activas'
+        de: 'Ausgänge 1 und 2 aktiv'
+        it: 'Uscite 1 e 2 attive'
+        pl: 'Wyjścia 1 i 2 aktywne'
+        ru: 'Выходы 1 и 2 активны'
+        zh: '输出1和2已激活'
+        hu: '1. és 2. kimenet aktív'
+        pt: 'Saídas 1 e 2 ativas'
+
+  AC_MANAGEMENT_STATUS:
+    bits: '2.4-2.3'
+    comment:
+      en: 'Climate management state (refrigerant loop low/high safety)'
+      fr: 'État de la gestion de la climatisation (sécurité basse/haute pression du circuit frigorifique)'
+      es: 'Estado de la gestión de la climatización (seguridad de baja/alta presión del circuito frigorífico)'
+      de: 'Status der Klimamanagements (Niedrig-/Hochdrucksicherheit des Kältekreislaufs)'
+      it: 'Stato della gestione della climatizzazione (sicurezza bassa/alta pressione del circuito frigorifero)'
+      pl: 'Stan zarządzania klimatyzacją (zabezpieczenie niskiego/wysokiego ciśnienia obiegu chłodniczego)'
+      ru: 'Состояние управления климат-контролем (защита низкого/высокого давления контура хладагента)'
+      zh: '空调管理状态(制冷回路低压/高压安全)'
+      hu: 'A klímakezelés állapota (a hűtőkör alacsony/magas nyomású biztonsága)'
+      pt: 'Estado da gestão do ar condicionado (segurança de baixa/alta pressão do circuito frigorífico)'
+    type: 'enum'
+    invalid: 0x03
+    default: 0x03
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'Low-pressure safety active'
+        fr: 'Sécurité basse pression active'
+        es: 'Seguridad de baja presión activa'
+        de: 'Niederdrucksicherung aktiv'
+        it: 'Sicurezza bassa pressione attiva'
+        pl: 'Aktywne zabezpieczenie niskiego ciśnienia'
+        ru: 'Активна защита по низкому давлению'
+        zh: '低压安全保护激活'
+        hu: 'Alacsony nyomású biztonsági funkció aktív'
+        pt: 'Segurança de baixa pressão ativa'
+      0x02:
+        en: 'High safety active'
+        fr: 'Sécurité haute active'
+        es: 'Seguridad alta activa'
+        de: 'Hohe Sicherheit aktiv'
+        it: 'Sicurezza alta attiva'
+        pl: 'Wysokie bezpieczeństwo aktywne'
+        ru: 'Высокий уровень безопасности активен'
+        zh: '高安全性激活'
+        hu: 'Magas biztonsági szint aktív'
+        pt: 'Segurança alta ativa'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  SAFETY_STATUS:
+    bits: '2.2'
+    comment:
+      en: 'Safety cut-off active (pressure, coolant temperature or evaporator temperature)'
+      fr: 'Coupure de sécurité active (pression, température d''eau ou température évaporateur)'
+      es: 'Corte de seguridad activo (presión, temperatura del agua o temperatura del evaporador)'
+      de: 'Sicherheitsabschaltung aktiv (Druck, Kühlmitteltemperatur oder Verdampfertemperatur)'
+      it: 'Interruzione di sicurezza attiva (pressione, temperatura acqua o temperatura evaporatore)'
+      pl: 'Aktywne odcięcie bezpieczeństwa (ciśnienie, temperatura wody lub temperatura parownika)'
+      ru: 'Активно защитное отключение (давление, температура воды или температура испарителя)'
+      zh: '安全切断已激活(压力、水温或蒸发器温度)'
+      hu: 'Biztonsági lekapcsolás aktív (nyomás, vízhőmérséklet vagy párologtató-hőmérséklet)'
+      pt: 'Corte de segurança ativo (pressão, temperatura da água ou temperatura do evaporador)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Absent'
+        fr: 'Absente'
+        es: 'Ausente'
+        de: 'Nicht vorhanden'
+        it: 'Assente'
+        pl: 'Brak'
+        ru: 'Отсутствует'
+        zh: '缺失'
+        hu: 'Hiányzik'
+        pt: 'Ausente'
+      0x01:
+        en: 'Present'
+        fr: 'Présente'
+        es: 'Presente'
+        de: 'Vorhanden'
+        it: 'Presente'
+        pl: 'Obecny'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presente'
+
+  RETRACTABLE_ROOF_STATUS:
+    bits: '2.1'
+    comment:
+      en: 'Retractable roof open: used to ignore the cabin temperature sensor, which would otherwise be disturbed by the airflow'
+      fr: 'Toit escamotable ouvert : utilisé pour ignorer le capteur de température habitacle, qui serait sinon perturbé par le flux d''air'
+      es: 'Techo retráctil abierto: se utiliza para ignorar el sensor de temperatura del habitáculo, que de otro modo se vería perturbado por el flujo de aire'
+      de: 'Versenkbares Dach offen: dient dazu, den Innenraumtemperatursensor zu ignorieren, der sonst durch den Luftstrom gestört würde'
+      it: 'Tetto retrattile aperto: utilizzato per ignorare il sensore di temperatura dell''abitacolo, che altrimenti sarebbe disturbato dal flusso d''aria'
+      pl: 'Otwarty chowany dach: służy do ignorowania czujnika temperatury w kabinie, który w przeciwnym razie byłby zakłócany przez przepływ powietrza'
+      ru: 'Складная крыша открыта: используется для игнорирования датчика температуры салона, который иначе был бы нарушен потоком воздуха'
+      zh: '可收放车顶开启:用于忽略座舱温度传感器,否则该传感器会受到气流干扰'
+      hu: 'A behúzható tető nyitva: a utastér-hőmérséklet-érzékelő figyelmen kívül hagyására szolgál, amelyet egyébként a légáramlás zavarna'
+      pt: 'Teto retrátil aberto: utilizado para ignorar o sensor de temperatura do habitáculo, que de outra forma seria perturbado pelo fluxo de ar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Retractable roof closed'
+        fr: 'Toit escamotable fermé'
+        es: 'Techo retráctil cerrado'
+        de: 'Versenkbares Verdeck geschlossen'
+        it: 'Tetto retrattile chiuso'
+        pl: 'Składany dach zamknięty'
+        ru: 'Убирающаяся крыша закрыта'
+        zh: '折叠车顶关闭'
+        hu: 'Behajtható tető zárva'
+        pt: 'Teto retrátil fechado'
+      0x01:
+        en: 'Retractable roof open'
+        fr: 'Toit escamotable ouvert'
+        es: 'Techo retráctil abierto'
+        de: 'Verdeck (versenkbares Dach) offen'
+        it: 'Tetto retrattile aperto'
+        pl: 'Otwarty dach chowany'
+        ru: 'Складная крыша открыта'
+        zh: '可收放车顶已打开'
+        hu: 'Behúzható tető nyitva'
+        pt: 'Teto retrátil aberto'
+
+  START_AND_STOP_ENGINE_STATUS:
+    bits: '2.0'
+    comment:
+      en: 'Engine stopped by Stop & Start'
+      fr: 'Moteur arrêté par le Stop & Start'
+      es: 'Motor detenido por el Start & Stop'
+      de: 'Motor durch Start-Stopp gestoppt'
+      it: 'Motore arrestato dallo Stop & Start'
+      pl: 'Silnik zatrzymany przez system Start & Stop'
+      ru: 'Двигатель остановлен системой Старт-стоп'
+      zh: '发动机被启停系统关闭'
+      hu: 'A motort a Start-Stop rendszer állította le'
+      pt: 'Motor parado pelo Stop & Start'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  PRESSURE_VALUE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Refrigerant loop pressure'
+      fr: 'Pression du circuit frigorifique'
+      es: 'Presión del circuito frigorífico'
+      de: 'Druck des Kältekreislaufs'
+      it: 'Pressione del circuito frigorifero'
+      pl: 'Ciśnienie obiegu chłodniczego'
+      ru: 'Давление контура хладагента'
+      zh: '制冷回路压力'
+      hu: 'A hűtőkör nyomása'
+      pt: 'Pressão do circuito frigorífico'
+    type: 'uint'
+    factor: 25
+    min: 0
+    max: 5000
+    units: 'kPa'
+    invalid: 0xFF
+    default: 0xFF
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 20)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 20)'
+          es: 'También observado con otro escalado (factor 20)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 20)'
+          it: 'Osservato anche con un''altra scala (factor 20)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 20)'
+          ru: 'Также наблюдался с другим масштабом (factor 20)'
+          zh: '也观察到使用另一种缩放（factor 20）'
+          hu: 'Megfigyelve más skálázással is (factor 20)'
+          pt: 'Também observado com outra escala (factor 20)'
+        factor: 20
+      - note:
+          en: 'Other scaling observed'
+          fr: 'Autre mise à l''échelle observée'
+          es: 'Otro escalado observado'
+          de: 'Andere Skalierung beobachtet'
+          it: 'Altra scala osservata'
+          pl: 'Zaobserwowano inne skalowanie'
+          ru: 'Наблюдалось другое масштабирование'
+          zh: '观察到其他缩放方式'
+          hu: 'Más skálázás is megfigyelhető'
+          pt: 'Outra escala observada'
+        factor: 20
+        units: 'kPa'
+
+  EVAPORATOR_TEMPERATURE:
+    bits: '4.7-5.0'
+    comment:
+      en: 'Evaporator temperature; invalid value sent when the climate unit acquires this sensor itself'
+      fr: 'Température évaporateur ; valeur invalide envoyée lorsque la climatisation acquiert elle-même ce capteur'
+      es: 'Temperatura del evaporador; se envía un valor no válido cuando el climatizador adquiere él mismo este sensor'
+      de: 'Verdampfertemperatur; ungültiger Wert wird gesendet, wenn die Klimaanlage diesen Sensor selbst erfasst'
+      it: 'Temperatura evaporatore; viene inviato un valore non valido quando il climatizzatore acquisisce autonomamente questo sensore'
+      pl: 'Temperatura parownika; nieprawidłowa wartość wysyłana, gdy klimatyzacja sama odczytuje ten czujnik'
+      ru: 'Температура испарителя; недействительное значение отправляется, когда климат-система сама считывает этот датчик'
+      zh: '蒸发器温度;当空调自行采集该传感器时发送无效值'
+      hu: 'Párologtató hőmérséklete; érvénytelen érték kerül elküldésre, ha a klíma maga olvassa ki ezt az érzékelőt'
+      pt: 'Temperatura do evaporador; valor inválido enviado quando o climatizador adquire ele próprio este sensor'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 80
+    units: '°C'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  AMBIENT_LUMINOSITY_VALUE1:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Sunshine (solar load) sensor, left (or single sensor); coding varies by vehicle (percent or 200 lux/bit)'
+      fr: 'Capteur d''ensoleillement, gauche (ou capteur unique) ; codage variable selon le véhicule (pourcentage ou 200 lux/bit)'
+      es: 'Sensor de luz solar, izquierdo (o único); la codificación varía según el vehículo (porcentaje o 200 lux/bit)'
+      de: 'Sonnenlichtsensor, links (oder Einzelsensor); Codierung fahrzeugabhängig (Prozent oder 200 Lux/Bit)'
+      it: 'Sensore di soleggiamento, sinistro (o unico); codifica variabile a seconda del veicolo (percentuale o 200 lux/bit)'
+      pl: 'Czujnik nasłonecznienia, lewy (lub pojedynczy); kodowanie zależne od pojazdu (procent lub 200 luksów/bit)'
+      ru: 'Датчик солнечного излучения, левый (или единственный); кодировка зависит от автомобиля (проценты или 200 люкс/бит)'
+      zh: '日照传感器,左侧(或单一传感器);编码因车型而异(百分比或200勒克斯/位)'
+      hu: 'Napfényérzékelő, bal (vagy egyetlen érzékelő); a kódolás járműtől függően változik (százalék vagy 200 lux/bit)'
+      pt: 'Sensor de luz solar, esquerdo (ou sensor único); codificação variável consoante o veículo (percentagem ou 200 lux/bit)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 10)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 10)'
+          es: 'También observado con otro escalado (factor 10)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 10)'
+          it: 'Osservato anche con un''altra scala (factor 10)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 10)'
+          ru: 'Также наблюдался с другим масштабом (factor 10)'
+          zh: '也观察到使用另一种缩放（factor 10）'
+          hu: 'Megfigyelve más skálázással is (factor 10)'
+          pt: 'Também observado com outra escala (factor 10)'
+        factor: 10
+
+  AMBIENT_LUMINOSITY_VALUE1_2:
+    bits: '7.7-7.0'
+    alt_names: ['AMBIENT_LUMINOSITY_VALUE2', 'MES_LUM']
+    comment:
+      en: 'Sunshine (solar load) sensor, left (or single sensor); coding varies by vehicle (percent or 200 lux/bit)'
+      fr: 'Capteur d''ensoleillement, gauche (ou capteur unique) ; codage variable selon le véhicule (pourcentage ou 200 lux/bit)'
+      es: 'Sensor de luz solar, izquierdo (o único); la codificación varía según el vehículo (porcentaje o 200 lux/bit)'
+      de: 'Sonnenlichtsensor, links (oder Einzelsensor); Codierung fahrzeugabhängig (Prozent oder 200 Lux/Bit)'
+      it: 'Sensore di soleggiamento, sinistro (o unico); codifica variabile a seconda del veicolo (percentuale o 200 lux/bit)'
+      pl: 'Czujnik nasłonecznienia, lewy (lub pojedynczy); kodowanie zależne od pojazdu (procent lub 200 luksów/bit)'
+      ru: 'Датчик солнечного излучения, левый (или единственный); кодировка зависит от автомобиля (проценты или 200 люкс/бит)'
+      zh: '日照传感器,左侧(或单一传感器);编码因车型而异(百分比或200勒克斯/位)'
+      hu: 'Napfényérzékelő, bal (vagy egyetlen érzékelő); a kódolás járműtől függően változik (százalék vagy 200 lux/bit)'
+      pt: 'Sensor de luz solar, esquerdo (ou sensor único); codificação variável consoante o veículo (percentagem ou 200 lux/bit)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 10)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 10)'
+          es: 'También observado con otro escalado (factor 10)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 10)'
+          it: 'Osservato anche con un''altra scala (factor 10)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 10)'
+          ru: 'Также наблюдался с другим масштабом (factor 10)'
+          zh: '也观察到使用另一种缩放（factor 10）'
+          hu: 'Megfigyelve más skálázással is (factor 10)'
+          pt: 'Também observado com outra escala (factor 10)'
+        factor: 10

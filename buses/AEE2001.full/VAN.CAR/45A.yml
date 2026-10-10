@@ -1,0 +1,145 @@
+id: 0x45A
+name: 'ALARM_PERIMETER_ALERT'
+type: 'van'
+length: 1
+comment:
+  en: 'Perimeter (door/boot opening) alert sent by the body computer to the alarm module.'
+  fr: 'Alerte périmétrique (ouverture de porte/coffre) envoyée par la BSI au module d''alarme.'
+  es: 'Alerta perimetral (apertura de puerta/maletero) enviada por la BSI al módulo de alarma.'
+  de: 'Perimeterwarnung (Tür-/Kofferraumöffnung), von der BSI an das Alarmmodul gesendet.'
+  it: 'Allarme perimetrale (apertura porta/bagagliaio) inviato dalla BSI al modulo allarme.'
+  pl: 'Alarm obwodowy (otwarcie drzwi/bagażnika) wysyłany przez BSI do modułu alarmu.'
+  ru: 'Периметровая тревога (открытие двери/багажника), отправляемая BSI в модуль сигнализации.'
+  zh: '由BSI发送给报警模块的周界警报（车门/后备箱打开）。'
+  hu: 'Kerületi riasztás (ajtó/csomagtér nyitás), amelyet a BSI küld a riasztómodulnak.'
+  pt: 'Alerta perimétrico (abertura de porta/bagageira) enviado pelo computador de servidão ao módulo de alarme.'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['ALARM']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  OPENING_ALERT_EVENT:
+    bits: '1.7'
+    comment:
+      en: 'Door or boot opening event (event-type behaviour)'
+      fr: 'Événement d''ouverture de porte ou de coffre (comportement type événement)'
+      es: 'Evento de apertura de puerta o maletero (comportamiento tipo evento)'
+      de: 'Ereignis „Tür- oder Kofferraumöffnung“ (Ereignisverhalten)'
+      it: 'Evento di apertura porta o bagagliaio (comportamento a evento)'
+      pl: 'Zdarzenie otwarcia drzwi lub bagażnika (zachowanie zdarzeniowe)'
+      ru: 'Событие открытия двери или багажника (поведение типа «событие»)'
+      zh: '车门或行李厢开启事件(事件型行为)'
+      hu: 'Ajtó- vagy csomagtartó-nyitási esemény (esemény-alapú viselkedés)'
+      pt: 'Evento de abertura de porta ou mala (comportamento tipo evento)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  OPENINGS_STATE:
+    bits: '1.6'
+    comment:
+      en: 'State of doors and boot (UK-market state-type behaviour)'
+      fr: 'État des ouvrants (portes et coffre) (comportement type état, marché UK)'
+      es: 'Estado de las puertas y el maletero (comportamiento tipo estado, mercado UK)'
+      de: 'Zustand von Türen und Kofferraum (Zustandsverhalten, UK-Markt)'
+      it: 'Stato di porte e bagagliaio (comportamento a stato, mercato UK)'
+      pl: 'Stan drzwi i bagażnika (zachowanie stanowe, rynek UK)'
+      ru: 'Состояние дверей и багажника (поведение типа «состояние», рынок Великобритании)'
+      zh: '车门与行李厢状态(状态型行为,英国市场)'
+      hu: 'Ajtók és csomagtartó állapota (állapot-alapú viselkedés, UK piac)'
+      pt: 'Estado das portas e da mala (comportamento tipo mercado do Reino Unido)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'All apertures closed'
+        fr: 'Tous les ouvrants sont fermés'
+        es: 'Todos los elementos están cerrados'
+        de: 'Alle Klappen geschlossen'
+        it: 'Tutti gli elementi apribili sono chiusi'
+        pl: 'Wszystkie elementy zamknięte'
+        ru: 'Все элементы закрыты'
+        zh: '所有开启部件均已关闭'
+        hu: 'Minden nyílászáró zárva'
+        pt: 'Todos os elementos estão fechados'
+      0x01:
+        en: 'At least one opening open (alert)'
+        fr: 'Au moins un ouvrant ouvert (alerte)'
+        es: 'Al menos una abertura abierta (alerta)'
+        de: 'Mindestens eine Öffnung offen (Alarm)'
+        it: 'Almeno un''apertura aperta (allarme)'
+        pl: 'Co najmniej jeden otwór otwarty (alarm)'
+        ru: 'Открыт минимум один проём (тревога)'
+        zh: '至少一个开口打开(警报)'
+        hu: 'Legalább egy nyílászáró nyitva (riasztás)'
+        pt: 'Pelo menos uma abertura aberta (alerta)'
+
+  OPENINGS_STATE_VALID:
+    bits: '1.5'
+    comment:
+      en: 'Validity of the openings-state bit (only taken into account when valid)'
+      fr: 'Validité du bit d''état des ouvrants (pris en compte uniquement si valide)'
+      es: 'Validez del bit de estado de las aberturas (solo se considera si es válido)'
+      de: 'Gültigkeit des Öffnungszustandsbits (nur berücksichtigt, wenn gültig)'
+      it: 'Validità del bit di stato delle aperture (considerato solo se valido)'
+      pl: 'Ważność bitu stanu otworów (uwzględniany tylko gdy ważny)'
+      ru: 'Достоверность бита состояния проёмов (учитывается только при достоверности)'
+      zh: '开口状态位的有效性(仅在有效时才被采用)'
+      hu: 'A nyílászáró-állapot bit érvényessége (csak érvényes esetén vesszük figyelembe)'
+      pt: 'Validade do bit de estado das aberturas (apenas considerado se válido)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  UNUSED_1:
+    bits: '1.4-1.0'
+    unused: true

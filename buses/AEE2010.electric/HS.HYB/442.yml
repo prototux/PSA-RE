@@ -1,0 +1,531 @@
+id: 0x442
+name: 'VCU_DRIVE_MODE_CAPABILITIES'
+type: 'can'
+length: 5
+comment:
+  en: 'Vehicle control unit data: available driving modes (normal, sport, eco, snow...), energy modes (hybrid, zero-emission, fuel) and drive-axle modes (auto, front, rear), plus cooling wake-up requests.'
+  fr: 'Données de l''unité de contrôle du véhicule : modes de conduite disponibles (normal, sport, éco, neige...), modes d''énergie (hybride, zéro émission, carburant) et modes d''essieu moteur (auto, avant, arrière), ainsi que les demandes de réveil pour le refroidissement.'
+  es: 'Datos de la unidad de control del vehículo: modos de conducción disponibles (normal, deportivo, eco, nieve...), modos de energía (híbrido, cero emisiones, combustible) y modos de eje motriz (automático, delantero, trasero), además de las solicitudes de activación para refrigeración.'
+  de: 'Daten der Fahrzeugsteuereinheit: verfügbare Fahrmodi (normal, sport, eco, schnee...), Energiemodi (hybrid, emissionsfrei, Kraftstoff) und Antriebsachsenmodi (auto, vorne, hinten), sowie Kühlungs-Weckanforderungen.'
+  it: 'Dati dell''unità di controllo veicolo: modalità di guida disponibili (normale, sport, eco, neve...), modalità energia (ibrida, zero emissioni, carburante) e modalità asse motore (auto, anteriore, posteriore), oltre alle richieste di risveglio per il raffreddamento.'
+  pl: 'Dane jednostki sterującej pojazdem: dostępne tryby jazdy (normalny, sportowy, eco, śnieg...), tryby energii (hybrydowy, zero emisji, paliwo) i tryby osi napędowej (auto, przednia, tylna), a także żądania wybudzenia do chłodzenia.'
+  ru: 'Данные блока управления автомобилем: доступные режимы движения (обычный, спорт, эко, снег...), энергетические режимы (гибрид, нулевые выбросы, топливо) и режимы ведущего моста (авто, передний, задний), а также запросы пробуждения для охлаждения.'
+  zh: '车辆控制单元数据:可用驾驶模式(普通、运动、经济、雪地……)、能量模式(混动、零排放、燃油)和驱动桥模式(自动、前、后),以及冷却唤醒请求。'
+  hu: 'A jármű vezérlőegység adatai: elérhető vezetési módok (normál, sport, eco, hó...), energiamódok (hibrid, nulla emissziós, üzemanyag) és hajtott tengely módok (automata, első, hátsó), valamint hűtési ébresztési kérések.'
+  pt: 'Dados da unidade de controlo do veículo: modos de condução disponíveis (normal, desportivo, eco, neve...), modos de energia (híbrido, emissões zero, combustível) e modos de eixo motor (automático, dianteiro, traseiro), além de pedidos de ativação do arrefecimento.'
+periodicity: ['50ms']
+senders: ['VCU']
+receivers: ['TBMU', 'OBC', 'ERAD', 'CMEL', 'CMM']
+
+signals:
+  VEHICLE_SPEED_WHEEL_SENSORS:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Vehicle speed (wheel sensors)'
+      fr: 'Vitesse du véhicule (capteurs de roues)'
+      es: 'Velocidad del vehículo (sensores de rueda)'
+      de: 'Fahrzeuggeschwindigkeit (Raddrehzahlsensoren)'
+      it: 'Velocità del veicolo (sensori ruota)'
+      pl: 'Prędkość pojazdu (czujniki kół)'
+      ru: 'Скорость автомобиля (датчики колёс)'
+      zh: '车速(车轮传感器)'
+      hu: 'Járműsebesség (kerékérzékelők)'
+      pt: 'Velocidade do veículo (sensores de roda)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  MAIN_WAKEUP_STATUS:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Main network wake-up request (RCD)'
+      fr: 'Demande de réveil principal du réseau (RCD)'
+      es: 'Solicitud de activación principal de la red (RCD)'
+      de: 'Anforderung des Hauptnetzwerk-Aufwachens (RCD)'
+      it: 'Richiesta di risveglio principale della rete (RCD)'
+      pl: 'Żądanie głównego wybudzenia sieci (RCD)'
+      ru: 'Запрос основного пробуждения сети (RCD)'
+      zh: '主网络唤醒请求(RCD)'
+      hu: 'A hálózat fő ébresztési kérése (RCD)'
+      pt: 'Pedido de ativação principal da rede (RCD)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid RCD'
+        fr: 'RCD invalide'
+        es: 'RCD no válido'
+        de: 'Ungültiges RCD'
+        it: 'RCD non valido'
+        pl: 'Nieprawidłowy RCD'
+        ru: 'Недействительный RCD'
+        zh: 'RCD无效'
+        hu: 'Érvénytelen RCD'
+        pt: 'RCD inválido'
+      0x01:
+        en: 'No main wake-up request'
+        fr: 'Pas de demande de réveil principal'
+        es: 'Sin solicitud de activación principal'
+        de: 'Keine Anforderung der Hauptaufwachfunktion'
+        it: 'Nessuna richiesta di riattivazione principale'
+        pl: 'Brak żądania głównego wybudzenia'
+        ru: 'Нет запроса основного пробуждения'
+        zh: '无主唤醒请求'
+        hu: 'Nincs fő ébresztési kérés'
+        pt: 'Sem pedido de despertar principal'
+      0x02:
+        en: 'Main wake-up request'
+        fr: 'Demande de réveil principal'
+        es: 'Solicitud de activación principal'
+        de: 'Hauptaufweckanforderung'
+        it: 'Richiesta di risveglio principale'
+        pl: 'Żądanie głównego wybudzenia'
+        ru: 'Запрос основного пробуждения'
+        zh: '主唤醒请求'
+        hu: 'Fő ébresztési kérés'
+        pt: 'Pedido de ativação principal'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  FAULT_LOG_CONTEXT:
+    bits: '3.5-3.0'
+    comment:
+      en: 'Fault log context information'
+      fr: 'Informations de contexte du journal de défauts'
+      es: 'Información de contexto del registro de fallos'
+      de: 'Kontextinformationen des Fehlerprotokolls'
+      it: 'Informazioni di contesto del registro guasti'
+      pl: 'Informacje kontekstowe dziennika usterek'
+      ru: 'Контекстная информация журнала неисправностей'
+      zh: '故障日志上下文信息'
+      hu: 'A hibanapló kontextusadatai'
+      pt: 'Informação de contexto do registo de falhas'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '4.7'
+    unused: true
+
+  MAIN_STATUS:
+    bits: '4.6-4.5'
+    comment:
+      en: 'Vehicle electrical system main state'
+      fr: 'État principal du système électrique véhicule (SEV)'
+      es: 'Estado principal del sistema eléctrico del vehículo (SEV)'
+      de: 'Hauptzustand des Fahrzeugbordnetzes (SEV)'
+      it: 'Stato principale del sistema elettrico veicolo (SEV)'
+      pl: 'Główny stan systemu elektrycznego pojazdu (SEV)'
+      ru: 'Основное состояние электрической системы автомобиля (SEV)'
+      zh: '车辆电气系统主状态 (SEV)'
+      hu: 'A jármű elektromos rendszerének fő állapota (SEV)'
+      pt: 'Estado principal do sistema elétrico do veículo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Stop'
+        fr: 'Arrêt'
+        es: 'Parada'
+        de: 'Stopp'
+        it: 'Arresto'
+        pl: 'Stop'
+        ru: 'Стоп'
+        zh: '停止'
+        hu: 'Leállás'
+        pt: 'Paragem'
+      0x01:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+      0x02:
+        en: 'DEM (starter)'
+        fr: 'DEM (démarreur)'
+        es: 'DEM (motor de arranque)'
+        de: 'DEM (Anlasser)'
+        it: 'DEM (motorino di avviamento)'
+        pl: 'DEM (rozrusznik)'
+        ru: 'DEM (стартер)'
+        zh: 'DEM(起动机)'
+        hu: 'DEM (önindító)'
+        pt: 'DEM (motor de arranque)'
+      0x03:
+        unused: true
+
+  ELECTRICAL_NETWORK_STATE:
+    bits: '4.4-4.1'
+    comment:
+      en: 'Vehicle electrical network state (nominal, degraded, available for start, starting, restarting)'
+      fr: 'État du réseau électrique du véhicule (nominal, dégradé, disponible pour démarrage, démarrage, redémarrage)'
+      es: 'Estado de la red eléctrica del vehículo (nominal, degradado, disponible para arranque, arranque, reinicio)'
+      de: 'Zustand des Fahrzeugbordnetzes (normal, eingeschränkt, startbereit, Start, Neustart)'
+      it: 'Stato della rete elettrica del veicolo (nominale, degradato, disponibile per l''avviamento, avviamento, riavviamento)'
+      pl: 'Stan sieci elektrycznej pojazdu (nominalny, obniżony, dostępny do rozruchu, rozruch, ponowny rozruch)'
+      ru: 'Статус бортовой электросети автомобиля (номинальный, ухудшенный, готов к запуску, запуск, перезапуск)'
+      zh: '车辆电网状态(正常、降级、可启动、启动中、重启中)'
+      hu: 'A jármű fedélzeti hálózatának állapota (névleges, korlátozott, indításra kész, indítás, újraindítás)'
+      pt: 'Estado da rede elétrica do veículo (nominal, degradado, disponível para arranque, a arrancar, a reiniciar)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Nominal torque interface'
+        fr: 'Interface couple nominal'
+        es: 'Interfaz de par nominal'
+        de: 'Nominal-Drehmoment-Schnittstelle'
+        it: 'Interfaccia coppia nominale'
+        pl: 'Interfejs momentu nominalnego'
+        ru: 'Интерфейс номинального крутящего момента'
+        zh: '标称转矩接口'
+        hu: 'Névleges nyomatékfelület'
+        pt: 'Interface de binário nominal'
+      0x01:
+        en: 'Degraded TI'
+        fr: 'TI dégradé'
+        es: 'TI degradado'
+        de: 'TI beeinträchtigt'
+        it: 'TI degradato'
+        pl: 'TI zdegradowane'
+        ru: 'TI в деградированном состоянии'
+        zh: 'TI 降级'
+        hu: 'TI vészüzem'
+        pt: 'TI degradado'
+      0x02:
+        en: 'Information availability request'
+        fr: 'Demande de disponibilité de l''information'
+        es: 'Solicitud de disponibilidad de información'
+        de: 'Anforderung der Informationsverfügbarkeit'
+        it: 'Richiesta di disponibilità delle informazioni'
+        pl: 'Żądanie dostępności informacji'
+        ru: 'Запрос доступности информации'
+        zh: '信息可用性请求'
+        hu: 'Információ elérhetőségi kérés'
+        pt: 'Pedido de disponibilidade da informação'
+      0x03:
+        en: 'Starting'
+        fr: 'Démarrage'
+        es: 'Arranque'
+        de: 'Start'
+        it: 'Avviamento'
+        pl: 'Rozruch'
+        ru: 'Запуск'
+        zh: '起动'
+        hu: 'Indítás'
+        pt: 'Arranque'
+      0x04:
+        en: 'Restart'
+        fr: 'Redémarrage'
+        es: 'Reinicio'
+        de: 'Neustart'
+        it: 'Riavvio'
+        pl: 'Ponowne uruchomienie'
+        ru: 'Перезапуск'
+        zh: '重新启动'
+        hu: 'Újraindítás'
+        pt: 'Reinício'
+      0x05:
+        en: 'Nominal'
+        fr: 'Nominal'
+        es: 'Nominal'
+        de: 'Nominal'
+        it: 'Nominal'
+        pl: 'Nominal'
+        ru: 'Nominal'
+        zh: 'Nominal'
+        hu: 'Nominal'
+        pt: 'Nominal'
+      0x06:
+        en: 'Degraded'
+        fr: 'Degraded'
+        es: 'Degraded'
+        de: 'Degraded'
+        it: 'Degraded'
+        pl: 'Degraded'
+        ru: 'Degraded'
+        zh: 'Degraded'
+        hu: 'Degraded'
+        pt: 'Degraded'
+      0x07:
+        en: 'Safe mode'
+        fr: 'Safe mode'
+        es: 'Safe mode'
+        de: 'Safe mode'
+        it: 'Safe mode'
+        pl: 'Safe mode'
+        ru: 'Safe mode'
+        zh: 'Safe mode'
+        hu: 'Safe mode'
+        pt: 'Safe mode'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  DIAG_STATUS:
+    bits: '4.0'
+    comment:
+      en: 'Multiplexed communication diagnostic status'
+      fr: 'État du diagnostic de communication multiplexée'
+      es: 'Estado del diagnóstico de comunicación multiplexada'
+      de: 'Status der Diagnose der multiplexierten Kommunikation'
+      it: 'Stato della diagnosi di comunicazione multiplata'
+      pl: 'Stan diagnostyki komunikacji multipleksowanej'
+      ru: 'Статус диагностики мультиплексной связи'
+      zh: '多路复用通信诊断状态'
+      hu: 'A multiplex kommunikáció diagnosztikai állapota'
+      pt: 'Estado do diagnóstico de comunicação multiplexada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No communication diagnostic'
+        fr: 'Pas de diagnostic de communication'
+        es: 'Sin diagnóstico de comunicación'
+        de: 'Keine Kommunikationsdiagnose'
+        it: 'Nessuna diagnostica di comunicazione'
+        pl: 'Brak diagnostyki komunikacji'
+        ru: 'Нет диагностики связи'
+        zh: '无通信诊断'
+        hu: 'Nincs kommunikációs diagnosztika'
+        pt: 'Sem diagnóstico de comunicação'
+      0x01:
+        en: 'Communication diagnostic on'
+        fr: 'Diagnostic de communication actif'
+        es: 'Diagnóstico de comunicación activo'
+        de: 'Kommunikationsdiagnose aktiv'
+        it: 'Diagnosi di comunicazione attiva'
+        pl: 'Aktywna diagnostyka komunikacji'
+        ru: 'Активна диагностика связи'
+        zh: '通信诊断已开启'
+        hu: 'Kommunikációs diagnosztika aktív'
+        pt: 'Diagnóstico de comunicação ativo'
+
+  PRE_DRIVE_WAKEUP:
+    bits: '5.7'
+    comment:
+      en: 'Partial wake-up status for CMM, VCU, TCU, MCU and TBMU wake-up ahead of driving.'
+      fr: 'État du réveil partiel pour le réveil des calculateurs CMM, VCU, TCU, MCU et TBMU en anticipation de la mise en roulage.'
+      es: 'Estado del despertar parcial para el despertar de las centralitas CMM, VCU, TCU, MCU y TBMU antes de circular.'
+      de: 'Status des Teil-Weckens für das Wecken der Steuergeräte CMM, VCU, TCU, MCU und TBMU vor der Fahrt.'
+      it: 'Stato del risveglio parziale per il risveglio delle centraline CMM, VCU, TCU, MCU e TBMU prima della marcia.'
+      pl: 'Stan częściowego wybudzenia dla wybudzenie sterowników CMM, VCU, TCU, MCU i TBMU przed jazdą.'
+      ru: 'Статус частичного пробуждения для пробуждение блоков CMM, VCU, TCU, MCU и TBMU перед началом движения.'
+      zh: '驾驶前唤醒CMM、VCU、TCU、MCU和TBMU控制单元的部分唤醒状态。'
+      hu: 'Részleges felébresztési állapot: a CMM, VCU, TCU, MCU és TBMU vezérlők felébresztését vezetés előtt.'
+      pt: 'Estado da ativação parcial para a ativação das centralinas CMM, VCU, TCU, MCU e TBMU antes da condução.'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  POST_DRIVE_WAKEUP_REQUEST:
+    bits: '5.6'
+    comment:
+      en: 'Post-drive wake-up request, keeping the OBC and TBMU awake for 2 minutes'
+      fr: 'Demande de réveil post-roulage, maintenant l''OBC et le TBMU éveillés pendant 2 minutes'
+      es: 'Solicitud de activación tras la conducción, manteniendo el OBC y el TBMU activos durante 2 minutos'
+      de: 'Aufwachanforderung nach der Fahrt, hält OBC und TBMU 2 Minuten lang aktiv'
+      it: 'Richiesta di risveglio post-guida, che mantiene attivi OBC e TBMU per 2 minuti'
+      pl: 'Żądanie wybudzenia po jeździe, utrzymujące OBC i TBMU aktywne przez 2 minuty'
+      ru: 'Запрос пробуждения после поездки, удерживающий OBC и TBMU активными в течение 2 минут'
+      zh: '行驶后唤醒请求,使 OBC 和 TBMU 保持唤醒2分钟'
+      hu: 'Vezetés utáni ébresztési kérés, amely 2 percig ébren tartja az OBC-t és a TBMU-t'
+      pt: 'Pedido de ativação pós-condução, mantendo o OBC e o TBMU ativos durante 2 minutos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  DELAYED_CHARGE_WAKEUP_REQUEST:
+    bits: '5.5'
+    comment:
+      en: 'Wake-up request to start delayed charging'
+      fr: 'Demande de réveil pour démarrer la recharge différée'
+      es: 'Solicitud de activación para iniciar la carga diferida'
+      de: 'Aufwachanforderung zum Start des verzögerten Ladevorgangs'
+      it: 'Richiesta di risveglio per avviare la ricarica differita'
+      pl: 'Żądanie wybudzenia w celu rozpoczęcia opóźnionego ładowania'
+      ru: 'Запрос пробуждения для запуска отложенной зарядки'
+      zh: '启动延迟充电的唤醒请求'
+      hu: 'Ébresztési kérés a késleltetett töltés indításához'
+      pt: 'Pedido de despertar para iniciar o carregamento diferido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  ELECTRICAL_PRECONDITIONING_WAKEUP_REQUEST:
+    bits: '5.4'
+    comment:
+      en: 'Wake-up request for electrical system preconditioning'
+      fr: 'Demande de réveil pour le préconditionnement par le système électrique'
+      es: 'Solicitud de activación para el preacondicionamiento por el sistema eléctrico'
+      de: 'Aufwachanforderung für die Vorkonditionierung durch das elektrische System'
+      it: 'Richiesta di risveglio per il precondizionamento tramite il sistema elettrico'
+      pl: 'Żądanie wybudzenia do wstępnej klimatyzacji przez system elektryczny'
+      ru: 'Запрос пробуждения для предварительного кондиционирования электрической системой'
+      zh: '电气系统预处理的唤醒请求'
+      hu: 'Ébresztési kérés az elektromos rendszer előkondicionálásához'
+      pt: 'Pedido de ativação para o pré-condicionamento pelo sistema elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  THERMAL_PRECONDITIONING_WAKEUP_REQUEST:
+    bits: '5.3'
+    comment:
+      en: 'Wake-up request for thermal system preconditioning'
+      fr: 'Demande de réveil pour le préconditionnement par le système thermique'
+      es: 'Solicitud de activación para el preacondicionamiento por el sistema térmico'
+      de: 'Aufwachanforderung für die Vorkonditionierung durch das Thermosystem'
+      it: 'Richiesta di risveglio per il precondizionamento tramite il sistema termico'
+      pl: 'Żądanie wybudzenia do wstępnej klimatyzacji przez system termiczny'
+      ru: 'Запрос пробуждения для предварительного кондиционирования тепловой системой'
+      zh: '热管理系统预处理的唤醒请求'
+      hu: 'Ébresztési kérés a hőrendszer előkondicionálásához'
+      pt: 'Pedido de ativação para o pré-condicionamento pelo sistema térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  UNUSED_2:
+    bits: '5.2-5.0'
+    unused: true

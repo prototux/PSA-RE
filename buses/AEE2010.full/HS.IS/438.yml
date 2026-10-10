@@ -1,0 +1,187 @@
+id: 0x438
+name: 'ENGINE_PERFORMANCE_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['50ms']
+senders: ['CMM']
+receivers: ['BVA']
+
+signals:
+  ENGINE_TORQUE_MINIMUM:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Minimum engine torque (N.m)'
+      fr: 'Couple moteur minimum (N.m)'
+      es: 'Par motor mínimo (N.m)'
+      de: 'Mindestes Motordrehmoment (N.m)'
+      it: 'Coppia motore minima (N.m)'
+      pl: 'Minimalny moment obrotowy silnika (N.m)'
+      ru: 'Минимальный крутящий момент двигателя (Н·м)'
+      zh: '最小发动机扭矩(N.m)'
+      hu: 'Minimális motornyomaték (N.m)'
+      pt: 'Binário mínimo do motor (N.m)'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x00
+
+  ENGINE_SPEED_AT_MAX_TORQUE:
+    bits: '2.7-3.6'
+    comment:
+      en: 'Engine speed at maximum torque (rpm)'
+      fr: 'Régime moteur au couple maximum (tr/min)'
+      es: 'Régimen del motor en el par máximo (rpm)'
+      de: 'Motordrehzahl bei maximalem Drehmoment (U/min)'
+      it: 'Regime motore alla coppia massima (giri/min)'
+      pl: 'Prędkość obrotowa silnika przy maksymalnym momencie obrotowym (obr/min)'
+      ru: 'Обороты двигателя при максимальном крутящем моменте (об/мин)'
+      zh: '最大扭矩时的发动机转速(rpm)'
+      hu: 'Motorfordulatszám a maximális nyomatéknál (ford/perc)'
+      pt: 'Regime do motor no binário máximo (rpm)'
+    type: 'uint'
+    factor: 10
+    min: 0
+    max: 6000
+    units: 'rpm'
+    invalid: 0x3FF
+    default: 0x1F4
+
+  ENGINE_PERFORMANCE_INDEX:
+    bits: '3.5-4.7'
+    comment:
+      en: 'Engine performance indicator (%)'
+      fr: 'Indicateur de performance moteur (%)'
+      es: 'Indicador de rendimiento del motor (%)'
+      de: 'Motorleistungsindikator (%)'
+      it: 'Indicatore di prestazione del motore (%)'
+      pl: 'Wskaźnik osiągów silnika (%)'
+      ru: 'Индикатор производительности двигателя (%)'
+      zh: '发动机性能指标(%)'
+      hu: 'Motorteljesítmény-mutató (%)'
+      pt: 'Indicador de desempenho do motor (%)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x64
+
+  SPORT_MODE_DISPLAY_BOOST_PRESSURE_RATIO:
+    bits: '4.6-4.0'
+    comment:
+      en: 'Maximum boost pressure ratio for sport-mode display'
+      fr: 'Ratio de pression de suralimentation maximum pour l''affichage en mode sport'
+      es: 'Relación de presión de sobrealimentación máxima para la pantalla en modo deportivo'
+      de: 'Maximales Ladedruckverhältnis für die Sportmodus-Anzeige'
+      it: 'Rapporto di pressione di sovralimentazione massima per la visualizzazione in modalità sport'
+      pl: 'Maksymalny stosunek ciśnienia doładowania do wyświetlania w trybie sport'
+      ru: 'Максимальное отношение давления наддува для отображения в спортивном режиме'
+      zh: '运动模式显示用的最大增压比'
+      hu: 'Maximális töltőnyomás-arány a sport módú kijelzéshez'
+      pt: 'Relação de pressão de sobrealimentação máxima para a visualização em modo desportivo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  SPORT_MODE_DISPLAY_POWER:
+    bits: '5.7-6.7'
+    comment:
+      en: 'Current power for sport-mode display'
+      fr: 'Puissance courante pour l''affichage en mode sport'
+      es: 'Potencia actual para la pantalla en modo deportivo'
+      de: 'Aktuelle Leistung für die Sportmodus-Anzeige'
+      it: 'Potenza attuale per la visualizzazione in modalità sport'
+      pl: 'Bieżąca moc do wyświetlania w trybie sport'
+      ru: 'Текущая мощность для отображения в спортивном режиме'
+      zh: '运动模式显示用的当前功率'
+      hu: 'Aktuális teljesítmény a sport módú kijelzéshez'
+      pt: 'Potência atual para a visualização em modo desportivo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 400
+    units: 'hp'
+    invalid: 0x1FF
+    default: 0x00
+
+  SPORT_MODE_DISPLAY_POWER_RATIO:
+    bits: '6.6-6.0'
+    comment:
+      en: 'Maximum power ratio for sport-mode display'
+      fr: 'Ratio de puissance maximum pour l''affichage en mode sport'
+      es: 'Relación de potencia máxima para la pantalla en modo deportivo'
+      de: 'Maximales Leistungsverhältnis für die Sportmodus-Anzeige'
+      it: 'Rapporto di potenza massima per la visualizzazione in modalità sport'
+      pl: 'Maksymalny stosunek mocy do wyświetlania w trybie sport'
+      ru: 'Максимальное отношение мощности для отображения в спортивном режиме'
+      zh: '运动模式显示用的最大功率比'
+      hu: 'Maximális teljesítményarány a sport módú kijelzéshez'
+      pt: 'Relação de potência máxima para a visualização em modo desportivo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  SPORT_MODE_DISPLAY_TORQUE:
+    bits: '7.7-8.7'
+    comment:
+      en: 'Current torque for sport-mode display'
+      fr: 'Couple courant pour l''affichage en mode sport'
+      es: 'Par motor actual para la pantalla en modo deportivo'
+      de: 'Aktuelles Drehmoment für die Sportmodus-Anzeige'
+      it: 'Coppia attuale per la visualizzazione in modalità sport'
+      pl: 'Bieżący moment obrotowy do wyświetlania w trybie sport'
+      ru: 'Текущий крутящий момент для отображения в спортивном режиме'
+      zh: '运动模式显示用的当前扭矩'
+      hu: 'Aktuális nyomaték a sport módú kijelzéshez'
+      pt: 'Binário atual para a visualização em modo desportivo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 500
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0x00
+
+  SPORT_MODE_DISPLAY_TORQUE_RATIO:
+    bits: '8.6-8.0'
+    comment:
+      en: 'Maximum torque ratio for sport-mode display'
+      fr: 'Ratio de couple maximum pour l''affichage en mode sport'
+      es: 'Relación de par máximo para la pantalla en modo deportivo'
+      de: 'Maximales Drehmomentverhältnis für die Sportmodus-Anzeige'
+      it: 'Rapporto di coppia massima per la visualizzazione in modalità sport'
+      pl: 'Maksymalny stosunek momentu obrotowego do wyświetlania w trybie sport'
+      ru: 'Максимальное отношение крутящего момента для отображения в спортивном режиме'
+      zh: '运动模式显示用的最大扭矩比'
+      hu: 'Maximális nyomatékarány a sport módú kijelzéshez'
+      pt: 'Relação de binário máximo para a visualização em modo desportivo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00

@@ -1,0 +1,176 @@
+id: 0x522
+name: 'BPVA_SUPERVISION'
+type: 'can'
+length: 8
+comment:
+  en: 'Electric vehicle charge status: charging station stop-charge request and charge-in-progress mode.'
+  fr: 'État de charge du véhicule électrique : demande d''arrêt de charge de la borne et mode charge en cours.'
+  es: 'Estado de carga del vehículo eléctrico: solicitud de parada de carga del punto de carga y modo de carga en curso.'
+  de: 'Ladestatus des Elektrofahrzeugs: Ladestopp-Anforderung der Ladestation und Modus „Ladevorgang läuft“.'
+  it: 'Stato di ricarica del veicolo elettrico: richiesta di arresto ricarica dalla colonnina e modalità ricarica in corso.'
+  pl: 'Stan ładowania pojazdu elektrycznego: żądanie zatrzymania ładowania ze stacji ładowania i tryb trwającego ładowania.'
+  ru: 'Статус зарядки электромобиля: запрос остановки зарядки от зарядной станции и режим выполняющейся зарядки.'
+  zh: '电动车充电状态:充电桩停止充电请求和充电进行中模式。'
+  hu: 'Az elektromos jármű töltési állapota: a töltőállomás töltésleállítási kérése és a folyamatban lévő töltés módja.'
+  pt: 'Estado de carga do veículo elétrico: pedido de paragem de carga do posto de carregamento e modo de carregamento em curso.'
+periodicity: ['1000ms']
+senders: ['E_VCU']
+receivers: ['BSI', 'MDS']
+
+signals:
+  DCDC_CONVERTER_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'DC/DC converter temperature (°C)'
+      fr: 'Température du convertisseur DC/DC (°C)'
+      es: 'Temperatura del convertidor DC/DC (°C)'
+      de: 'Temperatur des DC/DC-Wandlers (°C)'
+      it: 'Temperatura del convertitore DC/DC (°C)'
+      pl: 'Temperatura przetwornicy DC/DC (°C)'
+      ru: 'Температура преобразователя DC/DC (°C)'
+      zh: 'DC/DC变换器温度(°C)'
+      hu: 'A DC/DC átalakító hőmérséklete (°C)'
+      pt: 'Temperatura do conversor DC/DC (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+
+  INVERTER_WORKING_STATE:
+    bits: '4.7-4.5'
+    comment:
+      en: 'Traction inverter working state'
+      fr: 'État de fonctionnement de l''onduleur de traction'
+      es: 'Estado de funcionamiento del inversor de tracción'
+      de: 'Betriebszustand des Traktionswechselrichters'
+      it: 'Stato di funzionamento dell''inverter di trazione'
+      pl: 'Stan pracy falownika trakcyjnego'
+      ru: 'Рабочее состояние тягового инвертора'
+      zh: '牵引逆变器工作状态'
+      hu: 'A vontatási inverter üzemi állapota'
+      pt: 'Estado de funcionamento do inversor de tração'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Power off / wake-up'
+        fr: 'Extinction / réveil'
+        es: 'Apagado / activación'
+        de: 'Ausschalten / Aufwecken'
+        it: 'Spegnimento / risveglio'
+        pl: 'Wyłączenie / wybudzenie'
+        ru: 'Выключение / пробуждение'
+        zh: '关闭/唤醒'
+        hu: 'Kikapcsolás / ébresztés'
+        pt: 'Desligar / ativar'
+      0x01:
+        unused: true
+      0x02:
+        en: 'Ready'
+        fr: 'Prêt'
+        es: 'Listo'
+        de: 'Bereit'
+        it: 'Pronto'
+        pl: 'Gotowy'
+        ru: 'Готово'
+        zh: '就绪'
+        hu: 'Kész'
+        pt: 'Pronto'
+      0x03:
+        en: 'Functional'
+        fr: 'Fonctionnel'
+        es: 'Funcional'
+        de: 'Funktionsfähig'
+        it: 'Funzionale'
+        pl: 'Sprawne'
+        ru: 'Исправно'
+        zh: '功能正常'
+        hu: 'Működőképes'
+        pt: 'Funcional'
+      0x04:
+        en: 'Cooling down after use'
+        fr: 'Refroidissement après utilisation'
+        es: 'Enfriamiento tras el uso'
+        de: 'Abkühlung nach Gebrauch'
+        it: 'Raffreddamento dopo l''uso'
+        pl: 'Chłodzenie po użyciu'
+        ru: 'Охлаждение после использования'
+        zh: '使用后冷却'
+        hu: 'Lehűlés használat után'
+        pt: 'Arrefecimento após utilização'
+      0x05:
+        en: 'Deactivated'
+        fr: 'Désactivé'
+        es: 'Desactivado'
+        de: 'Deaktiviert'
+        it: 'Disattivato'
+        pl: 'Wyłączony'
+        ru: 'Отключено'
+        zh: '已停用'
+        hu: 'Letiltva'
+        pt: 'Desativado'
+      0x06:
+        en: 'Safety mode'
+        fr: 'Mode sécurité'
+        es: 'Modo de seguridad'
+        de: 'Sicherheitsmodus'
+        it: 'Modalità di sicurezza'
+        pl: 'Tryb bezpieczeństwa'
+        ru: 'Режим безопасности'
+        zh: '安全模式'
+        hu: 'Biztonsági üzemmód'
+        pt: 'Modo de segurança'
+      0x07:
+        en: 'Invalid value'
+        fr: 'Valeur invalide'
+        es: 'Valor no válido'
+        de: 'Ungültiger Wert'
+        it: 'Valore non valido'
+        pl: 'Nieprawidłowa wartość'
+        ru: 'Недопустимое значение'
+        zh: '无效值'
+        hu: 'Érvénytelen érték'
+        pt: 'Valor inválido'
+
+  HV_BATTERY_AVERAGE_TEMPERATURE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'HV battery average temperature (°C)'
+      fr: 'Température moyenne de la batterie haute tension (°C)'
+      es: 'Temperatura media de la batería de alta tensión (°C)'
+      de: 'Durchschnittstemperatur der Hochvoltbatterie (°C)'
+      it: 'Temperatura media della batteria ad alta tensione (°C)'
+      pl: 'Średnia temperatura akumulatora wysokiego napięcia (°C)'
+      ru: 'Средняя температура высоковольтной батареи (°C)'
+      zh: '高压电池平均温度(°C)'
+      hu: 'A nagyfeszültségű akkumulátor átlaghőmérséklete (°C)'
+      pt: 'Temperatura média da bateria de alta tensão (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 210
+    units: '°C'
+    invalid: 0xFF
+
+  CHARGE_REMAINING_TIME_DISPLAY:
+    bits: '7.3-8.0'
+    comment:
+      en: 'Remaining charging time to display (min)'
+      fr: 'Temps de charge restant à afficher (min)'
+      es: 'Tiempo de carga restante a mostrar (min)'
+      de: 'Anzuzeigende verbleibende Ladezeit (min)'
+      it: 'Tempo di ricarica residuo da visualizzare (min)'
+      pl: 'Pozostały czas ładowania do wyświetlenia (min)'
+      ru: 'Отображаемое оставшееся время зарядки (мин)'
+      zh: '待显示的剩余充电时间(min)'
+      hu: 'A megjelenítendő hátralévő töltési idő (perc)'
+      pt: 'Tempo de carga restante a mostrar (min)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 4093
+    units: 'min'
+    invalid: 0xFFF

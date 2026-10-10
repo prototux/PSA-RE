@@ -1,0 +1,329 @@
+id: 0x31C
+name: 'TRIP_COMPUTER_STATUS'
+type: 'can'
+length: 3
+comment:
+  en: 'Trip computer status: vehicle info display, self-check request/stop, trip 1/2 and partial odometer reset requests, message acknowledgement.'
+  fr: 'État de l''ordinateur de bord : affichage des infos véhicule, demande/arrêt d''autocontrôle, demandes de remise à zéro trajet 1/2 et de l''odomètre partiel, accusé de réception message.'
+  es: 'Estado del ordenador de a bordo: visualización de información del vehículo, solicitud/parada de autocomprobación, solicitudes de reinicio de trayecto 1/2 y del odómetro parcial, confirmación de mensaje.'
+  de: 'Status des Bordcomputers: Fahrzeuginfoanzeige, Selbsttestanforderung/-stopp, Reset-Anforderungen Fahrt 1/2 und Tageskilometerzähler, Nachrichtenbestätigung.'
+  it: 'Stato del computer di bordo: visualizzazione info veicolo, richiesta/arresto autotest, richieste di azzeramento percorso 1/2 e contachilometri parziale, conferma messaggio.'
+  pl: 'Stan komputera pokładowego: wyświetlanie informacji o pojeździe, żądanie/zatrzymanie autotestu, żądania resetu trasy 1/2 i licznika przebiegu częściowego, potwierdzenie komunikatu.'
+  ru: 'Статус бортового компьютера: отображение информации об автомобиле, запрос/остановка самопроверки, запросы сброса маршрута 1/2 и суточного пробега, подтверждение сообщения.'
+  zh: '行车电脑状态:车辆信息显示、自检请求/停止、行程1/2及小计里程复位请求、消息确认。'
+  hu: 'A fedélzeti számítógép állapota: járműinformáció kijelzése, önteszt kérése/leállítása, 1/2. útvonal és részleges kilométeróra nullázási kérései, üzenetnyugtázás.'
+  pt: 'Estado do computador de bordo: apresentação de informação do veículo, pedido/paragem de autoverificação, pedidos de reposição das viagens 1/2 e do conta-quilómetros parcial, confirmação de mensagem.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['200ms', 'trigger']
+senders: ['MATT']
+receivers: ['BSI']
+
+signals:
+  MATT_ALERT_CHECK_REQUEST:
+    bits: '1.7'
+    comment:
+      en: 'Check of alerts requested by the dot-matrix display'
+      fr: 'CHECK des alertes de la matrice de points demandé'
+      es: 'Comprobación de alertas solicitada por la matriz de puntos'
+      de: 'Angeforderte Prüfung der Warnungen der Punktmatrix'
+      it: 'Verifica degli allarmi richiesta dalla matrice a punti'
+      pl: 'Żądane sprawdzenie alertów wyświetlacza matrycowego'
+      ru: 'Запрошенная проверка предупреждений точечно-матричного дисплея'
+      zh: '点阵显示屏请求的警报检查'
+      hu: 'A pontmátrix kijelző riasztásainak kért ellenőrzése'
+      pt: 'Verificação dos alertas solicitada pela matriz de pontos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  MATT_CHECK_STOP_REQUEST:
+    bits: '1.6'
+    comment:
+      en: 'Order to interrupt the dot-matrix display check'
+      fr: 'Ordre d''interruption du CHECK de la matrice de points'
+      es: 'Orden de interrupción de la comprobación de la matriz de puntos'
+      de: 'Befehl zum Abbruch der Punktmatrix-Prüfung'
+      it: 'Ordine di interruzione della verifica della matrice a punti'
+      pl: 'Polecenie przerwania sprawdzania wyświetlacza matrycowego'
+      ru: 'Команда прерывания проверки точечно-матричного дисплея'
+      zh: '点阵显示屏检查中断指令'
+      hu: 'A pontmátrix kijelző ellenőrzésének megszakítási parancsa'
+      pt: 'Ordem de interrupção da verificação da matriz de pontos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  TRIP_ODOMETER_RESET_REQUEST_MATT:
+    bits: '1.5'
+    comment:
+      en: 'Reset of the partial trip odometer requested on the dot-matrix display'
+      fr: 'RAZ odomètre partiel de la matrice de points demandée'
+      es: 'Reinicio del odómetro parcial solicitado en la matriz de puntos'
+      de: 'Rücksetzung des Tageskilometerzählers der Punktmatrix angefordert'
+      it: 'Azzeramento del contachilometri parziale richiesto sulla matrice a punti'
+      pl: 'Żądane zerowanie licznika przebiegu cząstkowego wyświetlacza matrycowego'
+      ru: 'Запрошен сброс суточного счётчика пробега точечно-матричного дисплея'
+      zh: '点阵显示屏分段里程复位请求'
+      hu: 'A részleges kilométerszámláló nullázási kérése a pontmátrix kijelzőn'
+      pt: 'Reinicialização do odómetro parcial solicitada na matriz de pontos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  MATT_MAINTENANCE_RESET_REQUEST:
+    bits: '1.4'
+    comment:
+      en: 'Maintenance reset requested on the dot-matrix display'
+      fr: 'RAZ maintenance de la matrice de points demandée'
+      es: 'Reinicio de mantenimiento solicitado en la matriz de puntos'
+      de: 'Wartungsrücksetzung der Punktmatrix angefordert'
+      it: 'Azzeramento manutenzione richiesto sulla matrice a punti'
+      pl: 'Żądane zerowanie przeglądu wyświetlacza matrycowego'
+      ru: 'Запрошен сброс техобслуживания точечно-матричного дисплея'
+      zh: '点阵显示屏保养复位请求'
+      hu: 'A pontmátrix kijelző szervizállapotának nullázási kérése'
+      pt: 'Reinicialização de manutenção solicitada na matriz de pontos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  TRIP1_RESET_REQUEST_MATT:
+    bits: '1.3'
+    comment:
+      en: 'Reset request for trip 1 totals on the dot-matrix display'
+      fr: 'Demande de RAZ des cumuls trajet 1 de la matrice de points'
+      es: 'Solicitud de reinicio de los totales del trayecto 1 en la matriz de puntos'
+      de: 'Rücksetzanforderung der Summen von Fahrt 1 der Punktmatrix'
+      it: 'Richiesta di azzeramento dei totali del tragitto 1 della matrice a punti'
+      pl: 'Żądanie zerowania sum podróży 1 wyświetlacza matrycowego'
+      ru: 'Запрос сброса итогов поездки 1 точечно-матричного дисплея'
+      zh: '点阵显示屏行程1累计值复位请求'
+      hu: 'Az 1. út összesítőinek nullázási kérése a pontmátrix kijelzőn'
+      pt: 'Pedido de reinício dos acumulados do trajeto 1 na matriz de pontos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  TRIP2_RESET_REQUEST_MATT:
+    bits: '1.2'
+    comment:
+      en: 'Reset request for trip 2 totals on the dot-matrix display'
+      fr: 'Demande de RAZ des cumuls trajet 2 de la matrice de points'
+      es: 'Solicitud de reinicio de los totales del trayecto 2 en la matriz de puntos'
+      de: 'Rücksetzanforderung der Summen von Fahrt 2 der Punktmatrix'
+      it: 'Richiesta di azzeramento dei totali del tragitto 2 della matrice a punti'
+      pl: 'Żądanie zerowania sum podróży 2 wyświetlacza matrycowego'
+      ru: 'Запрос сброса итогов поездки 2 точечно-матричного дисплея'
+      zh: '点阵显示屏行程2累计值复位请求'
+      hu: 'A 2. út összesítőinek nullázási kérése a pontmátrix kijelzőn'
+      pt: 'Pedido de reinício dos acumulados do trajeto 2 na matriz de pontos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  DISPLAY_AVAILABILITY:
+    bits: '1.1'
+    comment:
+      en: 'Display availability'
+      fr: 'Disponibilité de l''afficheur'
+      es: 'Disponibilidad de la pantalla'
+      de: 'Verfügbarkeit der Anzeige'
+      it: 'Disponibilità del display'
+      pl: 'Dostępność wyświetlacza'
+      ru: 'Доступность дисплея'
+      zh: '显示屏可用性'
+      hu: 'A kijelző elérhetősége'
+      pt: 'Disponibilidade do ecrã'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x01:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  MESSAGE_ACK_POINTER:
+    bits: '2.7-3.1'
+    comment:
+      en: 'Pointer to the message to be acknowledged'
+      fr: 'Pointeur sur le message à acquitter'
+      es: 'Puntero al mensaje que debe confirmarse'
+      de: 'Zeiger auf die zu quittierende Nachricht'
+      it: 'Puntatore al messaggio da confermare'
+      pl: 'Wskaźnik do komunikatu wymagającego potwierdzenia'
+      ru: 'Указатель на подтверждаемое сообщение'
+      zh: '待确认消息的指针'
+      hu: 'A nyugtázandó üzenetre mutató pointer'
+      pt: 'Ponteiro para a mensagem a confirmar'
+    type: 'uint'
+    min: 0
+    max: 32767
+    default: 0x00
+
+  UNUSED_2:
+    bits: '3.0'
+    unused: true

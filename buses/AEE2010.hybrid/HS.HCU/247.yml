@@ -1,0 +1,219 @@
+id: 0x247
+name: 'HCU1_DYNAMIC_DATA_4'
+type: 'can'
+length: 7
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  PROCESS_COUNTER:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  EDTM_ESTIMATED_TORQUE:
+    bits: '1.3-2.2'
+    comment:
+      en: 'Actual EDTM torque estimated by the level-2 safety supervisor'
+      fr: 'Couple réel de l''EDTM estimé par le niveau 2 de sécurité'
+      es: 'Par real de EDTM estimado por el supervisor de seguridad de nivel 2'
+      de: 'Tatsächliches EDTM-Drehmoment, geschätzt von der Sicherheitsüberwachung Stufe 2'
+      it: 'Coppia reale EDTM stimata dal supervisore di sicurezza di livello 2'
+      pl: 'Rzeczywisty moment obrotowy EDTM szacowany przez nadzorcę bezpieczeństwa poziomu 2'
+      ru: 'Фактический момент EDTM, оценённый супервизором безопасности уровня 2'
+      zh: '二级安全监控器估算的EDTM实际扭矩'
+      hu: 'A 2. szintű biztonsági felügyelő által becsült tényleges EDTM-nyomaték'
+      pt: 'Binário real do EDTM estimado pelo supervisor de segurança de nível 2'
+    type: 'uint'
+    factor: 1
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FF
+    default: 0x1F4
+
+  EDTM_MAX_PERMITTED_TORQUE:
+    bits: '2.1-3.0'
+    comment:
+      en: 'EDTM maximum permitted torque, level-2 safety'
+      fr: 'Couple maximum autorisé de l''EDTM, niveau 2 de sécurité'
+      es: 'Par máximo permitido de EDTM, nivel de seguridad 2'
+      de: 'Maximal zulässiges EDTM-Drehmoment, Sicherheitsstufe 2'
+      it: 'Coppia massima consentita EDTM, sicurezza di livello 2'
+      pl: 'Maksymalny dopuszczalny moment obrotowy EDTM, poziom bezpieczeństwa 2'
+      ru: 'Максимально допустимый момент EDTM, уровень безопасности 2'
+      zh: 'EDTM最大允许扭矩,2级安全'
+      hu: 'Az EDTM maximálisan megengedett nyomatéka, 2. biztonsági szint'
+      pt: 'Binário máximo permitido do EDTM, nível de segurança 2'
+    type: 'uint'
+    factor: 1
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FF
+    default: 0x1F4
+
+  EDTM_MIN_PERMITTED_TORQUE:
+    bits: '4.7-5.6'
+    comment:
+      en: 'EDTM minimum permitted torque, level-2 safety'
+      fr: 'Couple minimum autorisé de l''EDTM, niveau 2 de sécurité'
+      es: 'Par mínimo permitido de EDTM, nivel de seguridad 2'
+      de: 'Minimal zulässiges EDTM-Drehmoment, Sicherheitsstufe 2'
+      it: 'Coppia minima consentita EDTM, sicurezza di livello 2'
+      pl: 'Minimalny dopuszczalny moment obrotowy EDTM, poziom bezpieczeństwa 2'
+      ru: 'Минимально допустимый момент EDTM, уровень безопасности 2'
+      zh: 'EDTM最小允许扭矩,2级安全'
+      hu: 'Az EDTM minimálisan megengedett nyomatéka, 2. biztonsági szint'
+      pt: 'Binário mínimo permitido do EDTM, nível de segurança 2'
+    type: 'uint'
+    factor: 1
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FF
+    default: 0x1F4
+
+  HCU2_AKS_STATE_REQUEST:
+    bits: '5.5-5.4'
+    comment:
+      en: 'Request to HCU2 to switch to AKS state'
+      fr: 'Demande au HCU2 de passer à l''état AKS'
+      es: 'Solicitud al HCU2 de pasar al estado AKS'
+      de: 'Anforderung an das HCU2, in den AKS-Zustand zu wechseln'
+      it: 'Richiesta all''HCU2 di passare allo stato AKS'
+      pl: 'Żądanie do HCU2 przejścia do stanu AKS'
+      ru: 'Запрос к HCU2 на переход в состояние AKS'
+      zh: '请求HCU2切换到AKS状态'
+      hu: 'Kérés a HCU2 felé az AKS állapotba váltásra'
+      pt: 'Pedido ao HCU2 para passar ao estado AKS'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Not defined'
+        fr: 'Non défini'
+        es: 'No definido'
+        de: 'Nicht definiert'
+        it: 'Non definito'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Nincs meghatározva'
+        pt: 'Não definido'
+      0x01:
+        en: 'HCU2 not going to AKS'
+        fr: 'HCU2 ne passe pas en AKS'
+        es: 'HCU2 no pasa a AKS'
+        de: 'HCU2 wechselt nicht zu AKS'
+        it: 'HCU2 non passa ad AKS'
+        pl: 'HCU2 nie przechodzi do AKS'
+        ru: 'HCU2 не переходит в AKS'
+        zh: 'HCU2未进入AKS'
+        hu: 'HCU2 nem vált AKS módba'
+        pt: 'O HCU2 não passa para AKS'
+      0x02:
+        en: 'HCU2 go to AKS'
+        fr: 'HCU2 passe en AKS'
+        es: 'HCU2 pasa a AKS'
+        de: 'HCU2 wechselt zu AKS'
+        it: 'HCU2 passa ad AKS'
+        pl: 'HCU2 przechodzi do AKS'
+        ru: 'HCU2 переходит в AKS'
+        zh: 'HCU2转入AKS'
+        hu: 'HCU2 átvált AKS-re'
+        pt: 'HCU2 vai para AKS'
+      0x03:
+        en: 'Not defined'
+        fr: 'Non défini'
+        es: 'No definido'
+        de: 'Nicht definiert'
+        it: 'Non definito'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Nincs meghatározva'
+        pt: 'Não definido'
+
+  FRAME_CHECKSUM:
+    bits: '5.3-5.0'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  EDTM_PTD_TORQUE_SAFETY:
+    bits: '6.7-7.6'
+    comment:
+      en: 'EDTM PTD torque for the safety level'
+      fr: 'Couple PTD de l''EDTM pour le niveau de sécurité'
+      es: 'Par PTD de EDTM para el nivel de seguridad'
+      de: 'PTD-Drehmoment des EDTM für die Sicherheitsebene'
+      it: 'Coppia PTD dell''EDTM per il livello di sicurezza'
+      pl: 'Moment obrotowy PTD EDTM dla poziomu bezpieczeństwa'
+      ru: 'Момент PTD блока EDTM для уровня безопасности'
+      zh: '安全层EDTM的PTD扭矩'
+      hu: 'Az EDTM PTD nyomatéka a biztonsági szinthez'
+      pt: 'Binário PTD do EDTM para o nível de segurança'
+    type: 'uint'
+    factor: 1
+    offset: -500
+    min: -500
+    max: 523
+    units: 'Nm'
+
+  EDTM_MODE_SAFETY:
+    bits: '7.5-7.2'
+    comment:
+      en: 'EDTM mode for the safety level'
+      fr: 'Mode de l''EDTM pour le niveau de sécurité'
+      es: 'Modo de EDTM para el nivel de seguridad'
+      de: 'EDTM-Modus für die Sicherheitsebene'
+      it: 'Modalità EDTM per il livello di sicurezza'
+      pl: 'Tryb EDTM dla poziomu bezpieczeństwa'
+      ru: 'Режим EDTM для уровня безопасности'
+      zh: '安全层的EDTM模式'
+      hu: 'Az EDTM módja a biztonsági szinthez'
+      pt: 'Modo do EDTM para o nível de segurança'
+    type: 'uint'
+    min: 0
+    max: 15
+
+  UNUSED_1:
+    bits: '7.1-7.0'
+    unused: true

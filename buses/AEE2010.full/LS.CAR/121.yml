@@ -1,0 +1,136 @@
+id: 0x121
+name: 'GEARBOX_RESTART_DATA'
+type: 'can'
+length: 3
+comment:
+  en: 'Engine restart command and restart counter, sent by the BSI to the gearbox/engine ECU.'
+  fr: 'Commande de redémarrage moteur et compteur de redémarrages, envoyés par la BSI au calculateur boîte/moteur.'
+  es: 'Orden de reinicio del motor y contador de reinicios, enviados por la BSI a la centralita de caja/motor.'
+  de: 'Motorneustartbefehl und Neustartzähler, von der BSI an das Getriebe-/Motorsteuergerät gesendet.'
+  it: 'Comando di riavvio motore e contatore di riavvii, inviati dalla BSI alla centralina cambio/motore.'
+  pl: 'Polecenie ponownego rozruchu silnika i licznik ponownych rozruchów, wysyłane przez BSI do sterownika skrzyni/silnika.'
+  ru: 'Команда перезапуска двигателя и счётчик перезапусков, отправляемые BSI в ЭБУ коробки передач/двигателя.'
+  zh: '由BSI发送给变速箱/发动机ECU的发动机重启命令及重启计数器。'
+  hu: 'A motor újraindítási parancsa és az újraindítás-számláló, a BSI küldi a váltó/motor vezérlőegységének.'
+  pt: 'Comando de reinício do motor e contador de reinícios, enviados pela BSI à unidade de controlo da caixa de velocidades/motor.'
+observations:
+  en: 'On state change of: STOP_START_PREPARATION_STATUS'
+  fr: 'Sur changement d''état de : STOP_START_PREPARATION_STATUS'
+  es: 'Al cambiar el estado de: STOP_START_PREPARATION_STATUS'
+  de: 'Bei Statusänderung von: STOP_START_PREPARATION_STATUS'
+  it: 'Al cambiamento di stato di: STOP_START_PREPARATION_STATUS'
+  pl: 'Wysyłane przy zmianie stanu: STOP_START_PREPARATION_STATUS'
+  ru: 'При изменении состояния: STOP_START_PREPARATION_STATUS'
+  zh: '当PREPA_AR_EN_COURS状态变化时'
+  hu: 'A(z) STOP_START_PREPARATION_STATUS állapotváltozásakor'
+  pt: 'Na mudança de estado de: STOP_START_PREPARATION_STATUS'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['BSM', 'BCM']
+
+signals:
+  STOP_START_PREPARATION_STATUS:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Stop-start restart preparation status'
+      fr: 'État de préparation du redémarrage (stop & start)'
+      es: 'Estado de preparación del reinicio (stop & start)'
+      de: 'Status der Neustartvorbereitung (Stop & Start)'
+      it: 'Stato di preparazione al riavvio (stop & start)'
+      pl: 'Stan przygotowania do ponownego rozruchu (stop & start)'
+      ru: 'Статус подготовки к перезапуску (стоп-старт)'
+      zh: '停止启动(Stop-Start)重启准备状态'
+      hu: 'Az újraindítás előkészítésének állapota (stop-start)'
+      pt: 'Estado de preparação do reinício (stop & start)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'No restart preparation in process'
+        fr: 'Pas de preparation redemarrage en cours'
+        es: 'Sin preparación de reinicio en curso'
+        de: 'Keine laufende Neustartvorbereitung'
+        it: 'Nessuna preparazione al riavvio in corso'
+        pl: 'Brak trwającego przygotowania do ponownego uruchomienia'
+        ru: 'Нет выполняемой подготовки к перезапуску'
+        zh: '无正在进行的重启准备'
+        hu: 'Nincs folyamatban lévő újraindítási előkészítés'
+        pt: 'Sem preparação de reinício em curso'
+      0x02:
+        en: 'Restart preparation in progress'
+        fr: 'Préparation du redémarrage en cours'
+        es: 'Preparación del reinicio en curso'
+        de: 'Neustartvorbereitung läuft'
+        it: 'Preparazione al riavvio in corso'
+        pl: 'Trwa przygotowanie do ponownego uruchomienia'
+        ru: 'Выполняется подготовка к перезапуску'
+        zh: '重启准备中'
+        hu: 'Újraindítás előkészítése folyamatban'
+        pt: 'Preparação do reinício em curso'
+      0x03:
+        unused: true
+
+  MEAP_COMMAND:
+    bits: '1.5'
+    comment:
+      en: 'Active grille shutter (MEAP) control command'
+      fr: 'Commande de pilotage du volet d''air actif (MEAP)'
+      es: 'Comando de control de la persiana de aire activa (MEAP)'
+      de: 'Steuerbefehl der aktiven Kühlerjalousie (MEAP)'
+      it: 'Comando di pilotaggio della serranda attiva del radiatore (MEAP)'
+      pl: 'Polecenie sterowania aktywną żaluzją chłodnicy (MEAP)'
+      ru: 'Команда управления активными жалюзи радиатора (MEAP)'
+      zh: '主动进气格栅(MEAP)控制指令'
+      hu: 'Az aktív hűtőrács-zsalu (MEAP) vezérlőparancsa'
+      pt: 'Comando de controlo da persiana de ar ativa (MEAP)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+      0x01:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+
+  UNUSED_1:
+    bits: '1.4-1.0'
+    unused: true
+
+  RESTART_COUNTER:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Engine restart counter'
+      fr: 'Compteur du nombre de redémarrages moteur'
+      es: 'Contador de reinicios del motor'
+      de: 'Zähler der Motorneustarts'
+      it: 'Contatore dei riavvii motore'
+      pl: 'Licznik liczby ponownych rozruchów silnika'
+      ru: 'Счётчик перезапусков двигателя'
+      zh: '发动机重启计数器'
+      hu: 'A motor újraindításainak számlálója'
+      pt: 'Contador do número de reinícios do motor'
+    type: 'uint'
+    factor: 50
+    offset: 1
+    min: 0
+    max: 3276750
+    default: 0x00

@@ -1,0 +1,544 @@
+id: 0x5F0
+name: 'RETRACTABLE_ROOF_FAST_STATUS'
+type: 'van'
+length: 7
+comment:
+  en: 'Retractable hard-top fast status, read by BSI with in-frame reply: display message and chime requests, window movement requests.'
+  fr: 'État rapide du toit escamotable, lu par la BSI avec réponse dans la trame : demandes d''affichage de message et de bruiteur, demandes de mouvement de vitre.'
+  es: 'Estado rápido del techo retráctil, leído por la BSI con respuesta en la trama: solicitudes de mensaje en pantalla y de zumbador, solicitudes de movimiento de cristal.'
+  de: 'Schnellstatus des versenkbaren Hardtops, von der BSI mit Antwort im Rahmen gelesen: Anzeigemeldungs- und Summeranforderungen, Fensterbewegungsanforderungen.'
+  it: 'Stato rapido del tettuccio rigido retrattile, letto dalla BSI con risposta nella trama: richieste di messaggio a display e cicalino, richieste di movimento cristallo.'
+  pl: 'Szybki stan chowanego twardego dachu, odczytywany przez BSI z odpowiedzią w ramce: żądania komunikatu wyświetlacza i brzęczyka, żądania ruchu szyby.'
+  ru: 'Быстрый статус складной жёсткой крыши, считываемый BSI с ответом в кадре: запросы сообщения на дисплее и зуммера, запросы движения стекла.'
+  zh: '硬顶敞篷车顶快速状态,由BSI帧内应答读取:显示消息和提示音请求、车窗移动请求。'
+  hu: 'A behúzható kemény tető gyors állapota, a BSI által keretválasszal olvasva: kijelzőüzenet- és hangjelzés-kérések, ablakmozgás-kérések.'
+  pt: 'Estado rápido do teto rígido retrátil, lido pela BSI com resposta na trama: mensagem de apresentação e pedidos de sinal sonoro, pedidos de movimento do vidro.'
+periodicity: ['50ms']
+senders: ['BTE']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '2.7-2.5'
+    unused: true
+
+  ROOF_LOCK_FORGOTTEN_DISPLAY_REQUEST:
+    bits: '2.4'
+    comment:
+      en: 'Request to display "roof not locked" warning'
+      fr: 'Demande d''affichage de l''alerte « toit non verrouillé »'
+      es: 'Solicitud de visualización del aviso "techo no bloqueado"'
+      de: 'Anforderung zur Anzeige der Warnung „Dach nicht verriegelt“'
+      it: 'Richiesta di visualizzazione dell''avviso "tetto non bloccato"'
+      pl: 'Żądanie wyświetlenia ostrzeżenia „dach niezablokowany”'
+      ru: 'Запрос отображения предупреждения «крыша не заблокирована»'
+      zh: '显示“车顶未锁定”警告的请求'
+      hu: 'A „tető nincs zárva” figyelmeztetés megjelenítésének kérése'
+      pt: 'Pedido de visualização do aviso «tejadilho não bloqueado»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No message to display'
+        fr: 'Pas de message à afficher'
+        es: 'Sin mensaje que mostrar'
+        de: 'Keine anzuzeigende Meldung'
+        it: 'Nessun messaggio da visualizzare'
+        pl: 'Brak komunikatu do wyświetlenia'
+        ru: 'Нет сообщения для отображения'
+        zh: '无待显示消息'
+        hu: 'Nincs megjelenítendő üzenet'
+        pt: 'Nenhuma mensagem a mostrar'
+      0x01:
+        en: 'Message to display'
+        fr: 'Message à afficher'
+        es: 'Mensaje a mostrar'
+        de: 'Anzuzeigende Meldung'
+        it: 'Messaggio da visualizzare'
+        pl: 'Komunikat do wyświetlenia'
+        ru: 'Сообщение для отображения'
+        zh: '待显示消息'
+        hu: 'Megjelenítendő üzenet'
+        pt: 'Mensagem a apresentar'
+
+  SPEED_THRESHOLD_EXCEEDED_DISPLAY_REQUEST:
+    bits: '2.3'
+    comment:
+      en: 'Request to display "speed threshold exceeded" warning'
+      fr: 'Demande d''affichage de l''alerte « seuil de vitesse dépassé »'
+      es: 'Solicitud de visualización del aviso "umbral de velocidad superado"'
+      de: 'Anforderung zur Anzeige der Warnung „Geschwindigkeitsschwelle überschritten“'
+      it: 'Richiesta di visualizzazione dell''avviso "soglia di velocità superata"'
+      pl: 'Żądanie wyświetlenia ostrzeżenia „przekroczony próg prędkości”'
+      ru: 'Запрос отображения предупреждения «превышен порог скорости»'
+      zh: '显示“超过速度阈值”警告的请求'
+      hu: 'A „sebességküszöb túllépve” figyelmeztetés megjelenítésének kérése'
+      pt: 'Pedido de visualização do aviso «limiar de velocidade ultrapassado»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No message to display'
+        fr: 'Pas de message à afficher'
+        es: 'Sin mensaje que mostrar'
+        de: 'Keine anzuzeigende Meldung'
+        it: 'Nessun messaggio da visualizzare'
+        pl: 'Brak komunikatu do wyświetlenia'
+        ru: 'Нет сообщения для отображения'
+        zh: '无待显示消息'
+        hu: 'Nincs megjelenítendő üzenet'
+        pt: 'Nenhuma mensagem a mostrar'
+      0x01:
+        en: 'Message to display'
+        fr: 'Message à afficher'
+        es: 'Mensaje a mostrar'
+        de: 'Anzuzeigende Meldung'
+        it: 'Messaggio da visualizzare'
+        pl: 'Komunikat do wyświetlenia'
+        ru: 'Сообщение для отображения'
+        zh: '待显示消息'
+        hu: 'Megjelenítendő üzenet'
+        pt: 'Mensagem a apresentar'
+
+  BOOT_OPEN_DISPLAY_REQUEST:
+    bits: '2.2'
+    comment:
+      en: 'Request to display "boot open" warning'
+      fr: 'Demande d''affichage de l''alerte « coffre ouvert »'
+      es: 'Solicitud de visualización del aviso "maletero abierto"'
+      de: 'Anforderung zur Anzeige der Warnung „Kofferraum offen“'
+      it: 'Richiesta di visualizzazione dell''avviso "bagagliaio aperto"'
+      pl: 'Żądanie wyświetlenia ostrzeżenia „bagażnik otwarty”'
+      ru: 'Запрос отображения предупреждения «багажник открыт»'
+      zh: '显示“行李厢开启”警告的请求'
+      hu: 'A „csomagtartó nyitva” figyelmeztetés megjelenítésének kérése'
+      pt: 'Pedido de visualização do aviso «mala aberta»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No message to display'
+        fr: 'Pas de message à afficher'
+        es: 'Sin mensaje que mostrar'
+        de: 'Keine anzuzeigende Meldung'
+        it: 'Nessun messaggio da visualizzare'
+        pl: 'Brak komunikatu do wyświetlenia'
+        ru: 'Нет сообщения для отображения'
+        zh: '无待显示消息'
+        hu: 'Nincs megjelenítendő üzenet'
+        pt: 'Nenhuma mensagem a mostrar'
+      0x01:
+        en: 'Message to display'
+        fr: 'Message à afficher'
+        es: 'Mensaje a mostrar'
+        de: 'Anzuzeigende Meldung'
+        it: 'Messaggio da visualizzare'
+        pl: 'Komunikat do wyświetlenia'
+        ru: 'Сообщение для отображения'
+        zh: '待显示消息'
+        hu: 'Megjelenítendő üzenet'
+        pt: 'Mensagem a apresentar'
+
+  ROOF_LOCKED_DISPLAY_REQUEST:
+    bits: '2.1'
+    comment:
+      en: 'Request to display "roof locked" message'
+      fr: 'Demande d''affichage du message « toit verrouillé »'
+      es: 'Solicitud de visualización del mensaje "techo bloqueado"'
+      de: 'Anforderung zur Anzeige der Meldung „Dach verriegelt“'
+      it: 'Richiesta di visualizzazione del messaggio "tetto bloccato"'
+      pl: 'Żądanie wyświetlenia komunikatu „dach zablokowany”'
+      ru: 'Запрос отображения сообщения «крыша заблокирована»'
+      zh: '显示“车顶已锁定”信息的请求'
+      hu: 'A „tető zárva” üzenet megjelenítésének kérése'
+      pt: 'Pedido de visualização da mensagem «tejadilho bloqueado»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No message to display'
+        fr: 'Pas de message à afficher'
+        es: 'Sin mensaje que mostrar'
+        de: 'Keine anzuzeigende Meldung'
+        it: 'Nessun messaggio da visualizzare'
+        pl: 'Brak komunikatu do wyświetlenia'
+        ru: 'Нет сообщения для отображения'
+        zh: '无待显示消息'
+        hu: 'Nincs megjelenítendő üzenet'
+        pt: 'Nenhuma mensagem a mostrar'
+      0x01:
+        en: 'Message to display'
+        fr: 'Message à afficher'
+        es: 'Mensaje a mostrar'
+        de: 'Anzuzeigende Meldung'
+        it: 'Messaggio da visualizzare'
+        pl: 'Komunikat do wyświetlenia'
+        ru: 'Сообщение для отображения'
+        zh: '待显示消息'
+        hu: 'Megjelenítendő üzenet'
+        pt: 'Mensagem a apresentar'
+
+  BLIND_NOT_DRAWN_DISPLAY_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Request to display "boot separator blind not drawn" warning'
+      fr: 'Demande d''affichage de l''alerte « rideau de séparation coffre non tiré »'
+      es: 'Solicitud de visualización del aviso "persiana separadora del maletero no cerrada"'
+      de: 'Anforderung zur Anzeige der Warnung „Kofferraumtrennrollo nicht ausgezogen“'
+      it: 'Richiesta di visualizzazione dell''avviso "tendina divisoria del bagagliaio non chiusa"'
+      pl: 'Żądanie wyświetlenia ostrzeżenia „roleta oddzielająca bagażnik nierozłożona”'
+      ru: 'Запрос отображения предупреждения «разделительная шторка багажника не выдвинута»'
+      zh: '显示“行李厢隔帘未拉出”警告的请求'
+      hu: 'A „csomagtér-elválasztó roló nincs kihúzva” figyelmeztetés megjelenítésének kérése'
+      pt: 'Pedido de visualização do aviso «cortina separadora da mala não fechada»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No message to display'
+        fr: 'Pas de message à afficher'
+        es: 'Sin mensaje que mostrar'
+        de: 'Keine anzuzeigende Meldung'
+        it: 'Nessun messaggio da visualizzare'
+        pl: 'Brak komunikatu do wyświetlenia'
+        ru: 'Нет сообщения для отображения'
+        zh: '无待显示消息'
+        hu: 'Nincs megjelenítendő üzenet'
+        pt: 'Nenhuma mensagem a mostrar'
+      0x01:
+        en: 'Message to display'
+        fr: 'Message à afficher'
+        es: 'Mensaje a mostrar'
+        de: 'Anzuzeigende Meldung'
+        it: 'Messaggio da visualizzare'
+        pl: 'Komunikat do wyświetlenia'
+        ru: 'Сообщение для отображения'
+        zh: '待显示消息'
+        hu: 'Megjelenítendő üzenet'
+        pt: 'Mensagem a apresentar'
+
+  UNUSED_2:
+    bits: '3.7-3.3'
+    unused: true
+
+  CATEGORY_5_SOUND_REQUEST:
+    bits: '3.2'
+    comment:
+      en: 'Category 5 chime request'
+      fr: 'Demande de son de catégorie 5'
+      es: 'Solicitud de sonido de categoría 5'
+      de: 'Anforderung eines Signaltons der Kategorie 5'
+      it: 'Richiesta di segnale acustico di categoria 5'
+      pl: 'Żądanie dźwięku kategorii 5'
+      ru: 'Запрос звукового сигнала категории 5'
+      zh: '第5类提示音请求'
+      hu: '5. kategóriájú hangjelzés kérése'
+      pt: 'Pedido de som de categoria 5'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sound requested'
+        fr: 'Pas de son demandé'
+        es: 'Sin sonido solicitado'
+        de: 'Kein Ton angefordert'
+        it: 'Nessun suono richiesto'
+        pl: 'Nie zażądano dźwięku'
+        ru: 'Звук не запрошен'
+        zh: '未请求声音'
+        hu: 'Nincs kért hang'
+        pt: 'Sem som pedido'
+      0x01:
+        en: 'Sound requested'
+        fr: 'Son demandé'
+        es: 'Sonido solicitado'
+        de: 'Ton angefordert'
+        it: 'Suono richiesto'
+        pl: 'Żądany dźwięk'
+        ru: 'Запрошен звук'
+        zh: '请求声音'
+        hu: 'Hang kérve'
+        pt: 'Som solicitado'
+
+  CATEGORY_4_SOUND_REQUEST:
+    bits: '3.1'
+    comment:
+      en: 'Category 4 chime request'
+      fr: 'Demande de son de catégorie 4'
+      es: 'Solicitud de sonido de categoría 4'
+      de: 'Anforderung eines Signaltons der Kategorie 4'
+      it: 'Richiesta di segnale acustico di categoria 4'
+      pl: 'Żądanie dźwięku kategorii 4'
+      ru: 'Запрос звукового сигнала категории 4'
+      zh: '第4类提示音请求'
+      hu: '4. kategóriájú hangjelzés kérése'
+      pt: 'Pedido de som de categoria 4'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sound requested'
+        fr: 'Pas de son demandé'
+        es: 'Sin sonido solicitado'
+        de: 'Kein Ton angefordert'
+        it: 'Nessun suono richiesto'
+        pl: 'Nie zażądano dźwięku'
+        ru: 'Звук не запрошен'
+        zh: '未请求声音'
+        hu: 'Nincs kért hang'
+        pt: 'Sem som pedido'
+      0x01:
+        en: 'Sound requested'
+        fr: 'Son demandé'
+        es: 'Sonido solicitado'
+        de: 'Ton angefordert'
+        it: 'Suono richiesto'
+        pl: 'Żądany dźwięk'
+        ru: 'Запрошен звук'
+        zh: '请求声音'
+        hu: 'Hang kérve'
+        pt: 'Som solicitado'
+
+  CATEGORY_3_SOUND_REQUEST:
+    bits: '3.0'
+    comment:
+      en: 'Category 3 chime request'
+      fr: 'Demande de son de catégorie 3'
+      es: 'Solicitud de sonido de categoría 3'
+      de: 'Anforderung eines Signaltons der Kategorie 3'
+      it: 'Richiesta di segnale acustico di categoria 3'
+      pl: 'Żądanie dźwięku kategorii 3'
+      ru: 'Запрос звукового сигнала категории 3'
+      zh: '第3类提示音请求'
+      hu: '3. kategóriájú hangjelzés kérése'
+      pt: 'Pedido de som de categoria 3'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sound requested'
+        fr: 'Pas de son demandé'
+        es: 'Sin sonido solicitado'
+        de: 'Kein Ton angefordert'
+        it: 'Nessun suono richiesto'
+        pl: 'Nie zażądano dźwięku'
+        ru: 'Звук не запрошен'
+        zh: '未请求声音'
+        hu: 'Nincs kért hang'
+        pt: 'Sem som pedido'
+      0x01:
+        en: 'Sound requested'
+        fr: 'Son demandé'
+        es: 'Sonido solicitado'
+        de: 'Ton angefordert'
+        it: 'Suono richiesto'
+        pl: 'Żądany dźwięk'
+        ru: 'Запрошен звук'
+        zh: '请求声音'
+        hu: 'Hang kérve'
+        pt: 'Som solicitado'
+
+  UNUSED_3:
+    bits: '4.7'
+    unused: true
+
+  WINDOW_COMMAND_INHIBIT_REQUEST:
+    bits: '4.6'
+    comment:
+      en: 'Request to inhibit power window commands'
+      fr: 'Demande d''inhibition des commandes de lève-vitre'
+      es: 'Solicitud de inhibición de los mandos de los elevalunas'
+      de: 'Anforderung zur Sperrung der Fensterheberbedienung'
+      it: 'Richiesta di inibizione dei comandi degli alzacristalli'
+      pl: 'Żądanie zablokowania sterowania szybami'
+      ru: 'Запрос блокировки управления стеклоподъёмниками'
+      zh: '车窗控制禁用请求'
+      hu: 'Az ablakemelő-vezérlés letiltásának kérése'
+      pt: 'Pedido de inibição dos comandos dos vidros elétricos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Command allowed'
+        fr: 'Commande possible'
+        es: 'Comando posible'
+        de: 'Befehl möglich'
+        it: 'Comando possibile'
+        pl: 'Polecenie możliwe'
+        ru: 'Команда возможна'
+        zh: '指令可行'
+        hu: 'Parancs lehetséges'
+        pt: 'Comando permitido'
+      0x01:
+        en: 'Command inhibited'
+        fr: 'Commande inhibée'
+        es: 'Mando inhibido'
+        de: 'Befehl gesperrt'
+        it: 'Comando inibito'
+        pl: 'Polecenie zablokowane'
+        ru: 'Команда заблокирована'
+        zh: '指令已禁用'
+        hu: 'A parancs letiltva'
+        pt: 'Comando inibido'
+
+  REAR_WINDOWS_MOVE_REQUEST:
+    bits: '4.5-4.3'
+    comment:
+      en: 'Rear windows movement request (other values invalid)'
+      fr: 'Demande de mouvement des vitres arrière (autres valeurs invalides)'
+      es: 'Solicitud de movimiento de los cristales traseros (otros valores no válidos)'
+      de: 'Bewegungsanforderung der hinteren Scheiben (andere Werte ungültig)'
+      it: 'Richiesta di movimento dei cristalli posteriori (altri valori non validi)'
+      pl: 'Żądanie ruchu tylnych szyb (pozostałe wartości nieprawidłowe)'
+      ru: 'Запрос движения задних стёкол (прочие значения недействительны)'
+      zh: '后车窗移动请求（其他数值无效）'
+      hu: 'A hátsó ablakok mozgatási kérése (a többi érték érvénytelen)'
+      pt: 'Pedido de movimento dos vidros traseiros (outros valores inválidos)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Aucune demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Raise request'
+        fr: 'Demande de montée'
+        es: 'Solicitud de subida'
+        de: 'Anforderung zum Anheben'
+        it: 'Richiesta di salita'
+        pl: 'Żądanie podniesienia'
+        ru: 'Запрос подъёма'
+        zh: '上升请求'
+        hu: 'Emelési kérés'
+        pt: 'Pedido de subida'
+      0x02:
+        en: 'Ajar (partial open) request'
+        fr: 'Demande d''entrebâillement'
+        es: 'Solicitud de apertura parcial'
+        de: 'Anforderung Teilöffnung'
+        it: 'Richiesta di apertura parziale'
+        pl: 'Żądanie uchylenia'
+        ru: 'Запрос частичного открытия'
+        zh: '半开请求'
+        hu: 'Résre nyitási kérés'
+        pt: 'Pedido de abertura parcial'
+      0x03:
+        en: 'Lowering request'
+        fr: 'Demande de descente'
+        es: 'Solicitud de bajada'
+        de: 'Absenkanforderung'
+        it: 'Richiesta di discesa'
+        pl: 'Żądanie opuszczenia'
+        ru: 'Запрос опускания'
+        zh: '下降请求'
+        hu: 'Süllyesztési kérés'
+        pt: 'Pedido de descida'
+
+  FRONT_WINDOWS_MOVE_REQUEST:
+    bits: '4.2-4.0'
+    comment:
+      en: 'Front windows movement request (other values invalid)'
+      fr: 'Demande de mouvement des vitres avant (autres valeurs invalides)'
+      es: 'Solicitud de movimiento de los cristales delanteros (otros valores no válidos)'
+      de: 'Bewegungsanforderung der vorderen Scheiben (andere Werte ungültig)'
+      it: 'Richiesta di movimento dei cristalli anteriori (altri valori non validi)'
+      pl: 'Żądanie ruchu przednich szyb (pozostałe wartości nieprawidłowe)'
+      ru: 'Запрос движения передних стёкол (прочие значения недействительны)'
+      zh: '前车窗移动请求（其他数值无效）'
+      hu: 'Az első ablakok mozgatási kérése (a többi érték érvénytelen)'
+      pt: 'Pedido de movimento dos vidros dianteiros (outros valores inválidos)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Aucune demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Raise request'
+        fr: 'Demande de montée'
+        es: 'Solicitud de subida'
+        de: 'Anforderung zum Anheben'
+        it: 'Richiesta di salita'
+        pl: 'Żądanie podniesienia'
+        ru: 'Запрос подъёма'
+        zh: '上升请求'
+        hu: 'Emelési kérés'
+        pt: 'Pedido de subida'
+      0x02:
+        en: 'Ajar (partial open) request'
+        fr: 'Demande d''entrebâillement'
+        es: 'Solicitud de apertura parcial'
+        de: 'Anforderung Teilöffnung'
+        it: 'Richiesta di apertura parziale'
+        pl: 'Żądanie uchylenia'
+        ru: 'Запрос частичного открытия'
+        zh: '半开请求'
+        hu: 'Résre nyitási kérés'
+        pt: 'Pedido de abertura parcial'
+      0x03:
+        en: 'Lowering request'
+        fr: 'Demande de descente'
+        es: 'Solicitud de bajada'
+        de: 'Absenkanforderung'
+        it: 'Richiesta di discesa'
+        pl: 'Żądanie opuszczenia'
+        ru: 'Запрос опускания'
+        zh: '下降请求'
+        hu: 'Süllyesztési kérés'
+        pt: 'Pedido de descida'
+
+  UNUSED_4:
+    bits: '5.7-5.0'
+    unused: true
+
+  FOOTER:
+    bits: '6.7-6.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

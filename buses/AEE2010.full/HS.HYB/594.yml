@@ -1,0 +1,227 @@
+id: 0x594
+name: 'HV_BATTERY_MANAGEMENT_DATA_6'
+type: 'can'
+length: 6
+comment:
+  en: 'HV battery management data: engine auto-stop authorisation, warning-lamp reset command and request, climate-control inhibition, engine action request, and battery state of charge/state of health.'
+  fr: 'Données de gestion batterie HT : autorisation d''arrêt automatique moteur, commande et demande de remise à zéro du voyant, inhibition climatisation, demande d''action moteur, et état de charge/état de santé de la batterie.'
+  es: 'Datos de gestión de batería de alta tensión: autorización de parada automática del motor, comando y solicitud de reinicio del testigo, inhibición de la climatización, solicitud de acción del motor, y estado de carga/estado de salud de la batería.'
+  de: 'Hochvoltbatterie-Managementdaten: Freigabe des automatischen Motorstopps, Rücksetzbefehl und -anforderung der Kontrollleuchte, Klimaanlagensperre, Motoraktionsanforderung sowie Ladezustand/Alterungszustand der Batterie.'
+  it: 'Dati di gestione batteria AT: autorizzazione arresto automatico motore, comando e richiesta di reset spia, inibizione climatizzazione, richiesta di azione motore, e stato di carica/stato di salute della batteria.'
+  pl: 'Dane zarządzania akumulatorem WN: autoryzacja automatycznego zatrzymania silnika, polecenie i żądanie kasowania kontrolki, blokada klimatyzacji, żądanie działania silnika oraz stan naładowania/stan zdrowia akumulatora.'
+  ru: 'Данные управления высоковольтной батареей: разрешение автоматической остановки двигателя, команда и запрос сброса индикатора, блокировка кондиционера, запрос действия двигателя, а также уровень заряда/состояние батареи.'
+  zh: '高压电池管理数据:发动机自动停止授权、警示灯复位命令和请求、空调抑制、发动机动作请求,以及电池充电状态/健康状态。'
+  hu: 'Nagyfeszültségű akkumulátor kezelési adatok: motor automatikus leállásának engedélyezése, jelzőlámpa visszaállítási parancs és kérés, klíma letiltása, motorművelet kérése, valamint az akkumulátor töltöttségi/állapotszintje.'
+  pt: 'Dados de gestão da bateria de alta tensão: autorização de paragem automática do motor, comando e pedido de reposição da luz avisadora, inibição da climatização, pedido de ação do motor, e estado de carga/estado de saúde da bateria.'
+observations:
+  en: 'On state change of: HV_BATTERY_INSULATION_FAULT_STATUS'
+  fr: 'Sur changement d''état de : HV_BATTERY_INSULATION_FAULT_STATUS'
+  es: 'Al cambiar el estado de: HV_BATTERY_INSULATION_FAULT_STATUS'
+  de: 'Bei Statusänderung von: HV_BATTERY_INSULATION_FAULT_STATUS'
+  it: 'Al cambiamento di stato di: HV_BATTERY_INSULATION_FAULT_STATUS'
+  pl: 'Wysyłane przy zmianie stanu: HV_BATTERY_INSULATION_FAULT_STATUS'
+  ru: 'При изменении состояния: HV_BATTERY_INSULATION_FAULT_STATUS'
+  zh: '当HV_BATT_INSUL_FAILURE状态变化时'
+  hu: 'A(z) HV_BATTERY_INSULATION_FAULT_STATUS állapotváltozásakor'
+  pt: 'Na mudança de estado de: HV_BATTERY_INSULATION_FAULT_STATUS'
+periodicity: ['1000ms', 'trigger']
+senders: ['TBMU']
+receivers: ['CMM', 'OBC', 'VCU']
+
+signals:
+  HV_BATTERY_COOLANT_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'HV battery coolant temperature'
+      fr: 'Température du liquide de refroidissement de la batterie haute tension'
+      es: 'Temperatura del refrigerante de la batería de alta tensión'
+      de: 'Kühlmitteltemperatur der Hochvoltbatterie'
+      it: 'Temperatura del liquido di raffreddamento della batteria ad alta tensione'
+      pl: 'Temperatura chłodziwa akumulatora wysokiego napięcia'
+      ru: 'Температура охлаждающей жидкости высоковольтной батареи'
+      zh: '高压电池冷却液温度'
+      hu: 'A nagyfeszültségű akkumulátor hűtőfolyadék-hőmérséklete'
+      pt: 'Temperatura do líquido de refrigeração da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x28
+
+  HV_BATTERY_TEMPERATURE:
+    bits: '2.7-2.1'
+    comment:
+      en: 'HV battery temperature'
+      fr: 'Température de la batterie haute tension'
+      es: 'Temperatura de la batería de alta tensión'
+      de: 'Temperatur der Hochvoltbatterie'
+      it: 'Temperatura della batteria ad alta tensione'
+      pl: 'Temperatura akumulatora wysokiego napięcia'
+      ru: 'Температура высоковольтной батареи'
+      zh: '高压电池温度'
+      hu: 'A nagyfeszültségű akkumulátor hőmérséklete'
+      pt: 'Temperatura da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0x7F
+    default: 0x28
+
+  UNUSED_1:
+    bits: '2.0'
+    unused: true
+
+  HV_BATTERY_CHARGE_REMAINING_TIME:
+    bits: '3.7-3.1'
+    comment:
+      en: 'HV battery remaining charge time'
+      fr: 'Temps de charge restant de la batterie haute tension'
+      es: 'Tiempo de carga restante de la batería de alta tensión'
+      de: 'Verbleibende Ladezeit der Hochvoltbatterie'
+      it: 'Tempo di ricarica rimanente della batteria ad alta tensione'
+      pl: 'Pozostały czas ładowania akumulatora wysokiego napięcia'
+      ru: 'Оставшееся время зарядки высоковольтной батареи'
+      zh: '高压电池剩余充电时间'
+      hu: 'A nagyfeszültségű akkumulátor hátralévő töltési ideje'
+      pt: 'Tempo de carga restante da bateria de alta tensão'
+    type: 'uint'
+    factor: 300
+    min: 0
+    max: 37800
+    units: 's'
+    invalid: 0x7F
+    default: 0x00
+
+  UNUSED_2:
+    bits: '3.0'
+    unused: true
+
+  HV_BATTERY_SOH_CAPACITY:
+    bits: '4.7-4.0'
+    comment:
+      en: 'HV battery state of health, capacity-based'
+      fr: 'État de santé de la batterie HT, basé sur la capacité'
+      es: 'Estado de salud de la batería de alta tensión, basado en la capacidad'
+      de: 'Alterungszustand (SOH) der HV-Batterie, kapazitätsbasiert'
+      it: 'Stato di salute della batteria HT, basato sulla capacità'
+      pl: 'Stan zdrowia akumulatora wysokiego napięcia, na podstawie pojemności'
+      ru: 'Состояние работоспособности (SOH) ВВ батареи по ёмкости'
+      zh: '基于容量的高压电池健康状态(SOH)'
+      hu: 'A nagyfeszültségű akkumulátor állapota (SOH), kapacitás alapján'
+      pt: 'Estado de saúde da bateria de alta tensão, baseado na capacidade'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x64
+
+  HV_BATTERY_SOH_RESISTANCE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'HV battery state of health, resistance-based'
+      fr: 'État de santé de la batterie HT, basé sur la résistance'
+      es: 'Estado de salud de la batería de alta tensión, basado en la resistencia'
+      de: 'Alterungszustand (SOH) der HV-Batterie, widerstandsbasiert'
+      it: 'Stato di salute della batteria HT, basato sulla resistenza'
+      pl: 'Stan zdrowia akumulatora wysokiego napięcia, na podstawie rezystancji'
+      ru: 'Состояние работоспособности (SOH) ВВ батареи по сопротивлению'
+      zh: '基于内阻的高压电池健康状态(SOH)'
+      hu: 'A nagyfeszültségű akkumulátor állapota (SOH), ellenállás alapján'
+      pt: 'Estado de saúde da bateria de alta tensão, baseado na resistência'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x64
+
+  HV_BATTERY_INSULATION_FAULT_STATUS:
+    bits: '6.7-6.5'
+    comment:
+      en: 'HV battery insulation fault diagnostic status'
+      fr: 'État du diagnostic des défauts d''isolement de la batterie haute tension'
+      es: 'Estado del diagnóstico de fallos de aislamiento de la batería de alta tensión'
+      de: 'Status der Diagnose von Isolationsfehlern der Hochvoltbatterie'
+      it: 'Stato della diagnosi dei guasti di isolamento della batteria ad alta tensione'
+      pl: 'Stan diagnostyki usterek izolacji akumulatora wysokiego napięcia'
+      ru: 'Статус диагностики неисправностей изоляции высоковольтной батареи'
+      zh: '高压电池绝缘故障诊断状态'
+      hu: 'A nagyfeszültségű akkumulátor szigetelési hibájának diagnosztikai állapota'
+      pt: 'Estado de diagnóstico de avaria de isolamento da bateria de alta tensão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Symmetry fault'
+        fr: 'Défaut de symétrie'
+        es: 'Fallo de simetría'
+        de: 'Symmetriefehler'
+        it: 'Guasto di simmetria'
+        pl: 'Usterka symetrii'
+        ru: 'Неисправность симметрии'
+        zh: '对称性故障'
+        hu: 'Szimmetriahiba'
+        pt: 'Avaria de simetria'
+      0x02:
+        en: 'Asymmetric HV+ fault'
+        fr: 'Panne asymétrique HT+'
+        es: 'Fallo asimétrico de AT+'
+        de: 'Asymmetrischer Fehler HV+'
+        it: 'Guasto asimmetrico AT+'
+        pl: 'Usterka asymetryczna WN+'
+        ru: 'Асимметричная неисправность ВН+'
+        zh: '高压正极不对称故障'
+        hu: 'Aszimmetrikus HV+ hiba'
+        pt: 'Falha assimétrica de AT+'
+      0x03:
+        en: 'Asymmetric high-voltage fault -'
+        fr: 'Panne asymétrique haute tension -'
+        es: 'Fallo asimétrico de alta tensión -'
+        de: 'Asymmetrischer Hochvolt-Fehler -'
+        it: 'Guasto asimmetrico alta tensione -'
+        pl: 'Asymetryczna usterka wysokiego napięcia -'
+        ru: 'Асимметричная неисправность высокого напряжения -'
+        zh: '高压不对称故障 -'
+        hu: 'Aszimmetrikus nagyfeszültségű hiba -'
+        pt: 'Falha assimétrica de alta tensão -'
+      0x04:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  UNUSED_3:
+    bits: '6.4-6.0'
+    unused: true

@@ -1,31 +1,208 @@
-# TODO: make it less sad!
-
 id: 0x552
-name: 'CURRENT_TIME'
+name: 'BSI_DATA_4_ELAPSED_TIME'
+alt_names: ['CURRENT_TIME']
+type: 'can'
 length: 5
 comment:
-  en: 'This is data that is gatewated by the BSI from the EMF node which handles the main clock'
-  fr: "Il s'agit de données transmises par le BSI à partir du nœud EMF qui gère l'horloge principale"
-  de: 'Diese Daten kommen über das BSI vom EMF welches die Hauptuhr des Autos ist.'
-type: 'can'
-periodicity: 1000 # rounded up ; messured avg 950.18 ms but this was over a network tunnel!
-senders:
-  - 'BSI'
+  en: 'Elapsed time since manufacture, from the body controller: years, days and seconds.'
+  fr: 'Temps écoulé depuis la fabrication, envoyé par la BSI : années, jours et secondes.'
+  es: 'Tiempo transcurrido desde la fabricación, enviado por la BSI: años, días y segundos.'
+  de: 'Seit der Herstellung verstrichene Zeit, vom BSI gesendet: Jahre, Tage und Sekunden.'
+  it: 'Tempo trascorso dalla fabbricazione, inviato dalla BSI: anni, giorni e secondi.'
+  pl: 'Czas, który upłynął od produkcji, wysyłany przez BSI: lata, dni i sekundy.'
+  ru: 'Время, прошедшее с момента изготовления, отправляемое BSI: годы, дни и секунды.'
+  zh: '自制造以来经过的时间,由BSI发送:年、日和秒。'
+  hu: 'A gyártás óta eltelt idő, a BSI küldi: évek, napok és másodpercek.'
+  pt: 'Tempo decorrido desde o fabrico, do computador de servidão: anos, dias e segundos.'
+observations:
+  en: 'After the BSI enters a partial wake-up (engine-start preparation) or a main wake-up, sent every 100 ms for 1 s, then periodically'
+  fr: 'Après l''entrée de la BSI en réveil partiel (préparation démarrage moteur) ou en réveil principal, émise toutes les 100 ms pendant 1 s, puis diffusée périodiquement'
+  es: 'Tras la entrada de la BSI en activación parcial (preparación de arranque del motor) o activación principal, enviada cada 100 ms durante 1 s y luego periódicamente'
+  de: 'Nachdem die BSI in ein Teilaufwachen (Motorstartvorbereitung) oder ein Hauptaufwachen eintritt, alle 100 ms für 1 s gesendet, danach periodisch'
+  it: 'Dopo l''ingresso della BSI in risveglio parziale (preparazione avvio motore) o risveglio principale, inviata ogni 100 ms per 1 s, poi diffusa periodicamente'
+  pl: 'Po przejściu BSI w częściowe wybudzenie (przygotowanie do rozruchu silnika) lub główne wybudzenie, wysyłane co 100 ms przez 1 s, a następnie okresowo'
+  ru: 'После перехода BSI в частичное пробуждение (подготовка запуска двигателя) или основное пробуждение отправляется каждые 100 мс в течение 1 с, затем периодически'
+  zh: 'BSI进入部分唤醒(发动机启动准备)或主唤醒后,以100毫秒周期发送1秒,随后转为周期性发送'
+  hu: 'Miután a BSI részleges ébredésbe (motorindítás előkészítése) vagy fő ébredésbe lép, 1 másodpercig 100 ms-onként küldve, majd periodikusan'
+  pt: 'Após a BSI entrar numa ativação parcial (preparação de arranque do motor) ou numa ativação principal, enviada a cada 100 ms durante 1 s, depois periodicamente'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
 receivers:
   - 'CMM'
+  - 'DAE'
+  - 'ABS'
+  - 'BVA'
+  - 'BCP'
+  - 'PIU'
+  - 'ACC'
+  - 'AMVAR'
+  - 'AR2S'
+  - 'CAAR'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'CSS'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'SBW'
+  - 'SCDT'
+  - 'BHI'
+  - 'TBMU'
 
 signals:
-  SECONDS:
+  SECOND_ELAPSED_SINCE_EMF_POWER_ON:
     bits: '1.7-3.4'
+    alt_names: ['SECONDS']
+    comment:
+      en: 'Number of seconds elapsed since the EMF (instrument cluster) permanent supply was last connected'
+      fr: 'Nombre de secondes écoulées depuis la dernière mise sous tension permanente du EMF (combiné d''instruments)'
+      es: 'Número de segundos transcurridos desde la última conexión permanente del EMF (cuadro de instrumentos)'
+      de: 'Anzahl der Sekunden seit dem letzten Anschluss der Dauerversorgung des EMF (Kombiinstruments)'
+      it: 'Numero di secondi trascorsi dall''ultimo collegamento dell''alimentazione permanente dell''EMF (quadro strumenti)'
+      pl: 'Liczba sekund, jakie upłynęły od ostatniego podłączenia zasilania stałego EMF (zestawu wskaźników)'
+      ru: 'Количество секунд, прошедших с момента последнего подключения постоянного питания EMF (приборной панели)'
+      zh: '自EMF(仪表组)常电最近一次接通以来经过的秒数'
+      hu: 'Az EMF (műszerfal) állandó tápellátásának utolsó bekapcsolása óta eltelt másodpercek száma'
+      pt: 'Número de segundos decorridos desde a última ligação permanente do EMF (quadro de instrumentos)'
     type: 'uint'
+    factor: 1
     min: 0
-    max: 86400 # 0xFF FF F  -> 1048575 but 24h is only 86400 sec
-  DAY:
+    max: 86399
+    units: 's'
+    invalid: 0xFFFFF
+    default: 0x00
+
+  DAY_ELAPSED_SINCE_EMF_POWER_ON:
     bits: '3.3-4.0'
+    alt_names: ['DAY']
+    comment:
+      en: 'Number of days elapsed since the EMF (instrument cluster) permanent supply was last connected'
+      fr: 'Nombre de jours écoulés depuis la dernière mise sous tension permanente du EMF (combiné d''instruments)'
+      es: 'Número de días transcurridos desde la última conexión permanente del EMF (cuadro de instrumentos)'
+      de: 'Anzahl der Tage seit dem letzten Anschluss der Dauerversorgung des EMF (Kombiinstruments)'
+      it: 'Numero di giorni trascorsi dall''ultimo collegamento dell''alimentazione permanente dell''EMF (quadro strumenti)'
+      pl: 'Liczba dni, jakie upłynęły od ostatniego podłączenia zasilania stałego EMF (zestawu wskaźników)'
+      ru: 'Количество дней, прошедших с момента последнего подключения постоянного питания EMF (приборной панели)'
+      zh: '自EMF(仪表组)常电最近一次接通以来经过的天数'
+      hu: 'Az EMF (műszerfal) állandó tápellátásának utolsó bekapcsolása óta eltelt napok száma'
+      pt: 'Número de dias decorridos desde a última ligação da alimentação permanente do EMF (quadrante)'
     type: 'uint'
+    factor: 1
     min: 0
-    max: 366 # max days in a leap year
-  YEAR:
+    max: 364
+    units: 'day'
+    invalid: 0xFFF
+    default: 0x00
+
+  YEAR_ELAPSED_SINCE_EMF_POWER_ON:
     bits: '5.7-5.0'
+    alt_names: ['YEAR']
+    comment:
+      en: 'Number of years elapsed since the EMF (instrument cluster) permanent supply was last connected'
+      fr: 'Nombre d''années écoulées depuis la dernière mise sous tension permanente du EMF (combiné d''instruments)'
+      es: 'Número de años transcurridos desde la última conexión permanente del EMF (cuadro de instrumentos)'
+      de: 'Anzahl der Jahre seit dem letzten Anschluss der Dauerversorgung des EMF (Kombiinstruments)'
+      it: 'Numero di anni trascorsi dall''ultimo collegamento dell''alimentazione permanente dell''EMF (quadro strumenti)'
+      pl: 'Liczba lat, jakie upłynęły od ostatniego podłączenia zasilania stałego EMF (zestawu wskaźników)'
+      ru: 'Количество лет, прошедших с момента последнего подключения постоянного питания EMF (приборной панели)'
+      zh: '自EMF(仪表组)常电最近一次接通以来经过的年数'
+      hu: 'Az EMF (műszerfal) állandó tápellátásának utolsó bekapcsolása óta eltelt évek száma'
+      pt: 'Número de anos decorridos desde a última ligação permanente do EMF (quadro de instrumentos)'
+    type: 'uint'
+    factor: 1
     min: 0
-    max: 255 # 0xFF 
+    max: 100
+    units: 'year'
+    invalid: 0xFF
+    default: 0x00
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 100ms'
+      fr: 'Aussi observée avec une période de 100ms'
+      es: 'También observada con un periodo de 100ms'
+      de: 'Auch mit einer Periode von 100ms beobachtet'
+      it: 'Osservata anche con un periodo di 100ms'
+      pl: 'Obserwowana także z okresem 100ms'
+      ru: 'Также наблюдалась с периодом 100ms'
+      zh: '也观察到周期为100ms'
+      hu: 'Megfigyelve 100ms periódussal is'
+      pt: 'Também observada com um período de 100ms'
+    periodicity: ['100ms', 'trigger']
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['100ms', 'trigger']
+    senders: ['BSI']
+    receivers: ['PIU']
+    signals:
+      SECOND_ELAPSED_SINCE_EMF_POWER_ON:
+        bits: '1.7-3.4'
+        comment:
+          en: 'Number of seconds elapsed since the EMF (instrument cluster) permanent supply was last connected'
+          fr: 'Nombre de secondes écoulées depuis la dernière mise sous tension permanente du EMF (combiné d''instruments)'
+          es: 'Número de segundos transcurridos desde la última conexión permanente del EMF (cuadro de instrumentos)'
+          de: 'Anzahl der Sekunden seit dem letzten Anschluss der Dauerversorgung des EMF (Kombiinstruments)'
+          it: 'Numero di secondi trascorsi dall''ultimo collegamento dell''alimentazione permanente dell''EMF (quadro strumenti)'
+          pl: 'Liczba sekund, jakie upłynęły od ostatniego podłączenia zasilania stałego EMF (zestawu wskaźników)'
+          ru: 'Количество секунд, прошедших с момента последнего подключения постоянного питания EMF (приборной панели)'
+          zh: '自EMF(仪表组)常电最近一次接通以来经过的秒数'
+          hu: 'Az EMF (műszerfal) állandó tápellátásának utolsó bekapcsolása óta eltelt másodpercek száma'
+          pt: 'Número de segundos decorridos desde a última ligação permanente do EMF (quadro de instrumentos)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 86399
+        units: 's'
+        invalid: 0xFFFFF
+        default: 0x00
+      DAY_ELAPSED_SINCE_EMF_POWER_ON:
+        bits: '3.3-4.0'
+        comment:
+          en: 'Number of days elapsed since the EMF (instrument cluster) permanent supply was last connected'
+          fr: 'Nombre de jours écoulés depuis la dernière mise sous tension permanente du EMF (combiné d''instruments)'
+          es: 'Número de días transcurridos desde la última conexión permanente del EMF (cuadro de instrumentos)'
+          de: 'Anzahl der Tage seit dem letzten Anschluss der Dauerversorgung des EMF (Kombiinstruments)'
+          it: 'Numero di giorni trascorsi dall''ultimo collegamento dell''alimentazione permanente dell''EMF (quadro strumenti)'
+          pl: 'Liczba dni, jakie upłynęły od ostatniego podłączenia zasilania stałego EMF (zestawu wskaźników)'
+          ru: 'Количество дней, прошедших с момента последнего подключения постоянного питания EMF (приборной панели)'
+          zh: '自EMF(仪表组)常电最近一次接通以来经过的天数'
+          hu: 'Az EMF (műszerfal) állandó tápellátásának utolsó bekapcsolása óta eltelt napok száma'
+          pt: 'Número de dias decorridos desde a última ligação da alimentação permanente do EMF (quadrante)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 364
+        units: 'day'
+        invalid: 0xFFF
+        default: 0x00
+      YEAR_ELAPSED_SINCE_EMF_POWER_ON:
+        bits: '5.7-5.0'
+        comment:
+          en: 'Number of years elapsed since the EMF (instrument cluster) permanent supply was last connected'
+          fr: 'Nombre d''années écoulées depuis la dernière mise sous tension permanente du EMF (combiné d''instruments)'
+          es: 'Número de años transcurridos desde la última conexión permanente del EMF (cuadro de instrumentos)'
+          de: 'Anzahl der Jahre seit dem letzten Anschluss der Dauerversorgung des EMF (Kombiinstruments)'
+          it: 'Numero di anni trascorsi dall''ultimo collegamento dell''alimentazione permanente dell''EMF (quadro strumenti)'
+          pl: 'Liczba lat, jakie upłynęły od ostatniego podłączenia zasilania stałego EMF (zestawu wskaźników)'
+          ru: 'Количество лет, прошедших с момента последнего подключения постоянного питания EMF (приборной панели)'
+          zh: '自EMF(仪表组)常电最近一次接通以来经过的年数'
+          hu: 'Az EMF (műszerfal) állandó tápellátásának utolsó bekapcsolása óta eltelt évek száma'
+          pt: 'Número de anos decorridos desde a última ligação permanente do EMF (quadro de instrumentos)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 100
+        units: 'year'
+        invalid: 0xFF
+        default: 0x00

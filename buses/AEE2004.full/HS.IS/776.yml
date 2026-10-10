@@ -1,0 +1,224 @@
+id: 0x776
+name: 'FAULT_LOG_ARTIV'
+type: 'can'
+length: 8
+comment:
+  en: 'Fault log frame from the ARTIV node: fault codes, status, mileage, frame index and time reference.'
+  fr: 'Trame du journal des défauts du calculateur ARTIV : codes défaut, état, kilométrage, index de trame et référence horaire.'
+  es: 'Trama del registro de fallos del nodo ARTIV: códigos de fallo, estado, kilometraje, índice de trama y referencia horaria.'
+  de: 'fault log-Fehlerspeicher-Rahmen des Steuergeräts ARTIV: Fehlercodes, Status, Kilometerstand, Rahmenindex und Zeitreferenz.'
+  it: 'Trama del registro guasti del nodo ARTIV: codici guasto, stato, chilometraggio, indice trama e riferimento orario.'
+  pl: 'Ramka dziennika usterek węzła ARTIV: kody usterek, stan, przebieg, indeks ramki i odniesienie czasowe.'
+  ru: 'Кадр журнала неисправностей узла ARTIV: коды неисправностей, статус, пробег, индекс кадра и временная метка.'
+  zh: 'ARTIV节点的故障日志帧:故障代码、状态、里程、帧索引和时间参考。'
+  hu: 'A ARTIV csomópont hibanapló kerete: hibakódok, állapot, futásteljesítmény, keretindex és időreferencia.'
+  pt: 'Trama do registo de avarias do nó ARTIV: códigos de avaria, estado, quilometragem, índice de trama e referência horária.'
+observations:
+  en: 'May be sent event-triggered as 3 groups of 3 frames, 100 ms apart, with different lengths, to the BSI'
+  fr: 'Peut être émise de façon événementielle sous forme de 3 fois 3 trames, espacées de 100 ms, de longueur différente, vers la BSI'
+  es: 'Puede enviarse de forma basada en eventos como 3 series de 3 tramas, separadas 100 ms, de longitud diferente, hacia la BSI'
+  de: 'Kann ereignisgesteuert als 3-mal 3 Frames unterschiedlicher Länge, 100 ms auseinander, an die BSI gesendet werden'
+  it: 'Può essere inviata in modo event-driven come 3 serie di 3 frame, distanziati di 100 ms, di lunghezza diversa, verso la BSI'
+  pl: 'Może być wysyłana zdarzeniowo jako 3 razy po 3 ramki, w odstępie 100 ms, o różnej długości, do BSI'
+  ru: 'Может отправляться по событию в виде 3 групп по 3 кадра с интервалом 100 мс и разной длиной, в адрес BSI'
+  zh: '可事件触发地以3组共3帧的形式发送给BSI,间隔100毫秒,长度各不相同'
+  hu: 'Eseményvezérelten küldhető 3-szor 3 keretként, 100 ms-os időközzel, eltérő hosszúsággal, a BSI felé'
+  pt: 'Pode ser enviada de forma baseada em eventos como 3 grupos de 3 tramas, com 100 ms de intervalo, com comprimentos diferentes, para a BSI'
+periodicity: ['trigger']
+senders: ['BSM']
+
+signals:
+  FRAME_COUNT:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Number of frames'
+      fr: 'Nombre de trames'
+      es: 'Número de tramas'
+      de: 'Anzahl der Botschaften'
+      it: 'Numero di messaggi'
+      pl: 'Liczba ramek'
+      ru: 'Количество кадров'
+      zh: '帧数量'
+      hu: 'Az üzenetek száma'
+      pt: 'Número de tramas'
+    type: 'uint'
+
+  FRAME_NUMBER:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Frame sequence number'
+      fr: 'Numéro de la trame'
+      es: 'Número de trama'
+      de: 'Rahmennummer'
+      it: 'Numero del messaggio'
+      pl: 'Numer ramki'
+      ru: 'Номер кадра'
+      zh: '帧序号'
+      hu: 'Az üzenet sorszáma'
+      pt: 'Número da trama'
+    type: 'uint'
+
+  FAULT_STATUS:
+    bits: '1.3'
+    comment:
+      en: 'Fault status'
+      fr: 'État du défaut'
+      es: 'Estado del fallo'
+      de: 'Fehlerstatus'
+      it: 'Stato del guasto'
+      pl: 'Stan usterki'
+      ru: 'Состояние неисправности'
+      zh: '故障状态'
+      hu: 'A hiba állapota'
+      pt: 'Estado da falha'
+    type: 'bool'
+
+  UNUSED_1:
+    bits: '1.2'
+    unused: true
+
+  MESSAGE_TYPE:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Message type'
+      fr: 'Type de message'
+      es: 'Tipo de mensaje'
+      de: 'Nachrichtentyp'
+      it: 'Tipo di messaggio'
+      pl: 'Typ komunikatu'
+      ru: 'Тип сообщения'
+      zh: '消息类型'
+      hu: 'Üzenettípus'
+      pt: 'Tipo de mensagem'
+    type: 'uint'
+
+  FAULT_CODES:
+    bits: '2.7-4.0'
+    comment:
+      en: 'Fault codes'
+      fr: 'Codes défaut'
+      es: 'Códigos de fallo'
+      de: 'Fehlercodes'
+      it: 'Codici guasto'
+      pl: 'Kody usterek'
+      ru: 'Коды неисправностей'
+      zh: '故障代码'
+      hu: 'Hibakódok'
+      pt: 'Códigos de falha'
+    type: 'uint'
+
+  VEHICLE_TIME_COUNTER:
+    bits: '5.7-8.0'
+    comment:
+      en: 'Vehicle operating time counter'
+      fr: 'Compteur du temps de fonctionnement du véhicule'
+      es: 'Contador del tiempo de funcionamiento del vehículo'
+      de: 'Betriebszeitzähler des Fahrzeugs'
+      it: 'Contatore del tempo di funzionamento del veicolo'
+      pl: 'Licznik czasu pracy pojazdu'
+      ru: 'Счётчик времени работы автомобиля'
+      zh: '车辆运行时间计数器'
+      hu: 'A jármű üzemidő-számlálója'
+      pt: 'Contador do tempo de funcionamento do veículo'
+    type: 'uint'
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      FRAME_COUNT:
+        bits: '1.7-1.6'
+        comment:
+          en: 'Number of frames'
+          fr: 'Nombre de trames'
+          es: 'Número de tramas'
+          de: 'Anzahl der Botschaften'
+          it: 'Numero di messaggi'
+          pl: 'Liczba ramek'
+          ru: 'Количество кадров'
+          zh: '帧数量'
+          hu: 'Az üzenetek száma'
+          pt: 'Número de tramas'
+        type: 'uint'
+      FRAME_NUMBER:
+        bits: '1.5-1.4'
+        comment:
+          en: 'Frame sequence number'
+          fr: 'Numéro de la trame'
+          es: 'Número de trama'
+          de: 'Rahmennummer'
+          it: 'Numero del messaggio'
+          pl: 'Numer ramki'
+          ru: 'Номер кадра'
+          zh: '帧序号'
+          hu: 'Az üzenet sorszáma'
+          pt: 'Número da trama'
+        type: 'uint'
+      FAULT_STATUS:
+        bits: '1.3'
+        comment:
+          en: 'Fault status'
+          fr: 'État du défaut'
+          es: 'Estado del fallo'
+          de: 'Fehlerstatus'
+          it: 'Stato del guasto'
+          pl: 'Stan usterki'
+          ru: 'Состояние неисправности'
+          zh: '故障状态'
+          hu: 'A hiba állapota'
+          pt: 'Estado da falha'
+        type: 'bool'
+      UNUSED_1:
+        bits: '1.2'
+        unused: true
+      MESSAGE_TYPE:
+        bits: '1.1-1.0'
+        comment:
+          en: 'Message type'
+          fr: 'Type de message'
+          es: 'Tipo de mensaje'
+          de: 'Nachrichtentyp'
+          it: 'Tipo di messaggio'
+          pl: 'Typ komunikatu'
+          ru: 'Тип сообщения'
+          zh: '消息类型'
+          hu: 'Üzenettípus'
+          pt: 'Tipo de mensagem'
+        type: 'uint'
+      FAULT_LOG_ODOMETER:
+        bits: '2.7-4.0'
+        comment:
+          en: 'Odometer reading recorded in the fault log'
+          fr: 'Kilométrage absolu enregistré dans le journal des défauts'
+          es: 'Kilometraje absoluto registrado en el registro de fallos'
+          de: 'Im Fehlerprotokoll erfasster Kilometerstand'
+          it: 'Chilometraggio assoluto registrato nel registro guasti'
+          pl: 'Przebieg zarejestrowany w dzienniku usterek'
+          ru: 'Пробег, зафиксированный в журнале неисправностей'
+          zh: '故障日志中记录的里程数'
+          hu: 'A hibanaplóban rögzített kilométeróra-állás'
+          pt: 'Quilometragem absoluta registada no registo de falhas'
+        type: 'uint'
+      FAULT_LOG_LIFE_PHASE:
+        bits: '5.7-7.0'
+        comment:
+          en: 'Fault log vehicle life phase'
+          fr: 'Phase de vie du véhicule pour le journal des défauts'
+          es: 'Fase de vida del vehículo para el registro de fallos'
+          de: 'Lebensphase des Fahrzeugs für das Fehlerprotokoll'
+          it: 'Fase di vita del veicolo per il registro guasti'
+          pl: 'Faza życia pojazdu dla dziennika usterek'
+          ru: 'Этап эксплуатации автомобиля для журнала неисправностей'
+          zh: '故障日志中的车辆生命周期阶段'
+          hu: 'A jármű életciklus-fázisa a hibanaplóhoz'
+          pt: 'Fase de vida do veículo para o registo de falhas'
+        type: 'uint'

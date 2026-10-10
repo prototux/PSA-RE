@@ -1,0 +1,522 @@
+id: 0x8EC
+name: 'CD_CHANGER_COMMAND'
+type: 'van'
+length: 3
+comment:
+  en: 'Family of frames sharing this ID: the content depends on CDC_COMMAND_ID'
+  fr: 'Famille de trames partageant cet identifiant : le contenu dépend de CDC_COMMAND_ID'
+  es: 'Familia de tramas que comparten este identificador: el contenido depende de CDC_COMMAND_ID'
+  de: 'Familie von Botschaften mit dieser ID: der Inhalt hängt von CDC_COMMAND_ID ab'
+  it: 'Famiglia di frame che condividono questo ID: il contenuto dipende da CDC_COMMAND_ID'
+  pl: 'Rodzina ramek o tym samym identyfikatorze: zawartość zależy od CDC_COMMAND_ID'
+  ru: 'Семейство кадров с этим идентификатором: содержимое зависит от CDC_COMMAND_ID'
+  zh: '共用此ID的一组帧：内容取决于CDC_COMMAND_ID'
+  hu: 'Ezt az azonosítót megosztó keretcsalád: a tartalom a(z) CDC_COMMAND_ID értékétől függ'
+  pt: 'Família de tramas que partilham este identificador: o conteúdo depende de CDC_COMMAND_ID'
+periodicity: ['trigger']
+senders: ['BTEL', 'EMF']
+receivers: ['CDC']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  CDC_COMMAND_ID:
+    bits: '1.7-1.0'
+    comment:
+      en: 'CD changer command identifier (sub-address)'
+      fr: 'Identifiant de commande du chargeur CD (sous-adresse)'
+      es: 'Identificador de comando del cambiador de CD (subdirección)'
+      de: 'Befehlskennung des CD-Wechslers (Unteradresse)'
+      it: 'Identificatore di comando del cambia CD (sotto-indirizzo)'
+      pl: 'Identyfikator polecenia zmieniarki CD (podadres)'
+      ru: 'Идентификатор команды CD-чейнджера (субадрес)'
+      zh: 'CD换碟机指令标识符(子地址)'
+      hu: 'A CD-váltó parancsazonosítója (alcím)'
+      pt: 'Identificador do comando do carregador de CD (subendereço)'
+    type: 'enum'
+    default: 0x00
+    mux_selector: true
+    values:
+      0x00:
+        unused: true
+      0x11:
+        en: 'Command (play/stop)'
+        fr: 'CDE'
+        es: 'COMANDO'
+        de: 'BEFEHL'
+        it: 'COMANDO'
+        pl: 'POLECENIE'
+        ru: 'КОМАНДА'
+        zh: '命令'
+        hu: 'PARANCS'
+        pt: 'Comando (reproduzir/parar)'
+      0x21:
+        en: 'Play mode'
+        fr: 'Mode de lecture'
+        es: 'Modo de reproducción'
+        de: 'Wiedergabemodus'
+        it: 'Modalità di riproduzione'
+        pl: 'Tryb odtwarzania'
+        ru: 'Режим воспроизведения'
+        zh: '播放模式'
+        hu: 'Lejátszási mód'
+        pt: 'Modo de reprodução'
+      0x31:
+        en: 'Track selection'
+        fr: 'Sélection de plage'
+        es: 'Selección de pista'
+        de: 'Titelauswahl'
+        it: 'Selezione traccia'
+        pl: 'Wybór ścieżki'
+        ru: 'Выбор дорожки'
+        zh: '曲目选择'
+        hu: 'Szám kiválasztása'
+        pt: 'Seleção de faixa'
+      0x41:
+        en: 'Disc selection'
+        fr: 'Sélection de disque'
+        es: 'Selección de disco'
+        de: 'Disc-Auswahl'
+        it: 'Selezione disco'
+        pl: 'Wybór płyty'
+        ru: 'Выбор диска'
+        zh: '光盘选择'
+        hu: 'Lemezválasztás'
+        pt: 'Seleção de disco'
+
+  CD_CHANGER_DISC_REQUEST:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Disc number to play (BCD coded 1..16); previous/next disc special codes'
+      fr: 'Numéro de disque à écouter (codé BCD 1 à 16) ; codes spéciaux disque précédent/suivant'
+      es: 'Número de disco a reproducir (codificado BCD 1 a 16); códigos especiales disco anterior/siguiente'
+      de: 'Abzuspielende Disc-Nummer (BCD-codiert 1..16); Sondercodes für vorherige/nächste Disc'
+      it: 'Numero del disco da riprodurre (codificato BCD 1..16); codici speciali disco precedente/successivo'
+      pl: 'Numer płyty do odtworzenia (kod BCD 1..16); specjalne kody poprzedniej/następnej płyty'
+      ru: 'Номер диска для воспроизведения (BCD-код 1..16); специальные коды предыдущего/следующего диска'
+      zh: '要播放的碟片编号(BCD编码1..16);上一张/下一张碟片的特殊代码'
+      hu: 'A lejátszandó lemez száma (BCD kódolt 1..16); speciális kódok az előző/következő lemezhez'
+      pt: 'Número do disco a ouvir (codificado em BCD, 1 a 16); códigos especiais de disco anterior/seguinte'
+    type: 'bcd'
+    default: 0x01
+    mux:
+      selector: 'CDC_COMMAND_ID'
+      values: [0x41]
+    values:
+      0x00:
+        unused: true
+      0xFE:
+        en: 'Previous disc'
+        fr: 'Disque précédent'
+        es: 'Disco anterior'
+        de: 'Vorheriger Datenträger'
+        it: 'Disco precedente'
+        pl: 'Poprzednia płyta'
+        ru: 'Предыдущий диск'
+        zh: '上一张碟片'
+        hu: 'Előző lemez'
+        pt: 'Disco anterior'
+      0xFF:
+        en: 'Next disc'
+        fr: 'Disque suivant'
+        es: 'Disco siguiente'
+        de: 'Nächste Disc'
+        it: 'Disco successivo'
+        pl: 'Następna płyta'
+        ru: 'Следующий диск'
+        zh: '下一张碟片'
+        hu: 'Következő lemez'
+        pt: 'Disco seguinte'
+
+  UNUSED_1:
+    bits: '2.7-2.4'
+    unused: true
+    mux:
+      selector: 'CDC_COMMAND_ID'
+      values: [0x21]
+
+  CD_CHANGER_REPEAT_MODE:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Current CD changer track/disc repeat mode'
+      fr: 'Mode de répétition plage/disque courant du changeur CD'
+      es: 'Modo de repetición de pista/disco actual del cambiador de CD'
+      de: 'Aktueller Wiederholmodus (Titel/Disc) des CD-Wechslers'
+      it: 'Modalità di ripetizione traccia/disco corrente del cambia CD'
+      pl: 'Bieżący tryb powtarzania ścieżki/płyty zmieniarki CD'
+      ru: 'Текущий режим повтора дорожки/диска CD-чейнджера'
+      zh: 'CD换碟机当前曲目/光盘重复模式'
+      hu: 'A CD-váltó aktuális szám-/lemezismétlési módja'
+      pt: 'Modo de repetição de faixa/disco atual do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'CDC_COMMAND_ID'
+      values: [0x21]
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Нормальный режим'
+        zh: '正常模式'
+        hu: 'Normál mód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Repeat track'
+        fr: 'Répétition de la plage'
+        es: 'Repetición de pista'
+        de: 'Titelwiederholung'
+        it: 'Ripetizione traccia'
+        pl: 'Powtarzanie utworu'
+        ru: 'Повтор трека'
+        zh: '重复曲目'
+        hu: 'Szám ismétlése'
+        pt: 'Repetição da faixa'
+      0x02:
+        en: 'Repeat disc'
+        fr: 'Répétition du disque'
+        es: 'Repetición del disco'
+        de: 'Disc-Wiederholung'
+        it: 'Ripetizione del disco'
+        pl: 'Powtarzanie płyty'
+        ru: 'Повтор диска'
+        zh: '光盘重复播放'
+        hu: 'Lemez ismétlése'
+        pt: 'Repetir disco'
+
+  CD_CHANGER_RANDOM_MODE:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Current CD changer playback (shuffle) mode'
+      fr: 'Mode de lecture (aléatoire) courant du changeur CD'
+      es: 'Modo de reproducción (aleatorio) actual del cambiador de CD'
+      de: 'Aktueller Wiedergabemodus (Zufall) des CD-Wechslers'
+      it: 'Modalità di riproduzione (casuale) corrente del cambia CD'
+      pl: 'Bieżący tryb odtwarzania (losowy) zmieniarki CD'
+      ru: 'Текущий режим воспроизведения (случайный) CD-чейнджера'
+      zh: 'CD换碟机当前播放(随机)模式'
+      hu: 'A CD-váltó aktuális lejátszási (véletlenszerű) módja'
+      pt: 'Modo de reprodução (aleatória) atual do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    mux:
+      selector: 'CDC_COMMAND_ID'
+      values: [0x21]
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Нормальный режим'
+        zh: '正常模式'
+        hu: 'Normál mód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Random track playback'
+        fr: 'Lecture aléatoire des pistes'
+        es: 'Reproducción aleatoria de pistas'
+        de: 'Zufällige Titelwiedergabe'
+        it: 'Riproduzione casuale delle tracce'
+        pl: 'Odtwarzanie losowe utworów'
+        ru: 'Воспроизведение треков в случайном порядке'
+        zh: '曲目随机播放'
+        hu: 'Számok véletlen lejátszása'
+        pt: 'Reprodução aleatória de faixas'
+      0x02:
+        en: 'Random discs'
+        fr: 'Lecture aléatoire des disques'
+        es: 'Reproducción aleatoria de discos'
+        de: 'Zufallswiedergabe der Discs'
+        it: 'Riproduzione casuale dei dischi'
+        pl: 'Losowe odtwarzanie płyt'
+        ru: 'Случайное воспроизведение дисков'
+        zh: '光盘随机播放'
+        hu: 'Lemezek véletlenszerű lejátszása'
+        pt: 'Reprodução aleatória de discos'
+      0x03:
+        en: 'Random track and disc playback'
+        fr: 'Lecture aléatoire des pistes et des disques'
+        es: 'Reproducción aleatoria de pistas y discos'
+        de: 'Zufällige Titel- und CD-Wiedergabe'
+        it: 'Riproduzione casuale di tracce e dischi'
+        pl: 'Odtwarzanie losowe utworów i płyt'
+        ru: 'Воспроизведение треков и дисков в случайном порядке'
+        zh: '曲目和光盘随机播放'
+        hu: 'Számok és lemezek véletlen lejátszása'
+        pt: 'Reprodução aleatória de faixas e discos'
+
+  CD_CHANGER_TRACK_REQUEST:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Track number to play (BCD coded 1..99); previous/next track special codes'
+      fr: 'Numéro de plage à écouter (codé BCD 1 à 99) ; codes spéciaux plage précédente/suivante'
+      es: 'Número de pista a reproducir (codificado BCD 1 a 99); códigos especiales pista anterior/siguiente'
+      de: 'Abzuspielende Titelnummer (BCD-codiert 1..99); Sondercodes für vorherigen/nächsten Titel'
+      it: 'Numero del brano da riprodurre (codificato BCD 1..99); codici speciali brano precedente/successivo'
+      pl: 'Numer utworu do odtworzenia (kod BCD 1..99); specjalne kody poprzedniego/następnego utworu'
+      ru: 'Номер трека для воспроизведения (BCD-код 1..99); специальные коды предыдущего/следующего трека'
+      zh: '要播放的曲目编号(BCD编码1..99);上一曲目/下一曲目的特殊代码'
+      hu: 'A lejátszandó szám száma (BCD kódolt 1..99); speciális kódok az előző/következő számhoz'
+      pt: 'Número de faixa a reproduzir (codificado BCD 1 a 99); códigos especiais faixa anterior/seguinte'
+    type: 'bcd'
+    default: 0x01
+    mux:
+      selector: 'CDC_COMMAND_ID'
+      values: [0x31]
+    values:
+      0x00:
+        unused: true
+      0xFE:
+        en: 'Previous track'
+        fr: 'Piste précédente'
+        es: 'Pista anterior'
+        de: 'Vorheriger Titel'
+        it: 'Traccia precedente'
+        pl: 'Poprzedni utwór'
+        ru: 'Предыдущий трек'
+        zh: '上一曲目'
+        hu: 'Előző szám'
+        pt: 'Faixa anterior'
+      0xFF:
+        en: 'Next track'
+        fr: 'Plage suivante'
+        es: 'Pista siguiente'
+        de: 'Nächster Titel'
+        it: 'Traccia successiva'
+        pl: 'Następny utwór'
+        ru: 'Следующая дорожка'
+        zh: '下一曲目'
+        hu: 'Következő szám'
+        pt: 'Faixa seguinte'
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['trigger']
+    senders: ['BTEL', 'EMF']
+    receivers: ['CDC']
+    signals:
+      CDC_COMMAND_ID:
+        bits: '1.7-1.0'
+        comment:
+          en: 'CD changer command identifier (sub-address)'
+          fr: 'Identifiant de commande du chargeur CD (sous-adresse)'
+          es: 'Identificador de comando del cambiador de CD (subdirección)'
+          de: 'Befehlskennung des CD-Wechslers (Unteradresse)'
+          it: 'Identificatore di comando del cambia CD (sotto-indirizzo)'
+          pl: 'Identyfikator polecenia zmieniarki CD (podadres)'
+          ru: 'Идентификатор команды CD-чейнджера (субадрес)'
+          zh: 'CD换碟机指令标识符(子地址)'
+          hu: 'A CD-váltó parancsazonosítója (alcím)'
+          pt: 'Identificador do comando do carregador de CD (subendereço)'
+        type: 'enum'
+        default: 0x00
+        mux_selector: true
+        values:
+          0x00:
+            unused: true
+          0x11:
+            en: 'Command (play/stop)'
+            fr: 'CDE'
+            es: 'COMANDO'
+            de: 'BEFEHL'
+            it: 'COMANDO'
+            pl: 'POLECENIE'
+            ru: 'КОМАНДА'
+            zh: '命令'
+            hu: 'PARANCS'
+            pt: 'Comando (reproduzir/parar)'
+          0x21:
+            en: 'Play mode'
+            fr: 'Mode de lecture'
+            es: 'Modo de reproducción'
+            de: 'Wiedergabemodus'
+            it: 'Modalità di riproduzione'
+            pl: 'Tryb odtwarzania'
+            ru: 'Режим воспроизведения'
+            zh: '播放模式'
+            hu: 'Lejátszási mód'
+            pt: 'Modo de reprodução'
+          0x31:
+            en: 'Track selection'
+            fr: 'Sélection de plage'
+            es: 'Selección de pista'
+            de: 'Titelauswahl'
+            it: 'Selezione traccia'
+            pl: 'Wybór ścieżki'
+            ru: 'Выбор дорожки'
+            zh: '曲目选择'
+            hu: 'Szám kiválasztása'
+            pt: 'Seleção de faixa'
+          0x41:
+            en: 'Disc selection'
+            fr: 'Sélection de disque'
+            es: 'Selección de disco'
+            de: 'Disc-Auswahl'
+            it: 'Selezione disco'
+            pl: 'Wybór płyty'
+            ru: 'Выбор диска'
+            zh: '光盘选择'
+            hu: 'Lemezválasztás'
+            pt: 'Seleção de disco'
+      CD_CHANGER_POWER_COMMAND:
+        bits: '2.7'
+        comment:
+          en: 'CD changer on/off command'
+          fr: 'Commande de marche/arrêt du chargeur CD'
+          es: 'Mando de encendido/apagado del cambiador de CD'
+          de: 'Ein-/Ausschaltbefehl des CD-Wechslers'
+          it: 'Comando di accensione/spegnimento del cambia CD'
+          pl: 'Polecenie włączenia/wyłączenia zmieniarki CD'
+          ru: 'Команда включения/выключения CD-чейнджера'
+          zh: 'CD换碟机开/关指令'
+          hu: 'A CD-váltó be-/kikapcsolási parancsa'
+          pt: 'Comando de ligar/desligar o leitor de CDs'
+        type: 'bool'
+        default: 0x00
+        mux:
+          selector: 'CDC_COMMAND_ID'
+          values: [0x11]
+        values:
+          0x00:
+            en: 'CD changer off'
+            fr: 'Changeur CD arrêté'
+            es: 'Cambiador de CD apagado'
+            de: 'CD-Wechsler aus'
+            it: 'Cambia CD spento'
+            pl: 'Zmieniarka CD wyłączona'
+            ru: 'CD-чейнджер выключен'
+            zh: 'CD换碟机关闭'
+            hu: 'CD-váltó kikapcsolva'
+            pt: 'Leitor de CD desligado'
+          0x01:
+            en: 'CD changer running'
+            fr: 'Changeur CD en marche'
+            es: 'Cambiador de CD en marcha'
+            de: 'CD-Wechsler läuft'
+            it: 'Cambia CD in funzione'
+            pl: 'Zmieniarka CD pracuje'
+            ru: 'CD-чейнджер работает'
+            zh: 'CD换碟机运行中'
+            hu: 'CD-váltó működik'
+            pt: 'Trocador de CD em funcionamento'
+      UNUSED_1:
+        bits: '2.6-2.3'
+        unused: true
+      CD_CHANGER_TRANSPORT_COMMAND:
+        bits: '2.2-2.0'
+        comment:
+          en: 'CD changer transport command'
+          fr: 'Commande de transport du chargeur CD'
+          es: 'Mando de transporte del cambiador de CD'
+          de: 'Transportbefehl des CD-Wechslers'
+          it: 'Comando di trasporto del cambia CD'
+          pl: 'Polecenie transportu zmieniarki CD'
+          ru: 'Команда транспортировки CD-чейнджера'
+          zh: 'CD换碟机传输指令'
+          hu: 'A CD-váltó transzport parancsa'
+          pt: 'Comando de transporte do carregador de CD'
+        type: 'enum'
+        default: 0x01
+        mux:
+          selector: 'CDC_COMMAND_ID'
+          values: [0x11]
+        values:
+          0x00:
+            en: 'Eject'
+            fr: 'Eject'
+            es: 'Expulsar'
+            de: 'Auswerfen'
+            it: 'Espelli'
+            pl: 'Wysuń'
+            ru: 'Извлечь'
+            zh: '弹出'
+            hu: 'Kiadás'
+            pt: 'Ejetar'
+          0x01:
+            en: 'Off'
+            fr: 'Arrêt'
+            es: 'Apagado'
+            de: 'Aus'
+            it: 'Spento'
+            pl: 'Wyłączony'
+            ru: 'Выключено'
+            zh: '关闭'
+            hu: 'Kikapcsolva'
+            pt: 'Desligado'
+          0x02:
+            en: 'Paused'
+            fr: 'Pause'
+            es: 'En pausa'
+            de: 'Pausiert'
+            it: 'In pausa'
+            pl: 'Wstrzymane'
+            ru: 'Пауза'
+            zh: '已暂停'
+            hu: 'Szüneteltetve'
+            pt: 'Em pausa'
+          0x03:
+            en: 'Playing'
+            fr: 'Lecture'
+            es: 'Reproduciendo'
+            de: 'Wiedergabe'
+            it: 'Riproduzione'
+            pl: 'Odtwarzanie'
+            ru: 'Воспроизведение'
+            zh: '播放中'
+            hu: 'Lejátszás'
+            pt: 'A reproduzir'
+          0x04:
+            en: 'Fast forward'
+            fr: 'Avance rapide'
+            es: 'Avance rápido'
+            de: 'Schneller Vorlauf'
+            it: 'Avanzamento rapido'
+            pl: 'Szybkie przewijanie do przodu'
+            ru: 'Быстрая перемотка вперёд'
+            zh: '快进'
+            hu: 'Gyors előretekerés'
+            pt: 'Avanço rápido'
+          0x05:
+            en: 'Fast rewind'
+            fr: 'Retour rapide'
+            es: 'Rebobinado rápido'
+            de: 'Schneller Rücklauf'
+            it: 'Riavvolgimento rapido'
+            pl: 'Szybkie przewijanie do tyłu'
+            ru: 'Быстрая перемотка назад'
+            zh: '快退'
+            hu: 'Gyors visszatekerés'
+            pt: 'Retrocesso rápido'
+          0x06:
+            unused: true
+          0x07:
+            en: 'Intro scan'
+            fr: 'Balayage d''intro'
+            es: 'Escaneo de intro'
+            de: 'Anspielscan'
+            it: 'Scansione intro'
+            pl: 'Skanowanie wstępu'
+            ru: 'Сканирование вступлений'
+            zh: '片头扫描'
+            hu: 'Bevezető-pásztázás'
+            pt: 'Varrimento de intro'

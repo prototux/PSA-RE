@@ -1,0 +1,265 @@
+id: 0x3A
+name: 'FLUSH_HANDLE_STATUS_RL'
+type: 'lin'
+length: 8
+comment:
+  en: 'Battery monitor measurements: maximum current, estimated/normal internal resistance, estimated open-circuit voltage, minimum voltage, predicted restart voltage.'
+  fr: 'Mesures du moniteur de batterie : courant maximal, résistance interne estimée/normale, tension en circuit ouvert estimée, tension minimale, tension de redémarrage prédite.'
+  es: 'Mediciones del monitor de batería: corriente máxima, resistencia interna estimada/normal, tensión en circuito abierto estimada, tensión mínima, tensión de reinicio prevista.'
+  de: 'Messwerte der Batterieüberwachung: maximaler Strom, geschätzter/normaler Innenwiderstand, geschätzte Leerlaufspannung, minimale Spannung, vorhergesagte Neustartspannung.'
+  it: 'Misure del monitor batteria: corrente massima, resistenza interna stimata/normale, tensione a circuito aperto stimata, tensione minima, tensione di riavvio prevista.'
+  pl: 'Pomiary monitora akumulatora: maksymalny prąd, szacowana/normalna rezystancja wewnętrzna, szacowane napięcie obwodu otwartego, minimalne napięcie, przewidywane napięcie ponownego rozruchu.'
+  ru: 'Измерения монитора батареи: максимальный ток, расчётное/нормальное внутреннее сопротивление, расчётное напряжение холостого хода, минимальное напряжение, прогнозируемое напряжение перезапуска.'
+  zh: '电池监测器测量值:最大电流、估计/正常内阻、估计开路电压、最低电压、预测重启电压。'
+  hu: 'Az akkumulátorfigyelő mérései: maximális áram, becsült/normál belső ellenállás, becsült üresjárati feszültség, minimális feszültség, becsült újraindítási feszültség.'
+  pt: 'Medições do monitor da bateria: corrente máxima, resistência interna estimada/normal, tensão em circuito aberto estimada, tensão mínima, tensão de reinício prevista.'
+periodicity: ['trigger']
+senders: ['BECB']
+receivers: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  PREDICTED_RESTART_VOLTAGE:
+    bits: '1.0-3.6'
+    comment:
+      en: 'Predicted battery terminal voltage under a restart current'
+      fr: 'Tension prédite aux bornes de la batterie sous un courant de redémarrage'
+      es: 'Tensión prevista en los bornes de la batería bajo una corriente de reinicio'
+      de: 'Vorhergesagte Klemmenspannung der Batterie bei einem Neustartstrom'
+      it: 'Tensione prevista ai morsetti della batteria sotto una corrente di riavvio'
+      pl: 'Przewidywane napięcie na zaciskach akumulatora przy prądzie ponownego uruchomienia'
+      ru: 'Прогнозируемое напряжение на клеммах батареи при токе перезапуска'
+      zh: '重新启动电流下预测的电池端电压'
+      hu: 'Az akkumulátor kapcsain várható feszültség újraindítási áram mellett'
+      pt: 'Tensão prevista nos terminais da bateria sob uma corrente de reinício'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 13
+    units: 'V'
+    invalid: 0x7FF
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.0-2.2'
+          fr: 'Aussi observé aux bits 1.0-2.2'
+          es: 'También observado en los bits 1.0-2.2'
+          de: 'Auch an den Bits 1.0-2.2 beobachtet'
+          it: 'Osservato anche ai bit 1.0-2.2'
+          pl: 'Obserwowany także na bitach 1.0-2.2'
+          ru: 'Также наблюдался в битах 1.0-2.2'
+          zh: '也观察到位于位1.0-2.2'
+          hu: 'Megfigyelve a(z) 1.0-2.2 biteken is'
+          pt: 'Também observado nos bits 1.0-2.2'
+        bits: '1.0-2.2'
+
+  BATTERY_INTERNAL_RESISTANCE:
+    bits: '3.0-5.7'
+    comment:
+      en: 'Estimated battery internal resistance'
+      fr: 'Résistance interne estimée de la batterie'
+      es: 'Resistencia interna estimada de la batería'
+      de: 'Geschätzter Innenwiderstand der Batterie'
+      it: 'Resistenza interna stimata della batteria'
+      pl: 'Szacowana rezystancja wewnętrzna akumulatora'
+      ru: 'Оценочное внутреннее сопротивление батареи'
+      zh: '估算的电池内阻'
+      hu: 'Az akkumulátor becsült belső ellenállása'
+      pt: 'Resistência interna estimada da bateria'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 10
+    units: 'mOhm'
+    invalid: 0x3FF
+    alternatives:
+      - note:
+          en: 'Also observed at bits 3.0-4.1'
+          fr: 'Aussi observé aux bits 3.0-4.1'
+          es: 'También observado en los bits 3.0-4.1'
+          de: 'Auch an den Bits 3.0-4.1 beobachtet'
+          it: 'Osservato anche ai bit 3.0-4.1'
+          pl: 'Obserwowany także na bitach 3.0-4.1'
+          ru: 'Также наблюдался в битах 3.0-4.1'
+          zh: '也观察到位于位3.0-4.1'
+          hu: 'Megfigyelve a(z) 3.0-4.1 biteken is'
+          pt: 'Também observado nos bits 3.0-4.1'
+        bits: '3.0-4.1'
+
+  BATTERY_OPEN_CIRCUIT_VOLTAGE:
+    bits: '5.0-6.0'
+    comment:
+      en: 'Estimated battery open-circuit voltage'
+      fr: 'Tension en circuit ouvert estimée de la batterie'
+      es: 'Tensión en circuito abierto estimada de la batería'
+      de: 'Geschätzte Leerlaufspannung der Batterie'
+      it: 'Tensione a circuito aperto stimata della batteria'
+      pl: 'Szacowane napięcie akumulatora w obwodzie otwartym'
+      ru: 'Оценочное напряжение батареи без нагрузки'
+      zh: '估算的电池开路电压'
+      hu: 'Az akkumulátor becsült nyitott áramköri feszültsége'
+      pt: 'Tensão em circuito aberto estimada da bateria'
+    type: 'uint'
+    factor: 0.0111
+    min: 11
+    max: 14
+    units: 'V'
+    invalid: 0x1FF
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 0.01)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 0.01)'
+          es: 'También observado con otro escalado (factor 0.01)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 0.01)'
+          it: 'Osservato anche con un''altra scala (factor 0.01)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 0.01)'
+          ru: 'Также наблюдался с другим масштабом (factor 0.01)'
+          zh: '也观察到使用另一种缩放（factor 0.01）'
+          hu: 'Megfigyelve más skálázással is (factor 0.01)'
+          pt: 'Também observado com outra escala (factor 0.01)'
+        factor: 0.01
+
+  BATTERY_INTERNAL_RESISTANCE_HIGH_CURRENT:
+    bits: '7.3-8.5'
+    comment:
+      en: 'Battery internal resistance, normalised at high discharge current'
+      fr: 'Résistance interne de la batterie, normalisée à fort courant de décharge'
+      es: 'Resistencia interna de la batería, normalizada a corriente de descarga alta'
+      de: 'Innenwiderstand der Batterie, normiert bei hohem Entladestrom'
+      it: 'Resistenza interna della batteria, normalizzata ad alta corrente di scarica'
+      pl: 'Rezystancja wewnętrzna akumulatora, znormalizowana przy wysokim prądzie rozładowania'
+      ru: 'Внутреннее сопротивление батареи, нормализованное при высоком токе разряда'
+      zh: '电池内阻（在高放电电流下归一化）'
+      hu: 'Az akkumulátor belső ellenállása, nagy kisütési áramra normalizálva'
+      pt: 'Resistência interna da bateria, normalizada a alta corrente de descarga'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 10
+    units: 'mOhm'
+    invalid: 0x7F
+    alternatives:
+      - note:
+          en: 'Also observed at bits 7.3-8.1'
+          fr: 'Aussi observé aux bits 7.3-8.1'
+          es: 'También observado en los bits 7.3-8.1'
+          de: 'Auch an den Bits 7.3-8.1 beobachtet'
+          it: 'Osservato anche ai bit 7.3-8.1'
+          pl: 'Obserwowany także na bitach 7.3-8.1'
+          ru: 'Также наблюдался в битах 7.3-8.1'
+          zh: '也观察到位于位7.3-8.1'
+          hu: 'Megfigyelve a(z) 7.3-8.1 biteken is'
+          pt: 'Também observado nos bits 7.3-8.1'
+        bits: '7.3-8.1'
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      PREDICTED_RESTART_VOLTAGE:
+        bits: '1.0-3.6'
+        comment:
+          en: 'Predicted battery terminal voltage under a restart current'
+          fr: 'Tension prédite aux bornes de la batterie sous un courant de redémarrage'
+          es: 'Tensión prevista en los bornes de la batería bajo una corriente de reinicio'
+          de: 'Vorhergesagte Klemmenspannung der Batterie bei einem Neustartstrom'
+          it: 'Tensione prevista ai morsetti della batteria sotto una corrente di riavvio'
+          pl: 'Przewidywane napięcie na zaciskach akumulatora przy prądzie ponownego uruchomienia'
+          ru: 'Прогнозируемое напряжение на клеммах батареи при токе перезапуска'
+          zh: '重新启动电流下预测的电池端电压'
+          hu: 'Az akkumulátor kapcsain várható feszültség újraindítási áram mellett'
+          pt: 'Tensão prevista nos terminais da bateria sob uma corrente de reinício'
+        type: 'uint'
+        factor: 0.01
+        min: 0
+        max: 13
+        units: 'V'
+        invalid: 0x7FF
+        alternatives:
+          - note:
+              en: 'Also observed at bits 1.0-2.2'
+              fr: 'Aussi observé aux bits 1.0-2.2'
+              es: 'También observado en los bits 1.0-2.2'
+              de: 'Auch an den Bits 1.0-2.2 beobachtet'
+              it: 'Osservato anche ai bit 1.0-2.2'
+              pl: 'Obserwowany także na bitach 1.0-2.2'
+              ru: 'Также наблюдался в битах 1.0-2.2'
+              zh: '也观察到位于位1.0-2.2'
+              hu: 'Megfigyelve a(z) 1.0-2.2 biteken is'
+              pt: 'Também observado nos bits 1.0-2.2'
+            bits: '1.0-2.2'
+      BATTERY_MAX_DISCHARGE_CURRENT:
+        bits: '4.2-5.5'
+        comment:
+          en: 'Maximum discharge current supplied by the battery at the last start'
+          fr: 'Courant maximal de décharge fourni par la batterie lors du dernier démarrage.'
+          es: 'Corriente máxima de descarga suministrada por la batería en el último arranque'
+          de: 'Maximaler Entladestrom der Batterie beim letzten Start'
+          it: 'Corrente massima di scarica fornita dalla batteria all''ultimo avviamento'
+          pl: 'Maksymalny prąd rozładowania dostarczony przez akumulator przy ostatnim uruchomieniu'
+          ru: 'Максимальный ток разряда батареи при последнем пуске'
+          zh: '上次启动时电池提供的最大放电电流'
+          hu: 'Az akkumulátor által az utolsó indításkor leadott maximális kisütési áram'
+          pt: 'Corrente máxima de descarga fornecida pela bateria no último arranque.'
+        type: 'sint'
+        factor: 20
+        offset: -1500
+        min: -1500
+        max: -300
+        units: 'A'
+        invalid: 0x3F
+        alternatives:
+          - note:
+              en: 'Also observed at bits 4.7-4.2'
+              fr: 'Aussi observé aux bits 4.7-4.2'
+              es: 'También observado en los bits 4.7-4.2'
+              de: 'Auch an den Bits 4.7-4.2 beobachtet'
+              it: 'Osservato anche ai bit 4.7-4.2'
+              pl: 'Obserwowany także na bitach 4.7-4.2'
+              ru: 'Также наблюдался в битах 4.7-4.2'
+              zh: '也观察到位于位4.7-4.2'
+              hu: 'Megfigyelve a(z) 4.7-4.2 biteken is'
+              pt: 'Também observado nos bits 4.7-4.2'
+            bits: '4.7-4.2'
+      BATTERY_MIN_VOLTAGE:
+        bits: '6.1-7.0'
+        comment:
+          en: 'Minimum battery voltage measured at the last start'
+          fr: 'Tension batterie minimale mesurée au dernier démarrage.'
+          es: 'Tensión mínima de la batería medida en el último arranque'
+          de: 'Minimale Batteriespannung, gemessen beim letzten Start'
+          it: 'Tensione minima della batteria misurata all''ultimo avviamento'
+          pl: 'Minimalne napięcie akumulatora zmierzone przy ostatnim uruchomieniu'
+          ru: 'Минимальное напряжение батареи, измеренное при последнем пуске'
+          zh: '上次启动时测得的电池最低电压'
+          hu: 'Az utolsó indításkor mért minimális akkumulátorfeszültség'
+          pt: 'Tensão mínima da bateria medida no último arranque.'
+        type: 'uint'
+        factor: 0.013
+        min: 3
+        max: 13
+        units: 'V'
+        invalid: 0x3FF
+        alternatives:
+          - note:
+              en: 'Also observed at bits 6.1-7.2. Also observed with another scaling (factor 0.1)'
+              fr: 'Aussi observé aux bits 6.1-7.2. Aussi observé avec une autre mise à l''échelle (factor 0.1)'
+              es: 'También observado en los bits 6.1-7.2. También observado con otro escalado (factor 0.1)'
+              de: 'Auch an den Bits 6.1-7.2 beobachtet. Auch mit anderer Skalierung beobachtet (factor 0.1)'
+              it: 'Osservato anche ai bit 6.1-7.2. Osservato anche con un''altra scala (factor 0.1)'
+              pl: 'Obserwowany także na bitach 6.1-7.2. Obserwowany także z innym skalowaniem (factor 0.1)'
+              ru: 'Также наблюдался в битах 6.1-7.2. Также наблюдался с другим масштабом (factor 0.1)'
+              zh: '也观察到位于位6.1-7.2. 也观察到使用另一种缩放（factor 0.1）'
+              hu: 'Megfigyelve a(z) 6.1-7.2 biteken is. Megfigyelve más skálázással is (factor 0.1)'
+              pt: 'Também observado nos bits 6.1-7.2. Também observado com outra escala (factor 0.1)'
+            bits: '6.1-7.2'
+            factor: 0.1

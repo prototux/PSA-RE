@@ -1,0 +1,228 @@
+id: 0x307
+name: 'HCU1_DYNAMIC_DATA_6'
+type: 'can'
+length: 6
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  REAR_EMOTOR_TORQUE_L2_SAFETY:
+    bits: '2.7-3.6'
+    comment:
+      en: 'L2 desired torque for the rear electric machine'
+      fr: 'Couple de consigne L2 pour la machine électrique arrière'
+      es: 'Par de consigna L2 para la máquina eléctrica trasera'
+      de: 'L2-Solldrehmoment für die hintere E-Maschine'
+      it: 'Coppia di riferimento L2 per la macchina elettrica posteriore'
+      pl: 'Zadany moment obrotowy L2 dla tylnej maszyny elektrycznej'
+      ru: 'Заданный момент L2 для задней электромашины'
+      zh: '后电机L2目标扭矩'
+      hu: 'A hátsó elektromos gép L2 kívánt nyomatéka'
+      pt: 'Binário de consigna L2 para a máquina elétrica traseira'
+    type: 'uint'
+    factor: 1
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FF
+    default: 0x1F4
+
+  REAR_EMOTOR_SPEED_L2_SAFETY:
+    bits: '3.5-4.4'
+    comment:
+      en: 'L2 desired speed for the rear electric machine'
+      fr: 'Régime L2 souhaité pour la machine électrique arrière'
+      es: 'Régimen L2 deseado para la máquina eléctrica trasera'
+      de: 'Gewünschte L2-Drehzahl für die hintere E-Maschine'
+      it: 'Regime L2 desiderato per la macchina elettrica posteriore'
+      pl: 'Żądana prędkość obrotowa L2 dla tylnej maszyny elektrycznej'
+      ru: 'Желаемая частота вращения L2 для задней электромашины'
+      zh: '后电机L2目标转速'
+      hu: 'A hátsó elektromos gép L2 kívánt fordulatszáma'
+      pt: 'Regime L2 pretendido para a máquina elétrica traseira'
+    type: 'uint'
+    factor: 32
+    offset: -16000
+    min: -16000
+    max: 16000
+    units: 'rpm'
+    default: 0x1F4
+
+  REAR_EMOTOR_VOLTAGE_L2_SAFETY:
+    bits: '5.6-6.6'
+    comment:
+      en: 'L2 desired voltage for the rear electric machine'
+      fr: 'Tension L2 souhaitée pour la machine électrique arrière'
+      es: 'Tensión L2 deseada para la máquina eléctrica trasera'
+      de: 'Gewünschte L2-Spannung für die hintere E-Maschine'
+      it: 'Tensione L2 desiderata per la macchina elettrica posteriore'
+      pl: 'Żądane napięcie L2 dla tylnej maszyny elektrycznej'
+      ru: 'Желаемое напряжение L2 для задней электромашины'
+      zh: '后电机L2目标电压'
+      hu: 'A hátsó elektromos gép L2 kívánt feszültsége'
+      pt: 'Tensão L2 pretendida para a máquina elétrica traseira'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FF
+    default: 0x00
+
+  REAR_EMOTOR_MODE_L2_SAFETY:
+    bits: '6.5-6.2'
+    comment:
+      en: 'L2 desired mode for the rear electric machine'
+      fr: 'Mode L2 souhaité pour la machine électrique arrière'
+      es: 'Modo L2 deseado para la máquina eléctrica trasera'
+      de: 'Gewünschter L2-Modus für die hintere E-Maschine'
+      it: 'Modalità L2 desiderata per la macchina elettrica posteriore'
+      pl: 'Żądany tryb L2 dla tylnej maszyny elektrycznej'
+      ru: 'Желаемый режим L2 для задней электромашины'
+      zh: '后电机L2目标模式'
+      hu: 'A hátsó elektromos gép L2 kívánt üzemmódja'
+      pt: 'Modo L2 pretendido para a máquina elétrica traseira'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Standby communication running, active shortcut activated'
+        fr: 'Communication en veille active, raccourci actif activé'
+        es: 'Comunicación en espera activa, atajo activo activado'
+        de: 'Standby-Kommunikation aktiv, aktive Abkürzung aktiviert'
+        it: 'Comunicazione in standby attiva, scorciatoia attiva attivata'
+        pl: 'Aktywna komunikacja w trybie czuwania, aktywowany aktywny skrót'
+        ru: 'Активна связь в режиме ожидания, активирован активный переход'
+        zh: '待机通信运行中,已激活主动快捷方式'
+        hu: 'Készenléti kommunikáció fut, aktív parancsikon aktiválva'
+        pt: 'Comunicação em espera em curso, atalho ativo ativado'
+      0x01:
+        en: 'Internal speed control'
+        fr: 'Régulation de vitesse interne'
+        es: 'Control de velocidad interno'
+        de: 'Interne Drehzahlregelung'
+        it: 'Controllo di velocità interno'
+        pl: 'Wewnętrzna regulacja prędkości'
+        ru: 'Внутреннее регулирование скорости'
+        zh: '内部速度控制'
+        hu: 'Belső sebességszabályozás'
+        pt: 'Controlo de velocidade interno'
+      0x02:
+        en: 'Torque control'
+        fr: 'Contrôle de couple'
+        es: 'Control de par'
+        de: 'Drehmomentregelung'
+        it: 'Controllo di coppia'
+        pl: 'Sterowanie momentem obrotowym'
+        ru: 'Управление крутящим моментом'
+        zh: '扭矩控制'
+        hu: 'Nyomatékszabályozás'
+        pt: 'Controlo de binário'
+      0x03:
+        en: 'External speed control'
+        fr: 'Contrôle de vitesse externe'
+        es: 'Control de velocidad externo'
+        de: 'Externe Geschwindigkeitsregelung'
+        it: 'Controllo di velocità esterno'
+        pl: 'Zewnętrzna kontrola prędkości'
+        ru: 'Внешнее управление скоростью'
+        zh: '外部速度控制'
+        hu: 'Külső sebességszabályozás'
+        pt: 'Controlo de velocidade externo'
+      0x04:
+        en: 'Voltage control'
+        fr: 'Contrôle de tension'
+        es: 'Control de tensión'
+        de: 'Spannungsregelung'
+        it: 'Controllo di tensione'
+        pl: 'Kontrola napięcia'
+        ru: 'Контроль напряжения'
+        zh: '电压控制'
+        hu: 'Feszültségszabályozás'
+        pt: 'Controlo de tensão'
+      0x05:
+        en: 'Offset angle adaptation'
+        fr: 'Adaptation du décalage d''angle'
+        es: 'Adaptación del desplazamiento angular'
+        de: 'Anpassung des Winkeloffsets'
+        it: 'Adattamento dell''offset angolare'
+        pl: 'Adaptacja przesunięcia kąta'
+        ru: 'Адаптация смещения угла'
+        zh: '角度偏移适应'
+        hu: 'Szögeltolás-adaptáció'
+        pt: 'Adaptação do desvio de ângulo'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Shut-off ECU in init phase, current signals'
+        fr: 'Calculateur de coupure en phase d''initialisation, signaux courants'
+        es: 'Unidad de control de corte en fase de inicialización, señales actuales'
+        de: 'Abschaltsteuergerät in Initialisierungsphase, aktuelle Signale'
+        it: 'Centralina di spegnimento in fase di inizializzazione, segnali correnti'
+        pl: 'Sterownik wyłączający w fazie inicjalizacji, bieżące sygnały'
+        ru: 'Блок отключения в фазе инициализации, текущие сигналы'
+        zh: '切断控制单元处于初始化阶段,当前信号'
+        hu: 'Lekapcsoló vezérlőegység inicializálási fázisban, aktuális jelek'
+        pt: 'Unidade de controlo de corte em fase de inicialização, sinais atuais'

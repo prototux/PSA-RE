@@ -1,0 +1,196 @@
+id: 0x2F5
+name: 'STEERING_BRAKE_COUPLING_DATA_2'
+alt_names: ['POWER_STEERING_STATUS']
+type: 'can'
+length: 7
+comment:
+  en: 'Optimised steering-wheel torque and fault status, for the function linking power-steering coupling to the brakes.'
+  fr: 'Couple volant optimisé et état de défaut, pour la fonction reliant le couplage de la direction assistée au freinage.'
+  es: 'Par de volante optimizado y estado de fallo, para la función que vincula el acoplamiento de la dirección asistida con el frenado.'
+  de: 'Optimiertes Lenkraddrehmoment und Fehlerstatus für die Funktion, die die Kopplung der Servolenkung mit der Bremse verbindet.'
+  it: 'Coppia volante ottimizzata e stato di guasto, per la funzione che collega l''accoppiamento dello sterzo assistito ai freni.'
+  pl: 'Zoptymalizowany moment obrotowy kierownicy i stan usterki, dla funkcji łączącej sprzężenie wspomagania kierownicy z hamulcami.'
+  ru: 'Оптимизированный крутящий момент рулевого колеса и статус неисправности для функции, связывающей сцепление усилителя руля с тормозами.'
+  zh: '优化的方向盘扭矩及故障状态,用于将电动助力转向耦合与制动器相连的功能。'
+  hu: 'Optimalizált kormánynyomaték és hibaállapot, a szervokormány-kapcsolást a fékkel összekötő funkcióhoz.'
+  pt: 'Binário otimizado do volante e estado de avaria, para a função que liga o acoplamento da direção assistida aos travões.'
+periodicity: ['10ms']
+senders: ['DAE']
+receivers: ['ABS']
+
+signals:
+  EPS_FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Power steering (DAE) dynamic frame checksum'
+      fr: 'Somme de contrôle de la trame dynamique de la direction assistée (DAE)'
+      es: 'Suma de comprobación de la trama dinámica de la dirección asistida (DAE)'
+      de: 'Prüfsumme des dynamischen Frames der Servolenkung (DAE)'
+      it: 'Checksum del frame dinamico dello sterzo assistito (DAE)'
+      pl: 'Suma kontrolna ramki dynamicznej wspomagania kierownicy (DAE)'
+      ru: 'Контрольная сумма динамического кадра усилителя руля (DAE)'
+      zh: '助力转向(DAE)动态帧校验和'
+      hu: 'A szervokormány (DAE) dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica da direção assistida (DAE)'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  STEERING_WHEEL_DRIVER_TORQUE:
+    bits: '2.7-2.0'
+    alt_names: ['EXTERNAL_TORQUE_APPLIED']
+    comment:
+      en: 'Torque applied by the driver on the steering wheel (negative = counterclockwise)'
+      fr: 'Couple appliqué par le conducteur sur le volant (négatif = sens antihoraire)'
+      es: 'Par aplicado por el conductor sobre el volante (negativo = sentido antihorario)'
+      de: 'Vom Fahrer auf das Lenkrad aufgebrachtes Drehmoment (negativ = Gegenuhrzeigersinn)'
+      it: 'Coppia applicata dal conducente sul volante (negativa = senso antiorario)'
+      pl: 'Moment przykładany przez kierowcę do kierownicy (ujemny = przeciwnie do ruchu wskazówek zegara)'
+      ru: 'Момент, прикладываемый водителем к рулевому колесу (отрицательный = против часовой стрелки)'
+      zh: '驾驶员施加在方向盘上的扭矩(负值=逆时针方向)'
+      hu: 'A vezető által a kormánykerékre kifejtett nyomaték (negatív = óramutató járásával ellentétes)'
+      pt: 'Binário aplicado pelo condutor no volante (negativo = sentido anti-horário)'
+    type: 'sint'
+    factor: 0.1
+    min: -10
+    max: 10
+    units: 'Nm'
+    invalid: 0x7F
+    default: 0x7F
+
+  SSP_EPS_COUPLING_FAILURE:
+    bits: '3.7'
+    comment:
+      en: 'SSP-EPS coupling function failure'
+      fr: 'Défaillance de la fonction de couplage SSP-EPS'
+      es: 'Fallo de la función de acoplamiento SSP-EPS'
+      de: 'Fehler der SSP-EPS-Kopplungsfunktion'
+      it: 'Guasto della funzione di accoppiamento SSP-EPS'
+      pl: 'Awaria funkcji sprzężenia SSP-EPS'
+      ru: 'Отказ функции связи SSP-EPS'
+      zh: 'SSP-EPS 耦合功能故障'
+      hu: 'Az SSP-EPS csatolási funkció hibája'
+      pt: 'Falha da função de acoplamento SSP-EPS'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No failure'
+        fr: 'Pas de défaillance'
+        es: 'Sin fallo'
+        de: 'Kein Ausfall'
+        it: 'Nessun guasto'
+        pl: 'Brak awarii'
+        ru: 'Нет отказа'
+        zh: '无故障'
+        hu: 'Nincs meghibásodás'
+        pt: 'Sem falha'
+      0x01:
+        en: 'Coupling fault'
+        fr: 'Défaillance du couplage'
+        es: 'Fallo de acoplamiento'
+        de: 'Kopplungsfehler'
+        it: 'Guasto di accoppiamento'
+        pl: 'Usterka sprzężenia'
+        ru: 'Неисправность сцепления'
+        zh: '耦合故障'
+        hu: 'Kapcsolási hiba'
+        pt: 'Falha de acoplamento'
+
+  EPS_COLUMN_ANGLE:
+    bits: '4.7-5.0'
+    alt_names: ['STEERING_COLUMN_ANGLE']
+    comment:
+      en: 'Power steering (EPS) column angle'
+      fr: 'Angle de la colonne de direction assistée (EPS)'
+      es: 'Ángulo de la columna de dirección asistida (EPS)'
+      de: 'Lenksäulenwinkel der elektrischen Servolenkung (EPS)'
+      it: 'Angolo del piantone dello sterzo assistito elettrico (EPS)'
+      pl: 'Kąt kolumny wspomagania kierownicy (EPS)'
+      ru: 'Угол рулевой колонки электроусилителя руля (EPS)'
+      zh: '电动助力转向(EPS)转向柱角度'
+      hu: 'Az elektromos szervokormány (EPS) oszlopszöge'
+      pt: 'Ângulo da coluna de direção assistida (EPS)'
+    type: 'sint'
+    factor: 0.1
+    min: -1630
+    max: 1630
+    units: '°'
+    invalid: 0x7FFF
+    default: 0x00
+
+  EPS_COLUMN_SPEED:
+    bits: '6.7-7.4'
+    comment:
+      en: 'Power steering (EPS) column rotation speed'
+      fr: 'Vitesse de rotation de la colonne de direction assistée (EPS)'
+      es: 'Velocidad de rotación de la columna de dirección asistida (EPS)'
+      de: 'Drehgeschwindigkeit der Lenksäule der Servolenkung (EPS)'
+      it: 'Velocità di rotazione del piantone dello sterzo assistito (EPS)'
+      pl: 'Prędkość obrotowa kolumny wspomagania kierownicy (EPS)'
+      ru: 'Скорость вращения рулевой колонки электроусилителя руля (EPS)'
+      zh: '电动助力转向(EPS)转向柱转速'
+      hu: 'Az elektromos szervokormány (EPS) oszlopának forgási sebessége'
+      pt: 'Velocidade de rotação da coluna de direção assistida (EPS)'
+    type: 'sint'
+    factor: 1
+    min: -2000
+    max: 2000
+    units: '°/s'
+    invalid: 0x7FF
+    default: 0x00
+
+  COLUMN_ANGLE_SAFE_STATUS:
+    bits: '7.0'
+    comment:
+      en: 'Steering column angle safety status'
+      fr: 'État de sécurisation de l''angle de la colonne de direction'
+      es: 'Estado de seguridad del ángulo de la columna de dirección'
+      de: 'Sicherheitsstatus des Lenksäulenwinkels'
+      it: 'Stato di sicurezza dell''angolo del piantone dello sterzo'
+      pl: 'Stan zabezpieczenia kąta kolumny kierownicy'
+      ru: 'Статус безопасности угла рулевой колонки'
+      zh: '转向柱角度安全状态'
+      hu: 'A kormányoszlop-szög biztonsági állapota'
+      pt: 'Estado de segurança do ângulo da coluna de direção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Column angle unsafe'
+        fr: 'Angle de colonne non sécurisé'
+        es: 'Ángulo de columna no seguro'
+        de: 'Lenksäulenwinkel nicht gesichert'
+        it: 'Angolo del piantone non sicuro'
+        pl: 'Kąt kolumny niezabezpieczony'
+        ru: 'Угол рулевой колонки небезопасен'
+        zh: '转向柱角度不安全'
+        hu: 'Kormányoszlop szöge nem biztonságos'
+        pt: 'Ângulo da coluna inseguro'
+      0x01:
+        en: 'Column angle safe'
+        fr: 'Angle de colonne sécurisé'
+        es: 'Ángulo de columna seguro'
+        de: 'Lenksäulenwinkel sicher'
+        it: 'Angolo del piantone sicuro'
+        pl: 'Bezpieczny kąt kolumny kierownicy'
+        ru: 'Угол рулевой колонки безопасен'
+        zh: '转向柱角度安全'
+        hu: 'A kormányoszlop szöge biztonságos'
+        pt: 'Ângulo da coluna seguro'

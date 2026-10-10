@@ -1,0 +1,297 @@
+id: 0x460
+name: 'ADDITIVE_SYSTEM_VEHICLE_INFO'
+type: 'van'
+length: 7
+comment:
+  en: 'Vehicle information sent to the diesel additive injection ECU: fuel level, vehicle speed, filler cap and ignition key position.'
+  fr: 'Informations véhicule envoyées au calculateur d''injection de l''additif gasoil : niveau de carburant, vitesse véhicule, trappe à carburant et position de la clé de contact.'
+  es: 'Información del vehículo enviada a la ECU de inyección del aditivo diésel: nivel de combustible, velocidad del vehículo, tapa del depósito y posición de la llave de contacto.'
+  de: 'An das Diesel-Additiv-Einspritzsteuergerät gesendete Fahrzeuginformationen: Kraftstoffstand, Fahrzeuggeschwindigkeit, Tankklappe und Zündschlüsselstellung.'
+  it: 'Informazioni del veicolo inviate alla centralina di iniezione dell''additivo diesel: livello carburante, velocità veicolo, sportello del serbatoio e posizione della chiave di accensione.'
+  pl: 'Informacje o pojeździe wysyłane do sterownika wtrysku dodatku do oleju napędowego: poziom paliwa, prędkość pojazdu, klapka wlewu paliwa i pozycja kluczyka zapłonu.'
+  ru: 'Информация об автомобиле, отправляемая блоку управления впрыском дизельной присадки: уровень топлива, скорость автомобиля, лючок бака и положение ключа зажигания.'
+  zh: '发送给柴油添加剂喷射控制单元的车辆信息:油位、车速、加油口盖及点火钥匙位置。'
+  hu: 'A dízeladalék-befecskendező vezérlőnek küldött járműinformációk: üzemanyagszint, járműsebesség, tanksapka és gyújtáskulcs helyzete.'
+  pt: 'Informação do veículo enviada à ECU de injeção do aditivo de gasóleo: nível de combustível, velocidade do veículo, tampa do depósito e posição da chave de ignição.'
+periodicity: ['100ms', 'trigger']
+senders: ['BSI']
+receivers: ['ADDGO']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  FUEL_LEVEL_RAW:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Raw (unfiltered) fuel level'
+      fr: 'Niveau de carburant brut (non filtré)'
+      es: 'Nivel de combustible bruto (sin filtrar)'
+      de: 'Roher (ungefilterter) Kraftstoffstand'
+      it: 'Livello carburante grezzo (non filtrato)'
+      pl: 'Surowy (niefiltrowany) poziom paliwa'
+      ru: 'Необработанный (нефильтрованный) уровень топлива'
+      zh: '原始(未滤波)燃油液位'
+      hu: 'Nyers (szűretlen) üzemanyagszint'
+      pt: 'Nível de combustível bruto (não filtrado)'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 126
+    units: 'L'
+    invalid: 0xFF
+    default: 0xFF
+
+  FUEL_LEVEL_FILTERED:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Filtered (displayed) fuel level'
+      fr: 'Niveau de carburant filtré (affiché)'
+      es: 'Nivel de combustible filtrado (mostrado)'
+      de: 'Gefilterter (angezeigter) Kraftstoffstand'
+      it: 'Livello carburante filtrato (visualizzato)'
+      pl: 'Filtrowany (wyświetlany) poziom paliwa'
+      ru: 'Отфильтрованный (отображаемый) уровень топлива'
+      zh: '滤波(显示)燃油液位'
+      hu: 'Szűrt (kijelzett) üzemanyagszint'
+      pt: 'Nível de combustível filtrado (mostrado)'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 126
+    units: 'L'
+    invalid: 0xFF
+    default: 0xFF
+
+  VEHICLE_SPEED:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Instantaneous vehicle speed (average of driven wheels), 0 below 2.75 km/h'
+      fr: 'Vitesse instantanée du véhicule (moyenne des roues motrices), nulle en dessous de 2,75 km/h'
+      es: 'Velocidad instantánea del vehículo (media de las ruedas motrices), nula por debajo de 2,75 km/h'
+      de: 'Momentane Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder), 0 unter 2,75 km/h'
+      it: 'Velocità istantanea del veicolo (media delle ruote motrici), nulla sotto i 2,75 km/h'
+      pl: 'Chwilowa prędkość pojazdu (średnia kół napędzanych), zerowa poniżej 2,75 km/h'
+      ru: 'Мгновенная скорость автомобиля (среднее по ведущим колёсам), равна нулю ниже 2,75 км/ч'
+      zh: '车辆瞬时速度(驱动轮平均值),低于2.75 km/h时为零'
+      hu: 'A jármű pillanatnyi sebessége (a hajtott kerekek átlaga), 2,75 km/h alatt nulla'
+      pt: 'Velocidade instantânea do veículo (média das rodas motrizes), nula abaixo de 2,75 km/h'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00
+    byte_order: 'little_endian'
+
+  UNUSED_1:
+    bits: '5.7'
+    unused: true
+
+  FUEL_CAP_STATE:
+    bits: '5.6-5.5'
+    comment:
+      en: 'Fuel filler cap presence'
+      fr: 'Présence du bouchon de réservoir de carburant'
+      es: 'Presencia del tapón del depósito de combustible'
+      de: 'Vorhandensein des Tankdeckels'
+      it: 'Presenza del tappo del serbatoio del carburante'
+      pl: 'Obecność korka wlewu paliwa'
+      ru: 'Наличие крышки топливного бака'
+      zh: '油箱盖存在状态'
+      hu: 'Az üzemanyag-betöltő nyílás fedelének jelenléte'
+      pt: 'Presença da tampa do depósito de combustível'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Cap absent'
+        fr: 'Bouchon absent'
+        es: 'Tapón ausente'
+        de: 'Deckel fehlt'
+        it: 'Tappo assente'
+        pl: 'Brak korka'
+        ru: 'Крышка отсутствует'
+        zh: '油箱盖缺失'
+        hu: 'A sapka hiányzik'
+        pt: 'Tampão ausente'
+      0x02:
+        en: 'Cap present'
+        fr: 'Bouchon présent'
+        es: 'Tapón presente'
+        de: 'Deckel vorhanden'
+        it: 'Tappo presente'
+        pl: 'Korek obecny'
+        ru: 'Крышка установлена'
+        zh: '油箱盖存在'
+        hu: 'Kupak jelen van'
+        pt: 'Tampa presente'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  ENGINE_RUNNING:
+    bits: '5.4-5.3'
+    comment:
+      en: 'Engine running state'
+      fr: 'État de fonctionnement du moteur (tournant ou non)'
+      es: 'Estado de funcionamiento del motor (en marcha o no)'
+      de: 'Motorlaufstatus (läuft oder nicht)'
+      it: 'Stato di funzionamento del motore (in moto o no)'
+      pl: 'Stan pracy silnika (pracujący lub nie)'
+      ru: 'Состояние работы двигателя (работает или нет)'
+      zh: '发动机运行状态(运转或未运转)'
+      hu: 'A motor működési állapota (jár vagy nem)'
+      pt: 'Estado de funcionamento do motor (a trabalhar ou não)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Not running'
+        fr: 'Non tournant'
+        es: 'Sin girar'
+        de: 'Nicht laufend'
+        it: 'Non in funzione'
+        pl: 'Niepracujący'
+        ru: 'Не работает'
+        zh: '未运转'
+        hu: 'Nem jár'
+        pt: 'Sem rotação'
+      0x01:
+        en: 'Running'
+        fr: 'En marche'
+        es: 'En marcha'
+        de: 'Läuft'
+        it: 'In funzione'
+        pl: 'Pracuje'
+        ru: 'Работает'
+        zh: '运转中'
+        hu: 'Jár'
+        pt: 'Em funcionamento'
+      0x02:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  IGNITION_KEY_POSITION:
+    bits: '5.2-5.0'
+    comment:
+      en: 'Ignition key position'
+      fr: 'Position de la clé de contact'
+      es: 'Posición de la llave de contacto'
+      de: 'Position des Zündschlüssels'
+      it: 'Posizione della chiave di accensione'
+      pl: 'Pozycja kluczyka zapłonu'
+      ru: 'Положение ключа зажигания'
+      zh: '点火钥匙位置'
+      hu: 'Gyújtáskulcs helyzete'
+      pt: 'Posição da chave de ignição'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Accessories'
+        fr: 'Accessoires'
+        es: 'Accesorios'
+        de: 'Zubehör'
+        it: 'Accessori'
+        pl: 'Akcesoria'
+        ru: 'Аксессуары'
+        zh: '附件'
+        hu: 'Tartozékok'
+        pt: 'Acessórios'
+      0x02:
+        en: 'Cranking'
+        fr: 'Démarreur en action'
+        es: 'Motor de arranque en marcha'
+        de: 'Anlasser dreht'
+        it: 'Motorino di avviamento in azione'
+        pl: 'Rozrusznik pracuje'
+        ru: 'Стартер вращает двигатель'
+        zh: '起动机运转中'
+        hu: 'Indítómotor forog'
+        pt: 'A rodar (arranque)'
+      0x03:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+
+  UNUSED_2:
+    bits: '6.7-6.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '7.7-7.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 1000ms'
+      fr: 'Aussi observée avec une période de 1000ms'
+      es: 'También observada con un periodo de 1000ms'
+      de: 'Auch mit einer Periode von 1000ms beobachtet'
+      it: 'Osservata anche con un periodo di 1000ms'
+      pl: 'Obserwowana także z okresem 1000ms'
+      ru: 'Также наблюдалась с периодом 1000ms'
+      zh: '也观察到周期为1000ms'
+      hu: 'Megfigyelve 1000ms periódussal is'
+      pt: 'Também observada com um período de 1000ms'
+    periodicity: ['1000ms', 'trigger']

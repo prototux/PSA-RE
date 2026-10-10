@@ -1,0 +1,273 @@
+id: 0x3E8
+name: 'ENGINE_ADIN_CONTROL_3'
+type: 'can'
+length: 7
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers: ['GAS']
+
+signals:
+  ENGINE_LOAD:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Engine load'
+      fr: 'Charge moteur'
+      es: 'Carga del motor'
+      de: 'Motorlast'
+      it: 'Carico motore'
+      pl: 'Obciążenie silnika'
+      ru: 'Нагрузка двигателя'
+      zh: '发动机负荷'
+      hu: 'Motorterhelés'
+      pt: 'Carga do motor'
+    type: 'uint'
+    factor: 0.011811
+    min: 0
+    max: 2.99
+    invalid: 0xFF
+    default: 0x00
+
+  LAMBDA_MEASURED:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Measured air-fuel ratio (lambda)'
+      fr: 'Richesse mesurée (lambda)'
+      es: 'Relación aire-combustible medida (lambda)'
+      de: 'Gemessenes Luft-Kraftstoff-Verhältnis (Lambda)'
+      it: 'Rapporto aria-carburante misurato (lambda)'
+      pl: 'Zmierzony współczynnik lambda'
+      ru: 'Измеренный коэффициент избытка воздуха (лямбда)'
+      zh: '实测空燃比(lambda)'
+      hu: 'Mért levegő-üzemanyag arány (lambda)'
+      pt: 'Relação ar/combustível medida (lambda)'
+    type: 'uint'
+    factor: 0.006
+    offset: 0.5
+    min: 0.5
+    max: 2
+    invalid: 0xFF
+    default: 0x53
+
+  INTAKE_MANIFOLD_PRESSURE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Intake manifold (plenum) pressure'
+      fr: 'Pression du collecteur d''admission (plenum)'
+      es: 'Presión del colector de admisión (plenum)'
+      de: 'Ansaugkrümmerdruck (Plenum)'
+      it: 'Pressione del collettore di aspirazione (plenum)'
+      pl: 'Ciśnienie w kolektorze dolotowym (plenum)'
+      ru: 'Давление во впускном коллекторе (ресивере)'
+      zh: '进气歧管(稳压腔)压力'
+      hu: 'Szívócsőnyomás (plenum)'
+      pt: 'Pressão do coletor de admissão (plenum)'
+    type: 'uint'
+    factor: 0.0390625
+    min: 0
+    max: 2559.9
+    default: 0x00
+
+  IGNITION_ADVANCE_APPLIED:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Ignition advance applied'
+      fr: 'Avance à l''allumage appliquée'
+      es: 'Avance de encendido aplicado'
+      de: 'Angewandter Zündwinkel'
+      it: 'Anticipo di accensione applicato'
+      pl: 'Zastosowany kąt wyprzedzenia zapłonu'
+      ru: 'Применённый угол опережения зажигания'
+      zh: '已施加的点火提前角'
+      hu: 'Alkalmazott gyújtáselőgyújtás'
+      pt: 'Avanço de ignição aplicado'
+    type: 'uint'
+    factor: 0.75
+    offset: -96
+    min: -96
+    max: 95.25
+    default: 0x80
+
+  GAS_MODE_AUTHORIZATION:
+    bits: '6.7'
+    comment:
+      en: 'Gas (LPG/CNG) mode authorization'
+      fr: 'Autorisation du mode gaz (GPL/GNV)'
+      es: 'Autorización del modo gas (GLP/GNC)'
+      de: 'Freigabe des Gasbetriebs (LPG/CNG)'
+      it: 'Autorizzazione della modalità gas (GPL/GNC)'
+      pl: 'Zezwolenie na tryb gazowy (LPG/CNG)'
+      ru: 'Разрешение газового режима (СНГ/СПГ)'
+      zh: '燃气模式(LPG/CNG)授权'
+      hu: 'Gázüzemmód (LPG/CNG) engedélyezése'
+      pt: 'Autorização do modo gás (GPL/GNV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'gas mode not authorized'
+        fr: 'Mode gaz non autorisé'
+        es: 'Modo gas no autorizado'
+        de: 'Gasmodus nicht zugelassen'
+        it: 'Modalità gas non autorizzata'
+        pl: 'Tryb gazowy niedozwolony'
+        ru: 'Газовый режим не разрешён'
+        zh: '燃气模式不允许'
+        hu: 'Gáz üzemmód nem engedélyezett'
+        pt: 'Modo gás não autorizado'
+      0x01:
+        en: 'Gas mode authorised'
+        fr: 'Mode gaz autorisé'
+        es: 'Modo gas autorizado'
+        de: 'Gasmodus zulässig'
+        it: 'Modalità gas autorizzata'
+        pl: 'Tryb gazowy dozwolony'
+        ru: 'Газовый режим разрешён'
+        zh: '允许燃气模式'
+        hu: 'Gáz üzemmód engedélyezve'
+        pt: 'Modo gás autorizado'
+
+  AIR_FUEL_RATIO_REGULATION_STATUS:
+    bits: '6.6'
+    comment:
+      en: 'Air-fuel ratio regulation status (open loop/closed loop)'
+      fr: 'État de la régulation de richesse (boucle ouverte/boucle fermée)'
+      es: 'Estado de la regulación de la relación aire-combustible (lazo abierto/lazo cerrado)'
+      de: 'Status der Kraftstoff-Luft-Gemischregelung (offener/geschlossener Regelkreis)'
+      it: 'Stato della regolazione del rapporto aria-carburante (anello aperto/anello chiuso)'
+      pl: 'Stan regulacji składu mieszanki paliwowo-powietrznej (pętla otwarta/zamknięta)'
+      ru: 'Статус регулирования соотношения топливо-воздух (разомкнутый/замкнутый контур)'
+      zh: '空燃比调节状态(开环/闭环)'
+      hu: 'A levegő-üzemanyag arány szabályozásának állapota (nyílt/zárt hurok)'
+      pt: 'Estado da regulação da riqueza da mistura (malha aberta/malha fechada)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Loop open'
+        fr: 'Boucle ouverte'
+        es: 'Bucle abierto'
+        de: 'Schleife offen'
+        it: 'Anello aperto'
+        pl: 'Pętla otwarta'
+        ru: 'Контур разомкнут'
+        zh: '回路断开'
+        hu: 'Hurok nyitva'
+        pt: 'Circuito aberto'
+      0x01:
+        en: 'Closed loop'
+        fr: 'Boucle fermée'
+        es: 'Bucle cerrado'
+        de: 'Geschlossener Regelkreis'
+        it: 'Anello chiuso'
+        pl: 'Pętla zamknięta'
+        ru: 'Замкнутый контур'
+        zh: '闭环'
+        hu: 'Zárt hurok'
+        pt: 'Ciclo fechado'
+
+  OPTIMAL_LEARNING_CONDITIONS_FLAG:
+    bits: '6.5'
+    comment:
+      en: 'Flag indicating optimal conditions for adaptive learning'
+      fr: 'Indicateur de conditions optimales pour l''apprentissage adaptatif'
+      es: 'Indicador de condiciones óptimas para el aprendizaje adaptativo'
+      de: 'Kennzeichen für optimale Bedingungen für das adaptive Lernen'
+      it: 'Indicatore di condizioni ottimali per l''apprendimento adattivo'
+      pl: 'Flaga optymalnych warunków uczenia adaptacyjnego'
+      ru: 'Флаг оптимальных условий для адаптивного обучения'
+      zh: '自适应学习最佳条件标志'
+      hu: 'Az adaptív tanulás optimális feltételeinek jelzője'
+      pt: 'Indicador de condições ótimas para a aprendizagem adaptativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Learning conditions not optimal'
+        fr: 'Conditions d''apprentissage non optimales'
+        es: 'Condiciones de aprendizaje no óptimas'
+        de: 'Lernbedingungen nicht optimal'
+        it: 'Condizioni di apprendimento non ottimali'
+        pl: 'Nieoptymalne warunki uczenia'
+        ru: 'Неоптимальные условия обучения'
+        zh: '学习条件不理想'
+        hu: 'A tanítási feltételek nem optimálisak'
+        pt: 'Condições de aprendizagem não ótimas'
+      0x01:
+        en: 'Optimal learning conditions'
+        fr: 'Conditions d''apprentissage optimales'
+        es: 'Condiciones de aprendizaje óptimas'
+        de: 'Optimale Anlernbedingungen'
+        it: 'Condizioni di apprendimento ottimali'
+        pl: 'Optymalne warunki uczenia'
+        ru: 'Оптимальные условия обучения'
+        zh: '最佳学习条件'
+        hu: 'Optimális tanulási feltételek'
+        pt: 'Condições de aprendizagem ótimas'
+
+  GAS_MODE_INHIBITED_PETROL_FAULT:
+    bits: '6.4'
+    comment:
+      en: 'Gas mode inhibited due to a petrol system fault'
+      fr: 'Mode gaz interdit en raison d''un défaut du circuit essence'
+      es: 'Modo gas prohibido debido a un fallo del circuito de gasolina'
+      de: 'Gasbetrieb gesperrt wegen eines Fehlers im Benzinsystem'
+      it: 'Modalità gas inibita a causa di un guasto del circuito benzina'
+      pl: 'Tryb gazowy zablokowany z powodu usterki układu benzynowego'
+      ru: 'Газовый режим заблокирован из-за неисправности бензиновой системы'
+      zh: '因汽油系统故障导致燃气模式被禁用'
+      hu: 'Gázüzemmód tiltva a benzinrendszer hibája miatt'
+      pt: 'Modo a gás inibido devido a uma avaria do sistema de gasolina'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Gas mode authorised'
+        fr: 'Mode gaz autorisé'
+        es: 'Modo gas autorizado'
+        de: 'Gasmodus zulässig'
+        it: 'Modalità gas autorizzata'
+        pl: 'Tryb gazowy dozwolony'
+        ru: 'Газовый режим разрешён'
+        zh: '允许燃气模式'
+        hu: 'Gáz üzemmód engedélyezve'
+        pt: 'Modo gás autorizado'
+      0x01:
+        en: 'gas mode not authorized'
+        fr: 'Mode gaz non autorisé'
+        es: 'Modo gas no autorizado'
+        de: 'Gasmodus nicht zugelassen'
+        it: 'Modalità gas non autorizzata'
+        pl: 'Tryb gazowy niedozwolony'
+        ru: 'Газовый режим не разрешён'
+        zh: '燃气模式不允许'
+        hu: 'Gáz üzemmód nem engedélyezett'
+        pt: 'Modo gás não autorizado'
+
+  LAMBDA_SETPOINT:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Air-fuel ratio (lambda) setpoint'
+      fr: 'Consigne de richesse (lambda)'
+      es: 'Consigna de relación aire-combustible (lambda)'
+      de: 'Luft-Kraftstoff-Verhältnis-Sollwert (Lambda)'
+      it: 'Consegna del rapporto aria-carburante (lambda)'
+      pl: 'Zadana wartość współczynnika lambda'
+      ru: 'Заданное значение коэффициента избытка воздуха (лямбда)'
+      zh: '空燃比(lambda)设定值'
+      hu: 'Levegő-üzemanyag arány (lambda) alapjele'
+      pt: 'Consigna da relação ar/combustível (lambda)'
+    type: 'uint'
+    factor: 0.0078125
+    min: 0
+    max: 2

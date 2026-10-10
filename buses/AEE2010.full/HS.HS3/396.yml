@@ -1,0 +1,625 @@
+id: 0x396
+name: 'BSRF_COMMAND_11'
+type: 'can'
+length: 8
+comment:
+  en: 'Vehicle data sent by the BSI to the telematics gateway: electric machine number, climate preconditioning menu state, consumption info, charging HMI state and fault lamp requests.'
+  fr: 'Données véhicule envoyées par la BSI à la passerelle télématique : numéro de machine électrique, état du menu préconditionnement climatique, infos de consommation, état IHM de recharge et demandes de voyants défaut.'
+  es: 'Datos del vehículo enviados por la BSI a la pasarela telemática: número de máquina eléctrica, estado del menú de preacondicionamiento climático, información de consumo, estado de IHM de recarga y solicitudes de testigos de fallo.'
+  de: 'Von der BSI an das Telematik-Gateway gesendete Fahrzeugdaten: Elektromaschinennummer, Zustand des Vorklimatisierungsmenüs, Verbrauchsinfos, Ladebedienzustand und Fehlerlampenanforderungen.'
+  it: 'Dati veicolo inviati dalla BSI al gateway telematico: numero macchina elettrica, stato del menu precondizionamento climatico, informazioni sui consumi, stato HMI di ricarica e richieste spie guasto.'
+  pl: 'Dane pojazdu wysyłane przez BSI do bramki telematycznej: numer maszyny elektrycznej, stan menu wstępnej klimatyzacji, informacje o zużyciu, stan HMI ładowania i żądania lampek usterek.'
+  ru: 'Данные автомобиля, отправляемые BSI в телематический шлюз: номер электромашины, состояние меню предварительного кондиционирования, информация о расходе, состояние интерфейса зарядки и запросы ламп неисправностей.'
+  zh: '由BSI发送给远程信息处理网关的车辆数据：电机编号、空调预调节菜单状态、能耗信息、充电人机界面状态及故障灯请求。'
+  hu: 'A BSI által a telematikai átjárónak küldött járműadatok: elektromos gép száma, klíma-előkondicionálási menü állapota, fogyasztási adatok, töltési kezelőfelület állapota és hibalámpa-kérések.'
+  pt: 'Dados do veículo enviados pela BSI ao gateway telemático: número da máquina elétrica, estado do menu de pré-condicionamento da climatização, informação de consumo, estado da IHM de carregamento e pedidos de luzes avisadoras de avaria.'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  REMOTE_DIAGNOSIS_AUTHORIZATION:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Remote diagnosis (TLDIAG) authorization'
+      fr: 'Autorisation de télédiagnostic (TLDIAG)'
+      es: 'Autorización de telediagnóstico (TLDIAG)'
+      de: 'Freigabe der Ferndiagnose (TLDIAG)'
+      it: 'Autorizzazione alla telediagnosi (TLDIAG)'
+      pl: 'Autoryzacja zdalnej diagnostyki (TLDIAG)'
+      ru: 'Разрешение удалённой диагностики (TLDIAG)'
+      zh: '远程诊断（TLDIAG）授权'
+      hu: 'A távdiagnosztika (TLDIAG) engedélyezése'
+      pt: 'Autorização de diagnóstico remoto (TLDIAG)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Not available'
+        fr: 'Non disponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem érhető el'
+        pt: 'Não disponível'
+      0x01:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  AC_PRECOND_ASAP_MODE_ACTIVE:
+    bits: '1.5'
+    comment:
+      en: 'Memorized activation status of the "as soon as possible" climate preconditioning mode'
+      fr: 'État mémorisé d''activation du mode de préconditionnement climatique « dès que possible »'
+      es: 'Estado memorizado de activación del modo de preacondicionamiento climático "lo antes posible"'
+      de: 'Gespeicherter Aktivierungsstatus des Klimavorkonditionierungsmodus "so schnell wie möglich"'
+      it: 'Stato memorizzato di attivazione della modalità di preclimatizzazione "il prima possibile"'
+      pl: 'Zapamiętany stan aktywacji trybu klimatyzacji wstępnej "jak najszybciej"'
+      ru: 'Сохранённое состояние активации режима предварительного кондиционирования "как можно скорее"'
+      zh: '“尽快”空调预处理模式的已存储激活状态'
+      hu: 'A „minél előbb” klíma-előkondicionálási mód tárolt aktiválási állapota'
+      pt: 'Estado memorizado de ativação do modo de pré-condicionamento climático «o mais depressa possível»'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  CHARGING_HMI_STATE:
+    bits: '1.4-1.2'
+    comment:
+      en: 'Charging status shown on the HMI'
+      fr: 'État de charge affiché sur l''IHM'
+      es: 'Estado de carga mostrado en la IHM'
+      de: 'Auf der HMI angezeigter Ladestatus'
+      it: 'Stato di ricarica mostrato sull''HMI'
+      pl: 'Stan ładowania wyświetlany w interfejsie HMI'
+      ru: 'Состояние зарядки, отображаемое на HMI'
+      zh: '人机界面上显示的充电状态'
+      hu: 'A HMI-n megjelenő töltési állapot'
+      pt: 'Estado de carga apresentado na IHM'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Disconnected'
+        fr: 'Déconnecté'
+        es: 'Desconectado'
+        de: 'Getrennt'
+        it: 'Disconnesso'
+        pl: 'Odłączony'
+        ru: 'Отключено'
+        zh: '已断开'
+        hu: 'Lecsatlakoztatva'
+        pt: 'Desligado'
+      0x01:
+        en: 'In progress'
+        fr: 'En cours'
+        es: 'En curso'
+        de: 'Läuft'
+        it: 'In corso'
+        pl: 'W toku'
+        ru: 'Выполняется'
+        zh: '进行中'
+        hu: 'Folyamatban'
+        pt: 'Em curso'
+      0x02:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+      0x03:
+        en: 'Stopped'
+        fr: 'Arrêté'
+        es: 'Detenido'
+        de: 'Angehalten'
+        it: 'Fermo'
+        pl: 'Zatrzymane'
+        ru: 'Остановлено'
+        zh: '已停止'
+        hu: 'Leállítva'
+        pt: 'Parado'
+      0x04:
+        en: 'Finished'
+        fr: 'Terminé'
+        es: 'Finalizado'
+        de: 'Beendet'
+        it: 'Terminato'
+        pl: 'Zakończone'
+        ru: 'Завершено'
+        zh: '已完成'
+        hu: 'Befejezve'
+        pt: 'Concluído'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  VEHICLE_ALERT_HIGHEST_GRADE:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Highest current vehicle warning grade'
+      fr: 'Niveau d''alerte véhicule le plus élevé en cours'
+      es: 'Nivel de alerta del vehículo más elevado en curso'
+      de: 'Aktuell höchste Fahrzeugwarnstufe'
+      it: 'Livello di allerta veicolo più alto in corso'
+      pl: 'Najwyższy aktualny poziom ostrzeżenia pojazdu'
+      ru: 'Наивысший текущий уровень предупреждения автомобиля'
+      zh: '当前最高的车辆警告等级'
+      hu: 'A jármű jelenlegi legmagasabb figyelmeztetési szintje'
+      pt: 'Nível de alerta do veículo mais elevado em curso'
+    type: 'enum'
+    values:
+      0x00:
+        en: '0'
+        fr: '0'
+        es: '0'
+        de: '0'
+        it: '0'
+        pl: '0'
+        ru: '0'
+        zh: '0'
+        hu: '0'
+        pt: '0'
+      0x01:
+        en: '1'
+        fr: '1'
+        es: '1'
+        de: '1'
+        it: '1'
+        pl: '1'
+        ru: '1'
+        zh: '1'
+        hu: '1'
+        pt: '1'
+      0x02:
+        en: '2'
+        fr: '2'
+        es: '2'
+        de: '2'
+        it: '2'
+        pl: '2'
+        ru: '2'
+        zh: '2'
+        hu: '2'
+        pt: '2'
+      0x03:
+        en: '3'
+        fr: '3'
+        es: '3'
+        de: '3'
+        it: '3'
+        pl: '3'
+        ru: '3'
+        zh: '3'
+        hu: '3'
+        pt: '3'
+
+  AUX_BATTERY_VOLTAGE:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Auxiliary (12V) battery voltage'
+      fr: 'Tension de la batterie auxiliaire (12V)'
+      es: 'Tensión de la batería auxiliar (12V)'
+      de: 'Spannung der Zusatzbatterie (12V)'
+      it: 'Tensione della batteria ausiliaria (12V)'
+      pl: 'Napięcie akumulatora pomocniczego (12V)'
+      ru: 'Напряжение вспомогательной батареи (12В)'
+      zh: '辅助（12V）电池电压'
+      hu: 'A segédakkumulátor (12V) feszültsége'
+      pt: 'Tensão da bateria auxiliar (12V)'
+    type: 'uint'
+    factor: 0.15
+    min: 5.5
+    max: 18.1
+    units: 'V'
+
+  EBB_ASSIST_FAULT_LAMP_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Request to light the brake assist fault warning lamp'
+      fr: 'Demande d''allumage du témoin de défaut d''assistance au freinage'
+      es: 'Solicitud de encendido del testigo de fallo de asistencia de frenado'
+      de: 'Anforderung zum Einschalten der Kontrollleuchte für Bremsassistenz-Störung'
+      it: 'Richiesta di accensione della spia di guasto dell''assistenza frenata'
+      pl: 'Żądanie zapalenia kontrolki usterki wspomagania hamowania'
+      ru: 'Запрос на включение лампы неисправности усилителя тормозов'
+      zh: '制动辅助故障警告灯点亮请求'
+      hu: 'A fékrásegítés-hiba jelzőlámpájának bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho de falha de assistência de travagem'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem falha'
+      0x01:
+        en: 'Brake fault'
+        fr: 'Défaut de frein'
+        es: 'Fallo de freno'
+        de: 'Bremsfehler'
+        it: 'Guasto ai freni'
+        pl: 'Usterka hamulca'
+        ru: 'Неисправность тормоза'
+        zh: '制动故障'
+        hu: 'Fékhiba'
+        pt: 'Avaria de travagem'
+
+  AUX_BATTERY_SOC:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Auxiliary (12V) battery state of charge'
+      fr: 'État de charge de la batterie auxiliaire (12V)'
+      es: 'Estado de carga de la batería auxiliar (12V)'
+      de: 'Ladezustand der Zusatzbatterie (12V)'
+      it: 'Stato di carica della batteria ausiliaria (12V)'
+      pl: 'Stan naładowania akumulatora pomocniczego (12V)'
+      ru: 'Уровень заряда вспомогательной батареи (12В)'
+      zh: '辅助（12V）电池荷电状态'
+      hu: 'A segédakkumulátor (12V) töltöttségi állapota'
+      pt: 'Estado de carga da bateria auxiliar (12V)'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+
+  FUEL_CONSUMPTION_LAST_5MIN:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Average fuel consumption over the last 5 minutes, for connected services'
+      fr: 'Consommation moyenne de carburant sur les 5 dernières minutes, pour les services connectés'
+      es: 'Consumo medio de combustible en los últimos 5 minutos, para los servicios conectados'
+      de: 'Durchschnittlicher Kraftstoffverbrauch der letzten 5 Minuten, für vernetzte Dienste'
+      it: 'Consumo medio di carburante negli ultimi 5 minuti, per i servizi connessi'
+      pl: 'Średnie zużycie paliwa w ciągu ostatnich 5 minut, dla usług połączonych'
+      ru: 'Средний расход топлива за последние 5 минут, для подключённых сервисов'
+      zh: '最近5分钟的平均油耗（用于联网服务）'
+      hu: 'Az átlagos üzemanyag-fogyasztás az utolsó 5 percben, a csatlakoztatott szolgáltatásokhoz'
+      pt: 'Consumo médio de combustível nos últimos 5 minutos, para serviços conectados'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25
+    units: 'L/100km'
+    invalid: 0xFF
+
+  ELECTRIC_CONSUMPTION_LAST_5MIN:
+    bits: '5.7-5.2'
+    comment:
+      en: 'Average electricity consumption over the last 5 minutes of driving, for connected services'
+      fr: 'Consommation électrique moyenne sur les 5 dernières minutes de conduite, pour les services connectés'
+      es: 'Consumo eléctrico medio en los últimos 5 minutos de conducción, para los servicios conectados'
+      de: 'Durchschnittlicher Stromverbrauch der letzten 5 Fahrminuten, für vernetzte Dienste'
+      it: 'Consumo elettrico medio negli ultimi 5 minuti di guida, per i servizi connessi'
+      pl: 'Średnie zużycie energii elektrycznej w ciągu ostatnich 5 minut jazdy, dla usług połączonych'
+      ru: 'Среднее потребление электроэнергии за последние 5 минут движения, для подключённых сервисов'
+      zh: '最近5分钟行驶的平均电耗（用于联网服务）'
+      hu: 'Az átlagos elektromos fogyasztás az utolsó 5 perc vezetés alatt, a csatlakoztatott szolgáltatásokhoz'
+      pt: 'Consumo médio de eletricidade nos últimos 5 minutos de condução, para serviços conectados'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 50
+    units: 'kWh/100km'
+    invalid: 0x3F
+
+  IVC_SIGN:
+    bits: '5.1-5.0'
+    comment:
+      en: 'Sign of the IVC value'
+      fr: 'Signe de la valeur IVC'
+      es: 'Signo del valor IVC'
+      de: 'Vorzeichen des IVC-Werts'
+      it: 'Segno del valore IVC'
+      pl: 'Znak wartości IVC'
+      ru: 'Знак значения IVC'
+      zh: 'IVC值的符号'
+      hu: 'Az IVC érték előjele'
+      pt: 'Sinal do valor IVC'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Null'
+        fr: 'Nul'
+        es: 'Nulo'
+        de: 'Null'
+        it: 'Nullo'
+        pl: 'Zerowy'
+        ru: 'Нулевой'
+        zh: '无效'
+        hu: 'Nulla'
+        pt: 'Nulo'
+      0x01:
+        en: 'Negative'
+        fr: 'Négative'
+        es: 'Negativa'
+        de: 'Negativ'
+        it: 'Negativa'
+        pl: 'Ujemna'
+        ru: 'Отрицательно'
+        zh: '否定'
+        hu: 'Negatív'
+        pt: 'Negativo'
+      0x02:
+        en: 'Positive'
+        fr: 'Positif'
+        es: 'Positivo'
+        de: 'Positiv'
+        it: 'Positivo'
+        pl: 'Dodatnie'
+        ru: 'Положительное'
+        zh: '正'
+        hu: 'Pozitív'
+        pt: 'Positivo'
+      0x03:
+        unused: true
+
+  ENERGY_RECOVERED_LAST_5MIN:
+    bits: '6.7-6.3'
+    comment:
+      en: 'Energy recovered during the last 5 minutes of driving'
+      fr: 'Énergie récupérée pendant les 5 dernières minutes de conduite'
+      es: 'Energía recuperada durante los últimos 5 minutos de conducción'
+      de: 'In den letzten 5 Fahrminuten zurückgewonnene Energie'
+      it: 'Energia recuperata negli ultimi 5 minuti di guida'
+      pl: 'Energia odzyskana w ciągu ostatnich 5 minut jazdy'
+      ru: 'Энергия, рекуперированная за последние 5 минут движения'
+      zh: '最近5分钟行驶中回收的能量'
+      hu: 'Az utolsó 5 perc vezetés alatt visszanyert energia'
+      pt: 'Energia recuperada durante os últimos 5 minutos de condução'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 20
+    units: 'kWh/100km'
+    invalid: 0x1F
+
+  ELECTRIC_MACHINE_COUNT:
+    bits: '6.2-6.0'
+    comment:
+      en: 'Number of electric machines fitted'
+      fr: 'Nombre de machines électriques présentes'
+      es: 'Número de máquinas eléctricas presentes'
+      de: 'Anzahl der vorhandenen Elektromaschinen'
+      it: 'Numero di macchine elettriche presenti'
+      pl: 'Liczba zamontowanych maszyn elektrycznych'
+      ru: 'Количество установленных электрических машин'
+      zh: '配备的电机数量'
+      hu: 'A beépített elektromos gépek száma'
+      pt: 'Número de máquinas elétricas presentes'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No electrical machine'
+        fr: 'Pas de machine électrique'
+        es: 'Sin máquina eléctrica'
+        de: 'Keine Elektromaschine'
+        it: 'Nessuna macchina elettrica'
+        pl: 'Brak maszyny elektrycznej'
+        ru: 'Нет электрической машины'
+        zh: '无电机'
+        hu: 'Nincs elektromos gép'
+        pt: 'Sem máquina elétrica'
+      0x01:
+        en: '1 electrical machine'
+        fr: '1 machine électrique'
+        es: '1 máquina eléctrica'
+        de: '1 elektrische Maschine'
+        it: '1 macchina elettrica'
+        pl: '1 maszyna elektryczna'
+        ru: '1 электрическая машина'
+        zh: '1台电机'
+        hu: '1 elektromos gép'
+        pt: '1 máquina elétrica'
+      0x02:
+        en: '2 electric machines'
+        fr: '2 machines électriques'
+        es: '2 máquinas eléctricas'
+        de: '2 Elektromaschinen'
+        it: '2 macchine elettriche'
+        pl: '2 maszyny elektryczne'
+        ru: '2 электромашины'
+        zh: '2台电机'
+        hu: '2 elektromos gép'
+        pt: '2 máquinas elétricas'
+      0x03:
+        en: '3 electric machines'
+        fr: '3 machines électriques'
+        es: '3 máquinas eléctricas'
+        de: '3 elektrische Maschinen'
+        it: '3 macchine elettriche'
+        pl: '3 maszyny elektryczne'
+        ru: '3 электрические машины'
+        zh: '3台电机'
+        hu: '3 elektromos gép'
+        pt: '3 máquinas elétricas'
+      0x04:
+        en: '4 electrical machines'
+        fr: '4 machines électriques'
+        es: '4 máquinas eléctricas'
+        de: '4 elektrische Maschinen'
+        it: '4 macchine elettriche'
+        pl: '4 maszyny elektryczne'
+        ru: '4 электрические машины'
+        zh: '4台电机'
+        hu: '4 elektromos gép'
+        pt: '4 máquinas elétricas'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  ENERGY_MODE_STATUS:
+    bits: '8.3-8.1'
+    comment:
+      en: 'Current energy mode status (Hybrid/Electric/Fuel)'
+      fr: 'État actuel du mode d''énergie (Hybride/Électrique/Thermique)'
+      es: 'Estado actual del modo de energía (Híbrido/Eléctrico/Combustión)'
+      de: 'Aktueller Status des Energiemodus (Hybrid/Elektrisch/Verbrenner)'
+      it: 'Stato attuale della modalità energetica (Ibrida/Elettrica/Termica)'
+      pl: 'Aktualny stan trybu energii (Hybrydowy/Elektryczny/Spalinowy)'
+      ru: 'Текущий статус энергетического режима (Гибрид/Электро/Топливо)'
+      zh: '当前能量模式状态(混合动力/纯电/燃油)'
+      hu: 'A jelenlegi energiamód állapota (Hibrid/Elektromos/Belső égésű)'
+      pt: 'Estado atual do modo de energia (Híbrido/Elétrico/Térmico)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Hybrid'
+        fr: 'Hybride'
+        es: 'Híbrido'
+        de: 'Hybrid'
+        it: 'Ibrido'
+        pl: 'Hybrydowy'
+        ru: 'Гибрид'
+        zh: '混合动力'
+        hu: 'Hibrid'
+        pt: 'Híbrido'
+      0x01:
+        en: 'ZEV'
+        fr: 'ZEV'
+        es: 'ZEV'
+        de: 'ZEV'
+        it: 'ZEV'
+        pl: 'ZEV'
+        ru: 'ZEV'
+        zh: 'ZEV'
+        hu: 'ZEV'
+        pt: 'ZEV'
+      0x02:
+        en: 'Fuel'
+        fr: 'Essence'
+        es: 'Combustible'
+        de: 'Kraftstoff'
+        it: 'Carburante'
+        pl: 'Paliwo'
+        ru: 'Топливо'
+        zh: '燃油'
+        hu: 'Üzemanyag'
+        pt: 'Combustível'
+      0x03:
+        en: 'Initialization'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Value not used (111)'
+        fr: 'Valeur non utilisée (111)'
+        es: 'Valor no utilizado (111)'
+        de: 'Nicht verwendeter Wert (111)'
+        it: 'Valore non utilizzato (111)'
+        pl: 'Wartość nieużywana (111)'
+        ru: 'Неиспользуемое значение (111)'
+        zh: '未使用的值（111）'
+        hu: 'Nem használt érték (111)'
+        pt: 'Valor não utilizado (111)'
+
+  ASR_ESP_FAULT_LAMP_REQUEST:
+    bits: '8.0'
+    comment:
+      en: 'ASR-ESP fault warning lamp request'
+      fr: 'Demande d''allumage du témoin de défaut ASR-ESP'
+      es: 'Solicitud de encendido del testigo de fallo ASR-ESP'
+      de: 'Anforderung der Warnleuchte für ASR-ESP-Fehler'
+      it: 'Richiesta di accensione della spia di guasto ASR-ESP'
+      pl: 'Żądanie zapalenia kontrolki usterki ASR-ESP'
+      ru: 'Запрос включения лампы неисправности ASR-ESP'
+      zh: 'ASR-ESP 故障警示灯请求'
+      hu: 'ASR-ESP hiba jelzőlámpájának kérése'
+      pt: 'Pedido de acendimento do testemunho de falha ASR-ESP'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande de mise en marche'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开机请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'

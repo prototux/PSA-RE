@@ -1,0 +1,340 @@
+id: 0x228
+name: 'ENGINE_EASY_MOVE_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Sent for the Easy Move function: checksum, uncertain Easy Move torque, process counter, accelerator pedal derivative and Easy Move torque info.'
+  fr: 'Émise pour la fonction Easy Move : somme de contrôle, couple Easy Move incertain, compteur de process, dérivée pédale d''accélérateur et info couple Easy Move.'
+  es: 'Enviada para la función Easy Move: suma de comprobación, par Easy Move incierto, contador de proceso, derivada del pedal acelerador e información de par Easy Move.'
+  de: 'Für die Easy-Move-Funktion gesendet: Prüfsumme, unsicheres Easy-Move-Drehmoment, Prozesszähler, Gaspedal-Ableitung und Easy-Move-Momentinfo.'
+  it: 'Inviata per la funzione Easy Move: checksum, coppia Easy Move incerta, contatore di processo, derivata del pedale acceleratore e info coppia Easy Move.'
+  pl: 'Wysyłana dla funkcji Easy Move: suma kontrolna, niepewny moment Easy Move, licznik procesu, pochodna pedału przyspieszenia i informacja o momencie Easy Move.'
+  ru: 'Отправляется для функции Easy Move: контрольная сумма, неопределённый момент Easy Move, счётчик процесса, производная педали акселератора и информация о моменте Easy Move.'
+  zh: '为Easy Move功能发送:校验和、不确定的Easy Move扭矩、处理计数器、加速踏板导数和Easy Move扭矩信息。'
+  hu: 'Az Easy Move funkcióhoz küldve: ellenőrzőösszeg, bizonytalan Easy Move nyomaték, folyamatszámláló, gázpedál deriváltja és Easy Move nyomaték infó.'
+  pt: 'Enviada para a função Easy Move: soma de verificação, binário incerto do Easy Move, contador de processo, derivada do pedal do acelerador e informação de binário do Easy Move.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers:
+  - 'HCU1'
+  - 'ABS'
+  - 'BVA'
+  - 'ACC'
+  - 'AMVAR'
+  - 'AR2S'
+  - 'BSI'
+  - 'CAAR'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'CSS'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'BCP'
+  - 'SBW'
+  - 'SCDT'
+  - 'BHI'
+  - 'TBMU'
+  - 'DAE'
+
+signals:
+  EASY_MOVE_TORQUE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Easy Move torque information'
+      fr: 'Information de couple Easy Move'
+      es: 'Información de par de Easy Move'
+      de: 'Easy-Move-Drehmomentinformation'
+      it: 'Informazione di coppia Easy Move'
+      pl: 'Informacja o momencie obrotowym Easy Move'
+      ru: 'Информация о крутящем моменте Easy Move'
+      zh: 'Easy Move 扭矩信息'
+      hu: 'Easy Move nyomatékinformáció'
+      pt: 'Informação de binário Easy Move'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+  EASY_MOVE_TORQUE_UNCERTAIN:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Estimated Easy Move torque uncertain'
+      fr: 'Couple Easy Move estimé incertain'
+      es: 'Par estimado de Easy Move incierto'
+      de: 'Geschätztes Easy-Move-Drehmoment unsicher'
+      it: 'Coppia stimata Easy Move incerta'
+      pl: 'Niepewny szacowany moment Easy Move'
+      ru: 'Ненадёжный расчётный момент Easy Move'
+      zh: 'Easy Move 估算扭矩不确定'
+      hu: 'Bizonytalan becsült Easy Move nyomaték'
+      pt: 'Binário estimado de Easy Move incerto'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Easy Move torque information guaranteed with the required accuracy'
+        fr: 'Information de couple Easy Move garantie avec la précision requise'
+        es: 'Información de par Easy Move garantizada con la precisión requerida'
+        de: 'Easy-Move-Drehmomentinformation mit der geforderten Genauigkeit gewährleistet'
+        it: 'Informazione di coppia Easy Move garantita con la precisione richiesta'
+        pl: 'Informacja o momencie Easy Move zagwarantowana z wymaganą dokładnością'
+        ru: 'Информация о моменте Easy Move гарантирована с требуемой точностью'
+        zh: 'Easy Move扭矩信息达到所需精度保证'
+        hu: 'Easy Move nyomatékinformáció a megkövetelt pontossággal garantálva'
+        pt: 'Informação de binário Easy Move garantida com a precisão exigida'
+      0x01:
+        en: 'Easy Move torque information not guaranteed to required accuracy'
+        fr: 'Information de couple Easy Move non garantie à la précision requise'
+        es: 'Información de par Easy Move no garantizada con la precisión requerida'
+        de: 'Easy-Move-Drehmomentinformation nicht mit erforderlicher Genauigkeit gewährleistet'
+        it: 'Informazione di coppia Easy Move non garantita con la precisione richiesta'
+        pl: 'Informacja o momencie Easy Move niegwarantowana z wymaganą dokładnością'
+        ru: 'Информация о моменте Easy Move не гарантирована с требуемой точностью'
+        zh: 'Easy Move扭矩信息未保证达到所需精度'
+        hu: 'Az Easy Move nyomatékinformáció nem garantált a szükséges pontossággal'
+        pt: 'Informação de binário Easy Move não garantida com a precisão exigida'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+
+  HILL_ASSIST_TORQUE_PRECISE:
+    bits: '2.5'
+    comment:
+      en: 'Engine torque precision sufficient for Hill Assist'
+      fr: 'Précision du couple moteur suffisante pour l''assistance au démarrage en côte'
+      es: 'Precisión del par de motor suficiente para la asistencia de arranque en pendiente'
+      de: 'Motordrehmoment-Genauigkeit ausreichend für die Berganfahrhilfe'
+      it: 'Precisione della coppia motore sufficiente per l''Hill Assist'
+      pl: 'Dokładność momentu silnika wystarczająca dla asystenta ruszania pod górę'
+      ru: 'Точность крутящего момента двигателя достаточна для ассистента старта на подъёме'
+      zh: '发动机扭矩精度满足坡道辅助要求'
+      hu: 'A motornyomaték pontossága elegendő a hegyi indítássegítőhöz'
+      pt: 'Precisão do binário do motor suficiente para a assistência de arranque em subida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Imprecise torque'
+        fr: 'Couple imprécis'
+        es: 'Par impreciso'
+        de: 'Ungenaues Drehmoment'
+        it: 'Coppia imprecisa'
+        pl: 'Niedokładny moment obrotowy'
+        ru: 'Неточный момент'
+        zh: '扭矩不精确'
+        hu: 'Pontatlan nyomaték'
+        pt: 'Binário impreciso'
+      0x01:
+        en: 'Precise torque'
+        fr: 'Couple précis'
+        es: 'Par preciso'
+        de: 'Präzises Drehmoment'
+        it: 'Coppia precisa'
+        pl: 'Precyzyjny moment obrotowy'
+        ru: 'Точный крутящий момент'
+        zh: '精确扭矩'
+        hu: 'Pontos nyomaték'
+        pt: 'Binário preciso'
+
+  HILL_ASSIST_AVAILABLE_TORQUE:
+    bits: '2.4'
+    comment:
+      en: 'Engine torque available for Hill Assist'
+      fr: 'Couple moteur disponible pour l''assistance au démarrage en côte'
+      es: 'Par de motor disponible para la asistencia de arranque en pendiente'
+      de: 'Verfügbares Motordrehmoment für die Berganfahrhilfe'
+      it: 'Coppia motore disponibile per l''Hill Assist'
+      pl: 'Dostępny moment obrotowy silnika dla asystenta ruszania pod górę'
+      ru: 'Доступный крутящий момент двигателя для ассистента старта на подъёме'
+      zh: '坡道辅助可用的发动机扭矩'
+      hu: 'A hegyi indítássegítő számára elérhető motornyomaték'
+      pt: 'Binário do motor disponível para a assistência de arranque em subida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Torque unavailable'
+        fr: 'Couple indisponible'
+        es: 'Par no disponible'
+        de: 'Drehmoment nicht verfügbar'
+        it: 'Coppia non disponibile'
+        pl: 'Moment obrotowy niedostępny'
+        ru: 'Крутящий момент недоступен'
+        zh: '扭矩不可用'
+        hu: 'Nyomaték nem elérhető'
+        pt: 'Binário indisponível'
+      0x01:
+        en: 'Available torque'
+        fr: 'Couple disponible'
+        es: 'Par disponible'
+        de: 'Verfügbares Drehmoment'
+        it: 'Coppia disponibile'
+        pl: 'Dostępny moment obrotowy'
+        ru: 'Доступный крутящий момент'
+        zh: '可用扭矩'
+        hu: 'Rendelkezésre álló nyomaték'
+        pt: 'Binário disponível'
+
+  SECURE_HARD_POINT_STATUS:
+    bits: '2.3'
+    comment:
+      en: 'Secured hard point crossed status'
+      fr: 'État de franchissement du point dur sécurisé'
+      es: 'Estado de superación del punto duro seguro'
+      de: 'Status des gesicherten Druckpunkts (überschritten)'
+      it: 'Stato di superamento del punto duro sicuro'
+      pl: 'Stan przekroczenia zabezpieczonego punktu oporu'
+      ru: 'Статус преодоления защищённой жёсткой точки'
+      zh: '安全硬点越过状态'
+      hu: 'A biztosított kemény pont átlépésének állapota'
+      pt: 'Estado de ultrapassagem do ponto duro de segurança'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Hard point not exceeded'
+        fr: 'Point dur non franchi'
+        es: 'Punto duro no superado'
+        de: 'Härtepunkt nicht überschritten'
+        it: 'Punto duro non superato'
+        pl: 'Punkt oporu nieprzekroczony'
+        ru: 'Точка сопротивления не пройдена'
+        zh: '未超过硬点'
+        hu: 'Keménypont nincs átlépve'
+        pt: 'Ponto crítico não excedido'
+      0x01:
+        en: 'Hard point exceeded'
+        fr: 'Point dur franchi'
+        es: 'Punto duro superado'
+        de: 'Druckpunkt überschritten'
+        it: 'Punto duro superato'
+        pl: 'Przekroczony punkt oporowy'
+        ru: 'Точка сопротивления пройдена'
+        zh: '已超过硬点'
+        hu: 'A keménypont átlépve'
+        pt: 'Ponto duro ultrapassado'
+
+  ACCELERATOR_PEDAL_POSITION:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Accelerator pedal position'
+      fr: 'Position de la pédale d''accélérateur'
+      es: 'Posición del pedal del acelerador'
+      de: 'Fahrpedalstellung'
+      it: 'Posizione del pedale dell''acceleratore'
+      pl: 'Położenie pedału przyspieszenia'
+      ru: 'Положение педали акселератора'
+      zh: '加速踏板位置'
+      hu: 'Gázpedál helyzete'
+      pt: 'Posição do pedal do acelerador'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  PROCESS_COUNTER_4BIT:
+    bits: '4.7-4.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ENGINE_DYNAMIC5_FRAME_CHECKSUM:
+    bits: '4.3-4.0'
+    comment:
+      en: 'Engine ECU dynamic frame 5 checksum'
+      fr: 'Somme de contrôle de la trame dynamique 5 du calculateur moteur'
+      es: 'Suma de comprobación de la trama dinámica 5 de la ECU del motor'
+      de: 'Prüfsumme des dynamischen Frames 5 des Motorsteuergeräts'
+      it: 'Checksum del frame dinamico 5 della centralina motore'
+      pl: 'Suma kontrolna ramki dynamicznej 5 sterownika silnika'
+      ru: 'Контрольная сумма динамического кадра 5 блока управления двигателем'
+      zh: '发动机控制单元动态帧5校验和'
+      hu: 'A motorvezérlő 5. dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica 5 da unidade de controlo do motor'
+    type: 'uint'
+
+  ENGINE_ECU_CLUTCH_PEDAL_POSITION:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Clutch pedal position, as measured by the engine ECU'
+      fr: 'Position de la pédale d''embrayage, mesurée par le calculateur moteur'
+      es: 'Posición del pedal de embrague, medida por la ECU del motor'
+      de: 'Kupplungspedalstellung, vom Motorsteuergerät gemessen'
+      it: 'Posizione del pedale della frizione, misurata dalla centralina motore'
+      pl: 'Położenie pedału sprzęgła, mierzone przez sterownik silnika'
+      ru: 'Положение педали сцепления, измеренное блоком управления двигателем'
+      zh: '由发动机控制单元测得的离合器踏板位置'
+      hu: 'Kuplungpedál helyzete, a motorvezérlő mérése szerint'
+      pt: 'Posição do pedal de embraiagem, medida pela ECU do motor'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFE
+
+  BRAKE_BOOSTER_PRESSURE_2:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Brake booster pressure, sensor 2'
+      fr: 'Pression de l''assistance de freinage (Mastervac), capteur 2'
+      es: 'Presión del servofreno (Mastervac), sensor 2'
+      de: 'Bremskraftverstärker-Druck (Mastervac), Sensor 2'
+      it: 'Pressione del servofreno (Mastervac), sensore 2'
+      pl: 'Ciśnienie wspomagania hamowania (Mastervac), czujnik 2'
+      ru: 'Давление вакуумного усилителя тормозов (Mastervac), датчик 2'
+      zh: '制动助力器(Mastervac)压力,传感器2'
+      hu: 'Fékrásegítő (Mastervac) nyomása, 2. érzékelő'
+      pt: 'Pressão da assistência de travagem (Mastervac), sensor 2'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 1200
+    units: 'hPa'
+    invalid: 0xFF
+    default: 0xFE
+
+  TAKEOFF_ENGINE_SPEED_TARGET:
+    bits: '7.7-8.6'
+    comment:
+      en: 'Target engine speed for pull-away (take-off)'
+      fr: 'Régime moteur de consigne au démarrage (décollage)'
+      es: 'Régimen de motor de consigna para el arranque'
+      de: 'Solldrehzahl für den Anfahrvorgang'
+      it: 'Regime motore target per la partenza'
+      pl: 'Zadana prędkość obrotowa silnika przy ruszaniu'
+      ru: 'Целевые обороты двигателя при трогании с места'
+      zh: '起步目标发动机转速'
+      hu: 'Célfordulatszám az elinduláshoz'
+      pt: 'Regime de motor de consigna para o arranque'
+    type: 'uint'
+    factor: 10
+    min: 0
+    max: 7500
+    units: 'rpm'
+    invalid: 0x3FF
+    default: 0x4B

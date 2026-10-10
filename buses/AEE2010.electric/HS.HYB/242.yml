@@ -1,0 +1,163 @@
+id: 0x242
+name: 'RFID_KEY_LEARNING_COMMAND'
+type: 'can'
+length: 5
+comment:
+  en: 'Hybrid powertrain state from the vehicle control unit.'
+  fr: 'État du groupe motopropulseur hybride, issu du calculateur de contrôle du véhicule (VCU).'
+  es: 'Estado del grupo motopropulsor híbrido, procedente de la centralita de control del vehículo (VCU).'
+  de: 'Zustand des Hybridantriebsstrangs vom Fahrzeugsteuergerät (VCU).'
+  it: 'Stato del gruppo propulsore ibrido, dalla centralina di controllo del veicolo (VCU).'
+  pl: 'Stan hybrydowego układu napędowego z jednostki sterującej pojazdem (VCU).'
+  ru: 'Состояние гибридного силового агрегата от блока управления автомобилем (VCU).'
+  zh: '来自整车控制单元(VCU)的混合动力总成状态。'
+  hu: 'A hibrid hajtáslánc állapota a jármű vezérlőegységétől (VCU).'
+  pt: 'Estado do grupo motopropulsor híbrido da unidade de controlo do veículo.'
+periodicity: ['10ms']
+senders: ['VCU']
+receivers: ['CMEL', 'OBC', 'BVA', 'CMM']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  UNUSED_1:
+    bits: '2.7-3.5'
+    unused: true
+
+  HYBRID_POWERTRAIN_OPERATING_STATE:
+    bits: '3.4-3.1'
+    comment:
+      en: 'Hybrid powertrain operating state'
+      fr: 'État de fonctionnement du GMP hybride'
+      es: 'Estado de funcionamiento de la cadena cinemática híbrida'
+      de: 'Betriebszustand des Hybridantriebsstrangs'
+      it: 'Stato di funzionamento del powertrain ibrido'
+      pl: 'Stan pracy hybrydowego układu napędowego'
+      ru: 'Рабочее состояние гибридного силового агрегата'
+      zh: '混合动力总成运行状态'
+      hu: 'A hibrid hajtáslánc üzemi állapota'
+      pt: 'Estado de funcionamento da cadeia cinemática híbrida'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Powertrain inactive'
+        fr: 'Groupe motopropulseur inactif'
+        es: 'Grupo motopropulsor inactivo'
+        de: 'Antriebsstrang inaktiv'
+        it: 'Gruppo propulsore inattivo'
+        pl: 'Zespół napędowy nieaktywny'
+        ru: 'Силовой агрегат неактивен'
+        zh: '动力总成未激活'
+        hu: 'Erőátviteli rendszer inaktív'
+        pt: 'Grupo motopropulsor inativo'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        en: 'Powertrain activation'
+        fr: 'Activation du groupe motopropulseur'
+        es: 'Activación del grupo motopropulsor'
+        de: 'Aktivierung des Antriebsstrangs'
+        it: 'Attivazione del gruppo propulsore'
+        pl: 'Aktywacja układu napędowego'
+        ru: 'Активация силового агрегата'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktiválása'
+        pt: 'Ativação do grupo motopropulsor'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        en: 'Powertrain active'
+        fr: 'Groupe motopropulseur actif'
+        es: 'Grupo motopropulsor activo'
+        de: 'Antriebsstrang aktiv'
+        it: 'Gruppo propulsore attivo'
+        pl: 'Zespół napędowy aktywny'
+        ru: 'Силовой агрегат активен'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktív'
+        pt: 'Grupo motopropulsor ativo'
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Powertrain deactivation'
+        fr: 'désactivation_GMP'
+        es: 'Desactivación del GMP'
+        de: 'Deaktivierung des Antriebsstrangs'
+        it: 'Disattivazione del GMP'
+        pl: 'Dezaktywacja układu napędowego'
+        ru: 'Деактивация силового агрегата'
+        zh: '动力总成停用'
+        hu: 'Hajtáslánc kikapcsolása'
+        pt: 'Desativação do GMP'
+      0x0B:
+        unused: true
+      0x0C:
+        en: 'Powertrain held after deactivation'
+        fr: 'Maintien du groupe motopropulseur après désactivation'
+        es: 'Retención del grupo motopropulsor tras la desactivación'
+        de: 'Antriebsstrang gehalten nach Deaktivierung'
+        it: 'Gruppo propulsore mantenuto dopo la disattivazione'
+        pl: 'Podtrzymanie układu napędowego po dezaktywacji'
+        ru: 'Удержание силового агрегата после деактивации'
+        zh: '动力总成停用后保持'
+        hu: 'Hajtáslánc tartva kikapcsolás után'
+        pt: 'Manutenção do grupo motopropulsor após desativação'
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Powertrain at rest'
+        fr: 'Groupe motopropulseur au repos'
+        es: 'Grupo motopropulsor en reposo'
+        de: 'Antriebsstrang im Ruhezustand'
+        it: 'Gruppo propulsore a riposo'
+        pl: 'Zespół napędowy w spoczynku'
+        ru: 'Силовой агрегат в состоянии покоя'
+        zh: '动力总成静止'
+        hu: 'Hajtáslánc nyugalmi állapotban'
+        pt: 'Grupo motopropulsor em repouso'
+      0x0F:
+        unused: true
+
+  UNUSED_2:
+    bits: '3.0-5.0'
+    unused: true

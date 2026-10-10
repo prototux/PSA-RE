@@ -1,35 +1,125 @@
 id: 0x072
 name: 'IMMO_REQUEST'
-alt_names: ['RQD_CMM_BSI']
+alt_names: ['RQD_CMM_BSI', 'ENGINE_UNLOCK_STATUS_BSI']
+type: 'can'
 length: 5
 comment:
-  en: 'Immobilizer unlock request'
-  fr: 'Demande de debloquage anti-demarrage'
-  de: 'Wegfahrsperre Entsperranfrage'
-type: 'can'
-periodicity: 'trigger'
-senders:
-  - 'CMM'
-receivers:
-  - 'BSI'
+  en: 'Immobilizer unlock exchange from the engine ECU to the BSI: lock status, or the seed of the unlock challenge (see COMMAND)'
+  fr: 'Échange de déverrouillage antidémarrage du calculateur moteur vers la BSI : état de verrouillage, ou valeur aléatoire du challenge de déverrouillage (voir COMMAND)'
+  es: 'Intercambio de desbloqueo del inmovilizador de la centralita del motor hacia la BSI: estado de bloqueo, o semilla del desafío de desbloqueo (ver COMMAND)'
+  de: 'Wegfahrsperren-Entsperraustausch vom Motorsteuergerät zum BSI: Sperrstatus oder Zufallswert der Entsperr-Aufgabe (siehe COMMAND)'
+  it: 'Scambio di sblocco dell''immobilizzatore dalla centralina motore al BSI: stato di blocco, o seme della sfida di sblocco (vedi COMMAND)'
+  pl: 'Wymiana odblokowania immobilizera od sterownika silnika do BSI: stan blokady lub ziarno wyzwania odblokowania (patrz COMMAND)'
+  ru: 'Обмен разблокировки иммобилайзера от блока управления двигателем к BSI: состояние блокировки или случайное значение запроса разблокировки (см. COMMAND)'
+  zh: '发动机ECU发送给BSI的防盗解锁交互：锁定状态，或解锁挑战的随机种子（见COMMAND）'
+  hu: 'Indításgátló-feloldási csere a motorvezérlőtől a BSI felé: zárolási állapot vagy a feloldási kihívás véletlen kezdőértéke (lásd COMMAND)'
+  pt: 'Troca de desbloqueio do imobilizador da centralina do motor para a BSI: estado de bloqueio, ou semente do desafio de desbloqueio (ver COMMAND)'
+periodicity: ['trigger']
+senders: ['CMM', 'PIU']
+receivers: ['BSI']
 
 signals:
   COMMAND:
     bits: '1.7-1.0'
+    comment:
+      en: 'Content of the frame'
+      fr: 'Contenu de la trame'
+      es: 'Contenido de la trama'
+      de: 'Inhalt der Botschaft'
+      it: 'Contenuto del frame'
+      pl: 'Zawartość ramki'
+      ru: 'Содержимое кадра'
+      zh: '帧内容'
+      hu: 'A keret tartalma'
+      pt: 'Conteúdo da trama'
+    type: 'enum'
+    mux_selector: true
     values:
       0x00:
         en: 'Unlocked'
-        fr: 'Deverouille'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
         de: 'Entsperrt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kireteszelve'
+        pt: 'Desbloqueado'
       0x02:
         en: 'Challenge'
         fr: 'Challenge'
+        es: 'Desafío (challenge)'
         de: 'Aufgabe'
+        it: 'Challenge'
+        pl: 'Challenge (wyzwanie)'
+        ru: 'Challenge (запрос-вызов)'
+        zh: '挑战值(Challenge)'
+        hu: 'Challenge (kihívás érték)'
+        pt: 'Desafio'
+
+  ECU_LOCK_STATUS:
+    bits: '2.7-2.0'
+    comment:
+      en: 'ECU lock status for the immobilizer function'
+      fr: 'État de verrouillage du calculateur pour la fonction antidémarrage'
+      es: 'Estado de bloqueo de la centralita para la función antiarranque'
+      de: 'Sperrstatus des Steuergeräts für die Wegfahrsperrenfunktion'
+      it: 'Stato di blocco della centralina per la funzione immobilizzatore'
+      pl: 'Stan blokady sterownika dla funkcji immobilizera'
+      ru: 'Состояние блокировки блока управления для функции иммобилайзера'
+      zh: '防盗锁止功能的ECU锁定状态'
+      hu: 'A vezérlőegység zárolási állapota az indításgátló funkcióhoz'
+      pt: 'Estado de bloqueio da unidade de controlo para a função imobilizador'
+    type: 'enum'
+    mux:
+      selector: 'COMMAND'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'Unlocked'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
+        de: 'Entriegelt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueado'
+      0x01:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+
+  UNUSED_STATUS:
+    bits: '3.7-5.0'
+    unused: true
+    mux:
+      selector: 'COMMAND'
+      values: [0x00]
 
   SEED:
     bits: '2.7-5.0'
-    type: 'uint'
     comment:
-      en: 'Random seed'
-      fr: 'Challenge random'
-      de: 'Zufällige Aufgabe'
+      en: 'Random seed of the unlock challenge'
+      fr: 'Valeur aléatoire du challenge de déverrouillage'
+      es: 'Semilla aleatoria del desafío de desbloqueo'
+      de: 'Zufallswert der Entsperr-Aufgabe'
+      it: 'Seme casuale della sfida di sblocco'
+      pl: 'Losowe ziarno (seed) wyzwania odblokowania'
+      ru: 'Случайное значение (seed) запроса разблокировки'
+      zh: '解锁挑战的随机种子'
+      hu: 'A feloldási kihívás véletlen kezdőértéke (seed)'
+      pt: 'Semente aleatória do desafio de desbloqueio'
+    type: 'uint'
+    mux:
+      selector: 'COMMAND'
+      values: [0x02]

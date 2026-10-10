@@ -1,473 +1,1168 @@
 id: 0x361
 name: 'VEHICLE_FEATURE_AVAILABILITY'
-alt_names: ['BSI_INF_CFG']
-length: 6
 type: 'can'
+length: 6
+comment:
+  en: 'Vehicle equipment availability sent by the BSI on change: parking sensors, auto lighting, auto wiping, daytime running lights and active profile number.'
+  fr: 'Disponibilité des équipements du véhicule envoyée par la BSI sur changement : aide au stationnement, éclairage automatique, essuyage automatique, feux de jour et numéro de profil actif.'
+  es: 'Disponibilidad de los equipos del vehículo enviada por la BSI al cambiar: ayuda al aparcamiento, alumbrado automático, limpiaparabrisas automático, luces diurnas y número de perfil activo.'
+  de: 'Von der BSI bei Änderung gesendete Verfügbarkeit der Fahrzeugausstattung: Einparkhilfe, automatisches Licht, automatisches Wischen, Tagfahrlicht und aktive Profilnummer.'
+  it: 'Disponibilità degli equipaggiamenti del veicolo inviata dalla BSI al cambio: assistenza al parcheggio, luci automatiche, tergicristalli automatici, luci diurne e numero di profilo attivo.'
+  pl: 'Dostępność wyposażenia pojazdu wysyłana przez BSI przy zmianie: czujniki parkowania, automatyczne światła, automatyczne wycieraczki, światła dzienne i numer aktywnego profilu.'
+  ru: 'Доступность оборудования автомобиля, отправляемая BSI при изменении: парковочные датчики, автосвет, автодворники, дневные ходовые огни и номер активного профиля.'
+  zh: '由BSI在状态变化时发送的车辆配置可用性：泊车传感器、自动大灯、自动雨刷、日间行车灯和当前配置文件编号。'
+  hu: 'A BSI által változáskor küldött jármű-felszereltségi elérhetőség: parkolóradar, automatikus világítás, automatikus ablaktörlő, nappali menetfény és az aktív profil száma.'
+  pt: 'Disponibilidade de equipamento do veículo enviada pela BSI na mudança: sensores de estacionamento, luzes automáticas, limpeza automática, luzes diurnas e número de perfil ativo.'
+observations:
+  en: 'On state change of: ACTIVE_PROFILE_NUMBER. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur changement d''état de : ACTIVE_PROFILE_NUMBER. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al cambiar el estado de: ACTIVE_PROFILE_NUMBER. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Statusänderung von: ACTIVE_PROFILE_NUMBER. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Al cambiamento di stato di: ACTIVE_PROFILE_NUMBER. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Wysyłane przy zmianie stanu: ACTIVE_PROFILE_NUMBER. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении состояния: ACTIVE_PROFILE_NUMBER. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '当NUM_PROF1状态变化时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A(z) ACTIVE_PROFILE_NUMBER állapotváltozásakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança de estado de: ACTIVE_PROFILE_NUMBER. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
 periodicity: ['500ms', 'trigger']
-senders:
-  - 'BSI'
-receivers:
-  - 'CMB'
-  - 'EMF'
-  - 'BTEL'
-  - 'CMB_EMF'
-  - 'RNEG'
-  - 'MATT'
+senders: ['BSI']
+receivers: ['CMB', 'EMF', 'BTEL', 'MATT', 'VTH']
 
 signals:
   UNUSED_1:
     bits: '1.7-1.4'
-    alt_names: ['LIBRE_1']
     unused: true
 
   PROFILE_CHANGE_AUTHORIZATION:
     bits: '1.3'
-    alt_names: ['AUTO_MENU']
     comment:
+      en: 'Authorization to change profile'
       fr: 'Autorisation de changement de profil'
-      en: 'Authorization for change of profile'
+      es: 'Autorización de cambio de perfil'
+      de: 'Freigabe zum Profilwechsel'
+      it: 'Autorizzazione al cambio di profilo'
+      pl: 'Zezwolenie na zmianę profilu'
+      ru: 'Разрешение на смену профиля'
+      zh: '配置文件更改授权'
+      hu: 'Profilváltás engedélyezése'
+      pt: 'Autorização de mudança de perfil'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
+        en: 'Change authorized'
         fr: 'Changement autorisé'
-        en: 'Change allowed'
+        es: 'Cambio autorizado'
+        de: 'Wechsel erlaubt'
+        it: 'Cambio autorizzato'
+        pl: 'Zmiana dozwolona'
+        ru: 'Изменение разрешено'
+        zh: '允许更改'
+        hu: 'Váltás engedélyezve'
+        pt: 'Mudança autorizada'
       0x01:
+        en: 'Shifting not allowed'
         fr: 'Changement interdit'
-        en: 'Change forbidden'
+        es: 'Cambio no permitido'
+        de: 'Schalten nicht erlaubt'
+        it: 'Cambio non consentito'
+        pl: 'Zmiana biegu niedozwolona'
+        ru: 'Переключение запрещено'
+        zh: '禁止换挡'
+        hu: 'Váltás nem engedélyezett'
+        pt: 'Mudança não permitida'
 
   ACTIVE_PROFILE_NUMBER:
     bits: '1.2-1.0'
-    alt_names: ['NUM_PROF1']
     comment:
-      fr: 'Numéro du profil actif'
       en: 'Active profile number'
+      fr: 'Numéro du profil actif'
+      es: 'Número del perfil activo'
+      de: 'Nummer des aktiven Profils'
+      it: 'Numero del profilo attivo'
+      pl: 'Numer aktywnego profilu'
+      ru: 'Номер активного профиля'
+      zh: '当前激活的配置文件编号'
+      hu: 'Az aktív profil száma'
+      pt: 'Número do perfil ativo'
+    type: 'enum'
+    default: 0x07
     values:
       0x00:
-        fr: 'Pas de profil'
         en: 'No profile'
+        fr: 'Pas de profil'
+        es: 'Sin perfil'
+        de: 'Kein Profil'
+        it: 'Nessun profilo'
+        pl: 'Brak profilu'
+        ru: 'Нет профиля'
+        zh: '无配置文件'
+        hu: 'Nincs profil'
+        pt: 'Sem perfil'
       0x01:
-        fr: 'Profil 1'
         en: 'Profile 1'
+        fr: 'Profil 1'
+        es: 'Perfil 1'
+        de: 'Profil 1'
+        it: 'Profilo 1'
+        pl: 'Profil 1'
+        ru: 'Профиль 1'
+        zh: '配置文件1'
+        hu: '1. profil'
+        pt: 'Perfil 1'
       0x02:
-        fr: 'Profil 2'
         en: 'Profile 2'
+        fr: 'Profil 2'
+        es: 'Perfil 2'
+        de: 'Profil 2'
+        it: 'Profilo 2'
+        pl: 'Profil 2'
+        ru: 'Профиль 2'
+        zh: '配置文件2'
+        hu: '2. profil'
+        pt: 'Perfil 2'
       0x04:
-        fr: 'Profil 3'
         en: 'Profile 3'
+        fr: 'Profil 3'
+        es: 'Perfil 3'
+        de: 'Profil 3'
+        it: 'Profilo 3'
+        pl: 'Profil 3'
+        ru: 'Профиль 3'
+        zh: '档案3'
+        hu: '3. profil'
+        pt: 'Perfil 3'
       0x07:
-        fr: 'Profil par défaut'
         en: 'Default profile'
+        fr: 'Profil par défaut'
+        es: 'Perfil predeterminado'
+        de: 'Standardprofil'
+        it: 'Profilo predefinito'
+        pl: 'Profil domyślny'
+        ru: 'Профиль по умолчанию'
+        zh: '默认配置文件'
+        hu: 'Alapértelmezett profil'
+        pt: 'Perfil por defeito'
 
   UNUSED_2:
     bits: '2.7-2.5'
-    alt_names: ['LIBRE_2']
     unused: true
 
   CONGIGURABLE_KEY_OPTION:
     bits: '2.4'
-    alt_names: ['PRES_TCFG']
     comment:
+      en: 'Presence of the configurable key configuration option'
       fr: 'Présence de l''option de configuration d''une touche configurable'
-      en: 'Presence of the configuration of a configurable key option'
+      es: 'Presencia de la opción de configuration d''une touche configurable'
+      de: 'Vorhandensein der Option de configuration d''une touche configurable'
+      it: 'Presenza dell''opzione de configuration d''une touche configurable'
+      pl: 'Obecność opcji de configuration d''une touche configurable'
+      ru: 'Наличие опции de configuration d''une touche configurable'
+      zh: '是否配备de configuration d''une touche configurable选项'
+      hu: 'A(z) de configuration d''une touche configurable opció megléte'
+      pt: 'Presença da opção de configuração de uma tecla configurável'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   SPECTROSCOPE_PRESENCE:
     bits: '2.3'
-    alt_names: ['PRES_SECUROSCOPE']
     comment:
-      fr: 'Présence sécuroscope'
-      en: 'Spectroscope presence'
+      en: 'Presence of the securoscope function'
+      fr: 'Présence de la fonction sécuroscope'
+      es: 'Presencia de la función securoscope'
+      de: 'Vorhandensein der Securoscope-Funktion'
+      it: 'Presenza della funzione securoscope'
+      pl: 'Obecność funkcji securoscope'
+      ru: 'Наличие функции securoscope'
+      zh: '是否配备安全指示功能（securoscope）'
+      hu: 'A securoscope funkció megléte'
+      pt: 'Presença da função securoscope'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   DRIVER_GREETING_PRESENCE:
     bits: '2.2'
-    alt_names: ['PRES_ACCUEIL']
     comment:
+      en: 'Presence of the driver greeting (welcome) function'
       fr: 'Présence de la fonction accueil'
-      en: 'Presence of the greeting function'
+      es: 'Presencia de la función de bienvenida'
+      de: 'Vorhandensein der Begrüßungsfunktion'
+      it: 'Presenza della funzione di accoglienza'
+      pl: 'Obecność funkcji powitania'
+      ru: 'Наличие функции приветствия'
+      zh: '迎宾功能存在'
+      hu: 'Az üdvözlő funkció jelenléte'
+      pt: 'Presença da função de boas-vindas'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   PARTIAL_WINDOW_DESCENT_OPTION_PRESENCE:
     bits: '2.1'
-    alt_names: ['PRES_DES_PART_V']
     comment:
-      fr: 'Présence de l''option descente partielle des vitres'
-      en: 'Presence of partial window descent option'
+      en: 'Presence of the partial window descent option'
+      fr: 'Présence de l''option de descente partielle des vitres'
+      es: 'Presencia de la opción de descente partielle des vitres'
+      de: 'Vorhandensein der Option de descente partielle des vitres'
+      it: 'Presenza dell''opzione de descente partielle des vitres'
+      pl: 'Obecność opcji de descente partielle des vitres'
+      ru: 'Наличие опции de descente partielle des vitres'
+      zh: '是否配备de descente partielle des vitres选项'
+      hu: 'A(z) de descente partielle des vitres opció megléte'
+      pt: 'Presença da opção de descida parcial dos vidros'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   REAR_SHUTTER_PERMANENT_LOCKING_OPTION_PRESENCE:
     bits: '2.0'
-    alt_names: ['VER_PERM_VOL_AR']
     comment:
-      fr: 'Présence de l''option verrouillage permanent du volet AR'
-      en: 'Presence of the permanent locking option of the rear shutter'
+      en: 'Presence of the rear shutter permanent locking option'
+      fr: 'Présence de l''option de verrouillage permanent du volet arrière'
+      es: 'Presencia de la opción de verrouillage permanent du volet arrière'
+      de: 'Vorhandensein der Option de verrouillage permanent du volet arrière'
+      it: 'Presenza dell''opzione de verrouillage permanent du volet arrière'
+      pl: 'Obecność opcji de verrouillage permanent du volet arrière'
+      ru: 'Наличие опции de verrouillage permanent du volet arrière'
+      zh: '是否配备de verrouillage permanent du volet arrière选项'
+      hu: 'A(z) de verrouillage permanent du volet arrière opció megléte'
+      pt: 'Presença da opção de bloqueio permanente do postigo traseiro'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   DOOR_SELECTIVITY_OPTION_PRESENCE:
     bits: '3.7'
-    alt_names: ['SELEC_OUV_CLE']
     comment:
-      fr: 'Présence de l''option sélectivité des ouvrants au PLIP/ADML'
-      en: 'Presence of the option of door selectivity at PLIP/ADML'
+      en: 'Presence of the door selectivity at key option'
+      fr: 'Présence de l''option de sélectivité des ouvrants à la clé'
+      es: 'Presencia de la opción de selectividad de las puertas con la llave'
+      de: 'Vorhandensein der Option Türselektivität per Schlüssel'
+      it: 'Presenza dell''opzione di selettività delle aperture tramite chiave'
+      pl: 'Obecność opcji selektywności drzwi kluczykiem'
+      ru: 'Наличие опции выборочной разблокировки дверей ключом'
+      zh: '是否配备钥匙车门选择性开锁选项'
+      hu: 'Az ajtók kulcsos szelektivitás opciójának megléte'
+      pt: 'Presença da opção de seletividade das portas pela chave'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   DISTANCE_AUTO_CLOSING_OPTION_PRESENCE:
     bits: '3.6'
-    alt_names: ['VER_AUTO_ELOIGN']
     comment:
-      fr: 'Présence de l''option fermeture automatique à l''éloignement (ADML)'
-      en: 'Presence of distance automatic closing option (ADML)'
+      en: 'Presence of the automatic distance closing (ADML) option'
+      fr: 'Présence de l''option de fermeture automatique à l''éloignement (ADML)'
+      es: 'Presencia de la opción de fermeture automatique à l''éloignement (ADML)'
+      de: 'Vorhandensein der Option de fermeture automatique à l''éloignement (ADML)'
+      it: 'Presenza dell''opzione de fermeture automatique à l''éloignement (ADML)'
+      pl: 'Obecność opcji de fermeture automatique à l''éloignement (ADML)'
+      ru: 'Наличие опции de fermeture automatique à l''éloignement (ADML)'
+      zh: '是否配备de fermeture automatique à l''éloignement (ADML)选项'
+      hu: 'A(z) de fermeture automatique à l''éloignement (ADML) opció megléte'
+      pt: 'Presença da opção de fecho automático ao afastamento (ADML)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   LOCKING_MODE_OPTION_PRESENCE:
     bits: '3.5'
-    alt_names: ['VER_COE']
     comment:
-      fr: 'Présence de l''option mode de verrouillage sur COE'
-      en: 'Presence of locking mode option on COE'
+      en: 'Presence of the locking mode on COE option'
+      fr: 'Présence de l''option de mode de verrouillage sur COE'
+      es: 'Presencia de la opción de mode de verrouillage sur COE'
+      de: 'Vorhandensein der Option de mode de verrouillage sur COE'
+      it: 'Presenza dell''opzione de mode de verrouillage sur COE'
+      pl: 'Obecność opcji de mode de verrouillage sur COE'
+      ru: 'Наличие опции de mode de verrouillage sur COE'
+      zh: '是否配备de mode de verrouillage sur COE选项'
+      hu: 'A(z) de mode de verrouillage sur COE opció megléte'
+      pt: 'Presença da opção de modo de bloqueio no COE'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   FOLLOW_ME_HOME_OPTION_PRESENCE:
     bits: '3.4'
-    alt_names: ['FOLLOW']
     comment:
-      fr: 'Présence de l''option éclairage accompagnement "Follow me Home"'
-      en: 'Presence of the support lighting option "Follow me Home"'
+      en: 'Presence of the "Follow me Home" escort lighting option'
+      fr: 'Présence de l''option d''éclairage d''accompagnement « Follow me Home »'
+      es: 'Presencia de la opción de iluminación de acompañamiento "Follow me Home"'
+      de: 'Vorhandensein der Begleitbeleuchtung „Follow me Home"'
+      it: 'Presenza dell''opzione di illuminazione di accompagnamento "Follow me Home"'
+      pl: 'Obecność opcji oświetlenia towarzyszącego "Follow me Home"'
+      ru: 'Наличие опции сопровождающего освещения "Follow me Home"'
+      zh: '是否配备“Follow me Home”伴随照明选项'
+      hu: 'A „Follow me Home” kísérő világítás opció megléte'
+      pt: 'Presença da opção de iluminação de acompanhamento "Follow me Home"'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   GREETING_LIGHT_PRESENCE:
     bits: '3.3'
-    alt_names: ['PRES_ECL_ACCUEIL']
     comment:
+      en: 'Presence of the greeting light function'
       fr: 'Présence de la fonction éclairage d''accueil'
-      en: 'Presence of greeting light function'
+      es: 'Presencia de la función de iluminación de bienvenida'
+      de: 'Vorhandensein der Begrüßungsbeleuchtung'
+      it: 'Presenza della funzione di illuminazione di benvenuto'
+      pl: 'Obecność funkcji oświetlenia powitalnego'
+      ru: 'Наличие функции приветственной подсветки'
+      zh: '是否配备迎宾灯光功能'
+      hu: 'Az üdvözlő világítás funkció megléte'
+      pt: 'Presença da função de iluminação de boas-vindas'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   ELECTRIC_PARKING_BRAKE_OPTION_PRESENCE:
     bits: '3.2'
-    alt_names: ['PRES_SER_FSE_AUTO']
     comment:
-      fr: 'Présence de l''option serrage frein de parking électrique automatique'
-      en: 'Presence of the option of automatic electric parking brake application'
+      en: 'Presence of the automatic electric parking brake application option'
+      fr: 'Présence de l''option de serrage automatique du frein de parking électrique'
+      es: 'Presencia de la opción de serrage automatique du frein de parking électrique'
+      de: 'Vorhandensein der Option de serrage automatique du frein de parking électrique'
+      it: 'Presenza dell''opzione de serrage automatique du frein de parking électrique'
+      pl: 'Obecność opcji de serrage automatique du frein de parking électrique'
+      ru: 'Наличие опции de serrage automatique du frein de parking électrique'
+      zh: '是否配备de serrage automatique du frein de parking électrique选项'
+      hu: 'A(z) de serrage automatique du frein de parking électrique opció megléte'
+      pt: 'Presença da opção de aperto automático do travão de estacionamento elétrico'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   IRC_PRESENCE:
     bits: '3.1'
-    alt_names: ['PRES_IRC']
     comment:
-      fr: 'Présence de l''IRC'
-      en: 'Presence of IRC'
+      en: 'Presence of the IRC option'
+      fr: 'Présence de l''option de l''IRC'
+      es: 'Presencia de la opción de l''IRC'
+      de: 'Vorhandensein der Option de l''IRC'
+      it: 'Presenza dell''opzione de l''IRC'
+      pl: 'Obecność opcji de l''IRC'
+      ru: 'Наличие опции de l''IRC'
+      zh: '是否配备de l''IRC选项'
+      hu: 'A(z) de l''IRC opció megléte'
+      pt: 'Presença da opção IRC'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'IRC absent'
         en: 'IRC absent'
+        fr: 'IRC absent'
+        es: 'IRC ausente'
+        de: 'IRC nicht vorhanden'
+        it: 'IRC assente'
+        pl: 'Brak IRC'
+        ru: 'IRC отсутствует'
+        zh: 'IRC缺失'
+        hu: 'IRC hiányzik'
+        pt: 'IRC ausente'
       0x01:
-        fr: 'IRC présent'
         en: 'IRC present'
+        fr: 'IRC présent'
+        es: 'IRC presente'
+        de: 'IRC vorhanden'
+        it: 'IRC presente'
+        pl: 'IRC obecny'
+        ru: 'IRC присутствует'
+        zh: 'IRC存在'
+        hu: 'IRC jelen'
+        pt: 'IRC presente'
 
   AUTOMATIC_HEADLIGHTS_SWITCHING_ON_OPTION_PRESENCE:
     bits: '3.0'
-    alt_names: ['PHARE_AUTO']
     comment:
-      fr: 'Présence de l''option allumage automatique des feux'
-      en: 'Presence of the option of automatic headlights switching on'
+      en: 'Presence of the automatic headlights switching on option'
+      fr: 'Présence de l''option d''allumage automatique des feux'
+      es: 'Presencia de la opción d''allumage automatique des feux'
+      de: 'Vorhandensein der Option d''allumage automatique des feux'
+      it: 'Presenza dell''opzione d''allumage automatique des feux'
+      pl: 'Obecność opcji d''allumage automatique des feux'
+      ru: 'Наличие опции d''allumage automatique des feux'
+      zh: '是否配备d''allumage automatique des feux选项'
+      hu: 'A(z) d''allumage automatique des feux opció megléte'
+      pt: 'Presença da opção de acendimento automático dos faróis'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   ADAPTIVE_LIGHTING_OPTION_PRESENCE:
     bits: '4.7'
-    alt_names: ['ECL_ADAPT_O']
     comment:
+      en: 'Presence of the adaptive lighting option'
       fr: 'Présence de l''option éclairage adaptatif'
-      en: 'Presence of adaptive lighting option'
+      es: 'Presencia de la opción de iluminación adaptativa'
+      de: 'Vorhandensein der Option Adaptives Kurvenlicht'
+      it: 'Presenza dell''opzione illuminazione adattiva'
+      pl: 'Obecność opcji oświetlenia adaptacyjnego'
+      ru: 'Наличие опции адаптивного освещения'
+      zh: '自适应大灯选装配置存在'
+      hu: 'Az adaptív fényszóró opció jelenléte'
+      pt: 'Presença da opção de iluminação adaptativa'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   DAYLIGHTS_OPTION_PRESENCE:
     bits: '4.6'
-    alt_names: ['FEUX_DIURN_O']
     comment:
-      fr: 'Présence de l''option Feux Diurnes'
-      en: 'Presence of day lights option'
+      en: 'Presence of the daytime running lights option'
+      fr: 'Présence de l''option feux diurnes'
+      es: 'Presencia de la opción de luces diurnas'
+      de: 'Vorhandensein der Option Tagfahrlicht'
+      it: 'Presenza dell''opzione luci diurne'
+      pl: 'Obecność opcji świateł do jazdy dziennej'
+      ru: 'Наличие опции дневных ходовых огней'
+      zh: '日间行车灯选装配置存在'
+      hu: 'A nappali menetfény opció jelenléte'
+      pt: 'Presença da opção de luzes diurnas'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   REAR_WIPER_IN_REVERSE_OPTION_PRESENCE:
     bits: '4.5'
-    alt_names: ['ESSUI_MAR']
     comment:
-      fr: 'Présence de l''option essuie vitre AR en MAR'
-      en: 'Presence of the option of REAR windscreen wiper in reverse'
+      en: 'Presence of the rear wiper in reverse gear option'
+      fr: 'Présence de l''option essuie-vitre arrière en marche arrière'
+      es: 'Presencia de la opción de limpiaparabrisas trasero en marcha atrás'
+      de: 'Vorhandensein der Option Heckscheibenwischer im Rückwärtsgang'
+      it: 'Presenza dell''opzione tergicristallo posteriore in retromarcia'
+      pl: 'Obecność opcji tylnej wycieraczki podczas biegu wstecznego'
+      ru: 'Наличие опции заднего стеклоочистителя при движении задним ходом'
+      zh: '是否配备倒车联动后雨刮选项'
+      hu: 'A hátsó ablaktörlő tolatáskori működtetésének opciója'
+      pt: 'Presença da opção de limpa-para-brisas traseiro em marcha-atrás'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   UNUSED_3:
     bits: '4.4-4.0'
-    alt_names: ['LIBRE_3']
     unused: true
 
   PARKING_AID_OPTION_PRESENCE:
     bits: '5.7'
-    alt_names: ['AAS_VISU']
     comment:
-      fr: 'Retour visuel de l''AAS'
-      en: 'Visual feedback of PAS'
+      en: 'Visual feedback of the parking assistance system (option presence)'
+      fr: 'Retour visuel de l''assistance au stationnement (présence d''option)'
+      es: 'Retroalimentación visual de la asistencia al estacionamiento (presencia de opción)'
+      de: 'Visuelle Rückmeldung der Einparkhilfe (Optionsvorhandensein)'
+      it: 'Feedback visivo dell''assistenza al parcheggio (presenza opzione)'
+      pl: 'Sygnał wizualny asystenta parkowania (obecność opcji)'
+      ru: 'Визуальная обратная связь системы помощи при парковке (наличие опции)'
+      zh: '泊车辅助系统视觉提示(选装配置存在)'
+      hu: 'A parkolássegítő vizuális visszajelzése (opció jelenléte)'
+      pt: 'Retorno visual do sistema de assistência ao estacionamento (presença de opção)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   PARKING_AID_AUDIBLE_FEEDBACK_OPTION_PRESENCE:
     bits: '5.6'
-    alt_names: ['AAS_SON']
     comment:
-      fr: 'Retour sonore de l''AAS'
-      en: 'Audible feedback of PAS'
+      en: 'Audible feedback of the parking assistance system (option presence)'
+      fr: 'Retour sonore de l''assistance au stationnement (présence d''option)'
+      es: 'Retroalimentación sonora de la asistencia al estacionamiento (presencia de opción)'
+      de: 'Akustische Rückmeldung der Einparkhilfe (Optionsvorhandensein)'
+      it: 'Feedback acustico dell''assistenza al parcheggio (presenza opzione)'
+      pl: 'Sygnał dźwiękowy asystenta parkowania (obecność opcji)'
+      ru: 'Звуковая обратная связь системы помощи при парковке (наличие опции)'
+      zh: '泊车辅助系统声音提示(选装配置存在)'
+      hu: 'A parkolássegítő hangjelzése (opció jelenléte)'
+      pt: 'Retorno sonoro do sistema de assistência ao estacionamento (presença de opção)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   PARKING_AID_INHIBITION_OPTION_PRESENCE:
     bits: '5.5'
-    alt_names: ['AAS_INHIB']
     comment:
-      fr: 'Inhibition totale de l''AAS'
-      en: 'Total inhibition of parking aid'
+      en: 'Total inhibition of the parking assistance system (option presence)'
+      fr: 'Inhibition totale de l''assistance au stationnement (présence d''option)'
+      es: 'Inhibición total de la asistencia al estacionamiento (presencia de opción)'
+      de: 'Vollständige Deaktivierung der Einparkhilfe (Optionsvorhandensein)'
+      it: 'Inibizione totale dell''assistenza al parcheggio (presenza opzione)'
+      pl: 'Całkowite wyłączenie asystenta parkowania (obecność opcji)'
+      ru: 'Полное отключение системы помощи при парковке (наличие опции)'
+      zh: '泊车辅助系统完全抑制(选装配置存在)'
+      hu: 'A parkolássegítő teljes letiltása (opció jelenléte)'
+      pt: 'Inibição total do sistema de assistência ao estacionamento (presença de opção)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
-  EMF_PRESENCE:
+  UNUSED_4:
     bits: '5.4'
-    alt_names: ['PRES_EMF']
-    comment:
-      fr: 'Présence de l''EMF'
-      en: 'Presence of EMF'
-    values:
-      0x00:
-        fr: 'EMF absent'
-        en: 'EMF absent'
-      0x01:
-        fr: 'EMF présent'
-        en: 'EMF present'
+    unused: true
 
   MOTORWAY_LIGHTING_FUNCTION_PRESENCE:
     bits: '5.3'
-    alt_names: ['PRES_AUTOROUTE']
     comment:
+      en: 'Presence of the motorway lighting function'
       fr: 'Présence de la fonction éclairage autoroute'
-      en: 'Presence of motorway lighting function'
+      es: 'Presencia de la función de iluminación en autopista'
+      de: 'Vorhandensein der Autobahn-Lichtfunktion'
+      it: 'Presenza della funzione illuminazione autostradale'
+      pl: 'Obecność funkcji oświetlenia autostradowego'
+      ru: 'Наличие функции освещения на автомагистрали'
+      zh: '高速公路照明功能存在'
+      hu: 'Az autópálya-világítás funkció jelenléte'
+      pt: 'Presença da função de iluminação em autoestrada'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   AMBIENT_LIGHTING_PRESENCE:
     bits: '5.2'
-    alt_names: ['PRES_AMBIANCE']
     comment:
-      fr: 'Présence éclairage d''ambiance'
-      en: 'Presence of background lighting'
+      en: 'Presence of ambient lighting'
+      fr: 'Présence de l''éclairage d''ambiance'
+      es: 'Presencia de la iluminación ambiental'
+      de: 'Vorhandensein der Ambientebeleuchtung'
+      it: 'Presenza dell''illuminazione d''ambiente'
+      pl: 'Obecność oświetlenia nastrojowego'
+      ru: 'Наличие атмосферной подсветки'
+      zh: '氛围灯存在'
+      hu: 'Az ambient világítás jelenléte'
+      pt: 'Presença da iluminação ambiente'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   BLIND_SPOT_MONITORING_PRESENCE:
     bits: '5.1'
-    alt_names: ['PRES_SAM']
     comment:
-      fr: 'Présence surveillance angle mort'
       en: 'Presence of blind spot monitoring'
+      fr: 'Présence de la surveillance d''angle mort'
+      es: 'Presencia de la vigilancia de ángulo muerto'
+      de: 'Vorhandensein der Totwinkelüberwachung'
+      it: 'Presenza del monitoraggio dell''angolo cieco'
+      pl: 'Obecność monitorowania martwego pola'
+      ru: 'Наличие контроля слепых зон'
+      zh: '是否配备盲区监测'
+      hu: 'A holttér-figyelés megléte'
+      pt: 'Presença da monitorização do ângulo morto'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   BLIND_SPOT_MONITORING_TOTAL_INHIBITION:
     bits: '5.0'
-    alt_names: ['SAM_TOTAL']
     comment:
-      fr: 'Inhibition totale SAM'
-      en: 'Total inhibition of DAS'
+      en: 'Total inhibition of the blind spot monitoring'
+      fr: 'Inhibition totale de la surveillance d''angle mort'
+      es: 'Inhibición total de la vigilancia de ángulo muerto'
+      de: 'Vollständige Deaktivierung der Totwinkelüberwachung'
+      it: 'Inibizione totale del monitoraggio dell''angolo cieco'
+      pl: 'Całkowite wyłączenie monitorowania martwego pola'
+      ru: 'Полное отключение контроля слепых зон'
+      zh: '盲区监测完全抑制'
+      hu: 'A holttér-figyelés teljes letiltása'
+      pt: 'Inibição total da monitorização do ângulo morto'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   BLIND_SPOT_MONITORING_SOUND_INHIBITION:
     bits: '6.7'
-    alt_names: ['SAM_SON']
     comment:
-      fr: 'Inhibition sonore de SAM'
-      en: 'Sound inhibition of blind spot monitoring'
+      en: 'Sound inhibition of the blind spot monitoring'
+      fr: 'Inhibition sonore de la surveillance d''angle mort'
+      es: 'Inhibición sonora de la vigilancia de ángulo muerto'
+      de: 'Akustische Stummschaltung der Totwinkelüberwachung'
+      it: 'Inibizione sonora del monitoraggio dell''angolo cieco'
+      pl: 'Wyciszenie dźwiękowe monitorowania martwego pola'
+      ru: 'Отключение звукового сигнала контроля слепых зон'
+      zh: '盲区监测声音抑制'
+      hu: 'A holttér-figyelés hangjelzésének letiltása'
+      pt: 'Inibição sonora da monitorização do ângulo morto'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Option absente'
         en: 'Option absent'
+        fr: 'Option absente'
+        es: 'Opción ausente'
+        de: 'Option nicht vorhanden'
+        it: 'Opzione assente'
+        pl: 'Brak opcji'
+        ru: 'Опция отсутствует'
+        zh: '选项缺失'
+        hu: 'A funkció hiányzik'
+        pt: 'Opção ausente'
       0x01:
-        fr: 'Option présente'
         en: 'Option present'
+        fr: 'Option présente'
+        es: 'Opción presente'
+        de: 'Option vorhanden'
+        it: 'Opzione presente'
+        pl: 'Opcja obecna'
+        ru: 'Опция присутствует'
+        zh: '选项存在'
+        hu: 'A funkció jelen van'
+        pt: 'Opção presente'
 
   TPMS_PRESENCE:
     bits: '6.6-6.4'
-    alt_names: ['PRES_DSG']
     comment:
-      fr: 'Présence de l''option DSG'
-      en: 'Presence of DSG option'
+      en: 'Presence and type of the tyre pressure monitoring system'
+      fr: 'Présence et type du système de surveillance de pression des pneus'
+      es: 'Presencia y tipo del sistema de control de presión de neumáticos'
+      de: 'Vorhandensein und Typ des Reifendrucküberwachungssystems'
+      it: 'Presenza e tipo del sistema di monitoraggio della pressione degli pneumatici'
+      pl: 'Obecność i rodzaj systemu monitorowania ciśnienia w oponach'
+      ru: 'Наличие и тип системы контроля давления в шинах'
+      zh: '胎压监测系统的配备情况及类型'
+      hu: 'A gumiabroncs-nyomásfigyelő rendszer megléte és típusa'
+      pt: 'Presença e tipo do sistema de monitorização da pressão dos pneus'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        fr: 'Aucun système DSG'
         en: 'No TPMS system'
+        fr: 'Aucun système de surveillance de pression des pneus (DSG)'
+        es: 'Sin sistema de control de presión de neumáticos (DSG)'
+        de: 'Kein Reifendruckkontrollsystem (DSG)'
+        it: 'Nessun sistema di monitoraggio pressione pneumatici (DSG)'
+        pl: 'Brak systemu monitorowania ciśnienia w oponach (DSG)'
+        ru: 'Нет системы контроля давления в шинах (DSG)'
+        zh: '无胎压监测系统(DSG)'
+        hu: 'Nincs gumiabroncsnyomás-ellenőrző rendszer (DSG)'
+        pt: 'Sem sistema de controlo de pressão dos pneus (DSG)'
       0x01:
-        fr: 'DSG Direct 1ère génération'
-        en: 'Direct TPMS first generation'
+        en: 'Direct TPMS, first generation'
+        fr: 'TPMS direct, première génération'
+        es: 'TPMS directo, primera generación'
+        de: 'Direktes RDKS, erste Generation'
+        it: 'TPMS diretto, prima generazione'
+        pl: 'Bezpośredni TPMS, pierwsza generacja'
+        ru: 'Прямой TPMS, первое поколение'
+        zh: '直接式胎压监测系统,第一代'
+        hu: 'Közvetlen TPMS, első generáció'
+        pt: 'TPMS direto, primeira geração'
       0x02:
+        en: 'Direct TPM system seconde generation'
         fr: 'DSG Direct 2ème génération'
-        en: 'Direct TPMS system second generation'
+        es: 'Sistema TPMS directo, 2.ª generación'
+        de: 'Direktes RDKS-System, 2. Generation'
+        it: 'Sistema TPMS diretto, 2ª generazione'
+        pl: 'Bezpośredni system TPMS, 2. generacja'
+        ru: 'Прямая система TPMS, 2-е поколение'
+        zh: '直接式胎压监测系统,第2代'
+        hu: 'Közvetlen TPMS rendszer, 2. generáció'
+        pt: 'Sistema TPMS direto, 2.ª geração'
       0x03:
-        fr: 'Système DSG indirect'
-        en: 'Indirect TPMS system'
+        en: 'Indirect TPM system'
+        fr: 'Système de surveillance de pression indirect'
+        es: 'Sistema de control de presión indirecto'
+        de: 'Indirektes Reifendrucküberwachungssystem'
+        it: 'Sistema di monitoraggio pressione indiretto'
+        pl: 'Pośredni system monitorowania ciśnienia'
+        ru: 'Косвенная система контроля давления'
+        zh: '间接式胎压监测系统'
+        hu: 'Közvetett gumiabroncs-nyomásfigyelő rendszer'
+        pt: 'Sistema de controlo de pressão indireto'
       0x04:
         unused: true
 
-  NBL_PRESENCE:
+  UNUSED_5:
     bits: '6.3'
-    alt_names: ['PRES_BOIT_TNB']
-    comment:
-      fr: 'Présence du boîtier TNB'
-      en: 'Presence of NBL casing'
-    values:
-      0x00:
-        fr: 'Boîtier TNB absent'
-        en: 'TNB casing absent'
-      0x01:
-        fr: 'Boîtier TNB présent'
-        en: 'TNB casing present'
+    unused: true
 
-  TPMS_REINITIALIZATION_OPTION_PRESENCE:
+  UNUSED_6:
     bits: '6.2'
-    alt_names: ['PRES_DSG_IND']
-    comment:
-      fr: 'Présence affichage menu de reset DSG'
-      en: 'TPMS Reinitialization display option'
-    values:
-      0x00:
-        fr: 'Option absente'
-        en: 'Option absent'
-      0x01:
-        fr: 'Option présente'
-        en: 'Option present'
+    unused: true
 
-  UNUSED_4:
+  UNUSED_7:
     bits: '6.1-6.0'
-    alt_names: ['LIBRE_4']
     unused: true

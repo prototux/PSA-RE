@@ -1,352 +1,731 @@
 id: 0x165
 name: 'RADIO_STATUS_GENERAL'
-alt_names: ['ETAT_RADIO_GEN_GEN']
+type: 'can'
 length: 4
 comment:
-  en: 'General status of the radio'
-  fr: 'Etat general de la radio'
-type: 'can'
-periodicity: ['100ms']
-senders:
-  - 'ICSV'
-  - 'PASS_ICSV'
-  - 'RAD'
-  - 'BTEL'
-  - 'NG4'
-  - 'RNEG'
-  - 'BTT'
-
-receivers:
-  - 'BSI'
-  - 'EMF'
-  - 'KML'
-  - 'AMPLI'
-  - 'CMB_EMF'
-  - 'MDS'
-  - 'BTT'
-  - 'MATT'
-  - 'CDC'
-  - 'PASS_ICSV'
+  en: 'Radio general status: amplifier on, dual-tuner mode, CD/CD-changer source, compressed audio format, Hi-Fi, mute, source presence and power state.'
+  fr: 'État général de l''autoradio : ampli activé, mode double tuner, source CD/changeur CD, format audio compressé, Hi-Fi, coupure son, présence de source et état d''alimentation.'
+  es: 'Estado general de la radio: amplificador activado, modo doble sintonizador, fuente CD/cambiador de CD, formato de audio comprimido, Hi-Fi, silencio, presencia de fuente y estado de alimentación.'
+  de: 'Allgemeiner Radiostatus: Verstärker ein, Zweifach-Tuner-Modus, CD-/CD-Wechsler-Quelle, komprimiertes Audioformat, Hi-Fi, Stummschaltung, Quellenpräsenz und Einschaltzustand.'
+  it: 'Stato generale della radio: amplificatore attivo, modalità doppio sintonizzatore, sorgente CD/caricatore CD, formato audio compresso, Hi-Fi, silenziamento, presenza sorgente e stato di alimentazione.'
+  pl: 'Ogólny stan radia: włączony wzmacniacz, tryb podwójnego tunera, źródło CD/zmieniarki CD, skompresowany format audio, Hi-Fi, wyciszenie, obecność źródła i stan zasilania.'
+  ru: 'Общий статус радио: усилитель включён, режим двойного тюнера, источник CD/CD-чейнджер, сжатый аудиоформат, Hi-Fi, отключение звука, наличие источника и состояние питания.'
+  zh: '收音机总体状态:放大器开启、双调谐器模式、CD/CD换碟机信源、压缩音频格式、Hi-Fi、静音、信源存在及电源状态。'
+  hu: 'Az autórádió általános állapota: erősítő bekapcsolva, kettős tuner mód, CD/CD-váltó forrás, tömörített hangformátum, Hi-Fi, némítás, forrás jelenléte és bekapcsolási állapot.'
+  pt: 'Estado geral da rádio: amplificador ligado, modo dual-tuner, fonte CD/leitor de CD, formato áudio comprimido, Hi-Fi, silêncio, presença de fonte e estado de alimentação.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['100ms', 'trigger']
+senders: ['ICSV', 'RAD', 'BTEL', 'BTT']
+receivers: ['EMF', 'BSI', 'KML', 'AMPLI', 'CMB', 'MDS', 'MATT', 'CDC', 'BTT', 'ICSV']
 
 signals:
   POWER:
     bits: '1.7'
-    alt_names: ['POWER']
     comment:
-      en: 'Radio power status'
-      fr: 'Etat de la radio'
+      en: 'Car radio state'
+      fr: 'État de l''autoradio'
+      es: 'Estado del autorradio'
+      de: 'Status des Autoradios'
+      it: 'Stato dell''autoradio'
+      pl: 'Stan radia samochodowego'
+      ru: 'Состояние автомагнитолы'
+      zh: '车载收音机状态'
+      hu: 'Az autórádió állapota'
+      pt: 'Estado do autorrádio'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Radio disabled'
-        fr: 'Radio eteinte'
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'Radio enabled'
-        fr: 'Radio allumee'
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
 
   AMPLI_ON:
     bits: '1.6'
-    alt_names: ['AMPLI_ON']
     comment:
-      en: 'Amplifier status'
-      fr: 'Etat de l''amplificateur'
+      en: 'Status of the car radio in relation to dissemination of sound, including auxiliary sources (PAS, TEL ...)'
+      fr: 'État de l''auto-radio vis-à-vis de la diffusion de son, y compris de sources auxiliaires (AAS, TEL...)'
+      es: 'Estado del autorradio respecto a la difusión de sonido, incluidas las fuentes auxiliares (AAS, teléfono...)'
+      de: 'Status des Autoradios in Bezug auf die Tonwiedergabe, einschließlich Zusatzquellen (AAS, Telefon...)'
+      it: 'Stato dell''autoradio riguardo alla diffusione del suono, incluse le sorgenti ausiliarie (AAS, telefono...)'
+      pl: 'Stan radia samochodowego w zakresie emisji dźwięku, w tym źródeł dodatkowych (AAS, telefon...)'
+      ru: 'Состояние автомагнитолы в отношении воспроизведения звука, включая вспомогательные источники (AAS, телефон...)'
+      zh: '车载收音机的声音输出状态，包括辅助音源（AAS、电话等）'
+      hu: 'Az autórádió hangkimeneti állapota, beleértve a kiegészítő forrásokat is (AAS, telefon...)'
+      pt: 'Estado do autorrádio quanto à difusão de som, incluindo fontes auxiliares (AAS, telefone...)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Amplified disabled'
-        fr: 'Amplificateur eteint'
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'Amplified enabled'
-        fr: 'Amplificateur allume'
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
 
   MUTE:
     bits: '1.5'
-    alt_names: ['MUTE_ACT']
     comment:
-      en: 'Mute status'
-      fr: 'Etat du mute'
+      en: 'Enabled/non-enabled mute'
+      fr: 'Mute activé/non activé'
+      es: 'Silenciamiento activado/no activado'
+      de: 'Stummschaltung aktiviert/nicht aktiviert'
+      it: 'Silenziamento attivato/non attivato'
+      pl: 'Wyciszenie włączone/niewłączone'
+      ru: 'Приглушение звука включено/не включено'
+      zh: '静音已启用／未启用'
+      hu: 'Némítás bekapcsolva/nincs bekapcsolva'
+      pt: 'Silenciamento ativado/não ativado'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Not muted'
-        fr: 'Non mute'
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
       0x01:
-        en: 'Muted'
-        fr: 'Mute'
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
 
   REJECT_POWER_ON_IN_ECO:
     bits: '1.4'
-    alt_names: ['ON_REFUSE']
     comment:
-      en: 'Power on rejected in ECO mode'
-      fr: 'Allumage refuse en mode ECO'
+      en: 'Request to set to ON rejected (in economy mode)'
+      fr: 'Demande de mise à ON refusée (en mode économie)'
+      es: 'Solicitud de encendido rechazada (en modo económico)'
+      de: 'Anforderung zum Einschalten abgelehnt (im Sparmodus)'
+      it: 'Richiesta di accensione rifiutata (in modalità economica)'
+      pl: 'Żądanie włączenia odrzucone (w trybie ekonomicznym)'
+      ru: 'Запрос включения отклонён (в экономичном режиме)'
+      zh: '开机请求被拒绝（经济模式下）'
+      hu: 'A bekapcsolási kérés elutasítva (gazdaságos üzemmódban)'
+      pt: 'Pedido de ligação recusado (em modo económico)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Power on not rejected'
-        fr: 'Allumage non refuse'
+        en: 'Not refused'
+        fr: 'Non refusé'
+        es: 'No rechazado'
+        de: 'Nicht abgelehnt'
+        it: 'Non rifiutato'
+        pl: 'Nie odrzucono'
+        ru: 'Не отклонено'
+        zh: '未拒绝'
+        hu: 'Nem elutasítva'
+        pt: 'Não recusado'
       0x01:
-        en: 'Power on rejected'
-        fr: 'Allumage refuse'
-
+        en: 'Refused'
+        fr: 'Refusé'
+        es: 'Rechazado'
+        de: 'Abgelehnt'
+        it: 'Rifiutato'
+        pl: 'Odrzucone'
+        ru: 'Отклонено'
+        zh: '已拒绝'
+        hu: 'Elutasítva'
+        pt: 'Recusado'
 
   BI_TUNER:
     bits: '1.3'
-    alt_names: ['BI_TUNER']
     comment:
-      en: 'Bi-tuner status'
-      fr: 'Etat du bi-tuner'
+      en: 'Car radio equipped with a 2nd tuner'
+      fr: 'Autoradio équipé d''un 2ème tuner'
+      es: 'Autorradio equipado con un segundo sintonizador'
+      de: 'Autoradio mit einem zweiten Tuner ausgestattet'
+      it: 'Autoradio dotata di un secondo sintonizzatore'
+      pl: 'Radio samochodowe wyposażone w drugi tuner'
+      ru: 'Автомагнитола оснащена вторым тюнером'
+      zh: '车载收音机配备第二调谐器'
+      hu: 'Az autórádió második tunerrel van felszerelve'
+      pt: 'Autorrádio equipado com um segundo sintonizador'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No bi-tuner'
-        fr: 'Pas de bi-tuner'
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
       0x01:
-        en: 'Bi-tuner'
-        fr: 'Bi-tuner'
+        en: 'Yes'
+        fr: 'oui'
+        es: 'sí'
+        de: 'ja'
+        it: 'sì'
+        pl: 'tak'
+        ru: 'да'
+        zh: '是'
+        hu: 'igen'
+        pt: 'Sim'
 
-  HIFI:
+  HIFI_VERSION:
     bits: '1.2'
-    alt_names: ['HI_FI']
+    alt_names: ['HIFI', 'HI_FI']
     comment:
-      en: 'Hi-fi status'
-      fr: 'Etat du hi-fi'
+      en: 'HIFI version'
+      fr: 'Version HIFI'
+      es: 'Versión HIFI'
+      de: 'HIFI-Version'
+      it: 'Versione HIFI'
+      pl: 'Wersja HIFI'
+      ru: 'Версия HIFI'
+      zh: 'HIFI 版本'
+      hu: 'HIFI verzió'
+      pt: 'Versão HIFI'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No hi-fi'
-        fr: 'Pas de hi-fi'
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
       0x01:
-        en: 'Hi-fi'
-        fr: 'Hi-fi'
+        en: 'Yes'
+        fr: 'oui'
+        es: 'sí'
+        de: 'ja'
+        it: 'sì'
+        pl: 'tak'
+        ru: 'да'
+        zh: '是'
+        hu: 'igen'
+        pt: 'Sim'
 
-  DYNAMICS_COMPRESSION:
+  UNUSED_1:
     bits: '1.1'
-    alt_names: ['COMP_DYN']
-    comment:
-      en: 'Dynamic compression status'
-      fr: 'Etat de la compression dynamique'
-    values:
-      0x00:
-        en: 'No dynamic compression'
-        fr: 'Pas de compression dynamique'
-      0x01:
-        en: 'Dynamic compression'
-        fr: 'Compression dynamique'
+    unused: true
 
-  USB_SOURCE_TYPE:
+  UNUSED_2:
     bits: '1.0'
-    alt_names: ['TYPE_SRC_SEL_USB']
-    comment:
-      en: 'Type of USB source'
-      fr: 'Type de source USB'
-    values:
-      0x00:
-        en: 'USB'
-        fr: 'USB'
-      0x01:
-        en: 'IPOD'
-        fr: 'IPOD'
+    unused: true
 
   TUN_SRC:
     bits: '2.7'
-    alt_names: ['TUN_SRC']
     comment:
-      en: 'Tuner source status'
-      fr: 'Etat de la source du tuner'
+      en: 'Tuner source present on the car radio'
+      fr: 'Source tuner présente sur l''autoradio'
+      es: 'Fuente de sintonizador presente en el autorradio'
+      de: 'Tuner-Quelle im Autoradio vorhanden'
+      it: 'Sorgente sintonizzatore presente sull''autoradio'
+      pl: 'Źródło tunera obecne w radiu samochodowym'
+      ru: 'Источник тюнера присутствует в автомагнитоле'
+      zh: '车载收音机中存在调谐器音源'
+      hu: 'Tuner forrás jelen van az autórádióban'
+      pt: 'Fonte de sintonizador presente no autorrádio'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No tuner available'
-        fr: 'Pas de tuner disponible'
+        en: 'Not present'
+        fr: 'Non présente'
+        es: 'No presente'
+        de: 'Nicht vorhanden'
+        it: 'Non presente'
+        pl: 'Nieobecne'
+        ru: 'Отсутствует'
+        zh: '不存在'
+        hu: 'Nincs jelen'
+        pt: 'Não presente'
       0x01:
-        en: 'Tuner available'
-        fr: 'Tuner disponible'
+        en: 'Present'
+        fr: 'Présente'
+        es: 'Presente'
+        de: 'Vorhanden'
+        it: 'Presente'
+        pl: 'Obecny'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presente'
 
   CD_SRC:
     bits: '2.6-2.5'
-    alt_names: ['CD_SRC']
     comment:
-      en: 'Internal CD player source status'
-      fr: 'Etat de la source du lecteur CD interne'
+      en: 'Internal CD source present on the car radio'
+      fr: 'Source CD interne présente sur l''autoradio'
+      es: 'Fuente de CD interna presente en el autorradio'
+      de: 'Interne CD-Quelle im Autoradio vorhanden'
+      it: 'Sorgente CD interna presente sull''autoradio'
+      pl: 'Wewnętrzne źródło CD obecne w radiu samochodowym'
+      ru: 'Внутренний источник CD присутствует в автомагнитоле'
+      zh: '车载收音机中存在内置 CD 音源'
+      hu: 'Belső CD forrás jelen van az autórádióban'
+      pt: 'Fonte de CD interna presente no autorrádio'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'No internal CD player'
-        fr: 'Pas de lecteur CD interne'
+        en: 'Not present'
+        fr: 'Non présente'
+        es: 'No presente'
+        de: 'Nicht vorhanden'
+        it: 'Non presente'
+        pl: 'Nieobecne'
+        ru: 'Отсутствует'
+        zh: '不存在'
+        hu: 'Nincs jelen'
+        pt: 'Não presente'
       0x01:
-        en: 'No disk available'
-        fr: 'Pas de disque disponible'
+        en: 'Present and unusable'
+        fr: 'Présente et non utilisable'
+        es: 'Presente y no utilizable'
+        de: 'Vorhanden und nicht nutzbar'
+        it: 'Presente e non utilizzabile'
+        pl: 'Obecne i nieużyteczne'
+        ru: 'Присутствует, но непригоден'
+        zh: '存在但不可用'
+        hu: 'Jelen van, de nem használható'
+        pt: 'Presente e inutilizável'
       0x02:
-        en: 'Player and disk available'
-        fr: 'Lecteur et disque disponibles'
+        en: 'Present and usable'
+        fr: 'Présente et utilisable'
+        es: 'Presente y utilizable'
+        de: 'Vorhanden und nutzbar'
+        it: 'Presente e utilizzabile'
+        pl: 'Obecny i użyteczny'
+        ru: 'Присутствует и пригоден к использованию'
+        zh: '存在且可用'
+        hu: 'Jelen van és használható'
+        pt: 'Presente e utilizável'
 
   CDC_SRC:
     bits: '2.4-2.3'
-    alt_names: ['CDC_SRC']
     comment:
-      en: 'CD changer source status'
-      fr: 'Etat de la source du changeur CD'
+      en: 'CD charger source present on the car radio'
+      fr: 'Source chargeur CD présente sur l''autoradio'
+      es: 'Fuente de cargador de CD presente en el autorradio'
+      de: 'CD-Wechsler-Quelle im Autoradio vorhanden'
+      it: 'Sorgente caricatore CD presente sull''autoradio'
+      pl: 'Źródło zmieniarki CD obecne w radiu samochodowym'
+      ru: 'Источник CD-чейнджера присутствует в автомагнитоле'
+      zh: '车载收音机中存在 CD 换碟机音源'
+      hu: 'CD-váltó forrás jelen van az autórádióban'
+      pt: 'Fonte do carregador de CD presente no autorrádio'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
         en: 'Not present'
-        fr: 'Pas de changeur CD present'
+        fr: 'Non présente'
+        es: 'No presente'
+        de: 'Nicht vorhanden'
+        it: 'Non presente'
+        pl: 'Nieobecne'
+        ru: 'Отсутствует'
+        zh: '不存在'
+        hu: 'Nincs jelen'
+        pt: 'Não presente'
       0x01:
-        en: 'Available but not usable'
-        fr: 'Disponible mais pas utilisable'
+        en: 'Present and unusable'
+        fr: 'Présente et non utilisable'
+        es: 'Presente y no utilizable'
+        de: 'Vorhanden und nicht nutzbar'
+        it: 'Presente e non utilizzabile'
+        pl: 'Obecne i nieużyteczne'
+        ru: 'Присутствует, но непригоден'
+        zh: '存在但不可用'
+        hu: 'Jelen van, de nem használható'
+        pt: 'Presente e inutilizável'
       0x02:
-        en: 'Available and usable'
-        fr: 'Disponible et utilisable'
+        en: 'Present and usable'
+        fr: 'Présente et utilisable'
+        es: 'Presente y utilizable'
+        de: 'Vorhanden und nutzbar'
+        it: 'Presente e utilizzabile'
+        pl: 'Obecny i użyteczny'
+        ru: 'Присутствует и пригоден к использованию'
+        zh: '存在且可用'
+        hu: 'Jelen van és használható'
+        pt: 'Presente e utilizável'
 
-  USB_SRC:
+  UNUSED_3:
     bits: '2.2-2.1'
-    alt_names: ['USB_SRC']
-    comment:
-      en: 'USB source status'
-      fr: 'Etat de la source USB'
-    values:
-      0x00:
-        en: 'Not present'
-        fr: 'Pas de source USB presente'
-      0x01:
-        en: 'Available but not usable'
-        fr: 'Disponible mais pas utilisable'
-      0x02:
-        en: 'Available and usable'
-        fr: 'Disponible et utilisable'
+    unused: true
 
-  UNUSED_1:
+  UNUSED_4:
     bits: '2.0'
     unused: true
 
-  SRC_MIX:
+  UNUSED_5:
     bits: '3.7'
-    alt_names: ['SRC_MIX']
-    comment:
-      en: 'Mixed source status'
-      fr: 'Etat de la source mixte'
-    values:
-      0x00:
-        en: 'No mixed source'
-        fr: 'Pas de source mixte'
-      0x01:
-        en: 'Mixed source'
-        fr: 'Source mixte'
+    unused: true
 
   SRC_SEL:
     bits: '3.6-3.4'
-    alt_names: ['SRC_SEL']
     comment:
-      en: 'Selected audio source'
-      fr: 'Source audio selectionnee'
+      en: 'Audio source selected'
+      fr: 'Source audio sélectionnée'
+      es: 'Fuente de audio seleccionada'
+      de: 'Ausgewählte Audioquelle'
+      it: 'Sorgente audio selezionata'
+      pl: 'Wybrane źródło audio'
+      ru: 'Выбранный источник звука'
+      zh: '已选音频源'
+      hu: 'Kiválasztott hangforrás'
+      pt: 'Fonte áudio selecionada'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'None'
-        fr: 'Aucune'
+        en: 'None (no longitudinal control)'
+        fr: 'Aucune (pas de régulation longitudinale)'
+        es: 'Ninguna (sin regulación longitudinal)'
+        de: 'Keine (keine Längsregelung)'
+        it: 'Nessuna (nessuna regolazione longitudinale)'
+        pl: 'Brak (brak regulacji podłużnej)'
+        ru: 'Нет (нет продольного регулирования)'
+        zh: '无(无纵向调节)'
+        hu: 'Nincs (nincs hosszirányú szabályozás)'
+        pt: 'Nenhum (sem controlo longitudinal)'
       0x01:
         en: 'Tuner'
         fr: 'Tuner'
+        es: 'Sintonizador'
+        de: 'Tuner'
+        it: 'Sintonizzatore'
+        pl: 'Tuner'
+        ru: 'Тюнер'
+        zh: '调谐器'
+        hu: 'Tuner'
+        pt: 'Sintonizador'
       0x02:
-        en: 'CD (internal)'
-        fr: 'CD (interne)'
+        en: 'Internal CD'
+        fr: 'CD interne'
+        es: 'CD interno'
+        de: 'Interne CD'
+        it: 'CD interno'
+        pl: 'Wewnętrzna płyta CD'
+        ru: 'Внутренний CD'
+        zh: '内部CD'
+        hu: 'Belső CD'
+        pt: 'CD interno'
       0x03:
         en: 'CD changer'
         fr: 'Changeur CD'
+        es: 'Cambiador de CD'
+        de: 'CD-Wechsler'
+        it: 'Cambia CD'
+        pl: 'Zmieniarka CD'
+        ru: 'CD-чейнджер'
+        zh: 'CD换碟机'
+        hu: 'CD-váltó'
+        pt: 'Leitor de CD'
       0x04:
-        en: 'Aux 1'
-        fr: 'Aux 1'
+        en: 'Auxiliary 1'
+        fr: 'Auxiliaire 1'
+        es: 'Auxiliar 1'
+        de: 'Zusatz 1'
+        it: 'Ausiliario 1'
+        pl: 'Pomocniczy 1'
+        ru: 'Вспомогательный 1'
+        zh: '辅助1'
+        hu: '1. kiegészítő'
+        pt: 'Auxiliar 1'
       0x05:
-        en: 'Aux 2'
-        fr: 'Aux 2'
+        en: 'Auxiliary 2'
+        fr: 'Auxiliaire 2'
+        es: 'Auxiliar 2'
+        de: 'Hilfsfunktion 2'
+        it: 'Ausiliario 2'
+        pl: 'Urządzenie pomocnicze 2'
+        ru: 'Вспомогательное устройство 2'
+        zh: '辅助设备2'
+        hu: 'Segédfunkció 2'
+        pt: 'Auxiliar 2'
       0x06:
         en: 'USB'
         fr: 'USB'
+        es: 'USB'
+        de: 'USB'
+        it: 'USB'
+        pl: 'USB'
+        ru: 'USB'
+        zh: 'USB'
+        hu: 'USB'
+        pt: 'USB'
       0x07:
-        en: 'Bluetooth'
-        fr: 'Bluetooth'
+        en: 'Streaming'
+        fr: 'Streaming'
+        es: 'Streaming'
+        de: 'Streaming'
+        it: 'Streaming'
+        pl: 'Strumieniowanie'
+        ru: 'Потоковое воспроизведение'
+        zh: '流媒体'
+        hu: 'Streamelés'
+        pt: 'Streaming'
 
-  SRC_KML:
+  UNUSED_6:
     bits: '3.3'
-    alt_names: ['SOURCE_KML']
-    comment:
-      en: 'Switching to source with KML configuration '
-      fr: 'Passage a une source avec configuration KML'
-    values:
-      0x00:
-        en: 'No switching'
-        fr: 'Pas de passage'
-      0x01:
-        en: 'Switching done'
-        fr: 'Passage effectue'
+    unused: true
 
   NO_SRC:
     bits: '3.2-3.0'
-    alt_names: ['NO_SRC']
     comment:
-      en: 'Audio source change rejected'
-      fr: 'Rejet du changement de source audio'
+      en: 'Change of audio source rejected'
+      fr: 'Changement de source audio refusé'
+      es: 'Cambio de fuente de audio rechazado'
+      de: 'Wechsel der Audioquelle abgelehnt'
+      it: 'Cambio della sorgente audio rifiutato'
+      pl: 'Zmiana źródła audio odrzucona'
+      ru: 'Смена источника звука отклонена'
+      zh: '音频源切换被拒绝'
+      hu: 'Hangforrás-váltás elutasítva'
+      pt: 'Mudança de fonte áudio recusada'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'None'
-        fr: 'Aucune'
+        en: 'Not refused'
+        fr: 'Non refusé'
+        es: 'No rechazado'
+        de: 'Nicht abgelehnt'
+        it: 'Non rifiutato'
+        pl: 'Nie odrzucono'
+        ru: 'Не отклонено'
+        zh: '未拒绝'
+        hu: 'Nem elutasítva'
+        pt: 'Não recusado'
       0x01:
-        en: 'Tuner'
-        fr: 'Tuner'
+        en: 'To tuner'
+        fr: 'Vers tuner'
+        es: 'Hacia el sintonizador'
+        de: 'Zum Tuner'
+        it: 'Verso il sintonizzatore'
+        pl: 'Do tunera'
+        ru: 'На тюнер'
+        zh: '至调谐器'
+        hu: 'A tunerhez'
+        pt: 'Para o sintonizador'
       0x02:
-        en: 'CD (internal)'
-        fr: 'CD (interne)'
+        en: 'To internal CD'
+        fr: 'Vers CD interne'
+        es: 'Hacia CD interno'
+        de: 'Zum internen CD'
+        it: 'Verso CD interno'
+        pl: 'Do wewnętrznego CD'
+        ru: 'На внутренний CD'
+        zh: '至内部CD'
+        hu: 'Belső CD-hez'
+        pt: 'Para CD interno'
       0x03:
-        en: 'CD changer'
-        fr: 'Changeur CD'
+        en: 'To CDC'
+        fr: 'Vers CDC'
+        es: 'Hacia CDC'
+        de: 'Zum CDC'
+        it: 'Verso CDC'
+        pl: 'Do CDC'
+        ru: 'На CDC'
+        zh: '至CDC'
+        hu: 'CDC-hez'
+        pt: 'Para CDC'
       0x04:
-        en: 'Aux 1'
-        fr: 'Aux 1'
+        en: 'To auxiliary 1'
+        fr: 'Vers auxiliaire 1'
+        es: 'Hacia auxiliar 1'
+        de: 'Zu Hilfsfunktion 1'
+        it: 'Verso ausiliario 1'
+        pl: 'Do urządzenia pomocniczego 1'
+        ru: 'К вспомогательному устройству 1'
+        zh: '至辅助设备1'
+        hu: 'Segédfunkció 1 felé'
+        pt: 'Para auxiliar 1'
       0x05:
-        en: 'Aux 2'
-        fr: 'Aux 2'
+        en: 'To auxiliary 2'
+        fr: 'Vers auxiliaire 2'
+        es: 'Hacia auxiliar 2'
+        de: 'Zu Zusatzgerät 2'
+        it: 'Verso ausiliario 2'
+        pl: 'Do urządzenia pomocniczego 2'
+        ru: 'К вспомогательному устройству 2'
+        zh: '至辅助设备2'
+        hu: '2. kiegészítő eszközre'
+        pt: 'Para auxiliar 2'
       0x06:
-        en: 'USB'
-        fr: 'USB'
+        en: 'To USB'
+        fr: 'Vers USB'
+        es: 'Hacia USB'
+        de: 'Zu USB'
+        it: 'Verso USB'
+        pl: 'Do USB'
+        ru: 'На USB'
+        zh: '至USB'
+        hu: 'USB felé'
+        pt: 'Para USB'
       0x07:
-        en: 'Bluetooth'
-        fr: 'Bluetooth'
+        en: 'To streaming'
+        fr: 'Vers streaming'
+        es: 'Hacia streaming'
+        de: 'Zum Streaming'
+        it: 'Verso lo streaming'
+        pl: 'Do strumieniowania'
+        ru: 'На потоковую передачу'
+        zh: '至流媒体'
+        hu: 'Streaminghez'
+        pt: 'Para streaming'
 
   CD_AUDIO_COMPRESSION:
     bits: '4.7-4.5'
-    alt_names: ['FMT_COMP_AUDIO']
     comment:
-      en: 'Audio compression format for CD sources'
-      fr: 'Format de compression audio pour les sources CD'
+      en: 'Audio compression formats supported by the CD'
+      fr: 'Formats de compression audio supportés par le CD'
+      es: 'Formatos de compresión de audio admitidos por el CD'
+      de: 'Vom CD unterstützte Audio-Kompressionsformate'
+      it: 'Formati di compressione audio supportati dal CD'
+      pl: 'Formaty kompresji audio obsługiwane przez CD'
+      ru: 'Форматы сжатия аудио, поддерживаемые CD'
+      zh: 'CD 支持的音频压缩格式'
+      hu: 'A CD által támogatott hangtömörítési formátumok'
+      pt: 'Formatos de compressão áudio suportados pelo CD'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'No CD or unknown format'
-        fr: 'Pas de CD ou format inconnu'
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
       0x01:
-        en: 'CD with MP3'
-        fr: 'CD avec fichiers MP3'
+        en: 'MPx'
+        fr: 'MPx'
+        es: 'MPx'
+        de: 'MPx'
+        it: 'MPx'
+        pl: 'MPx'
+        ru: 'MPx'
+        zh: 'MPx'
+        hu: 'MPx'
+        pt: 'MPx'
 
   SUPPORTED_DIGITAL_RADIO:
     bits: '4.4-4.2'
-    alt_names: ['RADIO_NUM']
     comment:
-      en: 'Supported digital radio formats'
-      fr: 'Formats de radio numerique supportes'
+      en: 'Supported types of digital radio'
+      fr: 'Types de radio numérique supportés'
+      es: 'Tipos de radio digital admitidos'
+      de: 'Unterstützte Digitalradio-Typen'
+      it: 'Tipi di radio digitale supportati'
+      pl: 'Obsługiwane typy radia cyfrowego'
+      ru: 'Поддерживаемые типы цифрового радио'
+      zh: '支持的数字广播类型'
+      hu: 'Támogatott digitális rádiótípusok'
+      pt: 'Tipos de rádio digital suportados'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'No digital radio supported'
-        fr: 'Pas de radio numerique supportee'
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
       0x01:
-        en: 'DAB supported'
-        fr: 'DAB supporte'
+        en: 'DAB'
+        fr: 'DAB'
+        es: 'DAB'
+        de: 'DAB'
+        it: 'DAB'
+        pl: 'DAB'
+        ru: 'DAB'
+        zh: 'DAB数字广播'
+        hu: 'DAB'
+        pt: 'DAB'
       0x02:
-        en: 'DVBT supported'
-        fr: 'DVBT supporte'
+        en: 'DVB-T'
+        fr: 'DVB-T'
+        es: 'DVB-T'
+        de: 'DVB-T'
+        it: 'DVB-T'
+        pl: 'DVB-T'
+        ru: 'DVB-T'
+        zh: 'DVB-T'
+        hu: 'DVB-T'
+        pt: 'DVB-T'
 
-  BT_SRC:
+  UNUSED_7:
     bits: '4.1-4.0'
-    alt_names: ['BT_SRC']
-    comment:
-      en: 'Bluetooth source status'
-      fr: 'Etat de la source Bluetooth'
-    values:
-      0x00:
-        en: 'Not present'
-        fr: 'Pas de source Bluetooth presente'
-      0x01:
-        en: 'Available but not usable'
-        fr: 'Disponible mais pas utilisable'
-      0x02:
-        en: 'Available and usable'
-        fr: 'Disponible et utilisable'
+    unused: true

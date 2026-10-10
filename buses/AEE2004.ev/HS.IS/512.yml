@@ -1,0 +1,205 @@
+id: 0x512
+name: 'BSI_SUPERVISION'
+type: 'can'
+length: 7
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+periodicity: ['100ms']
+senders: ['BSI']
+receivers: ['PIU']
+
+signals:
+  ELECTRIC_COMPRESSOR_SPEED_REQUEST:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Rotational speed request for the electric compressor'
+      fr: 'Demande de vitesse de rotation du compresseur électrique'
+      es: 'Solicitud de velocidad de rotación del compresor eléctrico'
+      de: 'Drehzahlanforderung des elektrischen Kompressors'
+      it: 'Richiesta di velocità di rotazione del compressore elettrico'
+      pl: 'Żądanie prędkości obrotowej sprężarki elektrycznej'
+      ru: 'Запрос частоты вращения электрического компрессора'
+      zh: '电动压缩机转速请求'
+      hu: 'Az elektromos kompresszor fordulatszám-kérése'
+      pt: 'Pedido de velocidade de rotação do compressor elétrico'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 12700
+    units: 'rpm'
+    invalid: 0xFF
+    default: 0x00
+
+  ELECTRIC_COMPRESSOR_POWER_LIMITATION_REQUEST:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Electrical compressor power limitation request'
+      fr: 'Demande de limitation de puissance du compresseur électrique'
+      es: 'Solicitud de limitación de potencia del compresor eléctrico'
+      de: 'Leistungsbegrenzungsanforderung des elektrischen Kompressors'
+      it: 'Richiesta di limitazione della potenza del compressore elettrico'
+      pl: 'Żądanie ograniczenia mocy sprężarki elektrycznej'
+      ru: 'Запрос ограничения мощности электрического компрессора'
+      zh: '电动压缩机功率限制请求'
+      hu: 'Az elektromos kompresszor teljesítménykorlátozási kérése'
+      pt: 'Pedido de limitação de potência do compressor elétrico'
+    type: 'uint'
+    factor: 0.04
+    min: 0
+    max: 10.16
+    units: 'kW'
+    invalid: 0xFF
+    default: 0x00
+
+  AIR_PTC_POWER_LIMITATION_REQUEST:
+    bits: '3.7-3.1'
+    comment:
+      en: 'Power limitation request for the electric compressor / air PTC heater'
+      fr: 'Demande de limitation de puissance du compresseur électrique / CTP air'
+      es: 'Solicitud de limitación de potencia del compresor eléctrico / calefactor PTC de aire'
+      de: 'Leistungsbegrenzungsanforderung des elektrischen Kompressors / Luft-PTC-Heizelements'
+      it: 'Richiesta di limitazione della potenza del compressore elettrico / CTP aria'
+      pl: 'Żądanie ograniczenia mocy sprężarki elektrycznej / grzałki PTC powietrza'
+      ru: 'Запрос ограничения мощности электрического компрессора / воздушного PTC-нагревателя'
+      zh: '电动压缩机/空气PTC加热器的功率限制请求'
+      hu: 'Az elektromos kompresszor / légfűtő PTC-elem teljesítménykorlátozási kérése'
+      pt: 'Pedido de limitação de potência do compressor elétrico / CTP de ar'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  AIR_PTC_POWER_ACTIVATION_COMMAND:
+    bits: '3.0'
+    comment:
+      en: 'Power activation command for the air PTC heater'
+      fr: 'Commande d''activation de puissance de la CTP air'
+      es: 'Comando de activación de potencia del calefactor PTC de aire'
+      de: 'Leistungsaktivierungsbefehl des Luft-PTC-Heizelements'
+      it: 'Comando di attivazione della potenza della CTP aria'
+      pl: 'Polecenie aktywacji mocy grzałki PTC powietrza'
+      ru: 'Команда активации мощности воздушного PTC-нагревателя'
+      zh: '空气PTC加热器功率激活指令'
+      hu: 'A légfűtő PTC-elem teljesítmény-aktiválási parancsa'
+      pt: 'Comando de ativação de potência do CTP de ar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No control request'
+        fr: 'Pas de demande de pilotage'
+        es: 'Sin solicitud de control'
+        de: 'Keine Steueranforderung'
+        it: 'Nessuna richiesta di pilotaggio'
+        pl: 'Brak żądania sterowania'
+        ru: 'Нет запроса управления'
+        zh: '无控制请求'
+        hu: 'Nincs vezérlési kérés'
+        pt: 'Sem pedido de controlo'
+      0x01:
+        en: 'Control request'
+        fr: 'Demande de pilotage'
+        es: 'Solicitud de control'
+        de: 'Steueranforderung'
+        it: 'Richiesta di controllo'
+        pl: 'Żądanie sterowania'
+        ru: 'Запрос управления'
+        zh: '控制请求'
+        hu: 'Vezérlési kérés'
+        pt: 'Pedido de controlo'
+
+  PTC_HEATER_MOMENTARY_POWER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Momentary power of the PTC electric heater elements'
+      fr: 'Puissance instantanée des éléments chauffants PTC'
+      es: 'Potencia instantánea de los elementos calefactores PTC'
+      de: 'Momentanleistung der PTC-Heizelemente'
+      it: 'Potenza istantanea degli elementi riscaldanti PTC'
+      pl: 'Chwilowa moc grzałek PTC'
+      ru: 'Мгновенная мощность нагревательных элементов PTC'
+      zh: 'PTC电加热元件的瞬时功率'
+      hu: 'A PTC fűtőelemek pillanatnyi teljesítménye'
+      pt: 'Potência instantânea dos elementos aquecedores PTC'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 10160
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00
+
+  AC_COMPRESSOR_AVERAGE_POWER:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Calculated average power of the air conditioning compressor'
+      fr: 'Puissance moyenne calculée du compresseur de climatisation'
+      es: 'Potencia media calculada del compresor de aire acondicionado'
+      de: 'Berechnete mittlere Leistung des Klimakompressors'
+      it: 'Potenza media calcolata del compressore del climatizzatore'
+      pl: 'Obliczona średnia moc sprężarki klimatyzacji'
+      ru: 'Расчётная средняя мощность компрессора кондиционера'
+      zh: '空调压缩机的计算平均功率'
+      hu: 'A klímakompresszor számított átlagteljesítménye'
+      pt: 'Potência média calculada do compressor de ar condicionado'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 10160
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00
+
+  PTC_HEATER_AVERAGE_POWER:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Calculated average power of the PTC electric heater elements'
+      fr: 'Puissance moyenne calculée des éléments chauffants PTC'
+      es: 'Potencia media calculada de los elementos calefactores PTC'
+      de: 'Berechnete mittlere Leistung der PTC-Heizelemente'
+      it: 'Potenza media calcolata degli elementi riscaldanti PTC'
+      pl: 'Obliczona średnia moc grzałek PTC'
+      ru: 'Расчётная средняя мощность нагревательных элементов PTC'
+      zh: 'PTC电加热元件的计算平均功率'
+      hu: 'A PTC fűtőelemek számított átlagteljesítménye'
+      pt: 'Potência média calculada dos elementos de aquecimento PTC'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 10160
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00
+
+  AC_COMPRESSOR_MOMENTARY_POWER:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Momentary power of the air conditioning compressor'
+      fr: 'Puissance instantanée du compresseur de climatisation'
+      es: 'Potencia instantánea del compresor de aire acondicionado'
+      de: 'Momentanleistung des Klimakompressors'
+      it: 'Potenza istantanea del compressore del climatizzatore'
+      pl: 'Chwilowa moc sprężarki klimatyzacji'
+      ru: 'Мгновенная мощность компрессора кондиционера'
+      zh: '空调压缩机的瞬时功率'
+      hu: 'A klímakompresszor pillanatnyi teljesítménye'
+      pt: 'Potência instantânea do compressor de ar condicionado'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 10160
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00

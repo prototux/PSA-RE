@@ -1,0 +1,186 @@
+id: 0x5CC
+name: 'RF_REMOTE_JAPAN_STATUS'
+type: 'van'
+length: 3
+comment:
+  en: 'Decoded remote-control key press from the RF receiver (Japan market).'
+  fr: 'Appui décodé de la télécommande, issu du récepteur RF (marché japonais).'
+  es: 'Pulsación decodificada del mando a distancia, procedente del receptor RF (mercado japonés).'
+  de: 'Dekodierter Tastendruck der Fernbedienung vom HF-Empfänger (Japan-Markt).'
+  it: 'Pressione decodificata del telecomando dal ricevitore RF (mercato giapponese).'
+  pl: 'Zdekodowane naciśnięcie przycisku pilota z odbiornika RF (rynek japoński).'
+  ru: 'Декодированное нажатие кнопки пульта ДУ от радиоприёмника (японский рынок).'
+  zh: '从射频接收机解码的遥控器按键(日本市场)。'
+  hu: 'A távirányító dekódolt gombnyomása az RF-vevőtől (japán piac).'
+  pt: 'Pressão de tecla descodificada do comando à distância do recetor RF (mercado japonês).'
+periodicity: ['1000ms', 'trigger']
+senders: ['BRHF']
+receivers: ['BSI']
+van:
+  access: 'read'
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  PRESSED_BUTTON:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Remote button pressed'
+      fr: 'Touche appuyée'
+      es: 'Botón del mando pulsado'
+      de: 'Gedrückte Fernbedienungstaste'
+      it: 'Pulsante del telecomando premuto'
+      pl: 'Naciśnięty przycisk pilota'
+      ru: 'Нажатая кнопка пульта'
+      zh: '遥控器按键按下'
+      hu: 'Megnyomott távirányító-gomb'
+      pt: 'Botão do comando premido'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No button pressed'
+        fr: 'Aucune touche appuyée'
+        es: 'Ningún botón pulsado'
+        de: 'Keine Taste gedrückt'
+        it: 'Nessun pulsante premuto'
+        pl: 'Nie naciśnięto żadnego przycisku'
+        ru: 'Ни одна кнопка не нажата'
+        zh: '没有按下任何按键'
+        hu: 'Nincs megnyomott gomb'
+        pt: 'Nenhuma tecla pressionada'
+      0x01:
+        en: 'Button 1 pressed'
+        fr: 'Touche 1 appuyée'
+        es: 'Tecla 1 pulsada'
+        de: 'Taste 1 gedrückt'
+        it: 'Tasto 1 premuto'
+        pl: 'Przycisk 1 wciśnięty'
+        ru: 'Нажата кнопка 1'
+        zh: '按钮1已按下'
+        hu: '1. gomb megnyomva'
+        pt: 'Botão 1 premido'
+      0x02:
+        en: 'Button 2 pressed'
+        fr: 'Touche 2 appuyée'
+        es: 'Botón 2 pulsado'
+        de: 'Taste 2 gedrückt'
+        it: 'Pulsante 2 premuto'
+        pl: 'Wciśnięty przycisk 2'
+        ru: 'Нажата кнопка 2'
+        zh: '按钮2已按下'
+        hu: 'A 2. gomb megnyomva'
+        pt: 'Botão 2 premido'
+      0x03:
+        en: 'Button 3 (optional)'
+        fr: 'Touche 3 (facultative)'
+        es: 'Botón 3 (opcional)'
+        de: 'Taste 3 (optional)'
+        it: 'Tasto 3 (opzionale)'
+        pl: 'Przycisk 3 (opcjonalny)'
+        ru: 'Кнопка 3 (опционально)'
+        zh: '按钮 3(可选)'
+        hu: '3. gomb (opcionális)'
+        pt: 'Botão 3 (opcional)'
+
+  LONG_PRESS:
+    bits: '2.5'
+    comment:
+      en: 'Key press duration (short/long)'
+      fr: 'Appui long sur la touche'
+      es: 'Duración de la pulsación de la tecla'
+      de: 'Tastendruckdauer'
+      it: 'Durata della pressione del tasto'
+      pl: 'Czas naciśnięcia przycisku'
+      ru: 'Длительность нажатия кнопки'
+      zh: '按键持续时间'
+      hu: 'Gombnyomás időtartama'
+      pt: 'Duração da pressão na tecla (curta/longa)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Short press'
+        fr: 'Appui court'
+        es: 'Pulsación corta'
+        de: 'Kurzer Tastendruck'
+        it: 'Pressione breve'
+        pl: 'Krótkie naciśnięcie'
+        ru: 'Короткое нажатие'
+        zh: '短按'
+        hu: 'Rövid nyomás'
+        pt: 'Pressão curta'
+      0x01:
+        en: 'Long press'
+        fr: 'Appui long'
+        es: 'Pulsación larga'
+        de: 'Langes Drücken'
+        it: 'Pressione lunga'
+        pl: 'Długie naciśnięcie'
+        ru: 'Долгое нажатие'
+        zh: '长按'
+        hu: 'Hosszú nyomás'
+        pt: 'Pressão longa'
+
+  REMOTE_BATTERY_LOW:
+    bits: '2.4'
+    comment:
+      en: 'Remote-control battery worn'
+      fr: 'Niveau d''usure de la pile de la télécommande'
+      es: 'Pila del mando desgastada'
+      de: 'Batterie der Fernbedienung schwach'
+      it: 'Batteria del telecomando esaurita'
+      pl: 'Zużyta bateria pilota'
+      ru: 'Батарея пульта разряжена'
+      zh: '遥控器电池电量低'
+      hu: 'A távirányító eleme lemerülőben'
+      pt: 'Pilha do comando à distância gasta'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Battery low'
+        fr: 'Pile faible'
+        es: 'Pila baja'
+        de: 'Batterie schwach'
+        it: 'Batteria scarica'
+        pl: 'Słaba bateria'
+        ru: 'Батарея разряжена'
+        zh: '电池电量低'
+        hu: 'Elem lemerülőben'
+        pt: 'Bateria fraca'
+
+  UNUSED_1:
+    bits: '2.3-2.0'
+    unused: true
+
+  FOOTER:
+    bits: '3.7-3.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

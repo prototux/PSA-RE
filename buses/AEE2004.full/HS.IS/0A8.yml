@@ -1,31 +1,84 @@
 id: 0x0A8
 name: 'IMMO_RESPONSE'
 alt_names: ['CFD_BSI_CMM']
+type: 'can'
 length: 5
 comment:
-  en: 'Immobilizer response request'
-  fr: 'Reponse anti-demarrage'
-  de: 'Wegfahrsperre Entsperrantwort'
-type: 'can'
-periodicity: 'trigger'
-senders:
-  - 'BSI'
+  en: 'Immobilizer unlock answer from the BSI: the key computed from the seed sent by the ECU (see 0x072)'
+  fr: 'Réponse de déverrouillage antidémarrage de la BSI : la clé calculée à partir de la valeur aléatoire envoyée par le calculateur (voir 0x072)'
+  es: 'Respuesta de desbloqueo del inmovilizador de la BSI: la clave calculada a partir de la semilla enviada por la centralita (ver 0x072)'
+  de: 'Wegfahrsperren-Entsperrantwort des BSI: der aus dem Zufallswert des Steuergeräts berechnete Schlüssel (siehe 0x072)'
+  it: 'Risposta di sblocco dell''immobilizzatore della BSI: la chiave calcolata dal seme inviato dalla centralina (vedi 0x072)'
+  pl: 'Odpowiedź odblokowania immobilizera od BSI: klucz obliczony z ziarna wysłanego przez sterownik (patrz 0x072)'
+  ru: 'Ответ BSI на разблокировку иммобилайзера: ключ, вычисленный из случайного значения, отправленного блоком (см. 0x072)'
+  zh: 'BSI的防盗解锁应答：根据ECU发送的随机种子计算出的密钥（见0x072）'
+  hu: 'A BSI indításgátló-feloldási válasza: a vezérlőegység által küldött véletlen kezdőértékből számított kulcs (lásd 0x072)'
+  pt: 'Resposta de desbloqueio do imobilizador da BSI: a chave calculada a partir da semente enviada pela centralina (ver 0x072)'
+periodicity: ['trigger']
+senders: ['BSI']
 receivers:
   - 'CMM'
+  - 'ACC'
+  - 'AMVAR'
+  - 'AR2S'
+  - 'BVA'
+  - 'CAAR'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'CSS'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'BCP'
+  - 'SBW'
+  - 'SCDT'
+  - 'BHI'
+  - 'TBMU'
+  - 'DAE'
+  - 'ABS'
 
 signals:
   COMMAND:
     bits: '1.7-1.0'
+    alt_names: ['BSI_UNLOCK_KEY_AUTHORIZATION']
+    comment:
+      en: 'Unlocking authorization (BSI key emission)'
+      fr: 'Autorisation de déverrouillage (émission de la clé BSI)'
+      es: 'Autorización de desbloqueo (emisión de la llave BSI)'
+      de: 'Entriegelungsfreigabe (Aussenden des BSI-Schlüssels)'
+      it: 'Autorizzazione allo sblocco (emissione della chiave BSI)'
+      pl: 'Autoryzacja odblokowania (wysłanie klucza BSI)'
+      ru: 'Разрешение на разблокировку (передача ключа BSI)'
+      zh: '解锁授权(BSI密钥发送)'
+      hu: 'Kioldási engedély (BSI kulcs kibocsátása)'
+      pt: 'Autorização de desbloqueio (emissão da chave BSI)'
+    type: 'enum'
     values:
       0x00:
         en: 'Response'
-        fr: 'Reponse'
+        fr: 'Réponse'
+        es: 'Respuesta'
         de: 'Antwort'
+        it: 'Risposta'
+        pl: 'Odpowiedź'
+        ru: 'Ответ'
+        zh: '响应'
+        hu: 'Válasz'
+        pt: 'Resposta'
 
   RESPONSE:
     bits: '2.7-5.0'
-    type: 'uint'
     comment:
-      en: 'Response = F(SEED)'
-      fr: 'Reponse = F(SEED)'
-      de: 'Antwort = F(SEED)'
+      en: 'BSI key computed from the seed of 0x072 (RESPONSE = F(SEED))'
+      fr: 'Clé BSI calculée à partir de la valeur aléatoire de 0x072 (RESPONSE = F(SEED))'
+      es: 'Clave BSI calculada a partir de la semilla de 0x072 (RESPONSE = F(SEED))'
+      de: 'BSI-Schlüssel, aus dem Zufallswert von 0x072 berechnet (RESPONSE = F(SEED))'
+      it: 'Chiave BSI calcolata dal seme di 0x072 (RESPONSE = F(SEED))'
+      pl: 'Klucz BSI obliczony z ziarna z 0x072 (RESPONSE = F(SEED))'
+      ru: 'Ключ BSI, вычисленный из случайного значения 0x072 (RESPONSE = F(SEED))'
+      zh: '根据0x072的随机种子计算出的BSI密钥（RESPONSE = F(SEED)）'
+      hu: 'A 0x072 véletlen kezdőértékéből számított BSI kulcs (RESPONSE = F(SEED))'
+      pt: 'Chave BSI calculada a partir da semente de 0x072 (RESPONSE = F(SEED))'
+    type: 'uint'

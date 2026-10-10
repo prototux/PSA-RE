@@ -1,0 +1,177 @@
+id: 0x5A7
+name: 'HYBRID_CONTROL_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Hybrid control data 2: low-voltage cooling water flow and temperature, hill-start/descent stop inhibition, SCR response mode and recovered electric energy.'
+  fr: 'Données hybrides 2 : débit et température d''eau de refroidissement basse tension, inhibition d''arrêt en pente, mode de réponse SCR et énergie électrique récupérée.'
+  es: 'Datos híbridos 2: caudal y temperatura del agua de refrigeración de baja tensión, inhibición de parada en pendiente, modo de respuesta SCR y energía eléctrica recuperada.'
+  de: 'Hybridsteuerungsdaten 2: Kühlwasserdurchfluss und -temperatur (Niederspannung), Stopp-Sperre am Hang, SCR-Antwortmodus und rückgewonnene elektrische Energie.'
+  it: 'Dati ibridi 2: portata e temperatura acqua di raffreddamento bassa tensione, inibizione arresto in pendenza, modalità di risposta SCR ed energia elettrica recuperata.'
+  pl: 'Dane hybrydowe 2: przepływ i temperatura wody chłodzącej niskiego napięcia, blokada zatrzymania na wzniesieniu, tryb odpowiedzi SCR i odzyskana energia elektryczna.'
+  ru: 'Гибридные данные 2: расход и температура низковольтной охлаждающей воды, блокировка остановки на уклоне, режим отклика SCR и рекуперированная электроэнергия.'
+  zh: '混合动力数据2:低压冷却水流量和温度、坡道停车抑制、SCR响应模式和回收电能。'
+  hu: 'Hibrid vezérlési adatok 2: kisfeszültségű hűtővíz áramlás és hőmérséklet, lejtőn történő leállás tiltása, SCR válaszmód és visszanyert elektromos energia.'
+  pt: 'Dados 2 de controlo híbrido: caudal e temperatura da água de arrefecimento de baixa tensão, inibição de paragem em subida/descida, modo de resposta SCR e energia elétrica recuperada.'
+observations:
+  en: 'On state change of: POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+  fr: 'Sur changement d''état de : POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+  es: 'Al cambiar el estado de: POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+  de: 'Bei Statusänderung von: POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+  it: 'Al cambiamento di stato di: POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+  pl: 'Wysyłane przy zmianie stanu: POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+  ru: 'При изменении состояния: POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+  zh: '当PWT_MODE_SCR_RESP, INTERD_STOP_PENTE状态变化时'
+  hu: 'A(z) POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE állapotváltozásakor'
+  pt: 'Na mudança de estado de: POWERTRAIN_MODE_REQUEST_ACK, STOP_INHIBIT_ON_SLOPE'
+periodicity: ['1000ms', 'trigger']
+senders: ['HCU1']
+receivers: ['CMM', 'BSI']
+
+signals:
+  REGEN_BRAKING_ENERGY_RECOVERED:
+    bits: '1.7-1.5'
+    comment:
+      en: 'Electrical energy recovered by regenerative braking (rolling counter)'
+      fr: 'Quantité d''énergie électrique récupérée par freinage régénératif (compteur tournant)'
+      es: 'Cantidad de energía eléctrica recuperada por frenado regenerativo (contador cíclico)'
+      de: 'Durch regeneratives Bremsen zurückgewonnene elektrische Energiemenge (umlaufender Zähler)'
+      it: 'Quantità di energia elettrica recuperata dalla frenata rigenerativa (contatore ciclico)'
+      pl: 'Ilość energii elektrycznej odzyskanej przez hamowanie odzyskowe (licznik cykliczny)'
+      ru: 'Количество электроэнергии, восстановленной рекуперативным торможением (циклический счётчик)'
+      zh: '再生制动回收的电能量(循环计数器)'
+      hu: 'A regeneratív fékezéssel visszanyert elektromos energia mennyisége (körforgó számláló)'
+      pt: 'Quantidade de energia elétrica recuperada por travagem regenerativa (contador cíclico)'
+    type: 'uint'
+    min: 0
+    max: 7
+    default: 0x00
+
+  POWERTRAIN_MODE_REQUEST_ACK:
+    bits: '1.4'
+    comment:
+      en: 'Powertrain mode request acknowledgment flag'
+      fr: 'Indicateur de prise en compte de la demande de mode du groupe motopropulseur'
+      es: 'Indicador de confirmación de la solicitud de modo del grupo motopropulsor'
+      de: 'Kennzeichen für die Berücksichtigung der Antriebsstrang-Modusanforderung'
+      it: 'Flag di presa in carico della richiesta di modalità del gruppo propulsore'
+      pl: 'Flaga potwierdzenia żądania trybu zespołu napędowego'
+      ru: 'Флаг подтверждения запроса режима силового агрегата'
+      zh: '动力总成模式请求确认标志'
+      hu: 'Az erőátviteli rendszer módkérésének elfogadási jelzője'
+      pt: 'Indicador de confirmação do pedido de modo do grupo motopropulsor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Request not taken into account'
+        fr: 'Requête non prise en compte'
+        es: 'Solicitud no tenida en cuenta'
+        de: 'Anfrage nicht berücksichtigt'
+        it: 'Richiesta non presa in considerazione'
+        pl: 'Żądanie nieuwzględnione'
+        ru: 'Запрос не учтён'
+        zh: '请求未被采纳'
+        hu: 'A kérés nincs figyelembe véve'
+        pt: 'Pedido não tido em conta'
+      0x01:
+        en: 'Request taken into account'
+        fr: 'Requête prise en compte'
+        es: 'Solicitud tenida en cuenta'
+        de: 'Anforderung berücksichtigt'
+        it: 'Richiesta presa in considerazione'
+        pl: 'Żądanie uwzględnione'
+        ru: 'Запрос учтён'
+        zh: '请求已处理'
+        hu: 'A kérés figyelembe véve'
+        pt: 'Pedido tido em conta'
+
+  STOP_INHIBIT_ON_SLOPE:
+    bits: '1.3'
+    comment:
+      en: 'Stop & Start inhibited on slope'
+      fr: 'Interdiction de passage en Stop & Start en tenant compte de la pente'
+      es: 'Prohibición de activar el Stop & Start teniendo en cuenta la pendiente'
+      de: 'Sperrung der Stopp-Start-Funktion unter Berücksichtigung der Steigung'
+      it: 'Divieto di passaggio in Stop & Start tenendo conto della pendenza'
+      pl: 'Zablokowanie funkcji Stop & Start z uwzględnieniem nachylenia'
+      ru: 'Запрет включения Стоп-Старт с учётом уклона'
+      zh: '考虑坡度后禁止启停系统进入停机'
+      hu: 'Stop & Start letiltása a lejtés figyelembevételével'
+      pt: 'Stop & Start inibido em declive'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Stop allowed'
+        fr: 'Arrêt autorisé'
+        es: 'Parada permitida'
+        de: 'Halt erlaubt'
+        it: 'Arresto consentito'
+        pl: 'Zatrzymanie dozwolone'
+        ru: 'Остановка разрешена'
+        zh: '允许停止'
+        hu: 'Leállás engedélyezett'
+        pt: 'Paragem permitida'
+      0x01:
+        en: 'Stop forbidden'
+        fr: 'Arrêt interdit'
+        es: 'Parada prohibida'
+        de: 'Stopp verboten'
+        it: 'Arresto vietato'
+        pl: 'Zatrzymanie zabronione'
+        ru: 'Остановка запрещена'
+        zh: '禁止停止'
+        hu: 'A leállítás tiltva'
+        pt: 'Paragem proibida'
+
+  UNUSED_1:
+    bits: '1.2-1.0'
+    unused: true
+
+  LOW_TEMP_CIRCUIT_WATER_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Water temperature in the low-temperature cooling circuit'
+      fr: 'Température d''eau du circuit basse température'
+      es: 'Temperatura del agua del circuito de baja temperatura'
+      de: 'Wassertemperatur im Niedertemperaturkreislauf'
+      it: 'Temperatura dell''acqua del circuito a bassa temperatura'
+      pl: 'Temperatura wody w obiegu niskotemperaturowym'
+      ru: 'Температура воды в низкотемпературном контуре'
+      zh: '低温回路水温'
+      hu: 'Alacsony hőmérsékletű kör vízhőmérséklete'
+      pt: 'Temperatura da água do circuito de baixa temperatura'
+    type: 'uint'
+    factor: 1
+    offset: -30
+    min: -30
+    max: 120
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFE
+
+  LOW_TEMP_CIRCUIT_WATER_FLOW:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Water flow rate in the low-temperature cooling circuit'
+      fr: 'Débit d''eau dans le circuit basse température'
+      es: 'Caudal de agua en el circuito de baja temperatura'
+      de: 'Wasserdurchfluss im Niedertemperaturkreislauf'
+      it: 'Portata d''acqua nel circuito a bassa temperatura'
+      pl: 'Przepływ wody w obiegu niskotemperaturowym'
+      ru: 'Расход воды в низкотемпературном контуре'
+      zh: '低温回路水流量'
+      hu: 'Alacsony hőmérsékletű kör vízáramlása'
+      pt: 'Caudal de água no circuito de baixa temperatura'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 20
+    units: 'L/min'
+    invalid: 0xFF
+    default: 0xFE
+
+  UNUSED_2:
+    bits: '4.7-4.0'
+    unused: true

@@ -1,0 +1,1255 @@
+id: 0x2B6
+name: 'ACC_DYNAMIC_STATE'
+type: 'can'
+length: 8
+comment:
+  en: 'Adaptive cruise control dynamic state 1: powertrain wheel-torque setpoint and potential setpoint, deceleration setpoint, torque-activation and brake-prefill requests, deceleration plateau request, ACC state.'
+  fr: 'État dynamique 1 du régulateur adaptatif : consigne et consigne potentielle de couple roue du GMP, consigne de décélération, demandes d''activation de couple et de préremplissage frein, demande de plateau de décélération, état ACC.'
+  es: 'Estado dinámico 1 del control de crucero adaptativo: consigna y consigna potencial de par de rueda del grupo motopropulsor, consigna de deceleración, solicitudes de activación de par y prellenado de freno, solicitud de meseta de deceleración, estado ACC.'
+  de: 'Dynamischer Status 1 des adaptiven Tempomaten: Radmoment-Sollwert und potenzieller Sollwert des Antriebsstrangs, Verzögerungssollwert, Momentaktivierungs- und Bremsvorbefüllungsanforderungen, Verzögerungsplateau-Anforderung, ACC-Status.'
+  it: 'Stato dinamico 1 del cruise control adattivo: setpoint e setpoint potenziale di coppia ruota del gruppo propulsore, setpoint di decelerazione, richieste di attivazione coppia e preriempimento freno, richiesta di plateau di decelerazione, stato ACC.'
+  pl: 'Stan dynamiczny 1 aktywnego tempomatu: nastawa i potencjalna nastawa momentu koła układu napędowego, nastawa opóźnienia, żądania aktywacji momentu i wstępnego napełnienia hamulca, żądanie plateau opóźnienia, stan ACC.'
+  ru: 'Динамическое состояние 1 адаптивного круиз-контроля: уставка и потенциальная уставка крутящего момента колеса силового агрегата, уставка замедления, запросы активации момента и преднаполнения тормоза, запрос плато замедления, состояние ACC.'
+  zh: '自适应巡航控制动态状态1:动力总成车轮扭矩设定值和潜在设定值、减速设定值、扭矩激活和制动预填充请求、减速平台请求、ACC状态。'
+  hu: 'Az adaptív tempomat dinamikus állapota 1: a hajtáslánc keréknyomaték alapjele és potenciális alapjele, lassítási alapjel, nyomatékaktiválási és fékelőtöltési kérések, lassítási fennsík kérés, ACC állapot.'
+  pt: 'Estado dinâmico 1 do regulador de velocidade adaptativo: ponto de ajuste de binário nas rodas e ponto de ajuste potencial do grupo motopropulsor, ponto de ajuste de desaceleração, pedidos de ativação de binário e de pré-enchimento dos travões, pedido de patamar de desaceleração, estado do ACC.'
+periodicity: ['20ms']
+senders: ['HCU2']
+receivers: ['HCU1']
+
+signals:
+  DETECTION_DEVICE_DECELERATION_SETPOINT:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Vehicle deceleration setpoint from the detection device'
+      fr: 'Consigne de décélération du véhicule émise par le dispositif de détection'
+      es: 'Consigna de deceleración del vehículo emitida por el dispositivo de detección'
+      de: 'Vom Erkennungsgerät ausgegebener Verzögerungs-Sollwert des Fahrzeugs'
+      it: 'Valore di decelerazione del veicolo richiesto dal dispositivo di rilevamento'
+      pl: 'Zadana wartość opóźnienia pojazdu z urządzenia wykrywającego'
+      ru: 'Заданное замедление автомобиля от устройства обнаружения'
+      zh: '探测装置发出的车辆减速度设定值'
+      hu: 'Az érzékelő eszköz által kiadott jármű-lassítási alapjel'
+      pt: 'Consigna de desaceleração do veículo emitida pelo dispositivo de deteção'
+    type: 'uint'
+    factor: 0.05
+    offset: -10.65
+    min: -10.65
+    max: 2
+    units: 'm/s2'
+    default: 0xFE
+
+  ACC_DOWNSHIFT_MIN_CONFIRMATION_TIME:
+    bits: '2.7-2.2'
+    comment:
+      en: 'ACC minimum confirmation time for a downshift'
+      fr: 'Temps de confirmation minimal pour un rapport descendant (ACC)'
+      es: 'Tiempo mínimo de confirmación para una marcha descendente (ACC)'
+      de: 'Mindestbestätigungszeit für einen Rückschaltvorgang (ACC)'
+      it: 'Tempo minimo di conferma per una scalata di marcia (ACC)'
+      pl: 'Minimalny czas potwierdzenia redukcji biegu (ACC)'
+      ru: 'Минимальное время подтверждения понижающего переключения передачи (ACC)'
+      zh: 'ACC 降挡最小确认时间'
+      hu: 'ACC visszaváltás minimális megerősítési ideje'
+      pt: 'Tempo mínimo de confirmação para uma mudança descendente (ACC)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 's'
+    invalid: 0x3F
+    default: 0x00
+
+  ACC_WHEEL_TORQUE_POTENTIAL_PROCESS_REQUEST:
+    bits: '2.1-2.0'
+    comment:
+      en: 'ACC powertrain potential wheel torque process activation request'
+      fr: 'Demande d''activation du processus de couple potentiel roue du groupe motopropulseur pour l''ACC'
+      es: 'Solicitud de activación del proceso de par potencial en rueda del grupo motopropulsor para el ACC'
+      de: 'Aktivierungsanforderung des potenziellen Radmoment-Prozesses des Antriebsstrangs für ACC'
+      it: 'Richiesta di attivazione del processo di coppia potenziale alla ruota del gruppo propulsore per l''ACC'
+      pl: 'Żądanie aktywacji procesu potencjalnego momentu na kole układu napędowego dla ACC'
+      ru: 'Запрос активации процесса потенциального момента на колесе силового агрегата для ACC'
+      zh: 'ACC 动力总成潜在车轮扭矩处理激活请求'
+      hu: 'ACC hajtáslánc potenciális kerékperdület-folyamat aktiválási kérése'
+      pt: 'Pedido de ativação do processo de binário potencial na roda do grupo motopropulsor para o ACC'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Powertrain mode requested'
+        fr: 'Mode GMP demandé'
+        es: 'Modo GMP solicitado'
+        de: 'Antriebsmodus angefordert'
+        it: 'Modalità GMP richiesta'
+        pl: 'Zażądano trybu napędu'
+        ru: 'Запрошен режим силовой установки'
+        zh: '已请求动力总成模式'
+        hu: 'Hajtáslánc üzemmód kérve'
+        pt: 'Modo GMP pedido'
+      0x02:
+        en: 'Brake Mode request'
+        fr: 'Demandé mode Frein'
+        es: 'Solicitud de modo freno'
+        de: 'Anforderung Bremsmodus'
+        it: 'Richiesta modalità freno'
+        pl: 'Żądanie trybu hamowania'
+        ru: 'Запрос режима торможения'
+        zh: '制动模式请求'
+        hu: 'Fékmód kérve'
+        pt: 'Pedido de modo travão'
+      0x03:
+        unused: true
+
+  ACC_WHEEL_TORQUE_POTENTIAL_SETPOINT:
+    bits: '3.7-4.4'
+    comment:
+      en: 'ACC powertrain potential wheel torque setpoint'
+      fr: 'Consigne de couple potentiel roue du groupe motopropulseur pour l''ACC'
+      es: 'Consigna de par potencial en rueda del grupo motopropulsor para el ACC'
+      de: 'Sollwert des potenziellen Radmoments des Antriebsstrangs für ACC'
+      it: 'Consegna di coppia potenziale alla ruota del gruppo propulsore per l''ACC'
+      pl: 'Nastawa potencjalnego momentu na kole układu napędowego dla ACC'
+      ru: 'Уставка потенциального момента на колесе силового агрегата для ACC'
+      zh: 'ACC 动力总成潜在车轮扭矩设定值'
+      hu: 'ACC hajtáslánc potenciális kerékperdület-alapjele'
+      pt: 'Consigna de binário potencial na roda do grupo motopropulsor para o ACC'
+    type: 'uint'
+    factor: 4
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    invalid: 0xFFF
+    default: 0x00
+
+  ACC_FUNCTION_STATUS:
+    bits: '4.3-4.0'
+    comment:
+      en: 'ACC (adaptive cruise control) function operating status'
+      fr: 'État de fonctionnement de la fonction ACC (régulateur de vitesse adaptatif)'
+      es: 'Estado de funcionamiento de la función ACC (control de crucero adaptativo)'
+      de: 'Betriebszustand der ACC-Funktion (adaptiver Tempomat)'
+      it: 'Stato di funzionamento della funzione ACC (cruise control adattivo)'
+      pl: 'Stan działania funkcji ACC (adaptacyjny tempomat)'
+      ru: 'Рабочий статус функции ACC (адаптивный круиз-контроль)'
+      zh: 'ACC(自适应巡航控制)功能运行状态'
+      hu: 'ACC (adaptív sebességtartó) funkció üzemállapota'
+      pt: 'Estado de funcionamento da função ACC (regulador de velocidade adaptativo)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x01:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Inhibited'
+        fr: 'Inhibé'
+        es: 'Inhibido'
+        de: 'Gesperrt'
+        it: 'Inibito'
+        pl: 'Zablokowany'
+        ru: 'Заблокировано'
+        zh: '已抑制'
+        hu: 'Letiltva'
+        pt: 'Inibido'
+      0x03:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x04:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x05:
+        en: 'Suspended'
+        fr: 'Suspendu'
+        es: 'Suspendido'
+        de: 'Ausgesetzt'
+        it: 'Sospeso'
+        pl: 'Wstrzymane'
+        ru: 'Приостановлено'
+        zh: '已暂停'
+        hu: 'Felfüggesztve'
+        pt: 'Suspenso'
+      0x06:
+        en: 'Brake only'
+        fr: 'Frein seul'
+        es: 'Solo freno'
+        de: 'Nur Bremse'
+        it: 'Solo freno'
+        pl: 'Tylko hamulec'
+        ru: 'Только тормоз'
+        zh: '仅制动'
+        hu: 'Csak fék'
+        pt: 'Apenas travão'
+      0x07:
+        en: 'Waiting ramp'
+        fr: 'Rampe d''attente'
+        es: 'Rampa de espera'
+        de: 'Warterampe'
+        it: 'Rampa di attesa'
+        pl: 'Rampa oczekiwania'
+        ru: 'Рампа ожидания'
+        zh: '等待斜坡'
+        hu: 'Várakozási rámpa'
+        pt: 'Rampa de espera'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ACC_WHEEL_TORQUE_SETPOINT:
+    bits: '5.7-6.2'
+    comment:
+      en: 'ACC powertrain wheel torque setpoint'
+      fr: 'Consigne de couple roue du groupe motopropulseur pour l''ACC'
+      es: 'Consigna de par en rueda del grupo motopropulsor para el ACC'
+      de: 'Radmoment-Sollwert des Antriebsstrangs für ACC'
+      it: 'Consegna di coppia alla ruota del gruppo propulsore per l''ACC'
+      pl: 'Nastawa momentu na kole układu napędowego dla ACC'
+      ru: 'Уставка момента на колесе силового агрегата для ACC'
+      zh: 'ACC 动力总成车轮扭矩设定值'
+      hu: 'ACC hajtáslánc kerékperdület-alapjele'
+      pt: 'Consigna de binário na roda do grupo motopropulsor para o ACC'
+    type: 'uint'
+    factor: 1
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x00
+
+  ACC_WHEEL_TORQUE_PROCESS_REQUEST:
+    bits: '6.1-6.0'
+    comment:
+      en: 'ACC powertrain wheel torque process activation request'
+      fr: 'Demande d''activation du processus de couple roue du groupe motopropulseur pour l''ACC'
+      es: 'Solicitud de activación del proceso de par en rueda del grupo motopropulsor para el ACC'
+      de: 'Aktivierungsanforderung des Radmoment-Prozesses des Antriebsstrangs für ACC'
+      it: 'Richiesta di attivazione del processo di coppia alla ruota del gruppo propulsore per l''ACC'
+      pl: 'Żądanie aktywacji procesu momentu na kole układu napędowego dla ACC'
+      ru: 'Запрос активации процесса момента на колесе силового агрегата для ACC'
+      zh: 'ACC 动力总成车轮扭矩处理激活请求'
+      hu: 'ACC hajtáslánc kerékperdület-folyamat aktiválási kérése'
+      pt: 'Pedido de ativação do processo de binário na roda do grupo motopropulsor para o ACC'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Upper bound requested'
+        fr: 'Plage haute demandée'
+        es: 'Límite superior solicitado'
+        de: 'Obergrenze angefordert'
+        it: 'Limite superiore richiesto'
+        pl: 'Żądana górna wartość zakresu'
+        ru: 'Запрошен верхний предел диапазона'
+        zh: '请求上限值'
+        hu: 'A felső tartomány kérve'
+        pt: 'Limite superior solicitado'
+      0x02:
+        en: 'Lower range requested'
+        fr: 'Plage basse demandée'
+        es: 'Rango bajo solicitado'
+        de: 'Unterer Bereich angefordert'
+        it: 'Intervallo basso richiesto'
+        pl: 'Żądanie dolnego zakresu'
+        ru: 'Запрошен нижний диапазон'
+        zh: '请求下限范围'
+        hu: 'Alsó tartomány kérve'
+        pt: 'Gama baixa pedida'
+      0x03:
+        unused: true
+
+  BRAKE_PREFILL_REQUEST:
+    bits: '7.7'
+    comment:
+      en: 'Brake prefill request'
+      fr: 'Demande de préremplissage des freins (prefill)'
+      es: 'Solicitud de prellenado de los frenos'
+      de: 'Anforderung zur Bremsvorfüllung (Prefill)'
+      it: 'Richiesta di preriempimento dei freni (prefill)'
+      pl: 'Żądanie wstępnego napełnienia hamulców (prefill)'
+      ru: 'Запрос предварительного наполнения тормозов (prefill)'
+      zh: '制动预填充请求'
+      hu: 'A fékek előtöltési (prefill) kérése'
+      pt: 'Pedido de pré-enchimento dos travões (prefill)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No prefill request'
+        fr: 'Pas de demande de Prefill'
+        es: 'Sin solicitud de prellenado'
+        de: 'Keine Prefill-Anforderung'
+        it: 'Nessuna richiesta di prefill'
+        pl: 'Brak żądania wstępnego napełnienia'
+        ru: 'Нет запроса предзаполнения'
+        zh: '无预填充请求'
+        hu: 'Nincs előtöltési kérés'
+        pt: 'Sem pedido de pré-enchimento'
+      0x01:
+        en: 'Prefill request'
+        fr: 'Demande de préremplissage'
+        es: 'Solicitud de prellenado'
+        de: 'Vorbefüllungsanforderung'
+        it: 'Richiesta di preriempimento'
+        pl: 'Żądanie wstępnego napełnienia'
+        ru: 'Запрос предварительного заполнения'
+        zh: '预填充请求'
+        hu: 'Előtöltési kérés'
+        pt: 'Pedido de pré-enchimento'
+
+  SHIFT_CONFIRMATION_TYPE:
+    bits: '7.6'
+    comment:
+      en: 'Type of gear shift confirmation time (upshift/downshift)'
+      fr: 'Type de temps de confirmation de rapport (montant/descendant)'
+      es: 'Tipo de tiempo de confirmación de marcha (ascendente/descendente)'
+      de: 'Art der Schaltbestätigungszeit (Hoch-/Rückschalten)'
+      it: 'Tipo di tempo di conferma marcia (scalata/salita)'
+      pl: 'Typ czasu potwierdzenia zmiany biegu (podwyższenie/redukcja)'
+      ru: 'Тип времени подтверждения переключения передачи (повышающее/понижающее)'
+      zh: '换挡确认时间类型(升挡/降挡)'
+      hu: 'Fokozatváltás-megerősítési idő típusa (fel/le)'
+      pt: 'Tipo de tempo de confirmação de mudança (ascendente/descendente)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Down'
+        fr: 'Descendant'
+        es: 'Descendente'
+        de: 'Abwärts'
+        it: 'Discendente'
+        pl: 'W dół'
+        ru: 'Вниз'
+        zh: '下降'
+        hu: 'Lefelé'
+        pt: 'Para baixo'
+      0x01:
+        en: 'Upshift'
+        fr: 'Montant (passage de rapport supérieur)'
+        es: 'Cambio ascendente'
+        de: 'Hochschalten'
+        it: 'Cambio in salita'
+        pl: 'Zmiana na wyższy bieg'
+        ru: 'Повышение передачи'
+        zh: '升挡'
+        hu: 'Felfelé váltás'
+        pt: 'Mudança para cima'
+
+  DETECTION_DEVICE_DECELERATION_CONTROL_REQUEST:
+    bits: '7.5'
+    comment:
+      en: 'Deceleration control request from the detection device'
+      fr: 'Demande de pilotage de la décélération par le dispositif de détection'
+      es: 'Solicitud de control de deceleración por el dispositivo de detección'
+      de: 'Anforderung der Verzögerungssteuerung durch das Erkennungsgerät'
+      it: 'Richiesta di controllo della decelerazione da parte del dispositivo di rilevamento'
+      pl: 'Żądanie sterowania opóźnieniem przez urządzenie wykrywające'
+      ru: 'Запрос управления замедлением от устройства обнаружения'
+      zh: '探测装置的减速控制请求'
+      hu: 'A lassítás vezérlésének kérése az érzékelő eszköz részéről'
+      pt: 'Pedido de controlo da desaceleração pelo dispositivo de deteção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No UCF control request'
+        fr: 'Pas de demande de pilotage UCF'
+        es: 'Sin solicitud de control UCF'
+        de: 'Keine UCF-Ansteuerungsanforderung'
+        it: 'Nessuna richiesta di pilotaggio UCF'
+        pl: 'Brak żądania sterowania UCF'
+        ru: 'Нет запроса управления UCF'
+        zh: '无UCF控制请求'
+        hu: 'Nincs UCF vezérlési kérés'
+        pt: 'Sem pedido de controlo UCF'
+      0x01:
+        en: 'UCF control request'
+        fr: 'Demande de pilotage UCF'
+        es: 'Solicitud de control UCF'
+        de: 'UCF-Ansteuerungsanforderung'
+        it: 'Richiesta di comando UCF'
+        pl: 'Żądanie sterowania UCF'
+        ru: 'Запрос управления UCF'
+        zh: 'UCF 控制请求'
+        hu: 'UCF vezérlési kérés'
+        pt: 'Pedido de controlo UCF'
+
+  DETECTION_DEVICE_DECELERATION_TYPE:
+    bits: '7.4-7.3'
+    comment:
+      en: 'Detection device deceleration type'
+      fr: 'Type de décélération du dispositif de détection'
+      es: 'Tipo de deceleración del dispositivo de detección'
+      de: 'Verzögerungsart des Erkennungsgeräts'
+      it: 'Tipo di decelerazione del dispositivo di rilevamento'
+      pl: 'Rodzaj opóźnienia urządzenia wykrywającego'
+      ru: 'Тип замедления устройства обнаружения'
+      zh: '探测装置的减速类型'
+      hu: 'Az érzékelő eszköz lassítási típusa'
+      pt: 'Tipo de desaceleração do dispositivo de deteção'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No braking'
+        fr: 'Pas de freinage'
+        es: 'Sin frenado'
+        de: 'Keine Bremsung'
+        it: 'Nessuna frenata'
+        pl: 'Brak hamowania'
+        ru: 'Торможение отсутствует'
+        zh: '无制动'
+        hu: 'Nincs fékezés'
+        pt: 'Sem travagem'
+      0x01:
+        en: 'ACC braking'
+        fr: 'Freinage ACC'
+        es: 'Frenado ACC'
+        de: 'ACC-Bremsung'
+        it: 'Frenata ACC'
+        pl: 'Hamowanie ACC'
+        ru: 'Торможение ACC'
+        zh: 'ACC制动'
+        hu: 'ACC fékezés'
+        pt: 'Travagem ACC'
+      0x02:
+        en: 'High-speed automatic braking / AFUi braking'
+        fr: 'Freinage automatique haute vitesse / freinage AFUi'
+        es: 'Frenado automático a alta velocidad / frenado AFUi'
+        de: 'Automatische Hochgeschwindigkeitsbremsung / AFUi-Bremsung'
+        it: 'Frenata automatica ad alta velocità / frenata AFUi'
+        pl: 'Automatyczne hamowanie przy dużej prędkości / hamowanie AFUi'
+        ru: 'Автоматическое торможение на высокой скорости / торможение AFUi'
+        zh: '高速自动制动/AFUi制动'
+        hu: 'Nagysebességű automatikus fékezés / AFUi fékezés'
+        pt: 'Travagem automática de alta velocidade / travagem AFUi'
+      0x03:
+        en: 'Low speed automatic braking / FARC2 braking'
+        fr: 'Freinage automatique basse vitesse / freinage FARC2'
+        es: 'Frenado automático a baja velocidad / frenado FARC2'
+        de: 'Automatische Bremsung bei niedriger Geschwindigkeit / FARC2-Bremsung'
+        it: 'Frenata automatica a bassa velocità / frenata FARC2'
+        pl: 'Automatyczne hamowanie przy niskiej prędkości / hamowanie FARC2'
+        ru: 'Автоматическое торможение на низкой скорости / торможение FARC2'
+        zh: '低速自动制动/FARC2制动'
+        hu: 'Alacsony sebességű automatikus fékezés / FARC2 fékezés'
+        pt: 'Travagem automática a baixa velocidade / travagem FARC2'
+
+  FARC_FUNCTION_STATUS:
+    bits: '7.2-7.0'
+    comment:
+      en: 'Status of the automatic emergency braking function (FARC) in the detection device'
+      fr: 'Etat de la fonction de freinage automatique d''urgence (FARC) dans le dispositif de détection'
+      es: 'Estado de la función de frenado automático de emergencia (FARC) en el dispositivo de detección'
+      de: 'Status der automatischen Notbremsfunktion (FARC) im Erkennungsgerät'
+      it: 'Stato della funzione di frenata automatica di emergenza (FARC) nel dispositivo di rilevamento'
+      pl: 'Stan funkcji automatycznego hamowania awaryjnego (FARC) w urządzeniu wykrywającym'
+      ru: 'Состояние функции автоматического экстренного торможения (FARC) в устройстве обнаружения'
+      zh: '探测装置中自动紧急制动功能(FARC)的状态'
+      hu: 'Az automatikus vészfékezési funkció (FARC) állapota az érzékelő eszközben'
+      pt: 'Estado da função de travagem automática de emergência (FARC) no dispositivo de deteção'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Inhibited'
+        fr: 'Inhibé'
+        es: 'Inhibido'
+        de: 'Gesperrt'
+        it: 'Inibito'
+        pl: 'Zablokowany'
+        ru: 'Заблокировано'
+        zh: '已抑制'
+        hu: 'Letiltva'
+        pt: 'Inibido'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x06:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x07:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ACC_PROCESS_COUNTER:
+    bits: '8.7-8.4'
+    comment:
+      en: 'Free-running counter (0 to 15) checking that a new ACC calculation has been done'
+      fr: 'Compteur libre (0 à 15) vérifiant qu''un nouveau calcul ACC a été effectué'
+      es: 'Contador libre (0 a 15) que verifica que se ha realizado un nuevo cálculo ACC'
+      de: 'Freilaufender Zähler (0 bis 15) zur Prüfung, dass eine neue ACC-Berechnung erfolgt ist'
+      it: 'Contatore libero (da 0 a 15) che verifica l''esecuzione di un nuovo calcolo ACC'
+      pl: 'Licznik swobodny (0 do 15) potwierdzający wykonanie nowego obliczenia ACC'
+      ru: 'Свободный счётчик (0-15), подтверждающий выполнение нового расчёта ACC'
+      zh: '自由计数器(0 到 15),用于确认 ACC 已完成新的计算'
+      hu: 'Szabadon futó számláló (0-15), amely igazolja, hogy új ACC-számítás történt'
+      pt: 'Contador livre (0 a 15) que verifica que foi realizado um novo cálculo ACC'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ACC_FRAME_CHECKSUM:
+    bits: '8.3-8.0'
+    comment:
+      en: 'ACC dynamic frame checksum'
+      fr: 'Somme de contrôle de la trame dynamique ACC'
+      es: 'Suma de comprobación de la trama dinámica ACC'
+      de: 'Prüfsumme der ACC-Dynamikbotschaft'
+      it: 'Checksum del messaggio dinamico ACC'
+      pl: 'Suma kontrolna ramki dynamicznej ACC'
+      ru: 'Контрольная сумма динамического кадра ACC'
+      zh: 'ACC 动态报文校验和'
+      hu: 'ACC dinamikus üzenet ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica ACC'
+    type: 'uint'
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      DETECTION_DEVICE_DECELERATION_SETPOINT:
+        bits: '1.7-1.0'
+        comment:
+          en: 'Vehicle deceleration setpoint from the detection device'
+          fr: 'Consigne de décélération du véhicule émise par le dispositif de détection'
+          es: 'Consigna de deceleración del vehículo emitida por el dispositivo de detección'
+          de: 'Vom Erkennungsgerät ausgegebener Verzögerungs-Sollwert des Fahrzeugs'
+          it: 'Valore di decelerazione del veicolo richiesto dal dispositivo di rilevamento'
+          pl: 'Zadana wartość opóźnienia pojazdu z urządzenia wykrywającego'
+          ru: 'Заданное замедление автомобиля от устройства обнаружения'
+          zh: '探测装置发出的车辆减速度设定值'
+          hu: 'Az érzékelő eszköz által kiadott jármű-lassítási alapjel'
+          pt: 'Consigna de desaceleração do veículo emitida pelo dispositivo de deteção'
+        type: 'uint'
+        factor: 0.05
+        offset: -10.65
+        min: -10.65
+        max: 2
+        units: 'm/s2'
+        default: 0xFE
+      ACC_UPSHIFT_MIN_CONFIRMATION_TIME:
+        bits: '2.7-2.2'
+        comment:
+          en: 'ACC minimum confirmation time for an upshift'
+          fr: 'Temps de confirmation minimal pour un rapport montant (ACC)'
+          es: 'Tiempo mínimo de confirmación para una marcha ascendente (ACC)'
+          de: 'Mindestbestätigungszeit für einen Hochschaltvorgang (ACC)'
+          it: 'Tempo minimo di conferma per una scalata di marcia superiore (ACC)'
+          pl: 'Minimalny czas potwierdzenia podwyższenia biegu (ACC)'
+          ru: 'Минимальное время подтверждения повышающего переключения передачи (ACC)'
+          zh: 'ACC 升挡最小确认时间'
+          hu: 'ACC felváltás minimális megerősítési ideje'
+          pt: 'Tempo mínimo de confirmação para uma mudança ascendente (ACC)'
+        type: 'uint'
+        factor: 0.1
+        min: 0
+        max: 6.2
+        units: 's'
+        invalid: 0x3F
+        default: 0x00
+      ACC_WHEEL_TORQUE_POTENTIAL_PROCESS_REQUEST:
+        bits: '2.1-2.0'
+        comment:
+          en: 'ACC powertrain potential wheel torque process activation request'
+          fr: 'Demande d''activation du processus de couple potentiel roue du groupe motopropulseur pour l''ACC'
+          es: 'Solicitud de activación del proceso de par potencial en rueda del grupo motopropulsor para el ACC'
+          de: 'Aktivierungsanforderung des potenziellen Radmoment-Prozesses des Antriebsstrangs für ACC'
+          it: 'Richiesta di attivazione del processo di coppia potenziale alla ruota del gruppo propulsore per l''ACC'
+          pl: 'Żądanie aktywacji procesu potencjalnego momentu na kole układu napędowego dla ACC'
+          ru: 'Запрос активации процесса потенциального момента на колесе силового агрегата для ACC'
+          zh: 'ACC 动力总成潜在车轮扭矩处理激活请求'
+          hu: 'ACC hajtáslánc potenciális kerékperdület-folyamat aktiválási kérése'
+          pt: 'Pedido de ativação do processo de binário potencial na roda do grupo motopropulsor para o ACC'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Not requested'
+            fr: 'Non demandé'
+            es: 'No solicitado'
+            de: 'Nicht angefordert'
+            it: 'Non richiesto'
+            pl: 'Nieżądane'
+            ru: 'Не запрошено'
+            zh: '未请求'
+            hu: 'Nincs kérve'
+            pt: 'Não pedido'
+          0x01:
+            en: 'Powertrain mode requested'
+            fr: 'Mode GMP demandé'
+            es: 'Modo GMP solicitado'
+            de: 'Antriebsmodus angefordert'
+            it: 'Modalità GMP richiesta'
+            pl: 'Zażądano trybu napędu'
+            ru: 'Запрошен режим силовой установки'
+            zh: '已请求动力总成模式'
+            hu: 'Hajtáslánc üzemmód kérve'
+            pt: 'Modo GMP pedido'
+          0x02:
+            en: 'Brake Mode request'
+            fr: 'Demandé mode Frein'
+            es: 'Solicitud de modo freno'
+            de: 'Anforderung Bremsmodus'
+            it: 'Richiesta modalità freno'
+            pl: 'Żądanie trybu hamowania'
+            ru: 'Запрос режима торможения'
+            zh: '制动模式请求'
+            hu: 'Fékmód kérve'
+            pt: 'Pedido de modo travão'
+          0x03:
+            unused: true
+      ACC_WHEEL_TORQUE_POTENTIAL_SETPOINT:
+        bits: '3.7-4.4'
+        comment:
+          en: 'ACC powertrain potential wheel torque setpoint'
+          fr: 'Consigne de couple potentiel roue du groupe motopropulseur pour l''ACC'
+          es: 'Consigna de par potencial en rueda del grupo motopropulsor para el ACC'
+          de: 'Sollwert des potenziellen Radmoments des Antriebsstrangs für ACC'
+          it: 'Consegna di coppia potenziale alla ruota del gruppo propulsore per l''ACC'
+          pl: 'Nastawa potencjalnego momentu na kole układu napędowego dla ACC'
+          ru: 'Уставка потенциального момента на колесе силового агрегата для ACC'
+          zh: 'ACC 动力总成潜在车轮扭矩设定值'
+          hu: 'ACC hajtáslánc potenciális kerékperdület-alapjele'
+          pt: 'Consigna de binário potencial na roda do grupo motopropulsor para o ACC'
+        type: 'uint'
+        factor: 4
+        offset: -4000
+        min: -4000
+        max: 11000
+        units: 'Nm'
+        invalid: 0xFFF
+        default: 0x00
+      ACC_FUNCTION_STATUS:
+        bits: '4.3-4.0'
+        comment:
+          en: 'ACC (adaptive cruise control) function operating status'
+          fr: 'État de fonctionnement de la fonction ACC (régulateur de vitesse adaptatif)'
+          es: 'Estado de funcionamiento de la función ACC (control de crucero adaptativo)'
+          de: 'Betriebszustand der ACC-Funktion (adaptiver Tempomat)'
+          it: 'Stato di funzionamento della funzione ACC (cruise control adattivo)'
+          pl: 'Stan działania funkcji ACC (adaptacyjny tempomat)'
+          ru: 'Рабочий статус функции ACC (адаптивный круиз-контроль)'
+          zh: 'ACC(自适应巡航控制)功能运行状态'
+          hu: 'ACC (adaptív sebességtartó) funkció üzemállapota'
+          pt: 'Estado de funcionamento da função ACC (regulador de velocidade adaptativo)'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Initialisation'
+            fr: 'Initialisation'
+            es: 'Inicialización'
+            de: 'Initialisierung'
+            it: 'Inizializzazione'
+            pl: 'Inicjalizacja'
+            ru: 'Инициализация'
+            zh: '初始化'
+            hu: 'Inicializálás'
+            pt: 'Inicialização'
+          0x01:
+            en: 'Off'
+            fr: 'Arrêt'
+            es: 'Apagado'
+            de: 'Aus'
+            it: 'Spento'
+            pl: 'Wyłączone'
+            ru: 'Выключено'
+            zh: '关闭'
+            hu: 'Kikapcsolva'
+            pt: 'Desligado'
+          0x02:
+            en: 'Inhibited'
+            fr: 'Inhibé'
+            es: 'Inhibido'
+            de: 'Gesperrt'
+            it: 'Inibito'
+            pl: 'Zablokowany'
+            ru: 'Заблокировано'
+            zh: '已抑制'
+            hu: 'Letiltva'
+            pt: 'Inibido'
+          0x03:
+            en: 'Waiting'
+            fr: 'Attente'
+            es: 'Espera'
+            de: 'Warten'
+            it: 'Attesa'
+            pl: 'Oczekiwanie'
+            ru: 'Ожидание'
+            zh: '等待中'
+            hu: 'Várakozás'
+            pt: 'Espera'
+          0x04:
+            en: 'Active'
+            fr: 'Actif'
+            es: 'Activo'
+            de: 'Aktiv'
+            it: 'Attivo'
+            pl: 'Aktywny'
+            ru: 'Активно'
+            zh: '激活'
+            hu: 'Aktív'
+            pt: 'Ativo'
+          0x05:
+            en: 'Suspended'
+            fr: 'Suspendu'
+            es: 'Suspendido'
+            de: 'Ausgesetzt'
+            it: 'Sospeso'
+            pl: 'Wstrzymane'
+            ru: 'Приостановлено'
+            zh: '已暂停'
+            hu: 'Felfüggesztve'
+            pt: 'Suspenso'
+          0x06:
+            en: 'Brake only'
+            fr: 'Frein seul'
+            es: 'Solo freno'
+            de: 'Nur Bremse'
+            it: 'Solo freno'
+            pl: 'Tylko hamulec'
+            ru: 'Только тормоз'
+            zh: '仅制动'
+            hu: 'Csak fék'
+            pt: 'Apenas travão'
+          0x07:
+            en: 'Waiting ramp'
+            fr: 'Rampe d''attente'
+            es: 'Rampa de espera'
+            de: 'Warterampe'
+            it: 'Rampa di attesa'
+            pl: 'Rampa oczekiwania'
+            ru: 'Рампа ожидания'
+            zh: '等待斜坡'
+            hu: 'Várakozási rámpa'
+            pt: 'Rampa de espera'
+          0x08:
+            unused: true
+          0x09:
+            unused: true
+          0x0A:
+            unused: true
+          0x0B:
+            unused: true
+          0x0C:
+            unused: true
+          0x0D:
+            unused: true
+          0x0E:
+            unused: true
+          0x0F:
+            en: 'Fault'
+            fr: 'Défaut'
+            es: 'Fallo'
+            de: 'Fehler'
+            it: 'Guasto'
+            pl: 'Usterka'
+            ru: 'Неисправность'
+            zh: '故障'
+            hu: 'Hiba'
+            pt: 'Falha'
+      ACC_WHEEL_TORQUE_SETPOINT:
+        bits: '5.7-6.2'
+        comment:
+          en: 'ACC powertrain wheel torque setpoint'
+          fr: 'Consigne de couple roue du groupe motopropulseur pour l''ACC'
+          es: 'Consigna de par en rueda del grupo motopropulsor para el ACC'
+          de: 'Radmoment-Sollwert des Antriebsstrangs für ACC'
+          it: 'Consegna di coppia alla ruota del gruppo propulsore per l''ACC'
+          pl: 'Nastawa momentu na kole układu napędowego dla ACC'
+          ru: 'Уставка момента на колесе силового агрегата для ACC'
+          zh: 'ACC 动力总成车轮扭矩设定值'
+          hu: 'ACC hajtáslánc kerékperdület-alapjele'
+          pt: 'Consigna de binário na roda do grupo motopropulsor para o ACC'
+        type: 'uint'
+        factor: 1
+        offset: -4000
+        min: -4000
+        max: 11000
+        units: 'Nm'
+        invalid: 0x3FFF
+        default: 0x00
+      ACC_WHEEL_TORQUE_PROCESS_REQUEST:
+        bits: '6.1-6.0'
+        comment:
+          en: 'ACC powertrain wheel torque process activation request'
+          fr: 'Demande d''activation du processus de couple roue du groupe motopropulseur pour l''ACC'
+          es: 'Solicitud de activación del proceso de par en rueda del grupo motopropulsor para el ACC'
+          de: 'Aktivierungsanforderung des Radmoment-Prozesses des Antriebsstrangs für ACC'
+          it: 'Richiesta di attivazione del processo di coppia alla ruota del gruppo propulsore per l''ACC'
+          pl: 'Żądanie aktywacji procesu momentu na kole układu napędowego dla ACC'
+          ru: 'Запрос активации процесса момента на колесе силового агрегата для ACC'
+          zh: 'ACC 动力总成车轮扭矩处理激活请求'
+          hu: 'ACC hajtáslánc kerékperdület-folyamat aktiválási kérése'
+          pt: 'Pedido de ativação do processo de binário na roda do grupo motopropulsor para o ACC'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Not requested'
+            fr: 'Non demandé'
+            es: 'No solicitado'
+            de: 'Nicht angefordert'
+            it: 'Non richiesto'
+            pl: 'Nieżądane'
+            ru: 'Не запрошено'
+            zh: '未请求'
+            hu: 'Nincs kérve'
+            pt: 'Não pedido'
+          0x01:
+            en: 'Upper bound requested'
+            fr: 'Plage haute demandée'
+            es: 'Límite superior solicitado'
+            de: 'Obergrenze angefordert'
+            it: 'Limite superiore richiesto'
+            pl: 'Żądana górna wartość zakresu'
+            ru: 'Запрошен верхний предел диапазона'
+            zh: '请求上限值'
+            hu: 'A felső tartomány kérve'
+            pt: 'Limite superior solicitado'
+          0x02:
+            en: 'Lower range requested'
+            fr: 'Plage basse demandée'
+            es: 'Rango bajo solicitado'
+            de: 'Unterer Bereich angefordert'
+            it: 'Intervallo basso richiesto'
+            pl: 'Żądanie dolnego zakresu'
+            ru: 'Запрошен нижний диапазон'
+            zh: '请求下限范围'
+            hu: 'Alsó tartomány kérve'
+            pt: 'Gama baixa pedida'
+          0x03:
+            unused: true
+      BRAKE_PREFILL_REQUEST:
+        bits: '7.7'
+        comment:
+          en: 'Brake prefill request'
+          fr: 'Demande de préremplissage des freins (prefill)'
+          es: 'Solicitud de prellenado de los frenos'
+          de: 'Anforderung zur Bremsvorfüllung (Prefill)'
+          it: 'Richiesta di preriempimento dei freni (prefill)'
+          pl: 'Żądanie wstępnego napełnienia hamulców (prefill)'
+          ru: 'Запрос предварительного наполнения тормозов (prefill)'
+          zh: '制动预填充请求'
+          hu: 'A fékek előtöltési (prefill) kérése'
+          pt: 'Pedido de pré-enchimento dos travões (prefill)'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No prefill request'
+            fr: 'Pas de demande de Prefill'
+            es: 'Sin solicitud de prellenado'
+            de: 'Keine Prefill-Anforderung'
+            it: 'Nessuna richiesta di prefill'
+            pl: 'Brak żądania wstępnego napełnienia'
+            ru: 'Нет запроса предзаполнения'
+            zh: '无预填充请求'
+            hu: 'Nincs előtöltési kérés'
+            pt: 'Sem pedido de pré-enchimento'
+          0x01:
+            en: 'Prefill request'
+            fr: 'Demande de préremplissage'
+            es: 'Solicitud de prellenado'
+            de: 'Vorbefüllungsanforderung'
+            it: 'Richiesta di preriempimento'
+            pl: 'Żądanie wstępnego napełnienia'
+            ru: 'Запрос предварительного заполнения'
+            zh: '预填充请求'
+            hu: 'Előtöltési kérés'
+            pt: 'Pedido de pré-enchimento'
+      SHIFT_CONFIRMATION_TYPE:
+        bits: '7.6'
+        comment:
+          en: 'Type of gear shift confirmation time (upshift/downshift)'
+          fr: 'Type de temps de confirmation de rapport (montant/descendant)'
+          es: 'Tipo de tiempo de confirmación de marcha (ascendente/descendente)'
+          de: 'Art der Schaltbestätigungszeit (Hoch-/Rückschalten)'
+          it: 'Tipo di tempo di conferma marcia (scalata/salita)'
+          pl: 'Typ czasu potwierdzenia zmiany biegu (podwyższenie/redukcja)'
+          ru: 'Тип времени подтверждения переключения передачи (повышающее/понижающее)'
+          zh: '换挡确认时间类型(升挡/降挡)'
+          hu: 'Fokozatváltás-megerősítési idő típusa (fel/le)'
+          pt: 'Tipo de tempo de confirmação de mudança (ascendente/descendente)'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Down'
+            fr: 'Descendant'
+            es: 'Descendente'
+            de: 'Abwärts'
+            it: 'Discendente'
+            pl: 'W dół'
+            ru: 'Вниз'
+            zh: '下降'
+            hu: 'Lefelé'
+            pt: 'Para baixo'
+          0x01:
+            en: 'Upshift'
+            fr: 'Montant (passage de rapport supérieur)'
+            es: 'Cambio ascendente'
+            de: 'Hochschalten'
+            it: 'Cambio in salita'
+            pl: 'Zmiana na wyższy bieg'
+            ru: 'Повышение передачи'
+            zh: '升挡'
+            hu: 'Felfelé váltás'
+            pt: 'Mudança para cima'
+      DETECTION_DEVICE_DECELERATION_CONTROL_REQUEST:
+        bits: '7.5'
+        comment:
+          en: 'Deceleration control request from the detection device'
+          fr: 'Demande de pilotage de la décélération par le dispositif de détection'
+          es: 'Solicitud de control de deceleración por el dispositivo de detección'
+          de: 'Anforderung der Verzögerungssteuerung durch das Erkennungsgerät'
+          it: 'Richiesta di controllo della decelerazione da parte del dispositivo di rilevamento'
+          pl: 'Żądanie sterowania opóźnieniem przez urządzenie wykrywające'
+          ru: 'Запрос управления замедлением от устройства обнаружения'
+          zh: '探测装置的减速控制请求'
+          hu: 'A lassítás vezérlésének kérése az érzékelő eszköz részéről'
+          pt: 'Pedido de controlo da desaceleração pelo dispositivo de deteção'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No UCF control request'
+            fr: 'Pas de demande de pilotage UCF'
+            es: 'Sin solicitud de control UCF'
+            de: 'Keine UCF-Ansteuerungsanforderung'
+            it: 'Nessuna richiesta di pilotaggio UCF'
+            pl: 'Brak żądania sterowania UCF'
+            ru: 'Нет запроса управления UCF'
+            zh: '无UCF控制请求'
+            hu: 'Nincs UCF vezérlési kérés'
+            pt: 'Sem pedido de controlo UCF'
+          0x01:
+            en: 'UCF control request'
+            fr: 'Demande de pilotage UCF'
+            es: 'Solicitud de control UCF'
+            de: 'UCF-Ansteuerungsanforderung'
+            it: 'Richiesta di comando UCF'
+            pl: 'Żądanie sterowania UCF'
+            ru: 'Запрос управления UCF'
+            zh: 'UCF 控制请求'
+            hu: 'UCF vezérlési kérés'
+            pt: 'Pedido de controlo UCF'
+      DETECTION_DEVICE_DECELERATION_TYPE:
+        bits: '7.4-7.3'
+        comment:
+          en: 'Detection device deceleration type'
+          fr: 'Type de décélération du dispositif de détection'
+          es: 'Tipo de deceleración del dispositivo de detección'
+          de: 'Verzögerungsart des Erkennungsgeräts'
+          it: 'Tipo di decelerazione del dispositivo di rilevamento'
+          pl: 'Rodzaj opóźnienia urządzenia wykrywającego'
+          ru: 'Тип замедления устройства обнаружения'
+          zh: '探测装置的减速类型'
+          hu: 'Az érzékelő eszköz lassítási típusa'
+          pt: 'Tipo de desaceleração do dispositivo de deteção'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No braking'
+            fr: 'Pas de freinage'
+            es: 'Sin frenado'
+            de: 'Keine Bremsung'
+            it: 'Nessuna frenata'
+            pl: 'Brak hamowania'
+            ru: 'Торможение отсутствует'
+            zh: '无制动'
+            hu: 'Nincs fékezés'
+            pt: 'Sem travagem'
+          0x01:
+            en: 'ACC braking'
+            fr: 'Freinage ACC'
+            es: 'Frenado ACC'
+            de: 'ACC-Bremsung'
+            it: 'Frenata ACC'
+            pl: 'Hamowanie ACC'
+            ru: 'Торможение ACC'
+            zh: 'ACC制动'
+            hu: 'ACC fékezés'
+            pt: 'Travagem ACC'
+          0x02:
+            en: 'High-speed automatic braking / AFUi braking'
+            fr: 'Freinage automatique haute vitesse / freinage AFUi'
+            es: 'Frenado automático a alta velocidad / frenado AFUi'
+            de: 'Automatische Hochgeschwindigkeitsbremsung / AFUi-Bremsung'
+            it: 'Frenata automatica ad alta velocità / frenata AFUi'
+            pl: 'Automatyczne hamowanie przy dużej prędkości / hamowanie AFUi'
+            ru: 'Автоматическое торможение на высокой скорости / торможение AFUi'
+            zh: '高速自动制动/AFUi制动'
+            hu: 'Nagysebességű automatikus fékezés / AFUi fékezés'
+            pt: 'Travagem automática de alta velocidade / travagem AFUi'
+          0x03:
+            en: 'Low speed automatic braking / FARC2 braking'
+            fr: 'Freinage automatique basse vitesse / freinage FARC2'
+            es: 'Frenado automático a baja velocidad / frenado FARC2'
+            de: 'Automatische Bremsung bei niedriger Geschwindigkeit / FARC2-Bremsung'
+            it: 'Frenata automatica a bassa velocità / frenata FARC2'
+            pl: 'Automatyczne hamowanie przy niskiej prędkości / hamowanie FARC2'
+            ru: 'Автоматическое торможение на низкой скорости / торможение FARC2'
+            zh: '低速自动制动/FARC2制动'
+            hu: 'Alacsony sebességű automatikus fékezés / FARC2 fékezés'
+            pt: 'Travagem automática a baixa velocidade / travagem FARC2'
+      FARC_FUNCTION_STATUS:
+        bits: '7.2-7.0'
+        comment:
+          en: 'Status of the automatic emergency braking function (FARC) in the detection device'
+          fr: 'Etat de la fonction de freinage automatique d''urgence (FARC) dans le dispositif de détection'
+          es: 'Estado de la función de frenado automático de emergencia (FARC) en el dispositivo de detección'
+          de: 'Status der automatischen Notbremsfunktion (FARC) im Erkennungsgerät'
+          it: 'Stato della funzione di frenata automatica di emergenza (FARC) nel dispositivo di rilevamento'
+          pl: 'Stan funkcji automatycznego hamowania awaryjnego (FARC) w urządzeniu wykrywającym'
+          ru: 'Состояние функции автоматического экстренного торможения (FARC) в устройстве обнаружения'
+          zh: '探测装置中自动紧急制动功能(FARC)的状态'
+          hu: 'Az automatikus vészfékezési funkció (FARC) állapota az érzékelő eszközben'
+          pt: 'Estado da função de travagem automática de emergência (FARC) no dispositivo de deteção'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Unavailable'
+            fr: 'Indisponible'
+            es: 'No disponible'
+            de: 'Nicht verfügbar'
+            it: 'Non disponibile'
+            pl: 'Niedostępne'
+            ru: 'Недоступно'
+            zh: '不可用'
+            hu: 'Nem elérhető'
+            pt: 'Indisponível'
+          0x01:
+            en: 'Initialisation'
+            fr: 'Initialisation'
+            es: 'Inicialización'
+            de: 'Initialisierung'
+            it: 'Inizializzazione'
+            pl: 'Inicjalizacja'
+            ru: 'Инициализация'
+            zh: '初始化'
+            hu: 'Inicializálás'
+            pt: 'Inicialização'
+          0x02:
+            unused: true
+          0x03:
+            en: 'Inhibited'
+            fr: 'Inhibé'
+            es: 'Inhibido'
+            de: 'Gesperrt'
+            it: 'Inibito'
+            pl: 'Zablokowany'
+            ru: 'Заблокировано'
+            zh: '已抑制'
+            hu: 'Letiltva'
+            pt: 'Inibido'
+          0x04:
+            unused: true
+          0x05:
+            en: 'Waiting'
+            fr: 'Attente'
+            es: 'Espera'
+            de: 'Warten'
+            it: 'Attesa'
+            pl: 'Oczekiwanie'
+            ru: 'Ожидание'
+            zh: '等待中'
+            hu: 'Várakozás'
+            pt: 'Espera'
+          0x06:
+            en: 'Active'
+            fr: 'Actif'
+            es: 'Activo'
+            de: 'Aktiv'
+            it: 'Attivo'
+            pl: 'Aktywny'
+            ru: 'Активно'
+            zh: '激活'
+            hu: 'Aktív'
+            pt: 'Ativo'
+          0x07:
+            en: 'Fault'
+            fr: 'Défaut'
+            es: 'Fallo'
+            de: 'Fehler'
+            it: 'Guasto'
+            pl: 'Usterka'
+            ru: 'Неисправность'
+            zh: '故障'
+            hu: 'Hiba'
+            pt: 'Falha'
+      ACC_PROCESS_COUNTER:
+        bits: '8.7-8.4'
+        comment:
+          en: 'Free-running counter (0 to 15) checking that a new ACC calculation has been done'
+          fr: 'Compteur libre (0 à 15) vérifiant qu''un nouveau calcul ACC a été effectué'
+          es: 'Contador libre (0 a 15) que verifica que se ha realizado un nuevo cálculo ACC'
+          de: 'Freilaufender Zähler (0 bis 15) zur Prüfung, dass eine neue ACC-Berechnung erfolgt ist'
+          it: 'Contatore libero (da 0 a 15) che verifica l''esecuzione di un nuovo calcolo ACC'
+          pl: 'Licznik swobodny (0 do 15) potwierdzający wykonanie nowego obliczenia ACC'
+          ru: 'Свободный счётчик (0-15), подтверждающий выполнение нового расчёта ACC'
+          zh: '自由计数器(0 到 15),用于确认 ACC 已完成新的计算'
+          hu: 'Szabadon futó számláló (0-15), amely igazolja, hogy új ACC-számítás történt'
+          pt: 'Contador livre (0 a 15) que verifica que foi realizado um novo cálculo ACC'
+        type: 'uint'
+        min: 0
+        max: 15
+        default: 0x00
+      ACC_FRAME_CHECKSUM:
+        bits: '8.3-8.0'
+        comment:
+          en: 'ACC dynamic frame checksum'
+          fr: 'Somme de contrôle de la trame dynamique ACC'
+          es: 'Suma de comprobación de la trama dinámica ACC'
+          de: 'Prüfsumme der ACC-Dynamikbotschaft'
+          it: 'Checksum del messaggio dinamico ACC'
+          pl: 'Suma kontrolna ramki dynamicznej ACC'
+          ru: 'Контрольная сумма динамического кадра ACC'
+          zh: 'ACC 动态报文校验和'
+          hu: 'ACC dinamikus üzenet ellenőrző összege'
+          pt: 'Soma de verificação da trama dinâmica ACC'
+        type: 'uint'

@@ -1,0 +1,145 @@
+id: 0x53A
+name: 'LVNSD_DATA_2'
+type: 'can'
+length: 3
+comment:
+  en: 'LVNSD node data: service-blink request, battery diagnostic state and switch state.'
+  fr: 'Données du module LVNSD : demande de clignotement service, état de diagnostic batterie et état du contacteur.'
+  es: 'Datos del módulo LVNSD: solicitud de parpadeo de servicio, estado de diagnóstico de batería y estado del interruptor.'
+  de: 'Daten des LVNSD-Moduls: Service-Blinkanforderung, Batteriediagnosestatus und Schalterzustand.'
+  it: 'Dati del modulo LVNSD: richiesta di lampeggio di servizio, stato di diagnosi batteria e stato dell''interruttore.'
+  pl: 'Dane modułu LVNSD: żądanie migania serwisowego, stan diagnostyki akumulatora i stan przełącznika.'
+  ru: 'Данные модуля LVNSD: запрос сервисного мигания, состояние диагностики батареи и состояние переключателя.'
+  zh: 'LVNSD模块数据:维修闪烁请求、电池诊断状态和开关状态。'
+  hu: 'Az LVNSD modul adatai: szervizvillogás kérése, akkumulátor-diagnosztikai állapot és kapcsoló állapota.'
+  pt: 'Dados do nó LVNSD: pedido de pisca de serviço, estado de diagnóstico da bateria e estado do interruptor.'
+observations:
+  en: 'On state change of: LV_BATTERY_THERMAL_DERATING_STATE'
+  fr: 'Sur changement d''état de : LV_BATTERY_THERMAL_DERATING_STATE'
+  es: 'Al cambiar el estado de: LV_BATTERY_THERMAL_DERATING_STATE'
+  de: 'Bei Statusänderung von: LV_BATTERY_THERMAL_DERATING_STATE'
+  it: 'Al cambiamento di stato di: LV_BATTERY_THERMAL_DERATING_STATE'
+  pl: 'Wysyłane przy zmianie stanu: LV_BATTERY_THERMAL_DERATING_STATE'
+  ru: 'При изменении состояния: LV_BATTERY_THERMAL_DERATING_STATE'
+  zh: '当LVNSD_THERMAL_DERATING状态变化时'
+  hu: 'A(z) LV_BATTERY_THERMAL_DERATING_STATE állapotváltozásakor'
+  pt: 'Na mudança de estado de: LV_BATTERY_THERMAL_DERATING_STATE'
+periodicity: ['100ms', 'trigger']
+senders: ['LVNSD']
+receivers: ['CMM']
+
+signals:
+  LV_BATTERY_SUPPLY_NETWORK_VOLTAGE:
+    bits: '1.7-1.1'
+    comment:
+      en: 'Switching voltage at the electrical network (RDB) interface (V)'
+      fr: 'Tension de commutation à l''interface du réseau de bord (RDB) (V)'
+      es: 'Tensión de conmutación en la interfaz de la red eléctrica de a bordo (RDB) (V)'
+      de: 'Schaltspannung an der Schnittstelle des Bordnetzes (RDB) (V)'
+      it: 'Tensione di commutazione all''interfaccia della rete di bordo (RDB) (V)'
+      pl: 'Napięcie przełączania na interfejsie sieci pokładowej (RDB) (V)'
+      ru: 'Коммутационное напряжение на интерфейсе бортовой сети (RDB) (В)'
+      zh: '车载电网(RDB)接口的切换电压(V)'
+      hu: 'A fedélzeti hálózat (RDB) interfészén mért kapcsolási feszültség (V)'
+      pt: 'Tensão de comutação na interface da rede elétrica de bordo (RDB) (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 5.4
+    max: 18
+    units: 'V'
+    invalid: 0x7F
+    default: 0x7E
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  LV_BATTERY_SWITCHING_VOLTAGE:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Switching voltage at the BAT12 interface (V)'
+      fr: 'Tension de commutation à l''interface BAT12 (V)'
+      es: 'Tensión de conmutación en la interfaz BAT12 (V)'
+      de: 'Schaltspannung an der Schnittstelle BAT12 (V)'
+      it: 'Tensione di commutazione all''interfaccia BAT12 (V)'
+      pl: 'Napięcie przełączania na interfejsie BAT12 (V)'
+      ru: 'Коммутационное напряжение на интерфейсе BAT12 (В)'
+      zh: 'BAT12接口的切换电压(V)'
+      hu: 'A BAT12 interfészen mért kapcsolási feszültség (V)'
+      pt: 'Tensão de comutação na interface BAT12 (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 5.4
+    max: 18
+    units: 'V'
+    invalid: 0x7F
+    default: 0x7E
+
+  UNUSED_2:
+    bits: '2.0'
+    unused: true
+
+  LV_BATTERY_THERMAL_DERATING_STATE:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Thermal derating status of the low-voltage battery module'
+      fr: 'État de déclassement thermique du module de batterie basse tension'
+      es: 'Estado de reducción térmica del módulo de la batería de baja tensión'
+      de: 'Status der thermischen Leistungsreduzierung des Niedervoltbatterie-Moduls'
+      it: 'Stato di declassamento termico del modulo batteria a bassa tensione'
+      pl: 'Stan ograniczenia termicznego modułu akumulatora niskiego napięcia'
+      ru: 'Статус температурного снижения мощности модуля низковольтной батареи'
+      zh: '低压蓄电池模块热降额状态'
+      hu: 'Az alacsony feszültségű akkumulátor-modul termikus teljesítménycsökkentési állapota'
+      pt: 'Estado de redução térmica do módulo da bateria de baixa tensão'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'No derating'
+        fr: 'Aucune dérive'
+        es: 'Sin reducción de potencia'
+        de: 'Keine Leistungsminderung'
+        it: 'Nessuna riduzione'
+        pl: 'Brak ograniczenia mocy'
+        ru: 'Нет снижения мощности'
+        zh: '无降额'
+        hu: 'Nincs teljesítménykorlátozás'
+        pt: 'Sem derrateamento'
+      0x01:
+        en: 'Level-1 derating request'
+        fr: 'Demande de déclassement niveau 1'
+        es: 'Solicitud de degradación nivel 1'
+        de: 'Anforderung der Leistungsreduzierung Stufe 1'
+        it: 'Richiesta di derating livello 1'
+        pl: 'Żądanie ograniczenia mocy poziomu 1'
+        ru: 'Запрос снижения мощности уровня 1'
+        zh: '1级降容请求'
+        hu: '1. szintű teljesítménycsökkentési kérés'
+        pt: 'Pedido de derrateamento de nível 1'
+      0x02:
+        en: 'Derating level 2 request'
+        fr: 'Demande de déclassement niveau 2'
+        es: 'Solicitud de reducción de potencia nivel 2'
+        de: 'Anforderung Leistungsreduzierung Stufe 2'
+        it: 'Richiesta di derating livello 2'
+        pl: 'Żądanie ograniczenia mocy poziom 2'
+        ru: 'Запрос снижения мощности, уровень 2'
+        zh: '2级降额请求'
+        hu: '2. szintű teljesítménycsökkentési kérés'
+        pt: 'Pedido de redução de potência nível 2'
+      0x03:
+        en: 'Unused value (11)'
+        fr: 'Valeur non utilisée (11)'
+        es: 'Valor no utilizado (11)'
+        de: 'Nicht verwendeter Wert (11)'
+        it: 'Valore non utilizzato (11)'
+        pl: 'Nieużywana wartość (11)'
+        ru: 'Неиспользуемое значение (11)'
+        zh: '未使用的值（11）'
+        hu: 'Nem használt érték (11)'
+        pt: 'Valor não utilizado (11)'
+
+  UNUSED_3:
+    bits: '3.5-3.0'
+    unused: true

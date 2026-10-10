@@ -1,0 +1,98 @@
+id: 0x568
+name: 'ENGINE_ECU_DATA_5'
+type: 'can'
+length: 7
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['100ms']
+senders: ['CMM']
+receivers: ['GAS']
+
+signals:
+  AIR_FUEL_RATIO_ADAPTATION:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Averaged air-fuel ratio regulation correction'
+      fr: 'Correction moyennée de la régulation de richesse'
+      es: 'Corrección promediada de la regulación de la riqueza de mezcla'
+      de: 'Gemittelte Korrektur der Gemischregelung'
+      it: 'Correzione media della regolazione del titolo aria-carburante'
+      pl: 'Uśredniona korekta regulacji bogactwa mieszanki'
+      ru: 'Усреднённая коррекция регулирования состава смеси'
+      zh: '空燃比调节的平均修正值'
+      hu: 'A levegő-üzemanyag arány szabályozásának átlagolt korrekciója'
+      pt: 'Correção média da regulação da riqueza da mistura'
+    type: 'uint'
+    factor: 3.05176e-05
+    min: 0
+    max: 1.999
+    invalid: 0xFFFF
+    default: 0x00
+
+  FUEL_SYSTEM_MIXTURE_ADAPTIVE_GAIN:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Fuel system mixture adaptive gain'
+      fr: 'Gain adaptatif de richesse du système carburant'
+      es: 'Ganancia adaptativa de la riqueza del sistema de combustible'
+      de: 'Adaptiver Verstärkungsfaktor des Kraftstoffsystem-Gemischs'
+      it: 'Guadagno adattivo del titolo del sistema carburante'
+      pl: 'Adaptacyjne wzmocnienie bogactwa mieszanki układu paliwowego'
+      ru: 'Адаптивный коэффициент усиления состава смеси топливной системы'
+      zh: '燃油系统混合气自适应增益'
+      hu: 'Az üzemanyagrendszer keverékének adaptív erősítése'
+      pt: 'Ganho adaptativo da mistura do sistema de combustível'
+    type: 'uint'
+    factor: 3.05176e-05
+    min: 0
+    max: 1.999
+    default: 0x8000
+
+  FUEL_SYSTEM_MIXTURE_ADAPTIVE_OFFSET:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Fuel system mixture adaptive offset'
+      fr: 'Décalage adaptatif de richesse du système carburant'
+      es: 'Desplazamiento adaptativo de la riqueza del sistema de combustible'
+      de: 'Adaptiver Offset des Kraftstoffsystem-Gemischs'
+      it: 'Offset adattivo del titolo del sistema carburante'
+      pl: 'Adaptacyjny offset bogactwa mieszanki układu paliwowego'
+      ru: 'Адаптивное смещение состава смеси топливной системы'
+      zh: '燃油系统混合气自适应偏移量'
+      hu: 'Az üzemanyagrendszer keverékének adaptív eltolása'
+      pt: 'Desvio adaptativo de riqueza do sistema de combustível'
+    type: 'uint'
+    factor: 0.04695
+    offset: -1536
+    min: -1536
+    max: 1536
+    default: 0x7FCC
+
+  INJECTOR_DEAD_TIME_ADAPTATION_OFFSET:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Dimensionless adaptive offset for injector dead time'
+      fr: 'Décalage adaptatif adimensionné du temps mort injecteur'
+      es: 'Desplazamiento adaptativo adimensional del tiempo muerto del inyector'
+      de: 'Dimensionsloser adaptiver Offset der Injektor-Totzeit'
+      it: 'Offset adattivo adimensionale del tempo morto dell''iniettore'
+      pl: 'Bezwymiarowy adaptacyjny offset czasu martwego wtryskiwacza'
+      ru: 'Безразмерное адаптивное смещение мёртвого времени форсунки'
+      zh: '喷油器无效时间的无量纲自适应偏移量'
+      hu: 'Az injektor holtidejének dimenzió nélküli adaptív eltolása'
+      pt: 'Desvio adaptativo adimensional do tempo morto do injetor'
+    type: 'uint'
+    factor: 0.0078125
+    offset: -1
+    min: -1
+    max: 0.9921875
+    invalid: 0xFF

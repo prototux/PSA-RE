@@ -1,0 +1,203 @@
+id: 0x5C2
+name: 'HDC_VERSION'
+type: 'can'
+length: 4
+comment:
+  en: 'Vehicle control unit data: available driving modes (normal, sport, eco, snow...), energy modes (hybrid, zero-emission, fuel) and drive-axle modes (auto, front, rear), plus cooling wake-up requests.'
+  fr: 'Données de l''unité de contrôle du véhicule : modes de conduite disponibles (normal, sport, éco, neige...), modes d''énergie (hybride, zéro émission, carburant) et modes d''essieu moteur (auto, avant, arrière), ainsi que les demandes de réveil pour le refroidissement.'
+  es: 'Datos de la unidad de control del vehículo: modos de conducción disponibles (normal, deportivo, eco, nieve...), modos de energía (híbrido, cero emisiones, combustible) y modos de eje motriz (automático, delantero, trasero), además de las solicitudes de activación para refrigeración.'
+  de: 'Daten der Fahrzeugsteuereinheit: verfügbare Fahrmodi (normal, sport, eco, schnee...), Energiemodi (hybrid, emissionsfrei, Kraftstoff) und Antriebsachsenmodi (auto, vorne, hinten), sowie Kühlungs-Weckanforderungen.'
+  it: 'Dati dell''unità di controllo veicolo: modalità di guida disponibili (normale, sport, eco, neve...), modalità energia (ibrida, zero emissioni, carburante) e modalità asse motore (auto, anteriore, posteriore), oltre alle richieste di risveglio per il raffreddamento.'
+  pl: 'Dane jednostki sterującej pojazdem: dostępne tryby jazdy (normalny, sportowy, eco, śnieg...), tryby energii (hybrydowy, zero emisji, paliwo) i tryby osi napędowej (auto, przednia, tylna), a także żądania wybudzenia do chłodzenia.'
+  ru: 'Данные блока управления автомобилем: доступные режимы движения (обычный, спорт, эко, снег...), энергетические режимы (гибрид, нулевые выбросы, топливо) и режимы ведущего моста (авто, передний, задний), а также запросы пробуждения для охлаждения.'
+  zh: '车辆控制单元数据:可用驾驶模式(普通、运动、经济、雪地……)、能量模式(混动、零排放、燃油)和驱动桥模式(自动、前、后),以及冷却唤醒请求。'
+  hu: 'A jármű vezérlőegység adatai: elérhető vezetési módok (normál, sport, eco, hó...), energiamódok (hibrid, nulla emissziós, üzemanyag) és hajtott tengely módok (automata, első, hátsó), valamint hűtési ébresztési kérések.'
+  pt: 'Dados da unidade de controlo do veículo: modos de condução disponíveis (normal, desportivo, eco, neve...), modos de energia (híbrido, emissões zero, combustível) e modos de eixo motor (automático, dianteiro, traseiro), além de pedidos de ativação do arrefecimento.'
+observations:
+  en: 'On state change of: VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+  fr: 'Sur changement d''état de : VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+  es: 'Al cambiar el estado de: VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+  de: 'Bei Statusänderung von: VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+  it: 'Al cambiamento di stato di: VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+  pl: 'Wysyłane przy zmianie stanu: VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+  ru: 'При изменении состояния: VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+  zh: '当LOCKED_VEHICLE_IN, VEHICLE_LOCKED_FROM_OUTSIDE, ELEC_METER_SATURATION状态变化时'
+  hu: 'A(z) VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION állapotváltozásakor'
+  pt: 'Na mudança de estado de: VEHICLE_LOCKED_FROM_INSIDE, VEHICLE_LOCKED_FROM_OUTSIDE, ELECTRICITY_METER_SATURATION'
+periodicity: ['1000ms', 'trigger']
+senders: ['VCU']
+receivers: ['OBC', 'TBMU', 'CMEL', 'ERAD']
+
+signals:
+  VEHICLE_LOCKED_FROM_INSIDE:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Vehicle locked from the inside'
+      fr: 'Véhicule verrouillé de l''intérieur'
+      es: 'Vehículo bloqueado desde el interior'
+      de: 'Fahrzeug von innen verriegelt'
+      it: 'Veicolo bloccato dall''interno'
+      pl: 'Pojazd zablokowany od wewnątrz'
+      ru: 'Автомобиль заблокирован изнутри'
+      zh: '车辆从内部锁闭'
+      hu: 'A jármű belülről lezárva'
+      pt: 'Veículo bloqueado a partir do interior'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unlocked'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
+        de: 'Entriegelt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueado'
+      0x01:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+      0x02:
+        en: 'Super-locked'
+        fr: 'Super verrouillé'
+        es: 'Super bloqueado'
+        de: 'Superverriegelt'
+        it: 'Super bloccato'
+        pl: 'Super zablokowane'
+        ru: 'Суперзаблокировано'
+        zh: '超级锁止'
+        hu: 'Szuperzárt'
+        pt: 'Superbloqueado'
+      0x03:
+        unused: true
+
+  VEHICLE_LOCKED_FROM_OUTSIDE:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Vehicle locked from the outside'
+      fr: 'Véhicule verrouillé de l''extérieur'
+      es: 'Vehículo bloqueado desde el exterior'
+      de: 'Fahrzeug von außen verriegelt'
+      it: 'Veicolo bloccato dall''esterno'
+      pl: 'Pojazd zablokowany od zewnątrz'
+      ru: 'Автомобиль заблокирован снаружи'
+      zh: '车辆从外部锁闭'
+      hu: 'A jármű kívülről lezárva'
+      pt: 'Veículo bloqueado a partir do exterior'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unlocked'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
+        de: 'Entriegelt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueado'
+      0x01:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+      0x02:
+        en: 'Super-locked'
+        fr: 'Super verrouillé'
+        es: 'Super bloqueado'
+        de: 'Superverriegelt'
+        it: 'Super bloccato'
+        pl: 'Super zablokowane'
+        ru: 'Суперзаблокировано'
+        zh: '超级锁止'
+        hu: 'Szuperzárt'
+        pt: 'Superbloqueado'
+      0x03:
+        unused: true
+
+  ELECTRICITY_METER_SATURATION:
+    bits: '1.3'
+    comment:
+      en: 'Electricity meter saturation'
+      fr: 'Saturation des compteurs d''électricité'
+      es: 'Saturación de los contadores de electricidad'
+      de: 'Sättigung der Stromzähler'
+      it: 'Saturazione dei contatori elettrici'
+      pl: 'Nasycenie liczników energii elektrycznej'
+      ru: 'Насыщение счётчиков электроэнергии'
+      zh: '电表饱和'
+      hu: 'A villamosenergia-mérők telítődése'
+      pt: 'Saturação dos contadores de eletricidade'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No saturation'
+        fr: 'Pas de saturation'
+        es: 'Sin saturación'
+        de: 'Keine Sättigung'
+        it: 'Nessuna saturazione'
+        pl: 'Brak nasycenia'
+        ru: 'Нет насыщения'
+        zh: '无饱和'
+        hu: 'Nincs telítettség'
+        pt: 'Sem saturação'
+      0x01:
+        en: 'Saturated'
+        fr: 'Saturé'
+        es: 'Saturado'
+        de: 'Gesättigt'
+        it: 'Saturo'
+        pl: 'Nasycony'
+        ru: 'Насыщено'
+        zh: '饱和'
+        hu: 'Telített'
+        pt: 'Saturado'
+
+  UNUSED_1:
+    bits: '1.2-1.0'
+    unused: true
+
+  OUTSIDE_AIR_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Outside air temperature (°C)'
+      fr: 'Température d''air extérieur (°C)'
+      es: 'Temperatura del aire exterior (°C)'
+      de: 'Außenlufttemperatur (°C)'
+      it: 'Temperatura dell''aria esterna (°C)'
+      pl: 'Temperatura powietrza zewnętrznego (°C)'
+      ru: 'Температура наружного воздуха (°C)'
+      zh: '车外空气温度(°C)'
+      hu: 'Külső levegő hőmérséklete (°C)'
+      pt: 'Temperatura do ar exterior (°C)'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFC
+
+  UNUSED_2:
+    bits: '3.7-4.0'
+    unused: true

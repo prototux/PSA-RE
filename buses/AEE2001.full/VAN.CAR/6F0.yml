@@ -1,0 +1,249 @@
+id: 0x6F0
+name: 'RETRACTABLE_ROOF_SYSTEM_DATA'
+type: 'van'
+length: 4
+comment:
+  en: 'BSI to retractable hard-top controller: power/ignition state, vehicle speed and outside temperature.'
+  fr: 'De la BSI vers le calculateur du toit escamotable : état alimentation/contact, vitesse véhicule et température extérieure.'
+  es: 'De la BSI a la centralita del techo retráctil: estado de alimentación/contacto, velocidad del vehículo y temperatura exterior.'
+  de: 'Vom BSI zum Steuergerät des versenkbaren Hardtops: Versorgungs-/Zündzustand, Fahrzeuggeschwindigkeit und Außentemperatur.'
+  it: 'Dalla BSI alla centralina del tettuccio rigido retrattile: stato alimentazione/accensione, velocità veicolo e temperatura esterna.'
+  pl: 'Od BSI do sterownika chowanego dachu twardego: stan zasilania/zapłonu, prędkość pojazdu i temperatura zewnętrzna.'
+  ru: 'От BSI к блоку управления складной жёсткой крышей: состояние питания/зажигания, скорость автомобиля и температура наружного воздуха.'
+  zh: '从BSI到可收藏硬顶控制器:电源/点火状态、车速和车外温度。'
+  hu: 'A BSI-től a behúzható kemény tető vezérlőjéhez: tápellátás/gyújtás állapota, jármű sebessége és külső hőmérséklet.'
+  pt: 'Da BSI para o controlador do teto rígido retrátil: estado de alimentação/ignição, velocidade do veículo e temperatura exterior.'
+periodicity: ['50ms']
+senders: ['BSI']
+receivers: ['BTE']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.5'
+    unused: true
+
+  ECONOMY_MODE:
+    bits: '1.4'
+    comment:
+      en: 'Economy (load shedding) mode'
+      fr: 'Mode économie (délestage)'
+      es: 'Modo economía (deslastre)'
+      de: 'Sparmodus (Lastabwurf)'
+      it: 'Modalità economia (distacco carico)'
+      pl: 'Tryb ekonomiczny (odciążenie)'
+      ru: 'Экономичный режим (снижение нагрузки)'
+      zh: '经济模式(减载)'
+      hu: 'Takarékos (tehermentesítő) üzemmód'
+      pt: 'Modo economia (corte de carga)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Mode inactive'
+        fr: 'Mode non actif'
+        es: 'Modo inactivo'
+        de: 'Modus inaktiv'
+        it: 'Modalità non attiva'
+        pl: 'Tryb nieaktywny'
+        ru: 'Режим неактивен'
+        zh: '模式未激活'
+        hu: 'Üzemmód inaktív'
+        pt: 'Modo inativo'
+      0x01:
+        en: 'Active mode'
+        fr: 'Mode actif'
+        es: 'Modo activo'
+        de: 'Aktiver Modus'
+        it: 'Modalità attiva'
+        pl: 'Tryb aktywny'
+        ru: 'Активный режим'
+        zh: '激活模式'
+        hu: 'Aktív mód'
+        pt: 'Modo ativo'
+
+  SLEEP_WITHIN_5S:
+    bits: '1.3'
+    comment:
+      en: 'Network going to sleep within 5 seconds'
+      fr: 'Mise en veille du réseau sous 5 secondes'
+      es: 'La red entrará en reposo en 5 segundos'
+      de: 'Bordnetz geht innerhalb von 5 Sekunden in den Ruhezustand'
+      it: 'La rete andrà in standby entro 5 secondi'
+      pl: 'Sieć przejdzie w stan uśpienia w ciągu 5 sekund'
+      ru: 'Сеть перейдёт в спящий режим через 5 секунд'
+      zh: '网络将在 5 秒内进入休眠'
+      hu: 'A hálózat 5 másodpercen belül alvó üzemmódba lép'
+      pt: 'A rede vai adormecer dentro de 5 segundos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sleep mode'
+        fr: 'Pas de mise en veille'
+        es: 'Sin modo de reposo'
+        de: 'Kein Ruhezustand'
+        it: 'Nessuna modalità di sospensione'
+        pl: 'Brak trybu uśpienia'
+        ru: 'Нет спящего режима'
+        zh: '无休眠'
+        hu: 'Nincs alvó üzemmód'
+        pt: 'Sem modo de repouso'
+      0x01:
+        en: 'Sleep within 5 s'
+        fr: 'Mise en veille sous 5 secondes'
+        es: 'Modo reposo en 5 segundos'
+        de: 'Ruhezustand innerhalb von 5 Sekunden'
+        it: 'Standby entro 5 secondi'
+        pl: 'Uśpienie w ciągu 5 sekund'
+        ru: 'Переход в спящий режим в течение 5 с'
+        zh: '5秒内进入休眠'
+        hu: 'Alvó üzemmódba lépés 5 másodpercen belül'
+        pt: 'Entrada em repouso em 5 segundos'
+
+  ENGINE_RUNNING:
+    bits: '1.2'
+    comment:
+      en: 'Engine running'
+      fr: 'Moteur tournant'
+      es: 'Motor en marcha'
+      de: 'Motor läuft'
+      it: 'Motore acceso'
+      pl: 'Silnik pracuje'
+      ru: 'Двигатель работает'
+      zh: '发动机运转'
+      hu: 'Motor jár'
+      pt: 'Motor em funcionamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Engine not running'
+        fr: 'Moteur non tournant'
+        es: 'Motor no en marcha'
+        de: 'Motor läuft nicht'
+        it: 'Motore non in funzione'
+        pl: 'Silnik niepracujący'
+        ru: 'Двигатель не работает'
+        zh: '发动机未运转'
+        hu: 'Motor nem jár'
+        pt: 'Motor sem rotação'
+      0x01:
+        en: 'Engine running'
+        fr: 'Moteur tournant'
+        es: 'Motor en marcha'
+        de: 'Motor läuft'
+        it: 'Motore in funzione'
+        pl: 'Silnik pracujący'
+        ru: 'Двигатель работает'
+        zh: '发动机运转中'
+        hu: 'A motor jár'
+        pt: 'Motor em funcionamento'
+
+  IGNITION_KEY_POSITION:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Ignition key position'
+      fr: 'Position de la clé de contact'
+      es: 'Posición de la llave de contacto'
+      de: 'Zündschlüsselstellung'
+      it: 'Posizione della chiave di accensione'
+      pl: 'Pozycja kluczyka w stacyjce'
+      ru: 'Положение ключа зажигания'
+      zh: '点火钥匙位置'
+      hu: 'Gyújtáskulcs helyzete'
+      pt: 'Posição da chave de ignição'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Accessories'
+        fr: 'Accessoires'
+        es: 'Accesorios'
+        de: 'Zubehör'
+        it: 'Accessori'
+        pl: 'Akcesoria'
+        ru: 'Аксессуары'
+        zh: '附件'
+        hu: 'Tartozékok'
+        pt: 'Acessórios'
+      0x02:
+        en: 'Cranking'
+        fr: 'Démarreur en action'
+        es: 'Motor de arranque en marcha'
+        de: 'Anlasser dreht'
+        it: 'Motorino di avviamento in azione'
+        pl: 'Rozrusznik pracuje'
+        ru: 'Стартер вращает двигатель'
+        zh: '起动机运转中'
+        hu: 'Indítómotor forog'
+        pt: 'A rodar (arranque)'
+      0x03:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+
+  SPEED:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Instantaneous vehicle speed (average of the driven wheels)'
+      fr: 'Vitesse instantanée du véhicule (moyenne des roues motrices)'
+      es: 'Velocidad instantánea del vehículo (media de las ruedas motrices)'
+      de: 'Momentane Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder)'
+      it: 'Velocità istantanea del veicolo (media delle ruote motrici)'
+      pl: 'Chwilowa prędkość pojazdu (średnia z kół napędowych)'
+      ru: 'Мгновенная скорость автомобиля (среднее по ведущим колёсам)'
+      zh: '车辆瞬时车速(驱动轮平均值)'
+      hu: 'Pillanatnyi jármű sebesség (a hajtott kerekek átlaga)'
+      pt: 'Velocidade instantânea do veículo (média das rodas motrizes)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00
+
+  OUTSIDE_TEMPERATURE:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Outside temperature, T = N/2 - 40 °C; default 0xFF in every situation'
+      fr: 'Température extérieure, T = N/2 - 40 °C ; valeur par défaut 0xFF dans tous les cas'
+      es: 'Temperatura exterior, T = N/2 - 40 °C; valor por defecto 0xFF en todos los casos'
+      de: 'Außentemperatur, T = N/2 - 40 °C; Standardwert 0xFF in jedem Fall'
+      it: 'Temperatura esterna, T = N/2 - 40 °C; valore predefinito 0xFF in ogni caso'
+      pl: 'Temperatura zewnętrzna, T = N/2 - 40 °C; wartość domyślna 0xFF w każdej sytuacji'
+      ru: 'Наружная температура, T = N/2 - 40 °C; значение по умолчанию 0xFF в любой ситуации'
+      zh: '车外温度,T = N/2 - 40°C;所有情况下默认值为 0xFF'
+      hu: 'Külső hőmérséklet, T = N/2 - 40 °C; alapértelmezett érték minden esetben 0xFF'
+      pt: 'Temperatura exterior, T = N/2 - 40 °C; valor por defeito 0xFF em todos os casos'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 87
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFF

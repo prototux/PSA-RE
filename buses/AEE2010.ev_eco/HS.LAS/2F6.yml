@@ -1,0 +1,828 @@
+id: 0x2F6
+name: 'COLLISION_ASSIST_DYNAMIC_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Collision-avoidance data: target detection, distance to vehicle ahead, deceleration setpoint and brake-prefill/haptic-alert requests.'
+  fr: 'Données d''aide à l''évitement de collision : détection de cible, distance au véhicule précédent, consigne de décélération et demandes de préremplissage frein/alerte haptique.'
+  es: 'Datos de asistencia a la prevención de colisiones: detección de objetivo, distancia al vehículo precedente, consigna de deceleración y solicitudes de prellenado de freno/alerta háptica.'
+  de: 'Daten der Kollisionsvermeidung: Zielerkennung, Abstand zum vorausfahrenden Fahrzeug, Verzögerungs-Sollwert sowie Anforderungen zur Bremsdruck-Vorbefüllung/haptischen Warnung.'
+  it: 'Dati di assistenza anticollisione: rilevamento del bersaglio, distanza dal veicolo che precede, valore richiesto di decelerazione e richieste di preriempimento freni/allerta aptica.'
+  pl: 'Dane wspomagania unikania kolizji: wykrycie celu, odległość od poprzedzającego pojazdu, zadana wartość opóźnienia oraz żądania wstępnego napełnienia hamulców/alertu haptycznego.'
+  ru: 'Данные системы предотвращения столкновений: обнаружение цели, дистанция до впереди идущего автомобиля, заданное значение замедления и запросы предварительного наполнения тормозов/тактильного предупреждения.'
+  zh: '碰撞规避数据:目标探测、与前车距离、减速度设定值以及制动预填充/触觉警报请求。'
+  hu: 'Ütközéselkerülési adatok: célfelismerés, távolság az előttünk haladó járműtől, lassítási alapjel, valamint fékrásegítés előtöltési/haptikus figyelmeztetési kérések.'
+  pt: 'Dados de prevenção de colisão: deteção de alvo, distância ao veículo da frente, ponto de ajuste de desaceleração e pedidos de pré-enchimento dos travões/alerta háptico.'
+periodicity: ['20ms']
+senders: ['CVM', 'ARTIV']
+receivers: ['BSI', 'BSM', 'ECR']
+
+signals:
+  COLLISION_ALERT_HAPTIC_REQUEST:
+    bits: '1.7'
+    comment:
+      en: 'Collision haptic alert request (ARC)'
+      fr: 'Demande d''alerte haptique de collision (ARC)'
+      es: 'Solicitud de alerta háptica de colisión (ARC)'
+      de: 'Anforderung der haptischen Kollisionswarnung (ARC)'
+      it: 'Richiesta di allerta aptica di collisione (ARC)'
+      pl: 'Żądanie ostrzeżenia haptycznego o kolizji (ARC)'
+      ru: 'Запрос тактильного предупреждения о столкновении (ARC)'
+      zh: '碰撞触觉警报请求(ARC)'
+      hu: 'Ütközés esetén taktilis figyelmeztetés kérése (ARC)'
+      pt: 'Pedido de alerta hático de colisão (ARC)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No haptic alert request'
+        fr: 'Pas de demande d''alerte haptique'
+        es: 'Sin solicitud de alerta háptica'
+        de: 'Keine Anforderung einer haptischen Warnung'
+        it: 'Nessuna richiesta di allerta aptica'
+        pl: 'Brak żądania alertu haptycznego'
+        ru: 'Нет запроса тактильного предупреждения'
+        zh: '无触觉警报请求'
+        hu: 'Nincs haptikus figyelmeztetési kérés'
+        pt: 'Sem pedido de alerta hático'
+      0x01:
+        en: 'Haptic alert request'
+        fr: 'Demande d''alerte haptique'
+        es: 'Solicitud de alerta háptica'
+        de: 'Anforderung einer haptischen Warnung'
+        it: 'Richiesta di allarme aptico'
+        pl: 'Żądanie alertu haptycznego'
+        ru: 'Запрос тактильного предупреждения'
+        zh: '触觉警报请求'
+        hu: 'Haptikus riasztási kérés'
+        pt: 'Pedido de alerta hático'
+
+  COLLISION_ALERT_SOUND_REQUEST:
+    bits: '1.6'
+    comment:
+      en: 'Collision sound alert request (ARC)'
+      fr: 'Demande d''alerte sonore de collision (ARC)'
+      es: 'Solicitud de alerta sonora de colisión (ARC)'
+      de: 'Anforderung der akustischen Kollisionswarnung (ARC)'
+      it: 'Richiesta di allerta sonora di collisione (ARC)'
+      pl: 'Żądanie ostrzeżenia dźwiękowego o kolizji (ARC)'
+      ru: 'Запрос звукового предупреждения о столкновении (ARC)'
+      zh: '碰撞声音警报请求(ARC)'
+      hu: 'Ütközés esetén hangjelzés kérése (ARC)'
+      pt: 'Pedido de alerta sonoro de colisão (ARC)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sound alarm request'
+        fr: 'Pas de demande d''alerte sonore'
+        es: 'Sin solicitud de alarma sonora'
+        de: 'Keine Anforderung des akustischen Alarms'
+        it: 'Nessuna richiesta di allarme sonoro'
+        pl: 'Brak żądania alarmu dźwiękowego'
+        ru: 'Нет запроса звукового сигнала'
+        zh: '无声音警报请求'
+        hu: 'Nincs hangjelzés-kérés'
+        pt: 'Sem pedido de alarme sonoro'
+      0x01:
+        en: 'Sound alert request'
+        fr: 'Demande d''alerte sonore'
+        es: 'Solicitud de alerta sonora'
+        de: 'Anforderung akustischer Alarm'
+        it: 'Richiesta di allarme sonoro'
+        pl: 'Żądanie alarmu dźwiękowego'
+        ru: 'Запрос звукового сигнала тревоги'
+        zh: '声音警示请求'
+        hu: 'Hangriasztás kérés'
+        pt: 'Pedido de alerta sonoro'
+
+  COLLISION_ALERT_VISUAL_REQUEST:
+    bits: '1.5'
+    comment:
+      en: 'Collision visual alert request (ARC)'
+      fr: 'Demande d''alerte visuelle de collision (ARC)'
+      es: 'Solicitud de alerta visual de colisión (ARC)'
+      de: 'Anforderung der optischen Kollisionswarnung (ARC)'
+      it: 'Richiesta di allerta visiva di collisione (ARC)'
+      pl: 'Żądanie ostrzeżenia wizualnego o kolizji (ARC)'
+      ru: 'Запрос визуального предупреждения о столкновении (ARC)'
+      zh: '碰撞视觉警报请求(ARC)'
+      hu: 'Ütközés esetén vizuális figyelmeztetés kérése (ARC)'
+      pt: 'Pedido de alerta visual de colisão (ARC)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No visual alert request'
+        fr: 'Pas de demande d''alerte visuelle'
+        es: 'Sin solicitud de alerta visual'
+        de: 'Keine Anforderung eines visuellen Warnhinweises'
+        it: 'Nessuna richiesta di allarme visivo'
+        pl: 'Brak żądania alertu wizualnego'
+        ru: 'Нет запроса визуального оповещения'
+        zh: '无视觉警报请求'
+        hu: 'Nincs vizuális figyelmeztetés kérése'
+        pt: 'Sem pedido de alerta visual'
+      0x01:
+        en: 'Visual alert request'
+        fr: 'Demande d''alerte visuelle'
+        es: 'Solicitud de alerta visual'
+        de: 'Anforderung einer optischen Warnung'
+        it: 'Richiesta di allarme visivo'
+        pl: 'Żądanie alarmu wizualnego'
+        ru: 'Запрос визуального предупреждения'
+        zh: '视觉警报请求'
+        hu: 'Vizuális riasztási kérés'
+        pt: 'Pedido de alerta visual'
+
+  SENSOR_BLINDED_STATUS:
+    bits: '1.4'
+    comment:
+      en: 'Sensor blinded (obstructed)'
+      fr: 'Capteur aveuglé (obstrué)'
+      es: 'Sensor cegado (obstruido)'
+      de: 'Sensor geblendet (verdeckt)'
+      it: 'Sensore accecato (ostruito)'
+      pl: 'Czujnik oślepiony (zasłonięty)'
+      ru: 'Датчик ослеплён (заблокирован)'
+      zh: '传感器被遮挡(致盲)'
+      hu: 'Az érzékelő elvakítva (eltakarva)'
+      pt: 'Sensor cego (obstruído)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  UNUSED_1:
+    bits: '1.3'
+    unused: true
+
+  DRIVER_TAKEOVER_REQUEST:
+    bits: '1.2-1.1'
+    comment:
+      en: 'Request for the driver to take back control'
+      fr: 'Demande de reprise en main par le conducteur'
+      es: 'Solicitud de recuperación del control por el conductor'
+      de: 'Aufforderung an den Fahrer, die Kontrolle zu übernehmen'
+      it: 'Richiesta al conducente di riprendere il controllo'
+      pl: 'Żądanie przejęcia kontroli przez kierowcę'
+      ru: 'Запрос водителю на возврат управления'
+      zh: '请求驾驶员重新接管控制'
+      hu: 'Kérés a vezető felé a vezetés visszavételére'
+      pt: 'Pedido de retoma de controlo pelo condutor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Non-critical request'
+        fr: 'Demande non critique'
+        es: 'Solicitud no crítica'
+        de: 'Unkritische Anforderung'
+        it: 'Richiesta non critica'
+        pl: 'Żądanie niekrytyczne'
+        ru: 'Некритичный запрос'
+        zh: '非关键请求'
+        hu: 'Nem kritikus kérés'
+        pt: 'Pedido não crítico'
+      0x02:
+        en: 'Critical request'
+        fr: 'Demande critique'
+        es: 'Solicitud crítica'
+        de: 'Kritische Anforderung'
+        it: 'Richiesta critica'
+        pl: 'Żądanie krytyczne'
+        ru: 'Критический запрос'
+        zh: '关键请求'
+        hu: 'Kritikus kérés'
+        pt: 'Pedido crítico'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  TARGET_DETECTED_STATUS:
+    bits: '1.0'
+    comment:
+      en: 'Detected target information'
+      fr: 'Information de cible détectée'
+      es: 'Información de objetivo detectado'
+      de: 'Information zum erkannten Ziel'
+      it: 'Informazione sul bersaglio rilevato'
+      pl: 'Informacja o wykrytym celu'
+      ru: 'Информация об обнаруженной цели'
+      zh: '检测到目标的信息'
+      hu: 'Az észlelt céltárgy adata'
+      pt: 'Informação do alvo detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Initialisation or no target detected'
+        fr: 'Initialisation ou pas de cible détectée'
+        es: 'Inicialización o sin objetivo detectado'
+        de: 'Initialisierung oder kein Ziel erkannt'
+        it: 'Inizializzazione o nessun bersaglio rilevato'
+        pl: 'Inicjalizacja lub brak wykrytego celu'
+        ru: 'Инициализация или цель не обнаружена'
+        zh: '初始化或未检测到目标'
+        hu: 'Inicializálás vagy nincs érzékelt célpont'
+        pt: 'Inicialização ou nenhum alvo detetado'
+      0x01:
+        en: 'Target detected'
+        fr: 'Cible détectée'
+        es: 'Objetivo detectado'
+        de: 'Ziel erkannt'
+        it: 'Bersaglio rilevato'
+        pl: 'Wykryto cel'
+        ru: 'Цель обнаружена'
+        zh: '检测到目标'
+        hu: 'Cél észlelve'
+        pt: 'Alvo detetado'
+
+  INTER_VEHICLE_DISTANCE:
+    bits: '2.7-3.6'
+    comment:
+      en: 'Inter-vehicle distance'
+      fr: 'Distance inter-véhicule'
+      es: 'Distancia entre vehículos'
+      de: 'Fahrzeugabstand'
+      it: 'Distanza intervehicolare'
+      pl: 'Odległość między pojazdami'
+      ru: 'Дистанция между автомобилями'
+      zh: '车间距'
+      hu: 'Járművek közötti távolság'
+      pt: 'Distância entre veículos'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 255.5
+    units: 'm'
+    invalid: 0x3FF
+    default: 0x3FE
+
+  AEB_ENABLED:
+    bits: '3.5'
+    comment:
+      en: 'AEB function available'
+      fr: 'Fonction AEB disponible'
+      es: 'Función AEB disponible'
+      de: 'AEB-Funktion verfügbar'
+      it: 'Funzione AEB disponibile'
+      pl: 'Funkcja AEB dostępna'
+      ru: 'Функция AEB доступна'
+      zh: 'AEB功能可用'
+      hu: 'AEB funkció elérhető'
+      pt: 'Função AEB disponível'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  AUTOMATIC_BRAKING_IN_PROGRESS:
+    bits: '3.4'
+    comment:
+      en: 'Automatic braking in progress status'
+      fr: 'Etat de réalisation d''un freinage automatique'
+      es: 'Estado de ejecución de un frenado automático'
+      de: 'Status der laufenden automatischen Bremsung'
+      it: 'Stato di esecuzione di una frenata automatica'
+      pl: 'Stan wykonywania automatycznego hamowania'
+      ru: 'Состояние выполнения автоматического торможения'
+      zh: '自动制动执行状态'
+      hu: 'Az automatikus fékezés végrehajtásának állapota'
+      pt: 'Estado de travagem automática em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No braking in progress'
+        fr: 'Pas de freinage en cours'
+        es: 'Sin frenado en curso'
+        de: 'Keine Bremsung aktiv'
+        it: 'Nessuna frenata in corso'
+        pl: 'Brak trwającego hamowania'
+        ru: 'Торможение не выполняется'
+        zh: '无制动进行中'
+        hu: 'Nincs folyamatban lévő fékezés'
+        pt: 'Sem travagem em curso'
+      0x01:
+        en: 'Braking in progress'
+        fr: 'Freinage en cours'
+        es: 'Frenado en curso'
+        de: 'Bremsung läuft'
+        it: 'Frenata in corso'
+        pl: 'Trwa hamowanie'
+        ru: 'Торможение выполняется'
+        zh: '制动进行中'
+        hu: 'Fékezés folyamatban'
+        pt: 'Travagem em curso'
+
+  ARC_FUNCTION_STATUS:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Status of the collision alert function (ARC) in the detection device'
+      fr: 'Etat de la fonction d''alerte de collision (ARC) dans le dispositif de détection'
+      es: 'Estado de la función de alerta de colisión (ARC) en el dispositivo de detección'
+      de: 'Status der Kollisionswarnfunktion (ARC) im Erkennungsgerät'
+      it: 'Stato della funzione di allerta collisione (ARC) nel dispositivo di rilevamento'
+      pl: 'Stan funkcji ostrzegania o kolizji (ARC) w urządzeniu wykrywającym'
+      ru: 'Состояние функции предупреждения о столкновении (ARC) в устройстве обнаружения'
+      zh: '探测装置中碰撞警报功能(ARC)的状态'
+      hu: 'Az ütközésjelző funkció (ARC) állapota az érzékelő eszközben'
+      pt: 'Estado da função de alerta de colisão (ARC) no dispositivo de deteção'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'Inhibited'
+        fr: 'Inhibé'
+        es: 'Inhibido'
+        de: 'Gesperrt'
+        it: 'Inibito'
+        pl: 'Zablokowany'
+        ru: 'Заблокировано'
+        zh: '已抑制'
+        hu: 'Letiltva'
+        pt: 'Inibido'
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x0B:
+        unused: true
+      0x0C:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNUSED_2:
+    bits: '4.7-4.0'
+    unused: true
+
+  INTER_VEHICLE_TIME_DISPLAY:
+    bits: '5.7-5.2'
+    comment:
+      en: 'Inter-vehicle time for display'
+      fr: 'Temps inter-véhicule pour l''affichage'
+      es: 'Tiempo entre vehículos para la visualización'
+      de: 'Fahrzeugabstandszeit für die Anzeige'
+      it: 'Tempo intervehicolare per la visualizzazione'
+      pl: 'Czas odstępu między pojazdami do wyświetlenia'
+      ru: 'Временной интервал между автомобилями для отображения'
+      zh: '用于显示的车间时距'
+      hu: 'A kijelzőn megjelenő járművek közötti időköz'
+      pt: 'Tempo entre veículos para visualização'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.1
+    units: 's'
+    invalid: 0x3F
+    default: 0x3E
+
+  DRIVE_AWAY_CONFIRMATION_REQUEST:
+    bits: '5.1'
+    comment:
+      en: 'Message to the driver requesting confirmation to drive away'
+      fr: 'Message au conducteur demandant confirmation du démarrage (décollage)'
+      es: 'Mensaje al conductor solicitando confirmación para arrancar'
+      de: 'Nachricht an den Fahrer mit Aufforderung zur Bestätigung des Anfahrens'
+      it: 'Messaggio al conducente che richiede conferma per la partenza'
+      pl: 'Komunikat do kierowcy z prośbą o potwierdzenie ruszenia'
+      ru: 'Сообщение водителю с запросом подтверждения трогания с места'
+      zh: '向驾驶员发送的起步确认请求消息'
+      hu: 'Üzenet a vezetőnek az elindulás megerősítésének kérésére'
+      pt: 'Mensagem ao condutor a solicitar confirmação para arrancar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No drive away required'
+        fr: 'Pas de nécessité de démarrage'
+        es: 'No es necesario ponerse en marcha'
+        de: 'Kein Wegfahren erforderlich'
+        it: 'Nessuna necessità di ripartire'
+        pl: 'Nie wymagane odjechanie'
+        ru: 'Не требуется трогаться с места'
+        zh: '无需驶离'
+        hu: 'Nincs szükség elindulásra'
+        pt: 'Sem necessidade de arranque'
+      0x01:
+        en: 'Drive away required'
+        fr: 'Départ requis'
+        es: 'Se requiere circular'
+        de: 'Losfahren erforderlich'
+        it: 'È richiesto muovere il veicolo'
+        pl: 'Wymagane ruszenie pojazdu'
+        ru: 'Требуется начать движение'
+        zh: '需要驶离'
+        hu: 'Elindulás szükséges'
+        pt: 'Necessário circular'
+
+  UNUSED_3:
+    bits: '5.0'
+    unused: true
+
+  FARC_FUNCTION_STATUS:
+    bits: '6.7-6.5'
+    comment:
+      en: 'Status of the automatic emergency braking function (FARC) in the detection device'
+      fr: 'Etat de la fonction de freinage automatique d''urgence (FARC) dans le dispositif de détection'
+      es: 'Estado de la función de frenado automático de emergencia (FARC) en el dispositivo de detección'
+      de: 'Status der automatischen Notbremsfunktion (FARC) im Erkennungsgerät'
+      it: 'Stato della funzione di frenata automatica di emergenza (FARC) nel dispositivo di rilevamento'
+      pl: 'Stan funkcji automatycznego hamowania awaryjnego (FARC) w urządzeniu wykrywającym'
+      ru: 'Состояние функции автоматического экстренного торможения (FARC) в устройстве обнаружения'
+      zh: '探测装置中自动紧急制动功能(FARC)的状态'
+      hu: 'Az automatikus vészfékezési funkció (FARC) állapota az érzékelő eszközben'
+      pt: 'Estado da função de travagem automática de emergência (FARC) no dispositivo de deteção'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Inhibited'
+        fr: 'Inhibé'
+        es: 'Inhibido'
+        de: 'Gesperrt'
+        it: 'Inibito'
+        pl: 'Zablokowany'
+        ru: 'Заблокировано'
+        zh: '已抑制'
+        hu: 'Letiltva'
+        pt: 'Inibido'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x06:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x07:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNUSED_4:
+    bits: '6.4-6.3'
+    unused: true
+
+  DETECTION_DEVICE_DECELERATION_CONTROL_REQUEST:
+    bits: '6.2'
+    comment:
+      en: 'Deceleration control request from the detection device'
+      fr: 'Demande de pilotage de la décélération par le dispositif de détection'
+      es: 'Solicitud de control de deceleración por el dispositivo de detección'
+      de: 'Anforderung der Verzögerungssteuerung durch das Erkennungsgerät'
+      it: 'Richiesta di controllo della decelerazione da parte del dispositivo di rilevamento'
+      pl: 'Żądanie sterowania opóźnieniem przez urządzenie wykrywające'
+      ru: 'Запрос управления замедлением от устройства обнаружения'
+      zh: '探测装置的减速控制请求'
+      hu: 'A lassítás vezérlésének kérése az érzékelő eszköz részéről'
+      pt: 'Pedido de controlo da desaceleração pelo dispositivo de deteção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No UCF control request'
+        fr: 'Pas de demande de pilotage UCF'
+        es: 'Sin solicitud de control UCF'
+        de: 'Keine UCF-Ansteuerungsanforderung'
+        it: 'Nessuna richiesta di pilotaggio UCF'
+        pl: 'Brak żądania sterowania UCF'
+        ru: 'Нет запроса управления UCF'
+        zh: '无UCF控制请求'
+        hu: 'Nincs UCF vezérlési kérés'
+        pt: 'Sem pedido de controlo UCF'
+      0x01:
+        en: 'UCF control request'
+        fr: 'Demande de pilotage UCF'
+        es: 'Solicitud de control UCF'
+        de: 'UCF-Ansteuerungsanforderung'
+        it: 'Richiesta di comando UCF'
+        pl: 'Żądanie sterowania UCF'
+        ru: 'Запрос управления UCF'
+        zh: 'UCF 控制请求'
+        hu: 'UCF vezérlési kérés'
+        pt: 'Pedido de controlo UCF'
+
+  UNUSED_5:
+    bits: '6.1'
+    unused: true
+
+  UNUSED_6:
+    bits: '6.0'
+    unused: true
+
+  PROCESS_COUNTER:
+    bits: '7.7-7.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM:
+    bits: '7.3-7.0'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  TARGET_POSITION_INDEX:
+    bits: '8.7-8.5'
+    comment:
+      en: 'Detected target parking space position index'
+      fr: 'Position du parking cible détecté (indice de position)'
+      es: 'Índice de posición del hueco de aparcamiento objetivo detectado'
+      de: 'Positionsindex des erkannten Ziel-Parkplatzes'
+      it: 'Indice di posizione del posto auto obiettivo rilevato'
+      pl: 'Indeks pozycji wykrytego docelowego miejsca parkingowego'
+      ru: 'Индекс позиции обнаруженного целевого парковочного места'
+      zh: '检测到的目标车位位置索引'
+      hu: 'Az észlelt cél-parkolóhely helyzetindexe'
+      pt: 'Índice de posição do lugar de estacionamento alvo detetado'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'POS1'
+        fr: 'POS1'
+        es: 'POS1'
+        de: 'POS1'
+        it: 'POS1'
+        pl: 'POS1'
+        ru: 'POS1'
+        zh: 'POS1'
+        hu: 'POS1'
+        pt: 'POS1'
+      0x01:
+        en: 'POS2'
+        fr: 'POS2'
+        es: 'POS2'
+        de: 'POS2'
+        it: 'POS2'
+        pl: 'POS2'
+        ru: 'POS2'
+        zh: 'POS2'
+        hu: 'POS2'
+        pt: 'POS2'
+      0x02:
+        en: 'Position 3'
+        fr: 'Position 3'
+        es: 'Posición 3'
+        de: 'Position 3'
+        it: 'Posizione 3'
+        pl: 'Pozycja 3'
+        ru: 'Позиция 3'
+        zh: '位置3'
+        hu: '3. pozíció'
+        pt: 'Posição 3'
+      0x03:
+        en: 'Position 4'
+        fr: 'Position 4'
+        es: 'Posición 4'
+        de: 'Position 4'
+        it: 'Posizione 4'
+        pl: 'Pozycja 4'
+        ru: 'Позиция 4'
+        zh: '位置4'
+        hu: '4. pozíció'
+        pt: 'Posição 4'
+      0x04:
+        en: 'POS5'
+        fr: 'POS5'
+        es: 'POS5'
+        de: 'POS5'
+        it: 'POS5'
+        pl: 'POS5'
+        ru: 'POS5'
+        zh: 'POS5'
+        hu: 'POS5'
+        pt: 'POS5'
+      0x05:
+        en: 'Position 6'
+        fr: 'Position 6'
+        es: 'Posición 6'
+        de: 'Position 6'
+        it: 'Posizione 6'
+        pl: 'Pozycja 6'
+        ru: 'Позиция 6'
+        zh: '位置6'
+        hu: '6. pozíció'
+        pt: 'Posição 6'
+      0x06:
+        en: 'Position 7'
+        fr: 'Position 7'
+        es: 'Posición 7'
+        de: 'Position 7'
+        it: 'Posizione 7'
+        pl: 'Pozycja 7'
+        ru: 'Позиция 7'
+        zh: '位置7'
+        hu: '7. helyzet'
+        pt: 'Posição 7'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_7:
+    bits: '8.4-8.0'
+    unused: true

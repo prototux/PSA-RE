@@ -1,0 +1,247 @@
+id: 0x391
+name: 'TELEMATICS_OTA_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Over-the-air update requests and progress for the telematics gateway and infotainment system.'
+  fr: 'Demandes et avancement de mise à jour à distance (OTA) de la passerelle télématique et du système multimédia.'
+  es: 'Solicitudes y progreso de actualización por aire (OTA) de la pasarela telemática y del sistema multimedia.'
+  de: 'Anforderungen und Fortschritt der Over-the-Air-Aktualisierung des Telematik-Gateways und des Infotainmentsystems.'
+  it: 'Richieste e avanzamento dell''aggiornamento over-the-air (OTA) del gateway telematico e del sistema multimediale.'
+  pl: 'Żądania i postęp aktualizacji bezprzewodowej (OTA) bramki telematycznej i systemu multimedialnego.'
+  ru: 'Запросы и ход обновления по воздуху (OTA) телематического шлюза и мультимедийной системы.'
+  zh: '远程信息处理网关和信息娱乐系统的空中升级(OTA)请求与进度。'
+  hu: 'A telematikai átjáró és az infotainment rendszer légi (OTA) frissítési kérései és állapota.'
+  pt: 'Pedidos e progresso da atualização over-the-air do gateway telemático e do sistema de infoentretenimento.'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['BTEL']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.0'
+    unused: true
+
+  RADIO_MODULE_UPDATE_REQUEST:
+    bits: '2.7'
+    comment:
+      en: 'Request to update the radio and telematics module (BSRF)'
+      fr: 'Demande de mise à jour du module radio et télématique (BSRF)'
+      es: 'Solicitud de actualización del módulo de radio y telemática (BSRF)'
+      de: 'Anforderung zur Aktualisierung des Radio-/Telematikmoduls (BSRF)'
+      it: 'Richiesta di aggiornamento del modulo radio e telematico (BSRF)'
+      pl: 'Żądanie aktualizacji modułu radiowo-telematycznego (BSRF)'
+      ru: 'Запрос на обновление радио-телематического модуля (BSRF)'
+      zh: '请求更新无线电及远程信息模块（BSRF）'
+      hu: 'A rádió- és telematikai modul (BSRF) frissítésének kérése'
+      pt: 'Pedido de atualização do módulo de rádio e telemática (BSRF)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Request'
+        fr: 'Requête'
+        es: 'Solicitud'
+        de: 'Anforderung'
+        it: 'Richiesta'
+        pl: 'Żądanie'
+        ru: 'Запрос'
+        zh: '请求'
+        hu: 'Kérés'
+        pt: 'Pedido'
+
+  UPDATE_DOWNLOAD_IN_PROGRESS:
+    bits: '2.6'
+    comment:
+      en: 'A software package download is in progress'
+      fr: 'Un téléchargement de paquet logiciel est en cours'
+      es: 'Hay una descarga de paquete de software en curso'
+      de: 'Ein Software-Download läuft gerade'
+      it: 'È in corso il download di un pacchetto software'
+      pl: 'Trwa pobieranie pakietu oprogramowania'
+      ru: 'Идёт загрузка пакета программного обеспечения'
+      zh: '软件包正在下载中'
+      hu: 'Szoftvercsomag letöltése van folyamatban'
+      pt: 'Está em curso a transferência de um pacote de software'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  VEHICLE_UPDATE_REQUEST_SOURCE:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Origin of the pending vehicle software update request'
+      fr: 'Origine de la demande de mise à jour logicielle du véhicule en attente'
+      es: 'Origen de la solicitud de actualización de software del vehículo pendiente'
+      de: 'Herkunft der ausstehenden Fahrzeugsoftware-Update-Anforderung'
+      it: 'Origine della richiesta di aggiornamento software del veicolo in sospeso'
+      pl: 'Źródło oczekującego żądania aktualizacji oprogramowania pojazdu'
+      ru: 'Источник ожидающего запроса на обновление ПО автомобиля'
+      zh: '待处理的车辆软件更新请求来源'
+      hu: 'A függőben lévő jármű-szoftverfrissítési kérés forrása'
+      pt: 'Origem do pedido de atualização de software do veículo pendente'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'BSRF_Request'
+        fr: 'BSRF_Request'
+        es: 'BSRF_Request'
+        de: 'BSRF_Request'
+        it: 'BSRF_Request'
+        pl: 'BSRF_Request'
+        ru: 'BSRF_Request'
+        zh: 'BSRF_Request'
+        hu: 'BSRF_Request'
+        pt: 'BSRF_Request'
+      0x02:
+        en: 'IVI request'
+        fr: 'Demande IVI (système multimédia)'
+        es: 'Solicitud IVI (sistema multimedia)'
+        de: 'IVI-Anforderung (Infotainmentsystem)'
+        it: 'Richiesta IVI (sistema multimediale)'
+        pl: 'Żądanie IVI (system multimedialny)'
+        ru: 'Запрос IVI (мультимедийная система)'
+        zh: 'IVI（车载信息娱乐系统）请求'
+        hu: 'IVI (infotainment rendszer) kérés'
+        pt: 'Pedido IVI (sistema multimédia)'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  INFOTAINMENT_UPDATE_REQUEST:
+    bits: '2.3'
+    comment:
+      en: 'Request to update the infotainment system (IVI)'
+      fr: 'Demande de mise à jour du système multimédia (IVI)'
+      es: 'Solicitud de actualización del sistema multimedia (IVI)'
+      de: 'Anforderung zur Aktualisierung des Infotainmentsystems (IVI)'
+      it: 'Richiesta di aggiornamento del sistema infotainment (IVI)'
+      pl: 'Żądanie aktualizacji systemu multimedialnego (IVI)'
+      ru: 'Запрос на обновление мультимедийной системы (IVI)'
+      zh: '请求更新车载娱乐系统（IVI）'
+      hu: 'Az infotainment rendszer (IVI) frissítésének kérése'
+      pt: 'Pedido de atualização do sistema de infoentretenimento (IVI)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Request'
+        fr: 'Requête'
+        es: 'Solicitud'
+        de: 'Anforderung'
+        it: 'Richiesta'
+        pl: 'Żądanie'
+        ru: 'Запрос'
+        zh: '请求'
+        hu: 'Kérés'
+        pt: 'Pedido'
+
+  NETWORK_HOLD_FOR_UPDATE_HMI_REQUEST:
+    bits: '2.2'
+    comment:
+      en: 'Request to keep the network active to allow an update HMI'
+      fr: 'Demande de maintien du réseau actif pour permettre un affichage IHM de mise à jour'
+      es: 'Solicitud de mantener la red activa para permitir una interfaz de actualización'
+      de: 'Anforderung, das Netzwerk aktiv zu halten, um eine Update-HMI zu ermöglichen'
+      it: 'Richiesta di mantenere attiva la rete per consentire un''interfaccia di aggiornamento'
+      pl: 'Żądanie utrzymania aktywnej sieci w celu umożliwienia interfejsu aktualizacji'
+      ru: 'Запрос на поддержание активности сети для отображения интерфейса обновления'
+      zh: '请求保持网络激活以便显示更新界面'
+      hu: 'A hálózat aktív tartásának kérése a frissítési kezelőfelület megjelenítéséhez'
+      pt: 'Pedido para manter a rede ativa para permitir uma atualização da IHM'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  UNUSED_2:
+    bits: '2.1-2.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '3.7-3.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '7.7-8.0'
+    unused: true

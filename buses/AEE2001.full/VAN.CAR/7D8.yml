@@ -1,0 +1,71 @@
+id: 0x7D8
+name: 'RAIN_LIGHT_SENSOR_SAVE'
+type: 'van'
+length: 8
+comment:
+  en: 'Supplier-specific sensor data read by the body computer when accessory power disappears, to be restored at next power-up (the sensor has no EEPROM).'
+  fr: 'Données spécifiques du capteur, lues par la BSI à la disparition du +ACC pour être restaurées au prochain démarrage (le capteur n''a pas d''EEPROM).'
+  es: 'Datos específicos del sensor, leídos por la BSI cuando desaparece el +ACC, para ser restaurados en el siguiente arranque (el sensor no tiene EEPROM).'
+  de: 'Herstellerspezifische Sensordaten, von der BSI beim Wegfall von +ACC gelesen, um beim nächsten Einschalten wiederhergestellt zu werden (der Sensor hat kein EEPROM).'
+  it: 'Dati specifici del sensore, letti dalla BSI alla scomparsa del +ACC, da ripristinare alla successiva accensione (il sensore non ha EEPROM).'
+  pl: 'Dane specyficzne dla czujnika, odczytywane przez BSI przy zaniku +ACC, przywracane przy następnym uruchomieniu (czujnik nie ma pamięci EEPROM).'
+  ru: 'Специфичные для датчика данные, считываемые BSI при пропадании +ACC, для восстановления при следующем включении (у датчика нет EEPROM).'
+  zh: '由车身控制器在辅助电源消失时读取的传感器专用数据,将在下次上电时恢复(该传感器没有EEPROM)。'
+  hu: 'A gyártóspecifikus érzékelőadatok, amelyeket a BSI a +ACC megszűnésekor olvas be, hogy a következő bekapcsoláskor visszaállítsa (az érzékelőnek nincs EEPROM-ja).'
+  pt: 'Dados específicos do fornecedor do sensor, lidos pelo computador de servidão quando a alimentação dos acessórios desaparece, para serem restituídos na próxima ativação (o sensor não tem EEPROM).'
+periodicity: ['trigger']
+senders: ['CDPL']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  SENSOR_CALIBRATION_DATA:
+    bits: '2.7-7.0'
+    comment:
+      en: 'Supplier-specific rain/light sensor calibration data (echo of saved sensor data)'
+      fr: 'Données de calibration spécifiques au fournisseur du capteur pluie/luminosité (écho des données enregistrées)'
+      es: 'Datos de calibración específicos del proveedor del sensor de lluvia/luz (eco de los datos guardados)'
+      de: 'Lieferantenspezifische Kalibrierdaten des Regen-/Lichtsensors (Rückmeldung der gespeicherten Sensordaten)'
+      it: 'Dati di calibrazione specifici del fornitore del sensore pioggia/luce (eco dei dati salvati)'
+      pl: 'Dane kalibracyjne czujnika deszczu/światła specyficzne dla dostawcy (echo zapisanych danych)'
+      ru: 'Специфичные для поставщика калибровочные данные датчика дождя/света (отражение сохранённых данных)'
+      zh: '供应商专用的雨量/光线传感器校准数据(已保存传感器数据的回传)'
+      hu: 'A gyártóra jellemző eső-/fényérzékelő kalibrációs adatok (a mentett érzékelőadatok visszaigazolása)'
+      pt: 'Dados de calibração específicos do fornecedor do sensor de chuva/luminosidade (eco dos dados guardados)'
+    type: 'bytes'
+    default: 0x00
+
+  FOOTER:
+    bits: '8.7-8.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

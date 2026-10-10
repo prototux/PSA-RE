@@ -1,0 +1,786 @@
+id: 0x2E9
+name: 'GEARBOX_TORQUE_CALIBRATION'
+type: 'can'
+length: 4
+comment:
+  en: 'Telematics unit status: display appearance, head-up display height/brightness/fold command, personalization mode.'
+  fr: 'État du boîtier télématique : apparence d''affichage, commande hauteur/luminosité/escamotage de l''affichage tête haute, mode personnalisation.'
+  es: 'Estado de la unidad telemática: apariencia de la pantalla, mando de altura/brillo/repliegue de la pantalla head-up, modo de personalización.'
+  de: 'Status der Telematikeinheit: Anzeigeerscheinungsbild, Höhen-/Helligkeits-/Einklappsteuerung des Head-up-Displays, Personalisierungsmodus.'
+  it: 'Stato dell''unità telematica: aspetto del display, comando altezza/luminosità/ripiegamento dell''head-up display, modalità personalizzazione.'
+  pl: 'Stan jednostki telematycznej: wygląd wyświetlacza, sterowanie wysokością/jasnością/chowaniem wyświetlacza przezierowego, tryb personalizacji.'
+  ru: 'Статус телематического блока: внешний вид дисплея, управление высотой/яркостью/складыванием проекционного дисплея, режим персонализации.'
+  zh: '车载通信单元状态:显示外观、平视显示器高度/亮度/收起指令、个性化模式。'
+  hu: 'A telematikai egység állapota: kijelző megjelenése, head-up kijelző magasság/fényerő/behúzás vezérlése, személyre szabási mód.'
+  pt: 'Estado da unidade telemática: aparência do visor, comando de altura/luminosidade/dobragem do head-up display, modo de personalização.'
+observations:
+  en: 'On state change of: DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+  fr: 'Sur changement d''état de : DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+  es: 'Al cambiar el estado de: DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+  de: 'Bei Statusänderung von: DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+  it: 'Al cambiamento di stato di: DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+  ru: 'При изменении состояния: DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+  zh: '当FIELD_P1_SETUP, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, CDE_HAUT_VTH状态变化时'
+  hu: 'A(z) DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: DISPLAY_PERSONAL_MODE_1_CHOICE, DISPLAY_PERSONAL_MODE_2_CHOICE, DISPLAY_PERSONAL_MODE_ACTIVE, HUD_FOLD_UNFOLD_REQUEST, HUD_BRIGHTNESS_ADJUSTMENT_REQUEST, HUD_HEIGHT_ADJUSTMENT_REQUEST'
+periodicity: ['200ms', 'trigger']
+senders: ['BTEL', 'OVIP']
+receivers: ['ICSV', 'CMB']
+
+signals:
+  CMB_APPEARANCE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Instrument cluster (CMB) appearance setting'
+      fr: 'Réglage d''apparence du combiné (CMB)'
+      es: 'Ajuste de apariencia del cuadro de instrumentos (CMB)'
+      de: 'Erscheinungsbild-Einstellung des Kombiinstruments (CMB)'
+      it: 'Impostazione dell''aspetto del quadro strumenti (CMB)'
+      pl: 'Ustawienie wyglądu zestawu wskaźników (CMB)'
+      ru: 'Настройка внешнего вида приборной панели (CMB)'
+      zh: '组合仪表(CMB)外观设置'
+      hu: 'A műszeregység (CMB) megjelenésének beállítása'
+      pt: 'Ajuste de aparência do quadro de instrumentos (CMB)'
+    type: 'uint'
+    min: 1
+    max: 254
+    invalid: 0xFF
+    default: 0x01
+
+  POLYSENSORIAL_MODE_ACTIVE:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Currently active polysensorial mode'
+      fr: 'Mode polysensoriel actuellement actif'
+      es: 'Modo polisensorial actualmente activo'
+      de: 'Aktuell aktiver polysensorischer Modus'
+      it: 'Modalità polisensoriale attualmente attiva'
+      pl: 'Aktualnie aktywny tryb polisensoryczny'
+      ru: 'Текущий активный полисенсорный режим'
+      zh: '当前激活的多感官模式'
+      hu: 'Az aktuálisan aktív többérzékszervi mód'
+      pt: 'Modo polissensorial atualmente ativo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Polysensorial mode deactivated'
+        fr: 'Polysensorial mode deactivated'
+        es: 'Polysensorial mode deactivated'
+        de: 'Polysensorial mode deactivated'
+        it: 'Polysensorial mode deactivated'
+        pl: 'Polysensorial mode deactivated'
+        ru: 'Polysensorial mode deactivated'
+        zh: 'Polysensorial mode deactivated'
+        hu: 'Polysensorial mode deactivated'
+        pt: 'Polysensorial mode deactivated'
+      0x01:
+        en: 'Mode 1'
+        fr: 'Mode 1'
+        es: 'Modo 1'
+        de: 'Modus 1'
+        it: 'Modalità 1'
+        pl: 'Tryb 1'
+        ru: 'Режим 1'
+        zh: '模式1'
+        hu: '1. mód'
+        pt: 'Modo 1'
+      0x02:
+        en: 'Mode 2'
+        fr: 'Mode 2'
+        es: 'Modo 2'
+        de: 'Modus 2'
+        it: 'Modalità 2'
+        pl: 'Tryb 2'
+        ru: 'Режим 2'
+        zh: '模式2'
+        hu: '2. mód'
+        pt: 'Modo 2'
+      0x03:
+        en: 'Mode 3'
+        fr: 'Mode 3'
+        es: 'Modo 3'
+        de: 'Modus 3'
+        it: 'Modalità 3'
+        pl: 'Tryb 3'
+        ru: 'Режим 3'
+        zh: '模式3'
+        hu: '3. mód'
+        pt: 'Modo 3'
+
+  DISPLAY_PERSONAL_MODE_1_CHOICE:
+    bits: '2.5-2.1'
+    comment:
+      en: 'Customer''s personal display mode choice for display slot 1'
+      fr: 'Choix du client de mode d''affichage personnalisé pour l''emplacement 1'
+      es: 'Elección del cliente del modo de pantalla personal para la posición 1'
+      de: 'Kundenwahl des persönlichen Anzeigemodus für Anzeigeplatz 1'
+      it: 'Scelta del cliente della modalità di visualizzazione personale per la posizione 1'
+      pl: 'Wybór klienta osobistego trybu wyświetlania dla pozycji 1'
+      ru: 'Выбор клиентом персонального режима отображения для слота 1'
+      zh: '客户选择的显示位1个性化显示模式'
+      hu: 'Az ügyfél személyes kijelzési mód választása az 1. kijelzőhelyhez'
+      pt: 'Escolha pessoal do cliente para o modo de visualização do slot 1'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'ADAS field order'
+        fr: 'Ordre de champ ADAS'
+        es: 'Orden de campo ADAS'
+        de: 'ADAS-Feldbefehl'
+        it: 'Ordine di campo ADAS'
+        pl: 'Polecenie pola ADAS'
+        ru: 'Команда поля ADAS'
+        zh: 'ADAS字段指令'
+        hu: 'ADAS mezőparancs'
+        pt: 'Ordem de campo ADAS'
+      0x02:
+        en: 'Black field'
+        fr: 'Black field'
+        es: 'Black field'
+        de: 'Black field'
+        it: 'Black field'
+        pl: 'Black field'
+        ru: 'Black field'
+        zh: 'Black field'
+        hu: 'Black field'
+        pt: 'Black field'
+      0x03:
+        en: 'Dynamic field 1'
+        fr: 'Dynamic field 1'
+        es: 'Dynamic field 1'
+        de: 'Dynamic field 1'
+        it: 'Dynamic field 1'
+        pl: 'Dynamic field 1'
+        ru: 'Dynamic field 1'
+        zh: 'Dynamic field 1'
+        hu: 'Dynamic field 1'
+        pt: 'Dynamic field 1'
+      0x04:
+        en: 'Dynamic field order 2'
+        fr: 'Ordre de champ dynamique 2'
+        es: 'Orden de campo dinámico 2'
+        de: 'Dynamische Feldreihenfolge 2'
+        it: 'Ordine campo dinamico 2'
+        pl: 'Kolejność pola dynamicznego 2'
+        ru: 'Порядок динамического поля 2'
+        zh: '动态字段顺序2'
+        hu: 'Dinamikus mező sorrend 2'
+        pt: 'Ordem de campo dinâmico 2'
+      0x05:
+        en: 'Gauge order field'
+        fr: 'Champ ordre jauge'
+        es: 'Campo de orden del indicador'
+        de: 'Feld Anzeigenreihenfolge'
+        it: 'Campo ordine indicatore'
+        pl: 'Pole kolejności wskaźnika'
+        ru: 'Поле порядка указателя'
+        zh: '仪表顺序字段'
+        hu: 'Műszer sorrend mező'
+        pt: 'Campo de ordem do indicador'
+      0x06:
+        en: 'Media full field order'
+        fr: 'Ordre du champ média complet'
+        es: 'Orden del campo de medios completo'
+        de: 'Reihenfolge des vollständigen Medienfelds'
+        it: 'Ordine del campo media completo'
+        pl: 'Kolejność pełnego pola multimedialnego'
+        ru: 'Порядок полного поля медиа'
+        zh: '完整媒体字段顺序'
+        hu: 'Teljes médiamező sorrendje'
+        pt: 'Ordem de campo de suporte completo'
+      0x07:
+        en: 'Media field light order'
+        fr: 'Ordre d''éclairage du champ média'
+        es: 'Orden de iluminación del campo multimedia'
+        de: 'Beleuchtungsbefehl des Medienfelds'
+        it: 'Comando di illuminazione del campo media'
+        pl: 'Polecenie podświetlenia pola multimediów'
+        ru: 'Команда подсветки медиаполя'
+        zh: '媒体区域照明指令'
+        hu: 'Médiamező-megvilágítási parancs'
+        pt: 'Ordem de iluminação do campo multimédia'
+      0x08:
+        en: 'Full navigation field'
+        fr: 'Full navigation field'
+        es: 'Full navigation field'
+        de: 'Full navigation field'
+        it: 'Full navigation field'
+        pl: 'Full navigation field'
+        ru: 'Full navigation field'
+        zh: 'Full navigation field'
+        hu: 'Full navigation field'
+        pt: 'Full navigation field'
+      0x09:
+        en: 'Nav light field order'
+        fr: 'Ordre du champ feux de navigation'
+        es: 'Orden del campo luces de navegación'
+        de: 'Reihenfolge des Navigationslichtfelds'
+        it: 'Ordine del campo luci di navigazione'
+        pl: 'Kolejność pola świateł nawigacyjnych'
+        ru: 'Порядок поля навигационных огней'
+        zh: '导航灯字段顺序'
+        hu: 'Navigációs fény mező sorrendje'
+        pt: 'Ordem de campo da luz de navegação'
+      0x0A:
+        en: 'OBD-field order'
+        fr: 'Ordre de champ ODB'
+        es: 'Orden de campo ODB'
+        de: 'ODB-Feldauftrag'
+        it: 'Ordine campo ODB'
+        pl: 'Zlecenie pola ODB'
+        ru: 'Приказ поля ODB'
+        zh: 'OBD字段指令'
+        hu: 'ODB mezőrendelés'
+        pt: 'Ordem de campo OBD'
+      0x0B:
+        en: 'Engine RPM field order'
+        fr: 'Ordre du champ régime moteur'
+        es: 'Orden del campo régimen motor'
+        de: 'Reihenfolge des Feldes Motordrehzahl'
+        it: 'Ordine del campo regime motore'
+        pl: 'Kolejność pola obrotów silnika'
+        ru: 'Порядок поля оборотов двигателя'
+        zh: '发动机转速字段顺序'
+        hu: 'Motorfordulatszám mező sorrendje'
+        pt: 'Ordem de campo de RPM do motor'
+      0x0C:
+        en: 'Custom image field order'
+        fr: 'Ordre du champ image personnalisée'
+        es: 'Orden del campo de imagen personalizada'
+        de: 'Reihenfolge des benutzerdefinierten Bildfelds'
+        it: 'Ordine del campo immagine personalizzata'
+        pl: 'Kolejność pola obrazu niestandardowego'
+        ru: 'Порядок поля пользовательского изображения'
+        zh: '自定义图像字段顺序'
+        hu: 'Egyéni képmező sorrendje'
+        pt: 'Ordem de campo de imagem personalizada'
+      0x0D:
+        en: 'Hybrid filed order 1'
+        fr: 'Ordre déposé hybride 1'
+        es: 'Orden depositada híbrida 1'
+        de: 'Hybrid-Ablageauftrag 1'
+        it: 'Ordine depositato ibrido 1'
+        pl: 'Zlecenie hybrydowe zapisane 1'
+        ru: 'Гибридный сохранённый приказ 1'
+        zh: '混合动力存档指令1'
+        hu: '1. hibrid rögzített parancs'
+        pt: 'Ordem de campo híbrida 1'
+      0x0E:
+        en: 'Hybrid field order 2'
+        fr: 'Ordre de champ hybride 2'
+        es: 'Orden de campo híbrido 2'
+        de: 'Hybrid-Feldreihenfolge 2'
+        it: 'Ordine campo ibrido 2'
+        pl: 'Kolejność pola hybrydowego 2'
+        ru: 'Порядок гибридного поля 2'
+        zh: '混动字段顺序2'
+        hu: 'Hibrid mező sorrend 2'
+        pt: 'Ordem de campo híbrido 2'
+      0x0F:
+        en: 'DAA field order'
+        fr: 'Ordre de champ DAA'
+        es: 'Orden de campo DAA'
+        de: 'DAA-Feldreihenfolge'
+        it: 'Ordine campo DAA'
+        pl: 'Kolejność pola DAA'
+        ru: 'Порядок поля DAA'
+        zh: 'DAA 字段顺序'
+        hu: 'DAA mező sorrend'
+        pt: 'Ordem de campo DAA'
+      0x10:
+        en: 'Eco-coach field order'
+        fr: 'Ordre du champ éco-coach'
+        es: 'Orden del campo eco-coach'
+        de: 'Reihenfolge des Eco-Coach-Felds'
+        it: 'Ordine del campo eco-coach'
+        pl: 'Kolejność pola eco-coach'
+        ru: 'Порядок поля эко-коуча'
+        zh: '节能教练字段顺序'
+        hu: 'Eco-coach mező sorrendje'
+        pt: 'Ordem de campo do eco-coach'
+      0x11:
+        unused: true
+      0x12:
+        unused: true
+      0x13:
+        unused: true
+      0x14:
+        unused: true
+      0x15:
+        unused: true
+      0x16:
+        unused: true
+      0x17:
+        unused: true
+      0x18:
+        unused: true
+      0x19:
+        unused: true
+      0x1A:
+        unused: true
+      0x1B:
+        unused: true
+      0x1C:
+        unused: true
+      0x1D:
+        unused: true
+      0x1E:
+        unused: true
+      0x1F:
+        unused: true
+
+  DISPLAY_PERSONAL_MODE_ACTIVE:
+    bits: '2.0'
+    comment:
+      en: 'Personal display mode active'
+      fr: 'Mode d''affichage personnalisé actif'
+      es: 'Modo de pantalla personal activo'
+      de: 'Persönlicher Anzeigemodus aktiv'
+      it: 'Modalità di visualizzazione personale attiva'
+      pl: 'Aktywny osobisty tryb wyświetlania'
+      ru: 'Активен персональный режим отображения'
+      zh: '个性化显示模式已激活'
+      hu: 'Aktív a személyes kijelzési mód'
+      pt: 'Modo de visualização personalizado ativo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  DISPLAY_PERSONAL_MODE_2_CHOICE:
+    bits: '3.7-3.3'
+    comment:
+      en: 'Customer''s personal display mode choice for display slot 2'
+      fr: 'Choix du client de mode d''affichage personnalisé pour l''emplacement 2'
+      es: 'Elección del cliente del modo de pantalla personal para la posición 2'
+      de: 'Kundenwahl des persönlichen Anzeigemodus für Anzeigeplatz 2'
+      it: 'Scelta del cliente della modalità di visualizzazione personale per la posizione 2'
+      pl: 'Wybór klienta osobistego trybu wyświetlania dla pozycji 2'
+      ru: 'Выбор клиентом персонального режима отображения для слота 2'
+      zh: '客户选择的显示位2个性化显示模式'
+      hu: 'Az ügyfél személyes kijelzési mód választása a 2. kijelzőhelyhez'
+      pt: 'Escolha pessoal do cliente para o modo de visualização do slot 2'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'ADAS field order'
+        fr: 'Ordre de champ ADAS'
+        es: 'Orden de campo ADAS'
+        de: 'ADAS-Feldbefehl'
+        it: 'Ordine di campo ADAS'
+        pl: 'Polecenie pola ADAS'
+        ru: 'Команда поля ADAS'
+        zh: 'ADAS字段指令'
+        hu: 'ADAS mezőparancs'
+        pt: 'Ordem de campo ADAS'
+      0x02:
+        en: 'Black field'
+        fr: 'Black field'
+        es: 'Black field'
+        de: 'Black field'
+        it: 'Black field'
+        pl: 'Black field'
+        ru: 'Black field'
+        zh: 'Black field'
+        hu: 'Black field'
+        pt: 'Black field'
+      0x03:
+        en: 'Dynamic field 1'
+        fr: 'Dynamic field 1'
+        es: 'Dynamic field 1'
+        de: 'Dynamic field 1'
+        it: 'Dynamic field 1'
+        pl: 'Dynamic field 1'
+        ru: 'Dynamic field 1'
+        zh: 'Dynamic field 1'
+        hu: 'Dynamic field 1'
+        pt: 'Dynamic field 1'
+      0x04:
+        en: 'Dynamic field order 2'
+        fr: 'Ordre de champ dynamique 2'
+        es: 'Orden de campo dinámico 2'
+        de: 'Dynamische Feldreihenfolge 2'
+        it: 'Ordine campo dinamico 2'
+        pl: 'Kolejność pola dynamicznego 2'
+        ru: 'Порядок динамического поля 2'
+        zh: '动态字段顺序2'
+        hu: 'Dinamikus mező sorrend 2'
+        pt: 'Ordem de campo dinâmico 2'
+      0x05:
+        en: 'Gauge order field'
+        fr: 'Champ ordre jauge'
+        es: 'Campo de orden del indicador'
+        de: 'Feld Anzeigenreihenfolge'
+        it: 'Campo ordine indicatore'
+        pl: 'Pole kolejności wskaźnika'
+        ru: 'Поле порядка указателя'
+        zh: '仪表顺序字段'
+        hu: 'Műszer sorrend mező'
+        pt: 'Campo de ordem do indicador'
+      0x06:
+        en: 'Media full field order'
+        fr: 'Ordre du champ média complet'
+        es: 'Orden del campo de medios completo'
+        de: 'Reihenfolge des vollständigen Medienfelds'
+        it: 'Ordine del campo media completo'
+        pl: 'Kolejność pełnego pola multimedialnego'
+        ru: 'Порядок полного поля медиа'
+        zh: '完整媒体字段顺序'
+        hu: 'Teljes médiamező sorrendje'
+        pt: 'Ordem de campo de suporte completo'
+      0x07:
+        en: 'Media field light order'
+        fr: 'Ordre d''éclairage du champ média'
+        es: 'Orden de iluminación del campo multimedia'
+        de: 'Beleuchtungsbefehl des Medienfelds'
+        it: 'Comando di illuminazione del campo media'
+        pl: 'Polecenie podświetlenia pola multimediów'
+        ru: 'Команда подсветки медиаполя'
+        zh: '媒体区域照明指令'
+        hu: 'Médiamező-megvilágítási parancs'
+        pt: 'Ordem de iluminação do campo multimédia'
+      0x08:
+        en: 'Full navigation field'
+        fr: 'Full navigation field'
+        es: 'Full navigation field'
+        de: 'Full navigation field'
+        it: 'Full navigation field'
+        pl: 'Full navigation field'
+        ru: 'Full navigation field'
+        zh: 'Full navigation field'
+        hu: 'Full navigation field'
+        pt: 'Full navigation field'
+      0x09:
+        en: 'Nav light field order'
+        fr: 'Ordre du champ feux de navigation'
+        es: 'Orden del campo luces de navegación'
+        de: 'Reihenfolge des Navigationslichtfelds'
+        it: 'Ordine del campo luci di navigazione'
+        pl: 'Kolejność pola świateł nawigacyjnych'
+        ru: 'Порядок поля навигационных огней'
+        zh: '导航灯字段顺序'
+        hu: 'Navigációs fény mező sorrendje'
+        pt: 'Ordem de campo da luz de navegação'
+      0x0A:
+        en: 'OBD-field order'
+        fr: 'Ordre de champ ODB'
+        es: 'Orden de campo ODB'
+        de: 'ODB-Feldauftrag'
+        it: 'Ordine campo ODB'
+        pl: 'Zlecenie pola ODB'
+        ru: 'Приказ поля ODB'
+        zh: 'OBD字段指令'
+        hu: 'ODB mezőrendelés'
+        pt: 'Ordem de campo OBD'
+      0x0B:
+        en: 'Engine RPM field order'
+        fr: 'Ordre du champ régime moteur'
+        es: 'Orden del campo régimen motor'
+        de: 'Reihenfolge des Feldes Motordrehzahl'
+        it: 'Ordine del campo regime motore'
+        pl: 'Kolejność pola obrotów silnika'
+        ru: 'Порядок поля оборотов двигателя'
+        zh: '发动机转速字段顺序'
+        hu: 'Motorfordulatszám mező sorrendje'
+        pt: 'Ordem de campo de RPM do motor'
+      0x0C:
+        en: 'Custom image field order'
+        fr: 'Ordre du champ image personnalisée'
+        es: 'Orden del campo de imagen personalizada'
+        de: 'Reihenfolge des benutzerdefinierten Bildfelds'
+        it: 'Ordine del campo immagine personalizzata'
+        pl: 'Kolejność pola obrazu niestandardowego'
+        ru: 'Порядок поля пользовательского изображения'
+        zh: '自定义图像字段顺序'
+        hu: 'Egyéni képmező sorrendje'
+        pt: 'Ordem de campo de imagem personalizada'
+      0x0D:
+        en: 'Hybrid filed order 1'
+        fr: 'Ordre déposé hybride 1'
+        es: 'Orden depositada híbrida 1'
+        de: 'Hybrid-Ablageauftrag 1'
+        it: 'Ordine depositato ibrido 1'
+        pl: 'Zlecenie hybrydowe zapisane 1'
+        ru: 'Гибридный сохранённый приказ 1'
+        zh: '混合动力存档指令1'
+        hu: '1. hibrid rögzített parancs'
+        pt: 'Ordem de campo híbrida 1'
+      0x0E:
+        en: 'Hybrid field order 2'
+        fr: 'Ordre de champ hybride 2'
+        es: 'Orden de campo híbrido 2'
+        de: 'Hybrid-Feldreihenfolge 2'
+        it: 'Ordine campo ibrido 2'
+        pl: 'Kolejność pola hybrydowego 2'
+        ru: 'Порядок гибридного поля 2'
+        zh: '混动字段顺序2'
+        hu: 'Hibrid mező sorrend 2'
+        pt: 'Ordem de campo híbrido 2'
+      0x0F:
+        en: 'DAA field order'
+        fr: 'Ordre de champ DAA'
+        es: 'Orden de campo DAA'
+        de: 'DAA-Feldreihenfolge'
+        it: 'Ordine campo DAA'
+        pl: 'Kolejność pola DAA'
+        ru: 'Порядок поля DAA'
+        zh: 'DAA 字段顺序'
+        hu: 'DAA mező sorrend'
+        pt: 'Ordem de campo DAA'
+      0x10:
+        en: 'Eco-coach field order'
+        fr: 'Ordre du champ éco-coach'
+        es: 'Orden del campo eco-coach'
+        de: 'Reihenfolge des Eco-Coach-Felds'
+        it: 'Ordine del campo eco-coach'
+        pl: 'Kolejność pola eco-coach'
+        ru: 'Порядок поля эко-коуча'
+        zh: '节能教练字段顺序'
+        hu: 'Eco-coach mező sorrendje'
+        pt: 'Ordem de campo do eco-coach'
+      0x11:
+        unused: true
+      0x12:
+        unused: true
+      0x13:
+        unused: true
+      0x14:
+        unused: true
+      0x15:
+        unused: true
+      0x16:
+        unused: true
+      0x17:
+        unused: true
+      0x18:
+        unused: true
+      0x19:
+        unused: true
+      0x1A:
+        unused: true
+      0x1B:
+        unused: true
+      0x1C:
+        unused: true
+      0x1D:
+        unused: true
+      0x1E:
+        unused: true
+      0x1F:
+        unused: true
+
+  UNUSED_1:
+    bits: '3.2-3.0'
+    unused: true
+
+  HUD_HEIGHT_ADJUSTMENT_REQUEST:
+    bits: '4.7-4.6'
+    comment:
+      en: 'Head-up display (HUD) height adjustment request'
+      fr: 'Demande de réglage de hauteur de l''affichage tête haute (HUD)'
+      es: 'Solicitud de ajuste de altura de la pantalla de proyección (HUD)'
+      de: 'Anforderung zur Höhenverstellung des Head-up-Displays (HUD)'
+      it: 'Richiesta di regolazione dell''altezza dell''head-up display (HUD)'
+      pl: 'Żądanie regulacji wysokości wyświetlacza przezierowego (HUD)'
+      ru: 'Запрос регулировки высоты дисплея на лобовом стекле (HUD)'
+      zh: '抬头显示器(HUD)高度调节请求'
+      hu: 'A head-up kijelző (HUD) magasságállításának kérése'
+      pt: 'Pedido de ajuste de altura do ecrã head-up (HUD)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No command'
+        fr: 'Pas de commande'
+        es: 'Sin comando'
+        de: 'Kein Befehl'
+        it: 'Nessun comando'
+        pl: 'Brak polecenia'
+        ru: 'Нет команды'
+        zh: '无指令'
+        hu: 'Nincs parancs'
+        pt: 'Sem comando'
+      0x01:
+        en: 'Rise command'
+        fr: 'Rise command'
+        es: 'Rise command'
+        de: 'Rise command'
+        it: 'Rise command'
+        pl: 'Rise command'
+        ru: 'Rise command'
+        zh: 'Rise command'
+        hu: 'Rise command'
+        pt: 'Rise command'
+      0x02:
+        en: 'Lower command'
+        fr: 'Commande de descente'
+        es: 'Comando de bajada'
+        de: 'Befehl absenken'
+        it: 'Comando di abbassamento'
+        pl: 'Polecenie opuszczania'
+        ru: 'Команда опускания'
+        zh: '下降命令'
+        hu: 'Süllyesztési parancs'
+        pt: 'Comando de descida'
+      0x03:
+        en: 'Undefined'
+        fr: 'Non défini'
+        es: 'No definido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Niezdefiniowane'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Nincs meghatározva'
+        pt: 'Indefinido'
+
+  HUD_BRIGHTNESS_ADJUSTMENT_REQUEST:
+    bits: '4.5-4.4'
+    comment:
+      en: 'Head-up display (HUD) brightness adjustment request'
+      fr: 'Demande de réglage de luminosité de l''affichage tête haute (HUD)'
+      es: 'Solicitud de ajuste de brillo de la pantalla de proyección (HUD)'
+      de: 'Anforderung zur Helligkeitsregelung des Head-up-Displays (HUD)'
+      it: 'Richiesta di regolazione della luminosità dell''head-up display (HUD)'
+      pl: 'Żądanie regulacji jasności wyświetlacza przezierowego (HUD)'
+      ru: 'Запрос регулировки яркости дисплея на лобовом стекле (HUD)'
+      zh: '抬头显示器(HUD)亮度调节请求'
+      hu: 'A head-up kijelző (HUD) fényerő-állításának kérése'
+      pt: 'Pedido de ajuste de luminosidade do ecrã head-up (HUD)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No command'
+        fr: 'Pas de commande'
+        es: 'Sin comando'
+        de: 'Kein Befehl'
+        it: 'Nessun comando'
+        pl: 'Brak polecenia'
+        ru: 'Нет команды'
+        zh: '无指令'
+        hu: 'Nincs parancs'
+        pt: 'Sem comando'
+      0x01:
+        en: 'Increase command'
+        fr: 'Commande d''augmentation'
+        es: 'Comando de aumento'
+        de: 'Erhöhungsbefehl'
+        it: 'Comando di aumento'
+        pl: 'Polecenie zwiększenia'
+        ru: 'Команда увеличения'
+        zh: '增加指令'
+        hu: 'Növelési parancs'
+        pt: 'Comando de aumento'
+      0x02:
+        en: 'Decrease command'
+        fr: 'Commande de diminution'
+        es: 'Comando de disminución'
+        de: 'Verringerungsbefehl'
+        it: 'Comando di diminuzione'
+        pl: 'Polecenie zmniejszenia'
+        ru: 'Команда уменьшения'
+        zh: '减小指令'
+        hu: 'Csökkentési parancs'
+        pt: 'Comando de diminuição'
+      0x03:
+        en: 'Undefined'
+        fr: 'Non défini'
+        es: 'No definido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Niezdefiniowane'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Nincs meghatározva'
+        pt: 'Indefinido'
+
+  HUD_FOLD_UNFOLD_REQUEST:
+    bits: '4.3'
+    comment:
+      en: 'Head-up display (HUD) folding/unfolding request'
+      fr: 'Demande de rabattement/déploiement de l''affichage tête haute (HUD)'
+      es: 'Solicitud de plegado/despliegue de la pantalla de proyección (HUD)'
+      de: 'Anforderung zum Ein-/Ausfahren des Head-up-Displays (HUD)'
+      it: 'Richiesta di ripiegamento/dispiegamento dell''head-up display (HUD)'
+      pl: 'Żądanie schowania/wysunięcia wyświetlacza przezierowego (HUD)'
+      ru: 'Запрос складывания/раскладывания дисплея на лобовом стекле (HUD)'
+      zh: '抬头显示器(HUD)收起/展开请求'
+      hu: 'A head-up kijelző (HUD) be-/kihajtásának kérése'
+      pt: 'Pedido de dobragem/desdobragem do ecrã head-up (HUD)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No command'
+        fr: 'Pas de commande'
+        es: 'Sin comando'
+        de: 'Kein Befehl'
+        it: 'Nessun comando'
+        pl: 'Brak polecenia'
+        ru: 'Нет команды'
+        zh: '无指令'
+        hu: 'Nincs parancs'
+        pt: 'Sem comando'
+      0x01:
+        en: 'Command'
+        fr: 'Commande'
+        es: 'Comando'
+        de: 'Befehl'
+        it: 'Comando'
+        pl: 'Polecenie'
+        ru: 'Команда'
+        zh: '命令'
+        hu: 'Parancs'
+        pt: 'Comando'
+
+  UNUSED_2:
+    bits: '4.2-4.0'
+    unused: true

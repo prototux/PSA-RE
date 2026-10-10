@@ -1,0 +1,201 @@
+id: 0x8C4
+name: 'AIR_CONDITIONING_EVENT'
+type: 'van'
+length: 3
+comment:
+  en: 'Event notification from the climate control unit to the display, telling it to read the climate status frame.'
+  fr: 'Notification d''événement de la climatisation vers l''écran, l''invitant à lire la trame d''état climatisation.'
+  es: 'Notificación de evento del climatizador hacia la pantalla, indicándole que lea la trama de estado del climatizador.'
+  de: 'Ereignisbenachrichtigung der Klimaanlage an das Display, das zum Lesen des Klimastatusrahmens auffordert.'
+  it: 'Notifica di evento del climatizzatore verso il display, che lo invita a leggere la trama di stato del climatizzatore.'
+  pl: 'Powiadomienie o zdarzeniu klimatyzacji do wyświetlacza, informujące o konieczności odczytu ramki stanu klimatyzacji.'
+  ru: 'Уведомление о событии кондиционера для дисплея, предписывающее считать кадр состояния кондиционера.'
+  zh: '空调向显示屏发送的事件通知,提示读取空调状态帧。'
+  hu: 'A klíma esemény-értesítése a kijelző felé, amely a klímaállapot-keret beolvasására utasít.'
+  pt: 'Notificação de evento da unidade de climatização para o visor, indicando-lhe para ler a trama de estado da climatização.'
+periodicity: ['trigger']
+senders: ['CLIM_AV']
+receivers: ['EMF']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  MAIN_EVENT_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Main event present (generic)'
+      fr: 'Événement principal présent (générique)'
+      es: 'Evento principal presente (genérico)'
+      de: 'Hauptereignis vorhanden (generisch)'
+      it: 'Evento principale presente (generico)'
+      pl: 'Obecne zdarzenie główne (ogólne)'
+      ru: 'Присутствует основное событие (общее)'
+      zh: '存在主要事件(通用)'
+      hu: 'Fő esemény jelen van (általános)'
+      pt: 'Evento principal presente (genérico)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Absent'
+        fr: 'Absence'
+        es: 'Ausente'
+        de: 'Nicht vorhanden'
+        it: 'Assente'
+        pl: 'Nieobecny'
+        ru: 'Отсутствует'
+        zh: '不存在'
+        hu: 'Hiányzik'
+        pt: 'Ausente'
+      0x01:
+        en: 'Present'
+        fr: 'Présence'
+        es: 'Presencia'
+        de: 'Vorhanden'
+        it: 'Presenza'
+        pl: 'Obecność'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presença'
+
+  SECONDARY_EVENT_STATUS:
+    bits: '1.6'
+    comment:
+      en: 'Secondary event present (lower priority, generic)'
+      fr: 'Événement secondaire présent (priorité basse, générique)'
+      es: 'Evento secundario presente (prioridad baja, genérico)'
+      de: 'Sekundäres Ereignis vorhanden (niedrigere Priorität, generisch)'
+      it: 'Evento secondario presente (priorità bassa, generico)'
+      pl: 'Obecne zdarzenie drugorzędne (niższy priorytet, ogólne)'
+      ru: 'Присутствует вторичное событие (низкий приоритет, общее)'
+      zh: '存在次要事件(低优先级,通用)'
+      hu: 'Másodlagos esemény jelen van (alacsonyabb prioritású, általános)'
+      pt: 'Evento secundário presente (prioridade baixa, genérico)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not present'
+        fr: 'Non présent'
+        es: 'No presente'
+        de: 'Nicht vorhanden'
+        it: 'Non presente'
+        pl: 'Nieobecne'
+        ru: 'Отсутствует'
+        zh: '不存在'
+        hu: 'Nincs jelen'
+        pt: 'Não presente'
+      0x01:
+        en: 'Present'
+        fr: 'Présent'
+        es: 'Presente'
+        de: 'Vorhanden'
+        it: 'Presente'
+        pl: 'Obecny'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presente'
+
+  UNUSED_1:
+    bits: '1.5'
+    unused: true
+
+  EVENT_SOURCE:
+    bits: '1.4-1.0'
+    comment:
+      en: 'Event source (generic)'
+      fr: 'Source de l''événement (générique)'
+      es: 'Fuente del evento (genérica)'
+      de: 'Ereignisquelle (generisch)'
+      it: 'Sorgente dell''evento (generica)'
+      pl: 'Źródło zdarzenia (ogólne)'
+      ru: 'Источник события (общий)'
+      zh: '事件来源(通用)'
+      hu: 'Esemény forrása (általános)'
+      pt: 'Fonte do evento (genérica)'
+    type: 'enum'
+    default: 0x00
+    mux_selector: true
+    values:
+      0x07:
+        en: 'Navigation'
+        fr: 'Navigation'
+        es: 'Navegación'
+        de: 'Navigation'
+        it: 'Navigazione'
+        pl: 'Nawigacja'
+        ru: 'Навигация'
+        zh: '导航'
+        hu: 'Navigáció'
+        pt: 'Navegação'
+      0x0A:
+        en: 'Car radio'
+        fr: 'Autoradio'
+        es: 'Autorradio'
+        de: 'Autoradio'
+        it: 'Autoradio'
+        pl: 'Radioodbiornik samochodowy'
+        ru: 'Автомагнитола'
+        zh: '车载收音机'
+        hu: 'Autórádió'
+        pt: 'Autorrádio'
+      0x0E:
+        en: 'Air conditioning'
+        fr: 'Climatisation'
+        es: 'Aire acondicionado'
+        de: 'Klimaanlage'
+        it: 'Climatizzatore'
+        pl: 'Klimatyzacja'
+        ru: 'Кондиционер'
+        zh: '空调'
+        hu: 'Légkondicionálás'
+        pt: 'Ar condicionado'
+      0x12:
+        en: 'BSI (body controller)'
+        fr: 'BSI (contrôleur de carrosserie)'
+        es: 'BSI (controlador de carrocería)'
+        de: 'BSI (Aufbausteuergerät)'
+        it: 'BSI (centralina carrozzeria)'
+        pl: 'BSI (sterownik nadwozia)'
+        ru: 'BSI (блок управления кузовом)'
+        zh: 'BSI(车身控制器)'
+        hu: 'BSI (karosszéria-vezérlő)'
+        pt: 'BSI (controlador de carroçaria)'
+      0x14:
+        en: 'Parking aid'
+        fr: 'Aide au stationnement'
+        es: 'Ayuda al estacionamiento'
+        de: 'Einparkhilfe'
+        it: 'Assistenza al parcheggio'
+        pl: 'Wspomaganie parkowania'
+        ru: 'Помощь при парковке'
+        zh: '泊车辅助'
+        hu: 'Parkolássegítő'
+        pt: 'Ajuda ao estacionamento'
+      0x16:
+        en: 'CD changer'
+        fr: 'Lecteur multidisques compact (changeur CD)'
+        es: 'Cambiador de CD'
+        de: 'CD-Wechsler'
+        it: 'Cambia CD'
+        pl: 'Zmieniarka CD'
+        ru: 'CD-чейнджер'
+        zh: 'CD 换碟机'
+        hu: 'CD-váltó'
+        pt: 'Carregador de CD'
+      0x1A:
+        en: 'Radiotelephone'
+        fr: 'Radio téléphone'
+        es: 'Radioteléfono'
+        de: 'Autotelefon'
+        it: 'Radiotelefono'
+        pl: 'Radiotelefon'
+        ru: 'Радиотелефон'
+        zh: '无线电话'
+        hu: 'Rádiótelefon'
+        pt: 'Radiotelefone'

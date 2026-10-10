@@ -1,0 +1,734 @@
+id: 0x452
+name: 'CRUISE_CONTROL_COMMAND_DATA'
+type: 'can'
+length: 6
+comment:
+  en: 'Wiper command sent to the ESP/dynamics unit: front wiper and washer state, cabin activation flag.'
+  fr: 'Commande d''essuyage envoyée à l''unité ESP/dynamique : état essuie-glace et lave-glace avant, indicateur d''activation habitacle.'
+  es: 'Comando de limpiaparabrisas enviado a la unidad ESP/dinámica: estado del limpiaparabrisas y lavaparabrisas delantero, indicador de activación del habitáculo.'
+  de: 'Wischerbefehl an die ESP-/Fahrdynamikeinheit: Zustand von Frontwischer und -wäscher, Aktivierungskennzeichen Innenraum.'
+  it: 'Comando tergicristallo inviato all''unità ESP/dinamica: stato tergicristallo e lavavetro anteriore, indicatore di attivazione abitacolo.'
+  pl: 'Polecenie wycieraczek wysyłane do jednostki ESP/dynamiki: stan wycieraczki i spryskiwacza przedniego, flaga aktywacji kabiny.'
+  ru: 'Команда стеклоочистителя, отправляемая блоку ESP/динамики: состояние переднего стеклоочистителя и омывателя, флаг активации салона.'
+  zh: '发送给ESP/动态单元的雨刮命令:前雨刮和洗涤器状态、座舱激活标志。'
+  hu: 'Az ESP/dinamikai egységnek küldött törlőparancs: az első ablaktörlő és mosó állapota, utastér aktiválási jelző.'
+  pt: 'Comando do limpa-para-brisas enviado à unidade ESP/dinâmica: estado do limpa e lava-para-brisas dianteiro, indicador de ativação do habitáculo.'
+periodicity: ['50ms']
+senders: ['BSI']
+receivers: ['CVM', 'ARTIV', 'BSM', 'CMM', 'ABS']
+
+signals:
+  FRONT_WIPER_STATE:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Front wiper state (off, confirmed wipe, low speed, high speed), sent when a rain sensor is fitted'
+      fr: 'État des essuie-glaces avant (arrêt, essuyage confirmé, petite vitesse, grande vitesse), émis en présence d''un capteur de pluie'
+      es: 'Estado de los limpiaparabrisas delanteros (parado, barrido confirmado, velocidad baja, velocidad alta), emitido cuando hay sensor de lluvia'
+      de: 'Zustand der Frontscheibenwischer (aus, bestätigter Wischvorgang, niedrige Geschwindigkeit, hohe Geschwindigkeit), gesendet bei vorhandenem Regensensor'
+      it: 'Stato dei tergicristalli anteriori (spento, tergitura confermata, bassa velocità, alta velocità), inviato in presenza di un sensore pioggia'
+      pl: 'Stan wycieraczek przednich (wyłączone, potwierdzone wycieranie, mała prędkość, duża prędkość), wysyłany przy zamontowanym czujniku deszczu'
+      ru: 'Состояние передних стеклоочистителей (выключены, подтверждённая протирка, низкая скорость, высокая скорость), передаётся при наличии датчика дождя'
+      zh: '前雨刷状态(停止、确认刮水、低速、高速),在装有雨量传感器时发送'
+      hu: 'Az első ablaktörlők állapota (leállítva, megerősített törlés, alacsony sebesség, magas sebesség), esőérzékelő megléte esetén küldve'
+      pt: 'Estado dos limpa-para-brisas dianteiros (parado, limpeza confirmada, velocidade baixa, velocidade alta), emitido na presença de um sensor de chuva'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Stop'
+        fr: 'Arrêt'
+        es: 'Parada'
+        de: 'Stopp'
+        it: 'Arresto'
+        pl: 'Zatrzymanie'
+        ru: 'Остановка'
+        zh: '停止'
+        hu: 'Leállás'
+        pt: 'Parar'
+      0x01:
+        en: 'Front wiping confirmed'
+        fr: 'Essuyage avant confirmé'
+        es: 'Limpieza delantera confirmada'
+        de: 'Vorderer Scheibenwischer bestätigt'
+        it: 'Tergitura anteriore confermata'
+        pl: 'Potwierdzone wycieranie przednie'
+        ru: 'Подтверждена работа передних дворников'
+        zh: '前刮水已确认'
+        hu: 'Első ablaktörlés megerősítve'
+        pt: 'Limpeza dianteira confirmada'
+      0x02:
+        en: 'Low speed'
+        fr: 'Petite vitesse'
+        es: 'Velocidad baja'
+        de: 'Niedrige Geschwindigkeit'
+        it: 'Velocità bassa'
+        pl: 'Mała prędkość'
+        ru: 'Низкая скорость'
+        zh: '低速'
+        hu: 'Alacsony sebesség'
+        pt: 'Baixa velocidade'
+      0x03:
+        en: 'High speed'
+        fr: 'Grande vitesse'
+        es: 'Alta velocidad'
+        de: 'Hohe Geschwindigkeit'
+        it: 'Alta velocità'
+        pl: 'Duża prędkość'
+        ru: 'Высокая скорость'
+        zh: '高速'
+        hu: 'Nagy sebesség'
+        pt: 'Alta velocidade'
+
+  BLINKERS_STATUS:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Turn indicator state'
+      fr: 'État des clignotants'
+      es: 'Estado de los intermitentes'
+      de: 'Zustand der Blinker'
+      it: 'Stato degli indicatori di direzione'
+      pl: 'Stan kierunkowskazów'
+      ru: 'Состояние указателей поворота'
+      zh: '转向灯状态'
+      hu: 'Irányjelzők állapota'
+      pt: 'Estado dos piscas'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Indicator not active'
+        fr: 'Clignotant inactif'
+        es: 'Intermitente inactivo'
+        de: 'Blinker inaktiv'
+        it: 'Indicatore di direzione inattivo'
+        pl: 'Kierunkowskaz nieaktywny'
+        ru: 'Указатель поворота неактивен'
+        zh: '转向灯未激活'
+        hu: 'Index nem aktív'
+        pt: 'Indicador não ativo'
+      0x01:
+        en: 'Right indicator active'
+        fr: 'Clignotant droit actif'
+        es: 'Intermitente derecho activo'
+        de: 'Rechter Blinker aktiv'
+        it: 'Indicatore di direzione destro attivo'
+        pl: 'Aktywny prawy kierunkowskaz'
+        ru: 'Правый указатель поворота активен'
+        zh: '右转向灯激活'
+        hu: 'A jobb irányjelző aktív'
+        pt: 'Pisca direito ativo'
+      0x02:
+        en: 'Left indicator active'
+        fr: 'Clignotant gauche actif'
+        es: 'Intermitente izquierdo activo'
+        de: 'Blinker links aktiv'
+        it: 'Indicatore sinistro attivo'
+        pl: 'Lewy kierunkowskaz aktywny'
+        ru: 'Левый указатель поворота активен'
+        zh: '左转向灯激活'
+        hu: 'Bal index aktív'
+        pt: 'Pisca esquerdo ativo'
+      0x03:
+        en: 'Left and right indicators both active'
+        fr: 'Clignotants gauche et droit actifs'
+        es: 'Intermitentes izquierdo y derecho activos'
+        de: 'Linker und rechter Blinker aktiv'
+        it: 'Indicatori sinistro e destro attivi'
+        pl: 'Aktywne oba kierunkowskazy, lewy i prawy'
+        ru: 'Активны левый и правый указатели поворота'
+        zh: '左右转向灯同时激活'
+        hu: 'A bal és a jobb irányjelző is aktív'
+        pt: 'Piscas esquerdo e direito ambos ativos'
+
+  UNUSED_1:
+    bits: '1.3-1.2'
+    unused: true
+
+  LONGITUDINAL_REGULATION_TYPE:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Longitudinal speed regulation type in use (none, cruise control, speed limiter, adaptive cruise control)'
+      fr: 'Type de régulation longitudinale en cours (aucune, régulateur de vitesse, limiteur de vitesse, régulateur adaptatif)'
+      es: 'Tipo de regulación longitudinal en curso (ninguna, control de crucero, limitador de velocidad, control de crucero adaptativo)'
+      de: 'Aktueller Typ der Längsgeschwindigkeitsregelung (keine, Tempomat, Geschwindigkeitsbegrenzer, adaptiver Tempomat)'
+      it: 'Tipo di regolazione longitudinale in corso (nessuna, cruise control, limitatore di velocità, cruise control adattivo)'
+      pl: 'Aktualny rodzaj regulacji wzdłużnej (brak, tempomat, ogranicznik prędkości, tempomat adaptacyjny)'
+      ru: 'Текущий тип продольного регулирования скорости (нет, круиз-контроль, ограничитель скорости, адаптивный круиз-контроль)'
+      zh: '当前使用的纵向速度调节类型(无、巡航控制、限速器、自适应巡航控制)'
+      hu: 'A jelenleg használt hosszirányú sebességszabályozás típusa (nincs, tempomat, sebességhatároló, adaptív tempomat)'
+      pt: 'Tipo de regulação longitudinal em curso (nenhuma, regulador de velocidade, limitador de velocidade, regulador adaptativo)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None (no longitudinal control)'
+        fr: 'Aucune (pas de régulation longitudinale)'
+        es: 'Ninguna (sin regulación longitudinal)'
+        de: 'Keine (keine Längsregelung)'
+        it: 'Nessuna (nessuna regolazione longitudinale)'
+        pl: 'Brak (brak regulacji podłużnej)'
+        ru: 'Нет (нет продольного регулирования)'
+        zh: '无(无纵向调节)'
+        hu: 'Nincs (nincs hosszirányú szabályozás)'
+        pt: 'Nenhum (sem controlo longitudinal)'
+      0x01:
+        en: 'cruise control: vehicle speed regulator (cruise control)'
+        fr: 'cruise control : régulateur de vitesse véhicule'
+        es: 'cruise control: regulador de velocidad del vehículo'
+        de: 'cruise control: Fahrzeuggeschwindigkeitsregler'
+        it: 'cruise control: regolatore di velocità del veicolo'
+        pl: 'cruise control: regulator prędkości pojazdu'
+        ru: 'cruise control: регулятор скорости автомобиля'
+        zh: 'cruise control:车速调节器(定速巡航)'
+        hu: 'cruise control: járműsebesség-szabályozó (tempomat)'
+        pt: 'cruise control: regulador de velocidade do veículo'
+      0x02:
+        en: 'speed limiter: vehicle speed limiter'
+        fr: 'speed limiter : limiteur de vitesse véhicule'
+        es: 'speed limiter: limitador de velocidad del vehículo'
+        de: 'speed limiter: Fahrzeuggeschwindigkeitsbegrenzer'
+        it: 'speed limiter: limitatore di velocità del veicolo'
+        pl: 'speed limiter: ogranicznik prędkości pojazdu'
+        ru: 'speed limiter: ограничитель скорости автомобиля'
+        zh: 'speed limiter：车速限制器'
+        hu: 'speed limiter: jármű sebességhatároló'
+        pt: 'speed limiter: limitador de velocidade do veículo'
+      0x03:
+        en: 'ACC: automatic vehicle speed regulator'
+        fr: 'ACC : régulateur de vitesse véhicule automatique'
+        es: 'ACC: regulador de velocidad automático del vehículo'
+        de: 'ACC: automatischer Fahrzeuggeschwindigkeitsregler'
+        it: 'ACC: regolatore di velocità automatico del veicolo'
+        pl: 'ACC: automatyczny regulator prędkości pojazdu'
+        ru: 'ACC: автоматический регулятор скорости автомобиля'
+        zh: 'ACC:车辆自动限速调节器'
+        hu: 'ACC: automatikus járműsebesség-szabályozó'
+        pt: 'ACC: regulador automático de velocidade do veículo'
+
+  VEHICLE_SPEED_SETPOINT_OR_LIMIT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Vehicle speed setpoint or limit, depending on the requested speed type bit'
+      fr: 'Consigne ou limite de vitesse véhicule, selon le bit de type de vitesse demandée'
+      es: 'Consigna o límite de velocidad del vehículo, según el bit de tipo de velocidad solicitada'
+      de: 'Fahrzeuggeschwindigkeitssollwert oder -grenze, abhängig vom Bit für den angeforderten Geschwindigkeitstyp'
+      it: 'Valore di riferimento o limite di velocità veicolo, in base al bit del tipo di velocità richiesta'
+      pl: 'Wartość zadana lub granica prędkości pojazdu, zależnie od bitu typu żądanej prędkości'
+      ru: 'Заданное значение или предел скорости автомобиля, в зависимости от бита типа запрошенной скорости'
+      zh: '车速设定值或限值,取决于所请求速度类型位'
+      hu: 'A jármű sebesség-alapjele vagy -korlátja, a kért sebességtípus bitjétől függően'
+      pt: 'Consigna ou limite de velocidade do veículo, consoante o bit de tipo de velocidade solicitada'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 255
+    units: 'km/h'
+    default: 0xFF
+
+  CRUISE_CONTROL_ACC_ACTIVATION_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Cruise control/adaptive cruise control (cruise control/ACC) activation request'
+      fr: 'Demande d''activation du régulateur de vitesse / régulateur adaptatif (cruise control/ACC)'
+      es: 'Solicitud de activación del control de crucero / control de crucero adaptativo (cruise control/ACC)'
+      de: 'Aktivierungsanforderung des Tempomats / adaptiven Tempomats (cruise control/ACC)'
+      it: 'Richiesta di attivazione del cruise control / cruise control adattivo (cruise control/ACC)'
+      pl: 'Żądanie aktywacji tempomatu / tempomatu adaptacyjnego (cruise control/ACC)'
+      ru: 'Запрос активации круиз-контроля / адаптивного круиз-контроля (cruise control/ACC)'
+      zh: '巡航控制/自适应巡航控制(cruise control/ACC)激活请求'
+      hu: 'A tempomat/adaptív tempomat (cruise control/ACC) aktiválási kérése'
+      pt: 'Pedido de ativação do regulador de velocidade / regulador adaptativo (cruise control/ACC)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No cruise control or ACC activation request'
+        fr: 'Pas de demande d''activation du cruise control ou de l''ACC'
+        es: 'Sin solicitud de activación del cruise control o del ACC'
+        de: 'Keine Aktivierungsanforderung von cruise control oder ACC'
+        it: 'Nessuna richiesta di attivazione cruise control o ACC'
+        pl: 'Brak żądania aktywacji cruise control lub ACC'
+        ru: 'Нет запроса на активацию cruise control или ACC'
+        zh: '无RVV或ACC激活请求'
+        hu: 'Nincs cruise control vagy ACC aktiválási kérés'
+        pt: 'Sem pedido de ativação do cruise control ou do ACC'
+      0x01:
+        en: 'Cruise control or ACC activation request'
+        fr: 'Demande d''activation du régulateur de vitesse ou de l''ACC'
+        es: 'Solicitud de activación del control de crucero o ACC'
+        de: 'Anforderung zur Aktivierung von Tempomat oder ACC'
+        it: 'Richiesta di attivazione del cruise control o dell''ACC'
+        pl: 'Żądanie aktywacji tempomatu lub ACC'
+        ru: 'Запрос активации круиз-контроля или ACC'
+        zh: '巡航控制或ACC激活请求'
+        hu: 'Tempomat vagy ACC aktiválási kérés'
+        pt: 'Pedido de ativação do regulador de velocidade ou do ACC'
+
+  SPEED_LIMITER_ACTIVATION_REQUEST:
+    bits: '3.6'
+    comment:
+      en: 'Speed limiter (speed limiter) activation request'
+      fr: 'Demande d''activation du limiteur de vitesse (speed limiter)'
+      es: 'Solicitud de activación del limitador de velocidad (speed limiter)'
+      de: 'Aktivierungsanforderung des Geschwindigkeitsbegrenzers (speed limiter)'
+      it: 'Richiesta di attivazione del limitatore di velocità (speed limiter)'
+      pl: 'Żądanie aktywacji ogranicznika prędkości (speed limiter)'
+      ru: 'Запрос активации ограничителя скорости (speed limiter)'
+      zh: '限速器(speed limiter)激活请求'
+      hu: 'A sebességhatároló (speed limiter) aktiválási kérése'
+      pt: 'Pedido de ativação do limitador de velocidade (speed limiter)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No speed limiter activation request'
+        fr: 'Pas de demande d''activation du speed limiter'
+        es: 'Sin solicitud de activación del speed limiter'
+        de: 'Keine speed limiter-Aktivierungsanforderung'
+        it: 'Nessuna richiesta di attivazione del speed limiter'
+        pl: 'Brak żądania aktywacji speed limiter'
+        ru: 'Запрос активации speed limiter отсутствует'
+        zh: '无LVV激活请求'
+        hu: 'Nincs speed limiter aktiválási kérés'
+        pt: 'Sem pedido de ativação do speed limiter'
+      0x01:
+        en: 'speed limiter (speed limiter) activation request'
+        fr: 'Demande d''activation du speed limiter (limiteur de vitesse)'
+        es: 'Solicitud de activación del speed limiter (limitador de velocidad)'
+        de: 'Aktivierungsanforderung des speed limiter (Geschwindigkeitsbegrenzer)'
+        it: 'Richiesta di attivazione del speed limiter (limitatore di velocità)'
+        pl: 'Żądanie aktywacji speed limiter (ogranicznika prędkości)'
+        ru: 'Запрос активации speed limiter (ограничителя скорости)'
+        zh: 'speed limiter(限速器)激活请求'
+        hu: 'Az speed limiter (sebességhatároló) aktiválási kérése'
+        pt: 'Pedido de ativação do speed limiter (limitador de velocidade)'
+
+  UNUSED_2:
+    bits: '3.5-3.3'
+    unused: true
+
+  BRAKE_ONLY_REQUEST_BSI:
+    bits: '3.2'
+    comment:
+      en: 'Brake-only request from the BSI'
+      fr: 'Frein seul demandé par la BSI'
+      es: 'Solicitud de frenado únicamente por parte de la BSI'
+      de: 'Nur-Bremsen-Anforderung von der BSI'
+      it: 'Richiesta di solo freno dalla BSI'
+      pl: 'Żądanie samego hamowania przez BSI'
+      ru: 'Запрос только торможения от BSI'
+      zh: 'BSI发出的仅制动请求'
+      hu: 'Csak fékezés kérése a BSI részéről'
+      pt: 'Pedido de travagem exclusiva da BSI'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Brake-only request not made by BSI'
+        fr: 'Demande de frein seul non émise par le BSI'
+        es: 'Solicitud de solo freno no emitida por el BSI'
+        de: 'Anforderung „nur Bremse" nicht vom BSI gestellt'
+        it: 'Richiesta di solo freno non emessa dal BSI'
+        pl: 'Żądanie samego hamowania niewystawione przez BSI'
+        ru: 'Запрос «только тормоз» не от BSI'
+        zh: '非BSI发出的仅制动请求'
+        hu: 'A csak fékezés kérést nem a BSI adta ki'
+        pt: 'Pedido de travão só não emitido pela BSI'
+      0x01:
+        en: 'Brake-only request by the body computer'
+        fr: 'Frein seul demandé par le BSI'
+        es: 'Solo freno solicitado por la BSI'
+        de: 'Nur Bremse angefordert vom BSI'
+        it: 'Solo freno richiesto dal BSI'
+        pl: 'Żądanie tylko hamowania przez BSI'
+        ru: 'Только торможение, запрошено BSI'
+        zh: '车身控制器仅请求制动'
+        hu: 'Csak fékezést kér a BSI'
+        pt: 'Pedido de apenas travão pelo computador de servidão'
+
+  CRUISE_CONTROL_SPEED_LIMITER_SETPOINT_CHECKSUM:
+    bits: '3.1-3.0'
+    comment:
+      en: 'Checksum securing the cruise-control (cruise control) or speed-limiter (speed limiter) setpoint signal (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+      fr: 'Somme de contrôle sécurisant le signal de consigne du régulateur (cruise control) ou du limiteur (speed limiter) de vitesse (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+      es: 'Suma de comprobación que protege la señal de consigna del regulador (cruise control) o del limitador (speed limiter) de velocidad (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+      de: 'Prüfsumme zur Absicherung des Tempomat- (cruise control) oder Begrenzer- (speed limiter) Sollwertsignals (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+      it: 'Checksum a protezione del segnale di setpoint del regolatore (cruise control) o limitatore (speed limiter) di velocità (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+      pl: 'Suma kontrolna zabezpieczająca sygnał wartości zadanej tempomatu (cruise control) lub ogranicznika (speed limiter) prędkości (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+      ru: 'Контрольная сумма, защищающая сигнал уставки круиз-контроля (cruise control) или ограничителя скорости (speed limiter) (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+      zh: '用于保护巡航控制(cruise control)或限速(speed limiter)设定值信号(VEHICLE_SPEED_SETPOINT_OR_LIMIT)的校验和'
+      hu: 'A sebességtartó (cruise control) vagy sebességhatároló (speed limiter) alapérték jelének (VEHICLE_SPEED_SETPOINT_OR_LIMIT) ellenőrző összege'
+      pt: 'Soma de verificação que protege o sinal de consigna do regulador (cruise control) ou do limitador (speed limiter) de velocidade (VEHICLE_SPEED_SETPOINT_OR_LIMIT)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Most-significant nibble of VEHICLE_SPEED_SETPOINT_OR_LIMIT is even AND least-significant nibble is even'
+        fr: 'Quartet de poids fort de VEHICLE_SPEED_SETPOINT_OR_LIMIT pair ET quartet de poids faible pair'
+        es: 'Nibble más significativo de VEHICLE_SPEED_SETPOINT_OR_LIMIT par Y nibble menos significativo par'
+        de: 'Höherwertiges Nibble von VEHICLE_SPEED_SETPOINT_OR_LIMIT gerade UND niederwertiges Nibble gerade'
+        it: 'Nibble più significativo di VEHICLE_SPEED_SETPOINT_OR_LIMIT pari E nibble meno significativo pari'
+        pl: 'Starszy pół-bajt VEHICLE_SPEED_SETPOINT_OR_LIMIT parzysty ORAZ młodszy pół-bajt parzysty'
+        ru: 'Старший полубайт VEHICLE_SPEED_SETPOINT_OR_LIMIT чётный И младший полубайт чётный'
+        zh: 'CONS_LIM_VITESSE_VEH高半字节为偶数且低半字节为偶数'
+        hu: 'A VEHICLE_SPEED_SETPOINT_OR_LIMIT magasabb helyértékű fél bájtja páros ÉS az alacsonyabb is páros'
+        pt: 'Nibble mais significativo de VEHICLE_SPEED_SETPOINT_OR_LIMIT par E nibble menos significativo par'
+      0x01:
+        en: 'VEHICLE_SPEED_SETPOINT_OR_LIMIT high nibble is even AND low nibble is odd'
+        fr: 'Le quartet de poids fort de VEHICLE_SPEED_SETPOINT_OR_LIMIT est pair ET le quartet de poids faible est impair'
+        es: 'El nibble alto de VEHICLE_SPEED_SETPOINT_OR_LIMIT es par Y el nibble bajo es impar'
+        de: 'Das höherwertige Nibble von VEHICLE_SPEED_SETPOINT_OR_LIMIT ist gerade UND das niederwertige Nibble ist ungerade'
+        it: 'Il nibble più significativo di VEHICLE_SPEED_SETPOINT_OR_LIMIT è pari E il nibble meno significativo è dispari'
+        pl: 'Starsza tetrada VEHICLE_SPEED_SETPOINT_OR_LIMIT jest parzysta ORAZ młodsza tetrada jest nieparzysta'
+        ru: 'Старший полубайт VEHICLE_SPEED_SETPOINT_OR_LIMIT чётный И младший полубайт нечётный'
+        zh: 'CONS_LIM_VITESSE_VEH高半字节为偶数且低半字节为奇数'
+        hu: 'A VEHICLE_SPEED_SETPOINT_OR_LIMIT felső fél bájtja páros ÉS az alsó fél bájtja páratlan'
+        pt: 'O nibble de maior peso de VEHICLE_SPEED_SETPOINT_OR_LIMIT é par E o nibble de menor peso é ímpar'
+      0x02:
+        en: 'Most significant nibble of VEHICLE_SPEED_SETPOINT_OR_LIMIT is odd AND least significant nibble of VEHICLE_SPEED_SETPOINT_OR_LIMIT is even'
+        fr: 'Quartet de poids fort de VEHICLE_SPEED_SETPOINT_OR_LIMIT impair ET quartet de poids faible de VEHICLE_SPEED_SETPOINT_OR_LIMIT pair'
+        es: 'Cuarteto de mayor peso de VEHICLE_SPEED_SETPOINT_OR_LIMIT impar Y cuarteto de menor peso de VEHICLE_SPEED_SETPOINT_OR_LIMIT par'
+        de: 'Höherwertiges Nibble von VEHICLE_SPEED_SETPOINT_OR_LIMIT ungerade UND niederwertiges Nibble von VEHICLE_SPEED_SETPOINT_OR_LIMIT gerade'
+        it: 'Nibble più significativo di VEHICLE_SPEED_SETPOINT_OR_LIMIT dispari E nibble meno significativo di VEHICLE_SPEED_SETPOINT_OR_LIMIT pari'
+        pl: 'Starszy pół-bajt VEHICLE_SPEED_SETPOINT_OR_LIMIT nieparzysty ORAZ młodszy pół-bajt VEHICLE_SPEED_SETPOINT_OR_LIMIT parzysty'
+        ru: 'Старший полубайт VEHICLE_SPEED_SETPOINT_OR_LIMIT нечётный И младший полубайт VEHICLE_SPEED_SETPOINT_OR_LIMIT чётный'
+        zh: 'CONS_LIM_VITESSE_VEH高位半字节为奇数且低位半字节为偶数'
+        hu: 'A VEHICLE_SPEED_SETPOINT_OR_LIMIT felső fél-bájtja páratlan ÉS az alsó fél-bájtja páros'
+        pt: 'O nibble mais significativo de VEHICLE_SPEED_SETPOINT_OR_LIMIT é ímpar E o nibble menos significativo de VEHICLE_SPEED_SETPOINT_OR_LIMIT é par'
+      0x03:
+        en: 'Most significant nibble of VEHICLE_SPEED_SETPOINT_OR_LIMIT is odd AND least significant nibble is odd'
+        fr: 'Quartet de poids fort de VEHICLE_SPEED_SETPOINT_OR_LIMIT impair ET quartet de poids faible impair'
+        es: 'Cuarteto de mayor peso de VEHICLE_SPEED_SETPOINT_OR_LIMIT impar Y cuarteto de menor peso impar'
+        de: 'Höherwertiges Nibble von VEHICLE_SPEED_SETPOINT_OR_LIMIT ungerade UND niederwertiges Nibble ungerade'
+        it: 'Nibble più significativo di VEHICLE_SPEED_SETPOINT_OR_LIMIT dispari E nibble meno significativo dispari'
+        pl: 'Starszy pół-bajt VEHICLE_SPEED_SETPOINT_OR_LIMIT nieparzysty ORAZ młodszy pół-bajt nieparzysty'
+        ru: 'Старший полубайт VEHICLE_SPEED_SETPOINT_OR_LIMIT нечётный И младший полубайт нечётный'
+        zh: 'CONS_LIM_VITESSE_VEH的高位半字节为奇数且低位半字节为奇数'
+        hu: 'A VEHICLE_SPEED_SETPOINT_OR_LIMIT legjelentősebb fél bájtja páratlan ÉS a legkevésbé jelentős fél bájtja páratlan'
+        pt: 'Nibble de maior peso de VEHICLE_SPEED_SETPOINT_OR_LIMIT ímpar E nibble de menor peso ímpar'
+
+  BSI_FRAME_COUNTER_2:
+    bits: '4.7-4.4'
+    comment:
+      en: 'BSI frame counter (2)'
+      fr: 'Compteur de trame BSI (2)'
+      es: 'Contador de tramas de la BSI (2)'
+      de: 'BSI-Framezähler (2)'
+      it: 'Contatore di frame BSI (2)'
+      pl: 'Licznik ramek BSI (2)'
+      ru: 'Счётчик кадров BSI (2)'
+      zh: 'BSI帧计数器(2)'
+      hu: 'BSI keretszámláló (2)'
+      pt: 'Contador de tramas do BSI (2)'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ARC_ACTIVATION_REQUEST:
+    bits: '4.3'
+    comment:
+      en: 'ARC activation request'
+      fr: 'Demande d''activation de l''ARC'
+      es: 'Solicitud de activación del ARC'
+      de: 'ARC-Aktivierungsanforderung'
+      it: 'Richiesta di attivazione dell''ARC'
+      pl: 'Żądanie aktywacji ARC'
+      ru: 'Запрос активации ARC'
+      zh: 'ARC激活请求'
+      hu: 'ARC aktiválási kérés'
+      pt: 'Pedido de ativação do ARC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'ARC deactivation'
+        fr: 'Désactivation de l''ARC'
+        es: 'Desactivación del ARC'
+        de: 'ARC-Deaktivierung'
+        it: 'Disattivazione dell''ARC'
+        pl: 'Dezaktywacja ARC'
+        ru: 'Деактивация ARC'
+        zh: 'ARC关闭'
+        hu: 'ARC kikapcsolása'
+        pt: 'Desativação do ARC'
+      0x01:
+        en: 'ARC activation'
+        fr: 'Activation ARC'
+        es: 'Activación ARC'
+        de: 'ARC-Aktivierung'
+        it: 'Attivazione ARC'
+        pl: 'Aktywacja ARC'
+        ru: 'Активация ARC'
+        zh: 'ARC激活'
+        hu: 'ARC aktiválás'
+        pt: 'Ativação do ARC'
+
+  ARC_SENSITIVITY_LEVEL:
+    bits: '4.2-4.0'
+    comment:
+      en: 'ARC sensitivity level'
+      fr: 'Niveau de sensibilité de l''ARC'
+      es: 'Nivel de sensibilidad del ARC'
+      de: 'ARC-Empfindlichkeitsstufe'
+      it: 'Livello di sensibilità dell''ARC'
+      pl: 'Poziom czułości ARC'
+      ru: 'Уровень чувствительности ARC'
+      zh: 'ARC灵敏度等级'
+      hu: 'Az ARC érzékenységi szintje'
+      pt: 'Nível de sensibilidade do ARC'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: '1'
+        fr: '1'
+        es: '1'
+        de: '1'
+        it: '1'
+        pl: '1'
+        ru: '1'
+        zh: '1'
+        hu: '1'
+        pt: '1'
+      0x02:
+        en: '2'
+        fr: '2'
+        es: '2'
+        de: '2'
+        it: '2'
+        pl: '2'
+        ru: '2'
+        zh: '2'
+        hu: '2'
+        pt: '2'
+      0x03:
+        en: '3'
+        fr: '3'
+        es: '3'
+        de: '3'
+        it: '3'
+        pl: '3'
+        ru: '3'
+        zh: '3'
+        hu: '3'
+        pt: '3'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  INTER_VEHICLE_TIME_SETPOINT:
+    bits: '5.7-5.2'
+    comment:
+      en: 'Inter-vehicle time setpoint'
+      fr: 'Consigne de temps inter-véhicule'
+      es: 'Consigna de tiempo entre vehículos'
+      de: 'Sollwert der Zeitlücke zum vorausfahrenden Fahrzeug'
+      it: 'Setpoint del tempo tra veicoli'
+      pl: 'Wartość zadana odstępu czasowego między pojazdami'
+      ru: 'Уставка временного интервала между автомобилями'
+      zh: '车间时距设定值'
+      hu: 'A gépjárművek közötti időköz alapértéke'
+      pt: 'Consigna de tempo entre veículos'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.1
+    units: 's'
+    invalid: 0x3F
+    default: 0x3E
+
+  FARC_AUTHORIZATION_FROM_CABIN:
+    bits: '5.1'
+    comment:
+      en: 'Authorization condition for the FARC function, issued by the cabin control module'
+      fr: 'Condition d''autorisation de la fonction FARC émise par le module habitacle'
+      es: 'Condición de autorización de la función FARC emitida por el módulo del habitáculo'
+      de: 'Freigabebedingung für die FARC-Funktion, ausgegeben vom Innenraum-Steuermodul'
+      it: 'Condizione di autorizzazione della funzione FARC emessa dal modulo abitacolo'
+      pl: 'Warunek zezwolenia dla funkcji FARC wydawany przez moduł kabiny'
+      ru: 'Условие разрешения функции FARC, выдаваемое модулем салона'
+      zh: '座舱模块发出的FARC功能授权条件'
+      hu: 'A FARC funkció engedélyezési feltétele, amelyet az utastér-vezérlő modul ad ki'
+      pt: 'Condição de autorização da função FARC, emitida pelo módulo de controlo do habitáculo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Deactivation'
+        fr: 'Désactivation'
+        es: 'Desactivación'
+        de: 'Deaktivierung'
+        it: 'Disattivazione'
+        pl: 'Dezaktywacja'
+        ru: 'Деактивация'
+        zh: '停用'
+        hu: 'Kikapcsolás'
+        pt: 'Desativação'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  FRONT_WASHER_STATE:
+    bits: '5.0'
+    comment:
+      en: 'Front windshield washer state'
+      fr: 'État du lave-glace avant'
+      es: 'Estado del lavaparabrisas delantero'
+      de: 'Zustand der Frontscheibenwaschanlage'
+      it: 'Stato del lavavetro anteriore'
+      pl: 'Stan spryskiwacza przedniej szyby'
+      ru: 'Состояние переднего стеклоомывателя'
+      zh: '前挡风玻璃洗涤器状态'
+      hu: 'Az első szélvédőmosó állapota'
+      pt: 'Estado do lava para-brisas dianteiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Washing'
+        fr: 'Lavage'
+        es: 'Lavado'
+        de: 'Waschen'
+        it: 'Lavaggio'
+        pl: 'Mycie'
+        ru: 'Мойка'
+        zh: '清洗'
+        hu: 'Mosás'
+        pt: 'Lavagem'
+
+  ACC_DRIVE_MODE:
+    bits: '6.7-6.6'
+    comment:
+      en: 'ACC driving mode (Comfort/Sport/Eco)'
+      fr: 'Mode de conduite ACC (Confort/Sport/Éco)'
+      es: 'Modo de conducción ACC (Confort/Sport/Eco)'
+      de: 'ACC-Fahrmodus (Komfort/Sport/Eco)'
+      it: 'Modalità di guida ACC (Comfort/Sport/Eco)'
+      pl: 'Tryb jazdy ACC (Komfort/Sport/Eco)'
+      ru: 'Режим движения ACC (Комфорт/Спорт/Эко)'
+      zh: 'ACC驾驶模式(舒适/运动/经济)'
+      hu: 'ACC vezetési mód (Comfort/Sport/Eco)'
+      pt: 'Modo de condução ACC (Conforto/Sport/Eco)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Comfort'
+        fr: 'Confort'
+        es: 'Confort'
+        de: 'Komfort'
+        it: 'Comfort'
+        pl: 'Komfort'
+        ru: 'Комфорт'
+        zh: '舒适'
+        hu: 'Kényelem'
+        pt: 'Conforto'
+      0x01:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x02:
+        en: 'Eco'
+        fr: 'Éco'
+        es: 'Eco'
+        de: 'Eco'
+        it: 'Eco'
+        pl: 'Eco'
+        ru: 'Эко'
+        zh: '经济模式'
+        hu: 'Eco'
+        pt: 'Eco'
+      0x03:
+        unused: true
+
+  ACC_RESUME_DRIVING_REQUEST:
+    bits: '6.5'
+    comment:
+      en: 'Cockpit request to resume driving for the ACC'
+      fr: 'Demande de redémarrage habitacle pour l''ACC'
+      es: 'Solicitud del habitáculo para reanudar la marcha del ACC'
+      de: 'Cockpit-Anforderung zur Weiterfahrt für den ACC'
+      it: 'Richiesta dall''abitacolo di ripartenza per l''ACC'
+      pl: 'Żądanie z kabiny wznowienia jazdy dla ACC'
+      ru: 'Запрос из салона на возобновление движения для ACC'
+      zh: '座舱发出的ACC继续行驶请求'
+      hu: 'Az utastér kérése az ACC továbbindításához'
+      pt: 'Pedido do habitáculo para retomar a marcha do ACC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Value 1'
+        fr: 'Valeur 1'
+        es: 'Valor 1'
+        de: 'Wert 1'
+        it: 'Valore 1'
+        pl: 'Wartość 1'
+        ru: 'Значение 1'
+        zh: '值1'
+        hu: '1. érték'
+        pt: 'Valor 1'
+      0x01:
+        en: 'Value 2'
+        fr: 'Valeur 2'
+        es: 'Valor 2'
+        de: 'Wert 2'
+        it: 'Valore 2'
+        pl: 'Wartość 2'
+        ru: 'Значение 2'
+        zh: '值2'
+        hu: '2. érték'
+        pt: 'Valor 2'
+
+  UNUSED_3:
+    bits: '6.4'
+    unused: true
+
+  CHECKSUM_FRAME_452:
+    bits: '6.3-6.0'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'

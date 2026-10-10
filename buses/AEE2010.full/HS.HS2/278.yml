@@ -1,0 +1,324 @@
+id: 0x278
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_6'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['10ms']
+senders: ['CMM', 'E_VCU']
+receivers: ['EBB', 'VCU', 'ABS', 'ARTIV', 'BSI', 'BVA', 'CVM', 'LVNSD']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  UNUSED_1:
+    bits: '2.7-4.7'
+    unused: true
+
+  REAR_COUPLING_STATUS:
+    bits: '4.6-4.5'
+    comment:
+      en: 'Rear powertrain coupling (dog clutch) status'
+      fr: 'État du crabotage arrière du groupe motopropulseur'
+      es: 'Estado del acoplamiento (dientes) trasero del grupo motopropulsor'
+      de: 'Status der hinteren Klauenkupplung des Antriebsstrangs'
+      it: 'Stato dell''innesto a denti posteriore del gruppo motopropulsore'
+      pl: 'Stan tylnego sprzęgła kłowego zespołu napędowego'
+      ru: 'Статус заднего кулачкового сцепления силового агрегата'
+      zh: '动力总成后置牙嵌离合器状态'
+      hu: 'Az erőátviteli rendszer hátsó karmos kapcsolójának állapota'
+      pt: 'Estado do engate (garras) traseiro do grupo motopropulsor'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+      0x01:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+      0x02:
+        en: 'Indistinct'
+        fr: 'Incertain'
+        es: 'Indistinto'
+        de: 'Unklar'
+        it: 'Indistinto'
+        pl: 'Niejednoznaczne'
+        ru: 'Неразличимо'
+        zh: '不明确'
+        hu: 'Bizonytalan'
+        pt: 'Indistinto'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  SECURE_HARD_POINT_STATUS:
+    bits: '4.4'
+    comment:
+      en: 'Secured hard point crossed status'
+      fr: 'État de franchissement du point dur sécurisé'
+      es: 'Estado de superación del punto duro seguro'
+      de: 'Status des gesicherten Druckpunkts (überschritten)'
+      it: 'Stato di superamento del punto duro sicuro'
+      pl: 'Stan przekroczenia zabezpieczonego punktu oporu'
+      ru: 'Статус преодоления защищённой жёсткой точки'
+      zh: '安全硬点越过状态'
+      hu: 'A biztosított kemény pont átlépésének állapota'
+      pt: 'Estado de ultrapassagem do ponto duro de segurança'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Hard point not exceeded'
+        fr: 'Point dur non franchi'
+        es: 'Punto duro no superado'
+        de: 'Härtepunkt nicht überschritten'
+        it: 'Punto duro non superato'
+        pl: 'Punkt oporu nieprzekroczony'
+        ru: 'Точка сопротивления не пройдена'
+        zh: '未超过硬点'
+        hu: 'Keménypont nincs átlépve'
+        pt: 'Ponto crítico não excedido'
+      0x01:
+        en: 'Hard point exceeded'
+        fr: 'Point dur franchi'
+        es: 'Punto duro superado'
+        de: 'Druckpunkt überschritten'
+        it: 'Punto duro superato'
+        pl: 'Przekroczony punkt oporowy'
+        ru: 'Точка сопротивления пройдена'
+        zh: '已超过硬点'
+        hu: 'A keménypont átlépve'
+        pt: 'Ponto duro ultrapassado'
+
+  BRAKE_PEDAL_PRESSED_EFFECTIVE:
+    bits: '4.3'
+    comment:
+      en: 'Effective brake pedal application'
+      fr: 'Appui effectif sur la pédale de frein'
+      es: 'Presión efectiva del pedal de freno'
+      de: 'Tatsächliche Bremspedalbetätigung'
+      it: 'Pressione effettiva del pedale del freno'
+      pl: 'Rzeczywiste naciśnięcie pedału hamulca'
+      ru: 'Фактическое нажатие педали тормоза'
+      zh: '有效制动踏板按压'
+      hu: 'Tényleges fékpedál-nyomás'
+      pt: 'Pressão efetiva no pedal do travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Brake pedal released'
+        fr: 'Pédale de frein relâchée'
+        es: 'Pedal de freno soltado'
+        de: 'Bremspedal losgelassen'
+        it: 'Pedale del freno rilasciato'
+        pl: 'Pedał hamulca zwolniony'
+        ru: 'Педаль тормоза отпущена'
+        zh: '制动踏板已松开'
+        hu: 'A fékpedál felengedve'
+        pt: 'Pedal de travão solto'
+      0x01:
+        en: 'Brake pedal pressed'
+        fr: 'Appui sur la pédale de frein'
+        es: 'Pedal de freno pulsado'
+        de: 'Bremspedal betätigt'
+        it: 'Pedale del freno premuto'
+        pl: 'Naciśnięty pedał hamulca'
+        ru: 'Педаль тормоза нажата'
+        zh: '制动踏板已按下'
+        hu: 'Fékpedál lenyomva'
+        pt: 'Pedal do travão premido'
+
+  FRONT_CLUTCH_STATUS:
+    bits: '4.2-4.1'
+    comment:
+      en: 'Front clutch status (open/slipping/closed/synchronized)'
+      fr: 'État de l''embrayage avant (ouvert/glissant/fermé/synchronisé)'
+      es: 'Estado del embrague delantero (abierto/patinando/cerrado/sincronizado)'
+      de: 'Status der vorderen Kupplung (offen/schlupfend/geschlossen/synchronisiert)'
+      it: 'Stato della frizione anteriore (aperta/slittante/chiusa/sincronizzata)'
+      pl: 'Stan przedniego sprzęgła (otwarte/poślizg/zamknięte/zsynchronizowane)'
+      ru: 'Статус переднего сцепления (разомкнуто/пробуксовка/замкнуто/синхронизировано)'
+      zh: '前离合器状态(分离/打滑/接合/同步)'
+      hu: 'Első kuplung állapota (nyitott/csúszik/zárt/szinkronizált)'
+      pt: 'Estado da embraiagem dianteira (aberta/a patinar/fechada/sincronizada)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Clutch open'
+        fr: 'Embrayage ouvert'
+        es: 'Embrague abierto'
+        de: 'Kupplung offen'
+        it: 'Frizione aperta'
+        pl: 'Sprzęgło rozłączone'
+        ru: 'Сцепление разомкнуто'
+        zh: '离合器分离'
+        hu: 'Kuplung nyitva'
+        pt: 'Embraiagem aberta'
+      0x01:
+        en: 'Clutch slipping'
+        fr: 'Embrayage glissant'
+        es: 'Embrague patinando'
+        de: 'Kupplung rutscht'
+        it: 'Frizione che slitta'
+        pl: 'Sprzęgło ślizga się'
+        ru: 'Сцепление пробуксовывает'
+        zh: '离合器打滑'
+        hu: 'A kuplung csúszik'
+        pt: 'Embraiagem a deslizar'
+      0x02:
+        en: 'Clutch closed'
+        fr: 'Embrayage fermé'
+        es: 'Embrague cerrado'
+        de: 'Kupplung geschlossen'
+        it: 'Frizione chiusa'
+        pl: 'Sprzęgło zamknięte'
+        ru: 'Сцепление замкнуто'
+        zh: '离合器结合'
+        hu: 'Tengelykapcsoló zárva'
+        pt: 'Embraiagem fechada'
+      0x03:
+        en: 'Clutch synchronised'
+        fr: 'Embrayage synchronisé'
+        es: 'Embrague sincronizado'
+        de: 'Kupplung synchronisiert'
+        it: 'Frizione sincronizzata'
+        pl: 'Sprzęgło zsynchronizowane'
+        ru: 'Сцепление синхронизировано'
+        zh: '离合器已同步'
+        hu: 'A kuplung szinkronizálva'
+        pt: 'Embraiagem sincronizada'
+
+  REAR_AXLE_LIFT_OFF_TORQUE_SETPOINT:
+    bits: '4.0-5.0'
+    comment:
+      en: 'Accelerator lift-off torque setpoint, expressed at the rear axle'
+      fr: 'Consigne de couple de lever de pied, exprimée à l''essieu arrière'
+      es: 'Consigna de par de levantamiento del pie del acelerador, expresada en el eje trasero'
+      de: 'Sollwert des Gaspedal-Loslassmoments, bezogen auf die Hinterachse'
+      it: 'Consegna di coppia di rilascio pedale, espressa sull''assale posteriore'
+      pl: 'Zadana wartość momentu przy zwolnieniu pedału gazu, wyrażona na osi tylnej'
+      ru: 'Заданный момент отпускания педали газа, выраженный на задней оси'
+      zh: '松油门扭矩设定值(后轴表示)'
+      hu: 'Gázelengedési nyomaték-alapjel, a hátsó tengelyen kifejezve'
+      pt: 'Consigna de binário de alívio do acelerador, expressa no eixo traseiro'
+    type: 'uint'
+    factor: 5
+    offset: -2000
+    min: -2000
+    max: 0
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0x190
+
+  ACCELERATOR_PEDAL_POSITION:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Accelerator pedal position'
+      fr: 'Position de la pédale d''accélérateur'
+      es: 'Posición del pedal del acelerador'
+      de: 'Fahrpedalstellung'
+      it: 'Posizione del pedale dell''acceleratore'
+      pl: 'Położenie pedału przyspieszenia'
+      ru: 'Положение педали акселератора'
+      zh: '加速踏板位置'
+      hu: 'Gázpedál helyzete'
+      pt: 'Posição do pedal do acelerador'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  ENGINE_SPEED_REDUCED_ACCURACY:
+    bits: '7.7-8.4'
+    comment:
+      en: 'Engine speed, reduced accuracy'
+      fr: 'Régime moteur, précision réduite'
+      es: 'Régimen del motor, precisión reducida'
+      de: 'Motordrehzahl, reduzierte Genauigkeit'
+      it: 'Regime motore, precisione ridotta'
+      pl: 'Obroty silnika, zmniejszona dokładność'
+      ru: 'Обороты двигателя, пониженная точность'
+      zh: '发动机转速(精度降低)'
+      hu: 'Motorfordulatszám, csökkentett pontosság'
+      pt: 'Regime do motor, precisão reduzida'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 8188
+    units: 'rpm'
+    invalid: 0xFFF
+    default: 0xFFF
+
+  UNUSED_2:
+    bits: '8.3-8.0'
+    unused: true

@@ -1,0 +1,116 @@
+id: 0x4C8
+name: 'CRASH_STATUS'
+type: 'can'
+length: 3
+comment:
+  en: 'Crash detection status, repeated every 50 ms once a crash is detected, until ignition is switched off.'
+  fr: 'État de détection de choc, répété toutes les 50 ms une fois un choc détecté, jusqu''à la coupure du contact.'
+  es: 'Estado de detección de impacto, repetido cada 50 ms una vez detectado un impacto, hasta el corte del contacto.'
+  de: 'Crash-Erkennungsstatus, wiederholt alle 50 ms nach Erkennung eines Aufpralls, bis zum Abschalten der Zündung.'
+  it: 'Stato di rilevamento urto, ripetuto ogni 50 ms una volta rilevato un urto, fino allo spegnimento del contatto.'
+  pl: 'Stan wykrywania zderzenia, powtarzany co 50 ms po wykryciu zderzenia, aż do wyłączenia zapłonu.'
+  ru: 'Статус обнаружения столкновения, повторяется каждые 50 мс после обнаружения удара, до выключения зажигания.'
+  zh: '碰撞检测状态,一旦检测到碰撞,每50毫秒重复发送一次,直至点火开关关闭。'
+  hu: 'Ütközésérzékelési állapot, ütközés észlelése után 50 ms-enként ismételve a gyújtás kikapcsolásáig.'
+  pt: 'Estado de deteção de colisão, repetido a cada 50 ms assim que uma colisão é detetada, até a ignição ser desligada.'
+observations:
+  en: 'Sent on two consecutive receptions of CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 or HYBRID_CRASH_INFO = 1, then periodically every 50 ms after the first event'
+  fr: 'Émise sur double réception consécutive de CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 ou HYBRID_CRASH_INFO = 1, puis périodiquement toutes les 50 ms après le premier événement'
+  es: 'Enviada al recibir dos veces consecutivas CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 o HYBRID_CRASH_INFO = 1, luego periódicamente cada 50 ms tras el primer evento'
+  de: 'Gesendet bei zweimaligem aufeinanderfolgendem Empfang von CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 oder HYBRID_CRASH_INFO = 1, danach periodisch alle 50 ms nach dem ersten Ereignis'
+  it: 'Inviata alla doppia ricezione consecutiva di CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 o HYBRID_CRASH_INFO = 1, poi periodicamente ogni 50 ms dopo il primo evento'
+  pl: 'Wysyłane po dwukrotnym kolejnym odebraniu CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 lub HYBRID_CRASH_INFO = 1, następnie okresowo co 50 ms po pierwszym zdarzeniu'
+  ru: 'Отправляется при двух последовательных приёмах CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 или HYBRID_CRASH_INFO = 1, затем периодически каждые 50 мс после первого события'
+  zh: '连续两次接收到INFO_CRASH=1或INFO_CHOC_HYB=1时发送,首次事件后每50毫秒周期发送'
+  hu: 'Küldve az CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 vagy HYBRID_CRASH_INFO = 1 két egymást követő fogadásakor, majd az első esemény után 50 ms-onként periodikusan'
+  pt: 'Enviada em duas receções consecutivas de CRASH_DETECTED_SINCE_LAST_POWER_UP = 1 ou HYBRID_CRASH_INFO = 1, depois periodicamente a cada 50 ms após o primeiro evento'
+periodicity: ['trigger']
+senders: ['HCU1']
+receivers: ['TBMU']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.0'
+    unused: true
+
+  HYBRID_CRASH_INFO:
+    bits: '2.1'
+    comment:
+      en: 'Hybrid system collision information (crash detected since last power-up)'
+      fr: 'Information de collision pour le système hybride (choc détecté depuis la dernière mise sous tension)'
+      es: 'Información de colisión del sistema híbrido (choque detectado desde el último encendido)'
+      de: 'Kollisionsinformation für das Hybridsystem (Crash seit letztem Einschalten erkannt)'
+      it: 'Informazione di collisione per il sistema ibrido (urto rilevato dall''ultima accensione)'
+      pl: 'Informacja o kolizji dla systemu hybrydowego (wykryto zderzenie od ostatniego włączenia)'
+      ru: 'Информация о столкновении для гибридной системы (авария обнаружена с момента последнего включения питания)'
+      zh: '混合动力系统碰撞信息(自上次上电以来检测到碰撞)'
+      hu: 'A hibrid rendszer ütközési információja (ütközés érzékelve a legutóbbi bekapcsolás óta)'
+      pt: 'Informação de colisão do sistema híbrido (colisão detetada desde a última ativação)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No crash since +APC'
+        fr: 'Pas de choc depuis + APC'
+        es: 'Sin choque desde +APC'
+        de: 'Kein Crash seit +APC'
+        it: 'Nessun urto dall''accensione (+APC)'
+        pl: 'Brak zderzenia od włączenia zapłonu (+APC)'
+        ru: 'Нет столкновения с момента +APC'
+        zh: '自+APC以来无碰撞'
+        hu: 'Nincs ütközés a +APC óta'
+        pt: 'Sem colisão desde +APC'
+      0x01:
+        en: 'Crash detected since last +APC'
+        fr: 'Choc détecté depuis la dernière mise du +APC'
+        es: 'Impacto detectado desde el último +APC'
+        de: 'Aufprall seit dem letzten +APC erkannt'
+        it: 'Urto rilevato dall''ultima attivazione di +APC'
+        pl: 'Wykryto uderzenie od ostatniego +APC'
+        ru: 'Обнаружен удар с момента последнего +APC'
+        zh: '自上次+APC以来检测到碰撞'
+        hu: 'Ütközés érzékelve az utolsó +APC óta'
+        pt: 'Colisão detetada desde o último +APC'
+
+  CRASH_DETECTED_SINCE_LAST_POWER_UP:
+    bits: '2.0'
+    comment:
+      en: 'Crash detected since the last power-up'
+      fr: 'Choc détecté depuis la dernière mise sous tension'
+      es: 'Choque detectado desde el último encendido'
+      de: 'Crash seit dem letzten Einschalten erkannt'
+      it: 'Urto rilevato dall''ultima accensione'
+      pl: 'Wykryto zderzenie od ostatniego włączenia'
+      ru: 'Авария обнаружена с момента последнего включения питания'
+      zh: '自上次上电以来检测到碰撞'
+      hu: 'Ütközés érzékelve a legutóbbi bekapcsolás óta'
+      pt: 'Colisão detetada desde a última ativação'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No crash since +APC'
+        fr: 'Pas de choc depuis + APC'
+        es: 'Sin choque desde +APC'
+        de: 'Kein Crash seit +APC'
+        it: 'Nessun urto dall''accensione (+APC)'
+        pl: 'Brak zderzenia od włączenia zapłonu (+APC)'
+        ru: 'Нет столкновения с момента +APC'
+        zh: '自+APC以来无碰撞'
+        hu: 'Nincs ütközés a +APC óta'
+        pt: 'Sem colisão desde +APC'
+      0x01:
+        en: 'Crash detected since last +APC'
+        fr: 'Choc détecté depuis la dernière mise du +APC'
+        es: 'Impacto detectado desde el último +APC'
+        de: 'Aufprall seit dem letzten +APC erkannt'
+        it: 'Urto rilevato dall''ultima attivazione di +APC'
+        pl: 'Wykryto uderzenie od ostatniego +APC'
+        ru: 'Обнаружен удар с момента последнего +APC'
+        zh: '自上次+APC以来检测到碰撞'
+        hu: 'Ütközés érzékelve az utolsó +APC óta'
+        pt: 'Colisão detetada desde o último +APC'
+
+  UNUSED_2:
+    bits: '3.7-3.0'
+    unused: true

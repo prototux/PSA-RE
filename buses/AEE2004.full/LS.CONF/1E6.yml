@@ -1,0 +1,236 @@
+id: 0x1E6
+name: 'SAM_MODULE_COMMAND'
+type: 'can'
+length: 2
+comment:
+  en: 'Command frame for the SAM module: push-button, ambient light level, degradation status and forced-info request.'
+  fr: 'Trame de commande du module SAM : bouton-poussoir, niveau de luminosité ambiante, état de dégradation et demande de forçage d''info.'
+  es: 'Trama de comando del módulo SAM: pulsador, nivel de luz ambiente, estado de degradación y solicitud de forzado de información.'
+  de: 'Befehlstelegramm für das SAM-Modul: Taster, Umgebungslichtstärke, Degradationsstatus und Anforderung zur Informationserzwingung.'
+  it: 'Trama di comando del modulo SAM: pulsante, livello di luce ambientale, stato di degradazione e richiesta di forzatura informazioni.'
+  pl: 'Ramka poleceń modułu SAM: przycisk, poziom oświetlenia otoczenia, stan degradacji i żądanie wymuszenia informacji.'
+  ru: 'Кадр команд для модуля SAM: кнопка, уровень освещённости, статус деградации и запрос принудительной информации.'
+  zh: 'SAM模块的命令帧:按钮、环境光水平、降级状态和强制信息请求。'
+  hu: 'A SAM modul parancskerete: nyomógomb, környezeti fényszint, degradációs állapot és kényszerített infó kérése.'
+  pt: 'Trama de comando para o módulo SAM: botão, nível de luz ambiente, estado de degradação e pedido de informação forçada.'
+observations:
+  en: 'On state change of: SAM_INFO_LEVEL_FORCE_REQUEST'
+  fr: 'Sur changement d''état de : SAM_INFO_LEVEL_FORCE_REQUEST'
+  es: 'Al cambiar el estado de: SAM_INFO_LEVEL_FORCE_REQUEST'
+  de: 'Bei Statusänderung von: SAM_INFO_LEVEL_FORCE_REQUEST'
+  it: 'Al cambiamento di stato di: SAM_INFO_LEVEL_FORCE_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: SAM_INFO_LEVEL_FORCE_REQUEST'
+  ru: 'При изменении состояния: SAM_INFO_LEVEL_FORCE_REQUEST'
+  zh: '当DMD_FORCAGE_INFO_SAM状态变化时'
+  hu: 'A(z) SAM_INFO_LEVEL_FORCE_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: SAM_INFO_LEVEL_FORCE_REQUEST'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['SAM']
+
+signals:
+  SAM_INFO_LEVEL_FORCE_REQUEST:
+    bits: '1.7'
+    comment:
+      en: 'Information level forcing request'
+      fr: 'Demande de forçage du niveau d''information'
+      es: 'Solicitud de forzado del nivel de información'
+      de: 'Anforderung zur Zwangssteuerung der Informationsebene'
+      it: 'Richiesta di forzatura del livello di informazione'
+      pl: 'Żądanie wymuszenia poziomu informacji'
+      ru: 'Запрос принудительного уровня информации'
+      zh: '信息等级强制请求'
+      hu: 'Információs szint kényszerítésének kérése'
+      pt: 'Pedido de forçagem do nível de informação'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  SAM_PUSH_BUTTON_STATE:
+    bits: '1.6'
+    comment:
+      en: 'SAM push button pressed state'
+      fr: 'État d''appui de la touche Push du SAM'
+      es: 'Estado de pulsación del botón Push del SAM'
+      de: 'Betätigungszustand der SAM-Push-Taste'
+      it: 'Stato di pressione del pulsante Push del SAM'
+      pl: 'Stan naciśnięcia przycisku Push modułu SAM'
+      ru: 'Состояние нажатия кнопки Push модуля SAM'
+      zh: 'SAM按压按钮状态'
+      hu: 'SAM nyomógomb lenyomott állapota'
+      pt: 'Estado de pressão da tecla Push do SAM'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not pressed'
+        fr: 'Pas d''appui'
+        es: 'Sin pulsación'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Brak naciśnięcia'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Não premido'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Premido'
+
+  UNUSED_1:
+    bits: '1.5'
+    unused: true
+
+  TRAILER_PRESENCE:
+    bits: '1.4'
+    comment:
+      en: 'Trailer presence'
+      fr: 'Présence d''une remorque'
+      es: 'Presencia de un remolque'
+      de: 'Vorhandensein eines Anhängers'
+      it: 'Presenza di un rimorchio'
+      pl: 'Obecność przyczepy'
+      ru: 'Наличие прицепа'
+      zh: '挂车存在'
+      hu: 'Pótkocsi megléte'
+      pt: 'Presença de reboque'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No trailer'
+        fr: 'Pas de remorque'
+        es: 'Sin remolque'
+        de: 'Kein Anhänger'
+        it: 'Nessun rimorchio'
+        pl: 'Brak przyczepy'
+        ru: 'Нет прицепа'
+        zh: '无拖车'
+        hu: 'Nincs pótkocsi'
+        pt: 'Sem reboque'
+      0x01:
+        en: 'Trailer presence'
+        fr: 'Présence de remorque'
+        es: 'Presencia de remolque'
+        de: 'Anhänger vorhanden'
+        it: 'Presenza rimorchio'
+        pl: 'Obecność przyczepy'
+        ru: 'Наличие прицепа'
+        zh: '存在挂车'
+        hu: 'Pótkocsi jelen'
+        pt: 'Presença de reboque'
+
+  DEFROST_IN_PROGRESS:
+    bits: '1.3'
+    comment:
+      en: 'Defrosting in progress'
+      fr: 'Dégivrage en cours'
+      es: 'Descongelación en curso'
+      de: 'Enteisung läuft'
+      it: 'Sbrinamento in corso'
+      pl: 'Odszranianie w toku'
+      ru: 'Выполняется оттаивание'
+      zh: '除霜进行中'
+      hu: 'Jégtelenítés folyamatban'
+      pt: 'Descongelação em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No defrosting in progress'
+        fr: 'Pas de dégivrage en cours'
+        es: 'Sin descongelación en curso'
+        de: 'Keine Enteisung läuft'
+        it: 'Nessuno sbrinamento in corso'
+        pl: 'Brak odszraniania w toku'
+        ru: 'Оттаивание не выполняется'
+        zh: '无除霜进行中'
+        hu: 'Nincs folyamatban lévő jégtelenítés'
+        pt: 'Sem descongelação em curso'
+      0x01:
+        en: 'Defrosting in progress'
+        fr: 'Dégivrage en cours'
+        es: 'Descongelación en curso'
+        de: 'Enteisung läuft'
+        it: 'Sbrinamento in corso'
+        pl: 'Trwa odszranianie'
+        ru: 'Идёт оттаивание'
+        zh: '除霜进行中'
+        hu: 'Jégmentesítés folyamatban'
+        pt: 'Desembaciamento em curso'
+
+  UNUSED_2:
+    bits: '1.2-1.0'
+    unused: true
+
+  AMBIENT_LIGHT_LEVEL:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Ambient light level'
+      fr: 'Niveau de lumière ambiante'
+      es: 'Nivel de luz ambiental'
+      de: 'Umgebungslichtstärke'
+      it: 'Livello di luce ambientale'
+      pl: 'Poziom światła otoczenia'
+      ru: 'Уровень окружающей освещённости'
+      zh: '环境光水平'
+      hu: 'A környezeti fény szintje'
+      pt: 'Nível de luz ambiente'
+    type: 'enum'
+    factor: 1
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unused value (0)'
+        fr: 'Valeur non utilisée (0)'
+        es: 'Valor no utilizado (0)'
+        de: 'Nicht verwendeter Wert (0)'
+        it: 'Valore non utilizzato (0)'
+        pl: 'Nieużywana wartość (0)'
+        ru: 'Неиспользуемое значение (0)'
+        zh: '未使用值 (0)'
+        hu: 'Nem használt érték (0)'
+        pt: 'Valor não utilizado (0)'
+      0x01:
+        en: 'Unused value (1)'
+        fr: 'Valeur non utilisée (1)'
+        es: 'Valor no utilizado (1)'
+        de: 'Nicht verwendeter Wert (1)'
+        it: 'Valore non utilizzato (1)'
+        pl: 'Nieużywana wartość (1)'
+        ru: 'Неиспользуемое значение (1)'
+        zh: '未使用值 (1)'
+        hu: 'Nem használt érték (1)'
+        pt: 'Valor não utilizado (1)'

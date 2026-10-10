@@ -1,0 +1,559 @@
+id: 0x007
+name: 'AIR_INTAKE_MOTOR_COMMAND'
+type: 'can'
+length: 6
+comment:
+  en: 'Rapid commands sent by the BSI to the engine bay relay box: water heater command, AC compressor, load shedding, engine mount, PWM fan commands and alternator excitation.'
+  fr: 'Commandes rapides envoyées par la BSI au boîtier relais moteur : commande réchauffeur d''eau, compresseur de climatisation, délestage, support moteur, commandes ventilateur PWM et excitation alternateur.'
+  es: 'Órdenes rápidas enviadas por la BSI a la caja de relés del motor: orden de calentador de agua, compresor de climatización, deslastre, soporte motor, órdenes de ventilador PWM y excitación del alternador.'
+  de: 'Schnelle Befehle, die von der BSI an das Motorraum-Relaismodul gesendet werden: Wasserheizungsbefehl, Klimakompressor, Lastabwurf, Motorlager, PWM-Lüfterbefehle und Lichtmaschinenerregung.'
+  it: 'Comandi rapidi inviati dalla BSI alla centralina relè vano motore: comando riscaldatore acqua, compressore climatizzatore, distacco carico, supporto motore, comandi ventola PWM ed eccitazione alternatore.'
+  pl: 'Szybkie polecenia wysyłane przez BSI do skrzynki przekaźników w komorze silnika: polecenie podgrzewacza wody, sprężarka klimatyzacji, zrzut obciążenia, mocowanie silnika, polecenia wentylatora PWM i wzbudzenie alternatora.'
+  ru: 'Быстрые команды, отправляемые BSI в блок реле моторного отсека: команда подогревателя воды, компрессор кондиционера, сброс нагрузки, опора двигателя, ШИМ-команды вентилятора и возбуждение генератора.'
+  zh: '由BSI发送给发动机舱继电器盒的快速命令：水加热器命令、空调压缩机、负载脱扣、发动机支架、PWM风扇命令及交流发电机励磁。'
+  hu: 'A BSI által a motortéri relédoboznak küldött gyors parancsok: vízmelegítő parancs, klímakompresszor, tehermentesítés, motortartó, PWM ventilátorparancsok és generátorgerjesztés.'
+  pt: 'Comandos rápidos enviados pela BSI à caixa de relés do compartimento do motor: comando do aquecedor de água, compressor de ar condicionado, corte de carga, suporte do motor, comandos PWM da ventoinha e excitação do alternador.'
+periodicity: ['10050ms']
+senders: ['BSI']
+receivers: ['BSM', 'BSG', 'CVM', 'CAFR']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.5'
+    unused: true
+
+  DAYTIME_RUNNING_LIGHTS_COMMAND:
+    bits: '1.4'
+    comment:
+      en: 'Daytime running lights command'
+      fr: 'Commande des feux de jour'
+      es: 'Comando de las luces diurnas'
+      de: 'Ansteuerung des Tagfahrlichts'
+      it: 'Comando delle luci diurne'
+      pl: 'Sterowanie światłami do jazdy dziennej'
+      ru: 'Управление дневными ходовыми огнями'
+      zh: '日间行车灯控制'
+      hu: 'A nappali menetfény vezérlése'
+      pt: 'Comando das luzes diurnas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Daytime running lights off'
+        fr: 'Feux diurnes éteints'
+        es: 'Luces diurnas apagadas'
+        de: 'Tagfahrlicht aus'
+        it: 'Luci diurne spente'
+        pl: 'Światła dzienne wyłączone'
+        ru: 'Дневные ходовые огни выключены'
+        zh: '日间行车灯关闭'
+        hu: 'Nappali menetfény kikapcsolva'
+        pt: 'Luzes diurnas apagadas'
+      0x01:
+        en: 'Daytime running lights on'
+        fr: 'Feux diurnes allumés'
+        es: 'Luces diurnas encendidas'
+        de: 'Tagfahrlicht ein'
+        it: 'Luci diurne accese'
+        pl: 'Światła do jazdy dziennej włączone'
+        ru: 'Дневные ходовые огни включены'
+        zh: '日间行车灯已开启'
+        hu: 'Nappali menetfény bekapcsolva'
+        pt: 'Luzes diurnas ligadas'
+
+  STATIC_CORNERING_LIGHTS_COMMAND:
+    bits: '1.3-1.2'
+    comment:
+      en: 'Static cornering lights command'
+      fr: 'Commande des feux de virage statiques'
+      es: 'Comando de las luces de giro estáticas'
+      de: 'Ansteuerung der statischen Kurvenlichter'
+      it: 'Comando delle luci di svolta statiche'
+      pl: 'Sterowanie statycznymi światłami doświetlającymi zakręt'
+      ru: 'Управление статическим поворотным освещением'
+      zh: '静态转向辅助灯控制'
+      hu: 'A statikus kanyarfények vezérlése'
+      pt: 'Comando das luzes de curva estáticas'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Static lights off'
+        fr: 'Feux statiques éteints'
+        es: 'Luces estáticas apagadas'
+        de: 'Statische Beleuchtung aus'
+        it: 'Luci statiche spente'
+        pl: 'Światła statyczne wyłączone'
+        ru: 'Статическое освещение выключено'
+        zh: '静态灯光关闭'
+        hu: 'Statikus lámpák kikapcsolva'
+        pt: 'Luzes estáticas desligadas'
+      0x01:
+        en: 'Right static light on'
+        fr: 'Feu statique droit allumé'
+        es: 'Luz estática derecha encendida'
+        de: 'Rechtes statisches Licht ein'
+        it: 'Luce statica destra accesa'
+        pl: 'Włączone prawe światło statyczne'
+        ru: 'Правый статический свет включён'
+        zh: '右侧静态灯已开启'
+        hu: 'Jobb statikus fény bekapcsolva'
+        pt: 'Luz estática direita acesa'
+      0x02:
+        en: 'Left static cornering light on'
+        fr: 'Feu statique gauche allumé'
+        es: 'Luz estática izquierda encendida'
+        de: 'Statisches Kurvenlicht links eingeschaltet'
+        it: 'Luce statica sinistra accesa'
+        pl: 'Włączone lewe światło statyczne doświetlające zakręt'
+        ru: 'Включён левый статический поворотный свет'
+        zh: '左侧静态转向灯已开启'
+        hu: 'Bal statikus kanyarfény bekapcsolva'
+        pt: 'Luz de curva estática esquerda acesa'
+      0x03:
+        en: 'Static lights on'
+        fr: 'Feux statiques allumés'
+        es: 'Luces estáticas encendidas'
+        de: 'Statische Kurvenlichter ein'
+        it: 'Luci statiche accese'
+        pl: 'Włączone światła statyczne'
+        ru: 'Статические огни включены'
+        zh: '静态照明开启'
+        hu: 'Statikus fények bekapcsolva'
+        pt: 'Luzes estáticas ligadas'
+
+  FRONT_FOG_LIGHT_CONTROL:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Front fog light / additional light control'
+      fr: 'Commande des feux antibrouillard avant / feux additionnels'
+      es: 'Mando de los faros antiniebla delanteros / luces adicionales'
+      de: 'Steuerung der Nebelscheinwerfer / Zusatzscheinwerfer'
+      it: 'Comando dei fendinebbia anteriori / luci aggiuntive'
+      pl: 'Sterowanie przednimi światłami przeciwmgielnymi / światłami dodatkowymi'
+      ru: 'Управление передними противотуманными фарами / дополнительным светом'
+      zh: '前雾灯/辅助灯控制'
+      hu: 'Az első ködlámpa/kiegészítő lámpa vezérlése'
+      pt: 'Comando dos faróis de nevoeiro dianteiros / luzes adicionais'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Lamps off'
+        fr: 'Lampes éteintes'
+        es: 'Lámparas apagadas'
+        de: 'Leuchten aus'
+        it: 'Spie spente'
+        pl: 'Lampki zgaszone'
+        ru: 'Лампы выключены'
+        zh: '指示灯熄灭'
+        hu: 'A lámpák kikapcsolva'
+        pt: 'Lâmpadas apagadas'
+      0x01:
+        en: 'Right fog light on'
+        fr: 'Brouillard AV Droite Allume'
+        es: 'Faro antiniebla delantero derecho encendido'
+        de: 'Nebelscheinwerfer vorne rechts an'
+        it: 'Fendinebbia anteriore destro acceso'
+        pl: 'Prawe przednie światło przeciwmgielne włączone'
+        ru: 'Правая передняя противотуманная фара включена'
+        zh: '右前雾灯开启'
+        hu: 'Jobb első ködlámpa bekapcsolva'
+        pt: 'Farol antinevoeiro dianteiro direito aceso'
+      0x02:
+        en: 'Left fog light on'
+        fr: 'Antibrouillard avant gauche allumé'
+        es: 'Antiniebla delantero izquierdo encendido'
+        de: 'Nebelscheinwerfer vorne links eingeschaltet'
+        it: 'Fendinebbia anteriore sinistro acceso'
+        pl: 'Włączone przednie lewe światło przeciwmgielne'
+        ru: 'Включена левая передняя противотуманная фара'
+        zh: '左前雾灯已开启'
+        hu: 'Bal első ködlámpa bekapcsolva'
+        pt: 'Nevoeiro esquerdo ligado'
+      0x03:
+        en: 'Front fog lights on'
+        fr: 'Feux antibrouillard avant allumés'
+        es: 'Luces antiniebla delanteras encendidas'
+        de: 'Nebelscheinwerfer vorne eingeschaltet'
+        it: 'Fendinebbia anteriori accesi'
+        pl: 'Przednie światła przeciwmgielne włączone'
+        ru: 'Передние противотуманные фары включены'
+        zh: '前雾灯已开启'
+        hu: 'Első ködlámpák bekapcsolva'
+        pt: 'Luzes antinevoeiro dianteiras acesas'
+
+  CORNERING_LIGHT_PWM_DUTY_RIGHT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'PWM duty cycle of the right front fog light used as cornering light'
+      fr: 'Rapport cyclique PWM de l''antibrouillard avant droit utilisé comme éclairage de virage'
+      es: 'Ciclo de trabajo PWM del antiniebla delantero derecho usado como luz de curva'
+      de: 'PWM-Tastverhältnis des rechten Nebelscheinwerfers bei Nutzung als Kurvenlicht'
+      it: 'Duty cycle PWM del fendinebbia anteriore destro usato come luce di svolta'
+      pl: 'Współczynnik wypełnienia PWM prawego przedniego światła przeciwmgielnego użytego jako doświetlenie zakrętu'
+      ru: 'Коэффициент заполнения ШИМ правой передней противотуманной фары, используемой как поворотный свет'
+      zh: '右前雾灯作为转弯辅助灯使用时的PWM占空比'
+      hu: 'A jobb első ködlámpa kanyarfényként történő használatának PWM kitöltési tényezője'
+      pt: 'Ciclo de trabalho PWM do antinevoeiro dianteiro direito utilizado como luz de curva'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  CORNERING_LIGHT_PWM_DUTY_LEFT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'PWM duty cycle of the left front fog light used as cornering light'
+      fr: 'Rapport cyclique PWM de l''antibrouillard avant gauche utilisé comme éclairage de virage'
+      es: 'Ciclo de trabajo PWM del antiniebla delantero izquierdo usado como luz de curva'
+      de: 'PWM-Tastverhältnis des linken Nebelscheinwerfers bei Nutzung als Kurvenlicht'
+      it: 'Duty cycle PWM del fendinebbia anteriore sinistro usato come luce di svolta'
+      pl: 'Współczynnik wypełnienia PWM lewego przedniego światła przeciwmgielnego użytego jako doświetlenie zakrętu'
+      ru: 'Коэффициент заполнения ШИМ левой передней противотуманной фары, используемой как поворотный свет'
+      zh: '左前雾灯作为转弯辅助灯使用时的PWM占空比'
+      hu: 'A bal első ködlámpa kanyarfényként történő használatának PWM kitöltési tényezője'
+      pt: 'Ciclo de trabalho PWM do antinevoeiro dianteiro esquerdo utilizado como luz de curva'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  AC_COMPRESSOR_PWM_DUTY:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Duty factor of the PWM signal for the air conditioning compressor capacity (constant frequency 400 Hz)'
+      fr: 'Rapport cyclique du signal PWM de la cylindrée du compresseur de climatisation (fréquence constante 400 Hz)'
+      es: 'Factor de trabajo de la señal PWM de la cilindrada del compresor de aire acondicionado (frecuencia constante 400 Hz)'
+      de: 'Tastverhältnis des PWM-Signals der Klimakompressor-Fördermenge (konstante Frequenz 400 Hz)'
+      it: 'Duty cycle del segnale PWM della cilindrata del compressore del climatizzatore (frequenza costante 400 Hz)'
+      pl: 'Współczynnik wypełnienia sygnału PWM wydajności sprężarki klimatyzacji (stała częstotliwość 400 Hz)'
+      ru: 'Коэффициент заполнения ШИМ-сигнала производительности компрессора кондиционера (постоянная частота 400 Гц)'
+      zh: '空调压缩机排量PWM信号占空比(恒定频率400 Hz)'
+      hu: 'A klímakompresszor löktérfogatának PWM-jele kitöltési tényezője (állandó 400 Hz frekvencia)'
+      pt: 'Fator de trabalho do sinal PWM da cilindrada do compressor de ar condicionado (frequência constante 400 Hz)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  AC_WATER_PUMP_COMMAND:
+    bits: '5.7'
+    comment:
+      en: 'Air conditioning water pump command'
+      fr: 'Commande de la pompe à eau de climatisation'
+      es: 'Comando de la bomba de agua del aire acondicionado'
+      de: 'Ansteuerung der Klimaanlagen-Wasserpumpe'
+      it: 'Comando della pompa dell''acqua del climatizzatore'
+      pl: 'Sterowanie pompą wody klimatyzacji'
+      ru: 'Управление водяным насосом кондиционера'
+      zh: '空调水泵控制'
+      hu: 'A klíma vízszivattyújának vezérlése'
+      pt: 'Comando da bomba de água do ar condicionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Command not activated'
+        fr: 'Commande non activée'
+        es: 'Mando no activado'
+        de: 'Befehl nicht aktiviert'
+        it: 'Comando non attivato'
+        pl: 'Polecenie nieaktywowane'
+        ru: 'Команда не активирована'
+        zh: '命令未激活'
+        hu: 'A parancs nincs aktiválva'
+        pt: 'Comando não ativado'
+      0x01:
+        en: 'Command activated'
+        fr: 'Commande activée'
+        es: 'Comando activado'
+        de: 'Befehl aktiviert'
+        it: 'Comando attivato'
+        pl: 'Polecenie aktywowane'
+        ru: 'Команда активирована'
+        zh: '命令已激活'
+        hu: 'A parancs aktiválva'
+        pt: 'Comando ativado'
+
+  CABIN_HEATER_COMMAND:
+    bits: '5.6'
+    comment:
+      en: 'Cabin coolant heater command'
+      fr: 'Commande du réchauffeur d''habitacle'
+      es: 'Comando del calentador del habitáculo'
+      de: 'Ansteuerung der Innenraumzuheizung'
+      it: 'Comando del riscaldatore dell''abitacolo'
+      pl: 'Sterowanie dogrzewaczem kabiny'
+      ru: 'Управление подогревателем салона'
+      zh: '车厢加热器控制'
+      hu: 'Az utastér fűtőelemének vezérlése'
+      pt: 'Comando do aquecedor do habitáculo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Pas de pilotage'
+        es: 'Sin acción'
+        de: 'Keine Ansteuerung'
+        it: 'Nessuna azione'
+        pl: 'Brak sterowania'
+        ru: 'Нет управления'
+        zh: '无操作'
+        hu: 'Nincs vezérlés'
+        pt: 'Sem controlo'
+      0x01:
+        en: 'Control'
+        fr: 'Pilotage'
+        es: 'Control'
+        de: 'Ansteuerung'
+        it: 'Comando'
+        pl: 'Sterowanie'
+        ru: 'Управление'
+        zh: '控制'
+        hu: 'Vezérlés'
+        pt: 'Controlo'
+
+  AC_COMPRESSOR_COMMAND:
+    bits: '5.5'
+    comment:
+      en: 'Air conditioning compressor control'
+      fr: 'Commande du compresseur de climatisation'
+      es: 'Mando del compresor de aire acondicionado'
+      de: 'Steuerung des Klimakompressors'
+      it: 'Comando del compressore del climatizzatore'
+      pl: 'Sterowanie sprężarką klimatyzacji'
+      ru: 'Управление компрессором кондиционера'
+      zh: '空调压缩机控制'
+      hu: 'A klímakompresszor vezérlése'
+      pt: 'Comando do compressor de ar condicionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Compressor off'
+        fr: 'Compresseur arrêté'
+        es: 'Compresor apagado'
+        de: 'Kompressor aus'
+        it: 'Compressore spento'
+        pl: 'Sprężarka wyłączona'
+        ru: 'Компрессор выключен'
+        zh: '压缩机关闭'
+        hu: 'Kompresszor kikapcsolva'
+        pt: 'Compressor parado'
+      0x01:
+        en: 'Compressor ON'
+        fr: 'Compresseur activé'
+        es: 'Compresor activado'
+        de: 'Kompressor EIN'
+        it: 'Compressore attivo'
+        pl: 'Sprężarka włączona'
+        ru: 'Компрессор включён'
+        zh: '压缩机开启'
+        hu: 'Kompresszor BE'
+        pt: 'Compressor ATIVADO'
+
+  BTC_LOAD_SHEDDING_REQUEST:
+    bits: '5.4'
+    comment:
+      en: 'BTC load shedding request'
+      fr: 'Demande de délestage BTC'
+      es: 'Solicitud de reducción de carga BTC'
+      de: 'BTC-Lastabwurfanforderung'
+      it: 'Richiesta di riduzione del carico BTC'
+      pl: 'Żądanie ograniczenia obciążenia BTC'
+      ru: 'Запрос снижения нагрузки BTC'
+      zh: 'BTC降载请求'
+      hu: 'A BTC terheléscsökkentési kérése'
+      pt: 'Pedido de deslastre BTC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No load shedding requested'
+        fr: 'Pas de délestage demandé'
+        es: 'Sin solicitud de reducción de carga'
+        de: 'Kein Lastabwurf angefordert'
+        it: 'Nessuna richiesta di distacco del carico'
+        pl: 'Brak żądania zrzutu obciążenia'
+        ru: 'Отключение нагрузки не запрошено'
+        zh: '未请求卸载'
+        hu: 'Nincs terheléscsökkentési kérés'
+        pt: 'Sem pedido de corte de carga'
+      0x01:
+        en: 'Power saving level'
+        fr: 'Delestage demande'
+        es: 'Reparto de carga solicitado'
+        de: 'Lastabwurf angefordert'
+        it: 'Distacco carico richiesto'
+        pl: 'Żądana redukcja obciążenia'
+        ru: 'Запрошен сброс нагрузки'
+        zh: '请求负载削减'
+        hu: 'Terheléskorlátozás kérve'
+        pt: 'Deslastre solicitado'
+
+  HEADLIGHT_WASHER_RELAY_OUTPUT:
+    bits: '5.3'
+    comment:
+      en: 'Relayed headlight washer output'
+      fr: 'Sortie relayée du lave-phares'
+      es: 'Salida repetida del lavafaros'
+      de: 'Weitergeleiteter Scheinwerferwascher-Ausgang'
+      it: 'Uscita relè del lavafari'
+      pl: 'Przekaźnikowe wyjście spryskiwacza reflektorów'
+      ru: 'Ретранслированный выход омывателя фар'
+      zh: '大灯清洗器中继输出'
+      hu: 'A fényszórómosó jelének relézett kimenete'
+      pt: 'Saída repetida do lava-faróis'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Headlight washer not activated'
+        fr: 'Lave-projecteur non activé'
+        es: 'Lavafaros no activado'
+        de: 'Scheinwerferwaschanlage nicht aktiviert'
+        it: 'Lavafari non attivato'
+        pl: 'Spryskiwacz reflektorów niewłączony'
+        ru: 'Омыватель фар не активирован'
+        zh: '大灯清洗器未激活'
+        hu: 'A fényszórómosó nincs aktiválva'
+        pt: 'Lava-faróis não ativado'
+      0x01:
+        en: 'Headlight washer activated'
+        fr: 'Lave-projecteur activé'
+        es: 'Lavafaros activado'
+        de: 'Scheinwerferwaschanlage aktiviert'
+        it: 'Lavafari attivato'
+        pl: 'Spryskiwacz reflektorów włączony'
+        ru: 'Омыватель фар активирован'
+        zh: '大灯清洗器已激活'
+        hu: 'A fényszórómosó aktiválva'
+        pt: 'Lava-faróis ativado'
+
+  ALTERNATOR_EXCITATION_COMMAND:
+    bits: '5.2'
+    comment:
+      en: 'Alternator excitation control'
+      fr: 'Commande de l''excitation de l''alternateur'
+      es: 'Mando de la excitación del alternador'
+      de: 'Steuerung der Lichtmaschinenerregung'
+      it: 'Comando dell''eccitazione dell''alternatore'
+      pl: 'Sterowanie wzbudzeniem alternatora'
+      ru: 'Управление возбуждением генератора'
+      zh: '发电机励磁控制'
+      hu: 'A generátor gerjesztésének vezérlése'
+      pt: 'Comando da excitação do alternador'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Command not activated'
+        fr: 'Commande non activée'
+        es: 'Mando no activado'
+        de: 'Befehl nicht aktiviert'
+        it: 'Comando non attivato'
+        pl: 'Polecenie nieaktywowane'
+        ru: 'Команда не активирована'
+        zh: '命令未激活'
+        hu: 'A parancs nincs aktiválva'
+        pt: 'Comando não ativado'
+      0x01:
+        en: 'Command activated'
+        fr: 'Commande activée'
+        es: 'Comando activado'
+        de: 'Befehl aktiviert'
+        it: 'Comando attivato'
+        pl: 'Polecenie aktywowane'
+        ru: 'Команда активирована'
+        zh: '命令已激活'
+        hu: 'A parancs aktiválva'
+        pt: 'Comando ativado'
+
+  UNUSED_2:
+    bits: '5.1'
+    unused: true
+
+  STARTER_NEUTRAL_CLUTCH_AUTHORIZATION:
+    bits: '5.0'
+    comment:
+      en: 'Authorization of the starter control if in neutral or the clutch pedal is pressed'
+      fr: 'Autorisation de la commande du démarreur si au point mort ou pédale d''embrayage appuyée'
+      es: 'Autorización del mando del motor de arranque si está en punto muerto o el pedal de embrague está pisado'
+      de: 'Freigabe der Anlassersteuerung bei Leerlaufstellung oder betätigtem Kupplungspedal'
+      it: 'Autorizzazione del comando motorino di avviamento in folle o con pedale frizione premuto'
+      pl: 'Autoryzacja sterowania rozrusznikiem przy biegu jałowym lub wciśniętym pedale sprzęgła'
+      ru: 'Разрешение управления стартером при нейтрали или нажатой педали сцепления'
+      zh: '空挡或离合器踏板踩下时的起动机控制授权'
+      hu: 'Az indítómotor vezérlésének engedélyezése üresben vagy lenyomott kuplungpedál esetén'
+      pt: 'Autorização do comando do motor de arranque se em ponto morto ou pedal de embraiagem pressionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Neutral'
+        fr: 'Point mort'
+        es: 'Punto muerto'
+        de: 'Neutral'
+        it: 'Folle'
+        pl: 'Luz'
+        ru: 'Нейтраль'
+        zh: '空挡'
+        hu: 'Üres'
+        pt: 'Ponto morto'
+      0x01:
+        en: 'Neutral or clutch disengaged'
+        fr: 'Point mort ou embrayage débrayé'
+        es: 'Punto muerto o embrague desembragado'
+        de: 'Leerlauf oder Kupplung ausgekuppelt'
+        it: 'Folle o frizione disinnestata'
+        pl: 'Bieg jałowy lub sprzęgło rozłączone'
+        ru: 'Нейтраль или сцепление выключено'
+        zh: '空挡或离合器分离'
+        hu: 'Üresjárat vagy kuplung kinyomva'
+        pt: 'Ponto morto ou embraiagem desengatada'
+
+  STATIC_CORNERING_LIGHT_PWM_DUTY_CYCLE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'PWM duty cycle of the static cornering light'
+      fr: 'Rapport cyclique PWM du feu de virage statique'
+      es: 'Ciclo de trabajo PWM de la luz de giro estática'
+      de: 'PWM-Tastverhältnis des statischen Kurvenlichts'
+      it: 'Duty cycle PWM della luce di svolta statica'
+      pl: 'Wypełnienie PWM statycznego światła doświetlającego zakręt'
+      ru: 'Коэффициент заполнения ШИМ статического поворотного освещения'
+      zh: '静态转向辅助灯的PWM占空比'
+      hu: 'A statikus kanyarfény PWM kitöltési tényezője'
+      pt: 'Ciclo de trabalho PWM da luz de curva estática'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 100ms'
+      fr: 'Aussi observée avec une période de 100ms'
+      es: 'También observada con un periodo de 100ms'
+      de: 'Auch mit einer Periode von 100ms beobachtet'
+      it: 'Osservata anche con un periodo di 100ms'
+      pl: 'Obserwowana także z okresem 100ms'
+      ru: 'Также наблюдалась с периодом 100ms'
+      zh: '也观察到周期为100ms'
+      hu: 'Megfigyelve 100ms periódussal is'
+      pt: 'Também observada com um período de 100ms'
+    periodicity: ['100ms']

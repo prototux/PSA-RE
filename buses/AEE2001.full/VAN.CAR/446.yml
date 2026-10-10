@@ -1,0 +1,326 @@
+id: 0x446
+name: 'ROLLOVER_UNIT_COMMAND'
+type: 'van'
+length: 4
+comment:
+  en: 'Body computer to rollover detection unit: sleep announcement, engine running, ignition key position, vehicle speed and rollover warning lamp state on the instrument cluster.'
+  fr: 'BSI vers le boîtier de détection de retournement : annonce de mise en veille, moteur tournant, position de la clé de contact, vitesse véhicule et état du témoin de retournement au combiné.'
+  es: 'BSI a la unidad de detección de vuelco: anuncio de puesta en reposo, motor en marcha, posición de la llave de contacto, velocidad del vehículo y estado del testigo de vuelco en el cuadro.'
+  de: 'BSI an die Überschlagerkennungseinheit: Ruhezustandsankündigung, Motor läuft, Zündschlüsselposition, Fahrzeuggeschwindigkeit und Überschlagwarnleuchtenzustand am Kombiinstrument.'
+  it: 'BSI alla centralina di rilevamento ribaltamento: annuncio di messa in stand-by, motore in moto, posizione della chiave di accensione, velocità del veicolo e stato della spia di ribaltamento sul quadro strumenti.'
+  pl: 'BSI do jednostki wykrywania przewrócenia: zapowiedź uśpienia, praca silnika, pozycja kluczyka zapłonu, prędkość pojazdu i stan lampki przewrócenia na zestawie wskaźników.'
+  ru: 'BSI в блок обнаружения переворачивания: объявление перехода в спящий режим, работающий двигатель, положение ключа зажигания, скорость автомобиля и состояние лампы переворачивания на приборной панели.'
+  zh: 'BSI发送给侧翻检测单元的信息：休眠通知、发动机运转、点火钥匙位置、车速及仪表组侧翻警告灯状态。'
+  hu: 'A BSI a borulásérzékelő egység felé: alvó állapot bejelentése, motor jár, gyújtáskulcs helyzete, jármű sebessége és a borulásjelző lámpa állapota a műszerfalon.'
+  pt: 'Do computador de servidão para a unidade de deteção de capotamento: anúncio de adormecimento, motor em funcionamento, posição da chave de ignição, velocidade do veículo e estado da luz avisadora de capotamento no quadrante de instrumentos.'
+periodicity: ['50ms']
+senders: ['BSI']
+receivers: ['ROLLOVER']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.6'
+    unused: true
+
+  UNUSED_2:
+    bits: '1.5'
+    unused: true
+
+  UNUSED_3:
+    bits: '1.4'
+    unused: true
+
+  SLEEP_ANNOUNCE:
+    bits: '1.3'
+    comment:
+      en: 'Announces upcoming sleep mode and loss of the VAN supply'
+      fr: 'Annonce de la mise en veille imminente et de la disparition du +VAN'
+      es: 'Anuncio de la próxima puesta en reposo y pérdida de la alimentación +VAN'
+      de: 'Ankündigung des bevorstehenden Ruhezustands und Wegfalls der VAN-Versorgung'
+      it: 'Annuncio dell''imminente stand-by e della perdita dell''alimentazione +VAN'
+      pl: 'Zapowiedź nadchodzącego trybu uśpienia i zaniku zasilania +VAN'
+      ru: 'Оповещение о переходе в спящий режим и отключении питания +VAN'
+      zh: '提前通知即将进入休眠模式和+VAN供电中断'
+      hu: 'A közelgő alvó üzemmód és a +VAN tápellátás megszűnésének előjelzése'
+      pt: 'Anúncio da colocação em repouso iminente e da perda da alimentação +VAN'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sleep'
+        fr: 'Pas de veille'
+        es: 'Sin reposo'
+        de: 'Kein Ruhezustand'
+        it: 'Nessuno standby'
+        pl: 'Brak uśpienia'
+        ru: 'Нет сна'
+        zh: '无休眠'
+        hu: 'Nincs alvó állapot'
+        pt: 'Sem repouso'
+      0x01:
+        en: 'Sleep announced'
+        fr: 'Veille annoncée'
+        es: 'Reposo anunciado'
+        de: 'Ruhezustand angekündigt'
+        it: 'Stand-by annunciato'
+        pl: 'Zapowiedziane uśpienie'
+        ru: 'Объявлен спящий режим'
+        zh: '已宣布休眠'
+        hu: 'Alvás bejelentve'
+        pt: 'Repouso anunciado'
+
+  ENGINE_RUNNING:
+    bits: '1.2'
+    comment:
+      en: 'Engine running state'
+      fr: 'État moteur tournant'
+      es: 'Estado de motor en marcha'
+      de: 'Motorlaufstatus'
+      it: 'Stato di motore in moto'
+      pl: 'Stan pracy silnika'
+      ru: 'Состояние работы двигателя'
+      zh: '发动机运转状态'
+      hu: 'A motor járási állapota'
+      pt: 'Estado de motor em funcionamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Engine not running'
+        fr: 'Moteur non tournant'
+        es: 'Motor no en marcha'
+        de: 'Motor läuft nicht'
+        it: 'Motore non in funzione'
+        pl: 'Silnik niepracujący'
+        ru: 'Двигатель не работает'
+        zh: '发动机未运转'
+        hu: 'Motor nem jár'
+        pt: 'Motor sem rotação'
+      0x01:
+        en: 'Engine running'
+        fr: 'Moteur tournant'
+        es: 'Motor en marcha'
+        de: 'Motor läuft'
+        it: 'Motore in funzione'
+        pl: 'Silnik pracujący'
+        ru: 'Двигатель работает'
+        zh: '发动机运转中'
+        hu: 'A motor jár'
+        pt: 'Motor em funcionamento'
+
+  IGNITION_KEY_POSITION:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Ignition key position (ignition feed present in cranking and on positions)'
+      fr: 'Position de la clé de contact (le +APC est présent en positions démarreur et contact)'
+      es: 'Posición de la llave de contacto (el +APC está presente en las posiciones de arranque y contacto)'
+      de: 'Position des Zündschlüssels (Zündstrom in Starter- und Zündungsstellung vorhanden)'
+      it: 'Posizione della chiave di accensione (il +APC è presente in posizione avviamento e marcia)'
+      pl: 'Pozycja kluczyka zapłonu (zasilanie +APC obecne w pozycji rozrusznika i zapłonu)'
+      ru: 'Положение ключа зажигания (питание +APC присутствует в положениях стартера и зажигания)'
+      zh: '点火钥匙位置(+APC电源在起动和点火位置存在)'
+      hu: 'A gyújtáskulcs helyzete (a +APC tápellátás jelen van az indítás és gyújtás állásban)'
+      pt: 'Posição da chave de ignição (o +APC está presente nas posições de arranque e contacto)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Accessories'
+        fr: 'Accessoires'
+        es: 'Accesorios'
+        de: 'Zubehör'
+        it: 'Accessori'
+        pl: 'Akcesoria'
+        ru: 'Аксессуары'
+        zh: '附件'
+        hu: 'Tartozékok'
+        pt: 'Acessórios'
+      0x02:
+        en: 'Cranking'
+        fr: 'Démarreur en action'
+        es: 'Motor de arranque en marcha'
+        de: 'Anlasser dreht'
+        it: 'Motorino di avviamento in azione'
+        pl: 'Rozrusznik pracuje'
+        ru: 'Стартер вращает двигатель'
+        zh: '起动机运转中'
+        hu: 'Indítómotor forog'
+        pt: 'A rodar (arranque)'
+      0x03:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+
+  VEHICLE_SPEED:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Vehicle speed (average of the driven wheels), reads 0 below 2.75 km/h'
+      fr: 'Vitesse du véhicule (moyenne des roues motrices), nulle en dessous de 2,75 km/h'
+      es: 'Velocidad del vehículo (media de las ruedas motrices), nula por debajo de 2,75 km/h'
+      de: 'Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder), unter 2,75 km/h gleich null'
+      it: 'Velocità del veicolo (media delle ruote motrici), nulla al di sotto di 2,75 km/h'
+      pl: 'Prędkość pojazdu (średnia kół napędowych), zerowa poniżej 2,75 km/h'
+      ru: 'Скорость автомобиля (среднее по ведущим колёсам), равна нулю ниже 2,75 км/ч'
+      zh: '车速(驱动轮平均值),低于2.75 km/h时读数为0'
+      hu: 'Járműsebesség (a hajtott kerekek átlaga), 2,75 km/h alatt nulla'
+      pt: 'Velocidade do veículo (média das rodas motrizes), indica 0 abaixo de 2,75 km/h'
+    type: 'enum'
+    factor: 0.01
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00
+    values:
+      0x00:
+        en: 'Minimum value'
+        fr: 'Valeur minimale'
+        es: 'Valor mínimo'
+        de: 'Minimalwert'
+        it: 'Valore minimo'
+        pl: 'Wartość minimalna'
+        ru: 'Минимальное значение'
+        zh: '最小值'
+        hu: 'Minimum érték'
+        pt: 'Valor mínimo'
+      0xFFFE:
+        en: 'Maximum value (655.34 km/h)'
+        fr: 'Valeur maximale (655,34 km/h)'
+        es: 'Valor máximo (655,34 km/h)'
+        de: 'Maximalwert (655,34 km/h)'
+        it: 'Valore massimo (655,34 km/h)'
+        pl: 'Wartość maksymalna (655,34 km/h)'
+        ru: 'Максимальное значение (655,34 км/ч)'
+        zh: '最大值(655.34公里/小时)'
+        hu: 'Maximális érték (655,34 km/h)'
+        pt: 'Valor máximo (655,34 km/h)'
+      0xFFFF:
+        en: 'Invalid bytes'
+        fr: 'Octets invalides'
+        es: 'Bytes no válidos'
+        de: 'Ungültige Bytes'
+        it: 'Byte non validi'
+        pl: 'Nieprawidłowe bajty'
+        ru: 'Недействительные байты'
+        zh: '无效字节'
+        hu: 'Érvénytelen bájtok'
+        pt: 'Bytes inválidos'
+
+  UNUSED_4:
+    bits: '4.7-4.6'
+    unused: true
+
+  ROLLOVER_LAMP_FAULT:
+    bits: '4.5'
+    comment:
+      en: 'Instrument cluster rollover (RBCU) warning lamp fault status'
+      fr: 'État de défaut du témoin de retournement (RBCU) du combiné'
+      es: 'Estado de fallo del testigo de vuelco (RBCU) del cuadro de instrumentos'
+      de: 'Fehlerstatus der Überschlagwarnleuchte (RBCU) im Kombiinstrument'
+      it: 'Stato di guasto della spia di ribaltamento (RBCU) del quadro strumenti'
+      pl: 'Stan usterki kontrolki dachowania (RBCU) w zestawie wskaźników'
+      ru: 'Статус неисправности индикатора опрокидывания (RBCU) на приборной панели'
+      zh: '仪表盘翻车指示灯(RBCU)故障状态'
+      hu: 'A műszerfal borulásjelző (RBCU) lámpájának hibaállapota'
+      pt: 'Estado de falha da luz avisadora de capotamento (RBCU) do quadro de instrumentos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ROLLOVER_LAMP_STATE:
+    bits: '4.4'
+    comment:
+      en: 'Instrument cluster rollover (RBCU) warning lamp lit'
+      fr: 'Allumage du témoin de retournement (RBCU) du combiné'
+      es: 'Encendido del testigo de vuelco (RBCU) del cuadro de instrumentos'
+      de: 'Einschalten der Überschlagwarnleuchte (RBCU) im Kombiinstrument'
+      it: 'Accensione della spia di ribaltamento (RBCU) del quadro strumenti'
+      pl: 'Zapalenie kontrolki dachowania (RBCU) w zestawie wskaźników'
+      ru: 'Включение индикатора опрокидывания (RBCU) на приборной панели'
+      zh: '仪表盘翻车指示灯(RBCU)点亮'
+      hu: 'A műszerfal borulásjelző (RBCU) lámpájának bekapcsolása'
+      pt: 'Indicador luminoso de capotamento (RBCU) do quadrante aceso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  UNUSED_5:
+    bits: '4.3'
+    unused: true
+
+  UNUSED_6:
+    bits: '4.2'
+    unused: true
+
+  UNUSED_7:
+    bits: '4.1'
+    unused: true
+
+  UNUSED_8:
+    bits: '4.0'
+    unused: true

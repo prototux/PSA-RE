@@ -1,0 +1,229 @@
+id: 0x349
+name: 'GEARBOX_SYNCHRONISATION'
+type: 'can'
+length: 6
+comment:
+  en: 'Gearbox to engine coordination: torque reduction/setpoint, converter state, gear and lever position'
+  fr: 'Coordination boîte de vitesses / moteur : réduction ou consigne de couple, état du convertisseur, rapport et position du levier'
+  es: 'Coordinación caja de cambios / motor: reducción o consigna de par, estado del convertidor, marcha y posición de la palanca'
+  de: 'Koordination Getriebe/Motor: Drehmomentreduzierung/-sollwert, Wandlerzustand, Gang und Wählhebelposition'
+  it: 'Coordinamento cambio/motore: riduzione o valore di riferimento di coppia, stato del convertitore, marcia e posizione della leva'
+  pl: 'Koordynacja skrzyni biegów z silnikiem: redukcja/wartość zadana momentu obrotowego, stan przetwornika, bieg i pozycja dźwigni'
+  ru: 'Координация коробки передач и двигателя: снижение/уставка крутящего момента, состояние гидротрансформатора, передача и положение рычага'
+  zh: '变速箱与发动机的协调:转矩降低/设定值、变矩器状态、挡位及换挡杆位置'
+  hu: 'Váltó–motor koordináció: nyomatékcsökkentés/alapjel, nyomatékváltó állapota, fokozat és váltókar helyzete'
+  pt: 'Coordenação entre a caixa de velocidades e o motor: redução/consigna de binário, estado do conversor, mudança engatada e posição da alavanca.'
+periodicity: ['20ms']
+senders: ['BVA']
+receivers: ['CMM', 'ABS']
+
+signals:
+  GEARBOX_EOBD_FAULTS:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Gearbox EOBD (emission-related on-board diagnosis) faults.'
+      fr: 'Défauts EOBD (diagnostic embarqué antipollution) de la boîte de vitesses.'
+      es: 'Fallos EOBD (diagnóstico a bordo de emisiones) de la caja de cambios.'
+      de: 'EOBD-Fehler (emissionsbezogene On-Board-Diagnose) des Getriebes.'
+      it: 'Guasti EOBD (diagnosi di bordo emissioni) del cambio.'
+      pl: 'Usterki EOBD (pokładowej diagnostyki emisji) skrzyni biegów.'
+      ru: 'Неисправности EOBD (бортовая диагностика по выбросам) коробки передач.'
+      zh: '变速箱EOBD（车载排放诊断）故障。'
+      hu: 'A váltó EOBD (fedélzeti kibocsátás-diagnosztikai) hibái.'
+      pt: 'Falhas EOBD (diagnóstico a bordo antipoluição) da caixa de velocidades'
+    type: 'uint'
+
+  GEARBOX_TORQUE_REDUCTION_REQUEST:
+    bits: '1.3-1.2'
+    comment:
+      en: 'Torque reduction requested by the gearbox.'
+      fr: 'Réduction de couple demandée par la boîte de vitesses.'
+      es: 'Reducción de par solicitada por la caja de cambios.'
+      de: 'Vom Getriebe angeforderte Drehmomentreduzierung.'
+      it: 'Riduzione di coppia richiesta dal cambio.'
+      pl: 'Zmniejszenie momentu obrotowego żądane przez skrzynię biegów.'
+      ru: 'Снижение крутящего момента, запрошенное коробкой передач.'
+      zh: '变速箱请求的转矩降低。'
+      hu: 'A váltó nyomatékcsökkentési kérése.'
+      pt: 'Redução de binário solicitada pela caixa de velocidades.'
+    type: 'uint'
+
+  DRAG_TORQUE_REDUCTION:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Drag (engine braking) torque reduction.'
+      fr: 'Réduction du couple de traînée (frein moteur).'
+      es: 'Reducción del par de arrastre (freno motor).'
+      de: 'Verringerung des Schleppmoments (Motorbremse).'
+      it: 'Riduzione della coppia di trascinamento (freno motore).'
+      pl: 'Zmniejszenie momentu oporowego (hamowanie silnikiem).'
+      ru: 'Снижение тормозного момента двигателя (торможение двигателем).'
+      zh: '拖曳转矩（发动机制动）降低。'
+      hu: 'A vonszolónyomaték (motorfék) csökkentése.'
+      pt: 'Redução do binário de arrasto (travão motor).'
+    type: 'uint'
+
+  GEARBOX_TORQUE_SETPOINT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Torque setpoint requested by the gearbox.'
+      fr: 'Consigne de couple demandée par la boîte de vitesses.'
+      es: 'Consigna de par solicitada por la caja de cambios.'
+      de: 'Vom Getriebe angeforderter Drehmoment-Sollwert.'
+      it: 'Consegna di coppia richiesta dal cambio.'
+      pl: 'Zadana wartość momentu obrotowego żądana przez skrzynię biegów.'
+      ru: 'Заданный крутящий момент, запрошенный коробкой передач.'
+      zh: '变速箱请求的转矩设定值。'
+      hu: 'A váltó által kért nyomatéki alapjel.'
+      pt: 'Consigna de binário solicitada pela caixa de velocidades'
+    type: 'uint'
+
+  IDLE_SPEED_INCREASE_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Idle speed increase request.'
+      fr: 'Demande d''augmentation du régime de ralenti.'
+      es: 'Solicitud de aumento del régimen de ralentí.'
+      de: 'Anforderung zur Erhöhung der Leerlaufdrehzahl.'
+      it: 'Richiesta di aumento del regime del minimo.'
+      pl: 'Żądanie zwiększenia obrotów biegu jałowego.'
+      ru: 'Запрос на повышение оборотов холостого хода.'
+      zh: '怠速提升请求。'
+      hu: 'Alapjárati fordulatszám-növelési kérés.'
+      pt: 'Pedido de aumento do regime de ralenti'
+    type: 'bool'
+
+  GEARBOX_MAJOR_FAULT:
+    bits: '3.6'
+    comment:
+      en: 'Major gearbox fault (BVMP).'
+      fr: 'Défaut majeur de la boîte de vitesses (BVMP).'
+      es: 'Fallo grave de la caja de cambios (BVMP).'
+      de: 'Schwerwiegender Getriebefehler (BVMP).'
+      it: 'Guasto grave del cambio (BVMP).'
+      pl: 'Poważna usterka skrzyni biegów (BVMP).'
+      ru: 'Серьёзная неисправность коробки передач (BVMP).'
+      zh: '变速箱重大故障(BVMP)。'
+      hu: 'Súlyos váltóhiba (BVMP).'
+      pt: 'Falha grave da caixa de velocidades (BVMP)'
+    type: 'bool'
+
+  AC_COMPRESSOR_CHANGE_INHIBIT:
+    bits: '3.5-3.4'
+    comment:
+      en: 'A/C compressor state change inhibition.'
+      fr: 'Interdiction de changement d''état du compresseur de climatisation.'
+      es: 'Inhibición del cambio de estado del compresor de climatización.'
+      de: 'Sperre der Zustandsänderung des Klimakompressors.'
+      it: 'Inibizione del cambio di stato del compressore del climatizzatore.'
+      pl: 'Zablokowanie zmiany stanu sprężarki klimatyzacji.'
+      ru: 'Запрет изменения состояния компрессора кондиционера.'
+      zh: '空调压缩机状态变更禁止。'
+      hu: 'A klímakompresszor állapotváltásának tiltása.'
+      pt: 'Inibição da mudança de estado do compressor de A/C.'
+    type: 'uint'
+
+  TORQUE_CONVERTER_STATUS:
+    bits: '3.3-3.2'
+    comment:
+      en: 'Torque converter state.'
+      fr: 'État du convertisseur de couple.'
+      es: 'Estado del convertidor de par.'
+      de: 'Zustand des Drehmomentwandlers.'
+      it: 'Stato del convertitore di coppia.'
+      pl: 'Stan przetwornika momentu obrotowego.'
+      ru: 'Состояние гидротрансформатора.'
+      zh: '变矩器状态。'
+      hu: 'A nyomatékváltó állapota.'
+      pt: 'Estado do conversor de binário.'
+    type: 'uint'
+
+  GEARBOX_COOLING_FAN_REQUEST:
+    bits: '3.1'
+    comment:
+      en: 'Cooling fan request from the gearbox.'
+      fr: 'Demande de groupe motoventilateur par la boîte de vitesses.'
+      es: 'Solicitud del electroventilador de refrigeración por la caja de cambios.'
+      de: 'Kühlerlüfteranforderung durch das Getriebe.'
+      it: 'Richiesta dell''elettroventola da parte del cambio.'
+      pl: 'Żądanie wentylatora chłodnicy przez skrzynię biegów.'
+      ru: 'Запрос вентилятора охлаждения от коробки передач.'
+      zh: '变速箱冷却风扇请求。'
+      hu: 'A váltó hűtőventilátor-kérése.'
+      pt: 'Pedido do grupo moto-ventilador pela caixa de velocidades'
+    type: 'bool'
+
+  GEAR_SHIFT_IN_PROGRESS:
+    bits: '3.0'
+    comment:
+      en: 'Gear shift in progress.'
+      fr: 'Changement de rapport en cours.'
+      es: 'Cambio de marcha en curso.'
+      de: 'Gangwechsel läuft.'
+      it: 'Cambio marcia in corso.'
+      pl: 'Trwa zmiana biegu.'
+      ru: 'Переключение передачи выполняется.'
+      zh: '正在换挡。'
+      hu: 'Folyamatban lévő fokozatváltás.'
+      pt: 'Mudança de velocidade em curso.'
+    type: 'bool'
+
+  ENGAGED_GEAR:
+    bits: '4.7-4.4'
+    comment:
+      en: 'Engaged gear.'
+      fr: 'Rapport de boîte de vitesses engagé.'
+      es: 'Marcha engranada.'
+      de: 'Eingelegter Gang.'
+      it: 'Marcia innestata.'
+      pl: 'Włączony bieg.'
+      ru: 'Включённая передача.'
+      zh: '已挂挡位。'
+      hu: 'Bekapcsolt sebességfokozat.'
+      pt: 'Velocidade engrenada.'
+    type: 'uint'
+
+  SELECTOR_LEVER_POSITION:
+    bits: '4.3-4.0'
+    comment:
+      en: 'Gear selector lever position.'
+      fr: 'Position du levier de sélection de la boîte de vitesses.'
+      es: 'Posición de la palanca selectora de la caja de cambios.'
+      de: 'Position des Getriebewählhebels.'
+      it: 'Posizione della leva del cambio.'
+      pl: 'Położenie dźwigni wyboru biegów.'
+      ru: 'Положение рычага селектора коробки передач.'
+      zh: '变速箱选挡杆位置。'
+      hu: 'A váltókar helyzete.'
+      pt: 'Posição da alavanca seletora da caixa de velocidades.'
+    type: 'uint'
+
+  GEARBOX_MAX_ADMISSIBLE_TORQUE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Maximum torque admissible by the gearbox.'
+      fr: 'Couple maximum admissible par la boîte de vitesses.'
+      es: 'Par máximo admisible por la caja de cambios.'
+      de: 'Vom Getriebe maximal zulässiges Drehmoment.'
+      it: 'Coppia massima ammissibile dal cambio.'
+      pl: 'Maksymalny moment obrotowy dopuszczalny dla skrzyni biegów.'
+      ru: 'Максимальный допустимый крутящий момент коробки передач.'
+      zh: '变速箱允许的最大转矩。'
+      hu: 'A váltó által megengedett maximális nyomaték.'
+      pt: 'Binário máximo admissível pela caixa de velocidades'
+    type: 'uint'
+
+  GEARBOX_INPUT_SPEED:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Gearbox input speed (turbine speed on automatic gearboxes).'
+      fr: 'Régime d''entrée de la boîte de vitesses (régime turbine en BVA).'
+      es: 'Régimen de entrada de la caja de cambios (régimen de la turbina en cambio automático).'
+      de: 'Getriebeeingangsdrehzahl (Turbinendrehzahl bei Automatikgetrieben).'
+      it: 'Regime di ingresso del cambio (regime turbina nei cambi automatici).'
+      pl: 'Prędkość obrotowa na wejściu skrzyni biegów (prędkość turbiny w skrzyni automatycznej).'
+      ru: 'Частота вращения на входе коробки передач (частота турбины для АКПП).'
+      zh: '变速箱输入转速（自动变速箱的涡轮转速）。'
+      hu: 'A váltó bemeneti fordulatszáma (automatavaltónál a turbina fordulatszáma).'
+      pt: 'Regime de entrada da caixa de velocidades (regime da turbina em caixa automática).'
+    type: 'uint'

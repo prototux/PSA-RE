@@ -1,0 +1,530 @@
+id: 0x207
+name: 'GEARBOX_SPEED_RELAY'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['CMM']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ENGINE_TORQUE_SETPOINT:
+    bits: '2.7-3.2'
+    comment:
+      en: 'Engine torque setpoint'
+      fr: 'Consigne de couple moteur'
+      es: 'Consigna de par motor'
+      de: 'Motordrehmoment-Sollwert'
+      it: 'Valore di coppia motore richiesto'
+      pl: 'Zadany moment obrotowy silnika'
+      ru: 'Заданный момент двигателя'
+      zh: '发动机扭矩设定值'
+      hu: 'A motor nyomaték-alapjele'
+      pt: 'Consigna de binário do motor'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  EASY_MOVE_TORQUE_SETPOINT:
+    bits: '3.1-5.4'
+    comment:
+      en: 'Torque setpoint after Easy Move processing'
+      fr: 'Consigne de couple après traitement Easy Move'
+      es: 'Consigna de par tras el procesamiento Easy Move'
+      de: 'Solldrehmoment nach Easy-Move-Verarbeitung'
+      it: 'Valore di coppia richiesto dopo l''elaborazione Easy Move'
+      pl: 'Zadany moment obrotowy po przetworzeniu przez funkcję Easy Move'
+      ru: 'Заданный момент после обработки функцией Easy Move'
+      zh: 'Easy Move处理后的扭矩设定值'
+      hu: 'Nyomaték-alapjel az Easy Move feldolgozás után'
+      pt: 'Consigna de binário após processamento Easy Move'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  DECELERATION_ACTIVATION_FILTERED_TORQUE:
+    bits: '5.3-7.6'
+    comment:
+      en: 'Filtered torque at deceleration activation'
+      fr: 'Couple filtré à l''activation de la décélération'
+      es: 'Par filtrado en la activación de la deceleración'
+      de: 'Gefiltertes Drehmoment bei Aktivierung der Verzögerung'
+      it: 'Coppia filtrata all''attivazione della decelerazione'
+      pl: 'Filtrowany moment obrotowy przy aktywacji opóźnienia'
+      ru: 'Отфильтрованный момент при активации замедления'
+      zh: '减速激活时的滤波扭矩'
+      hu: 'Szűrt nyomaték a lassítás aktiválásakor'
+      pt: 'Binário filtrado na ativação da desaceleração'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  EMOTOR_STATIC_TORQUE_LIMIT:
+    bits: '7.5-8.0'
+    comment:
+      en: 'Static torque limit of the electric machine control (CME)'
+      fr: 'Couple de limitation statique de la commande de la machine électrique (CME)'
+      es: 'Límite de par estático del control de la máquina eléctrica (CME)'
+      de: 'Statische Drehmomentbegrenzung der E-Maschinensteuerung (CME)'
+      it: 'Limite di coppia statico del comando della macchina elettrica (CME)'
+      pl: 'Statyczne ograniczenie momentu obrotowego sterownika maszyny elektrycznej (CME)'
+      ru: 'Статическое ограничение момента блока управления электромашиной (CME)'
+      zh: '电机控制器(CME)静态扭矩限制'
+      hu: 'Az elektromosgép-vezérlő (CME) statikus nyomatékhatára'
+      pt: 'Limite de binário estático do controlo da máquina elétrica (CME)'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['HCU1']
+    receivers: ['CMM', 'HCU2']
+    signals:
+      UNUSED_1:
+        bits: '1.7-2.3'
+        unused: true
+      IDLE_SPEED_REGULATION_SETPOINT:
+        bits: '2.2-4.6'
+        comment:
+          en: 'Idle speed regulation setpoint'
+          fr: 'Consigne de régulation de régime'
+          es: 'Consigna de regulación de régimen'
+          de: 'Sollwert der Leerlaufdrehzahlregelung'
+          it: 'Valore di riferimento di regolazione del regime'
+          pl: 'Wartość zadana regulacji obrotów'
+          ru: 'Уставка регулирования оборотов'
+          zh: '转速调节设定值'
+          hu: 'Fordulatszám-szabályozási alapjel'
+          pt: 'Consigna de regulação do regime'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 8000
+        units: 'rpm'
+        invalid: 0x1FFF
+        default: 0x00
+      CURATIVE_COMFORT_WEIGHTING:
+        bits: '4.5-4.0'
+        comment:
+          en: 'Curative comfort weighting'
+          fr: 'Pondération confort curative'
+          es: 'Ponderación de confort curativa'
+          de: 'Kurative Komfortgewichtung'
+          it: 'Ponderazione comfort curativa'
+          pl: 'Waga komfortu naprawczego'
+          ru: 'Взвешивание корректирующего комфорта'
+          zh: '修正性舒适性加权'
+          hu: 'Javító célú kényelmi súlyozás'
+          pt: 'Ponderação de conforto curativa'
+        type: 'uint'
+        factor: 0.02
+        min: 0
+        max: 1
+        invalid: 0x3F
+        default: 0x32
+      SPORT_INDEX:
+        bits: '5.7-5.1'
+        comment:
+          en: 'Sportiness index'
+          fr: 'Indice de sportivité'
+          es: 'Índice de deportividad'
+          de: 'Sportlichkeitsindex'
+          it: 'Indice di sportività'
+          pl: 'Wskaźnik sportowości'
+          ru: 'Индекс спортивности'
+          zh: '运动性指数'
+          hu: 'Sportosság-index'
+          pt: 'Índice de desportividade'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 100
+        units: '%'
+        invalid: 0x7F
+        default: 0x00
+      GEARBOX_COORDINATED_TORQUE_LIMIT:
+        bits: '5.0-6.0'
+        comment:
+          en: 'Coordinated torque limitations from the gearbox'
+          fr: 'Couple coordonné des limitations de la boîte de vitesses'
+          es: 'Par coordinado de las limitaciones de la caja de cambios'
+          de: 'Koordiniertes Drehmoment der Getriebebegrenzungen'
+          it: 'Coppia coordinata delle limitazioni del cambio'
+          pl: 'Skoordynowany moment obrotowy ograniczeń skrzyni biegów'
+          ru: 'Скоординированный крутящий момент ограничений коробки передач'
+          zh: '变速箱协调限制转矩'
+          hu: 'A váltó nyomatékkorlátozásainak koordinált értéke'
+          pt: 'Limitações de binário coordenadas da caixa de velocidades'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 500
+        units: 'Nm'
+        invalid: 0x1FF
+        default: 0x00
+      BACKLASH_PASSAGE_THRESHOLD:
+        bits: '7.7-8.7'
+        comment:
+          en: 'Backlash passage threshold'
+          fr: 'Seuil de passage de jeu'
+          es: 'Umbral de paso de holgura'
+          de: 'Schwellenwert der Spieldurchfahrt'
+          it: 'Soglia di passaggio di gioco'
+          pl: 'Próg przejścia luzu'
+          ru: 'Порог прохождения люфта'
+          zh: '间隙通过阈值'
+          hu: 'Holtjáték-átjárási küszöbérték'
+          pt: 'Limiar de passagem de folga'
+        type: 'uint'
+        factor: 0.5
+        offset: -100
+        min: -100
+        max: 100
+        units: 'Nm'
+        invalid: 0x1FF
+        default: 0xC8
+      COMFORT_FILTERING_PHASE:
+        bits: '8.6-8.3'
+        comment:
+          en: 'Comfort filtering phase'
+          fr: 'Phase de filtrage confort'
+          es: 'Fase de filtrado de confort'
+          de: 'Komfort-Filterphase'
+          it: 'Fase di filtraggio comfort'
+          pl: 'Faza filtrowania komfortu'
+          ru: 'Фаза комфортной фильтрации'
+          zh: '舒适性滤波阶段'
+          hu: 'Kényelmi szűrési fázis'
+          pt: 'Fase de filtragem de conforto'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Filtering deactivated'
+            fr: 'Filtrage désactivé'
+            es: 'Filtrado desactivado'
+            de: 'Filterung deaktiviert'
+            it: 'Filtraggio disattivato'
+            pl: 'Filtrowanie wyłączone'
+            ru: 'Фильтрация отключена'
+            zh: '过滤已停用'
+            hu: 'Szűrés kikapcsolva'
+            pt: 'Filtragem desativada'
+          0x01:
+            en: 'Filtering inactive'
+            fr: 'Filtrage inactif'
+            es: 'Filtrado inactivo'
+            de: 'Filterung inaktiv'
+            it: 'Filtraggio inattivo'
+            pl: 'Filtrowanie nieaktywne'
+            ru: 'Фильтрация неактивна'
+            zh: '滤波未激活'
+            hu: 'Szűrés inaktív'
+            pt: 'Filtragem inativa'
+          0x02:
+            en: 'Acceleration filtering for zone 2'
+            fr: 'Filtrage en accélération pour la zone 2'
+            es: 'Filtrado en aceleración para la zona 2'
+            de: 'Beschleunigungsfilterung für Zone 2'
+            it: 'Filtraggio in accelerazione per la zona 2'
+            pl: 'Filtrowanie przyspieszenia dla strefy 2'
+            ru: 'Фильтрация ускорения для зоны 2'
+            zh: '区域2的加速滤波'
+            hu: 'Gyorsulásszűrés a 2. zónához'
+            pt: 'Filtragem de aceleração para a zona 2'
+          0x03:
+            en: 'Acceleration filtering for zone 3'
+            fr: 'Filtrage en accélération pour la zone 3'
+            es: 'Filtrado en aceleración para la zona 3'
+            de: 'Beschleunigungsfilterung für Zone 3'
+            it: 'Filtraggio in accelerazione per la zona 3'
+            pl: 'Filtrowanie przyspieszenia dla strefy 3'
+            ru: 'Фильтрация ускорения для зоны 3'
+            zh: '区域3加速滤波'
+            hu: 'Gyorsítási szűrés a 3. zónához'
+            pt: 'Filtragem em aceleração para a zona 3'
+          0x04:
+            en: 'Acceleration filtering for zone 4'
+            fr: 'Filtrage en accélération pour la zone 4'
+            es: 'Filtrado en aceleración para la zona 4'
+            de: 'Beschleunigungsfilterung für Zone 4'
+            it: 'Filtraggio in accelerazione per la zona 4'
+            pl: 'Filtrowanie przyspieszenia dla strefy 4'
+            ru: 'Фильтрация ускорения для зоны 4'
+            zh: '区域4加速滤波'
+            hu: 'Gyorsulásszűrés a 4. zónához'
+            pt: 'Filtragem em aceleração para a zona 4'
+          0x05:
+            en: 'Deceleration filtering for zone 5'
+            fr: 'Filtrage en décélération pour la zone 5'
+            es: 'Filtrado de deceleración para la zona 5'
+            de: 'Verzögerungsfilterung für Zone 5'
+            it: 'Filtraggio in decelerazione per la zona 5'
+            pl: 'Filtrowanie opóźnienia dla strefy 5'
+            ru: 'Фильтрация замедления для зоны 5'
+            zh: '5区减速滤波'
+            hu: 'Lassítási szűrés az 5. zónában'
+            pt: 'Filtragem em desaceleração para a zona 5'
+          0x06:
+            en: 'Acceleration filtering for zone 6'
+            fr: 'Filtrage en accélération pour la zone 6'
+            es: 'Filtrado en aceleración para la zona 6'
+            de: 'Beschleunigungsfilterung für Zone 6'
+            it: 'Filtraggio in accelerazione per la zona 6'
+            pl: 'Filtrowanie przyspieszenia dla strefy 6'
+            ru: 'Фильтрация ускорения для зоны 6'
+            zh: '区域6加速滤波'
+            hu: 'Gyorsulásszűrés a 6. zónához'
+            pt: 'Filtragem em aceleração para a zona 6'
+          0x07:
+            en: 'Deceleration filtering for zone 7'
+            fr: 'Filtrage en décélération pour la zone 7'
+            es: 'Filtrado de deceleración para la zona 7'
+            de: 'Verzögerungsfilterung für Zone 7'
+            it: 'Filtraggio in decelerazione per la zona 7'
+            pl: 'Filtrowanie zwalniania dla strefy 7'
+            ru: 'Фильтрация замедления для зоны 7'
+            zh: '第7区减速滤波'
+            hu: 'Lassítás szűrése a 7. zónában'
+            pt: 'Filtragem de desaceleração para a zona 7'
+          0x08:
+            en: 'deceleration filtering for zone 8'
+            fr: 'filtrage en accel pour la zone 8'
+            es: 'Filtrado de aceleración para la zona 8'
+            de: 'Beschleunigungsfilterung für Zone 8'
+            it: 'Filtraggio dell''accelerazione per la zona 8'
+            pl: 'Filtrowanie przyspieszenia dla strefy 8'
+            ru: 'Фильтрация ускорения для зоны 8'
+            zh: '8区加速度滤波'
+            hu: 'Gyorsulásszűrés a 8. zónához'
+            pt: 'Filtragem em aceleração para a zona 8'
+          0x09:
+            en: 'Acceleration filtering for zone 9'
+            fr: 'Filtrage en accélération pour la zone 9'
+            es: 'Filtrado en aceleración para la zona 9'
+            de: 'Beschleunigungsfilterung für Zone 9'
+            it: 'Filtraggio in accelerazione per la zona 9'
+            pl: 'Filtrowanie przyspieszenia dla strefy 9'
+            ru: 'Фильтрация ускорения для зоны 9'
+            zh: '区域9的加速滤波'
+            hu: 'Gyorsulásszűrés a 9. zónához'
+            pt: 'Filtragem de aceleração para a zona 9'
+          0x0A:
+            en: 'Acceleration filtering for zone 10'
+            fr: 'Filtrage en accélération pour la zone 10'
+            es: 'Filtrado en aceleración para la zona 10'
+            de: 'Filterung bei Beschleunigung für Zone 10'
+            it: 'Filtraggio in accelerazione per la zona 10'
+            pl: 'Filtrowanie przy przyspieszeniu dla strefy 10'
+            ru: 'Фильтрация при ускорении для зоны 10'
+            zh: '第10区加速滤波'
+            hu: 'Gyorsításkori szűrés a 10. zónához'
+            pt: 'Filtragem de aceleração para a zona 10'
+          0x0B:
+            en: 'Deceleration filtering for zone 11'
+            fr: 'Filtrage en décélération pour la zone 11'
+            es: 'Filtrado de deceleración para la zona 11'
+            de: 'Verzögerungsfilterung für Zone 11'
+            it: 'Filtraggio in decelerazione per la zona 11'
+            pl: 'Filtrowanie zwalniania dla strefy 11'
+            ru: 'Фильтрация замедления для зоны 11'
+            zh: '第11区减速滤波'
+            hu: 'Lassítás szűrése a 11. zónában'
+            pt: 'Filtragem de desaceleração para a zona 11'
+          0x0C:
+            unused: true
+          0x0D:
+            unused: true
+          0x0E:
+            unused: true
+          0x0F:
+            unused: true
+      CURATIVE_BACKLASH_PASSAGE_DETECTION:
+        bits: '8.2'
+        comment:
+          en: 'Detection of curative backlash passage'
+          fr: 'Détection du passage de jeu curatif'
+          es: 'Detección del paso de holgura curativo'
+          de: 'Erkennung der kurativen Spieldurchfahrt'
+          it: 'Rilevamento del passaggio di gioco curativo'
+          pl: 'Wykrycie naprawczego przejścia luzu'
+          ru: 'Обнаружение корректирующего прохождения люфта'
+          zh: '修正性间隙通过检测'
+          hu: 'A javító célú holtjáték-átjárás érzékelése'
+          pt: 'Deteção da passagem de folga curativa'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No detection'
+            fr: 'Pas de détection'
+            es: 'Sin detección'
+            de: 'Keine Erkennung'
+            it: 'Nessun rilevamento'
+            pl: 'Brak detekcji'
+            ru: 'Обнаружение отсутствует'
+            zh: '未检测到'
+            hu: 'Nincs érzékelés'
+            pt: 'Sem deteção'
+          0x01:
+            en: 'Detection'
+            fr: 'Détection'
+            es: 'Detección'
+            de: 'Erkennung'
+            it: 'Rilevamento'
+            pl: 'Wykrycie'
+            ru: 'Обнаружение'
+            zh: '检测'
+            hu: 'Érzékelés'
+            pt: 'Deteção'
+      CURATIVE_BACKLASH_PASSAGE_ACTIVATION:
+        bits: '8.1'
+        comment:
+          en: 'Activation of curative backlash passage'
+          fr: 'Activation du passage de jeu curatif'
+          es: 'Activación del paso de holgura curativo'
+          de: 'Aktivierung der kurativen Spieldurchfahrt'
+          it: 'Attivazione del passaggio di gioco curativo'
+          pl: 'Aktywacja naprawczego przejścia luzu'
+          ru: 'Активация корректирующего прохождения люфта'
+          zh: '修正性间隙通过激活'
+          hu: 'A javító célú holtjáték-átjárás aktiválása'
+          pt: 'Ativação da passagem de folga curativa'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No desactivation'
+            fr: 'Pas de desactivation'
+            es: 'Sin desactivación'
+            de: 'Keine Deaktivierung'
+            it: 'Nessuna disattivazione'
+            pl: 'Brak dezaktywacji'
+            ru: 'Нет деактивации'
+            zh: '未停用'
+            hu: 'Nincs kikapcsolás'
+            pt: 'Sem desativação'
+          0x01:
+            en: 'Desactivation'
+            fr: 'Desactivation'
+            es: 'Desactivación'
+            de: 'Deaktivierung'
+            it: 'Disattivazione'
+            pl: 'Dezaktywacja'
+            ru: 'Деактивация'
+            zh: '停用'
+            hu: 'Kikapcsolás'
+            pt: 'Desativação'
+      CURATIVE_DECELERATION_ACTIVATION:
+        bits: '8.0'
+        comment:
+          en: 'Activation of curative deceleration'
+          fr: 'Activation de la décélération curative'
+          es: 'Activación de la deceleración curativa'
+          de: 'Aktivierung der kurativen Verzögerung'
+          it: 'Attivazione della decelerazione curativa'
+          pl: 'Aktywacja dekoncelaracji naprawczej'
+          ru: 'Активация корректирующего замедления'
+          zh: '修正性减速激活'
+          hu: 'A javító célú lassítás aktiválása'
+          pt: 'Ativação da desaceleração curativa'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No activation'
+            fr: 'Pas d''activation'
+            es: 'Sin activación'
+            de: 'Keine Aktivierung'
+            it: 'Nessuna attivazione'
+            pl: 'Brak aktywacji'
+            ru: 'Нет активации'
+            zh: '未激活'
+            hu: 'Nincs aktiválás'
+            pt: 'Sem ativação'
+          0x01:
+            en: 'Activation'
+            fr: 'Activation'
+            es: 'Activación'
+            de: 'Aktivierung'
+            it: 'Attivazione'
+            pl: 'Aktywacja'
+            ru: 'Активация'
+            zh: '激活'
+            hu: 'Aktiválás'
+            pt: 'Ativação'

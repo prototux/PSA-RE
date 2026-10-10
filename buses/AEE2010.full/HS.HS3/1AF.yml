@@ -1,0 +1,178 @@
+id: 0x1AF
+name: 'BSRF_COMMAND_3'
+type: 'can'
+length: 8
+comment:
+  en: 'Adaptive cruise target presence, accelerator pedal action, battery charge state, clutch pedal position, brake master cylinder pressure, AC mechanical power and auxiliary battery voltage, sent by the BSI to the telematics gateway.'
+  fr: 'Présence de cible régulateur adaptatif, action pédale d''accélérateur, état de charge batterie, position pédale d''embrayage, pression maître-cylindre de frein, puissance mécanique climatisation et tension batterie auxiliaire, envoyées par la BSI à la passerelle télématique.'
+  es: 'Presencia de objetivo del regulador adaptativo, acción del pedal del acelerador, estado de carga de la batería, posición del pedal de embrague, presión del cilindro maestro de freno, potencia mecánica de climatización y tensión de la batería auxiliar, enviadas por la BSI a la pasarela telemática.'
+  de: 'Zielobjekt-Präsenz des Abstandstempomaten, Gaspedalbetätigung, Batterieladezustand, Kupplungspedalstellung, Bremshauptzylinderdruck, mechanische Klimaleistung und Zusatzbatteriespannung, von der BSI an das Telematik-Gateway gesendet.'
+  it: 'Presenza obiettivo regolatore adattivo, azione pedale acceleratore, stato di carica batteria, posizione pedale frizione, pressione cilindro maestro freno, potenza meccanica climatizzatore e tensione batteria ausiliaria, inviate dalla BSI al gateway telematico.'
+  pl: 'Obecność celu adaptacyjnego tempomatu, działanie pedału przyspieszenia, stan naładowania akumulatora, pozycja pedału sprzęgła, ciśnienie pompy hamulcowej, moc mechaniczna klimatyzacji i napięcie akumulatora pomocniczego, wysyłane przez BSI do bramki telematycznej.'
+  ru: 'Наличие цели адаптивного круиз-контроля, воздействие на педаль акселератора, состояние заряда батареи, положение педали сцепления, давление главного тормозного цилиндра, механическая мощность кондиционера и напряжение вспомогательной батареи, отправляемые BSI в телематический шлюз.'
+  zh: '自适应巡航目标存在、加速踏板动作、电池荷电状态、离合器踏板位置、刹车总泵压力、空调机械功率及辅助电池电压，由BSI发送给远程信息处理网关。'
+  hu: 'Az adaptív sebességtartó célpontjának jelenléte, gázpedál-működtetés, akkumulátor töltöttségi állapota, kuplungpedál helyzete, főfékhenger nyomása, a klíma mechanikai teljesítménye és a segédakkumulátor feszültsége, a BSI küldi a telematikai átjárónak.'
+  pt: 'Presença de alvo do regulador de velocidade adaptativo, ação do pedal do acelerador, estado de carga da bateria, posição do pedal da embraiagem, pressão do cilindro mestre de travagem, potência mecânica do ar condicionado e tensão da bateria auxiliar, enviados pela BSI ao gateway telemático.'
+periodicity: ['100ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  ACCELERATOR_PEDAL_POSITION:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Accelerator pedal position'
+      fr: 'Position de la pédale d''accélérateur'
+      es: 'Posición del pedal del acelerador'
+      de: 'Fahrpedalstellung'
+      it: 'Posizione del pedale dell''acceleratore'
+      pl: 'Położenie pedału przyspieszenia'
+      ru: 'Положение педали акселератора'
+      zh: '加速踏板位置'
+      hu: 'Gázpedál helyzete'
+      pt: 'Posição do pedal do acelerador'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+
+  BATTERY_STATE_OF_CHARGE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Battery state of charge'
+      fr: 'État de charge de la batterie'
+      es: 'Estado de carga de la batería'
+      de: 'Ladezustand der Batterie'
+      it: 'Stato di carica della batteria'
+      pl: 'Stan naładowania akumulatora'
+      ru: 'Уровень заряда батареи'
+      zh: '电池荷电状态'
+      hu: 'Az akkumulátor töltöttségi állapota'
+      pt: 'Estado de carga da bateria'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+
+  ENGINE_ECU_CLUTCH_PEDAL_POSITION:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Clutch pedal position, as measured by the engine ECU'
+      fr: 'Position de la pédale d''embrayage, mesurée par le calculateur moteur'
+      es: 'Posición del pedal de embrague, medida por la ECU del motor'
+      de: 'Kupplungspedalstellung, vom Motorsteuergerät gemessen'
+      it: 'Posizione del pedale della frizione, misurata dalla centralina motore'
+      pl: 'Położenie pedału sprzęgła, mierzone przez sterownik silnika'
+      ru: 'Положение педали сцепления, измеренное блоком управления двигателем'
+      zh: '由发动机控制单元测得的离合器踏板位置'
+      hu: 'Kuplungpedál helyzete, a motorvezérlő mérése szerint'
+      pt: 'Posição do pedal de embraiagem, medida pela ECU do motor'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+
+  AC_MECHANICAL_POWER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Mechanical power consumed by the air conditioning system'
+      fr: 'Puissance mécanique consommée par le système de climatisation'
+      es: 'Potencia mecánica consumida por el sistema de aire acondicionado'
+      de: 'Von der Klimaanlage verbrauchte mechanische Leistung'
+      it: 'Potenza meccanica consumata dal sistema di climatizzazione'
+      pl: 'Moc mechaniczna pobierana przez układ klimatyzacji'
+      ru: 'Механическая мощность, потребляемая системой кондиционирования'
+      zh: '空调系统消耗的机械功率'
+      hu: 'A klímarendszer által felhasznált mechanikai teljesítmény'
+      pt: 'Potência mecânica consumida pelo sistema de ar condicionado'
+    type: 'uint'
+    factor: 25
+    min: 0
+    max: 6350
+    units: 'W'
+    invalid: 0xFF
+
+  MASTER_CYLINDER_PRESSURE:
+    bits: '6.7-7.4'
+    comment:
+      en: 'Master cylinder pressure'
+      fr: 'Pression du maître-cylindre'
+      es: 'Presión del cilindro maestro'
+      de: 'Hauptbremszylinderdruck'
+      it: 'Pressione del cilindro maestro'
+      pl: 'Ciśnienie w pompie hamulcowej głównej'
+      ru: 'Давление в главном тормозном цилиндре'
+      zh: '制动主缸压力'
+      hu: 'Főfékhenger nyomása'
+      pt: 'Pressão do cilindro mestre'
+    type: 'uint'
+    factor: 0.1
+    offset: -55
+    min: -55
+    max: 354.4
+    units: 'bar'
+    invalid: 0xFFF
+
+  BECB_BATTERY_VOLTAGE:
+    bits: '7.3-8.1'
+    comment:
+      en: 'Battery voltage measured by the BECB'
+      fr: 'Tension de la batterie mesurée par le BECB'
+      es: 'Tensión de la batería medida por el BECB'
+      de: 'Vom BECB gemessene Batteriespannung'
+      it: 'Tensione della batteria misurata dal BECB'
+      pl: 'Napięcie akumulatora zmierzone przez BECB'
+      ru: 'Напряжение батареи, измеренное BECB'
+      zh: 'BECB测得的电池电压'
+      hu: 'A BECB által mért akkumulátorfeszültség'
+      pt: 'Tensão da bateria medida pela BECB'
+    type: 'uint'
+    factor: 0.015
+    min: 5
+    max: 18
+    units: 'V'
+    invalid: 0x7FF
+
+  ACC_TARGET_DETECTED:
+    bits: '8.0'
+    comment:
+      en: 'Adaptive cruise control detected target presence'
+      fr: 'Présence d''une cible détectée par le régulateur de vitesse adaptatif'
+      es: 'Presencia de un objetivo detectado por el control de crucero adaptativo'
+      de: 'Vom adaptiven Tempomat erkannte Zielpräsenz'
+      it: 'Presenza di un target rilevato dal cruise control adattivo'
+      pl: 'Obecność celu wykrytego przez adaptacyjny tempomat'
+      ru: 'Наличие цели, обнаруженной адаптивным круиз-контролем'
+      zh: '自适应巡航控制检测到的目标存在'
+      hu: 'Az adaptív tempomat által érzékelt célobjektum jelenléte'
+      pt: 'Presença de um alvo detetado pelo regulador de velocidade adaptativo'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Initialisation or no target detected'
+        fr: 'Initialisation ou pas de cible détectée'
+        es: 'Inicialización o sin objetivo detectado'
+        de: 'Initialisierung oder kein Ziel erkannt'
+        it: 'Inizializzazione o nessun bersaglio rilevato'
+        pl: 'Inicjalizacja lub brak wykrytego celu'
+        ru: 'Инициализация или цель не обнаружена'
+        zh: '初始化或未检测到目标'
+        hu: 'Inicializálás vagy nincs érzékelt célpont'
+        pt: 'Inicialização ou nenhum alvo detetado'
+      0x01:
+        en: 'Target detected'
+        fr: 'Cible détectée'
+        es: 'Objetivo detectado'
+        de: 'Ziel erkannt'
+        it: 'Bersaglio rilevato'
+        pl: 'Wykryto cel'
+        ru: 'Цель обнаружена'
+        zh: '检测到目标'
+        hu: 'Cél észlelve'
+        pt: 'Alvo detetado'

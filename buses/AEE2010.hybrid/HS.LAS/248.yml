@@ -1,0 +1,529 @@
+id: 0x248
+name: 'ENGINE_DYNAMIC_DATA_V2'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['10ms']
+senders: ['HCU2']
+receivers: ['ABS']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ENGINE_OPERATING_STATE_RAW:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Raw combustion engine operating state (locked/stalled/cranking/running/stopped)'
+      fr: 'État brut de fonctionnement du moteur thermique (verrouillé/calé/entraîné/tournant/arrêté)'
+      es: 'Estado bruto de funcionamiento del motor térmico (bloqueado/calado/arrancando/en marcha/parado)'
+      de: 'Rohbetriebszustand des Verbrennungsmotors (gesperrt/abgewürgt/gestartet/läuft/gestoppt)'
+      it: 'Stato grezzo di funzionamento del motore termico (bloccato/spento/avviamento/in moto/fermo)'
+      pl: 'Surowy stan pracy silnika spalinowego (zablokowany/zgaszony/rozruch/pracuje/zatrzymany)'
+      ru: 'Необработанное рабочее состояние теплового двигателя (заблокирован/заглох/пуск/работает/остановлен)'
+      zh: '内燃机原始运行状态(锁定/熄火/起动中/运转/停止)'
+      hu: 'A belső égésű motor nyers üzemállapota (zárolt/leállt/indítás alatt/jár/leállítva)'
+      pt: 'Estado bruto de funcionamento do motor térmico (bloqueado/calado/a ser arrastado/em funcionamento/parado)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Stalled (engine off)'
+        fr: 'Coupé calé'
+        es: 'Parado (calado)'
+        de: 'Abgewürgt (Motor aus)'
+        it: 'Spento (in stallo)'
+        pl: 'Zgaszony (zdławiony)'
+        ru: 'Заглох (двигатель выключен)'
+        zh: '熄火(发动机关闭)'
+        hu: 'Leállt (motor kikapcsolva)'
+        pt: 'Calado (motor desligado)'
+      0x02:
+        en: 'Starting (driven)'
+        fr: 'Démarrage entraîné'
+        es: 'Arranque accionado'
+        de: 'Angetriebener Start'
+        it: 'Avviamento trainato'
+        pl: 'Rozruch napędzany'
+        ru: 'Запуск с приводом'
+        zh: '带动启动'
+        hu: 'Hajtott indítás'
+        pt: 'Arranque acionado'
+      0x03:
+        en: 'Engine running'
+        fr: 'Moteur tournant'
+        es: 'Motor en marcha'
+        de: 'Motor läuft'
+        it: 'Motore in funzione'
+        pl: 'Silnik pracujący'
+        ru: 'Двигатель работает'
+        zh: '发动机运转中'
+        hu: 'A motor jár'
+        pt: 'Motor em funcionamento'
+      0x04:
+        en: 'Stopped'
+        fr: 'Arrêté'
+        es: 'Detenido'
+        de: 'Angehalten'
+        it: 'Fermato'
+        pl: 'Zatrzymane'
+        ru: 'Остановлено'
+        zh: '已停止'
+        hu: 'Leállítva'
+        pt: 'Parado'
+      0x05:
+        en: 'Driven restart'
+        fr: 'Redémarrage entrainé'
+        es: 'Reinicio por arrastre'
+        de: 'Neustart durch Schleppen'
+        it: 'Riavvio trainato'
+        pl: 'Ponowne uruchomienie przez holowanie'
+        ru: 'Перезапуск буксировкой'
+        zh: '拖动重启'
+        hu: 'Vontatásos újraindítás'
+        pt: 'Reinício por arrasto'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Engine preparing'
+        fr: 'En préparation'
+        es: 'En preparación'
+        de: 'In Vorbereitung'
+        it: 'In preparazione'
+        pl: 'W przygotowaniu'
+        ru: 'Идёт подготовка'
+        zh: '准备中'
+        hu: 'Előkészítés alatt'
+        pt: 'Em preparação'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Autonomous starting'
+        fr: 'Démarrage autonome'
+        es: 'Arranque autónomo'
+        de: 'Autonomer Start'
+        it: 'Avviamento autonomo'
+        pl: 'Rozruch autonomiczny'
+        ru: 'Автономный пуск'
+        zh: '自主启动'
+        hu: 'Önálló indítás'
+        pt: 'Arranque autónomo'
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        en: 'Autonomous restart'
+        fr: 'Redémarrage autonome'
+        es: 'Reinicio autónomo'
+        de: 'Autonomer Neustart'
+        it: 'Riavvio autonomo'
+        pl: 'Autonomiczny restart'
+        ru: 'Автономный перезапуск'
+        zh: '自主重启'
+        hu: 'Autonóm újraindítás'
+        pt: 'Reinício autónomo'
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  ENGINE_LOSS_TORQUE:
+    bits: '2.3-4.6'
+    comment:
+      en: 'Engine loss torque'
+      fr: 'Couple de perte moteur'
+      es: 'Par de pérdida del motor'
+      de: 'Motorverlustmoment'
+      it: 'Coppia di perdita motore'
+      pl: 'Moment strat silnika'
+      ru: 'Момент потерь двигателя'
+      zh: '发动机损耗扭矩'
+      hu: 'Motor veszteségi nyomatéka'
+      pt: 'Binário de perda do motor'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  ENGINE_TORQUE:
+    bits: '4.5-5.0'
+    comment:
+      en: 'Engine torque'
+      fr: 'Couple moteur'
+      es: 'Par de motor'
+      de: 'Motordrehmoment'
+      it: 'Coppia motore'
+      pl: 'Moment obrotowy silnika'
+      ru: 'Крутящий момент двигателя'
+      zh: '发动机扭矩'
+      hu: 'Motornyomaték'
+      pt: 'Binário do motor'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  ENGINE_START_REQUEST_COORDINATED:
+    bits: '6.7'
+    comment:
+      en: 'Coordinated request to start the combustion engine'
+      fr: 'Demande coordonnée de démarrage du moteur thermique'
+      es: 'Solicitud coordinada de arranque del motor térmico'
+      de: 'Koordinierte Startanforderung des Verbrennungsmotors'
+      it: 'Richiesta coordinata di avviamento del motore termico'
+      pl: 'Skoordynowane żądanie uruchomienia silnika spalinowego'
+      ru: 'Согласованный запрос запуска теплового двигателя'
+      zh: '内燃机启动协调请求'
+      hu: 'A belső égésű motor összehangolt indítási kérése'
+      pt: 'Pedido coordenado de arranque do motor térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No start request'
+        fr: 'Pas de demande de marche'
+        es: 'Sin solicitud de arranque'
+        de: 'Keine Startanforderung'
+        it: 'Nessuna richiesta di avvio'
+        pl: 'Brak żądania uruchomienia'
+        ru: 'Нет запроса запуска'
+        zh: '无启动请求'
+        hu: 'Nincs indítási kérés'
+        pt: 'Sem pedido de arranque'
+      0x01:
+        en: 'Start request'
+        fr: 'Demande de marche'
+        es: 'Solicitud de marcha'
+        de: 'Startanforderung'
+        it: 'Richiesta di marcia'
+        pl: 'Żądanie uruchomienia'
+        ru: 'Запрос запуска'
+        zh: '启动请求'
+        hu: 'Indítási kérés'
+        pt: 'Pedido de arranque'
+
+  DPF_REGENERATION_REQUEST:
+    bits: '6.6'
+    comment:
+      en: 'Particulate filter (DPF) regeneration request'
+      fr: 'Demande de régénération du filtre à particules (FAP)'
+      es: 'Solicitud de regeneración del filtro de partículas (FAP)'
+      de: 'Anforderung zur Partikelfilterregeneration (DPF)'
+      it: 'Richiesta di rigenerazione del filtro antiparticolato (FAP)'
+      pl: 'Żądanie regeneracji filtra cząstek stałych (DPF)'
+      ru: 'Запрос регенерации сажевого фильтра (DPF)'
+      zh: '颗粒过滤器(DPF)再生请求'
+      hu: 'A részecskeszűrő (DPF) regenerálási kérése'
+      pt: 'Pedido de regeneração do filtro de partículas (FAP)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No regeneration'
+        fr: 'Pas de régénération'
+        es: 'Sin regeneración'
+        de: 'Keine Regeneration'
+        it: 'Nessuna rigenerazione'
+        pl: 'Brak regeneracji'
+        ru: 'Нет регенерации'
+        zh: '无再生'
+        hu: 'Nincs regenerálás'
+        pt: 'Sem regeneração'
+      0x01:
+        en: 'Regeneration'
+        fr: 'Régénération'
+        es: 'Regeneración'
+        de: 'Regeneration'
+        it: 'Rigenerazione'
+        pl: 'Regeneracja'
+        ru: 'Регенерация'
+        zh: '再生'
+        hu: 'Regenerálás'
+        pt: 'Regeneração'
+
+  EMACHINE_TORQUE_REQUEST_RAW:
+    bits: '6.5-7.0'
+    comment:
+      en: 'Electric machine torque request, before processing'
+      fr: 'Couple demandé à la machine électrique, avant traitement'
+      es: 'Par solicitado a la máquina eléctrica, antes del procesamiento'
+      de: 'Angefordertes Drehmoment der E-Maschine, vor der Verarbeitung'
+      it: 'Coppia richiesta alla macchina elettrica, prima dell''elaborazione'
+      pl: 'Moment żądany od maszyny elektrycznej, przed przetworzeniem'
+      ru: 'Момент, запрошенный от электромашины, до обработки'
+      zh: '对电机的扭矩请求(处理前)'
+      hu: 'A villanymotortól kért nyomaték, feldolgozás előtt'
+      pt: 'Binário solicitado à máquina elétrica, antes do processamento'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['HCU2']
+    receivers: ['ABS']
+    signals:
+      EMACHINE_TORQUE_REQUEST_RAW:
+        bits: '1.7-2.5'
+        comment:
+          en: 'Electric machine torque request, before processing'
+          fr: 'Couple demandé à la machine électrique, avant traitement'
+          es: 'Par solicitado a la máquina eléctrica, antes del procesamiento'
+          de: 'Angefordertes Drehmoment der E-Maschine, vor der Verarbeitung'
+          it: 'Coppia richiesta alla macchina elettrica, prima dell''elaborazione'
+          pl: 'Moment żądany od maszyny elektrycznej, przed przetworzeniem'
+          ru: 'Момент, запрошенный от электромашины, до обработки'
+          zh: '对电机的扭矩请求(处理前)'
+          hu: 'A villanymotortól kért nyomaték, feldolgozás előtt'
+          pt: 'Binário solicitado à máquina elétrica, antes do processamento'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      ENGINE_TORQUE:
+        bits: '2.4-3.2'
+        comment:
+          en: 'Engine torque'
+          fr: 'Couple moteur'
+          es: 'Par de motor'
+          de: 'Motordrehmoment'
+          it: 'Coppia motore'
+          pl: 'Moment obrotowy silnika'
+          ru: 'Крутящий момент двигателя'
+          zh: '发动机扭矩'
+          hu: 'Motornyomaték'
+          pt: 'Binário do motor'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      ENGINE_LOSS_TORQUE:
+        bits: '3.1-4.1'
+        comment:
+          en: 'Engine loss torque'
+          fr: 'Couple de perte moteur'
+          es: 'Par de pérdida del motor'
+          de: 'Motorverlustmoment'
+          it: 'Coppia di perdita motore'
+          pl: 'Moment strat silnika'
+          ru: 'Момент потерь двигателя'
+          zh: '发动机损耗扭矩'
+          hu: 'Motor veszteségi nyomatéka'
+          pt: 'Binário de perda do motor'
+        type: 'uint'
+        factor: 0.5
+        min: 0
+        max: 255
+        units: 'Nm'
+        invalid: 0x1FF
+        default: 0x00
+      IDLE_SPEED_REGULATION_TORQUE:
+        bits: '4.0-6.6'
+        comment:
+          en: 'Idle speed regulation torque'
+          fr: 'Couple de régulation du régime de ralenti'
+          es: 'Par de regulación del ralentí'
+          de: 'Leerlaufregelungsdrehmoment'
+          it: 'Coppia di regolazione del regime minimo'
+          pl: 'Moment regulacji obrotów biegu jałowego'
+          ru: 'Момент регулирования холостого хода'
+          zh: '怠速调节扭矩'
+          hu: 'Alapjárati fordulatszám-szabályozó nyomaték'
+          pt: 'Binário de regulação do regime de ralenti'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      MAX_ENGINE_TORQUE:
+        bits: '6.5-7.3'
+        comment:
+          en: 'Maximum engine torque'
+          fr: 'Couple moteur maximal'
+          es: 'Par de motor máximo'
+          de: 'Maximales Motordrehmoment'
+          it: 'Coppia motore massima'
+          pl: 'Maksymalny moment obrotowy silnika'
+          ru: 'Максимальный крутящий момент двигателя'
+          zh: '最大发动机扭矩'
+          hu: 'Maximális motornyomaték'
+          pt: 'Binário máximo do motor'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      ENGINE_TORQUE_PRECISION_INDEX:
+        bits: '7.2-8.7'
+        comment:
+          en: 'Engine torque precision index'
+          fr: 'Indice de précision du couple moteur'
+          es: 'Índice de precisión del par de motor'
+          de: 'Genauigkeitsindex des Motordrehmoments'
+          it: 'Indice di precisione della coppia motore'
+          pl: 'Wskaźnik dokładności momentu obrotowego silnika'
+          ru: 'Индекс точности крутящего момента двигателя'
+          zh: '发动机扭矩精度指数'
+          hu: 'A motornyomaték pontossági indexe'
+          pt: 'Índice de precisão do binário do motor'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 10
+        invalid: 0x0F
+        default: 0x00
+      COMFORT_BACKLASH_DETECTION_STATUS:
+        bits: '8.6-8.5'
+        comment:
+          en: 'Driveline comfort backlash detection status'
+          fr: 'État de détection du jeu de confort (jeu d''agrément) de la transmission'
+          es: 'Estado de detección de la holgura de confort de la transmisión'
+          de: 'Status der Erkennung des Komfort-Spiels im Antriebsstrang'
+          it: 'Stato di rilevamento del gioco di comfort della trasmissione'
+          pl: 'Stan wykrywania luzu komfortowego układu napędowego'
+          ru: 'Статус обнаружения комфортного люфта трансмиссии'
+          zh: '传动系舒适间隙检测状态'
+          hu: 'A hajtáslánc kényelmi holtjátékának felismerési állapota'
+          pt: 'Estado de deteção da folga de conforto da transmissão'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Detection inactive'
+            fr: 'Détection inactive'
+            es: 'Detección inactiva'
+            de: 'Erkennung inaktiv'
+            it: 'Rilevamento inattivo'
+            pl: 'Wykrywanie nieaktywne'
+            ru: 'Обнаружение неактивно'
+            zh: '检测未激活'
+            hu: 'Érzékelés inaktív'
+            pt: 'Deteção inativa'
+          0x01:
+            en: 'Detection in progress'
+            fr: 'Détection en cours'
+            es: 'Detección en curso'
+            de: 'Erkennung läuft'
+            it: 'Rilevamento in corso'
+            pl: 'Wykrywanie w toku'
+            ru: 'Обнаружение выполняется'
+            zh: '检测进行中'
+            hu: 'Észlelés folyamatban'
+            pt: 'Deteção em curso'
+          0x02:
+            en: 'Detection completed'
+            fr: 'Détection effective'
+            es: 'Detección efectiva'
+            de: 'Erkennung abgeschlossen'
+            it: 'Rilevamento effettuato'
+            pl: 'Wykrywanie zakończone'
+            ru: 'Обнаружение завершено'
+            zh: '检测完成'
+            hu: 'Érzékelés befejezve'
+            pt: 'Deteção concluída'
+          0x03:
+            en: 'Detection ended'
+            fr: 'Fin de détection'
+            es: 'Fin de la detección'
+            de: 'Erkennung beendet'
+            it: 'Fine del rilevamento'
+            pl: 'Koniec wykrywania'
+            ru: 'Обнаружение завершено'
+            zh: '检测结束'
+            hu: 'Az érzékelés vége'
+            pt: 'Fim da deteção'
+      UNUSED_1:
+        bits: '8.4-8.0'
+        unused: true

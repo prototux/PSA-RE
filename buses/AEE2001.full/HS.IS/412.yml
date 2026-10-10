@@ -1,0 +1,439 @@
+id: 0x412
+name: 'CABIN_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Body controller data for powertrain/chassis ECUs: brake pedal, key position, cruise control buttons, gearbox/suspension switches, fuel level, doors.'
+  fr: 'Données de la BSI pour les calculateurs groupe motopropulseur/châssis : pédale de frein, position clé, boutons régulateur de vitesse, contacteurs boîte de vitesses/suspension, niveau carburant, portes.'
+  es: 'Datos de la BSI para las centralitas de grupo motopropulsor/chasis: pedal de freno, posición de llave, botones del regulador de velocidad, interruptores de caja de cambios/suspensión, nivel de combustible, puertas.'
+  de: 'BSI-Daten für Antriebsstrang-/Fahrwerksteuergeräte: Bremspedal, Schlüsselposition, Tempomattasten, Getriebe-/Fahrwerksschalter, Kraftstoffstand, Türen.'
+  it: 'Dati della BSI per le centraline gruppo propulsore/telaio: pedale del freno, posizione chiave, pulsanti del regolatore di velocità, interruttori cambio/sospensione, livello carburante, porte.'
+  pl: 'Dane BSI dla sterowników układu napędowego/podwozia: pedał hamulca, pozycja kluczyka, przyciski tempomatu, przełączniki skrzyni biegów/zawieszenia, poziom paliwa, drzwi.'
+  ru: 'Данные BSI для ЭБУ силового агрегата/шасси: педаль тормоза, положение ключа, кнопки круиз-контроля, переключатели коробки передач/подвески, уровень топлива, двери.'
+  zh: '供动力总成/底盘ECU使用的BSI数据:刹车踏板、钥匙位置、巡航控制按钮、变速箱/悬挂开关、燃油液位、车门。'
+  hu: 'A BSI adatai a hajtáslánc/alváz vezérlőknek: fékpedál, kulcshelyzet, tempomat gombok, váltó/felfüggesztés kapcsolók, üzemanyagszint, ajtók.'
+  pt: 'Dados do computador de servidão para as unidades de controlo do grupo motopropulsor/chassis: pedal do travão, posição da chave, botões do regulador de velocidade, comutadores da caixa de velocidades/suspensão, nível de combustível, portas.'
+periodicity: ['50ms', 'trigger']
+senders: ['BSI']
+receivers: ['CMM', 'BVA', 'BHI', 'ABS']
+
+signals:
+  LOW_BEAM_STATUS:
+    bits: '1.6'
+    comment:
+      en: 'Low beam headlamps on'
+      fr: 'Feux de croisement allumés'
+      es: 'Luces de cruce encendidas'
+      de: 'Abblendlicht eingeschaltet'
+      it: 'Anabbaglianti accesi'
+      pl: 'Włączone światła mijania'
+      ru: 'Включён ближний свет'
+      zh: '近光灯已开启'
+      hu: 'Tompított fényszóró bekapcsolva'
+      pt: 'Luzes de cruzamento acesas'
+    type: 'bool'
+
+  BRAKE_PEDAL_MAIN_SWITCH:
+    bits: '1.5'
+    comment:
+      en: 'Brake pedal main switch'
+      fr: 'Contact principal de la pédale de frein'
+      es: 'Contacto principal del pedal de freno'
+      de: 'Hauptschalter des Bremspedals'
+      it: 'Interruttore principale del pedale del freno'
+      pl: 'Główny wyłącznik pedału hamulca'
+      ru: 'Основной выключатель педали тормоза'
+      zh: '刹车踏板主开关'
+      hu: 'Fékpedál fő kapcsolója'
+      pt: 'Contacto principal do pedal de travão'
+    type: 'bool'
+
+  IGNITION_ON:
+    bits: '1.4'
+    comment:
+      en: 'Key position: ignition on (+APC)'
+      fr: 'Position clé de contact : contact mis (+APC)'
+      es: 'Posición de la llave: contacto puesto (+APC)'
+      de: 'Schlüsselstellung: Zündung ein (+APC)'
+      it: 'Posizione chiave: contatto inserito (+APC)'
+      pl: 'Pozycja kluczyka: zapłon włączony (+APC)'
+      ru: 'Положение ключа: зажигание включено (+APC)'
+      zh: '钥匙位置:点火开启 (+APC)'
+      hu: 'Kulcshelyzet: gyújtás bekapcsolva (+APC)'
+      pt: 'Posição da chave: contacto ligado (+APC)'
+    type: 'bool'
+
+  HANDBRAKE_SWITCH:
+    bits: '1.3'
+    comment:
+      en: 'Handbrake switch'
+      fr: 'Contact du frein à main'
+      es: 'Contacto del freno de mano'
+      de: 'Handbremsschalter'
+      it: 'Interruttore del freno a mano'
+      pl: 'Wyłącznik hamulca ręcznego'
+      ru: 'Выключатель стояночного тормоза'
+      zh: '手刹开关'
+      hu: 'Kézifék kapcsoló'
+      pt: 'Contacto do travão de mão'
+    type: 'bool'
+
+  REVERSE_GEAR_MANUAL_GEARBOX:
+    bits: '1.2'
+    comment:
+      en: 'Reverse gear engaged (manual gearbox)'
+      fr: 'Marche arrière enclenchée (boîte mécanique)'
+      es: 'Marcha atrás engranada (caja manual)'
+      de: 'Rückwärtsgang eingelegt (Schaltgetriebe)'
+      it: 'Retromarcia inserita (cambio manuale)'
+      pl: 'Włączony bieg wsteczny (skrzynia manualna)'
+      ru: 'Включена задняя передача (механическая коробка)'
+      zh: '倒挡已挂入(手动变速箱)'
+      hu: 'Hátrameneti fokozat bekapcsolva (manuális váltó)'
+      pt: 'Marcha-atrás engatada (caixa manual)'
+    type: 'bool'
+
+  KEY_CRANKING:
+    bits: '1.1'
+    comment:
+      en: 'Key position: cranking (+DEM)'
+      fr: 'Position clé de contact : démarreur (+DEM)'
+      es: 'Posición de la llave: arranque (+DEM)'
+      de: 'Schlüsselstellung: Anlasser (+DEM)'
+      it: 'Posizione chiave: avviamento (+DEM)'
+      pl: 'Pozycja kluczyka: rozruch (+DEM)'
+      ru: 'Положение ключа: стартер (+DEM)'
+      zh: '钥匙位置:起动 (+DEM)'
+      hu: 'Kulcshelyzet: indítás (+DEM)'
+      pt: 'Posição da chave: arranque (+DEM)'
+    type: 'bool'
+
+  BRAKE_PEDAL_MAIN_SWITCH_FAULTY:
+    bits: '1.0'
+    comment:
+      en: 'Brake pedal main switch out of order'
+      fr: 'Contact principal de la pédale de frein hors service'
+      es: 'Contacto principal del pedal de freno fuera de servicio'
+      de: 'Hauptschalter des Bremspedals außer Betrieb'
+      it: 'Interruttore principale del pedale del freno fuori servizio'
+      pl: 'Główny wyłącznik pedału hamulca uszkodzony'
+      ru: 'Основной выключатель педали тормоза неисправен'
+      zh: '刹车踏板主开关失效'
+      hu: 'A fékpedál fő kapcsolója üzemképtelen'
+      pt: 'Contacto principal do pedal de travão fora de serviço'
+    type: 'bool'
+
+  CRUISE_CONTROL_BUTTONS:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Cruise control buttons/commands'
+      fr: 'Commandes de régulation de vitesse'
+      es: 'Mandos del regulador de velocidad'
+      de: 'Tempomat-Bedienelemente'
+      it: 'Comandi del regolatore di velocità'
+      pl: 'Przyciski/sterowanie tempomatem'
+      ru: 'Органы управления круиз-контролем'
+      zh: '定速巡航控制按钮'
+      hu: 'Sebességtartó automatika kezelőgombjai'
+      pt: 'Comandos do regulador de velocidade'
+    type: 'uint'
+
+  ABS_ABSENT:
+    bits: '2.3'
+    comment:
+      en: 'ABS/ESP absent (vehicle dynamics frame missing)'
+      fr: 'ABR (ABS/ESP) absent (trame dynamique véhicule manquante)'
+      es: 'ABR (ABS/ESP) ausente (trama de dinámica del vehículo ausente)'
+      de: 'ABR (ABS/ESP) fehlt (Fahrzeugdynamik-Botschaft fehlt)'
+      it: 'ABR (ABS/ESP) assente (messaggio di dinamica del veicolo mancante)'
+      pl: 'Brak ABR (ABS/ESP) (brak ramki dynamiki pojazdu)'
+      ru: 'Отсутствует блок ABR (ABS/ESP) (нет сообщения динамики автомобиля)'
+      zh: 'ABR(ABS/ESP)缺失(车辆动态报文缺失)'
+      hu: 'ABR (ABS/ESP) hiányzik (a jármű dinamikai üzenete hiányzik)'
+      pt: 'ABR (ABS/ESP) ausente (trama de dinâmica do veículo em falta)'
+    type: 'bool'
+
+  STOP_AND_GO_INHIBIT_BUTTON:
+    bits: '2.2'
+    comment:
+      en: 'Stop & Go inhibit button pressed'
+      fr: 'Bouton d''inhibition du Stop & Go appuyé'
+      es: 'Botón de inhibición del Stop & Go pulsado'
+      de: 'Stop&Go-Deaktivierungstaste gedrückt'
+      it: 'Pulsante di disattivazione dello Stop & Go premuto'
+      pl: 'Wciśnięty przycisk wyłączenia Stop & Go'
+      ru: 'Нажата кнопка отключения системы Стоп-Старт'
+      zh: 'Stop & Go 抑制按钮已按下'
+      hu: 'Stop&Start letiltó gomb megnyomva'
+      pt: 'Botão de inibição do Stop & Go premido'
+    type: 'bool'
+
+  CRUISE_CONTROL_ON:
+    bits: '2.1'
+    comment:
+      en: 'Cruise control switched on'
+      fr: 'Régulateur de vitesse activé'
+      es: 'Regulador de velocidad activado'
+      de: 'Tempomat eingeschaltet'
+      it: 'Regolatore di velocità attivato'
+      pl: 'Włączony tempomat'
+      ru: 'Круиз-контроль включён'
+      zh: '定速巡航已开启'
+      hu: 'Sebességtartó automatika bekapcsolva'
+      pt: 'Regulador de velocidade ativado'
+    type: 'bool'
+
+  HEATED_WINDSCREEN_ON:
+    bits: '2.0'
+    comment:
+      en: 'Electric heated windscreen on'
+      fr: 'Pare-brise chauffant électrique enclenché'
+      es: 'Parabrisas calefactado eléctrico activado'
+      de: 'Elektrisch beheizte Windschutzscheibe eingeschaltet'
+      it: 'Parabrezza riscaldato elettrico attivato'
+      pl: 'Włączona elektryczna szyba przednia ogrzewana'
+      ru: 'Включён электрический обогрев лобового стекла'
+      zh: '电动加热前挡风玻璃已开启'
+      hu: 'Elektromos fűthető szélvédő bekapcsolva'
+      pt: 'Para-brisas aquecido elétrico ligado'
+    type: 'bool'
+
+  ASR_ESP_DISABLED:
+    bits: '3.7'
+    comment:
+      en: 'ASR/ESP switched off'
+      fr: 'Déconnexion de l''ASR ou de l''ESP'
+      es: 'Desconexión del ASR o del ESP'
+      de: 'ASR/ESP ausgeschaltet'
+      it: 'Disattivazione dell''ASR o dell''ESP'
+      pl: 'Wyłączenie ASR lub ESP'
+      ru: 'Отключение ASR или ESP'
+      zh: 'ASR/ESP 已关闭'
+      hu: 'ASR/ESP kikapcsolva'
+      pt: 'Desativação do ASR ou do ESP'
+    type: 'bool'
+
+  SUSPENSION_SWITCH_PRESSED:
+    bits: '3.6'
+    comment:
+      en: 'Suspension switch pressed'
+      fr: 'Interrupteur de suspension appuyé'
+      es: 'Interruptor de suspensión pulsado'
+      de: 'Fahrwerkschalter gedrückt'
+      it: 'Interruttore delle sospensioni premuto'
+      pl: 'Wciśnięty przełącznik zawieszenia'
+      ru: 'Нажат переключатель подвески'
+      zh: '悬架开关已按下'
+      hu: 'Futómű kapcsoló megnyomva'
+      pt: 'Interruptor da suspensão pressionado'
+    type: 'bool'
+
+  HEIGHT_DOWN_REQUEST:
+    bits: '3.5'
+    comment:
+      en: 'Height "-" request'
+      fr: 'Demande de hauteur "-"'
+      es: 'Solicitud de altura "-"'
+      de: 'Anforderung Höhe "-"'
+      it: 'Richiesta altezza "-"'
+      pl: 'Żądanie zmniejszenia wysokości "-"'
+      ru: 'Запрос уменьшения высоты "-"'
+      zh: '高度"-"请求'
+      hu: 'Magasság "-" kérés'
+      pt: 'Pedido de altura "-"'
+    type: 'bool'
+
+  HEIGHT_UP_REQUEST:
+    bits: '3.4'
+    comment:
+      en: 'Height "+" request'
+      fr: 'Demande de hauteur "+"'
+      es: 'Solicitud de altura "+"'
+      de: 'Anforderung Höhe "+"'
+      it: 'Richiesta altezza "+"'
+      pl: 'Żądanie zwiększenia wysokości "+"'
+      ru: 'Запрос увеличения высоты "+"'
+      zh: '高度"+"请求'
+      hu: 'Magasság "+" kérés'
+      pt: 'Pedido de altura "+"'
+    type: 'bool'
+
+  GEARBOX_FIRST_GEAR_SWITCH:
+    bits: '3.2'
+    comment:
+      en: 'Gearbox "1st gear" switch pressed'
+      fr: 'Interrupteur "1ère" de la boîte de vitesses appuyé'
+      es: 'Interruptor de "1ª marcha" de la caja de cambios pulsado'
+      de: 'Schalter "1. Gang" des Getriebes gedrückt'
+      it: 'Interruttore "1a marcia" del cambio premuto'
+      pl: 'Wciśnięty przełącznik "1. biegu" skrzyni biegów'
+      ru: 'Нажат переключатель "1-я передача" коробки передач'
+      zh: '变速箱"1挡"开关已按下'
+      hu: 'A váltó "1. sebesség" kapcsolója megnyomva'
+      pt: 'Interruptor de "1.ª velocidade" da caixa de velocidades pressionado'
+    type: 'bool'
+
+  GEARBOX_SPORT_SWITCH:
+    bits: '3.1'
+    comment:
+      en: 'Gearbox sport switch pressed'
+      fr: 'Interrupteur "sport" de la boîte de vitesses appuyé'
+      es: 'Interruptor "sport" de la caja de cambios pulsado'
+      de: 'Sportschalter des Getriebes gedrückt'
+      it: 'Interruttore "sport" del cambio premuto'
+      pl: 'Wciśnięty przełącznik trybu sportowego skrzyni biegów'
+      ru: 'Нажат переключатель спортивного режима коробки передач'
+      zh: '变速箱运动模式开关已按下'
+      hu: 'A váltó sport üzemmód kapcsolója megnyomva'
+      pt: 'Interruptor desportivo da caixa de velocidades pressionado'
+    type: 'bool'
+
+  GEARBOX_SNOW_SWITCH:
+    bits: '3.0'
+    comment:
+      en: 'Gearbox snow switch pressed'
+      fr: 'Interrupteur "neige" de la boîte de vitesses appuyé'
+      es: 'Interruptor de "nieve" de la caja de cambios pulsado'
+      de: 'Schneeschalter des Getriebes gedrückt'
+      it: 'Interruttore "neve" del cambio premuto'
+      pl: 'Wciśnięty przełącznik trybu śniegowego skrzyni biegów'
+      ru: 'Нажат переключатель зимнего режима коробки передач'
+      zh: '变速箱雪地模式开关已按下'
+      hu: 'A váltó hó üzemmód kapcsolója megnyomva'
+      pt: 'Interruptor de neve da caixa de velocidades pressionado'
+    type: 'bool'
+
+  ADDITIONAL_HEATER_COMMAND:
+    bits: '4.7-4.6'
+    comment:
+      en: 'Additional heating resistors command'
+      fr: 'Commande des résistances de chauffage additionnel'
+      es: 'Mando de las resistencias de calefacción adicional'
+      de: 'Ansteuerung der Zusatzheizwiderstände'
+      it: 'Comando delle resistenze di riscaldamento supplementare'
+      pl: 'Sterowanie grzałkami ogrzewania dodatkowego'
+      ru: 'Управление дополнительными нагревательными элементами отопителя'
+      zh: '辅助加热电阻控制'
+      hu: 'Kiegészítő fűtőellenállások vezérlése'
+      pt: 'Comando das resistências de aquecimento adicional'
+    type: 'uint'
+
+  AIR_PUMP_STATUS:
+    bits: '4.4-4.3'
+    comment:
+      en: 'Secondary air pump state'
+      fr: 'État de la pompe à air'
+      es: 'Estado de la bomba de aire'
+      de: 'Zustand der Sekundärluftpumpe'
+      it: 'Stato della pompa dell''aria'
+      pl: 'Stan pompy powietrza wtórnego'
+      ru: 'Состояние насоса вторичного воздуха'
+      zh: '二次空气泵状态'
+      hu: 'Másodlagos levegőszivattyú állapota'
+      pt: 'Estado da bomba de ar secundário'
+    type: 'uint'
+
+  LOW_FUEL_LEVEL_DIAG:
+    bits: '4.2-4.1'
+    comment:
+      en: 'Low fuel level sensor diagnosis'
+      fr: 'Diagnostic du capteur de niveau minimum de carburant'
+      es: 'Diagnóstico del sensor de nivel mínimo de combustible'
+      de: 'Diagnose des Kraftstoff-Mindeststandsensors'
+      it: 'Diagnosi del sensore di livello minimo carburante'
+      pl: 'Diagnostyka czujnika minimalnego poziomu paliwa'
+      ru: 'Диагностика датчика минимального уровня топлива'
+      zh: '最低燃油液位传感器诊断'
+      hu: 'Minimális üzemanyagszint-érzékelő diagnosztikája'
+      pt: 'Diagnóstico do sensor de nível mínimo de combustível'
+    type: 'uint'
+
+  LOW_FUEL_LEVEL:
+    bits: '4.0'
+    comment:
+      en: 'Low fuel level'
+      fr: 'Niveau de carburant minimum'
+      es: 'Nivel mínimo de combustible'
+      de: 'Kraftstoff-Mindeststand'
+      it: 'Livello minimo di carburante'
+      pl: 'Minimalny poziom paliwa'
+      ru: 'Минимальный уровень топлива'
+      zh: '燃油液位过低'
+      hu: 'Minimális üzemanyagszint'
+      pt: 'Nível mínimo de combustível'
+    type: 'bool'
+
+  ELECTRICAL_POWER_CONSUMED:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Consumed electrical power'
+      fr: 'Puissance électrique consommée'
+      es: 'Potencia eléctrica consumida'
+      de: 'Verbrauchte elektrische Leistung'
+      it: 'Potenza elettrica consumata'
+      pl: 'Zużywana moc elektryczna'
+      ru: 'Потребляемая электрическая мощность'
+      zh: '消耗的电功率'
+      hu: 'Felhasznált elektromos teljesítmény'
+      pt: 'Potência elétrica consumida'
+    type: 'uint'
+
+  ENGINE_OIL_TEMPERATURE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Engine oil temperature'
+      fr: 'Température d''huile moteur'
+      es: 'Temperatura del aceite del motor'
+      de: 'Motoröltemperatur'
+      it: 'Temperatura dell''olio motore'
+      pl: 'Temperatura oleju silnikowego'
+      ru: 'Температура моторного масла'
+      zh: '发动机机油温度'
+      hu: 'Motorolaj hőmérséklete'
+      pt: 'Temperatura do óleo do motor'
+    type: 'uint'
+
+  DOORS_STATUS:
+    bits: '7.7-7.3'
+    comment:
+      en: 'Doors/openings state (5 bits)'
+      fr: 'État des ouvrants (5 bits)'
+      es: 'Estado de las aberturas (5 bits)'
+      de: 'Zustand der Türen/Öffnungen (5 Bit)'
+      it: 'Stato delle aperture (5 bit)'
+      pl: 'Stan drzwi/otworów (5 bitów)'
+      ru: 'Состояние дверей/люков (5 бит)'
+      zh: '车门/开启件状态(5 位)'
+      hu: 'Ajtók/nyílászárók állapota (5 bit)'
+      pt: 'Estado das portas/aberturas (5 bits)'
+    type: 'uint'
+
+  LOW_ADDITIVE_LEVEL:
+    bits: '7.1-7.0'
+    comment:
+      en: 'Fuel additive minimum level reached'
+      fr: 'Niveau minimum d''additif atteint'
+      es: 'Nivel mínimo de aditivo alcanzado'
+      de: 'Mindeststand des Kraftstoffadditivs erreicht'
+      it: 'Livello minimo additivo raggiunto'
+      pl: 'Osiągnięto minimalny poziom dodatku paliwowego'
+      ru: 'Достигнут минимальный уровень присадки к топливу'
+      zh: '燃油添加剂已达到最低液位'
+      hu: 'Az üzemanyag-adalék minimális szintje elérve'
+      pt: 'Nível mínimo de aditivo atingido'
+    type: 'uint'
+
+  DPF_DOWNSTREAM_TEMPERATURE:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Temperature downstream of the particulate filter'
+      fr: 'Température en aval du filtre à particules'
+      es: 'Temperatura aguas abajo del filtro de partículas'
+      de: 'Temperatur nach dem Partikelfilter'
+      it: 'Temperatura a valle del filtro antiparticolato'
+      pl: 'Temperatura za filtrem cząstek stałych'
+      ru: 'Температура после сажевого фильтра'
+      zh: '颗粒捕集器下游温度'
+      hu: 'Részecskeszűrő utáni hőmérséklet'
+      pt: 'Temperatura a jusante do filtro de partículas'
+    type: 'uint'

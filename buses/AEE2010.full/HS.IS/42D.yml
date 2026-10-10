@@ -1,0 +1,238 @@
+id: 0x42D
+name: 'HYBRID_SLOPE_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Hybrid control slope data: estimated road slope value and accuracy, stop-light activation request.'
+  fr: 'Données de pente du contrôle hybride : valeur et précision de la pente estimée de la route, demande d''activation des feux stop.'
+  es: 'Datos de pendiente del control híbrido: valor y precisión de la pendiente estimada de la carretera, solicitud de activación de luces de freno.'
+  de: 'Steigungsdaten der Hybridsteuerung: geschätzter Straßensteigungswert und Genauigkeit, Anforderung zur Aktivierung der Bremsleuchten.'
+  it: 'Dati di pendenza del controllo ibrido: valore e precisione della pendenza stradale stimata, richiesta di attivazione delle luci di stop.'
+  pl: 'Dane nachylenia z kontroli hybrydowej: wartość i dokładność szacowanego nachylenia drogi, żądanie aktywacji świateł stop.'
+  ru: 'Данные уклона гибридного управления: расчётное значение и точность уклона дороги, запрос активации стоп-сигналов.'
+  zh: '混合动力控制坡度数据:估计道路坡度值和精度、刹车灯激活请求。'
+  hu: 'Hibrid vezérlési lejtésadatok: a becsült úthajlásszög értéke és pontossága, féklámpa-aktiválási kérés.'
+  pt: 'Dados de inclinação do controlo híbrido: valor e precisão estimados da inclinação da estrada, pedido de ativação da luz de travagem.'
+periodicity: ['50ms']
+senders: ['ABS']
+receivers: ['ARTIV', 'CVM', 'AAS', 'CMM', 'BVA', 'BSI']
+
+signals:
+  DYNAMIC_SLOPE_ACCURACY:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Accuracy of the dynamically estimated road slope'
+      fr: 'Précision de la pente dynamique estimée'
+      es: 'Precisión de la pendiente dinámica estimada'
+      de: 'Genauigkeit der dynamisch geschätzten Fahrbahnsteigung'
+      it: 'Precisione della pendenza dinamica stimata'
+      pl: 'Dokładność dynamicznie szacowanego nachylenia drogi'
+      ru: 'Точность динамически оцениваемого уклона дороги'
+      zh: '动态估算道路坡度的精度'
+      hu: 'A dinamikusan becsült útlejtés pontossága'
+      pt: 'Precisão da inclinação dinâmica estimada'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Good'
+        fr: 'Bonne'
+        es: 'Buena'
+        de: 'Gut'
+        it: 'Buona'
+        pl: 'Dobra'
+        ru: 'Хорошая'
+        zh: '良好'
+        hu: 'Jó'
+        pt: 'Boa'
+      0x01:
+        en: 'Medium'
+        fr: 'Moyenne'
+        es: 'Media'
+        de: 'Mittel'
+        it: 'Media'
+        pl: 'Średni'
+        ru: 'Средний'
+        zh: '中等'
+        hu: 'Közepes'
+        pt: 'Média'
+      0x02:
+        en: 'Low'
+        fr: 'Faible'
+        es: 'Bajo'
+        de: 'Niedrig'
+        it: 'Basso'
+        pl: 'Niski'
+        ru: 'Низкий'
+        zh: '低'
+        hu: 'Alacsony'
+        pt: 'Baixo'
+      0x03:
+        en: 'Undefined'
+        fr: 'Indéfini'
+        es: 'Indefinido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Meghatározatlan'
+        pt: 'Indefinido'
+
+  DYNAMIC_SLOPE_VALUE:
+    bits: '1.5-1.0'
+    comment:
+      en: 'Dynamically estimated road slope (%)'
+      fr: 'Pente dynamique estimée (%)'
+      es: 'Pendiente dinámica estimada (%)'
+      de: 'Dynamisch geschätzte Fahrbahnsteigung (%)'
+      it: 'Pendenza dinamica stimata (%)'
+      pl: 'Dynamicznie szacowane nachylenie drogi (%)'
+      ru: 'Динамически оцениваемый уклон дороги (%)'
+      zh: '动态估算的道路坡度(%)'
+      hu: 'A dinamikusan becsült útlejtés (%)'
+      pt: 'Inclinação dinâmica estimada (%)'
+    type: 'uint'
+    factor: 1
+    offset: -30
+    min: -30
+    max: 30
+    units: '%'
+    invalid: 0x3F
+    default: 0x3E
+
+  STOP_LIGHTS_ACTIVATION_REQUEST:
+    bits: '2.7'
+    comment:
+      en: 'Request to activate the stop lights during deceleration or automatic immobilization'
+      fr: 'Requête d''activation des feux stop lors d''une décélération ou d''une immobilisation automatique'
+      es: 'Solicitud de activación de las luces de freno durante una deceleración o una inmovilización automática'
+      de: 'Anforderung zur Aktivierung der Bremsleuchten bei Verzögerung oder automatischem Stillstand'
+      it: 'Richiesta di attivazione delle luci di stop durante una decelerazione o un''immobilizzazione automatica'
+      pl: 'Żądanie aktywacji świateł stop podczas zwalniania lub automatycznego unieruchomienia'
+      ru: 'Запрос на включение стоп-сигналов при замедлении или автоматической остановке'
+      zh: '减速或自动驻车时激活刹车灯的请求'
+      hu: 'A féklámpák aktiválási kérése lassuláskor vagy automatikus megállásnál'
+      pt: 'Pedido de ativação das luzes de travão durante uma desaceleração ou uma imobilização automática'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  ESP_MIL_REQUEST:
+    bits: '2.6'
+    comment:
+      en: 'Steady MIL lamp lighting request from the ESP'
+      fr: 'Demande d''allumage fixe du témoin MIL par l''ESP'
+      es: 'Solicitud de encendido fijo del testigo MIL por el ESP'
+      de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte durch das ESP'
+      it: 'Richiesta di accensione fissa della spia MIL da parte dell''ESP'
+      pl: 'Żądanie stałego świecenia kontrolki MIL z ESP'
+      ru: 'Запрос постоянного включения лампы MIL от ESP'
+      zh: 'ESP请求常亮MIL灯'
+      hu: 'Az ESP kérése a MIL lámpa folyamatos világítására'
+      pt: 'Pedido de acendimento fixo da luz avisadora MIL pelo ESP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'MIL lamp continuous lighting request'
+        fr: 'Demande d''allumage continu du témoin MIL'
+        es: 'Solicitud de encendido continuo del testigo MIL'
+        de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte'
+        it: 'Richiesta di accensione continua della spia MIL'
+        pl: 'Żądanie ciągłego świecenia kontrolki MIL'
+        ru: 'Запрос постоянного включения индикатора MIL'
+        zh: 'MIL 灯常亮请求'
+        hu: 'MIL lámpa folyamatos világításának kérése'
+        pt: 'Pedido de acendimento contínuo da luz MIL'
+
+  UNUSED_1:
+    bits: '2.5-2.0'
+    unused: true
+
+  CHECKSUM_FRAME_42D:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_42D:
+    bits: '3.3-3.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ESP_BRAKE_BOOSTER_PRESSURE:
+    bits: '4.7-4.0'
+    comment:
+      en: 'ESP brake booster (Mastervac) pressure (hPa)'
+      fr: 'Pression du servofrein (Mastervac) pour l''ESP (hPa)'
+      es: 'Presión del servofreno (Mastervac) para el ESP (hPa)'
+      de: 'Druck des Bremskraftverstärkers (Mastervac) für das ESP (hPa)'
+      it: 'Pressione del servofreno (Mastervac) per l''ESP (hPa)'
+      pl: 'Ciśnienie wspomagania hamulca (Mastervac) dla ESP (hPa)'
+      ru: 'Давление вакуумного усилителя тормозов (Mastervac) для ESP (гПа)'
+      zh: '用于ESP的真空助力器(Mastervac)压力(hPa)'
+      hu: 'A fékrásegítő (Mastervac) nyomása az ESP számára (hPa)'
+      pt: 'Pressão da assistência de travagem (Mastervac) para o ESP (hPa)'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 1200
+    units: 'hPa'
+    invalid: 0xFF
+    default: 0xFE

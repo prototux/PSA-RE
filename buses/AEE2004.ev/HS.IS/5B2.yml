@@ -1,0 +1,117 @@
+id: 0x5B2
+name: 'CONTEXT'
+type: 'can'
+length: 8
+comment:
+  en: 'Context data: SCR load-shedding, service interval exceeded and maintenance reset acknowledgement.'
+  fr: 'Données de contexte : délestage SCR, dépassement de l''échéance d''entretien et accusé de remise à zéro entretien.'
+  es: 'Datos de contexto: reducción de carga SCR, vencimiento del intervalo de mantenimiento y confirmación de reinicio de mantenimiento.'
+  de: 'Kontextdaten: SCR-Lastabwurf, überschrittenes Wartungsintervall und Bestätigung des Wartungsresets.'
+  it: 'Dati di contesto: riduzione carico SCR, intervallo di manutenzione superato e conferma di reset manutenzione.'
+  pl: 'Dane kontekstowe: zrzut obciążenia SCR, przekroczony interwał przeglądu i potwierdzenie kasowania przeglądu.'
+  ru: 'Контекстные данные: сброс нагрузки SCR, превышение интервала обслуживания и подтверждение сброса напоминания об обслуживании.'
+  zh: '上下文数据:SCR减载、保养周期超期以及保养复位确认。'
+  hu: 'Kontextus adatok: SCR terheléscsökkentés, szerviz esedékesség túllépése és szerviz-nullázás visszaigazolása.'
+  pt: 'Dados de contexto: corte de carga SCR, intervalo de revisão excedido e confirmação de reposição da manutenção.'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['DSG', 'CMM']
+
+signals:
+  SCR_LOAD_SHEDDING_REQUEST:
+    bits: '6.7-6.1'
+    comment:
+      en: 'SCR system load-shedding request'
+      fr: 'Demande de délestage du système SCR'
+      es: 'Solicitud de deslastre del sistema SCR'
+      de: 'Anforderung zur Lastabschaltung des SCR-Systems'
+      it: 'Richiesta di distacco del carico del sistema SCR'
+      pl: 'Żądanie zrzutu obciążenia układu SCR'
+      ru: 'Запрос сброса нагрузки системы SCR'
+      zh: 'SCR系统甩负荷请求'
+      hu: 'SCR rendszer terheléscsökkentési kérése'
+      pt: 'Pedido de deslastre do sistema SCR'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x64
+
+  SERVICE_DUE:
+    bits: '6.0'
+    comment:
+      en: 'Service interval exceeded'
+      fr: 'Échéance d''entretien dépassée'
+      es: 'Intervalo de mantenimiento superado'
+      de: 'Wartungsintervall überschritten'
+      it: 'Intervallo di manutenzione superato'
+      pl: 'Przekroczony termin przeglądu'
+      ru: 'Интервал технического обслуживания превышен'
+      zh: '保养周期已超期'
+      hu: 'Szervizidőpont túllépve'
+      pt: 'Intervalo de manutenção ultrapassado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Service interval not exceeded'
+        fr: 'Échéance d''entretien non dépassée'
+        es: 'Intervalo de mantenimiento no superado'
+        de: 'Wartungsintervall nicht überschritten'
+        it: 'Intervallo di manutenzione non superato'
+        pl: 'Termin przeglądu nieprzekroczony'
+        ru: 'Интервал технического обслуживания не превышен'
+        zh: '保养周期未超期'
+        hu: 'Szervizidőpont nincs túllépve'
+        pt: 'Prazo de manutenção não excedido'
+      0x01:
+        en: 'Service overdue'
+        fr: 'Entretien dépassé'
+        es: 'Mantenimiento vencido'
+        de: 'Wartung überfällig'
+        it: 'Manutenzione scaduta'
+        pl: 'Przekroczony termin przeglądu'
+        ru: 'Просрочено техобслуживание'
+        zh: '保养已超期'
+        hu: 'Karbantartás esedékes'
+        pt: 'Revisão em atraso'
+
+  SERVICE_RESET_OK:
+    bits: '7.7'
+    comment:
+      en: 'Service reset acknowledged'
+      fr: 'Réinitialisation d''entretien confirmée'
+      es: 'Reinicio de mantenimiento confirmado'
+      de: 'Wartungsrücksetzung bestätigt'
+      it: 'Azzeramento della manutenzione confermato'
+      pl: 'Potwierdzone zerowanie przeglądu'
+      ru: 'Подтверждён сброс технического обслуживания'
+      zh: '保养复位已确认'
+      hu: 'Szervizvisszaállítás megerősítve'
+      pt: 'Reinicialização de manutenção confirmada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No oil-change reset'
+        fr: 'Pas de remise à zéro de la vidange'
+        es: 'Sin puesta a cero del cambio de aceite'
+        de: 'Kein Rückstellen des Ölwechsels'
+        it: 'Nessun azzeramento del cambio olio'
+        pl: 'Brak zerowania licznika wymiany oleju'
+        ru: 'Нет сброса счётчика замены масла'
+        zh: '无换油复位'
+        hu: 'Nincs olajcsere-visszaállítás'
+        pt: 'Sem reposição a zero do óleo'
+      0x01:
+        en: 'Oil change reset detected'
+        fr: 'RAZ vidange détectée'
+        es: 'Reinicio de cambio de aceite detectado'
+        de: 'Rücksetzung des Ölwechsels erkannt'
+        it: 'Reset del cambio olio rilevato'
+        pl: 'Wykryto reset wymiany oleju'
+        ru: 'Обнаружен сброс замены масла'
+        zh: '检测到换油复位'
+        hu: 'Olajcsere-visszaállítás észlelve'
+        pt: 'Reinicialização de mudança de óleo detetada'

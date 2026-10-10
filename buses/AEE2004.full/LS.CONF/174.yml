@@ -1,0 +1,235 @@
+id: 0x174
+name: 'DEFLECTOR_COMMAND'
+type: 'can'
+length: 2
+comment:
+  en: 'Deflector (spoiler) commands sent by the BSI: automatic function state, movement command, emergency brake and pilot mode.'
+  fr: 'Commandes du déflecteur envoyées par la BSI : état de la fonction automatique, commande de mouvement, freinage d''urgence et mode pilotage.'
+  es: 'Órdenes del deflector enviadas por la BSI: estado de la función automática, orden de movimiento, frenado de emergencia y modo de pilotaje.'
+  de: 'Von der BSI gesendete Deflektorbefehle (Spoiler): Zustand der Automatikfunktion, Bewegungsbefehl, Notbremsung und Pilotiermodus.'
+  it: 'Comandi del deflettore inviati dalla BSI: stato della funzione automatica, comando di movimento, frenata di emergenza e modalità di pilotaggio.'
+  pl: 'Polecenia deflektora (spojlera) wysyłane przez BSI: stan funkcji automatycznej, polecenie ruchu, hamowanie awaryjne i tryb sterowania.'
+  ru: 'Команды дефлектора (спойлера), отправляемые BSI: состояние автоматической функции, команда движения, экстренное торможение и режим управления.'
+  zh: '由BSI发送的导流板（扰流板）命令：自动功能状态、运动命令、紧急制动及驾驶模式。'
+  hu: 'A BSI deflektor- (spoiler-) parancsai: az automatikus funkció állapota, mozgásparancs, vészfékezés és vezérlési mód.'
+  pt: 'Comandos do defletor (spoiler) enviados pela BSI: estado da função automática, comando de movimento, travão de emergência e modo piloto.'
+observations:
+  en: 'On state change of: WIND_DEFLECTOR_OPERATION_AUTHORIZATION. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur changement d''état de : WIND_DEFLECTOR_OPERATION_AUTHORIZATION. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al cambiar el estado de: WIND_DEFLECTOR_OPERATION_AUTHORIZATION. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Statusänderung von: WIND_DEFLECTOR_OPERATION_AUTHORIZATION. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Al cambiamento di stato di: WIND_DEFLECTOR_OPERATION_AUTHORIZATION. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Wysyłane przy zmianie stanu: WIND_DEFLECTOR_OPERATION_AUTHORIZATION. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении состояния: WIND_DEFLECTOR_OPERATION_AUTHORIZATION. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '当AUTO_FONCT_DEF状态变化时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A(z) WIND_DEFLECTOR_OPERATION_AUTHORIZATION állapotváltozásakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança de estado de: WIND_DEFLECTOR_OPERATION_AUTHORIZATION. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['DEF']
+
+signals:
+  WIND_DEFLECTOR_OPERATION_AUTHORIZATION:
+    bits: '1.7'
+    comment:
+      en: 'Wind deflector operation authorization'
+      fr: 'Autorisation de fonctionnement du déflecteur'
+      es: 'Autorización de funcionamiento del deflector'
+      de: 'Freigabe des Windschottbetriebs'
+      it: 'Autorizzazione al funzionamento del deflettore'
+      pl: 'Zezwolenie na działanie deflektora'
+      ru: 'Разрешение работы дефлектора'
+      zh: '导风板运行授权'
+      hu: 'Szélterelő működési engedélyezése'
+      pt: 'Autorização de funcionamento do defletor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x01:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+
+  UNUSED_1:
+    bits: '1.6-1.4'
+    unused: true
+
+  EMERGENCY_BRAKING_INFO:
+    bits: '1.3'
+    comment:
+      en: 'Emergency braking in progress information'
+      fr: 'Information de freinage d''urgence en cours'
+      es: 'Información de frenado de emergencia en curso'
+      de: 'Information über laufende Notbremsung'
+      it: 'Informazione di frenata di emergenza in corso'
+      pl: 'Informacja o trwającym hamowaniu awaryjnym'
+      ru: 'Информация о выполняемом экстренном торможении'
+      zh: '紧急制动进行中信息'
+      hu: 'Vészfékezés folyamatban információ'
+      pt: 'Informação de travagem de emergência em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Emergency braking absent'
+        fr: 'Freinage d''urgence absent'
+        es: 'Frenado de emergencia ausente'
+        de: 'Notbremsung nicht vorhanden'
+        it: 'Frenata di emergenza assente'
+        pl: 'Brak hamowania awaryjnego'
+        ru: 'Экстренное торможение отсутствует'
+        zh: '无紧急制动'
+        hu: 'Nincs vészfékezés'
+        pt: 'Travagem de emergência ausente'
+      0x01:
+        en: 'Emergency braking in progress'
+        fr: 'Freinage d''urgence en cours'
+        es: 'Frenado de emergencia en curso'
+        de: 'Notbremsung läuft'
+        it: 'Frenata di emergenza in corso'
+        pl: 'Trwa hamowanie awaryjne'
+        ru: 'Экстренное торможение выполняется'
+        zh: '紧急制动进行中'
+        hu: 'Vészfékezés folyamatban'
+        pt: 'Travagem de emergência em curso'
+
+  UNUSED_2:
+    bits: '1.2-1.0'
+    unused: true
+
+  WIND_DEFLECTOR_MODE:
+    bits: '2.7'
+    comment:
+      en: 'Wind deflector movement mode (automatic/manual)'
+      fr: 'Mode de mouvement du déflecteur (automatique/manuel)'
+      es: 'Modo de movimiento del deflector (automático/manual)'
+      de: 'Bewegungsmodus des Windschotts (automatisch/manuell)'
+      it: 'Modalità di movimento del deflettore (automatica/manuale)'
+      pl: 'Tryb ruchu deflektora (automatyczny/ręczny)'
+      ru: 'Режим перемещения дефлектора (автоматический/ручной)'
+      zh: '导风板移动模式(自动/手动)'
+      hu: 'Szélterelő mozgási módja (automata/manuális)'
+      pt: 'Modo de movimento do defletor (automático/manual)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Automatic'
+        fr: 'Automatique'
+        es: 'Automático'
+        de: 'Automatisch'
+        it: 'Automatico'
+        pl: 'Automatyczny'
+        ru: 'Автоматический'
+        zh: '自动'
+        hu: 'Automatikus'
+        pt: 'Automático'
+      0x01:
+        en: 'Manual'
+        fr: 'Manuel'
+        es: 'Manual'
+        de: 'Manuell'
+        it: 'Manuale'
+        pl: 'Ręczny'
+        ru: 'Ручной'
+        zh: '手动'
+        hu: 'Kézi'
+        pt: 'Manual'
+
+  WIND_DEFLECTOR_MOVEMENT_COMMAND:
+    bits: '2.6-2.4'
+    comment:
+      en: 'Wind deflector movement command'
+      fr: 'Commande de mouvement du déflecteur'
+      es: 'Mando de movimiento del deflector'
+      de: 'Bewegungsbefehl für das Windschott'
+      it: 'Comando di movimento del deflettore'
+      pl: 'Sterowanie ruchem deflektora'
+      ru: 'Команда перемещения дефлектора'
+      zh: '导风板移动指令'
+      hu: 'Szélterelő mozgásparancs'
+      pt: 'Comando de movimento do defletor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No movement request'
+        fr: 'Pas de demande de mouvement'
+        es: 'Sin solicitud de movimiento'
+        de: 'Keine Bewegungsanforderung'
+        it: 'Nessuna richiesta di movimento'
+        pl: 'Brak żądania ruchu'
+        ru: 'Запрос движения отсутствует'
+        zh: '无运动请求'
+        hu: 'Nincs mozgási kérés'
+        pt: 'Sem pedido de movimento'
+      0x01:
+        en: 'Request to position 0'
+        fr: 'Demande en position 0'
+        es: 'Solicitud en posición 0'
+        de: 'Anforderung in Position 0'
+        it: 'Richiesta in posizione 0'
+        pl: 'Żądanie w pozycji 0'
+        ru: 'Запрос в положение 0'
+        zh: '请求至位置0'
+        hu: 'Kérés a 0 pozícióba'
+        pt: 'Pedido de posição 0'
+      0x02:
+        en: 'Request in position 1'
+        fr: 'Demande en position 1'
+        es: 'Solicitud en posición 1'
+        de: 'Anforderung in Position 1'
+        it: 'Richiesta in posizione 1'
+        pl: 'Żądanie w pozycji 1'
+        ru: 'Запрос в положении 1'
+        zh: '位置1请求'
+        hu: 'Kérés az 1. pozícióban'
+        pt: 'Pedido na posição 1'
+      0x03:
+        en: 'Request in position 2'
+        fr: 'Demande en position 2'
+        es: 'Solicitud en posición 2'
+        de: 'Anforderung in Position 2'
+        it: 'Richiesta in posizione 2'
+        pl: 'Żądanie w pozycji 2'
+        ru: 'Запрос в положении 2'
+        zh: '位置2请求'
+        hu: 'Kérés a 2. pozícióban'
+        pt: 'Pedido na posição 2'
+      0x04:
+        en: 'Maintenance position requested'
+        fr: 'Demande de position maintenance'
+        es: 'Solicitud de posición de mantenimiento'
+        de: 'Wartungsposition angefordert'
+        it: 'Richiesta posizione di manutenzione'
+        pl: 'Żądanie pozycji serwisowej'
+        ru: 'Запрошено положение обслуживания'
+        zh: '请求维护位置'
+        hu: 'Karbantartási pozíció kérve'
+        pt: 'Posição de manutenção pedida'
+
+  UNUSED_3:
+    bits: '2.3'
+    unused: true
+
+  UNUSED_4:
+    bits: '2.2-2.0'
+    unused: true

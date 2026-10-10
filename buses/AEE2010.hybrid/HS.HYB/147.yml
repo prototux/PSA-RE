@@ -1,0 +1,502 @@
+id: 0x147
+name: 'HCU1_DYNAMIC_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['CMM', 'HCU2']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  START_TYPE:
+    bits: '2.7-2.5'
+    comment:
+      en: 'Start type'
+      fr: 'Type de démarrage'
+      es: 'Tipo de arranque'
+      de: 'Startart'
+      it: 'Tipo di avviamento'
+      pl: 'Rodzaj rozruchu'
+      ru: 'Тип запуска'
+      zh: '起动类型'
+      hu: 'Indítás típusa'
+      pt: 'Tipo de arranque'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Dynamic'
+        fr: 'Dynamique'
+        es: 'Dinámico'
+        de: 'Dynamisch'
+        it: 'Dinamico'
+        pl: 'Dynamiczny'
+        ru: 'Динамический'
+        zh: '动态'
+        hu: 'Dinamikus'
+        pt: 'Dinâmico'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  DCDC_HV_VOLTAGE_SETPOINT:
+    bits: '2.4-3.0'
+    comment:
+      en: 'DC/DC converter voltage setpoint, high-voltage side'
+      fr: 'Consigne de tension du convertisseur DC/DC, côté haute tension'
+      es: 'Consigna de tensión del convertidor DC/DC, lado de alta tensión'
+      de: 'Spannungssollwert des DC/DC-Wandlers, Hochvoltseite'
+      it: 'Valore di tensione richiesto del convertitore DC/DC, lato alta tensione'
+      pl: 'Zadane napięcie przetwornicy DC/DC, strona wysokiego napięcia'
+      ru: 'Заданное напряжение DC/DC-преобразователя, сторона высокого напряжения'
+      zh: 'DC/DC转换器高压侧电压设定值'
+      hu: 'A DC/DC átalakító feszültség-alapjele, nagyfeszültségű oldal'
+      pt: 'Consigna de tensão do conversor DC/DC, lado de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FFF
+    default: 0x00
+
+  INJECTION_CUTOFF_REQUEST:
+    bits: '4.7'
+    comment:
+      en: 'Injection cutoff request'
+      fr: 'Demande de coupure d''injection'
+      es: 'Solicitud de corte de inyección'
+      de: 'Anforderung der Einspritzabschaltung'
+      it: 'Richiesta di interruzione dell''iniezione'
+      pl: 'Żądanie odcięcia wtrysku'
+      ru: 'Запрос отключения впрыска'
+      zh: '喷油切断请求'
+      hu: 'Befecskendezés-megszakítási kérés'
+      pt: 'Pedido de corte de injeção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Request in progress'
+        fr: 'Demande en cours'
+        es: 'Solicitud en curso'
+        de: 'Anforderung läuft'
+        it: 'Richiesta in corso'
+        pl: 'Żądanie w toku'
+        ru: 'Запрос выполняется'
+        zh: '请求进行中'
+        hu: 'Kérés folyamatban'
+        pt: 'Pedido em curso'
+
+  GEAR_ENGAGEMENT_APPROACH_TYPE:
+    bits: '4.6'
+    comment:
+      en: 'Gear engagement approach type (from below or from above)'
+      fr: 'Type d''approche pour l''engagement du rapport (par le bas ou par le haut)'
+      es: 'Tipo de aproximación para el engranaje de la marcha (por abajo o por arriba)'
+      de: 'Anfahrtstyp zum Einlegen des Gangs (von unten oder von oben)'
+      it: 'Tipo di approccio per l''innesto della marcia (dal basso o dall''alto)'
+      pl: 'Rodzaj podejścia do włączenia biegu (od dołu lub od góry)'
+      ru: 'Тип подхода к включению передачи (снизу или сверху)'
+      zh: '挂挡方式(自下方或自上方)'
+      hu: 'A fokozat bekapcsolásának megközelítési típusa (alulról vagy felülről)'
+      pt: 'Tipo de aproximação para o engate da mudança (por baixo ou por cima)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Low docking'
+        fr: 'Accostage par le bas'
+        es: 'Acoplamiento por abajo'
+        de: 'Andocken von unten'
+        it: 'Aggancio dal basso'
+        pl: 'Dokowanie od dołu'
+        ru: 'Стыковка снизу'
+        zh: '下部对接'
+        hu: 'Alsó dokkolás'
+        pt: 'Acoplamento por baixo'
+      0x01:
+        en: 'Docking from above'
+        fr: 'Accostage par le haut'
+        es: 'Acoplamiento por arriba'
+        de: 'Andocken von oben'
+        it: 'Aggancio dall''alto'
+        pl: 'Dokowanie od góry'
+        ru: 'Стыковка сверху'
+        zh: '从上方对接'
+        hu: 'Felülről történő dokkolás'
+        pt: 'Acoplamento por cima'
+
+  CLUTCH_TORQUE_REQUEST:
+    bits: '4.5-5.0'
+    comment:
+      en: 'Clutch torque request'
+      fr: 'Consigne de couple d''embrayage'
+      es: 'Consigna de par de embrague'
+      de: 'Kupplungsdrehmoment-Sollwert'
+      it: 'Richiesta di coppia della frizione'
+      pl: 'Żądany moment obrotowy sprzęgła'
+      ru: 'Заданный момент сцепления'
+      zh: '离合器扭矩请求'
+      hu: 'Kuplung nyomatékigénye'
+      pt: 'Consigna de binário de embraiagem'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  GEARBOX_COORDINATED_TORQUE_LIMIT:
+    bits: '6.5-7.0'
+    comment:
+      en: 'Torque coordinated with gearbox limitations'
+      fr: 'Couple coordonné avec les limitations de la boîte de vitesses'
+      es: 'Par coordinado con las limitaciones de la caja de cambios'
+      de: 'Mit den Getriebebegrenzungen koordiniertes Drehmoment'
+      it: 'Coppia coordinata con le limitazioni del cambio'
+      pl: 'Moment obrotowy skoordynowany z ograniczeniami skrzyni biegów'
+      ru: 'Момент, согласованный с ограничениями коробки передач'
+      zh: '与变速箱限制协调的扭矩'
+      hu: 'A váltóművi korlátozásokkal összehangolt nyomaték'
+      pt: 'Binário coordenado com as limitações da caixa de velocidades'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x3FFF
+    default: 0x1F40
+
+  GEARBOX_ENGAGED_RATIO:
+    bits: '8.3-8.0'
+    comment:
+      en: 'Gear ratio mechanically engaged (validated value)'
+      fr: 'Rapport de boîte de vitesses effectivement engagé mécaniquement'
+      es: 'Relación de la caja de cambios efectivamente engranada mecánicamente'
+      de: 'Mechanisch tatsächlich eingelegte Gangstufe (gesicherter Wert)'
+      it: 'Rapporto del cambio effettivamente innestato meccanicamente'
+      pl: 'Przełożenie skrzyni biegów rzeczywiście włączone mechanicznie'
+      ru: 'Фактически механически включённая передача (проверенное значение)'
+      zh: '机械实际啮合的档位(已验证值)'
+      hu: 'A ténylegesen mechanikusan bekapcsolt fokozat (validált érték)'
+      pt: 'Relação da caixa de velocidades mecanicamente engrenada (valor validado)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Neutral or declutched'
+        fr: 'Neutre ou débrayé'
+        es: 'Punto muerto o desembragado'
+        de: 'Neutral oder ausgekuppelt'
+        it: 'Folle o disinnestato'
+        pl: 'Luz lub rozłączone sprzęgło'
+        ru: 'Нейтраль или расцеплено'
+        zh: '空挡或已分离'
+        hu: 'Üres vagy kikuplungozva'
+        pt: 'Ponto morto ou desembraiado'
+      0x01:
+        en: 'Gear: 1'
+        fr: 'Rapport : 1'
+        es: 'Marcha: 1'
+        de: 'Gang: 1'
+        it: 'Rapporto: 1'
+        pl: 'Bieg: 1'
+        ru: 'Передача: 1'
+        zh: '挡位:1'
+        hu: 'Fokozat: 1'
+        pt: 'Mudança: 1'
+      0x02:
+        en: 'Gear: 2'
+        fr: 'Rapport : 2'
+        es: 'Marcha: 2'
+        de: 'Gang: 2'
+        it: 'Marcia: 2'
+        pl: 'Bieg: 2'
+        ru: 'Передача: 2'
+        zh: '挡位:2'
+        hu: 'Fokozat: 2'
+        pt: 'Mudança: 2'
+      0x03:
+        en: 'Gear: 3'
+        fr: 'Rapport : 3'
+        es: 'Marcha: 3'
+        de: 'Gang: 3'
+        it: 'Rapporto: 3'
+        pl: 'Bieg: 3'
+        ru: 'Передача: 3'
+        zh: '挡位:3'
+        hu: 'Fokozat: 3'
+        pt: 'Mudança: 3'
+      0x04:
+        en: 'Transmission range: 4'
+        fr: 'Rapport : 4'
+        es: 'Gama de transmisión: 4'
+        de: 'Getriebebereich: 4'
+        it: 'Gamma di trasmissione: 4'
+        pl: 'Zakres przekładni: 4'
+        ru: 'Диапазон трансмиссии: 4'
+        zh: '变速器挡位范围:4'
+        hu: 'Sebességtartomány: 4'
+        pt: 'Gama de transmissão: 4'
+      0x05:
+        en: 'Gear: 5'
+        fr: 'Rapport : 5'
+        es: 'Marcha: 5'
+        de: 'Gang: 5'
+        it: 'Marcia: 5'
+        pl: 'Bieg: 5'
+        ru: 'Передача: 5'
+        zh: '挡位：5'
+        hu: 'Fokozat: 5'
+        pt: 'Mudança: 5'
+      0x06:
+        en: 'Gear: 6'
+        fr: 'Rapport : 6'
+        es: 'Marcha: 6'
+        de: 'Gang: 6'
+        it: 'Marcia: 6'
+        pl: 'Bieg: 6'
+        ru: 'Передача: 6'
+        zh: '挡位:6'
+        hu: 'Fokozat: 6'
+        pt: 'Mudança: 6'
+      0x07:
+        en: 'Reverse gear'
+        fr: 'Marche arrière'
+        es: 'Marcha atrás'
+        de: 'Rückwärtsgang'
+        it: 'Retromarcia'
+        pl: 'Bieg wsteczny'
+        ru: 'Задний ход'
+        zh: '倒挡'
+        hu: 'Hátrameneti fokozat'
+        pt: 'Marcha-atrás'
+      0x08:
+        en: 'Gear: 7'
+        fr: 'Rapport : 7'
+        es: 'Marcha: 7'
+        de: 'Gang: 7'
+        it: 'Rapporto: 7'
+        pl: 'Bieg: 7'
+        ru: 'Передача: 7'
+        zh: '挡位:7'
+        hu: 'Fokozat: 7'
+        pt: 'Mudança: 7'
+      0x09:
+        en: 'Gear: 8'
+        fr: 'Rapport : 8'
+        es: 'Marcha: 8'
+        de: 'Gang: 8'
+        it: 'Marcia: 8'
+        pl: 'Bieg: 8'
+        ru: 'Передача: 8'
+        zh: '挡位:8'
+        hu: 'Fokozat: 8'
+        pt: 'Velocidade: 8'
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['HCU1']
+    receivers: ['CMM']
+    signals:
+      FRAME_CHECKSUM:
+        bits: '1.7-1.4'
+        comment:
+          en: 'Checksum of the frame'
+          fr: 'Somme de contrôle (checksum) de la trame'
+          es: 'Suma de comprobación (checksum) de la trama'
+          de: 'Prüfsumme (Checksum) des Frames'
+          it: 'Checksum del frame'
+          pl: 'Suma kontrolna (checksum) ramki'
+          ru: 'Контрольная сумма кадра'
+          zh: '帧校验和'
+          hu: 'A keret ellenőrző összege (checksum)'
+          pt: 'Soma de verificação da trama'
+        type: 'uint'
+      PROCESS_COUNTER:
+        bits: '1.3-1.0'
+        comment:
+          en: 'Rolling counter incremented at each calculation cycle'
+          fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+          es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+          de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+          it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+          pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+          ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+          zh: '每个计算周期递增的循环计数器'
+          hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+          pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+        type: 'uint'
+        min: 0
+        max: 15
+        default: 0x00
+      TORQUE_BEFORE_FILTER_BEFORE_LIMIT:
+        bits: '2.7-2.0'
+        comment:
+          en: 'Torque before filtering, before limitation'
+          fr: 'Couple avant filtrage, avant limitation'
+          es: 'Par antes del filtrado, antes de la limitación'
+          de: 'Drehmoment vor Filterung, vor Begrenzung'
+          it: 'Coppia prima del filtraggio, prima della limitazione'
+          pl: 'Moment obrotowy przed filtrowaniem, przed ograniczeniem'
+          ru: 'Крутящий момент до фильтрации, до ограничения'
+          zh: '滤波前、限制前的转矩'
+          hu: 'Nyomaték szűrés előtt, korlátozás előtt'
+          pt: 'Binário antes da filtragem, antes da limitação'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      UNUSED_1:
+        bits: '3.7-3.5'
+        unused: true
+      TORQUE_SETPOINT_POST_EASY_MOVE:
+        bits: '3.4-4.2'
+        comment:
+          en: 'Torque setpoint after Easy-Move'
+          fr: 'Consigne de couple après Easy-Move'
+          es: 'Consigna de par tras Easy-Move'
+          de: 'Drehmoment-Sollwert nach Easy-Move'
+          it: 'Valore di riferimento di coppia dopo Easy-Move'
+          pl: 'Wartość zadana momentu obrotowego po Easy-Move'
+          ru: 'Уставка крутящего момента после Easy-Move'
+          zh: 'Easy-Move后的转矩设定值'
+          hu: 'Nyomatékalapjel az Easy-Move után'
+          pt: 'Consigna de binário após Easy-Move'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      FILTERED_TORQUE_DECEL_ACTIVATION:
+        bits: '4.1-6.7'
+        comment:
+          en: 'Filtered torque, deceleration activation'
+          fr: 'Couple filtré, activation décélération'
+          es: 'Par filtrado, activación de deceleración'
+          de: 'Gefiltertes Drehmoment, Verzögerungsaktivierung'
+          it: 'Coppia filtrata, attivazione decelerazione'
+          pl: 'Filtrowany moment obrotowy, aktywacja hamowania silnikiem'
+          ru: 'Фильтрованный крутящий момент, активация замедления'
+          zh: '滤波转矩,减速激活'
+          hu: 'Szűrt nyomaték, lassítás aktiválása'
+          pt: 'Binário filtrado, ativação da desaceleração'
+        type: 'uint'
+        factor: 0.5
+        offset: -500
+        min: -500
+        max: 500
+        units: 'Nm'
+        invalid: 0x7FF
+        default: 0x3E8
+      UNUSED_2:
+        bits: '6.6-7.0'
+        unused: true

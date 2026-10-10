@@ -1,0 +1,482 @@
+id: 0x55A
+name: 'LVNSD_DATA_3'
+type: 'can'
+length: 7
+comment:
+  en: 'LVNSD node data: service-blink request, battery diagnostic state and switch state.'
+  fr: 'Données du module LVNSD : demande de clignotement service, état de diagnostic batterie et état du contacteur.'
+  es: 'Datos del módulo LVNSD: solicitud de parpadeo de servicio, estado de diagnóstico de batería y estado del interruptor.'
+  de: 'Daten des LVNSD-Moduls: Service-Blinkanforderung, Batteriediagnosestatus und Schalterzustand.'
+  it: 'Dati del modulo LVNSD: richiesta di lampeggio di servizio, stato di diagnosi batteria e stato dell''interruttore.'
+  pl: 'Dane modułu LVNSD: żądanie migania serwisowego, stan diagnostyki akumulatora i stan przełącznika.'
+  ru: 'Данные модуля LVNSD: запрос сервисного мигания, состояние диагностики батареи и состояние переключателя.'
+  zh: 'LVNSD模块数据:维修闪烁请求、电池诊断状态和开关状态。'
+  hu: 'Az LVNSD modul adatai: szervizvillogás kérése, akkumulátor-diagnosztikai állapot és kapcsoló állapota.'
+  pt: 'Dados do nó LVNSD: pedido de pisca de serviço, estado de diagnóstico da bateria e estado do interruptor.'
+observations:
+  en: 'Sent when the power-supply network diagnosis finishes: 2 frames (one per LID value), 50 ms apart'
+  fr: 'Émise à la finalisation du diagnostic du réseau d''alimentation : 2 trames (une par valeur de LID), espacées de 50 ms'
+  es: 'Enviada al finalizar el diagnóstico de la red de alimentación: 2 tramas (una por valor de LID), separadas 50 ms'
+  de: 'Gesendet nach Abschluss der Diagnose des Versorgungsnetzes: 2 Frames (einer pro LID-Wert), 50 ms auseinander'
+  it: 'Inviata al termine della diagnosi della rete di alimentazione: 2 frame (uno per valore di LID), distanziati di 50 ms'
+  pl: 'Wysyłane po zakończeniu diagnostyki sieci zasilania: 2 ramki (po jednej na wartość LID), w odstępie 50 ms'
+  ru: 'Отправляется по завершении диагностики сети питания: 2 кадра (по одному на значение LID) с интервалом 50 мс'
+  zh: '供电网络诊断完成时发送:2帧(每个LID值一帧),间隔50毫秒'
+  hu: 'Küldve a tápellátó hálózat diagnosztikájának befejezésekor: 2 keret (LID-értékenként egy), 50 ms-os időközzel'
+  pt: 'Enviada quando o diagnóstico da rede de alimentação termina: 2 tramas (uma por valor de LID), com 50 ms de intervalo'
+periodicity: ['100ms', 'trigger']
+senders: ['LVNSD']
+receivers: ['CMM']
+
+signals:
+  LV_BATTERY_SEQUENCE_ID:
+    bits: '1.7'
+    comment:
+      en: 'Identifier of the low-voltage battery measurement sequence being transmitted'
+      fr: 'Identifiant de la séquence de mesure de la batterie basse tension transmise'
+      es: 'Identificador de la secuencia de medición de la batería de baja tensión transmitida'
+      de: 'Kennung der übertragenen Messsequenz der Niedervoltbatterie'
+      it: 'Identificativo della sequenza di misura della batteria a bassa tensione trasmessa'
+      pl: 'Identyfikator przesyłanej sekwencji pomiarowej akumulatora niskiego napięcia'
+      ru: 'Идентификатор передаваемой измерительной последовательности низковольтной батареи'
+      zh: '传输的低压蓄电池测量序列标识'
+      hu: 'Az átvitt alacsony feszültségű akkumulátor mérési szekvenciájának azonosítója'
+      pt: 'Identificador da sequência de medição da bateria de baixa tensão a ser transmitida'
+    type: 'bool'
+    default: 0x00
+    mux_selector: true
+    values:
+      0x00:
+        en: 'Emission of BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+        fr: 'Emission de BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+        es: 'Emisión de BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+        de: 'Übertragung von BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+        it: 'Emissione di BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+        pl: 'Nadawanie BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+        ru: 'Передача BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+        zh: 'BATTERY_VOLTAGE_SEQ1、BATTERY_RESISTANCE_SEQ1 的发送'
+        hu: 'BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1 küldése'
+        pt: 'Transmissão de BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+      0x01:
+        en: 'Transmission of BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+        fr: 'Émission de BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+        es: 'Transmisión de BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+        de: 'Übertragung von BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+        it: 'Trasmissione di BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+        pl: 'Transmisja BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+        ru: 'Передача BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+        zh: 'BATTERY_VOLTAGE_SEQ4、SEQ4_BATT_RES的发送'
+        hu: 'BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4 átvitele'
+        pt: 'Transmissão de BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+
+  UNUSED_1:
+    bits: '1.6-1.0'
+    unused: true
+
+  BATTERY_VOLTAGE_SEQ1:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Battery voltage measured under a 100A load, sequence 1 (V)'
+      fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 1 (V)'
+      es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 1 (V)'
+      de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 1 (V)'
+      it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 1 (V)'
+      pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 1 (V)'
+      ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 1 (В)'
+      zh: '100A负载下测得的电池电压,序列1(V)'
+      hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 1. szekvencia (V)'
+      pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 1 (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 5.4
+    max: 18
+    units: 'V'
+    invalid: 0x7F
+    default: 0x00
+    mux:
+      selector: 'LV_BATTERY_SEQUENCE_ID'
+      values: [0x00]
+
+  BATTERY_VOLTAGE_SEQ4:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Battery voltage measured under a 100A load, sequence 4 (V)'
+      fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 4 (V)'
+      es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 4 (V)'
+      de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 4 (V)'
+      it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 4 (V)'
+      pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 4 (V)'
+      ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 4 (В)'
+      zh: '100A负载下测得的电池电压,序列4(V)'
+      hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 4. szekvencia (V)'
+      pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 4 (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 5.4
+    max: 18
+    units: 'V'
+    invalid: 0x7F
+    default: 0x00
+    mux:
+      selector: 'LV_BATTERY_SEQUENCE_ID'
+      values: [0x01]
+
+  BATTERY_RESISTANCE_SEQ1:
+    bits: '2.0-3.0'
+    comment:
+      en: 'Battery internal resistance under 12V, measurement sequence 1 (mOhm)'
+      fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 1 (mOhm)'
+      es: 'Resistencia interna de la batería a 12V, secuencia de medición 1 (mOhm)'
+      de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 1 (mOhm)'
+      it: 'Resistenza interna della batteria a 12V, sequenza di misura 1 (mOhm)'
+      pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 1 (mOhm)'
+      ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 1 (мОм)'
+      zh: '12V下电池内阻,测量序列1(mOhm)'
+      hu: 'Az akkumulátor belső ellenállása 12V-on, 1. mérési szekvencia (mOhm)'
+      pt: 'Resistência interna da bateria a 12V, sequência de medição 1 (mOhm)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 35
+    units: 'mOhm'
+    invalid: 0x1FF
+    default: 0x00
+    mux:
+      selector: 'LV_BATTERY_SEQUENCE_ID'
+      values: [0x00]
+
+  BATTERY_RESISTANCE_SEQ4:
+    bits: '2.0-3.0'
+    comment:
+      en: 'Battery internal resistance under 12V, measurement sequence 4 (mOhm)'
+      fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 4 (mOhm)'
+      es: 'Resistencia interna de la batería a 12V, secuencia de medición 4 (mOhm)'
+      de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 4 (mOhm)'
+      it: 'Resistenza interna della batteria a 12V, sequenza di misura 4 (mOhm)'
+      pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 4 (mOhm)'
+      ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 4 (мОм)'
+      zh: '12V下电池内阻,测量序列4(mOhm)'
+      hu: 'Az akkumulátor belső ellenállása 12V-on, 4. mérési szekvencia (mOhm)'
+      pt: 'Resistência interna da bateria a 12V, sequência de medição 4 (mOhm)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 35
+    units: 'mOhm'
+    invalid: 0x1FF
+    default: 0x00
+    mux:
+      selector: 'LV_BATTERY_SEQUENCE_ID'
+      values: [0x01]
+
+  BATTERY_VOLTAGE_SEQ2:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Battery voltage measured under a 100A load, sequence 2 (V)'
+      fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 2 (V)'
+      es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 2 (V)'
+      de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 2 (V)'
+      it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 2 (V)'
+      pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 2 (V)'
+      ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 2 (В)'
+      zh: '100A负载下测得的电池电压,序列2(V)'
+      hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 2. szekvencia (V)'
+      pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 2 (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 5.4
+    max: 18
+    units: 'V'
+    invalid: 0x7F
+    default: 0x00
+
+  BATTERY_RESISTANCE_SEQ2:
+    bits: '4.0-5.0'
+    comment:
+      en: 'Battery internal resistance under 12V, measurement sequence 2 (mOhm)'
+      fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 2 (mOhm)'
+      es: 'Resistencia interna de la batería a 12V, secuencia de medición 2 (mOhm)'
+      de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 2 (mOhm)'
+      it: 'Resistenza interna della batteria a 12V, sequenza di misura 2 (mOhm)'
+      pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 2 (mOhm)'
+      ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 2 (мОм)'
+      zh: '12V下电池内阻,测量序列2(mOhm)'
+      hu: 'Az akkumulátor belső ellenállása 12V-on, 2. mérési szekvencia (mOhm)'
+      pt: 'Resistência interna da bateria a 12V, sequência de medição 2 (mOhm)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 35
+    units: 'mOhm'
+    invalid: 0x1FF
+    default: 0x00
+
+  BATTERY_VOLTAGE_SEQ3:
+    bits: '6.7-6.1'
+    comment:
+      en: 'Battery voltage measured under a 100A load, sequence 3 (V)'
+      fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 3 (V)'
+      es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 3 (V)'
+      de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 3 (V)'
+      it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 3 (V)'
+      pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 3 (V)'
+      ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 3 (В)'
+      zh: '100A负载下测得的电池电压,序列3(V)'
+      hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 3. szekvencia (V)'
+      pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 3 (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 5.4
+    max: 18
+    units: 'V'
+    invalid: 0x7F
+    default: 0x00
+
+  BATTERY_RESISTANCE_SEQ3:
+    bits: '6.0-7.0'
+    comment:
+      en: 'Battery internal resistance under 12V, measurement sequence 3 (mOhm)'
+      fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 3 (mOhm)'
+      es: 'Resistencia interna de la batería a 12V, secuencia de medición 3 (mOhm)'
+      de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 3 (mOhm)'
+      it: 'Resistenza interna della batteria a 12V, sequenza di misura 3 (mOhm)'
+      pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 3 (mOhm)'
+      ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 3 (мОм)'
+      zh: '12V下电池内阻,测量序列3(mOhm)'
+      hu: 'Az akkumulátor belső ellenállása 12V-on, 3. mérési szekvencia (mOhm)'
+      pt: 'Resistência interna da bateria a 12V, sequência de medição 3 (mOhm)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 35
+    units: 'mOhm'
+    invalid: 0x1FF
+    default: 0x00
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      LV_BATTERY_SEQUENCE_ID:
+        bits: '1.7'
+        comment:
+          en: 'Identifier of the low-voltage battery measurement sequence being transmitted'
+          fr: 'Identifiant de la séquence de mesure de la batterie basse tension transmise'
+          es: 'Identificador de la secuencia de medición de la batería de baja tensión transmitida'
+          de: 'Kennung der übertragenen Messsequenz der Niedervoltbatterie'
+          it: 'Identificativo della sequenza di misura della batteria a bassa tensione trasmessa'
+          pl: 'Identyfikator przesyłanej sekwencji pomiarowej akumulatora niskiego napięcia'
+          ru: 'Идентификатор передаваемой измерительной последовательности низковольтной батареи'
+          zh: '传输的低压蓄电池测量序列标识'
+          hu: 'Az átvitt alacsony feszültségű akkumulátor mérési szekvenciájának azonosítója'
+          pt: 'Identificador da sequência de medição da bateria de baixa tensão a ser transmitida'
+        type: 'bool'
+        default: 0x00
+        mux_selector: true
+        values:
+          0x00:
+            en: 'Emission of BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+            fr: 'Emission de BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+            es: 'Emisión de BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+            de: 'Übertragung von BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+            it: 'Emissione di BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+            pl: 'Nadawanie BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+            ru: 'Передача BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+            zh: 'BATTERY_VOLTAGE_SEQ1、BATTERY_RESISTANCE_SEQ1 的发送'
+            hu: 'BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1 küldése'
+            pt: 'Transmissão de BATTERY_VOLTAGE_SEQ1, BATTERY_RESISTANCE_SEQ1,'
+          0x01:
+            en: 'Transmission of BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+            fr: 'Émission de BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+            es: 'Transmisión de BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+            de: 'Übertragung von BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+            it: 'Trasmissione di BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+            pl: 'Transmisja BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+            ru: 'Передача BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+            zh: 'BATTERY_VOLTAGE_SEQ4、SEQ4_BATT_RES的发送'
+            hu: 'BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4 átvitele'
+            pt: 'Transmissão de BATTERY_VOLTAGE_SEQ4, BATTERY_RESISTANCE_SEQ4'
+      UNUSED_1:
+        bits: '1.6-1.0'
+        unused: true
+      BATTERY_VOLTAGE_SEQ1:
+        bits: '2.7-2.1'
+        comment:
+          en: 'Battery voltage measured under a 100A load, sequence 1 (V)'
+          fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 1 (V)'
+          es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 1 (V)'
+          de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 1 (V)'
+          it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 1 (V)'
+          pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 1 (V)'
+          ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 1 (В)'
+          zh: '100A负载下测得的电池电压,序列1(V)'
+          hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 1. szekvencia (V)'
+          pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 1 (V)'
+        type: 'uint'
+        factor: 0.1
+        min: 5.4
+        max: 18
+        units: 'V'
+        invalid: 0x7F
+        default: 0x00
+        mux:
+          selector: 'LV_BATTERY_SEQUENCE_ID'
+          values: [0x00]
+      BATTERY_VOLTAGE_SEQ4:
+        bits: '2.7-2.1'
+        comment:
+          en: 'Battery voltage measured under a 100A load, sequence 4 (V)'
+          fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 4 (V)'
+          es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 4 (V)'
+          de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 4 (V)'
+          it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 4 (V)'
+          pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 4 (V)'
+          ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 4 (В)'
+          zh: '100A负载下测得的电池电压,序列4(V)'
+          hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 4. szekvencia (V)'
+          pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 4 (V)'
+        type: 'uint'
+        factor: 0.1
+        min: 5.4
+        max: 18
+        units: 'V'
+        invalid: 0x7F
+        default: 0x00
+        mux:
+          selector: 'LV_BATTERY_SEQUENCE_ID'
+          values: [0x01]
+      BATTERY_RESISTANCE_SEQ1:
+        bits: '2.0-3.0'
+        comment:
+          en: 'Battery internal resistance under 12V, measurement sequence 1 (mOhm)'
+          fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 1 (mOhm)'
+          es: 'Resistencia interna de la batería a 12V, secuencia de medición 1 (mOhm)'
+          de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 1 (mOhm)'
+          it: 'Resistenza interna della batteria a 12V, sequenza di misura 1 (mOhm)'
+          pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 1 (mOhm)'
+          ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 1 (мОм)'
+          zh: '12V下电池内阻,测量序列1(mOhm)'
+          hu: 'Az akkumulátor belső ellenállása 12V-on, 1. mérési szekvencia (mOhm)'
+          pt: 'Resistência interna da bateria a 12V, sequência de medição 1 (mOhm)'
+        type: 'uint'
+        factor: 0.1
+        min: 0
+        max: 35
+        units: 'mOhm'
+        invalid: 0x1FF
+        default: 0x00
+        mux:
+          selector: 'LV_BATTERY_SEQUENCE_ID'
+          values: [0x00]
+      BATTERY_RESISTANCE_SEQ4:
+        bits: '2.0-3.0'
+        comment:
+          en: 'Battery internal resistance under 12V, measurement sequence 4 (mOhm)'
+          fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 4 (mOhm)'
+          es: 'Resistencia interna de la batería a 12V, secuencia de medición 4 (mOhm)'
+          de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 4 (mOhm)'
+          it: 'Resistenza interna della batteria a 12V, sequenza di misura 4 (mOhm)'
+          pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 4 (mOhm)'
+          ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 4 (мОм)'
+          zh: '12V下电池内阻,测量序列4(mOhm)'
+          hu: 'Az akkumulátor belső ellenállása 12V-on, 4. mérési szekvencia (mOhm)'
+          pt: 'Resistência interna da bateria a 12V, sequência de medição 4 (mOhm)'
+        type: 'uint'
+        factor: 0.1
+        min: 0
+        max: 35
+        units: 'mOhm'
+        invalid: 0x1FF
+        default: 0x00
+        mux:
+          selector: 'LV_BATTERY_SEQUENCE_ID'
+          values: [0x01]
+      BATTERY_VOLTAGE_SEQ5:
+        bits: '4.7-4.1'
+        comment:
+          en: 'Battery voltage measured under a 100A load, sequence 5 (V)'
+          fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 5 (V)'
+          es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 5 (V)'
+          de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 5 (V)'
+          it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 5 (V)'
+          pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 5 (V)'
+          ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 5 (В)'
+          zh: '100A负载下测得的电池电压,序列5(V)'
+          hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 5. szekvencia (V)'
+          pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 5 (V)'
+        type: 'uint'
+        factor: 0.1
+        min: 5.4
+        max: 18
+        units: 'V'
+        invalid: 0x7F
+        default: 0x00
+      BATTERY_RESISTANCE_SEQ5:
+        bits: '4.0-5.0'
+        comment:
+          en: 'Battery internal resistance under 12V, measurement sequence 5 (mOhm)'
+          fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 5 (mOhm)'
+          es: 'Resistencia interna de la batería a 12V, secuencia de medición 5 (mOhm)'
+          de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 5 (mOhm)'
+          it: 'Resistenza interna della batteria a 12V, sequenza di misura 5 (mOhm)'
+          pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 5 (mOhm)'
+          ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 5 (мОм)'
+          zh: '12V下电池内阻,测量序列5(mOhm)'
+          hu: 'Az akkumulátor belső ellenállása 12V-on, 5. mérési szekvencia (mOhm)'
+          pt: 'Resistência interna da bateria a 12V, sequência de medição 5 (mOhm)'
+        type: 'uint'
+        factor: 0.1
+        min: 0
+        max: 35
+        units: 'mOhm'
+        invalid: 0x1FF
+        default: 0x00
+      BATTERY_VOLTAGE_SEQ3:
+        bits: '6.7-6.1'
+        comment:
+          en: 'Battery voltage measured under a 100A load, sequence 3 (V)'
+          fr: 'Tension de la batterie mesurée sous une sollicitation de 100A, séquence 3 (V)'
+          es: 'Tensión de la batería medida bajo una carga de 100A, secuencia 3 (V)'
+          de: 'Gemessene Batteriespannung unter 100A Last, Sequenz 3 (V)'
+          it: 'Tensione della batteria misurata sotto un carico di 100A, sequenza 3 (V)'
+          pl: 'Napięcie akumulatora mierzone pod obciążeniem 100A, sekwencja 3 (V)'
+          ru: 'Напряжение батареи, измеренное под нагрузкой 100А, последовательность 3 (В)'
+          zh: '100A负载下测得的电池电压,序列3(V)'
+          hu: 'Az akkumulátor feszültsége 100A terhelés alatt mérve, 3. szekvencia (V)'
+          pt: 'Tensão da bateria medida sob uma carga de 100A, sequência 3 (V)'
+        type: 'uint'
+        factor: 0.1
+        min: 5.4
+        max: 18
+        units: 'V'
+        invalid: 0x7F
+        default: 0x00
+      BATTERY_RESISTANCE_SEQ3:
+        bits: '6.0-7.0'
+        comment:
+          en: 'Battery internal resistance under 12V, measurement sequence 3 (mOhm)'
+          fr: 'Résistance interne de la batterie sous 12V, séquence de mesure 3 (mOhm)'
+          es: 'Resistencia interna de la batería a 12V, secuencia de medición 3 (mOhm)'
+          de: 'Innenwiderstand der Batterie bei 12V, Messsequenz 3 (mOhm)'
+          it: 'Resistenza interna della batteria a 12V, sequenza di misura 3 (mOhm)'
+          pl: 'Rezystancja wewnętrzna akumulatora przy 12V, sekwencja pomiarowa 3 (mOhm)'
+          ru: 'Внутреннее сопротивление батареи при 12В, последовательность измерения 3 (мОм)'
+          zh: '12V下电池内阻,测量序列3(mOhm)'
+          hu: 'Az akkumulátor belső ellenállása 12V-on, 3. mérési szekvencia (mOhm)'
+          pt: 'Resistência interna da bateria a 12V, sequência de medição 3 (mOhm)'
+        type: 'uint'
+        factor: 0.1
+        min: 0
+        max: 35
+        units: 'mOhm'
+        invalid: 0x1FF
+        default: 0x00

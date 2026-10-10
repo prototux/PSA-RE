@@ -1,0 +1,130 @@
+id: 0x11F
+name: 'RADIO_REPLY_PAYLOAD'
+type: 'can'
+length: 8
+comment:
+  en: 'Multi-frame reply payload from the radio (tuner preset list or repertoire records).'
+  fr: 'Charge utile de la réponse multi-trame de l''autoradio (liste des préréglages tuner ou fiches répertoire).'
+  es: 'Carga útil de la respuesta multitrama de la radio (lista de preajustes del sintonizador o fichas de la agenda).'
+  de: 'Nutzdaten der Mehrfachrahmen-Antwort des Radios (Tuner-Presetliste oder Verzeichniseinträge).'
+  it: 'Payload della risposta multi-trama della radio (elenco preset tuner o schede rubrica).'
+  pl: 'Dane odpowiedzi wieloramkowej radia (lista ustawień zaprogramowanych tunera lub wpisy książki).'
+  ru: 'Полезная нагрузка многокадрового ответа радио (список предустановок тюнера или записи справочника).'
+  zh: '收音机的多帧应答有效载荷(调谐器预设列表或通讯录记录)。'
+  hu: 'A rádió többkeretes válaszának hasznos adattartalma (tuner előbeállítás-lista vagy névjegyzék-bejegyzések).'
+  pt: 'Payload de resposta multi-trama da rádio (lista de memórias do sintonizador ou registos de repertório).'
+periodicity: ['trigger']
+senders: []  # TODO: find the sender(s)
+
+signals:
+  NPCI_HEADER_SF_2:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Second byte of the transport protocol header for a single frame.'
+      fr: 'Deuxième octet de l''en-tête du protocole de transport pour une trame unique.'
+      es: 'Segundo byte de la cabecera del protocolo de transporte de una trama única'
+      de: 'Zweites Byte des Transportprotokoll-Headers eines Einzelrahmens'
+      it: 'Secondo byte dell''intestazione del protocollo di trasporto di un frame singolo'
+      pl: 'Drugi bajt nagłówka protokołu transportowego pojedynczej ramki'
+      ru: 'Второй байт заголовка транспортного протокола одиночного кадра'
+      zh: '单帧传输协议报头的第二个字节'
+      hu: 'Az egykeret szállítási protokoll fejlécének második bájtja'
+      pt: 'Segundo byte do cabeçalho do protocolo de transporte de uma trama única.'
+    type: 'uint'
+
+  SF_DATA_2:
+    bits: '2.7-5.0'
+    comment:
+      en: 'Single frame data payload (part 2).'
+      fr: 'Données utiles de la trame unique (partie 2).'
+      es: 'Datos útiles de la trama única (parte 2)'
+      de: 'Nutzdaten des Einzelrahmens (Teil 2)'
+      it: 'Dati utili del frame singolo (parte 2)'
+      pl: 'Dane użytkowe pojedynczej ramki (część 2)'
+      ru: 'Полезные данные одиночного кадра (часть 2)'
+      zh: '单帧数据负载（第 2 部分）'
+      hu: 'Az egykeret hasznos adata (2. rész)'
+      pt: 'Dados úteis da trama única (parte 2)'
+    type: 'uint'
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      CF_DATA_2:
+        bits: '1.7-1.0'
+        comment:
+          en: 'Consecutive frame data payload (part 2).'
+          fr: 'Données utiles de la trame de suite (partie 2).'
+          es: 'Datos útiles de la trama de continuación (parte 2)'
+          de: 'Nutzdaten des Folgerahmens (Teil 2)'
+          it: 'Dati utili del frame di continuazione (parte 2)'
+          pl: 'Dane użytkowe ramki kontynuacji (część 2)'
+          ru: 'Полезные данные последующего кадра (часть 2)'
+          zh: '连续帧数据负载（第 2 部分）'
+          hu: 'A folytatókeret hasznos adata (2. rész)'
+          pt: 'Dados úteis da trama de continuação (parte 2)'
+        type: 'uint'
+      NPCI_HEADER_CF_2:
+        bits: '2.7-2.0'
+        comment:
+          en: 'Second byte of the transport protocol header for a consecutive frame.'
+          fr: 'Deuxième octet de l''en-tête du protocole de transport pour une trame de suite.'
+          es: 'Segundo byte de la cabecera del protocolo de transporte de una trama de continuación'
+          de: 'Zweites Byte des Transportprotokoll-Headers eines Folgerahmens'
+          it: 'Secondo byte dell''intestazione del protocollo di trasporto di un frame di continuazione'
+          pl: 'Drugi bajt nagłówka protokołu transportowego ramki kontynuacji'
+          ru: 'Второй байт заголовка транспортного протокола последующего кадра'
+          zh: '连续帧传输协议报头的第二个字节'
+          hu: 'A folytatókeret szállítási protokoll fejlécének második bájtja'
+          pt: 'Segundo byte do cabeçalho do protocolo de transporte de uma trama de continuação.'
+        type: 'uint'
+      FF_DATA_2:
+        bits: '3.7-8.0'
+        comment:
+          en: 'First frame data payload (part 2).'
+          fr: 'Données utiles de la première trame (partie 2).'
+          es: 'Datos útiles de la primera trama (parte 2)'
+          de: 'Nutzdaten des ersten Rahmens (Teil 2)'
+          it: 'Dati utili del primo frame (parte 2)'
+          pl: 'Dane użytkowe pierwszej ramki (część 2)'
+          ru: 'Полезные данные первого кадра (часть 2)'
+          zh: '首帧数据负载（第 2 部分）'
+          hu: 'Az első keret hasznos adata (2. rész)'
+          pt: 'Dados úteis da primeira trama (parte 2)'
+        type: 'uint'
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      FAULT_LOG_NPCI_2:
+        bits: '1.7-2.0'
+        comment:
+          en: 'Network protocol control information (NPCI), part 2, of the fault-log record'
+          fr: 'Information de contrôle de protocole réseau (NPCI), partie 2, de l''enregistrement du journal de défauts'
+          es: 'Información de control de protocolo de red (NPCI), parte 2, del registro del historial de fallos'
+          de: 'Netzwerkprotokoll-Steuerinformation (NPCI), Teil 2, des Fehlerprotokolleintrags'
+          it: 'Informazioni di controllo del protocollo di rete (NPCI), parte 2, del record del registro guasti'
+          pl: 'Informacja sterująca protokołu sieciowego (NPCI), część 2, rekordu dziennika usterek'
+          ru: 'Управляющая информация сетевого протокола (NPCI), часть 2, записи журнала неисправностей'
+          zh: '故障日志记录的网络协议控制信息(NPCI)第2部分'
+          hu: 'A hibanapló-bejegyzés hálózati protokoll vezérlési információja (NPCI), 2. rész'
+          pt: 'Informação de controlo de protocolo de rede (NPCI), parte 2, do registo do histórico de falhas'
+        type: 'uint'

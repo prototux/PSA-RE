@@ -1,0 +1,82 @@
+id: 0x5EE
+name: 'HYBRID_BATTERY_DATA_4'
+type: 'can'
+length: 3
+comment:
+  en: 'Hybrid battery data sent by the BSI: processed maximum current, normalized internal resistance and minimum voltage.'
+  fr: 'Données de batterie hybride envoyées par la BSI : courant maximal traité, résistance interne normalisée et tension minimale.'
+  es: 'Datos de la batería híbrida enviados por la BSI: corriente máxima procesada, resistencia interna normalizada y tensión mínima.'
+  de: 'Von der BSI gesendete Hybridbatteriedaten: verarbeiteter Maximalstrom, normierter Innenwiderstand und Mindestspannung.'
+  it: 'Dati della batteria ibrida inviati dalla BSI: corrente massima elaborata, resistenza interna normalizzata e tensione minima.'
+  pl: 'Dane akumulatora hybrydowego wysyłane przez BSI: przetworzony prąd maksymalny, znormalizowana rezystancja wewnętrzna i napięcie minimalne.'
+  ru: 'Данные гибридной батареи, отправляемые BSI: обработанный максимальный ток, нормализованное внутреннее сопротивление и минимальное напряжение.'
+  zh: '由BSI发送的混合动力电池数据：处理后的最大电流、归一化内阻和最小电压。'
+  hu: 'A BSI által küldött hibrid akkumulátor adatok: feldolgozott maximális áram, normalizált belső ellenállás és minimális feszültség.'
+  pt: 'Dados da bateria híbrida enviados pela BSI: corrente máxima processada, resistência interna normalizada e tensão mínima.'
+observations:
+  en: 'On ignition-on if the BSI is already awake, or 4 events 50 ms apart after CAN-IS wake-up'
+  fr: 'À la mise du contact si la BSI est déjà réveillée, ou 4 événements espacés de 50 ms à partir du réveil du CAN-IS'
+  es: 'Al dar contacto si la BSI ya está activa, o 4 eventos separados 50 ms tras la activación del CAN-IS'
+  de: 'Beim Zünden, wenn die BSI bereits aufgewacht ist, oder 4 Ereignisse im Abstand von 50 ms nach dem CAN-IS-Aufwachen'
+  it: 'All''accensione se la BSI è già sveglia, oppure 4 eventi distanziati di 50 ms dal risveglio del CAN-IS'
+  pl: 'Przy włączeniu zapłonu, jeśli BSI jest już wybudzone, lub 4 zdarzenia w odstępie 50 ms po wybudzeniu CAN-IS'
+  ru: 'При включении зажигания, если BSI уже активен, либо 4 события с интервалом 50 мс после пробуждения CAN-IS'
+  zh: '若BSI已唤醒则在点火开启时发送,或在CAN-IS唤醒后间隔50毫秒发送4次事件'
+  hu: 'Gyújtáskapcsoláskor, ha a BSI már ébren van, vagy 4 esemény 50 ms-os időközzel a CAN-IS ébredése után'
+  pt: 'Na ligação da ignição se a BSI já estiver ativa, ou 4 eventos com 50 ms de intervalo após a ativação do CAN-IS'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['CMM']
+
+signals:
+  LAST_THERMAL_PRECONDITIONING_DURATION:
+    bits: '1.7-1.1'
+    comment:
+      en: 'Duration of the last thermal preconditioning'
+      fr: 'Durée du dernier préconditionnement thermique'
+      es: 'Duración del último preacondicionamiento térmico'
+      de: 'Dauer der letzten thermischen Vorkonditionierung'
+      it: 'Durata dell''ultimo precondizionamento termico'
+      pl: 'Czas trwania ostatniego kondycjonowania termicznego'
+      ru: 'Продолжительность последнего теплового предкондиционирования'
+      zh: '上次热预处理的持续时间'
+      hu: 'Az utolsó termikus előkondicionálás időtartama'
+      pt: 'Duração do último pré-condicionamento térmico'
+    type: 'uint'
+    factor: 30
+    offset: -30
+    min: 0
+    max: 2700
+    units: 's'
+    invalid: 0x7F
+    default: 0x00
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  LAST_THERMAL_PRECONDITIONING_DELAY:
+    bits: '2.7-3.6'
+    comment:
+      en: 'Delay since the last thermal preconditioning'
+      fr: 'Délai depuis le dernier préconditionnement thermique'
+      es: 'Retraso desde el último preacondicionamiento térmico'
+      de: 'Zeit seit der letzten thermischen Vorkonditionierung'
+      it: 'Ritardo dall''ultimo precondizionamento termico'
+      pl: 'Czas od ostatniej kondycjonowania termicznego'
+      ru: 'Время с последнего теплового предкондиционирования'
+      zh: '距上次热预处理的延迟时间'
+      hu: 'Az utolsó termikus előkondicionálás óta eltelt idő'
+      pt: 'Tempo decorrido desde o último pré-condicionamento térmico'
+    type: 'uint'
+    factor: 1
+    offset: -1
+    min: 0
+    max: 720
+    units: 'min'
+    invalid: 0x3FF
+    default: 0x00
+
+  UNUSED_2:
+    bits: '3.5-3.0'
+    unused: true

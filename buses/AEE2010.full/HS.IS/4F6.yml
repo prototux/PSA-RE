@@ -1,0 +1,309 @@
+id: 0x4F6
+name: 'ACC_RADAR_DATA_V2'
+type: 'can'
+length: 5
+comment:
+  en: 'Adaptive cruise control radar data, version 2: target detected, distance, sensor state, target-change info, travel direction, time gap and relative speed.'
+  fr: 'Données radar du régulateur de vitesse adaptatif, version 2 : cible détectée, distance, état capteur, info de changement de cible, sens de circulation, intervalle temporel et vitesse relative.'
+  es: 'Datos del radar del control de crucero adaptativo, versión 2: objetivo detectado, distancia, estado del sensor, información de cambio de objetivo, sentido de circulación, intervalo de tiempo y velocidad relativa.'
+  de: 'Radardaten des adaptiven Tempomaten, Version 2: erkanntes Ziel, Abstand, Sensorstatus, Zielwechselinfo, Fahrtrichtung, Zeitlücke und Relativgeschwindigkeit.'
+  it: 'Dati radar del cruise control adattivo, versione 2: bersaglio rilevato, distanza, stato sensore, info cambio bersaglio, senso di marcia, intervallo temporale e velocità relativa.'
+  pl: 'Dane radaru aktywnego tempomatu, wersja 2: wykryty cel, odległość, stan czujnika, informacja o zmianie celu, kierunek jazdy, odstęp czasowy i prędkość względna.'
+  ru: 'Данные радара адаптивного круиз-контроля, версия 2: обнаруженная цель, расстояние, состояние датчика, информация о смене цели, направление движения, временной интервал и относительная скорость.'
+  zh: '自适应巡航控制雷达数据,版本2:检测到的目标、距离、传感器状态、目标变更信息、行驶方向、时间间隔和相对速度。'
+  hu: 'Az adaptív tempomat radaradatai, 2. verzió: észlelt célpont, távolság, érzékelő állapota, célpontváltás infó, haladási irány, időrés és relatív sebesség.'
+  pt: 'Dados do radar do regulador de velocidade adaptativo, versão 2: alvo detetado, distância, estado do sensor, informação de mudança de alvo, sentido de marcha, intervalo de tempo e velocidade relativa.'
+periodicity: ['100ms']
+senders: ['ARTIV']
+receivers: ['BSI']
+
+signals:
+  ARTIV_TIME_GAP:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Time gap to the vehicle ahead (ARTIV radar)'
+      fr: 'Intervalle de temps avec le véhicule qui précède (radar ARTIV)'
+      es: 'Intervalo de tiempo con el vehículo precedente (radar ARTIV)'
+      de: 'Zeitabstand zum vorausfahrenden Fahrzeug (ARTIV-Radar)'
+      it: 'Intervallo di tempo dal veicolo che precede (radar ARTIV)'
+      pl: 'Odstęp czasowy od poprzedzającego pojazdu (radar ARTIV)'
+      ru: 'Временной интервал до впереди идущего автомобиля (радар ARTIV)'
+      zh: '与前车的时间间隔(ARTIV雷达)'
+      hu: 'Az előttük haladó járműtől mért időrés (ARTIV radar)'
+      pt: 'Intervalo de tempo com o veículo precedente (radar ARTIV)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.4
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+
+  ARTIV_DISTANCE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Distance to the vehicle ahead (ARTIV radar)'
+      fr: 'Distance au véhicule qui précède (radar ARTIV)'
+      es: 'Distancia al vehículo precedente (radar ARTIV)'
+      de: 'Abstand zum vorausfahrenden Fahrzeug (ARTIV-Radar)'
+      it: 'Distanza dal veicolo che precede (radar ARTIV)'
+      pl: 'Odległość do poprzedzającego pojazdu (radar ARTIV)'
+      ru: 'Дистанция до впереди идущего автомобиля (радар ARTIV)'
+      zh: '与前车的距离(ARTIV雷达)'
+      hu: 'Az előttük haladó járműtől mért távolság (ARTIV radar)'
+      pt: 'Distância ao veículo da frente (radar ARTIV)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 253
+    units: 'm'
+    invalid: 0xFF
+    default: 0xFE
+
+  ARTIV_SENSOR_STATE:
+    bits: '3.7-3.5'
+    comment:
+      en: 'ARTIV (distance radar) sensor state'
+      fr: 'État du capteur du radar ARTIV'
+      es: 'Estado del sensor del radar ARTIV'
+      de: 'Zustand des ARTIV-Radarsensors'
+      it: 'Stato del sensore del radar ARTIV'
+      pl: 'Stan czujnika radaru ARTIV'
+      ru: 'Состояние датчика радара ARTIV'
+      zh: 'ARTIV(距离雷达)传感器状态'
+      hu: 'Az ARTIV (távolságradar) érzékelő állapota'
+      pt: 'Estado do sensor do radar ARTIV'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x01:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x02:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x03:
+        en: 'Reduced visibility'
+        fr: 'Visibilité réduite'
+        es: 'Visibilidad reducida'
+        de: 'Verringerte Sicht'
+        it: 'Visibilità ridotta'
+        pl: 'Ograniczona widoczność'
+        ru: 'Пониженная видимость'
+        zh: '能见度降低'
+        hu: 'Csökkent látótávolság'
+        pt: 'Visibilidade reduzida'
+      0x04:
+        en: 'Simulation'
+        fr: 'Simulation'
+        es: 'Simulación'
+        de: 'Simulation'
+        it: 'Simulazione'
+        pl: 'Symulacja'
+        ru: 'Симуляция'
+        zh: '仿真'
+        hu: 'Szimuláció'
+        pt: 'Simulação'
+      0x05:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ARTIV_RELATIVE_SPEED:
+    bits: '3.4-4.0'
+    comment:
+      en: 'Relative speed to the vehicle ahead (ARTIV radar)'
+      fr: 'Vitesse relative par rapport au véhicule qui précède (radar ARTIV)'
+      es: 'Velocidad relativa respecto al vehículo precedente (radar ARTIV)'
+      de: 'Relativgeschwindigkeit zum vorausfahrenden Fahrzeug (ARTIV-Radar)'
+      it: 'Velocità relativa rispetto al veicolo che precede (radar ARTIV)'
+      pl: 'Prędkość względna do poprzedzającego pojazdu (radar ARTIV)'
+      ru: 'Относительная скорость до впереди идущего автомобиля (радар ARTIV)'
+      zh: '相对前车的相对速度(ARTIV雷达)'
+      hu: 'Relatív sebesség az előttük haladó járműhöz képest (ARTIV radar)'
+      pt: 'Velocidade relativa em relação ao veículo precedente (radar ARTIV)'
+    type: 'uint'
+    factor: 0.02
+    offset: -70
+    min: -70
+    max: 70
+    units: 'm/s'
+    invalid: 0x1FFF
+    default: 0x1FFE
+
+  TRAFFIC_DIRECTION:
+    bits: '5.7-5.6'
+    comment:
+      en: 'Traffic direction (left-hand or right-hand)'
+      fr: 'Sens de circulation (à droite ou à gauche)'
+      es: 'Sentido de circulación (por la derecha o por la izquierda)'
+      de: 'Verkehrsrichtung (rechts oder links)'
+      it: 'Senso di marcia (a destra o a sinistra)'
+      pl: 'Kierunek ruchu drogowego (prawostronny lub lewostronny)'
+      ru: 'Направление движения (правостороннее или левостороннее)'
+      zh: '通行方向(右侧或左侧)'
+      hu: 'Közlekedési irány (jobb- vagy balkezes)'
+      pt: 'Sentido de circulação (à direita ou à esquerda)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Right (maximum)'
+        fr: 'Droite (maximum)'
+        es: 'Derecha (máximo)'
+        de: 'Rechts (Maximum)'
+        it: 'Destra (massimo)'
+        pl: 'Prawo (maksimum)'
+        ru: 'Направо (максимум)'
+        zh: '右(最大)'
+        hu: 'Jobbra (maximum)'
+        pt: 'Direita (máximo)'
+      0x01:
+        en: 'Left'
+        fr: 'Gauche'
+        es: 'Izquierda'
+        de: 'Links'
+        it: 'Sinistra'
+        pl: 'Lewo'
+        ru: 'Слева'
+        zh: '左'
+        hu: 'Bal'
+        pt: 'Esquerda'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+
+  ARTIV_TARGET_CHANGE:
+    bits: '5.5'
+    comment:
+      en: 'Tracked target change indicator (ARTIV radar)'
+      fr: 'Indicateur de changement de cible suivie (radar ARTIV)'
+      es: 'Indicador de cambio de objetivo seguido (radar ARTIV)'
+      de: 'Anzeige des Zielwechsels (ARTIV-Radar)'
+      it: 'Indicatore di cambio del bersaglio tracciato (radar ARTIV)'
+      pl: 'Wskaźnik zmiany śledzonego celu (radar ARTIV)'
+      ru: 'Индикатор смены отслеживаемой цели (радар ARTIV)'
+      zh: '跟踪目标切换指示(ARTIV雷达)'
+      hu: 'A követett célpont váltásának jelzése (ARTIV radar)'
+      pt: 'Indicador de mudança de alvo seguido (radar ARTIV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Value 1'
+        fr: 'Value 1'
+        es: 'Value 1'
+        de: 'Value 1'
+        it: 'Value 1'
+        pl: 'Value 1'
+        ru: 'Value 1'
+        zh: 'Value 1'
+        hu: 'Value 1'
+        pt: 'Value 1'
+      0x01:
+        en: 'Value 2'
+        fr: 'Value 2'
+        es: 'Value 2'
+        de: 'Value 2'
+        it: 'Value 2'
+        pl: 'Value 2'
+        ru: 'Value 2'
+        zh: 'Value 2'
+        hu: 'Value 2'
+        pt: 'Value 2'
+
+  TARGET_DETECTED_STATUS:
+    bits: '5.4'
+    comment:
+      en: 'Detected target information'
+      fr: 'Information de cible détectée'
+      es: 'Información de objetivo detectado'
+      de: 'Information zum erkannten Ziel'
+      it: 'Informazione sul bersaglio rilevato'
+      pl: 'Informacja o wykrytym celu'
+      ru: 'Информация об обнаруженной цели'
+      zh: '检测到目标的信息'
+      hu: 'Az észlelt céltárgy adata'
+      pt: 'Informação do alvo detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Initialisation or no target detected'
+        fr: 'Initialisation ou pas de cible détectée'
+        es: 'Inicialización o sin objetivo detectado'
+        de: 'Initialisierung oder kein Ziel erkannt'
+        it: 'Inizializzazione o nessun bersaglio rilevato'
+        pl: 'Inicjalizacja lub brak wykrytego celu'
+        ru: 'Инициализация или цель не обнаружена'
+        zh: '初始化或未检测到目标'
+        hu: 'Inicializálás vagy nincs érzékelt célpont'
+        pt: 'Inicialização ou nenhum alvo detetado'
+      0x01:
+        en: 'Target detected'
+        fr: 'Cible détectée'
+        es: 'Objetivo detectado'
+        de: 'Ziel erkannt'
+        it: 'Bersaglio rilevato'
+        pl: 'Wykryto cel'
+        ru: 'Цель обнаружена'
+        zh: '检测到目标'
+        hu: 'Cél észlelve'
+        pt: 'Alvo detetado'

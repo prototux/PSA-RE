@@ -1,0 +1,482 @@
+id: 0x567
+name: 'HYBRID_STATUS'
+type: 'can'
+length: 5
+comment:
+  en: 'Hybrid powertrain engine-start/stop requests and injection-cutoff commands from the hybrid control unit (HCU1).'
+  fr: 'Demandes de démarrage/arrêt moteur et commandes de coupure d''injection issues du calculateur hybride (HCU1).'
+  es: 'Solicitudes de arranque/parada del motor y órdenes de corte de inyección de la unidad de control híbrida (HCU1).'
+  de: 'Motorstart-/Stopp-Anforderungen und Einspritzabschaltbefehle vom Hybridsteuergerät (HCU1).'
+  it: 'Richieste di avviamento/arresto motore e comandi di interruzione iniezione dalla centralina ibrida (HCU1).'
+  pl: 'Żądania uruchomienia/zatrzymania silnika i polecenia odcięcia wtrysku ze sterownika hybrydowego (HCU1).'
+  ru: 'Запросы пуска/остановки двигателя и команды отключения впрыска от гибридного блока управления (HCU1).'
+  zh: '来自混合动力控制单元(HCU1)的发动机启停请求及喷油切断指令。'
+  hu: 'A motor indítási/leállítási kérései és a befecskendezés-lekapcsolási parancsok a hibrid vezérlőegységtől (HCU1).'
+  pt: 'Pedidos de arranque/paragem do motor do grupo motopropulsor híbrido e comandos de corte de injeção da unidade de controlo híbrida (HCU1).'
+observations:
+  en: 'On state change of: ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+  fr: 'Sur changement d''état de : ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+  es: 'Al cambiar el estado de: ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+  de: 'Bei Statusänderung von: ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+  it: 'Al cambiamento di stato di: ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+  ru: 'При изменении состояния: ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+  zh: '当DDE_DEM_MTH, ENGINE_STOP_REQUEST, DMD_OUV_DISCONT状态变化时'
+  hu: 'A(z) ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: ENGINE_START_REQUEST, ENGINE_STOP_REQUEST, HV_BATTERY_CONTACTOR_REQUEST'
+periodicity: ['100ms', 'trigger']
+senders: ['HCU1']
+receivers: ['CMM', 'TBMU', 'HCU2']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: '4-bit frame checksum'
+      fr: 'Somme de contrôle de trame sur 4 bits'
+      es: 'Suma de comprobación de trama de 4 bits'
+      de: '4-Bit-Rahmenprüfsumme'
+      it: 'Checksum della trama a 4 bit'
+      pl: '4-bitowa suma kontrolna ramki'
+      ru: '4-битная контрольная сумма кадра'
+      zh: '4位帧校验和'
+      hu: '4 bites keret-ellenőrzőösszeg'
+      pt: 'Soma de verificação de trama de 4 bits'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process sur 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  HYBRID_POWERTRAIN_OPERATING_STATE:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Hybrid powertrain operating state'
+      fr: 'État de fonctionnement du GMP hybride'
+      es: 'Estado de funcionamiento de la cadena cinemática híbrida'
+      de: 'Betriebszustand des Hybridantriebsstrangs'
+      it: 'Stato di funzionamento del powertrain ibrido'
+      pl: 'Stan pracy hybrydowego układu napędowego'
+      ru: 'Рабочее состояние гибридного силового агрегата'
+      zh: '混合动力总成运行状态'
+      hu: 'A hibrid hajtáslánc üzemi állapota'
+      pt: 'Estado de funcionamento da cadeia cinemática híbrida'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Powertrain inactive'
+        fr: 'Groupe motopropulseur inactif'
+        es: 'Grupo motopropulsor inactivo'
+        de: 'Antriebsstrang inaktiv'
+        it: 'Gruppo propulsore inattivo'
+        pl: 'Zespół napędowy nieaktywny'
+        ru: 'Силовой агрегат неактивен'
+        zh: '动力总成未激活'
+        hu: 'Erőátviteli rendszer inaktív'
+        pt: 'Grupo motopropulsor inativo'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        en: 'Powertrain activation'
+        fr: 'Activation du groupe motopropulseur'
+        es: 'Activación del grupo motopropulsor'
+        de: 'Aktivierung des Antriebsstrangs'
+        it: 'Attivazione del gruppo propulsore'
+        pl: 'Aktywacja układu napędowego'
+        ru: 'Активация силового агрегата'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktiválása'
+        pt: 'Ativação do grupo motopropulsor'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        en: 'Powertrain active'
+        fr: 'Groupe motopropulseur actif'
+        es: 'Grupo motopropulsor activo'
+        de: 'Antriebsstrang aktiv'
+        it: 'Gruppo propulsore attivo'
+        pl: 'Zespół napędowy aktywny'
+        ru: 'Силовой агрегат активен'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktív'
+        pt: 'Grupo motopropulsor ativo'
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Powertrain deactivation'
+        fr: 'désactivation_GMP'
+        es: 'Desactivación del GMP'
+        de: 'Deaktivierung des Antriebsstrangs'
+        it: 'Disattivazione del GMP'
+        pl: 'Dezaktywacja układu napędowego'
+        ru: 'Деактивация силового агрегата'
+        zh: '动力总成停用'
+        hu: 'Hajtáslánc kikapcsolása'
+        pt: 'Desativação do GMP'
+      0x0B:
+        unused: true
+      0x0C:
+        en: 'Powertrain held after deactivation'
+        fr: 'Maintien du groupe motopropulseur après désactivation'
+        es: 'Retención del grupo motopropulsor tras la desactivación'
+        de: 'Antriebsstrang gehalten nach Deaktivierung'
+        it: 'Gruppo propulsore mantenuto dopo la disattivazione'
+        pl: 'Podtrzymanie układu napędowego po dezaktywacji'
+        ru: 'Удержание силового агрегата после деактивации'
+        zh: '动力总成停用后保持'
+        hu: 'Hajtáslánc tartva kikapcsolás után'
+        pt: 'Manutenção do grupo motopropulsor após desativação'
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Powertrain at rest'
+        fr: 'Groupe motopropulseur au repos'
+        es: 'Grupo motopropulsor en reposo'
+        de: 'Antriebsstrang im Ruhezustand'
+        it: 'Gruppo propulsore a riposo'
+        pl: 'Zespół napędowy w spoczynku'
+        ru: 'Силовой агрегат в состоянии покоя'
+        zh: '动力总成静止'
+        hu: 'Hajtáslánc nyugalmi állapotban'
+        pt: 'Grupo motopropulsor em repouso'
+      0x0F:
+        unused: true
+
+  ENGINE_START_REQUEST:
+    bits: '2.3'
+    comment:
+      en: 'Engine start request'
+      fr: 'Demande de démarrage du moteur'
+      es: 'Solicitud de arranque del motor'
+      de: 'Motorstartanforderung'
+      it: 'Richiesta di avviamento del motore'
+      pl: 'Żądanie uruchomienia silnika'
+      ru: 'Запрос запуска двигателя'
+      zh: '发动机起动请求'
+      hu: 'Motorindítási kérés'
+      pt: 'Pedido de arranque do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  ENGINE_STOP_REQUEST:
+    bits: '2.2'
+    comment:
+      en: 'Combustion engine stop request'
+      fr: 'Demande d''arrêt du moteur thermique'
+      es: 'Solicitud de parada del motor térmico'
+      de: 'Stoppanforderung des Verbrennungsmotors'
+      it: 'Richiesta di arresto del motore termico'
+      pl: 'Żądanie zatrzymania silnika spalinowego'
+      ru: 'Запрос остановки двигателя внутреннего сгорания'
+      zh: '内燃机停机请求'
+      hu: 'A belső égésű motor leállítási kérése'
+      pt: 'Pedido de paragem do motor térmico'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Engine stop request'
+        fr: 'Demande d''arrêt moteur thermique'
+        es: 'Solicitud de parada del motor térmico'
+        de: 'Anforderung zum Abstellen des Verbrennungsmotors'
+        it: 'Richiesta di arresto del motore termico'
+        pl: 'Żądanie zatrzymania silnika spalinowego'
+        ru: 'Запрос остановки теплового двигателя'
+        zh: '请求停止热机'
+        hu: 'A belső égésű motor leállításának kérése'
+        pt: 'Pedido de paragem do motor térmico'
+
+  HV_BATTERY_CONTACTOR_REQUEST:
+    bits: '2.1'
+    comment:
+      en: 'Request to open or close the high-voltage battery contactors'
+      fr: 'Consigne d''ouverture/fermeture des contacteurs de la batterie haute tension'
+      es: 'Consigna de apertura/cierre de los contactores de la batería de alta tensión'
+      de: 'Anforderung zum Öffnen/Schließen der Hochvoltbatterie-Schütze'
+      it: 'Richiesta di apertura/chiusura dei contattori della batteria ad alta tensione'
+      pl: 'Żądanie otwarcia/zamknięcia styczników akumulatora wysokiego napięcia'
+      ru: 'Запрос на размыкание/замыкание контакторов высоковольтной батареи'
+      zh: '高压电池接触器开闭请求'
+      hu: 'A nagyfeszültségű akkumulátor kontaktorainak nyitási/zárási kérése'
+      pt: 'Consigna de abertura/fecho dos contactores da bateria de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+      0x01:
+        en: 'Closing'
+        fr: 'Fermeture'
+        es: 'Cierre'
+        de: 'Schließen'
+        it: 'Chiusura'
+        pl: 'Zamykanie'
+        ru: 'Закрытие'
+        zh: '关闭中'
+        hu: 'Zárás'
+        pt: 'A fechar'
+
+  INJECTION_CUTOFF_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Injection cutoff request'
+      fr: 'Demande de coupure d''injection'
+      es: 'Solicitud de corte de inyección'
+      de: 'Anforderung der Einspritzabschaltung'
+      it: 'Richiesta di interruzione dell''iniezione'
+      pl: 'Żądanie odcięcia wtrysku'
+      ru: 'Запрос отключения впрыска'
+      zh: '喷油切断请求'
+      hu: 'Befecskendezés-megszakítási kérés'
+      pt: 'Pedido de corte de injeção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Request in progress'
+        fr: 'Demande en cours'
+        es: 'Solicitud en curso'
+        de: 'Anforderung läuft'
+        it: 'Richiesta in corso'
+        pl: 'Żądanie w toku'
+        ru: 'Запрос выполняется'
+        zh: '请求进行中'
+        hu: 'Kérés folyamatban'
+        pt: 'Pedido em curso'
+
+  NOX_SOURCE_REDUCTION_GLOBAL:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Percentage of global NOx source reduction (all active hybrid levers)'
+      fr: 'Pourcentage de réduction de NOx à la source, global (tous les leviers hybrides actifs)'
+      es: 'Porcentaje de reducción global de NOx en la fuente (todas las palancas híbridas activas)'
+      de: 'Prozentsatz der globalen NOx-Quellreduktion (alle aktiven Hybridhebel)'
+      it: 'Percentuale di riduzione globale degli NOx alla fonte (tutte le leve ibride attive)'
+      pl: 'Procent globalnej redukcji NOx u źródła (wszystkie aktywne dźwignie hybrydowe)'
+      ru: 'Процент общего снижения NOx у источника (все активные гибридные рычаги)'
+      zh: 'NOx源头全局削减百分比(所有已激活混动杠杆)'
+      hu: 'Globális NOx forráscsökkentés százaléka (az összes aktív hibrid beavatkozás)'
+      pt: 'Percentagem de redução global de NOx na fonte (todas as alavancas híbridas ativas)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 500
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  NOX_SOURCE_REDUCTION_CURRENT:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Percentage of NOx source reduction, current package'
+      fr: 'Pourcentage de réduction de NOx à la source, package en cours'
+      es: 'Porcentaje de reducción de NOx en la fuente, paquete actual'
+      de: 'Prozentsatz der NOx-Quellreduktion, aktuelles Paket'
+      it: 'Percentuale di riduzione degli NOx alla fonte, pacchetto corrente'
+      pl: 'Procent redukcji NOx u źródła, bieżący pakiet'
+      ru: 'Процент снижения NOx у источника, текущий пакет'
+      zh: 'NOx源头削减百分比(当前方案)'
+      hu: 'NOx forráscsökkentés százaléka, aktuális csomag'
+      pt: 'Percentagem de redução de NOx na fonte, pacote atual'
+    type: 'uint'
+    min: 0
+    max: 100
+    invalid: 0x7F
+    default: 0x00
+
+  NOX_SOURCE_REDUCTION_MAX_LEVEL_FLAG:
+    bits: '4.0'
+    comment:
+      en: 'Flag indicating that all authorised hybrid levers are active to reduce NOx'
+      fr: 'Indicateur signalant que tous les leviers hybrides autorisés sont actifs pour réduire les NOx'
+      es: 'Indicador que señala que todas las palancas híbridas autorizadas están activas para reducir el NOx'
+      de: 'Kennzeichen, dass alle zulässigen Hybridhebel zur NOx-Reduktion aktiv sind'
+      it: 'Indicatore che segnala che tutte le leve ibride autorizzate sono attive per ridurre gli NOx'
+      pl: 'Flaga sygnalizująca, że wszystkie dozwolone dźwignie hybrydowe są aktywne w celu redukcji NOx'
+      ru: 'Флаг, указывающий, что все разрешённые гибридные рычаги активны для снижения NOx'
+      zh: '表示所有允许的混动杠杆均已激活以降低NOx的标志'
+      hu: 'Jelző, amely azt mutatja, hogy minden engedélyezett hibrid beavatkozás aktív a NOx csökkentésére'
+      pt: 'Indicador que sinaliza que todas as alavancas híbridas autorizadas estão ativas para reduzir o NOx'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Hybrid levers available to reduce NOx emissions'
+        fr: 'Leviers hybrides disponibles pour réduire les émissions de NOx'
+        es: 'Palancas híbridas disponibles para reducir las emisiones de NOx'
+        de: 'Hybrid-Hebel zur Reduzierung der NOx-Emissionen verfügbar'
+        it: 'Leve ibride disponibili per ridurre le emissioni di NOx'
+        pl: 'Dostępne dźwignie hybrydowe do redukcji emisji NOx'
+        ru: 'Доступны гибридные рычаги для снижения выбросов NOx'
+        zh: '可用混动策略以降低NOx排放'
+        hu: 'Hibrid eszközök elérhetők a NOx-kibocsátás csökkentésére'
+        pt: 'Alavancas híbridas disponíveis para reduzir as emissões de NOx'
+      0x01:
+        en: 'All levers active (HY)'
+        fr: 'Tous les leviers actifs (HY)'
+        es: 'Todas las palancas activas (HY)'
+        de: 'Alle Hebel aktiv (HY)'
+        it: 'Tutte le leve attive (HY)'
+        pl: 'Wszystkie dźwignie aktywne (HY)'
+        ru: 'Все рычаги активны (HY)'
+        zh: '所有操纵杆均已激活 (HY)'
+        hu: 'Minden kar aktív (HY)'
+        pt: 'Todas as alavancas ativas (HY)'
+
+  ZERO_TORQUE_DEACTIVATION_SAFETY_REQUEST:
+    bits: '5.7'
+    comment:
+      en: 'Safety request from the powertrain coordinator to deactivate zero torque'
+      fr: 'Demande sécurisée du coordinateur groupe motopropulseur de désactivation du couple nul'
+      es: 'Solicitud de seguridad del coordinador del grupo motopropulsor para desactivar el par nulo'
+      de: 'Sicherheitsanforderung des Antriebsstrang-Koordinators zur Deaktivierung des Nulldrehmoments'
+      it: 'Richiesta di sicurezza del coordinatore del gruppo motopropulsore per disattivare la coppia zero'
+      pl: 'Bezpieczne żądanie koordynatora zespołu napędowego dezaktywacji zerowego momentu obrotowego'
+      ru: 'Защитный запрос координатора силового агрегата на деактивацию нулевого крутящего момента'
+      zh: '动力总成协调器的零转矩停用安全请求'
+      hu: 'A hajtáslánc-koordinátor biztonsági kérése a nullanyomaték deaktiválására'
+      pt: 'Pedido de segurança do coordenador do grupo motopropulsor para desativar o binário nulo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No deactivation request'
+        fr: 'Pas de demande de désactivation'
+        es: 'Sin solicitud de desactivación'
+        de: 'Keine Deaktivierungsanforderung'
+        it: 'Nessuna richiesta di disattivazione'
+        pl: 'Brak żądania dezaktywacji'
+        ru: 'Нет запроса деактивации'
+        zh: '无停用请求'
+        hu: 'Nincs kikapcsolási kérés'
+        pt: 'Sem pedido de desativação'
+      0x01:
+        en: 'Deactivation request'
+        fr: 'Demande de désactivation'
+        es: 'Solicitud de desactivación'
+        de: 'Deaktivierungsanforderung'
+        it: 'Richiesta di disattivazione'
+        pl: 'Żądanie dezaktywacji'
+        ru: 'Запрос деактивации'
+        zh: '停用请求'
+        hu: 'Kikapcsolási kérés'
+        pt: 'Pedido de desativação'
+
+  ENGINE_SAFETY_PREVENTIVE_END:
+    bits: '5.6'
+    comment:
+      en: 'End of the preventive safety engine intervention'
+      fr: 'Fin de l''intervention préventive sécurisée moteur'
+      es: 'Fin de la intervención preventiva de seguridad del motor'
+      de: 'Ende des sicheren präventiven Motoreingriffs'
+      it: 'Fine dell''intervento preventivo di sicurezza motore'
+      pl: 'Koniec prewencyjnej bezpiecznej interwencji silnika'
+      ru: 'Окончание превентивного защитного вмешательства двигателя'
+      zh: '发动机预防性安全介入结束'
+      hu: 'A motor megelőző biztonsági beavatkozásának vége'
+      pt: 'Fim da intervenção preventiva de segurança do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Preventive intervention (engine)'
+        fr: 'Intervention préventive moteur'
+        es: 'Intervención preventiva del motor'
+        de: 'Vorbeugende Maßnahme (Motor)'
+        it: 'Intervento preventivo motore'
+        pl: 'Interwencja zapobiegawcza silnika'
+        ru: 'Профилактическое вмешательство двигателя'
+        zh: '发动机预防性干预'
+        hu: 'Megelőző beavatkozás (motor)'
+        pt: 'Intervenção preventiva (motor)'
+      0x01:
+        en: 'End of engine preventive intervention'
+        fr: 'Fin d''intervention préventive moteur thermique'
+        es: 'Fin de la intervención preventiva del motor térmico'
+        de: 'Ende des vorbeugenden Eingriffs am Verbrennungsmotor'
+        it: 'Fine dell''intervento preventivo motore termico'
+        pl: 'Koniec interwencji prewencyjnej silnika spalinowego'
+        ru: 'Окончание профилактического вмешательства двигателя'
+        zh: '发动机预防性干预结束'
+        hu: 'A motor megelőző beavatkozásának vége'
+        pt: 'Fim da intervenção preventiva do motor'
+
+  UNUSED_1:
+    bits: '5.5-5.0'
+    unused: true

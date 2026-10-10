@@ -1,83 +1,272 @@
 id: 0x161
 name: 'BSI_GAUGES'
-alt_names: ['ETAT_BSI_TEMP_NIVEAU']
-length: 7
 type: 'can'
+length: 7
+comment:
+  en: 'Fuel level, oil level and oil temperature gauges from the BSI.'
+  fr: 'Niveaux de carburant et d''huile, température huile, transmis par la BSI.'
+  es: 'Niveles de combustible y de aceite, temperatura del aceite, transmitidos por la BSI.'
+  de: 'Kraftstoff- und Ölstand, Öltemperatur, von der BSI übermittelt.'
+  it: 'Livelli di carburante e olio, temperatura olio, trasmessi dalla BSI.'
+  pl: 'Poziomy paliwa i oleju, temperatura oleju, przesyłane przez BSI.'
+  ru: 'Уровень топлива и масла, температура масла, передаваемые BSI.'
+  zh: '由BSI传输的燃油液位、机油液位及机油温度。'
+  hu: 'Üzemanyag- és olajszint, olajhőmérséklet, a BSI-től.'
+  pt: 'Indicadores de nível de combustível, nível de óleo e temperatura de óleo da BSI.'
 periodicity: ['500ms']
-senders:
-  - 'BSI'
-receivers:
-  - 'CMB'
-  - 'BTEL'
-  - 'BCD'
-  - 'CMB_EMF'
-  - 'MDS'
-  - 'RNEG'
-  - 'MATT'
-  - 'BGP'
+senders: ['BSI']
+receivers: ['CMB', 'BTEL', 'BCD', 'MDS', 'MATT', 'BGP', 'VTH']
 
 signals:
   OIL_LEVEL_RESTART:
     bits: '1.7'
-    alt_names: ['RELANCE_NIV_HUILE']
     comment:
-      en: 'Oil level restart'
-      fr: 'Relance niveau huile moteur'
+      en: 'Oil level display restart request'
+      fr: 'Demande de relance de l''affichage du niveau d''huile'
+      es: 'Solicitud de reinicio de la visualización del nivel de aceite'
+      de: 'Anforderung zum Neustart der Ölstandsanzeige'
+      it: 'Richiesta di riavvio della visualizzazione del livello dell''olio'
+      pl: 'Żądanie ponownego uruchomienia wyświetlania poziomu oleju'
+      ru: 'Запрос перезапуска индикации уровня масла'
+      zh: '机油液位显示重启请求'
+      hu: 'Az olajszintkijelzés újraindításának kérése'
+      pt: 'Pedido de repetição da visualização do nível de óleo'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'No restart'
         fr: 'Pas de relance'
+        es: 'Sin reinicio'
+        de: 'Kein Neustart'
+        it: 'Nessun riavvio'
+        pl: 'Brak ponownego uruchomienia'
+        ru: 'Без перезапуска'
+        zh: '无重启'
+        hu: 'Nincs újraindítás'
+        pt: 'Sem reinício'
       0x01:
         en: 'Restart'
         fr: 'Relance'
+        es: 'Reinicio'
+        de: 'Neustart'
+        it: 'Riavvio'
+        pl: 'Ponowne uruchomienie'
+        ru: 'Перезапуск'
+        zh: '重启'
+        hu: 'Újraindítás'
+        pt: 'Reinício'
 
   UNUSED_1:
     bits: '1.6-2.0'
     unused: true
 
-  OIL_TEMPERATURE:
+  ENGINE_OIL_TEMPERATURE:
     bits: '3.7-3.0'
-    alt_names: ['T_HUILE']
+    alt_names: ['OIL_TEMPERATURE', 'T_HUILE']
     comment:
-      en: 'Oil temperature'
-      fr: 'Temperature huile moteur'
-    type: 'uint8'
+      en: 'Engine oil temperature'
+      fr: 'Température d''huile moteur'
+      es: 'Temperatura del aceite del motor'
+      de: 'Motoröltemperatur'
+      it: 'Temperatura dell''olio motore'
+      pl: 'Temperatura oleju silnikowego'
+      ru: 'Температура моторного масла'
+      zh: '发动机机油温度'
+      hu: 'Motorolaj-hőmérséklet'
+      pt: 'Temperatura do óleo do motor'
+    type: 'uint'
+    factor: 1
     offset: -40
     min: -40
     max: 214
-    resolution: 1
+    units: '°C'
     invalid: 0xFF
-    units: 'C'
+    default: 0x3C
 
-  FUEL_LEVEL:
+  FILTERED_FUEL_LEVEL:
     bits: '4.7-4.0'
-    alt_names: ['NIV_CRB']
+    alt_names: ['FUEL_LEVEL', 'NIV_CRB']
     comment:
-      en: 'Fuel level'
-      fr: 'Niveau carburant'
-    type: 'uint8'
-    offset: 0
+      en: 'Filtered fuel level'
+      fr: 'Niveau de carburant filtré'
+      es: 'Nivel de combustible filtrado'
+      de: 'Gefilterter Kraftstoffstand'
+      it: 'Livello di carburante filtrato'
+      pl: 'Filtrowany poziom paliwa'
+      ru: 'Отфильтрованный уровень топлива'
+      zh: '滤波后的燃油液位'
+      hu: 'Szűrt üzemanyagszint'
+      pt: 'Nível de combustível filtrado'
+    type: 'uint'
+    factor: 1
     min: 0
     max: 100
-    resolution: 1
-    invalid: 0xFF
     units: '%'
+    invalid: 0xFF
+    default: 0x00
 
   UNUSED_2:
     bits: '5.7-6.0'
     unused: true
 
-  OIL_LEVEL:
+  ENGINE_OIL_LEVEL:
     bits: '7.7-7.0'
-    alt_names: ['NIV_HUILE']
+    alt_names: ['OIL_LEVEL', 'NIV_HUILE']
     comment:
-      en: 'Oil level'
-      fr: 'Niveau huile moteur'
-    type: 'uint8'
-    offset: 0
-    min: 0
-    max: 250
-    resolution: 1
-    invalid: 0xFF
+      en: 'Engine oil level (can exceed 100% to signal overfill)'
+      fr: 'Niveau d''huile moteur (peut dépasser 100% pour signaler un surplus)'
+      es: 'Nivel de aceite del motor (puede superar el 100% para indicar exceso)'
+      de: 'Motorölstand (kann 100% übersteigen, um Überfüllung anzuzeigen)'
+      it: 'Livello dell''olio motore (può superare il 100% per segnalare un eccesso)'
+      pl: 'Poziom oleju silnikowego (może przekroczyć 100%, sygnalizując nadmiar)'
+      ru: 'Уровень моторного масла (может превышать 100% для сигнализации перелива)'
+      zh: '发动机机油液位(可超过100%以指示加注过量)'
+      hu: 'Motorolajszint (meghaladhatja a 100%-ot túltöltés jelzésére)'
+      pt: 'Nível de óleo do motor (pode ultrapassar 100% para indicar excesso)'
+    type: 'enum'
+    factor: 1
     units: '%'
+    invalid: 0xFF
+    default: 0xFF
+    values:
+      0xFB:
+        en: 'Oil level check OK, undetermined'
+        fr: 'Diagnostic du niveau d''huile OK, indéterminé'
+        es: 'Comprobación del nivel de aceite correcta, indeterminada'
+        de: 'Ölstandprüfung OK, unbestimmt'
+        it: 'Controllo livello olio OK, indeterminato'
+        pl: 'Sprawdzenie poziomu oleju OK, nieokreślone'
+        ru: 'Проверка уровня масла ОК, неопределённо'
+        zh: '机油油位检测正常，未确定'
+        hu: 'Olajszint-ellenőrzés rendben, meghatározatlan'
+        pt: 'Diagnóstico do nível de óleo OK, indeterminado'
+      0xFC:
+        en: 'Oil level code not OK, undetermined'
+        fr: 'Code niveau huile non OK, indéterminé'
+        es: 'Código de nivel de aceite no OK, indeterminado'
+        de: 'Ölstandcode nicht OK, unbestimmt'
+        it: 'Codice livello olio non OK, indeterminato'
+        pl: 'Kod poziomu oleju nie OK, nieokreślony'
+        ru: 'Код уровня масла не OK, неопределён'
+        zh: '机油液位代码非正常,未确定'
+        hu: 'Olajszint kód nem OK, nem meghatározott'
+        pt: 'Código de nível de óleo não OK, indeterminado'
+      0xFD:
+        en: 'Oil level check not performed'
+        fr: 'Diagnostic du niveau d''huile non effectué'
+        es: 'Comprobación del nivel de aceite no realizada'
+        de: 'Ölstandprüfung nicht durchgeführt'
+        it: 'Controllo del livello olio non eseguito'
+        pl: 'Nie wykonano sprawdzenia poziomu oleju'
+        ru: 'Проверка уровня масла не выполнена'
+        zh: '未执行机油油位检测'
+        hu: 'Az olajszint-ellenőrzés nem történt meg'
+        pt: 'Diagnóstico do nível de óleo não realizado'
+      0xFE:
+        en: 'Measurement in progress code'
+        fr: 'Code mesure en cours'
+        es: 'Código de medición en curso'
+        de: 'Code: Messung läuft'
+        it: 'Codice misurazione in corso'
+        pl: 'Kod trwającego pomiaru'
+        ru: 'Код измерения в процессе'
+        zh: '测量进行中代码'
+        hu: 'Folyamatban lévő mérés kódja'
+        pt: 'Código de medição em curso'
 
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['500ms']
+    senders: ['BSI']
+    receivers: ['CMB', 'BTEL', 'BCD', 'MDS', 'MATT', 'BGP']
+    signals:
+      OIL_LEVEL_RESTART:
+        bits: '1.7'
+        comment:
+          en: 'Oil level display restart request'
+          fr: 'Demande de relance de l''affichage du niveau d''huile'
+          es: 'Solicitud de reinicio de la visualización del nivel de aceite'
+          de: 'Anforderung zum Neustart der Ölstandsanzeige'
+          it: 'Richiesta di riavvio della visualizzazione del livello dell''olio'
+          pl: 'Żądanie ponownego uruchomienia wyświetlania poziomu oleju'
+          ru: 'Запрос перезапуска индикации уровня масла'
+          zh: '机油液位显示重启请求'
+          hu: 'Az olajszintkijelzés újraindításának kérése'
+          pt: 'Pedido de repetição da visualização do nível de óleo'
+        type: 'bool'
+        default: 0x00
+      UNUSED_1:
+        bits: '1.6-2.0'
+        unused: true
+      BATTERY_CELL_MIN_TEMPERATURE:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Minimum battery cell temperature'
+          fr: 'Température minimale des cellules de la batterie'
+          es: 'Temperatura mínima de las celdas de la batería'
+          de: 'Minimale Zelltemperatur der Batterie'
+          it: 'Temperatura minima delle celle della batteria'
+          pl: 'Minimalna temperatura ogniw akumulatora'
+          ru: 'Минимальная температура ячейки батареи'
+          zh: '电池单体最低温度'
+          hu: 'Az akkumulátorcellák minimális hőmérséklete'
+          pt: 'Temperatura mínima das células da bateria'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 214
+        units: '°C'
+        invalid: 0xFF
+      BATTERY_SOC_DISPLAY:
+        bits: '4.7-4.0'
+        comment:
+          en: 'Displayed battery state of charge'
+          fr: 'État de charge de la batterie affiché'
+          es: 'Estado de carga de la batería mostrado'
+          de: 'Angezeigter Ladezustand der Batterie'
+          it: 'Stato di carica della batteria visualizzato'
+          pl: 'Wyświetlany stan naładowania akumulatora'
+          ru: 'Отображаемый уровень заряда батареи'
+          zh: '显示的电池荷电状态'
+          hu: 'A kijelzett akkumulátor töltöttségi állapot'
+          pt: 'Estado de carga da bateria apresentado'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 100
+        units: '%'
+        invalid: 0xFF
+      UNUSED_2:
+        bits: '5.7-6.0'
+        unused: true
+      BATTERY_CELL_MAX_TEMPERATURE:
+        bits: '7.7-7.0'
+        comment:
+          en: 'Maximum battery cell temperature'
+          fr: 'Température maximale des cellules de la batterie'
+          es: 'Temperatura máxima de las celdas de la batería'
+          de: 'Maximale Zelltemperatur der Batterie'
+          it: 'Temperatura massima delle celle della batteria'
+          pl: 'Maksymalna temperatura ogniw akumulatora'
+          ru: 'Максимальная температура ячейки батареи'
+          zh: '电池单体最高温度'
+          hu: 'Az akkumulátorcellák maximális hőmérséklete'
+          pt: 'Temperatura máxima das células da bateria'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 250
+        units: '%'
+        invalid: 0xFF

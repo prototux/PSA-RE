@@ -1,143 +1,311 @@
 id: 0x1A7
 name: 'RESTART_ALERTS'
-alt_names: ['RELANCE_ALERTES']
+type: 'can'
 length: 4
 comment:
-  en: 'Contains restart alerts information'
-  fr: 'Contient des informations relatives aux alertes de relance'
-type: 'can'
+  en: 'Retransmitted whenever any of its status parameters changes: alarm lock beep, and door/ESP/lights/speed limiter/pollution/cruise control/rain sensor/theft-alert faults.'
+  fr: 'Retransmise à chaque changement d''état de l''un de ses paramètres : bip de verrouillage alarme, et défauts porte/ESP/feux/limiteur de vitesse/pollution/regulateur/capteur de pluie/alerte antivol.'
+  es: 'Retransmitida cada vez que cambia uno de sus parámetros de estado: bip de bloqueo de alarma y fallos de puerta/ESP/luces/limitador de velocidad/contaminación/control de crucero/sensor de lluvia/alerta antirrobo.'
+  de: 'Wird bei jeder Zustandsänderung eines ihrer Parameter erneut gesendet: Alarm-Verriegelungston sowie Fehler bei Tür/ESP/Licht/Tempolimiter/Abgas/Tempomat/Regensensor/Diebstahlwarnung.'
+  it: 'Ritrasmessa ad ogni cambiamento di stato di uno dei suoi parametri: bip di chiusura allarme e guasti porta/ESP/luci/limitatore di velocità/inquinamento/cruise control/sensore pioggia/allarme antifurto.'
+  pl: 'Retransmitowana przy każdej zmianie stanu któregokolwiek z parametrów: sygnał blokady alarmu oraz usterki drzwi/ESP/świateł/ogranicznika prędkości/emisji/tempomatu/czujnika deszczu/alarmu antywłamaniowego.'
+  ru: 'Повторно передаётся при каждом изменении любого из параметров состояния: звуковой сигнал блокировки сигнализации, а также неисправности дверей/ESP/света/ограничителя скорости/выбросов/круиз-контроля/датчика дождя/сигнализации.'
+  zh: '任一状态参数发生变化时重新发送:报警上锁提示音,以及车门/ESP/车灯/限速器/排放/巡航控制/雨量传感器/防盗报警故障。'
+  hu: 'Bármely állapotparaméterének változásakor újra elküldve: riasztózárás hangjelzés, valamint ajtó-/ESP-/világítás-/sebességkorlátozó-/kibocsátás-/tempomat-/esoerzekelő-/lopásriasztás-hibák.'
+  pt: 'Retransmitida sempre que um dos seus parâmetros de estado muda: sinal sonoro de bloqueio do alarme, e avarias de porta/ESP/luzes/limitador de velocidade/poluição/regulador de velocidade/sensor de chuva/alerta antirroubo.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
 periodicity: ['1000ms', 'trigger']
-senders:
-  - 'BSI'
-receivers:
-  - 'CMB'
+senders: ['BSI']
+receivers: ['CMB']
 
 signals:
   RESTART_ESP_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_ESP']
-    bits: "1.7"
+    bits: '1.7'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut ESP (bit toggle)"
-      en: "Evolution of restart request of ESP fault alert (bit toggle)"
+      en: 'Toggle bit for the ESP fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut ESP'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo ESP'
+      de: 'Umschaltbit für die Neustartanforderung der ESP-Fehlerwarnung'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto ESP'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki ESP'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности ESP'
+      zh: 'ESP故障提醒重启请求的切换位'
+      hu: 'Az ESP-hiba riasztás újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha ESP'
+    type: 'bool'
+    default: 0x00
 
   RESTART_LVV_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_LVV']
-    bits: "1.6"
+    bits: '1.6'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut LVV (bit toggle)"
-      en: "Evolution of restart request of LVV fault alert (bit toggle)"
+      en: 'Toggle bit for the speed limiter (speed limiter) fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut du limiteur de vitesse (speed limiter)'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo del limitador de velocidad (speed limiter)'
+      de: 'Umschaltbit für die Neustartanforderung der Fehlerwarnung des Geschwindigkeitsbegrenzers (speed limiter)'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto del limitatore di velocità (speed limiter)'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki ogranicznika prędkości (speed limiter)'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности ограничителя скорости (speed limiter)'
+      zh: '限速器(speed limiter)故障提醒重启请求的切换位'
+      hu: 'A sebességhatároló (speed limiter) hiba riasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha do limitador de velocidade (speed limiter)'
+    type: 'bool'
+    default: 0x00
 
   RESTART_RVV_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_RVV']
-    bits: "1.5"
+    bits: '1.5'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut RVV (bit toggle)"
-      en: "Evolution of restart request of RVV fault alert (bit toggle)"
+      en: 'Toggle bit for the cruise control (cruise control) fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut du régulateur de vitesse (cruise control)'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo del regulador de velocidad (cruise control)'
+      de: 'Umschaltbit für die Neustartanforderung der Fehlerwarnung des Tempomaten (cruise control)'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto del regolatore di velocità (cruise control)'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki tempomatu (cruise control)'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности круиз-контроля (cruise control)'
+      zh: '巡航控制(cruise control)故障提醒重启请求的切换位'
+      hu: 'A sebességtartó automatika (cruise control) hiba riasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha do regulador de velocidade (cruise control)'
+    type: 'bool'
+    default: 0x00
 
   RESTART_STL_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_STL']
-    bits: "1.4"
+    bits: '1.4'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut STL (bit toggle)"
-      en: "Evolution of restart request of STL fault alert (bit toggle)"
+      en: 'Toggle bit for the stop lamp (STL) fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut du feu stop (STL)'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo de la luz de freno (STL)'
+      de: 'Umschaltbit für die Neustartanforderung der Bremsleuchten-Fehlerwarnung (STL)'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto della luce di stop (STL)'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki światła stop (STL)'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности стоп-сигнала (STL)'
+      zh: '刹车灯(STL)故障提醒重启请求的切换位'
+      hu: 'A féklámpa (STL) hiba riasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha da luz de stop (STL)'
+    type: 'bool'
+    default: 0x00
 
   RESTART_STT_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_STT']
-    bits: "1.3"
+    bits: '1.3'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut STT (bit toggle)"
-      en: "Evolution of restart request of STT fault alert (bit toggle)"
+      en: 'Toggle bit for the stop & start (STT) fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut du stop & start (STT)'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo del Stop & Start (STT)'
+      de: 'Umschaltbit für die Neustartanforderung der Start-Stopp-Fehlerwarnung (STT)'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto dello Stop & Start (STT)'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki Stop & Start (STT)'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности Старт-стоп (STT)'
+      zh: '启停系统(STT)故障提醒重启请求的切换位'
+      hu: 'A Stop & Start (STT) hiba riasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha do Stop & Start (STT)'
+    type: 'bool'
+    default: 0x00
 
   RESTART_SAM_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_SAM']
-    bits: "1.2"
+    bits: '1.2'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut SAM (bit toggle)"
-      en: "Evolution of restart request of blind spot fault alert (bit toggle)"
+      en: 'Toggle bit for the automatic parking assist (SAM) fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut de l''aide au stationnement automatique (SAM)'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo de la ayuda al estacionamiento automático (SAM)'
+      de: 'Umschaltbit für die Neustartanforderung der Fehlerwarnung des automatischen Einparkassistenten (SAM)'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto dell''assistenza al parcheggio automatico (SAM)'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki wspomagania automatycznego parkowania (SAM)'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности автоматического парковочного ассистента (SAM)'
+      zh: '自动泊车辅助(SAM)故障提醒重启请求的切换位'
+      hu: 'Az automatikus parkolássegítő (SAM) hiba riasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha da ajuda ao estacionamento automático (SAM)'
+    type: 'bool'
+    default: 0x00
 
   RESTART_PLC_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_PLC']
-    bits: "1.1"
+    bits: '1.1'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut PLC (bit toggle)"
-      en: "Evolution of restart request of PLC fault alert (bit toggle)"
+      en: 'Toggle bit for the power sliding door fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut de la porte coulissante électrique'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo de la puerta corredera eléctrica'
+      de: 'Umschaltbit für die Neustartanforderung der Fehlerwarnung der elektrischen Schiebetür'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto della porta scorrevole elettrica'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki elektrycznych drzwi przesuwnych'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности электрической сдвижной двери'
+      zh: '电动滑动门故障提醒重启请求的切换位'
+      hu: 'Az elektromos tolóajtó hiba riasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha da porta corrediça elétrica'
+    type: 'bool'
+    default: 0x00
 
   RESTART_DOP_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_DOP']
-    bits: "1.0"
+    bits: '1.0'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut DOP (bit toggle)"
-      en: "Evolution of restart request of DOP fault alert (bit toggle)"
+      en: 'Toggle bit for the DOP fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut DOP'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo DOP'
+      de: 'Umschaltbit für die Neustartanforderung der DOP-Fehlerwarnung'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto DOP'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki DOP'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности DOP'
+      zh: 'DOP故障提醒重启请求的切换位'
+      hu: 'A DOP-hiba riasztás újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha DOP'
+    type: 'bool'
+    default: 0x00
 
   RESTART_LOW_WASHER_FLUID_ALERT:
-    alt_names: ['RELANCE_MINI_LAVE_GLACE']
-    bits: "2.7"
+    bits: '2.7'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut niveau lave-glace faible (bit toggle)"
-      en: "Evolution of restart request of low windshield washing fluid fault alert (bit toggle)"
+      en: 'Toggle bit for the low windshield washer fluid alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte niveau de liquide lave-glace faible'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de nivel bajo de líquido limpiaparabrisas'
+      de: 'Umschaltbit für die Neustartanforderung der Warnung „Scheibenwaschflüssigkeit niedrig“'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di livello basso del liquido lavavetri'
+      pl: 'Bit przełączający dla żądania ponowienia alertu niskiego poziomu płynu do spryskiwaczy'
+      ru: 'Бит переключения для запроса повторной активации оповещения о низком уровне жидкости омывателя'
+      zh: '玻璃水液位过低提醒重启请求的切换位'
+      hu: 'Az alacsony ablakmosófolyadék-szint riasztás újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de nível baixo de líquido lava-vidros'
+    type: 'bool'
+    default: 0x00
 
   RESTART_BIP_LOCK:
-    alt_names: ['RELANCE_BIP_LOCK']
-    bits: "2.6"
+    bits: '2.6'
     comment:
-      fr: "Evolution de la demande de relance \"bip lock\" (bit toggle)"
-      en: "Evolution of \"beep lock\" restart request (bit toggle)"
+      en: 'Toggle bit for the "lock beep" reminder alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte « bip de verrouillage »'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de "pitido de bloqueo"'
+      de: 'Umschaltbit für die Neustartanforderung des Warnhinweises „Verriegelungston“'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso "bip di chiusura"'
+      pl: 'Bit przełączający dla żądania ponowienia alertu „sygnału zamknięcia”'
+      ru: 'Бит переключения для запроса повторной активации оповещения «звуковой сигнал блокировки»'
+      zh: '“锁车提示音”提醒重启请求的切换位'
+      hu: 'A „zárás hangjelzés” emlékeztető újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta «sinal sonoro de bloqueio»'
+    type: 'bool'
+    default: 0x00
 
   RESTART_APPLIED_PARKING_BRAKE_ALERT:
-    alt_names: ['RELANCE_FREIN_SERRE']
-    bits: "2.5"
+    bits: '2.5'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte frein de stationnement serré (bit toggle)"
-      en: "Evolution of restart request of applied parking brake alert (bit toggle)"
+      en: 'Toggle bit for the parking brake applied alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte frein de stationnement serré'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de freno de estacionamiento activado'
+      de: 'Umschaltbit für die Neustartanforderung der Warnung „Feststellbremse angezogen“'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di freno di stazionamento inserito'
+      pl: 'Bit przełączający dla żądania ponowienia alertu zaciągniętego hamulca postojowego'
+      ru: 'Бит переключения для запроса повторной активации оповещения о включённом стояночном тормозе'
+      zh: '驻车制动接合提醒重启请求的切换位'
+      hu: 'A rögzítőfék behúzva riasztás újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de travão de estacionamento apertado'
+    type: 'bool'
+    default: 0x00
 
   RESTART_SUSPENSION_POSITION_ALERT:
-    alt_names: ['RELANCE_POS_SUSPENSION']
-    bits: "2.4"
+    bits: '2.4'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte position de suspension déjà obtenue (bit toggle)"
-      en: "Evolution of restart request of already obtained suspension position fault alert (bit toggle)"
+      en: 'Toggle bit for the suspension position already-reached alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte position de suspension déjà atteinte'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de posición de suspensión ya alcanzada'
+      de: 'Umschaltbit für die Neustartanforderung der Warnung „Fahrwerksposition bereits erreicht“'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di posizione sospensione già raggiunta'
+      pl: 'Bit przełączający dla żądania ponowienia alertu już osiągniętej pozycji zawieszenia'
+      ru: 'Бит переключения для запроса повторной активации оповещения о достигнутом положении подвески'
+      zh: '悬架位置已达到提醒重启请求的切换位'
+      hu: 'A már elért futómű-pozíció riasztás újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de posição de suspensão já atingida'
+    type: 'bool'
+    default: 0x00
 
   RESTART_PUSH_FSE:
-    alt_names: ['RELANCE_PUSH_FSE']
-    bits: "2.3"
+    bits: '2.3'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut du push FSE (bit toggle)"
-      en: "Evolution of restart request of FSE push fault alert (bit toggle)"
+      en: 'Toggle bit for the EPB switch fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut du bouton du frein de stationnement électrique (EPB)'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo del botón del freno de estacionamiento eléctrico (EPB)'
+      de: 'Umschaltbit für die Neustartanforderung der Fehlerwarnung des Tasters der elektrischen Feststellbremse (EPB)'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto del pulsante del freno di stazionamento elettrico (EPB)'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki przycisku elektrycznego hamulca postojowego (EPB)'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности кнопки электрического стояночного тормоза (EPB)'
+      zh: '电子驻车制动(EPB)按钮故障提醒重启请求的切换位'
+      hu: 'Az elektromos rögzítőfék (EPB) kapcsolóhibájának riasztási újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha do botão do travão de estacionamento elétrico (EPB)'
+    type: 'bool'
+    default: 0x00
 
-  RESTART_AUTOMATIC_HEADLIGHTS_FAULT_ALERT:
-    alt_names: ['RELANCE_DEF_AUT_FEUX_AUTO']
-    bits: "2.2"
+  RESTART_AUTO_HEADLIGHT_FAULT_ALERT:
+    bits: '2.2'
+    alt_names: ['RESTART_AUTOMATIC_HEADLIGHTS_FAULT_ALERT', 'RELANCE_DEF_AUT_FEUX_AUTO']
     comment:
-      fr: "Evolution de la demande de relance de l'alerte allumage automatique des feux en défaut (bit toggle)"
-      en: "Evolution of restart request of automatic headlights fault alert (bit toggle)"
+      en: 'Toggle bit for the automatic headlight activation fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut d''allumage automatique des feux'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo del encendido automático de luces'
+      de: 'Umschaltbit für die Neustartanforderung der Fehlerwarnung des automatischen Lichteinschaltens'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto dell''accensione automatica delle luci'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki automatycznego włączania świateł'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности автоматического включения света'
+      zh: '自动大灯开启故障提醒重启请求的切换位'
+      hu: 'Az automatikus fényszóró-bekapcsolás hibariasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha do acendimento automático das luzes'
+    type: 'bool'
+    default: 0x00
 
   RESTART_SPACE_SIZE_MESSAGE:
-    alt_names: ['RELANCE_TAILLE_PLACE']
-    bits: "2.1"
+    bits: '2.1'
     comment:
-      fr: "Evolution de la demande de relance du message de taille de place (bit toggle)"
-      en: "Evolution of restart request of the space size message (bit toggle)"
+      en: 'Toggle bit for the parking space size message restart request'
+      fr: 'Bit de bascule pour la demande de relance du message de taille de la place de stationnement'
+      es: 'Bit de conmutación para la solicitud de reinicio del mensaje de tamaño de la plaza de aparcamiento'
+      de: 'Umschaltbit für die Neustartanforderung der Meldung zur Parklückengröße'
+      it: 'Bit di commutazione per la richiesta di riavvio del messaggio di dimensione del posto auto'
+      pl: 'Bit przełączający dla żądania ponowienia komunikatu o rozmiarze miejsca parkingowego'
+      ru: 'Бит переключения для запроса повторной активации сообщения о размере парковочного места'
+      zh: '停车位大小信息重启请求的切换位'
+      hu: 'A parkolóhely méretéről szóló üzenet újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição da mensagem de tamanho do lugar de estacionamento'
+    type: 'bool'
+    default: 0x00
 
   RESTART_RELEASED_PARKING_BRAKE_ALERT:
-    alt_names: ['RELANCE_FREIN_DESSERRE']
-    bits: "2.0"
+    bits: '2.0'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte frein de stationnement desserré (bit toggle)"
-      en: "Evolution of restart request of released parking brake alert (bit toggle)"
+      en: 'Toggle bit for the parking brake released alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte frein de stationnement desserré'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de freno de estacionamiento desactivado'
+      de: 'Umschaltbit für die Neustartanforderung der Warnung „Feststellbremse gelöst“'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di freno di stazionamento rilasciato'
+      pl: 'Bit przełączający dla żądania ponowienia alertu zwolnionego hamulca postojowego'
+      ru: 'Бит переключения для запроса повторной активации оповещения об отпущенном стояночном тормозе'
+      zh: '驻车制动释放提醒重启请求的切换位'
+      hu: 'A rögzítőfék kioldva riasztás újraindítási kérésének váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de travão de estacionamento desapertado'
+    type: 'bool'
+    default: 0x00
 
   UNUSED_1:
-    alt_names: ['LIBRE_1']
-    bits: "3.7-3.1"
+    bits: '3.7-3.1'
     unused: true
 
   RESTART_POLLUTION_FAULT_ALERT:
-    alt_names: ['RELANCE_DEFAUT_POLLU']
-    bits: "3.0"
+    bits: '3.0'
     comment:
-      fr: "Evolution de la demande de relance de l'alerte défaut pollution (bit toggle)"
-      en: "Evolution of restart request of pollution fault alert (bit toggle)"
+      en: 'Toggle bit for the emissions fault alert restart request'
+      fr: 'Bit de bascule pour la demande de relance de l''alerte défaut de pollution'
+      es: 'Bit de conmutación para la solicitud de reinicio de la alerta de fallo de emisiones'
+      de: 'Umschaltbit für die Neustartanforderung der Abgasfehlerwarnung'
+      it: 'Bit di commutazione per la richiesta di riavvio dell''avviso di guasto emissioni'
+      pl: 'Bit przełączający dla żądania ponowienia alertu usterki emisji'
+      ru: 'Бит переключения для запроса повторной активации оповещения о неисправности выбросов'
+      zh: '排放故障提醒重启请求的切换位'
+      hu: 'A kibocsátási hiba riasztásának újraindítási kérési váltóbitje'
+      pt: 'Bit de comutação para o pedido de repetição do alerta de falha de emissões'
+    type: 'bool'
+    default: 0x00
 
   UNUSED_2:
-    alt_names: ['LIBRE_2']
-    bits: "4.7-4.0"
+    bits: '4.7-4.0'
     unused: true

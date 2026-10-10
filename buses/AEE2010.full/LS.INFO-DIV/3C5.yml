@@ -1,0 +1,510 @@
+id: 0x3C5
+name: 'DASHCAM_STATE'
+type: 'can'
+length: 3
+comment:
+  en: 'Dashcam operating state: recording in progress, list available, playback state and memory usage.'
+  fr: 'État de fonctionnement du dashcam : enregistrement en cours, liste disponible, état de lecture et occupation mémoire.'
+  es: 'Estado de funcionamiento del dashcam: grabación en curso, lista disponible, estado de reproducción y uso de memoria.'
+  de: 'Betriebszustand der Dashcam: laufende Aufnahme, verfügbare Liste, Wiedergabestatus und Speichernutzung.'
+  it: 'Stato operativo del dashcam: registrazione in corso, elenco disponibile, stato di riproduzione e utilizzo memoria.'
+  pl: 'Stan pracy wideorejestratora: trwające nagrywanie, dostępna lista, stan odtwarzania i wykorzystanie pamięci.'
+  ru: 'Рабочее состояние видеорегистратора: идёт запись, список доступен, состояние воспроизведения и использование памяти.'
+  zh: '行车记录仪工作状态:录制中、列表可用、播放状态及内存占用。'
+  hu: 'A fedélzeti kamera üzemi állapota: folyamatban lévő felvétel, elérhető lista, lejátszási állapot és memóriahasználat.'
+  pt: 'Estado de funcionamento da câmara de bordo: gravação em curso, lista disponível, estado de reprodução e utilização da memória.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['1000ms', 'trigger']
+senders: ['IDVR']
+receivers: ['BTEL', 'OVIP']
+
+signals:
+  IDVR_RECORDING:
+    bits: '1.7'
+    comment:
+      en: 'IDVR is recording video'
+      fr: 'L''IDVR enregistre une vidéo'
+      es: 'El IDVR está grabando vídeo'
+      de: 'Das IDVR zeichnet ein Video auf'
+      it: 'L''IDVR sta registrando un video'
+      pl: 'IDVR nagrywa wideo'
+      ru: 'IDVR записывает видео'
+      zh: 'IDVR正在录制视频'
+      hu: 'Az IDVR videót rögzít'
+      pt: 'O IDVR está a gravar vídeo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not active'
+        fr: 'Non actif'
+        es: 'No activo'
+        de: 'Nicht aktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Nem aktív'
+        pt: 'Não ativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  IDVR_STATE:
+    bits: '1.6-1.4'
+    comment:
+      en: 'State of the IDVR'
+      fr: 'État de l''IDVR'
+      es: 'Estado del IDVR'
+      de: 'Status des IDVR'
+      it: 'Stato dell''IDVR'
+      pl: 'Stan IDVR'
+      ru: 'Состояние IDVR'
+      zh: 'IDVR状态'
+      hu: 'Az IDVR állapota'
+      pt: 'Estado do IDVR'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'Live'
+        fr: 'En direct'
+        es: 'En vivo'
+        de: 'Live'
+        it: 'Live'
+        pl: 'Na żywo'
+        ru: 'В прямом эфире'
+        zh: '实时'
+        hu: 'Élő'
+        pt: 'Em direto'
+      0x02:
+        en: 'Record file'
+        fr: 'Fichier d''enregistrement'
+        es: 'Archivo de grabación'
+        de: 'Aufzeichnungsdatei'
+        it: 'File di registrazione'
+        pl: 'Plik nagrania'
+        ru: 'Файл записи'
+        zh: '记录文件'
+        hu: 'Rögzítési fájl'
+        pt: 'Ficheiro de gravação'
+      0x03:
+        en: 'ADAS camera'
+        fr: 'Caméra ADAS'
+        es: 'Cámara ADAS'
+        de: 'ADAS-Kamera'
+        it: 'Telecamera ADAS'
+        pl: 'Kamera ADAS'
+        ru: 'Камера ADAS'
+        zh: 'ADAS摄像头'
+        hu: 'ADAS kamera'
+        pt: 'Câmara ADAS'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  IDVR_PLAYBACK_STATE:
+    bits: '1.3-1.0'
+    comment:
+      en: 'State of the playing video'
+      fr: 'État de la vidéo en cours de lecture'
+      es: 'Estado del vídeo en reproducción'
+      de: 'Status des wiedergegebenen Videos'
+      it: 'Stato del video in riproduzione'
+      pl: 'Stan odtwarzanego wideo'
+      ru: 'Состояние воспроизводимого видео'
+      zh: '播放中视频的状态'
+      hu: 'A lejátszott videó állapota'
+      pt: 'Estado do vídeo em reprodução'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Sin acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Play'
+        fr: 'Play'
+        es: 'Reproducir'
+        de: 'Wiedergabe'
+        it: 'Riproduzione'
+        pl: 'Odtwarzanie'
+        ru: 'Воспроизведение'
+        zh: '播放'
+        hu: 'Lejátszás'
+        pt: 'Reproduzir'
+      0x02:
+        en: 'Paused'
+        fr: 'Pause'
+        es: 'En pausa'
+        de: 'Pausiert'
+        it: 'In pausa'
+        pl: 'Wstrzymane'
+        ru: 'Пауза'
+        zh: '已暂停'
+        hu: 'Szüneteltetve'
+        pt: 'Em pausa'
+      0x03:
+        en: 'Stopped'
+        fr: 'Arrêt'
+        es: 'Detenido'
+        de: 'Gestoppt'
+        it: 'Fermo'
+        pl: 'Zatrzymany'
+        ru: 'Остановлено'
+        zh: '已停止'
+        hu: 'Leállítva'
+        pt: 'Parado'
+      0x04:
+        en: 'Reward'
+        fr: 'Récompense'
+        es: 'Recompensa'
+        de: 'Belohnung'
+        it: 'Ricompensa'
+        pl: 'Nagroda'
+        ru: 'Награда'
+        zh: '奖励'
+        hu: 'Jutalom'
+        pt: 'Recompensa'
+      0x05:
+        en: 'Forward'
+        fr: 'Avant'
+        es: 'Adelante'
+        de: 'Vorwärts'
+        it: 'Avanti'
+        pl: 'Do przodu'
+        ru: 'Вперёд'
+        zh: '前进'
+        hu: 'Előre'
+        pt: 'Avançar'
+      0x06:
+        en: 'Previous'
+        fr: 'Précédent'
+        es: 'Anterior'
+        de: 'Vorherige'
+        it: 'Precedente'
+        pl: 'Poprzedni'
+        ru: 'Предыдущий'
+        zh: '上一个'
+        hu: 'Előző'
+        pt: 'Anterior'
+      0x07:
+        en: 'Next'
+        fr: 'Suivant'
+        es: 'Siguiente'
+        de: 'Weiter'
+        it: 'Successivo'
+        pl: 'Następny'
+        ru: 'Далее'
+        zh: '下一个'
+        hu: 'Következő'
+        pt: 'Seguinte'
+      0x08:
+        en: 'File not readable'
+        fr: 'Fichier illisible'
+        es: 'Archivo ilegible'
+        de: 'Datei nicht lesbar'
+        it: 'File non leggibile'
+        pl: 'Plik nieodczytywalny'
+        ru: 'Файл нечитаем'
+        zh: '文件不可读'
+        hu: 'A fájl nem olvasható'
+        pt: 'Ficheiro ilegível'
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  ACCIDENT_MEMORY_USAGE_PERCENT:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Percentage of memory used by accident video'
+      fr: 'Pourcentage de mémoire utilisée par les vidéos d''accident'
+      es: 'Porcentaje de memoria utilizada por los vídeos de accidente'
+      de: 'Prozentsatz des durch Unfallvideos belegten Speichers'
+      it: 'Percentuale di memoria utilizzata dai video di incidente'
+      pl: 'Procent pamięci wykorzystanej przez nagrania wypadków'
+      ru: 'Процент памяти, используемой видео ДТП'
+      zh: '事故视频占用的内存百分比'
+      hu: 'A balesetvideók által elfoglalt memória százaléka'
+      pt: 'Percentagem de memória utilizada pelos vídeos de acidente'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  ACCIDENT_RECORDING_IN_PROGRESS:
+    bits: '2.0'
+    comment:
+      en: 'Accident video recording in progress'
+      fr: 'Enregistrement vidéo d''accident en cours'
+      es: 'Grabación de vídeo de accidente en curso'
+      de: 'Unfallvideoaufzeichnung läuft'
+      it: 'Registrazione video dell''incidente in corso'
+      pl: 'Trwa nagrywanie wideo wypadku'
+      ru: 'Выполняется запись видео ДТП'
+      zh: '事故视频录制进行中'
+      hu: 'Balesetvideó rögzítése folyamatban'
+      pt: 'Gravação de vídeo de acidente em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No video recording'
+        fr: 'Pas d''enregistrement vidéo'
+        es: 'Sin grabación de vídeo'
+        de: 'Keine Videoaufzeichnung'
+        it: 'Nessuna registrazione video'
+        pl: 'Brak nagrywania wideo'
+        ru: 'Нет видеозаписи'
+        zh: '无视频录制'
+        hu: 'Nincs videofelvétel'
+        pt: 'Sem gravação de vídeo'
+      0x01:
+        en: 'Video recording'
+        fr: 'Enregistrement vidéo'
+        es: 'Grabación de vídeo'
+        de: 'Videoaufzeichnung'
+        it: 'Registrazione video'
+        pl: 'Nagrywanie wideo'
+        ru: 'Видеозапись'
+        zh: '视频录制'
+        hu: 'Videofelvétel'
+        pt: 'Gravação de vídeo'
+
+  DRIVING_RECORDING_MENU_STATE:
+    bits: '3.7'
+    comment:
+      en: 'State of the driving recording in the settings menu'
+      fr: 'État de l''enregistrement de conduite dans le menu des paramètres'
+      es: 'Estado de la grabación de conducción en el menú de ajustes'
+      de: 'Status der Fahraufzeichnung im Einstellungsmenü'
+      it: 'Stato della registrazione di guida nel menu delle impostazioni'
+      pl: 'Stan nagrywania jazdy w menu ustawień'
+      ru: 'Состояние записи вождения в меню настроек'
+      zh: '设置菜单中的行车录像状态'
+      hu: 'A vezetésrögzítés állapota a beállítások menüben'
+      pt: 'Estado da gravação de condução no menu de ajustes'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not active'
+        fr: 'Non actif'
+        es: 'No activo'
+        de: 'Nicht aktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Nem aktív'
+        pt: 'Não ativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  AUTO_ACCIDENT_RECORDING_STATE:
+    bits: '3.6'
+    comment:
+      en: 'State of the automatic accident recording'
+      fr: 'État de l''enregistrement automatique d''accident'
+      es: 'Estado de la grabación automática de accidentes'
+      de: 'Status der automatischen Unfallaufzeichnung'
+      it: 'Stato della registrazione automatica dell''incidente'
+      pl: 'Stan automatycznego nagrywania wypadku'
+      ru: 'Состояние автоматической записи ДТП'
+      zh: '自动事故录像状态'
+      hu: 'Az automatikus balesetrögzítés állapota'
+      pt: 'Estado do registo automático de acidentes'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not active'
+        fr: 'Non actif'
+        es: 'No activo'
+        de: 'Nicht aktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Nem aktív'
+        pt: 'Não ativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  IDVR_LIST_ACCEPTANCE_STATE:
+    bits: '3.5-3.4'
+    comment:
+      en: 'State of list acceptance'
+      fr: 'État d''acceptation de la liste'
+      es: 'Estado de aceptación de la lista'
+      de: 'Akzeptanzstatus der Liste'
+      it: 'Stato di accettazione dell''elenco'
+      pl: 'Stan akceptacji listy'
+      ru: 'Состояние принятия списка'
+      zh: '列表接受状态'
+      hu: 'A lista elfogadási állapota'
+      pt: 'Estado de aceitação da lista'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Idle'
+        fr: 'Ralenti'
+        es: 'Inactivo'
+        de: 'Leerlauf'
+        it: 'Inattivo'
+        pl: 'Bezczynny'
+        ru: 'Холостой ход'
+        zh: '空闲'
+        hu: 'Üresjárat'
+        pt: 'Ralenti'
+      0x01:
+        en: 'List closing request'
+        fr: 'Demande de fermeture de liste'
+        es: 'Solicitud de cierre de lista'
+        de: 'Anforderung zum Schließen der Liste'
+        it: 'Richiesta di chiusura elenco'
+        pl: 'Żądanie zamknięcia listy'
+        ru: 'Запрос закрытия списка'
+        zh: '列表关闭请求'
+        hu: 'Listabezárási kérés'
+        pt: 'Pedido de fecho de lista'
+      0x02:
+        en: 'List mode refused'
+        fr: 'Mode liste refusé'
+        es: 'Modo lista rechazado'
+        de: 'Listenmodus abgelehnt'
+        it: 'Modalità elenco rifiutata'
+        pl: 'Tryb listy odrzucony'
+        ru: 'Режим списка отклонён'
+        zh: '列表模式被拒绝'
+        hu: 'Listamód elutasítva'
+        pt: 'Modo de lista recusado'
+      0x03:
+        en: 'List mode accepted'
+        fr: 'Mode liste accepté'
+        es: 'Modo de lista aceptado'
+        de: 'Listenmodus akzeptiert'
+        it: 'Modalità elenco accettata'
+        pl: 'Tryb listy zaakceptowany'
+        ru: 'Режим списка принят'
+        zh: '列表模式已接受'
+        hu: 'Listaüzemmód elfogadva'
+        pt: 'Modo de lista aceite'
+
+  IDVR_LIST_AVAILABILITY:
+    bits: '3.3'
+    comment:
+      en: 'Availability state of the list'
+      fr: 'État de disponibilité de la liste'
+      es: 'Estado de disponibilidad de la lista'
+      de: 'Verfügbarkeitsstatus der Liste'
+      it: 'Stato di disponibilità dell''elenco'
+      pl: 'Stan dostępności listy'
+      ru: 'Состояние доступности списка'
+      zh: '列表可用状态'
+      hu: 'A lista elérhetőségi állapota'
+      pt: 'Estado de disponibilidade da lista'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not available'
+        fr: 'Non disponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Não disponível'
+      0x01:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępny'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+
+  UNUSED_1:
+    bits: '3.2-3.0'
+    unused: true

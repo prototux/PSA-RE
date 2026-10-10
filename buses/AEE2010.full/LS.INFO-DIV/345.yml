@@ -1,0 +1,230 @@
+id: 0x345
+name: 'DASHCAM_ACCIDENT_POPUP'
+type: 'can'
+length: 8
+comment:
+  en: 'Dashcam accident recording pop-up: recording date/time, video number and pop-up type shown on the display.'
+  fr: 'Pop-up d''enregistrement accident du dashcam : date/heure d''enregistrement, numéro de vidéo et type de pop-up affiché sur l''écran.'
+  es: 'Aviso emergente de grabación de accidente del dashcam: fecha/hora de grabación, número de vídeo y tipo de aviso mostrado en la pantalla.'
+  de: 'Dashcam-Unfallaufnahme-Popup: Aufnahmedatum/-uhrzeit, Videonummer und auf dem Display angezeigter Popup-Typ.'
+  it: 'Popup di registrazione incidente del dashcam: data/ora di registrazione, numero video e tipo di popup mostrato sul display.'
+  pl: 'Wyskakujące powiadomienie o nagraniu wypadku z wideorejestratora: data/godzina nagrania, numer wideo i typ powiadomienia na wyświetlaczu.'
+  ru: 'Всплывающее уведомление о записи ДТП видеорегистратором: дата/время записи, номер видео и тип всплывающего окна на дисплее.'
+  zh: '行车记录仪事故录制弹窗:录制日期/时间、视频编号及显示屏上显示的弹窗类型。'
+  hu: 'A fedélzeti kamera balesetfelvétel felugró ablaka: felvétel dátuma/ideje, videószám és a kijelzőn megjelenő felugró ablak típusa.'
+  pt: 'Alerta pop-up de gravação de acidente da câmara de bordo: data/hora da gravação, número do vídeo e tipo de pop-up apresentado no ecrã.'
+observations:
+  en: 'On an external event'
+  fr: 'Sur événement extérieur'
+  es: 'Ante un evento externo'
+  de: 'Bei einem externen Ereignis'
+  it: 'Su un evento esterno'
+  pl: 'Przy zdarzeniu zewnętrznym'
+  ru: 'При внешнем событии'
+  zh: '外部事件触发时'
+  hu: 'Külső esemény hatására'
+  pt: 'Num evento externo'
+periodicity: ['trigger']
+senders: ['IDVR']
+receivers: ['BTEL', 'OVIP']
+
+signals:
+  POPUP_TYPE_2:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Type of display pop-up'
+      fr: 'Type de fenêtre contextuelle d''affichage'
+      es: 'Tipo de ventana emergente de visualización'
+      de: 'Typ des Anzeige-Popups'
+      it: 'Tipo di finestra popup del display'
+      pl: 'Typ wyskakującego okna wyświetlacza'
+      ru: 'Тип всплывающего окна дисплея'
+      zh: '显示弹窗类型'
+      hu: 'A kijelző felugró ablakának típusa'
+      pt: 'Tipo de janela contextual de visualização'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'Automatic'
+        fr: 'Automatique'
+        es: 'Automático'
+        de: 'Automatisch'
+        it: 'Automatico'
+        pl: 'Automatyczny'
+        ru: 'Автоматический'
+        zh: '自动'
+        hu: 'Automatikus'
+        pt: 'Automático'
+      0x02:
+        en: 'Manual'
+        fr: 'Manuel'
+        es: 'Manual'
+        de: 'Manuell'
+        it: 'Manuale'
+        pl: 'Ręczny'
+        ru: 'Ручной'
+        zh: '手动'
+        hu: 'Kézi'
+        pt: 'Manual'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '1.5-1.0'
+    unused: true
+
+  VIDEO_YEAR:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Year of the video'
+      fr: 'Année de la vidéo'
+      es: 'Año del vídeo'
+      de: 'Jahr des Videos'
+      it: 'Anno del video'
+      pl: 'Rok nagrania wideo'
+      ru: 'Год видеозаписи'
+      zh: '视频所属年'
+      hu: 'A videó éve'
+      pt: 'Ano do vídeo'
+    type: 'uint'
+    factor: 1
+    offset: 2000
+    min: 2000
+    max: 2254
+    units: 'year'
+    invalid: 0xFF
+    default: 0xFF
+
+  VIDEO_MONTH:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Month of the video'
+      fr: 'Mois de la vidéo'
+      es: 'Mes del vídeo'
+      de: 'Monat des Videos'
+      it: 'Mese del video'
+      pl: 'Miesiąc nagrania wideo'
+      ru: 'Месяц видеозаписи'
+      zh: '视频所属月'
+      hu: 'A videó hónapja'
+      pt: 'Mês do vídeo'
+    type: 'uint'
+    factor: 1
+    min: 1
+    max: 12
+    units: 'month'
+    invalid: 0x0F
+    default: 0x0F
+
+  UNUSED_2:
+    bits: '3.3-3.0'
+    unused: true
+
+  VIDEO_DAY:
+    bits: '4.7-4.2'
+    comment:
+      en: 'Day of the video'
+      fr: 'Jour de la vidéo'
+      es: 'Día del vídeo'
+      de: 'Tag des Videos'
+      it: 'Giorno del video'
+      pl: 'Dzień nagrania wideo'
+      ru: 'День видеозаписи'
+      zh: '视频所属日'
+      hu: 'A videó napja'
+      pt: 'Dia do vídeo'
+    type: 'uint'
+    factor: 1
+    min: 1
+    max: 31
+    units: 'day'
+    invalid: 0x3F
+    default: 0x3F
+
+  UNUSED_3:
+    bits: '4.1-4.0'
+    unused: true
+
+  VIDEO_HOUR:
+    bits: '5.7-5.3'
+    comment:
+      en: 'Hour of the video'
+      fr: 'Heure de la vidéo'
+      es: 'Hora del vídeo'
+      de: 'Stunde des Videos'
+      it: 'Ora del video'
+      pl: 'Godzina nagrania wideo'
+      ru: 'Час видеозаписи'
+      zh: '视频所属时'
+      hu: 'A videó órája'
+      pt: 'Hora do vídeo'
+    type: 'uint'
+    min: 0
+    max: 24
+    invalid: 0x1F
+    default: 0x1F
+
+  UNUSED_4:
+    bits: '5.2-5.0'
+    unused: true
+
+  VIDEO_MINUTE:
+    bits: '6.7-6.2'
+    comment:
+      en: 'Minute of the video'
+      fr: 'Minute de la vidéo'
+      es: 'Minuto del vídeo'
+      de: 'Minute des Videos'
+      it: 'Minuto del video'
+      pl: 'Minuta nagrania wideo'
+      ru: 'Минута видеозаписи'
+      zh: '视频所属分'
+      hu: 'A videó perce'
+      pt: 'Minuto do vídeo'
+    type: 'uint'
+    min: 0
+    max: 59
+    invalid: 0x3F
+    default: 0x3F
+
+  UNUSED_5:
+    bits: '6.1-6.0'
+    unused: true
+
+  VIDEO_SEQUENCE_NUMBER:
+    bits: '7.7-7.4'
+    comment:
+      en: 'Number of the video among those with the same date'
+      fr: 'Numéro de la vidéo parmi celles de même date'
+      es: 'Número del vídeo entre los de la misma fecha'
+      de: 'Nummer des Videos unter denen mit gleichem Datum'
+      it: 'Numero del video tra quelli con la stessa data'
+      pl: 'Numer nagrania wideo wśród nagrań z tą samą datą'
+      ru: 'Номер видео среди записей за ту же дату'
+      zh: '同日期视频中的编号'
+      hu: 'A videó sorszáma az azonos dátumúak között'
+      pt: 'Número do vídeo entre os da mesma data'
+    type: 'uint'
+    min: 0
+    max: 9
+    default: 0x00
+
+  UNUSED_6:
+    bits: '7.3-7.0'
+    unused: true
+
+  UNUSED_7:
+    bits: '8.7-8.0'
+    unused: true

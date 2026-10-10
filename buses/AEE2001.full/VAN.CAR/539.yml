@@ -1,0 +1,605 @@
+id: 0x539
+name: 'ENGINE_BAY_BOX_COMMAND'
+type: 'van'
+length: 6
+comment:
+  en: 'Relay output commands for the engine-bay fuse/relay box (ports A and B of its VAN I/O expander), plus port direction/option configuration bytes.'
+  fr: 'Commandes des sorties relayées du boîtier fusibles/relais moteur (ports A et B de son extenseur VAN I/O), et octets de configuration de direction/option des ports.'
+  es: 'Órdenes de las salidas de relé de la caja de fusibles/relés del motor (puertos A y B de su expansor VAN I/O) y bytes de configuración de dirección/opción de los puertos.'
+  de: 'Relaisausgangsbefehle des Motorraum-Sicherungs-/Relaiskastens (Ports A und B seines VAN-E/A-Erweiterungsmoduls) sowie Port-Richtungs-/Options-Konfigurationsbytes.'
+  it: 'Comandi delle uscite relè della centralina fusibili/relè vano motore (porte A e B del suo espansore VAN I/O), e byte di configurazione di direzione/opzione delle porte.'
+  pl: 'Polecenia wyjść przekaźnikowych skrzynki bezpieczników/przekaźników silnika (porty A i B jej ekspandera VAN we/wy) oraz bajty konfiguracji kierunku/opcji portów.'
+  ru: 'Команды релейных выходов блока предохранителей/реле моторного отсека (порты A и B его расширителя VAN ввода-вывода), а также байты конфигурации направления/опций портов.'
+  zh: '发动机舱保险丝/继电器盒的继电器输出命令（其VAN I/O扩展器的A、B端口），以及端口方向/选项配置字节。'
+  hu: 'A motortéri biztosíték-/reledoboz relékimeneti parancsai (a VAN I/O bővítőjének A és B portja), valamint a portok irány-/opciókonfigurációs bájtjai.'
+  pt: 'Comandos de saída de relé para a caixa de fusíveis/relés do compartimento do motor (portas A e B do seu expansor de E/S VAN), além dos bytes de configuração de direção/opção das portas.'
+periodicity: ['50ms', 'trigger']
+senders: ['BSI']
+receivers: ['BSM']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  UNUSED_1:
+    bits: '1.7'
+    unused: true
+
+  HORN_COMMAND:
+    bits: '1.6'
+    comment:
+      en: 'Horn relay control'
+      fr: 'Commande du relais d''avertisseur sonore'
+      es: 'Mando del relé del claxon'
+      de: 'Steuerung des Hupenrelais'
+      it: 'Comando del relè del clacson'
+      pl: 'Sterowanie przekaźnikiem sygnału dźwiękowego'
+      ru: 'Управление реле звукового сигнала'
+      zh: '喇叭继电器控制'
+      hu: 'A duda relé vezérlése'
+      pt: 'Comando do relé da buzina'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Horn not activated'
+        fr: 'Avertisseur sonore non activé'
+        es: 'Claxon no activado'
+        de: 'Hupe nicht aktiviert'
+        it: 'Clacson non attivato'
+        pl: 'Klakson nieaktywny'
+        ru: 'Звуковой сигнал не активирован'
+        zh: '喇叭未激活'
+        hu: 'Hangjelzés nincs aktiválva'
+        pt: 'Buzina não ativada'
+      0x01:
+        en: 'Horn on'
+        fr: 'Avertisseur sonore activé'
+        es: 'Claxon activado'
+        de: 'Hupe eingeschaltet'
+        it: 'Clacson attivo'
+        pl: 'Klakson włączony'
+        ru: 'Звуковой сигнал включён'
+        zh: '喇叭已开启'
+        hu: 'Kürt bekapcsolva'
+        pt: 'Buzina ligada'
+
+  HEADLAMP_WASHER_COMMAND:
+    bits: '1.5'
+    comment:
+      en: 'Headlamp washer pump relay'
+      fr: 'Relais de la pompe de lave-projecteurs'
+      es: 'Relé de la bomba del lavafaros'
+      de: 'Relais der Scheinwerferwaschpumpe'
+      it: 'Relè della pompa lavafari'
+      pl: 'Przekaźnik pompy spryskiwacza reflektorów'
+      ru: 'Реле насоса омывателя фар'
+      zh: '大灯清洗泵继电器'
+      hu: 'A fényszórómosó szivattyú relé'
+      pt: 'Relé da bomba do lava-faróis'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Headlamp washer off'
+        fr: 'Lave-projecteurs non activé'
+        es: 'Lavafaros no activado'
+        de: 'Scheinwerferwaschanlage nicht aktiviert'
+        it: 'Lavafari non attivato'
+        pl: 'Spryskiwacz reflektorów nieaktywny'
+        ru: 'Омыватель фар не активирован'
+        zh: '大灯清洗器未激活'
+        hu: 'Fényszórómosó nincs bekapcsolva'
+        pt: 'Lava-faróis não ativado'
+      0x01:
+        en: 'Headlamp washer on'
+        fr: 'Lave-projecteur activé'
+        es: 'Lavafaros activado'
+        de: 'Scheinwerferwaschanlage aktiviert'
+        it: 'Lavafari attivato'
+        pl: 'Spryskiwacz reflektorów włączony'
+        ru: 'Омыватель фар включён'
+        zh: '大灯清洗器已激活'
+        hu: 'Fényszóró mosó bekapcsolva'
+        pt: 'Lava-faróis ligado'
+
+  FRONT_SCREEN_WASHER_COMMAND:
+    bits: '1.4'
+    comment:
+      en: 'Front windscreen washer pump relay'
+      fr: 'Relais de la pompe de lave-vitre avant'
+      es: 'Relé de la bomba del lavaparabrisas delantero'
+      de: 'Relais der Frontscheibenwaschpumpe'
+      it: 'Relè della pompa lavaparabrezza anteriore'
+      pl: 'Przekaźnik pompy spryskiwacza przedniej szyby'
+      ru: 'Реле насоса омывателя лобового стекла'
+      zh: '前风窗清洗泵继电器'
+      hu: 'Az első ablakmosó szivattyú relé'
+      pt: 'Relé da bomba do lava-para-brisas dianteiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Front washer off'
+        fr: 'Lave-vitre avant non activé'
+        es: 'Lavaparabrisas delantero no activado'
+        de: 'Frontscheibenwaschanlage nicht aktiviert'
+        it: 'Lavavetro anteriore non attivato'
+        pl: 'Spryskiwacz przedniej szyby nieaktywny'
+        ru: 'Передний омыватель не активирован'
+        zh: '前风挡清洗器未激活'
+        hu: 'Első ablakmosó nincs bekapcsolva'
+        pt: 'Lava-para-brisas dianteiro não ativado'
+      0x01:
+        en: 'Front washer on'
+        fr: 'Lave vitre avant activé'
+        es: 'Lavaparabrisas delantero activado'
+        de: 'Frontscheibenwäsche aktiviert'
+        it: 'Lavavetro anteriore attivato'
+        pl: 'Spryskiwacz przedni aktywowany'
+        ru: 'Передний омыватель активирован'
+        zh: '前洗涤器已激活'
+        hu: 'Első ablakmosó aktiválva'
+        pt: 'Lava-para-brisas dianteiro ativado'
+
+  REAR_SCREEN_WASHER_COMMAND:
+    bits: '1.3'
+    comment:
+      en: 'Rear window washer pump relay'
+      fr: 'Relais de la pompe de lave-vitre arrière'
+      es: 'Relé de la bomba del lavaluneta trasero'
+      de: 'Relais der Heckscheibenwaschpumpe'
+      it: 'Relè della pompa lavalunotto posteriore'
+      pl: 'Przekaźnik pompy spryskiwacza tylnej szyby'
+      ru: 'Реле насоса омывателя заднего стекла'
+      zh: '后风窗清洗泵继电器'
+      hu: 'A hátsó ablakmosó szivattyú relé'
+      pt: 'Relé da bomba do lava-vidro traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rear washer off'
+        fr: 'Lave-vitre arrière non activé'
+        es: 'Lavaparabrisas trasero no activado'
+        de: 'Heckscheibenwaschanlage nicht aktiviert'
+        it: 'Lavavetro posteriore non attivato'
+        pl: 'Nieaktywna spryskiwacz tylnej szyby'
+        ru: 'Задний омыватель не активирован'
+        zh: '后窗清洗器未激活'
+        hu: 'Hátsó ablakmosó nincs bekapcsolva'
+        pt: 'Lava-vidro traseiro não ativado'
+      0x01:
+        en: 'Rear washer on'
+        fr: 'Lave-vitre arrière activé'
+        es: 'Lavaparabrisas trasero activado'
+        de: 'Heckscheibenwäscher ein'
+        it: 'Lavavetro posteriore attivo'
+        pl: 'Spryskiwacz tylnej szyby włączony'
+        ru: 'Задний омыватель включён'
+        zh: '后风窗洗涤器开启'
+        hu: 'Hátsó ablakmosó bekapcsolva'
+        pt: 'Lava-vidros traseiro ligado'
+
+  AIR_PUMP_COMMAND:
+    bits: '1.2'
+    comment:
+      en: 'Secondary air pump relay (petrol engines)'
+      fr: 'Relais de la pompe à air secondaire (moteurs essence)'
+      es: 'Relé de la bomba de aire secundario (motores de gasolina)'
+      de: 'Relais der Sekundärluftpumpe (Ottomotoren)'
+      it: 'Relè della pompa dell''aria secondaria (motori a benzina)'
+      pl: 'Przekaźnik pompy powietrza wtórnego (silniki benzynowe)'
+      ru: 'Реле насоса вторичного воздуха (бензиновые двигатели)'
+      zh: '二次空气泵继电器(汽油发动机)'
+      hu: 'A másodlagos légszivattyú relé (benzinmotorok)'
+      pt: 'Relé da bomba de ar secundário (motores a gasolina)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Air pump off'
+        fr: 'Pompe à air non activée'
+        es: 'Bomba de aire no activada'
+        de: 'Luftpumpe nicht aktiviert'
+        it: 'Pompa dell''aria non attivata'
+        pl: 'Pompa powietrza nieaktywna'
+        ru: 'Воздушный насос не активирован'
+        zh: '空气泵未激活'
+        hu: 'Légszivattyú nincs aktiválva'
+        pt: 'Bomba de ar não ativada'
+      0x01:
+        en: 'Air pump on'
+        fr: 'Pompe à air activée'
+        es: 'Bomba de aire activada'
+        de: 'Luftpumpe eingeschaltet'
+        it: 'Pompa dell''aria attivata'
+        pl: 'Pompa powietrza włączona'
+        ru: 'Воздушный насос включён'
+        zh: '空气泵已启用'
+        hu: 'Levegőszivattyú bekapcsolva'
+        pt: 'Bomba de ar ligada'
+
+  HIGH_BEAM_COMMAND:
+    bits: '1.1'
+    comment:
+      en: 'Left and right high beam (main beam) relay'
+      fr: 'Relais des feux de route gauche et droit'
+      es: 'Relé de las luces de carretera izquierda y derecha'
+      de: 'Relais des linken und rechten Fernlichts'
+      it: 'Relè degli abbaglianti sinistro e destro'
+      pl: 'Przekaźnik lewego i prawego światła drogowego'
+      ru: 'Реле левого и правого дальнего света'
+      zh: '左右远光灯继电器'
+      hu: 'A bal és jobb távolsági fényszóró relé'
+      pt: 'Relé dos máximos esquerdo e direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Lamps off'
+        fr: 'Lampes éteintes'
+        es: 'Lámparas apagadas'
+        de: 'Lampen aus'
+        it: 'Lampade spente'
+        pl: 'Lampy wyłączone'
+        ru: 'Лампы выключены'
+        zh: '灯已熄灭'
+        hu: 'Lámpák kikapcsolva'
+        pt: 'Lâmpadas desligadas'
+      0x01:
+        en: 'Lamps on'
+        fr: 'Lampes allumées'
+        es: 'Luces encendidas'
+        de: 'Lampen ein'
+        it: 'Lampade accese'
+        pl: 'Lampy włączone'
+        ru: 'Лампы включены'
+        zh: '灯已点亮'
+        hu: 'Lámpák bekapcsolva'
+        pt: 'Luzes acesas'
+
+  LOW_BEAM_COMMAND:
+    bits: '1.0'
+    comment:
+      en: 'Left and right low beam (dipped beam) relay'
+      fr: 'Relais des feux de croisement gauche et droit'
+      es: 'Relé de las luces de cruce izquierda y derecha'
+      de: 'Relais des linken und rechten Abblendlichts'
+      it: 'Relè degli anabbaglianti sinistro e destro'
+      pl: 'Przekaźnik lewego i prawego światła mijania'
+      ru: 'Реле левого и правого ближнего света'
+      zh: '左右近光灯继电器'
+      hu: 'A bal és jobb tompított fényszóró relé'
+      pt: 'Relé dos médios esquerdo e direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Lamps off'
+        fr: 'Lampes éteintes'
+        es: 'Lámparas apagadas'
+        de: 'Lampen aus'
+        it: 'Lampade spente'
+        pl: 'Lampy wyłączone'
+        ru: 'Лампы выключены'
+        zh: '灯已熄灭'
+        hu: 'Lámpák kikapcsolva'
+        pt: 'Lâmpadas desligadas'
+      0x01:
+        en: 'Lamps on'
+        fr: 'Lampes allumées'
+        es: 'Luces encendidas'
+        de: 'Lampen ein'
+        it: 'Lampade accese'
+        pl: 'Lampy włączone'
+        ru: 'Лампы включены'
+        zh: '灯已点亮'
+        hu: 'Lámpák bekapcsolva'
+        pt: 'Luzes acesas'
+
+  PORT_A_DIRECTION:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Data direction register of I/O port A (all outputs)'
+      fr: 'Registre de direction du port A (toutes sorties)'
+      es: 'Registro de dirección del puerto A (todas salidas)'
+      de: 'Datenrichtungsregister von I/O-Port A (alle Ausgänge)'
+      it: 'Registro di direzione della porta A (tutte uscite)'
+      pl: 'Rejestr kierunku portu A (wszystkie wyjścia)'
+      ru: 'Регистр направления порта A (все выходы)'
+      zh: 'A端口数据方向寄存器(全部为输出)'
+      hu: 'Az A I/O port adatirány-regisztere (mind kimenet)'
+      pt: 'Registo de direção do porto A (todas as saídas)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0xFF:
+        en: 'Port A all outputs'
+        fr: 'Direction du port A (sortie)'
+        es: 'Dirección del puerto A (salida)'
+        de: 'Richtung Port A (Ausgang)'
+        it: 'Direzione della porta A (uscita)'
+        pl: 'Kierunek portu A (wyjście)'
+        ru: 'Направление порта A (выход)'
+        zh: 'A端口方向(输出)'
+        hu: 'A port iránya (kimenet)'
+        pt: 'Direção do porto A (saída)'
+
+  PORT_A_OPTION:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Option register of I/O port A'
+      fr: 'Registre d''option du port A'
+      es: 'Registro de opción del puerto A'
+      de: 'Optionsregister von I/O-Port A'
+      it: 'Registro di opzione della porta A'
+      pl: 'Rejestr opcji portu A'
+      ru: 'Регистр опций порта A'
+      zh: 'A端口选项寄存器'
+      hu: 'Az A I/O port opcióregisztere'
+      pt: 'Registo de opção da porta A'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Port A option value'
+        fr: 'Valeur d''option du port A'
+        es: 'Valor de opción del puerto A'
+        de: 'Optionswert Port A'
+        it: 'Valore opzione della porta A'
+        pl: 'Wartość opcji portu A'
+        ru: 'Значение опции порта A'
+        zh: 'A端口选项值'
+        hu: 'Az A port opcióértéke'
+        pt: 'Valor de opção do porto A'
+
+  UNUSED_2:
+    bits: '4.7'
+    unused: true
+
+  FRONT_WIPER_HIGH_SPEED_COMMAND:
+    bits: '4.6'
+    comment:
+      en: 'Front wiper high-speed relay; only effective when the wiper on/off relay is energised'
+      fr: 'Relais de grande vitesse de l''essuie-vitre avant ; effectif seulement si le relais marche/arrêt est activé'
+      es: 'Relé de gran velocidad del limpiaparabrisas delantero; solo efectivo si el relé de marcha/paro está activado'
+      de: 'Relais für die hohe Wischgeschwindigkeit vorne; nur wirksam, wenn das Ein-/Aus-Relais aktiv ist'
+      it: 'Relè della grande velocità del tergicristallo anteriore; efficace solo se il relè marcia/arresto è attivato'
+      pl: 'Przekaźnik dużej prędkości przedniej wycieraczki; skuteczny tylko przy aktywnym przekaźniku włącz/wyłącz'
+      ru: 'Реле высокой скорости переднего дворника; действует только при активированном реле вкл/выкл'
+      zh: '前雨刷高速继电器;仅在雨刷开关继电器通电时有效'
+      hu: 'Az első ablaktörlő nagy sebességű relé; csak akkor hatásos, ha a be-/kikapcsoló relé aktív'
+      pt: 'Relé de grande velocidade do limpa-para-brisas dianteiro; só é efetivo se o relé de marcha/paragem estiver ativado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not commanded (low speed)'
+        fr: 'Petite vitesse / non commandé'
+        es: 'Velocidad baja / no accionado'
+        de: 'Niedrige Geschwindigkeit / nicht angesteuert'
+        it: 'Bassa velocità / non comandato'
+        pl: 'Niska prędkość / brak sterowania'
+        ru: 'Низкая скорость / без управления'
+        zh: '低速/未指令'
+        hu: 'Alacsony sebesség / nincs vezérelve'
+        pt: 'Não comandado (baixa velocidade)'
+      0x01:
+        en: 'High speed'
+        fr: 'Grande vitesse'
+        es: 'Alta velocidad'
+        de: 'Hohe Geschwindigkeit'
+        it: 'Alta velocità'
+        pl: 'Duża prędkość'
+        ru: 'Высокая скорость'
+        zh: '高速'
+        hu: 'Nagy sebesség'
+        pt: 'Alta velocidade'
+
+  FUEL_PUMP_CUTOFF_COMMAND:
+    bits: '4.5'
+    comment:
+      en: 'Fuel pump cut-off (on crash); outside crash situations the pump relay is hard-wired to the engine ECU'
+      fr: 'Coupure de la pompe à carburant (sur choc) ; hors situation de choc, le relais est câblé directement au calculateur moteur'
+      es: 'Corte de la bomba de combustible (en caso de impacto); fuera de situaciones de choque, el relé está cableado directamente a la ECU del motor'
+      de: 'Kraftstoffpumpenabschaltung (bei Crash); außerhalb von Crashsituationen ist das Relais fest mit dem Motorsteuergerät verdrahtet'
+      it: 'Interruzione della pompa carburante (in caso di urto); al di fuori di situazioni di urto il relè è cablato direttamente alla centralina motore'
+      pl: 'Odcięcie pompy paliwa (przy zderzeniu); poza sytuacją zderzenia przekaźnik jest bezpośrednio okablowany do sterownika silnika'
+      ru: 'Отключение топливного насоса (при аварии); вне аварийных ситуаций реле напрямую соединено с блоком управления двигателем'
+      zh: '燃油泵切断(碰撞时);非碰撞情况下继电器直接硬接线至发动机ECU'
+      hu: 'Az üzemanyag-szivattyú lekapcsolása (ütközéskor); ütközésen kívül a relé közvetlenül a motorvezérlő egységhez van vezetékezve'
+      pt: 'Corte da bomba de combustível (em caso de impacto); fora de situações de choque, o relé está cablado diretamente à unidade de controlo do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No cut-off'
+        fr: 'Pas de coupure'
+        es: 'Sin corte'
+        de: 'Keine Abschaltung'
+        it: 'Nessun taglio'
+        pl: 'Brak odcięcia'
+        ru: 'Нет отключения'
+        zh: '无切断'
+        hu: 'Nincs lekapcsolás'
+        pt: 'Sem corte'
+      0x01:
+        en: 'Fuel pump cut off'
+        fr: 'Coupure de la pompe à carburant'
+        es: 'Corte de la bomba de combustible'
+        de: 'Abschaltung der Kraftstoffpumpe'
+        it: 'Interruzione della pompa del carburante'
+        pl: 'Odcięcie pompy paliwa'
+        ru: 'Отключение топливного насоса'
+        zh: '燃油泵切断'
+        hu: 'Üzemanyagszivattyú lekapcsolva'
+        pt: 'Corte da bomba de combustível'
+
+  UNUSED_3:
+    bits: '4.4-4.3'
+    unused: true
+
+  FRONT_FOG_LAMPS_COMMAND:
+    bits: '4.2'
+    comment:
+      en: 'Front fog lamps relay; on some HID (xenon) equipped vehicles this output supplies an ignition-switched feed instead'
+      fr: 'Relais des feux antibrouillard avant ; sur certains véhicules équipés de lampes à décharge (xénon), cette sortie fournit un +APC'
+      es: 'Relé de los faros antiniebla delanteros; en algunos vehículos con lámparas de descarga (xenón), esta salida suministra un +APC'
+      de: 'Nebelscheinwerferrelais; bei manchen Fahrzeugen mit Xenon-Lampen liefert dieser Ausgang stattdessen ein Zündungsplus'
+      it: 'Relè dei fendinebbia anteriori; su alcuni veicoli con lampade a scarica (xeno) questa uscita fornisce un +APC'
+      pl: 'Przekaźnik przednich świateł przeciwmgielnych; w niektórych pojazdach z lampami wyładowczymi (ksenon) to wyjście dostarcza zasilanie +APC'
+      ru: 'Реле передних противотуманных фар; на некоторых автомобилях с газоразрядными (ксеноновыми) лампами этот выход подаёт питание +APC'
+      zh: '前雾灯继电器;在部分配备氙气大灯的车辆上,此输出改为提供点火开关供电'
+      hu: 'Az első ködlámpák relé; egyes xenonlámpás járműveken ez a kimenet +APC tápellátást ad'
+      pt: 'Relé dos faróis de nevoeiro dianteiros; em alguns veículos com lâmpadas de descarga (xénon), esta saída fornece um +APC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Lamps off'
+        fr: 'Lampes éteintes'
+        es: 'Lámparas apagadas'
+        de: 'Lampen aus'
+        it: 'Lampade spente'
+        pl: 'Lampy wyłączone'
+        ru: 'Лампы выключены'
+        zh: '灯已熄灭'
+        hu: 'Lámpák kikapcsolva'
+        pt: 'Lâmpadas desligadas'
+      0x01:
+        en: 'Lamps on'
+        fr: 'Lampes allumées'
+        es: 'Luces encendidas'
+        de: 'Lampen ein'
+        it: 'Lampade accese'
+        pl: 'Lampy włączone'
+        ru: 'Лампы включены'
+        zh: '灯已点亮'
+        hu: 'Lámpák bekapcsolva'
+        pt: 'Luzes acesas'
+
+  WATCHDOG_TOGGLE:
+    bits: '4.1'
+    comment:
+      en: 'Watchdog bit toggled every 50 ms; if it stops toggling (loss of communication) low beams are forced on'
+      fr: 'Bit chien de garde basculant toutes les 50 ms ; s''il cesse de basculer (perte de communication), les feux de croisement sont forcés allumés'
+      es: 'Bit de vigilancia que conmuta cada 50 ms; si deja de conmutar (pérdida de comunicación), se fuerza el encendido de las luces de cruce'
+      de: 'Watchdog-Bit, das alle 50 ms umschaltet; bleibt es stehen (Kommunikationsverlust), wird das Abblendlicht erzwungen eingeschaltet'
+      it: 'Bit di watchdog che commuta ogni 50 ms; se smette di commutare (perdita di comunicazione) vengono forzati gli anabbaglianti'
+      pl: 'Bit watchdog przełączający się co 50 ms; jeśli przestanie się przełączać (utrata komunikacji), światła mijania zostają wymuszone'
+      ru: 'Бит сторожевого таймера, переключается каждые 50 мс; если переключение прекращается (потеря связи), ближний свет включается принудительно'
+      zh: '每50毫秒翻转一次的看门狗位;如果停止翻转(通信丢失),则强制开启近光灯'
+      hu: '50 ms-onként váltakozó watchdog bit; ha leáll (kommunikációvesztés), a tompított fény kényszerítve bekapcsol'
+      pt: 'Bit de vigilância que comuta a cada 50 ms; se deixar de comutar (perda de comunicação), as luzes de cruzamento são forçadas a acender'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Toggles every 50 ms'
+        fr: 'Changement d''état toutes les 50 ms'
+        es: 'Cambia de estado cada 50 ms'
+        de: 'Wechselt alle 50 ms'
+        it: 'Cambia stato ogni 50 ms'
+        pl: 'Zmiana stanu co 50 ms'
+        ru: 'Переключение каждые 50 мс'
+        zh: '每50毫秒切换一次'
+        hu: '50 ms-enként állapotot vált'
+        pt: 'Muda de estado a cada 50 ms'
+
+  AC_BLOWER_COMMAND:
+    bits: '4.0'
+    comment:
+      en: 'Climate control blower relay'
+      fr: 'Relais du pulseur de climatisation'
+      es: 'Relé del ventilador de climatización'
+      de: 'Relais des Klimagebläses'
+      it: 'Relè del ventilatore del climatizzatore'
+      pl: 'Przekaźnik dmuchawy klimatyzacji'
+      ru: 'Реле вентилятора кондиционера'
+      zh: '空调鼓风机继电器'
+      hu: 'A klímaventilátor relé'
+      pt: 'Relé do ventilador do ar condicionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Blower not powered'
+        fr: 'Pulseur non alimenté'
+        es: 'Ventilador no alimentado'
+        de: 'Gebläse ohne Stromversorgung'
+        it: 'Ventola non alimentata'
+        pl: 'Dmuchawa niezasilana'
+        ru: 'Вентилятор не запитан'
+        zh: '鼓风机未供电'
+        hu: 'Ventilátor nincs táplálva'
+        pt: 'Ventilador não alimentado'
+      0x01:
+        en: 'Blower powered'
+        fr: 'Pulseur alimenté'
+        es: 'Soplador alimentado'
+        de: 'Gebläse mit Spannung versorgt'
+        it: 'Ventola alimentata'
+        pl: 'Dmuchawa zasilana'
+        ru: 'Вентилятор запитан'
+        zh: '送风机已供电'
+        hu: 'A fúvó táplálva'
+        pt: 'Ventilador alimentado'
+
+  PORT_B_DIRECTION:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Data direction register of I/O port B'
+      fr: 'Registre de direction du port B'
+      es: 'Registro de dirección del puerto B'
+      de: 'Datenrichtungsregister von I/O-Port B'
+      it: 'Registro di direzione della porta B'
+      pl: 'Rejestr kierunku portu B'
+      ru: 'Регистр направления порта B'
+      zh: 'B端口数据方向寄存器'
+      hu: 'A B I/O port adatirány-regisztere'
+      pt: 'Registo de direção do porto B'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x67:
+        en: 'Port B direction value'
+        fr: 'Valeur de direction du port B'
+        es: 'Valor de dirección del puerto B'
+        de: 'Richtungswert von Port B'
+        it: 'Valore di direzione della porta B'
+        pl: 'Wartość kierunku portu B'
+        ru: 'Значение направления порта B'
+        zh: 'B端口方向值'
+        hu: 'B port irányértéke'
+        pt: 'Valor de direção da porta B'
+
+  PORT_B_OPTION:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Option register of I/O port B'
+      fr: 'Registre d''option du port B'
+      es: 'Registro de opción del puerto B'
+      de: 'Optionsregister von I/O-Port B'
+      it: 'Registro di opzione della porta B'
+      pl: 'Rejestr opcji portu B'
+      ru: 'Регистр опций порта B'
+      zh: 'B端口选项寄存器'
+      hu: 'A B I/O port opcióregisztere'
+      pt: 'Registo de opção da porta B'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Port B option value'
+        fr: 'Valeur d''option du port B'
+        es: 'Valor de opción del puerto B'
+        de: 'Optionswert von Port B'
+        it: 'Valore opzione porta B'
+        pl: 'Wartość opcji portu B'
+        ru: 'Значение опции порта B'
+        zh: 'B端口选项值'
+        hu: 'B port opcióértéke'
+        pt: 'Valor da opção da porta B'

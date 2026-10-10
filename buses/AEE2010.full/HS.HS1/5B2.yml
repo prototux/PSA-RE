@@ -1,0 +1,413 @@
+id: 0x5B2
+name: 'CONTEXT'
+type: 'can'
+length: 8
+comment:
+  en: 'Context data: SCR load-shedding, service interval exceeded and maintenance reset acknowledgement.'
+  fr: 'Données de contexte : délestage SCR, dépassement de l''échéance d''entretien et accusé de remise à zéro entretien.'
+  es: 'Datos de contexto: reducción de carga SCR, vencimiento del intervalo de mantenimiento y confirmación de reinicio de mantenimiento.'
+  de: 'Kontextdaten: SCR-Lastabwurf, überschrittenes Wartungsintervall und Bestätigung des Wartungsresets.'
+  it: 'Dati di contesto: riduzione carico SCR, intervallo di manutenzione superato e conferma di reset manutenzione.'
+  pl: 'Dane kontekstowe: zrzut obciążenia SCR, przekroczony interwał przeglądu i potwierdzenie kasowania przeglądu.'
+  ru: 'Контекстные данные: сброс нагрузки SCR, превышение интервала обслуживания и подтверждение сброса напоминания об обслуживании.'
+  zh: '上下文数据:SCR减载、保养周期超期以及保养复位确认。'
+  hu: 'Kontextus adatok: SCR terheléscsökkentés, szerviz esedékesség túllépése és szerviz-nullázás visszaigazolása.'
+  pt: 'Dados de contexto: corte de carga SCR, intervalo de revisão excedido e confirmação de reposição da manutenção.'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['VCU', 'CVM', 'CSS', 'ABS', 'CMM', 'BVA', 'HCU1', 'E_VCU', 'BSM']
+
+signals:
+  TOTAL_ADDITIVE_QUANTITY:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Mass of metal additive retained in the particulate filter since commissioning'
+      fr: 'Masse d''additif métallique retenue dans le filtre à particules depuis sa mise en service'
+      es: 'Masa de aditivo metálico retenida en el filtro de partículas desde su puesta en servicio'
+      de: 'Seit Inbetriebnahme im Partikelfilter zurückgehaltene Menge an Metalladditiv'
+      it: 'Massa di additivo metallico trattenuta nel filtro antiparticolato dalla sua messa in servizio'
+      pl: 'Masa dodatku metalicznego zatrzymana w filtrze cząstek stałych od uruchomienia'
+      ru: 'Масса металлической присадки, накопленной в сажевом фильтре с момента ввода в эксплуатацию'
+      zh: '自投入使用以来颗粒过滤器中保留的金属添加剂质量'
+      hu: 'Az üzembe helyezés óta a részecskeszűrőben megkötött fém adalékanyag tömege'
+      pt: 'Massa de aditivo metálico retida no filtro de partículas desde a sua entrada em serviço'
+    type: 'uint'
+    factor: 0.05
+    min: 0
+    max: 3276.5
+    units: 'g'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  OUTSIDE_AIR_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Outside air temperature (°C)'
+      fr: 'Température d''air extérieur (°C)'
+      es: 'Temperatura del aire exterior (°C)'
+      de: 'Außenlufttemperatur (°C)'
+      it: 'Temperatura dell''aria esterna (°C)'
+      pl: 'Temperatura powietrza zewnętrznego (°C)'
+      ru: 'Температура наружного воздуха (°C)'
+      zh: '车外空气温度(°C)'
+      hu: 'Külső levegő hőmérséklete (°C)'
+      pt: 'Temperatura do ar exterior (°C)'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFC
+
+  ADDITIVE_SYSTEM_STATUS:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Additive (FAP) system status, used by the engine ECU for fallback strategies'
+      fr: 'État du système d''additivation, utilisé par le calculateur moteur pour les stratégies de secours'
+      es: 'Estado del sistema de aditivo, utilizado por la centralita del motor para las estrategias de emergencia'
+      de: 'Status des Additivsystems, von der Motorsteuerung für Notlaufstrategien genutzt'
+      it: 'Stato del sistema di additivazione, utilizzato dalla centralina motore per le strategie di emergenza'
+      pl: 'Stan układu dodawania środka do filtra cząstek stałych, wykorzystywany przez sterownik silnika do strategii awaryjnych'
+      ru: 'Состояние системы присадки, используемое блоком управления двигателем для аварийных стратегий'
+      zh: '添加剂系统状态,供发动机ECU用于应急策略'
+      hu: 'Adalékrendszer állapota, amelyet a motorvezérlő tartalék stratégiákhoz használ'
+      pt: 'Estado do sistema de aditivo, utilizado pela unidade de controlo do motor para as estratégias de emergência'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'All at zero (additive dosing impossible, no fault)'
+        fr: 'Tout à zéro (dosage d''additif impossible, aucun défaut)'
+        es: 'Todo a cero (dosificación de aditivo imposible, sin fallo)'
+        de: 'Alles auf null (Additivdosierung nicht möglich, kein Fehler)'
+        it: 'Tutto a zero (dosaggio additivo impossibile, nessun guasto)'
+        pl: 'Wszystko zero (dozowanie dodatku niemożliwe, brak usterki)'
+        ru: 'Всё на нуле (дозирование присадки невозможно, неисправностей нет)'
+        zh: '全部归零(无法计量添加剂,无故障)'
+        hu: 'Minden nullán (adalékadagolás nem lehetséges, nincs hiba)'
+        pt: 'Tudo a zero (dosagem de aditivo impossível, sem falha)'
+      0x01:
+        en: 'Tank filler cap sensor fault'
+        fr: 'Défaut du capteur de bouchon de réservoir'
+        es: 'Fallo del sensor del tapón del depósito'
+        de: 'Fehler des Tankdeckelsensors'
+        it: 'Guasto del sensore del tappo del serbatoio'
+        pl: 'Usterka czujnika korka wlewu paliwa'
+        ru: 'Неисправность датчика крышки топливного бака'
+        zh: '油箱盖传感器故障'
+        hu: 'Az üzemanyagtartály-sapka érzékelőjének hibája'
+        pt: 'Falha do sensor da tampa do depósito'
+      0x02:
+        en: 'Fuel gauge fault'
+        fr: 'Défaut de la jauge de carburant'
+        es: 'Fallo del indicador de combustible'
+        de: 'Fehler der Kraftstoffanzeige'
+        it: 'Guasto dell''indicatore del livello carburante'
+        pl: 'Usterka wskaźnika paliwa'
+        ru: 'Неисправность указателя уровня топлива'
+        zh: '燃油表故障'
+        hu: 'Az üzemanyagszint-jelző hibája'
+        pt: 'Falha do indicador de combustível'
+      0x04:
+        en: 'Additive (cerium) level sensor fault'
+        fr: 'Défaut du capteur de niveau d''additif (cérine)'
+        es: 'Fallo del sensor de nivel de aditivo (cerio)'
+        de: 'Fehler des Additiv-Füllstandssensors (Cer)'
+        it: 'Guasto del sensore di livello dell''additivo (cerio)'
+        pl: 'Usterka czujnika poziomu dodatku (cer)'
+        ru: 'Неисправность датчика уровня присадки (церий)'
+        zh: '添加剂(铈)液位传感器故障'
+        hu: 'Adalékanyag (cérium) szintérzékelő hiba'
+        pt: 'Falha do sensor de nível de aditivo (cério)'
+      0x08:
+        en: 'Downstream DPF temperature sensor fault (if sensor present)'
+        fr: 'Défaut du capteur de température aval du filtre à particules (si le capteur est présent)'
+        es: 'Fallo del sensor de temperatura aguas abajo del filtro de partículas (si el sensor está presente)'
+        de: 'Fehler des Temperatursensors stromabwärts des Partikelfilters (falls Sensor vorhanden)'
+        it: 'Guasto del sensore di temperatura a valle del filtro antiparticolato (se presente)'
+        pl: 'Usterka czujnika temperatury za filtrem cząstek stałych (jeśli czujnik występuje)'
+        ru: 'Неисправность датчика температуры за сажевым фильтром (при наличии датчика)'
+        zh: '颗粒过滤器下游温度传感器故障(如有该传感器)'
+        hu: 'A részecskeszűrő utáni hőmérséklet-érzékelő hibája (ha van érzékelő)'
+        pt: 'Avaria do sensor de temperatura DPF a jusante (se sensor presente)'
+      0x10:
+        en: 'Additive calculator fault'
+        fr: 'Défaut du calculateur d''additif'
+        es: 'Fallo de la centralita de aditivo'
+        de: 'Fehler des Additiv-Steuergeräts'
+        it: 'Guasto della centralina additivo'
+        pl: 'Usterka sterownika dodatku'
+        ru: 'Неисправность блока управления присадкой'
+        zh: '添加剂计算单元故障'
+        hu: 'Az adalékanyag-vezérlő egység hibája'
+        pt: 'Falha da unidade de controlo de aditivo'
+      0x20:
+        en: 'Additive injector at fault (if the actuator is present)'
+        fr: 'Injecteur d''additif en défaut (si l''actionneur est présent)'
+        es: 'Inyector de aditivo con fallo (si el actuador está presente)'
+        de: 'Additivinjektor gestört (falls Aktuator vorhanden)'
+        it: 'Iniettore additivo in guasto (se presente l''attuatore)'
+        pl: 'Usterka wtryskiwacza dodatku (jeśli siłownik jest obecny)'
+        ru: 'Неисправность инжектора присадки (при наличии привода)'
+        zh: '添加剂喷射器故障(如存在执行器)'
+        hu: 'Adalékbefecskendező hibás (ha az aktuátor jelen van)'
+        pt: 'Injetor de aditivo com falha (se o atuador estiver presente)'
+      0x40:
+        en: 'Additive pump faulty'
+        fr: 'Défaut de la pompe d''additif'
+        es: 'Fallo de la bomba de aditivo'
+        de: 'Fehler der Additivpumpe'
+        it: 'Guasto della pompa additivo'
+        pl: 'Usterka pompy dodatku'
+        ru: 'Неисправность насоса присадки'
+        zh: '添加剂泵故障'
+        hu: 'Az adalékanyag-szivattyú hibás'
+        pt: 'Bomba de aditivo com falha'
+      0x80:
+        en: 'Addition possible'
+        fr: 'Additivation possible'
+        es: 'Aditivación posible'
+        de: 'Additivierung möglich'
+        it: 'Additivazione possibile'
+        pl: 'Możliwe dodawanie'
+        ru: 'Возможно добавление присадки'
+        zh: '可执行添加操作'
+        hu: 'Adalékolás lehetséges'
+        pt: 'Aditivação possível'
+
+  EOBD_INFO_STATUS_BSI:
+    bits: '5.7-5.0'
+    comment:
+      en: 'EOBD information status as seen by the BSI'
+      fr: 'État des informations EOBD vu par la BSI'
+      es: 'Estado de la información EOBD visto por la BSI'
+      de: 'Status der EOBD-Informationen aus Sicht des BSI'
+      it: 'Stato delle informazioni EOBD visto dalla BSI'
+      pl: 'Stan informacji EOBD z punktu widzenia BSI'
+      ru: 'Статус информации EOBD по данным BSI'
+      zh: 'BSI所见的EOBD信息状态'
+      hu: 'Az EOBD-információk állapota a BSI szemszögéből'
+      pt: 'Estado da informação EOBD visto pela BSI'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No network fault'
+        fr: 'Pas de défaut du réseau'
+        es: 'Sin fallo de red'
+        de: 'Kein Netzfehler'
+        it: 'Nessun guasto di rete'
+        pl: 'Brak usterki sieci'
+        ru: 'Нет неисправности сети'
+        zh: '无网络故障'
+        hu: 'Nincs hálózati hiba'
+        pt: 'Sem avaria de rede'
+      0x01:
+        en: 'Not entered in the ACCESS database'
+        fr: 'Non renseigné dans la base ACCESS'
+        es: 'No registrado en la base de datos ACCESS'
+        de: 'Nicht in der ACCESS-Datenbank erfasst'
+        it: 'Non presente nel database ACCESS'
+        pl: 'Brak wpisu w bazie ACCESS'
+        ru: 'Не указано в базе данных ACCESS'
+        zh: 'ACCESS数据库中未登记'
+        hu: 'Nincs bejegyezve az ACCESS adatbázisban'
+        pt: 'Não introduzido na base de dados ACCESS'
+      0x02:
+        en: 'LIN network failure'
+        fr: 'Défaillance du réseau LIN'
+        es: 'Fallo de la red LIN'
+        de: 'Ausfall des LIN-Netzes'
+        it: 'Guasto della rete LIN'
+        pl: 'Awaria sieci LIN'
+        ru: 'Неисправность сети LIN'
+        zh: 'LIN网络故障'
+        hu: 'LIN hálózati hiba'
+        pt: 'Falha da rede LIN'
+      0x04:
+        en: 'Communication fault with the ECU on the LIN network'
+        fr: 'Défaillance de communication avec le calculateur sur le réseau LIN'
+        es: 'Fallo de comunicación con la unidad de control en la red LIN'
+        de: 'Kommunikationsfehler mit dem Steuergerät im LIN-Netzwerk'
+        it: 'Guasto di comunicazione con la centralina sulla rete LIN'
+        pl: 'Usterka komunikacji ze sterownikiem w sieci LIN'
+        ru: 'Неисправность связи с блоком управления в сети LIN'
+        zh: 'LIN 网络与控制单元通信故障'
+        hu: 'Kommunikációs hiba a vezérlőegységgel a LIN hálózaton'
+        pt: 'Falha de comunicação com a unidade de controlo na rede LIN'
+      0x08:
+        en: 'MIL warning lamp network fault'
+        fr: 'Défaut réseau du voyant MIL'
+        es: 'Fallo de red del testigo MIL'
+        de: 'Netzfehler der MIL-Kontrollleuchte'
+        it: 'Guasto di rete della spia MIL'
+        pl: 'Usterka sieci kontrolki MIL'
+        ru: 'Сетевая неисправность лампы MIL'
+        zh: 'MIL指示灯网络故障'
+        hu: 'MIL jelzőlámpa hálózati hiba'
+        pt: 'Avaria de rede da luz avisadora MIL'
+      0x10:
+        en: 'CAN LS CAR network fault'
+        fr: 'Défaillance du réseau CAN LS CAR'
+        es: 'Fallo de la red CAN LS CAR'
+        de: 'Störung des CAN-LS-CAR-Netzwerks'
+        it: 'Guasto della rete CAN LS CAR'
+        pl: 'Usterka sieci CAN LS CAR'
+        ru: 'Неисправность сети CAN LS CAR'
+        zh: 'CAN LS CAR网络故障'
+        hu: 'A CAN LS CAR hálózat hibája'
+        pt: 'Falha da rede CAN LS CAR'
+      0x20:
+        en: 'ADDGO or body VAN bus 2 network fault'
+        fr: 'Défaut réseau ADDGO ou VAN carrosserie 2'
+        es: 'Fallo de red ADDGO o VAN carrocería 2'
+        de: 'Netzwerkfehler ADDGO oder Karosserie-VAN 2'
+        it: 'Guasto di rete ADDGO o VAN carrozzeria 2'
+        pl: 'Usterka sieci ADDGO lub VAN nadwozia 2'
+        ru: 'Неисправность сети ADDGO или кузовной VAN 2'
+        zh: 'ADDGO或车身VAN2网络故障'
+        hu: 'ADDGO vagy 2. karosszéria VAN hálózati hiba'
+        pt: 'Falha da rede ADDGO ou VAN carroçaria 2'
+      0x40:
+        en: 'VAN body network 1 or BSM failure'
+        fr: 'Défaillance du réseau VAN carrosserie 1 ou du BSM'
+        es: 'Fallo de la red VAN carrocería 1 o del BSM'
+        de: 'Ausfall des VAN-Netzes Karosserie 1 oder des BSM'
+        it: 'Guasto della rete VAN carrozzeria 1 o del BSM'
+        pl: 'Awaria sieci VAN nadwozia 1 lub BSM'
+        ru: 'Неисправность сети VAN кузова 1 или BSM'
+        zh: 'VAN车身网络1或BSM故障'
+        hu: 'VAN karosszéria 1 hálózat vagy BSM meghibásodás'
+        pt: 'Falha da rede de servidão VAN 1 ou da BSM'
+      0x80:
+        en: 'CMB or VAN CONF network fault'
+        fr: 'Défaillance du réseau VAN CONF ou du CMB'
+        es: 'Fallo de la red VAN CONF o del CMB'
+        de: 'Ausfall des VAN-Netzes CONF oder des CMB'
+        it: 'Guasto della rete VAN CONF o del CMB'
+        pl: 'Awaria sieci VAN CONF lub CMB'
+        ru: 'Неисправность сети VAN CONF или CMB'
+        zh: 'VAN CONF网络或CMB故障'
+        hu: 'VAN CONF hálózat vagy CMB meghibásodás'
+        pt: 'Avaria de rede CMB ou VAN CONF'
+
+  SCR_LOAD_SHEDDING_REQUEST:
+    bits: '6.7-6.1'
+    comment:
+      en: 'SCR system load-shedding request'
+      fr: 'Demande de délestage du système SCR'
+      es: 'Solicitud de deslastre del sistema SCR'
+      de: 'Anforderung zur Lastabschaltung des SCR-Systems'
+      it: 'Richiesta di distacco del carico del sistema SCR'
+      pl: 'Żądanie zrzutu obciążenia układu SCR'
+      ru: 'Запрос сброса нагрузки системы SCR'
+      zh: 'SCR系统甩负荷请求'
+      hu: 'SCR rendszer terheléscsökkentési kérése'
+      pt: 'Pedido de deslastre do sistema SCR'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x64
+
+  UNUSED_1:
+    bits: '6.0'
+    unused: true
+
+  SERVICE_RESET_OK:
+    bits: '7.7'
+    comment:
+      en: 'Service reset acknowledged'
+      fr: 'Réinitialisation d''entretien confirmée'
+      es: 'Reinicio de mantenimiento confirmado'
+      de: 'Wartungsrücksetzung bestätigt'
+      it: 'Azzeramento della manutenzione confermato'
+      pl: 'Potwierdzone zerowanie przeglądu'
+      ru: 'Подтверждён сброс технического обслуживания'
+      zh: '保养复位已确认'
+      hu: 'Szervizvisszaállítás megerősítve'
+      pt: 'Reinicialização de manutenção confirmada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No oil-change reset'
+        fr: 'Pas de remise à zéro de la vidange'
+        es: 'Sin puesta a cero del cambio de aceite'
+        de: 'Kein Rückstellen des Ölwechsels'
+        it: 'Nessun azzeramento del cambio olio'
+        pl: 'Brak zerowania licznika wymiany oleju'
+        ru: 'Нет сброса счётчика замены масла'
+        zh: '无换油复位'
+        hu: 'Nincs olajcsere-visszaállítás'
+        pt: 'Sem reposição a zero do óleo'
+      0x01:
+        en: 'Oil change reset detected'
+        fr: 'RAZ vidange détectée'
+        es: 'Reinicio de cambio de aceite detectado'
+        de: 'Rücksetzung des Ölwechsels erkannt'
+        it: 'Reset del cambio olio rilevato'
+        pl: 'Wykryto reset wymiany oleju'
+        ru: 'Обнаружен сброс замены масла'
+        zh: '检测到换油复位'
+        hu: 'Olajcsere-visszaállítás észlelve'
+        pt: 'Reinicialização de mudança de óleo detetada'
+
+  OUTSIDE_TEMP_SENSOR_DIAG:
+    bits: '7.6-7.5'
+    comment:
+      en: 'Outside temperature sensor diagnostic'
+      fr: 'Diagnostic du capteur de température extérieure'
+      es: 'Diagnóstico del sensor de temperatura exterior'
+      de: 'Diagnose des Außentemperatursensors'
+      it: 'Diagnosi del sensore di temperatura esterna'
+      pl: 'Diagnostyka czujnika temperatury zewnętrznej'
+      ru: 'Диагностика датчика наружной температуры'
+      zh: '室外温度传感器诊断'
+      hu: 'Külső hőmérséklet-érzékelő diagnosztikája'
+      pt: 'Diagnóstico do sensor de temperatura exterior'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault on the outside temperature sensor'
+        fr: 'Pas de défaut du capteur de température extérieure'
+        es: 'Sin fallo del sensor de temperatura exterior'
+        de: 'Kein Fehler am Außentemperatursensor'
+        it: 'Nessun guasto del sensore di temperatura esterna'
+        pl: 'Brak usterki czujnika temperatury zewnętrznej'
+        ru: 'Нет неисправности датчика наружной температуры'
+        zh: '车外温度传感器无故障'
+        hu: 'Nincs hiba a külső hőmérséklet-érzékelőn'
+        pt: 'Sem falha no sensor de temperatura exterior'
+      0x01:
+        unused: true
+      0x02:
+        en: 'Outside temperature sensor short-circuited'
+        fr: 'Capteur de température extérieure en court-circuit'
+        es: 'Sensor de temperatura exterior en cortocircuito'
+        de: 'Außentemperatursensor Kurzschluss'
+        it: 'Sensore di temperatura esterna in cortocircuito'
+        pl: 'Zwarcie czujnika temperatury zewnętrznej'
+        ru: 'Короткое замыкание датчика наружной температуры'
+        zh: '车外温度传感器短路'
+        hu: 'A külső hőmérséklet-érzékelő rövidzárlatos'
+        pt: 'Sensor de temperatura exterior em curto-circuito'
+      0x03:
+        en: 'External temperature sensor open circuit'
+        fr: 'Capteur de température extérieure en circuit ouvert'
+        es: 'Sensor de temperatura exterior en circuito abierto'
+        de: 'Außentemperatursensor im offenen Stromkreis'
+        it: 'Sensore di temperatura esterna a circuito aperto'
+        pl: 'Czujnik temperatury zewnętrznej w obwodzie otwartym'
+        ru: 'Обрыв цепи датчика наружной температуры'
+        zh: '外部温度传感器开路'
+        hu: 'A külső hőmérséklet-érzékelő áramkör szakadt'
+        pt: 'Sensor de temperatura exterior em circuito aberto'
+
+  UNUSED_2:
+    bits: '7.4-8.0'
+    unused: true

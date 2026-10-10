@@ -1,0 +1,472 @@
+id: 0x214
+name: 'TRACTION_BATTERY_DYNAMIC_DATA'
+type: 'can'
+length: 7
+comment:
+  en: 'Traction battery management data: measured HV current/voltage, disconnect state, unexpected contactor opening and hydrogen detection.'
+  fr: 'Données du gestionnaire de batterie de traction : courant/tension HT mesurés, état de déconnexion, ouverture de contacteur non commandée et détection d''hydrogène.'
+  es: 'Datos del gestor de la batería de tracción: corriente/tensión de alta tensión medidas, estado de desconexión, apertura de contactor no ordenada y detección de hidrógeno.'
+  de: 'Daten des Traktionsbatteriemanagements: gemessener HV-Strom/-Spannung, Trennzustand, unbefohlenes Öffnen des Schützes und Wasserstofferkennung.'
+  it: 'Dati del gestore della batteria di trazione: corrente/tensione ad alta tensione misurate, stato di disconnessione, apertura non comandata del contattore e rilevamento di idrogeno.'
+  pl: 'Dane zarządzania baterią trakcyjną: zmierzony prąd/napięcie wysokiego napięcia, stan odłączenia, niezamierzone otwarcie stycznika oraz wykrycie wodoru.'
+  ru: 'Данные управления тяговой батареей: измеренные ток/напряжение высокого напряжения, состояние отключения, непреднамеренное размыкание контактора и обнаружение водорода.'
+  zh: '牵引电池管理数据:实测高压电流/电压、断开状态、非指令性接触器断开及氢气检测。'
+  hu: 'A vonóakkumulátor-kezelés adatai: a mért nagyfeszültségű áram/feszültség, leválasztási állapot, nem parancsra történő mágneskapcsoló-nyitás és hidrogénérzékelés.'
+  pt: 'Dados de gestão da bateria de tração: corrente/tensão de alta tensão medidas, estado de desconexão, abertura inesperada do contactor e deteção de hidrogénio.'
+periodicity: ['10ms']
+senders: ['TBMU']
+receivers: ['HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  HV_CONTACTOR_OPENING_CAUSE:
+    bits: '2.7-2.5'
+    comment:
+      en: 'Cause of the high-voltage contactors opening'
+      fr: 'Cause de l''ouverture des contacteurs haute tension'
+      es: 'Causa de la apertura de los contactores de alta tensión'
+      de: 'Ursache der Öffnung der Hochvoltschütze'
+      it: 'Causa dell''apertura dei contattori ad alta tensione'
+      pl: 'Przyczyna rozłączenia styczników wysokiego napięcia'
+      ru: 'Причина размыкания высоковольтных контакторов'
+      zh: '高压接触器断开原因'
+      hu: 'A nagyfeszültségű kontaktorok nyitásának oka'
+      pt: 'Causa da abertura dos contactores de alta tensão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Nothing'
+        fr: 'RAS'
+        es: 'Nada que señalar'
+        de: 'Nichts zu melden'
+        it: 'Niente da segnalare'
+        pl: 'Nic do zgłoszenia'
+        ru: 'Нечего сообщить'
+        zh: '无异常'
+        hu: 'Nincs jelenteni való'
+        pt: 'Nada a assinalar'
+      0x01:
+        en: 'Crash'
+        fr: 'Choc'
+        es: 'Choque'
+        de: 'Unfall'
+        it: 'Urto'
+        pl: 'Zderzenie'
+        ru: 'Авария'
+        zh: '碰撞'
+        hu: 'Ütközés'
+        pt: 'Choque'
+      0x02:
+        en: 'Supply voltage too low'
+        fr: 'Tension d''alimentation trop faible'
+        es: 'Tensión de alimentación demasiado baja'
+        de: 'Versorgungsspannung zu niedrig'
+        it: 'Tensione di alimentazione troppo bassa'
+        pl: 'Zbyt niskie napięcie zasilania'
+        ru: 'Слишком низкое напряжение питания'
+        zh: '供电电压过低'
+        hu: 'A tápfeszültség túl alacsony'
+        pt: 'Tensão de alimentação demasiado baixa'
+      0x03:
+        en: 'Supply voltage too high'
+        fr: 'Tension d''alimentation trop élevée'
+        es: 'Tensión de alimentación demasiado alta'
+        de: 'Versorgungsspannung zu hoch'
+        it: 'Tensione di alimentazione troppo elevata'
+        pl: 'Napięcie zasilania zbyt wysokie'
+        ru: 'Напряжение питания слишком высокое'
+        zh: '供电电压过高'
+        hu: 'A tápfeszültség túl magas'
+        pt: 'Tensão de alimentação demasiado alta'
+      0x04:
+        en: 'high temperature'
+        fr: 'Temperature trop importante'
+        es: 'Temperatura demasiado alta'
+        de: 'Temperatur zu hoch'
+        it: 'Temperatura troppo elevata'
+        pl: 'Temperatura zbyt wysoka'
+        ru: 'Слишком высокая температура'
+        zh: '温度过高'
+        hu: 'Túl magas hőmérséklet'
+        pt: 'Temperatura demasiado elevada'
+      0x05:
+        en: 'Pilot line opening'
+        fr: 'Ouverture ligne pilote'
+        es: 'Apertura de línea piloto'
+        de: 'Öffnung Pilotleitung'
+        it: 'Apertura linea pilota'
+        pl: 'Otwarcie linii pilotującej'
+        ru: 'Открытие пилотной линии'
+        zh: '引导线开启'
+        hu: 'Pilótavonal nyitása'
+        pt: 'Abertura da linha piloto'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  HV_BATTERY_ACTUAL_VOLTAGE:
+    bits: '2.4-3.0'
+    comment:
+      en: 'Actual voltage of the high-voltage battery'
+      fr: 'Tension réelle de la batterie haute tension'
+      es: 'Tensión real de la batería de alta tensión'
+      de: 'Tatsächliche Spannung der Hochvoltbatterie'
+      it: 'Tensione reale della batteria ad alta tensione'
+      pl: 'Rzeczywiste napięcie akumulatora wysokiego napięcia'
+      ru: 'Фактическое напряжение высоковольтной батареи'
+      zh: '高压电池实际电压'
+      hu: 'A nagyfeszültségű akkumulátor tényleges feszültsége'
+      pt: 'Tensão real da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FFF
+    default: 0x00
+
+  TBMU_POWER_LATCH_REQUEST:
+    bits: '4.7'
+    comment:
+      en: 'TBMU power latch request to keep the cooling fan powered after shutdown'
+      fr: 'Demande de maintien d''alimentation (power latch) du TBMU pour le ventilateur après coupure'
+      es: 'Solicitud de retención de alimentación (power latch) del TBMU para el ventilador tras el apagado'
+      de: 'Anforderung der Selbsthaltung (Power Latch) des TBMU zur Versorgung des Lüfters nach dem Abschalten'
+      it: 'Richiesta di automantenimento dell''alimentazione (power latch) del TBMU per la ventola dopo lo spegnimento'
+      pl: 'Żądanie podtrzymania zasilania (power latch) TBMU dla wentylatora po wyłączeniu'
+      ru: 'Запрос удержания питания (power latch) TBMU для вентилятора после выключения'
+      zh: 'TBMU电源自锁请求,以在关闭后维持风扇供电'
+      hu: 'A TBMU önfenntartó tápellátásának (power latch) kérése a ventilátor számára kikapcsolás után'
+      pt: 'Pedido de retenção de alimentação (power latch) do TBMU para o ventilador após o corte'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  HV_BATTERY_CONTACTOR_STATUS:
+    bits: '4.6-4.5'
+    comment:
+      en: 'High-voltage battery contactors status'
+      fr: 'Etat des contacteurs de la batterie haute tension'
+      es: 'Estado de los contactores de la batería de alta tensión'
+      de: 'Status der Hochvoltbatterie-Schütze'
+      it: 'Stato dei contattori della batteria ad alta tensione'
+      pl: 'Stan styczników akumulatora wysokiego napięcia'
+      ru: 'Состояние контакторов высоковольтной батареи'
+      zh: '高压电池接触器状态'
+      hu: 'A nagyfeszültségű akkumulátor kontaktorainak állapota'
+      pt: 'Estado dos contactores da bateria de alta tensão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Contactor open'
+        fr: 'Discontacteur ouvert'
+        es: 'Contactor abierto'
+        de: 'Schütz offen'
+        it: 'Contattore aperto'
+        pl: 'Stycznik otwarty'
+        ru: 'Контактор разомкнут'
+        zh: '接触器断开'
+        hu: 'Kontaktor nyitva'
+        pt: 'Contactor aberto'
+      0x01:
+        en: 'Contactor pre-load'
+        fr: 'Précharge des discontacteurs'
+        es: 'Precarga de los contactores'
+        de: 'Vorladung der Schütze'
+        it: 'Precarica dei contattori'
+        pl: 'Doładowanie wstępne styczników'
+        ru: 'Предзаряд контакторов'
+        zh: '接触器预充电'
+        hu: 'Kontaktorok előtöltése'
+        pt: 'Pré-carga do contactor'
+      0x02:
+        en: 'Contactor closed'
+        fr: 'Discontacteur fermé'
+        es: 'Contactor cerrado'
+        de: 'Schütz geschlossen'
+        it: 'Contattore chiuso'
+        pl: 'Zamknięty stycznik'
+        ru: 'Контактор замкнут'
+        zh: '接触器已闭合'
+        hu: 'A kontaktor zárva'
+        pt: 'Contactor fechado'
+      0x03:
+        unused: true
+
+  HV_BATTERY_ACTUAL_CURRENT:
+    bits: '4.4-5.0'
+    comment:
+      en: 'Actual current of the high-voltage battery'
+      fr: 'Courant réel de la batterie haute tension'
+      es: 'Corriente real de la batería de alta tensión'
+      de: 'Tatsächlicher Strom der Hochvoltbatterie'
+      it: 'Corrente reale della batteria ad alta tensione'
+      pl: 'Rzeczywisty prąd akumulatora wysokiego napięcia'
+      ru: 'Фактический ток высоковольтной батареи'
+      zh: '高压电池实际电流'
+      hu: 'A nagyfeszültségű akkumulátor tényleges árama'
+      pt: 'Corrente real da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    offset: -250
+    min: -250
+    max: 250
+    units: 'A'
+    invalid: 0x1FFF
+    default: 0x9C4
+
+  HV_BATTERY_POWER_LEVEL_STATUS:
+    bits: '6.4'
+    comment:
+      en: 'Available battery power level status'
+      fr: 'Statut du niveau de puissance batterie disponible'
+      es: 'Estado del nivel de potencia disponible de la batería'
+      de: 'Status des verfügbaren Batterieleistungsniveaus'
+      it: 'Stato del livello di potenza disponibile della batteria'
+      pl: 'Stan dostępnego poziomu mocy akumulatora'
+      ru: 'Состояние доступного уровня мощности батареи'
+      zh: '可用电池功率水平状态'
+      hu: 'Az elérhető akkumulátor-teljesítményszint állapota'
+      pt: 'Estado do nível de potência disponível da bateria'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alarm (power level below a critical threshold)'
+        fr: 'Aucune alarme (niveau de puissance en dessous d''un seuil critique)'
+        es: 'Sin alarma (nivel de potencia por debajo de un umbral crítico)'
+        de: 'Kein Alarm (Leistungspegel unter kritischem Schwellenwert)'
+        it: 'Nessun allarme (livello di potenza sotto una soglia critica)'
+        pl: 'Brak alarmu (poziom mocy poniżej progu krytycznego)'
+        ru: 'Нет тревоги (уровень мощности ниже критического порога)'
+        zh: '无警报（功率水平低于临界阈值）'
+        hu: 'Nincs riasztás (a teljesítményszint kritikus küszöb alatt van)'
+        pt: 'Sem alarme (nível de potência abaixo de um limiar crítico)'
+      0x01:
+        en: 'Alarm (power level outside a critical zone)'
+        fr: 'Alarme (niveau de puissance hors d''une zone critique)'
+        es: 'Alarma (nivel de potencia fuera de una zona crítica)'
+        de: 'Alarm (Leistungspegel außerhalb eines kritischen Bereichs)'
+        it: 'Allarme (livello di potenza fuori da una zona critica)'
+        pl: 'Alarm (poziom mocy poza strefą krytyczną)'
+        ru: 'Тревога (уровень мощности вне критической зоны)'
+        zh: '报警(功率水平超出临界区)'
+        hu: 'Riasztás (teljesítményszint kritikus zónán kívül)'
+        pt: 'Alarme (nível de potência fora de uma zona crítica)'
+
+  HV_BATTERY_SOH_SUPPLIER_HISTORY:
+    bits: '6.3-7.3'
+    comment:
+      en: 'Battery state of health (SOH) history value from the supplier'
+      fr: 'Etat de santé (SOH) de la batterie, historisation fournisseur'
+      es: 'Estado de salud (SOH) de la batería, historial del proveedor'
+      de: 'Alterungszustand (SOH) der Batterie, Lieferantenhistorie'
+      it: 'Stato di salute (SOH) della batteria, storicizzazione del fornitore'
+      pl: 'Stan zdrowia (SOH) akumulatora, historia dostawcy'
+      ru: 'Состояние здоровья батареи (SOH), архив поставщика'
+      zh: '电池健康状态(SOH)供应商历史值'
+      hu: 'Az akkumulátor állapota (SOH), szállítói előzmény'
+      pt: 'Estado de saúde (SOH) da bateria, histórico do fornecedor'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x1FF
+    default: 0x118
+
+  HYDROGEN_RISK_DETECTED:
+    bits: '7.2'
+    comment:
+      en: 'Hydrogen release risk detected'
+      fr: 'Risque de dégagement d''hydrogène détecté'
+      es: 'Riesgo de fuga de hidrógeno detectado'
+      de: 'Wasserstoff-Freisetzungsrisiko erkannt'
+      it: 'Rilevato rischio di rilascio di idrogeno'
+      pl: 'Wykryto ryzyko wydzielania wodoru'
+      ru: 'Обнаружен риск выделения водорода'
+      zh: '检测到氢气释放风险'
+      hu: 'Hidrogénkibocsátási kockázat észlelve'
+      pt: 'Risco de libertação de hidrogénio detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No hydrogen leak risk detected'
+        fr: 'Aucun risque de dégagement d''hydrogène détecté'
+        es: 'Ningún riesgo de fuga de hidrógeno detectado'
+        de: 'Kein Risiko einer Wasserstofffreisetzung erkannt'
+        it: 'Nessun rischio di rilascio di idrogeno rilevato'
+        pl: 'Nie wykryto ryzyka wydzielania wodoru'
+        ru: 'Риск выделения водорода не обнаружен'
+        zh: '未检测到氢气泄漏风险'
+        hu: 'Nem észleltek hidrogénkiáramlási kockázatot'
+        pt: 'Nenhum risco de fuga de hidrogénio detetado'
+      0x01:
+        en: 'Hydrogen release risk detected'
+        fr: 'Risque de dégagement d''hydrogène détecté'
+        es: 'Riesgo de emisión de hidrógeno detectado'
+        de: 'Risiko einer Wasserstofffreisetzung erkannt'
+        it: 'Rilevato rischio di emissione di idrogeno'
+        pl: 'Wykryto ryzyko uwolnienia wodoru'
+        ru: 'Обнаружен риск выделения водорода'
+        zh: '检测到氢气泄漏风险'
+        hu: 'Hidrogénszivárgás kockázat észlelve'
+        pt: 'Risco de libertação de hidrogénio detetado'
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['TBMU']
+    receivers: ['ERAD', 'CMM', 'CMEL', 'BVA', 'OBC']
+    signals:
+      FRAME_CHECKSUM:
+        bits: '1.7-1.4'
+        comment:
+          en: 'Checksum of the frame'
+          fr: 'Somme de contrôle (checksum) de la trame'
+          es: 'Suma de comprobación (checksum) de la trama'
+          de: 'Prüfsumme (Checksum) des Frames'
+          it: 'Checksum del frame'
+          pl: 'Suma kontrolna (checksum) ramki'
+          ru: 'Контрольная сумма кадра'
+          zh: '帧校验和'
+          hu: 'A keret ellenőrző összege (checksum)'
+          pt: 'Soma de verificação da trama'
+        type: 'uint'
+      PROCESS_COUNTER:
+        bits: '1.3-1.0'
+        comment:
+          en: 'Rolling counter incremented at each calculation cycle'
+          fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+          es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+          de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+          it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+          pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+          ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+          zh: '每个计算周期递增的循环计数器'
+          hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+          pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+        type: 'uint'
+        min: 0
+        max: 15
+        default: 0x00
+      HV_BATTERY_ACTUAL_VOLTAGE:
+        bits: '2.7-3.5'
+        comment:
+          en: 'HV battery actual voltage (V)'
+          fr: 'Tension réelle de la batterie haute tension (V)'
+          es: 'Tensión real de la batería de alta tensión (V)'
+          de: 'Tatsächliche Spannung der Hochvoltbatterie (V)'
+          it: 'Tensione reale della batteria ad alta tensione (V)'
+          pl: 'Rzeczywiste napięcie akumulatora wysokiego napięcia (V)'
+          ru: 'Фактическое напряжение высоковольтной батареи (В)'
+          zh: '高压电池实际电压(V)'
+          hu: 'A nagyfeszültségű akkumulátor tényleges feszültsége (V)'
+          pt: 'Tensão real da bateria de alta tensão (V)'
+        type: 'uint'
+        factor: 0.25
+        min: 0
+        max: 500
+        units: 'V'
+        invalid: 0x7FF
+        default: 0x00
+      HV_BATTERY_ACTUAL_CURRENT:
+        bits: '3.4-4.2'
+        comment:
+          en: 'Actual current of the high-voltage battery'
+          fr: 'Courant réel de la batterie haute tension'
+          es: 'Corriente real de la batería de alta tensión'
+          de: 'Tatsächlicher Strom der Hochvoltbatterie'
+          it: 'Corrente reale della batteria ad alta tensione'
+          pl: 'Rzeczywisty prąd akumulatora wysokiego napięcia'
+          ru: 'Фактический ток высоковольтной батареи'
+          zh: '高压电池实际电流'
+          hu: 'A nagyfeszültségű akkumulátor tényleges árama'
+          pt: 'Corrente real da bateria de alta tensão'
+        type: 'sint'
+        factor: 0.4
+        min: -400
+        max: 400
+        units: 'A'
+        invalid: 0x3FF
+        default: 0x00
+      UNUSED_1:
+        bits: '4.1-4.0'
+        unused: true

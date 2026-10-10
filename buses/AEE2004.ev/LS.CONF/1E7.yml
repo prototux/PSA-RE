@@ -1,0 +1,371 @@
+id: 0x1E7
+name: 'ARTIV_AND_HYBRID_STATUS'
+type: 'can'
+length: 5
+comment:
+  en: 'Adaptive cruise control (target detection and gap) and hybrid system status: alert, detected target, display mode, gap setpoint.'
+  fr: 'État du régulateur de distance adaptatif (détection de cible, écart) et du système hybride : alerte, cible détectée, mode d''affichage, consigne d''écart.'
+  es: 'Estado del regulador de distancia adaptativo (detección de objetivo, separación) y del sistema híbrido: alerta, objetivo detectado, modo de visualización, consigna de separación.'
+  de: 'Status des adaptiven Abstandsreglers (Zielobjekterkennung, Abstand) und des Hybridsystems: Warnung, erkanntes Ziel, Anzeigemodus, Abstandssollwert.'
+  it: 'Stato del regolatore di distanza adattivo (rilevamento target, distanza) e del sistema ibrido: allarme, target rilevato, modalità di visualizzazione, setpoint di distanza.'
+  pl: 'Stan adaptacyjnego regulatora odległości (wykrywanie celu, odstęp) i układu hybrydowego: alarm, wykryty cel, tryb wyświetlania, zadany odstęp.'
+  ru: 'Статус адаптивного круиз-контроля (обнаружение цели, дистанция) и гибридной системы: сигнал тревоги, обнаруженная цель, режим отображения, заданная дистанция.'
+  zh: '自适应巡航(目标探测、车距)及混合动力系统状态:告警、探测到的目标、显示模式、车距设定值。'
+  hu: 'Az adaptív követési távolságszabályzó (célfelismerés, távolság) és a hibrid rendszer állapota: riasztás, felismert cél, kijelzési mód, távolság-alapérték.'
+  pt: 'Estado do regulador de velocidade adaptativo (deteção de alvo e intervalo) e do sistema híbrido: alerta, alvo detetado, modo de apresentação, ponto de ajuste de intervalo.'
+observations:
+  en: 'On state change of: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+  fr: 'Sur changement d''état de : ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+  es: 'Al cambiar el estado de: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+  de: 'Bei Statusänderung von: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+  it: 'Al cambiamento di stato di: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+  pl: 'Wysyłane przy zmianie stanu: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+  ru: 'При изменении состояния: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+  zh: '当ETAT_SELEC_ARTIV, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_CIBLE状态变化时'
+  hu: 'A(z) ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET állapotváltozásakor'
+  pt: 'Na mudança de estado de: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['CMB', 'VTH', 'MATT', 'BTEL']
+
+signals:
+  ARTIV_SELECTION_STATUS:
+    bits: '1.7-1.6'
+    comment:
+      en: 'ARTIV selection status'
+      fr: 'Statut de sélection ARTIV'
+      es: 'Estado de selección ARTIV'
+      de: 'Auswahlstatus ARTIV'
+      it: 'Stato di selezione ARTIV'
+      pl: 'Stan wyboru ARTIV'
+      ru: 'Статус выбора ARTIV'
+      zh: 'ARTIV选择状态'
+      hu: 'Az ARTIV kiválasztási állapota'
+      pt: 'Estado de seleção do ARTIV'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Not selected'
+        fr: 'Non sélectionné'
+        es: 'No seleccionado'
+        de: 'Nicht ausgewählt'
+        it: 'Non selezionato'
+        pl: 'Niewybrane'
+        ru: 'Не выбрано'
+        zh: '未选择'
+        hu: 'Nincs kiválasztva'
+        pt: 'Não selecionado'
+      0x01:
+        en: 'Selected'
+        fr: 'Sélectionné'
+        es: 'Seleccionado'
+        de: 'Ausgewählt'
+        it: 'Selezionato'
+        pl: 'Wybrany'
+        ru: 'Выбрано'
+        zh: '已选择'
+        hu: 'Kiválasztva'
+        pt: 'Selecionado'
+      0x02:
+        en: 'Selected but unavailable'
+        fr: 'Sélectionné mais indisponible'
+        es: 'Seleccionado pero no disponible'
+        de: 'Ausgewählt, aber nicht verfügbar'
+        it: 'Selezionato ma non disponibile'
+        pl: 'Wybrane, ale niedostępne'
+        ru: 'Выбрано, но недоступно'
+        zh: '已选择但不可用'
+        hu: 'Kiválasztva, de nem elérhető'
+        pt: 'Selecionado mas indisponível'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  IHM_ARTIV_STATUS:
+    bits: '1.5-1.4'
+    comment:
+      en: 'ARTIV display status'
+      fr: 'Statut de l''affichage ARTIV'
+      es: 'Estado de la pantalla ARTIV'
+      de: 'Anzeigestatus ARTIV'
+      it: 'Stato del display ARTIV'
+      pl: 'Stan wyświetlacza ARTIV'
+      ru: 'Статус дисплея ARTIV'
+      zh: 'ARTIV显示状态'
+      hu: 'Az ARTIV kijelző állapota'
+      pt: 'Estado do visor ARTIV'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unsuitable speed'
+        fr: 'Vitesse inadaptée'
+        es: 'Velocidad inadecuada'
+        de: 'Ungeeignete Geschwindigkeit'
+        it: 'Velocità inadeguata'
+        pl: 'Nieodpowiednia prędkość'
+        ru: 'Неподходящая скорость'
+        zh: '速度不适宜'
+        hu: 'Nem megfelelő sebesség'
+        pt: 'Velocidade inadequada'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        en: 'Reduced visibility'
+        fr: 'Visibilité réduite'
+        es: 'Visibilidad reducida'
+        de: 'Verringerte Sicht'
+        it: 'Visibilità ridotta'
+        pl: 'Ograniczona widoczność'
+        ru: 'Пониженная видимость'
+        zh: '能见度降低'
+        hu: 'Csökkent látótávolság'
+        pt: 'Visibilidade reduzida'
+      0x03:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+
+  ARTIV_ALERT:
+    bits: '1.3'
+    comment:
+      en: 'ARTIV alert'
+      fr: 'Alerte ARTIV'
+      es: 'Alerta ARTIV'
+      de: 'ARTIV-Warnung'
+      it: 'Allarme ARTIV'
+      pl: 'Alarm ARTIV'
+      ru: 'Оповещение ARTIV'
+      zh: 'ARTIV警报'
+      hu: 'ARTIV riasztás'
+      pt: 'Alerta ARTIV'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  ARTIV_ALERT_ADJUSTMENT:
+    bits: '1.2'
+    comment:
+      en: 'ARTIV alert adjustment'
+      fr: 'Réglage de l''alerte ARTIV'
+      es: 'Ajuste de la alerta ARTIV'
+      de: 'Einstellung der ARTIV-Warnung'
+      it: 'Regolazione dell''allarme ARTIV'
+      pl: 'Regulacja alarmu ARTIV'
+      ru: 'Настройка оповещения ARTIV'
+      zh: 'ARTIV警报调整'
+      hu: 'Az ARTIV riasztás beállítása'
+      pt: 'Ajuste do alerta ARTIV'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No adjustment'
+        fr: 'Pas de réglage'
+        es: 'Sin ajuste'
+        de: 'Keine Einstellung'
+        it: 'Nessuna regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Нет настройки'
+        zh: '无调节'
+        hu: 'Nincs beállítás'
+        pt: 'Sem ajuste'
+      0x01:
+        en: 'Adjustment'
+        fr: 'Réglage'
+        es: 'Ajuste'
+        de: 'Einstellung'
+        it: 'Regolazione'
+        pl: 'Regulacja'
+        ru: 'Настройка'
+        zh: '调节'
+        hu: 'Beállítás'
+        pt: 'Ajuste'
+
+  ARTIV_TARGET_DETECTED:
+    bits: '1.1'
+    comment:
+      en: 'ARTIV target detected'
+      fr: 'Cible ARTIV détectée'
+      es: 'Objetivo ARTIV detectado'
+      de: 'ARTIV-Ziel erkannt'
+      it: 'Bersaglio ARTIV rilevato'
+      pl: 'Wykryto cel ARTIV'
+      ru: 'Обнаружена цель ARTIV'
+      zh: '检测到ARTIV目标'
+      hu: 'ARTIV célpont észlelve'
+      pt: 'Alvo ARTIV detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Target not detected'
+        fr: 'Cible non détectée'
+        es: 'Objetivo no detectado'
+        de: 'Ziel nicht erkannt'
+        it: 'Bersaglio non rilevato'
+        pl: 'Nie wykryto celu'
+        ru: 'Цель не обнаружена'
+        zh: '未检测到目标'
+        hu: 'Célobjektum nincs észlelve'
+        pt: 'Alvo não detetado'
+      0x01:
+        en: 'Target detected'
+        fr: 'Cible détectée'
+        es: 'Objetivo detectado'
+        de: 'Ziel erkannt'
+        it: 'Bersaglio rilevato'
+        pl: 'Wykryto cel'
+        ru: 'Цель обнаружена'
+        zh: '检测到目标'
+        hu: 'Cél észlelve'
+        pt: 'Alvo detetado'
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  TIV_SETPOINT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Setpoint time interval to the vehicle ahead (TIV)'
+      fr: 'Consigne d''intervalle de temps avec le véhicule précédent (TIV)'
+      es: 'Consigna de intervalo de tiempo con el vehículo precedente (TIV)'
+      de: 'Sollwert des Zeitabstands zum vorausfahrenden Fahrzeug (TIV)'
+      it: 'Valore di riferimento dell''intervallo di tempo dal veicolo che precede (TIV)'
+      pl: 'Wartość zadana odstępu czasowego od poprzedzającego pojazdu (TIV)'
+      ru: 'Заданный временной интервал до впереди идущего автомобиля (TIV)'
+      zh: '与前车时间间隔的设定值(TIV)'
+      hu: 'Az előttünk haladó járműtől való időintervallum alapjele (TIV)'
+      pt: 'Consigna de intervalo de tempo com o veículo precedente (TIV)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.3
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+
+  TIV_TARGET:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Target time interval to the vehicle ahead (TIV)'
+      fr: 'Intervalle de temps cible avec le véhicule précédent (TIV)'
+      es: 'Intervalo de tiempo objetivo con el vehículo precedente (TIV)'
+      de: 'Ziel-Zeitabstand zum vorausfahrenden Fahrzeug (TIV)'
+      it: 'Intervallo di tempo obiettivo dal veicolo che precede (TIV)'
+      pl: 'Docelowy odstęp czasowy od poprzedzającego pojazdu (TIV)'
+      ru: 'Целевой временной интервал до впереди идущего автомобиля (TIV)'
+      zh: '与前车的目标时间间隔(TIV)'
+      hu: 'Az előttünk haladó járműtől való célzott időintervallum (TIV)'
+      pt: 'Intervalo de tempo alvo com o veículo precedente (TIV)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.3
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+    values:
+      0xFE:
+        en: 'TIV not displayed'
+        fr: 'TIV non affiché'
+        es: 'TIV no mostrado'
+        de: 'TIV nicht angezeigt'
+        it: 'TIV non visualizzato'
+        pl: 'TIV niewyświetlany'
+        ru: 'TIV не отображается'
+        zh: 'TIV未显示'
+        hu: 'A TIV nincs megjelenítve'
+        pt: 'TIV não apresentado'
+
+  POWER_BATTERY_HT:
+    bits: '4.7-4.1'
+    comment:
+      en: 'High-voltage battery power balance'
+      fr: 'Bilan de puissance de la batterie haute tension'
+      es: 'Balance de potencia de la batería de alta tensión'
+      de: 'Leistungsbilanz der Hochvoltbatterie'
+      it: 'Bilancio di potenza della batteria ad alta tensione'
+      pl: 'Bilans mocy akumulatora wysokiego napięcia'
+      ru: 'Баланс мощности высоковольтной батареи'
+      zh: '高压电池功率平衡'
+      hu: 'A nagyfeszültségű akkumulátor teljesítménymérlege'
+      pt: 'Balanço de potência da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    offset: -50
+    min: -50
+    max: 50
+    units: 'kW'
+    invalid: 0x7F
+    default: 0x00
+
+  HYBRID_POWER_TRACTION:
+    bits: '4.0-5.0'
+    comment:
+      en: 'Power delivered by the hybrid powertrain'
+      fr: 'Puissance délivrée par la chaîne de traction hybride'
+      es: 'Potencia entregada por la cadena de tracción híbrida'
+      de: 'Vom Hybridantrieb abgegebene Leistung'
+      it: 'Potenza erogata dal sistema di trazione ibrido'
+      pl: 'Moc dostarczana przez hybrydowy układ napędowy'
+      ru: 'Мощность, выдаваемая гибридной трансмиссией'
+      zh: '混合动力传动系统输出功率'
+      hu: 'A hibrid hajtáslánc által leadott teljesítmény'
+      pt: 'Potência fornecida pela cadeia de tração híbrida'
+    type: 'uint'
+    factor: 0.5
+    offset: -50
+    min: -50
+    max: 200
+    units: '%'
+    invalid: 0x1FF
+    default: 0x00

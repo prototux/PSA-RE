@@ -1,63 +1,151 @@
 id: 0x1A9
 name: 'TELEMATICS_STATUS'
-alt_names: ['DEMANDES_BTEL']
+type: 'can'
 length: 1
 comment:
-  en: 'Telematics status'
-  fr: 'Statut télématique'
-type: 'can'
+  en: 'Telematic unit status, sent on change: dark push-button state, emergency call request and telematic function status.'
+  fr: 'État du boîtier télématique, envoyé sur changement : état du bouton-poussoir dark, demande d''appel d''urgence et état de la fonction télématique.'
+  es: 'Estado de la unidad telemática, enviado en cambio: estado del pulsador dark, solicitud de llamada de emergencia y estado de la función telemática.'
+  de: 'Status des Telematikgeräts, bei Änderung gesendet: Zustand der Dark-Taste, Notruf-Anforderung und Status der Telematikfunktion.'
+  it: 'Stato dell''unità telematica, inviato al cambiamento: stato del pulsante dark, richiesta di chiamata di emergenza e stato della funzione telematica.'
+  pl: 'Stan jednostki telematycznej, wysyłany przy zmianie: stan przycisku dark, żądanie połączenia alarmowego i stan funkcji telematycznej.'
+  ru: 'Статус телематического блока, отправляемый при изменении: состояние кнопки dark, запрос экстренного вызова и статус телематической функции.'
+  zh: '车载通信单元状态,状态变化时发送:dark按钮状态、紧急呼叫请求和通信功能状态。'
+  hu: 'A telematikai egység állapota, változáskor küldve: dark gomb állapota, segélyhívás kérése és a telematikai funkció állapota.'
+  pt: 'Estado da unidade telemática, enviado na mudança: estado do botão dark, pedido de chamada de emergência e estado da função telemática.'
+observations:
+  en: 'On state change of: BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
+  fr: 'Sur changement d''état de : BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
+  es: 'Al cambiar el estado de: BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
+  de: 'Bei Statusänderung von: BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
+  it: 'Al cambiamento di stato di: BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
+  pl: 'Wysyłane przy zmianie stanu: BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
+  ru: 'При изменении состояния: BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
+  zh: '当ETAT_BP_DARK, EMERGENCY_CALL_STATUS, S_FCT_TELE状态变化时'
+  hu: 'A(z) BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS állapotváltozásakor'
+  pt: 'Na mudança de estado de: BLACK_PANEL_STATUS, EMERGENCY_CALL_STATUS, TELEMATICS_FUNCTIONS_STATUS'
 periodicity: ['200ms', 'trigger']
-senders:
-  - 'BTEL'
-  - 'NG4'
-  - 'RNEG'
-receivers:
-  - 'BSI'
+senders: ['BTEL']
+receivers: ['BSI']
 
 signals:
   BLACK_PANEL_STATUS:
-    alt_names: ['ETAT_BP_DARK']
-    bits: "1.7"
+    bits: '1.7'
     comment:
-      fr: "Etat de la fonction Black Panel associée au push Dark"
-      en: "Status of Black Panel function associated with Dark push"
+      en: 'Black Panel (dark display) function status'
+      fr: 'État de la fonction Black Panel (affichage sombre)'
+      es: 'Estado de la función Black Panel (pantalla oscura)'
+      de: 'Status der Black-Panel-Funktion (abgedunkelte Anzeige)'
+      it: 'Stato della funzione Black Panel (display scuro)'
+      pl: 'Stan funkcji Black Panel (przyciemniony wyświetlacz)'
+      ru: 'Статус функции Black Panel (затемнённый дисплей)'
+      zh: 'Black Panel(黑屏)功能状态'
+      hu: 'A Black Panel (elsötétített kijelző) funkció állapota'
+      pt: 'Estado da função Black Panel (ecrã escuro)'
+    type: 'bool'
+    default: 0x00
     values:
-      0:
-        fr: "Fonction inactivée"
-        en: "Function disabled"
-      1:
-        fr: "Fonction activée"
-        en: "Function enabled"
+      0x00:
+        en: 'Function deactivated'
+        fr: 'Fonction désactivée'
+        es: 'Función desactivada'
+        de: 'Funktion deaktiviert'
+        it: 'Funzione disattivata'
+        pl: 'Funkcja wyłączona'
+        ru: 'Функция отключена'
+        zh: '功能已停用'
+        hu: 'Funkció letiltva'
+        pt: 'Função desativada'
+      0x01:
+        en: 'Function activated'
+        fr: 'Fonction activée'
+        es: 'Función activada'
+        de: 'Funktion aktiviert'
+        it: 'Funzione attivata'
+        pl: 'Funkcja aktywowana'
+        ru: 'Функция активирована'
+        zh: '功能已激活'
+        hu: 'Funkció aktiválva'
+        pt: 'Função ativada'
 
   EMERGENCY_CALL_STATUS:
-    alt_names: ['APP_URG']
-    bits: "1.6"
+    bits: '1.6'
     comment:
-      fr: "Appel d'urgence en cours"
-      en: "Emergency call in progress"
+      en: 'Emergency call (eCall) in progress'
+      fr: 'Appel d''urgence (eCall) en cours'
+      es: 'Llamada de emergencia (eCall) en curso'
+      de: 'Notruf (eCall) läuft'
+      it: 'Chiamata di emergenza (eCall) in corso'
+      pl: 'Trwa połączenie alarmowe (eCall)'
+      ru: 'Выполняется экстренный вызов (eCall)'
+      zh: '紧急呼叫(eCall)进行中'
+      hu: 'Segélyhívás (eCall) folyamatban'
+      pt: 'Chamada de emergência (eCall) em curso'
+    type: 'bool'
+    default: 0x00
     values:
-      0:
-        fr: "Pas d'appel d'urgence"
-        en: "No emergency call"
-      1:
-        fr: "Appel d'urgence en cours"
-        en: "Emergency call in progress"
+      0x00:
+        en: 'No emergency call'
+        fr: 'Pas d''appel d''urgence'
+        es: 'Sin llamada de emergencia'
+        de: 'Kein Notruf'
+        it: 'Nessuna chiamata di emergenza'
+        pl: 'Brak wezwania alarmowego'
+        ru: 'Нет экстренного вызова'
+        zh: '无紧急呼叫'
+        hu: 'Nincs vészhívás'
+        pt: 'Sem chamada de emergência'
+      0x01:
+        en: 'Emergency call in progress'
+        fr: 'Appel d''urgence en cours'
+        es: 'Llamada de emergencia en curso'
+        de: 'Notruf läuft'
+        it: 'Chiamata di emergenza in corso'
+        pl: 'Trwa połączenie alarmowe'
+        ru: 'Экстренный вызов выполняется'
+        zh: '紧急呼叫进行中'
+        hu: 'Segélyhívás folyamatban'
+        pt: 'Chamada de emergência em curso'
 
   TELEMATICS_FUNCTIONS_STATUS:
-    alt_names: ['S_FCT_TELE']
-    bits: "1.5"
+    bits: '1.5'
     comment:
-      fr: "Etat des fonctions télématiques."
-      en: "Telematic functions state."
+      en: 'Telematics functions status'
+      fr: 'État des fonctions télématiques'
+      es: 'Estado de las funciones telemáticas'
+      de: 'Status der Telematikfunktionen'
+      it: 'Stato delle funzioni telematiche'
+      pl: 'Stan funkcji telematycznych'
+      ru: 'Статус телематических функций'
+      zh: '远程信息处理功能状态'
+      hu: 'A telematikai funkciók állapota'
+      pt: 'Estado das funções telemáticas'
+    type: 'bool'
+    default: 0x00
     values:
-      0:
-        fr: "Aucune fonction télématique activée"
-        en: "No telematic function active"
-      1:
-        fr: "Au moins une fonction télématique activée"
-        en: "At least one telematic function active"
+      0x00:
+        en: 'No telematics function activated'
+        fr: 'Aucune fonction télématique activée'
+        es: 'Ninguna función telemática activada'
+        de: 'Keine Telematikfunktion aktiviert'
+        it: 'Nessuna funzione telematica attivata'
+        pl: 'Nie aktywowano żadnej funkcji telematycznej'
+        ru: 'Ни одна телематическая функция не активирована'
+        zh: '未激活远程信息处理功能'
+        hu: 'Nincs aktiválva telematikai funkció'
+        pt: 'Nenhuma função telemática ativada'
+      0x01:
+        en: 'At least one telematics function activated'
+        fr: 'Au moins une fonction télématique activée'
+        es: 'Al menos una función telemática activada'
+        de: 'Mindestens eine Telematikfunktion aktiviert'
+        it: 'Almeno una funzione telematica attivata'
+        pl: 'Aktywowano co najmniej jedną funkcję telematyczną'
+        ru: 'Активирована как минимум одна телематическая функция'
+        zh: '至少一项远程信息功能已激活'
+        hu: 'Legalább egy telematikai funkció aktiválva'
+        pt: 'Pelo menos uma função telemática ativada'
 
   UNUSED_1:
-    alt_names: ['LIBRE_1']
-    bits: "1.4-1.0"
+    bits: '1.4-1.0'
     unused: true

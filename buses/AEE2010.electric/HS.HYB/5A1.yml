@@ -1,0 +1,145 @@
+id: 0x5A1
+name: 'OBC_DCDC_WAKEUP_STATUS_2'
+type: 'can'
+length: 4
+comment:
+  en: 'On-board charger / DC-DC converter wake-up requests: cabin cooling, blower, disconnector hold, HV battery recharge and MEAP cooling.'
+  fr: 'Demandes de réveil du chargeur embarqué / convertisseur DC-DC : refroidissement habitacle, pulseur, maintien du disjoncteur, recharge batterie HT et refroidissement MEAP.'
+  es: 'Solicitudes de activación del cargador embarcado / convertidor DC-DC: refrigeración del habitáculo, ventilador, mantenimiento del seccionador, recarga de batería de alta tensión y refrigeración MEAP.'
+  de: 'Weckanforderungen des Onboard-Ladegeräts / DC-DC-Wandlers: Innenraumkühlung, Gebläse, Halten des Trennschalters, Hochvoltbatterie-Nachladung und MEAP-Kühlung.'
+  it: 'Richieste di risveglio del caricabatterie di bordo / convertitore DC-DC: raffreddamento abitacolo, ventola, mantenimento del sezionatore, ricarica batteria AT e raffreddamento MEAP.'
+  pl: 'Żądania wybudzenia ładowarki pokładowej / przetwornicy DC-DC: chłodzenie kabiny, dmuchawa, podtrzymanie rozłącznika, doładowanie akumulatora WN i chłodzenie MEAP.'
+  ru: 'Запросы пробуждения бортового зарядного устройства / преобразователя DC-DC: охлаждение салона, вентилятор, удержание разъединителя, подзарядка высоковольтной батареи и охлаждение MEAP.'
+  zh: '车载充电器/DC-DC转换器唤醒请求:座舱冷却、鼓风机、断路器保持、高压电池补充充电和MEAP冷却。'
+  hu: 'A fedélzeti töltő / DC-DC átalakító ébresztési kérései: utastér hűtés, fűtőventilátor, megszakító tartása, nagyfeszültségű akkumulátor újratöltése és MEAP hűtés.'
+  pt: 'Pedidos de ativação do carregador de bordo / conversor DC-DC: arrefecimento do habitáculo, ventilador, manutenção do disjuntor, recarga da bateria de alta tensão e arrefecimento MEAP.'
+observations:
+  en: 'On state change of: OBC_HV_BATTERY_CONTACTOR_REQUEST'
+  fr: 'Sur changement d''état de : OBC_HV_BATTERY_CONTACTOR_REQUEST'
+  es: 'Al cambiar el estado de: OBC_HV_BATTERY_CONTACTOR_REQUEST'
+  de: 'Bei Statusänderung von: OBC_HV_BATTERY_CONTACTOR_REQUEST'
+  it: 'Al cambiamento di stato di: OBC_HV_BATTERY_CONTACTOR_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: OBC_HV_BATTERY_CONTACTOR_REQUEST'
+  ru: 'При изменении состояния: OBC_HV_BATTERY_CONTACTOR_REQUEST'
+  zh: '当OBC_CONT_OPEN_HV_BATT_REQ状态变化时'
+  hu: 'A(z) OBC_HV_BATTERY_CONTACTOR_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: OBC_HV_BATTERY_CONTACTOR_REQUEST'
+periodicity: ['500ms', 'trigger']
+senders: ['OBC']
+receivers: ['CMM', 'TBMU']
+
+signals:
+  DCDC_CONVERTER_ACTUAL_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'DC/DC converter temperature (°C)'
+      fr: 'Température du convertisseur DC/DC (°C)'
+      es: 'Temperatura del convertidor DC/DC (°C)'
+      de: 'Temperatur des DC/DC-Wandlers (°C)'
+      it: 'Temperatura del convertitore DC/DC (°C)'
+      pl: 'Temperatura przetwornicy DC/DC (°C)'
+      ru: 'Температура преобразователя DC/DC (°C)'
+      zh: 'DC/DC变换器温度(°C)'
+      hu: 'A DC/DC átalakító hőmérséklete (°C)'
+      pt: 'Temperatura do conversor DC/DC (°C)'
+    type: 'uint'
+    factor: -40
+    offset: 1
+    min: -40
+    max: 130
+    units: '°C'
+    invalid: 0xFF
+    default: 0x00
+
+  OBC_HV_BATTERY_CONTACTOR_REQUEST:
+    bits: '2.7-2.6'
+    comment:
+      en: 'On-board charger request to the HV battery contactor'
+      fr: 'Demande d''état du contacteur de la batterie haute tension par le chargeur embarqué'
+      es: 'Solicitud de estado del contactor de la batería de alta tensión por el cargador embarcado'
+      de: 'Anforderung des Schützzustands der Hochvoltbatterie durch das On-Board-Ladegerät'
+      it: 'Richiesta di stato del contattore della batteria ad alta tensione da parte del caricabatterie di bordo'
+      pl: 'Żądanie stanu stycznika akumulatora wysokiego napięcia przez ładowarkę pokładową'
+      ru: 'Запрос состояния контактора высоковольтной батареи от бортового зарядного устройства'
+      zh: '车载充电器对高压电池接触器状态的请求'
+      hu: 'A fedélzeti töltő kérése a nagyfeszültségű akkumulátor érintkezőjének állapotára'
+      pt: 'Pedido de estado do contactor da bateria de alta tensão pelo carregador de bordo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Request to open contactors'
+        fr: 'Demande d''ouverture des contacteurs'
+        es: 'Solicitud de apertura de los contactores'
+        de: 'Anforderung zum Öffnen der Schütze'
+        it: 'Richiesta di apertura dei contattori'
+        pl: 'Żądanie otwarcia styczników'
+        ru: 'Запрос размыкания контакторов'
+        zh: '请求断开接触器'
+        hu: 'Kontaktorok nyitási kérése'
+        pt: 'Pedido de abertura dos contactores'
+      0x01:
+        en: 'Request to close the contactors'
+        fr: 'Demande de fermeture des contacteurs'
+        es: 'Solicitud de cierre de los contactores'
+        de: 'Anforderung zum Schließen der Schütze'
+        it: 'Richiesta di chiusura dei contattori'
+        pl: 'Żądanie zamknięcia styczników'
+        ru: 'Запрос замыкания контакторов'
+        zh: '接触器闭合请求'
+        hu: 'A kontaktorok zárási kérése'
+        pt: 'Pedido de fecho dos contactores'
+      0x02:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '2.5-2.4'
+    unused: true
+
+  CHECKSUM_FRAME_5A1:
+    bits: '2.3-2.0'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_5A1:
+    bits: '3.7-3.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  UNUSED_2:
+    bits: '3.3-4.0'
+    unused: true

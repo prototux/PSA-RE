@@ -1,0 +1,138 @@
+id: 0x058
+name: 'AIRBAG_STATUS'
+type: 'can'
+length: 1
+comment:
+  en: 'Airbag computer status: bonnet switch active, general airbag state, centre and passenger airbag inhibition.'
+  fr: 'État du calculateur airbag : contacteur capot actif, état général airbag, inhibition airbag central et passager.'
+  es: 'Estado de la centralita de airbag: interruptor de capó activo, estado general del airbag, inhibición de airbag central y del pasajero.'
+  de: 'Status des Airbag-Steuergeräts: Motorhaubenschalter aktiv, allgemeiner Airbag-Zustand, Deaktivierung Mittel- und Beifahrer-Airbag.'
+  it: 'Stato della centralina airbag: interruttore cofano attivo, stato generale airbag, inibizione airbag centrale e passeggero.'
+  pl: 'Stan sterownika poduszek powietrznych: aktywny wyłącznik maski, ogólny stan poduszek powietrznych, wyłączenie poduszki centralnej i pasażera.'
+  ru: 'Статус блока управления подушками безопасности: активен выключатель капота, общее состояние подушек, отключение центральной и пассажирской подушки.'
+  zh: '安全气囊控制单元状态:引擎盖开关激活、安全气囊总体状态、中央和乘客安全气囊禁用。'
+  hu: 'A légzsák-vezérlőegység állapota: motorháztető-kapcsoló aktív, általános légzsákállapot, közép- és utaslégzsák letiltása.'
+  pt: 'Estado do computador do airbag: comutador do capot ativo, estado geral do airbag, inibição do airbag central e do passageiro.'
+observations:
+  en: 'On state change of: RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+  fr: 'Sur changement d''état de : RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+  es: 'Al cambiar el estado de: RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+  de: 'Bei Statusänderung von: RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+  it: 'Al cambiamento di stato di: RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+  pl: 'Wysyłane przy zmianie stanu: RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+  ru: 'При изменении состояния: RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+  zh: '当ET_GEN_RBG, ET_CLEF_INHIB状态变化时'
+  hu: 'A(z) RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS állapotváltozásakor'
+  pt: 'Na mudança de estado de: RBG_GENERAL_STATUS, INHIBIT_KEY_STATUS'
+periodicity: ['500ms', 'trigger']
+senders: ['RBG']
+receivers: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7'
+    unused: true
+
+  RBG_GENERAL_STATUS:
+    bits: '1.6'
+    comment:
+      en: 'General operating state'
+      fr: 'État de fonctionnement général'
+      es: 'Estado de funcionamiento general'
+      de: 'Allgemeiner Betriebszustand'
+      it: 'Stato di funzionamento generale'
+      pl: 'Ogólny stan działania'
+      ru: 'Общее рабочее состояние'
+      zh: '总体工作状态'
+      hu: 'Általános üzemi állapot'
+      pt: 'Estado geral de funcionamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No signalling'
+        fr: 'Pas de signalisation'
+        es: 'Sin señalización'
+        de: 'Keine Signalisierung'
+        it: 'Nessuna segnalazione'
+        pl: 'Brak sygnalizacji'
+        ru: 'Нет сигнализации'
+        zh: '无信号指示'
+        hu: 'Nincs jelzés'
+        pt: 'Sem sinalização'
+      0x01:
+        en: 'Signalling'
+        fr: 'Signalisation'
+        es: 'Señalización'
+        de: 'Signalisierung'
+        it: 'Segnalazione'
+        pl: 'Sygnalizacja'
+        ru: 'Сигнализация'
+        zh: '信号'
+        hu: 'Jelzés'
+        pt: 'Sinalização'
+
+  INHIBIT_KEY_STATUS:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Status of the pack''s inhibition key'
+      fr: 'État de la clef d''inhibition du pack'
+      es: 'Estado de la llave de inhibición del módulo'
+      de: 'Status des Deaktivierungsschlüssels des Steuergeräts'
+      it: 'Stato della chiave di inibizione del modulo'
+      pl: 'Stan klucza dezaktywacji modułu'
+      ru: 'Состояние ключа блокировки блока'
+      zh: '模块禁用钥匙状态'
+      hu: 'A modul letiltókulcsának állapota'
+      pt: 'Estado da chave de inibição do pack'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Undetermined'
+        fr: 'Indéterminé'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未确定'
+        hu: 'Meghatározatlan'
+        pt: 'Indeterminado'
+      0x01:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x02:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+      0x03:
+        en: 'IN FAULT'
+        fr: 'En defaut'
+        es: 'EN FALLO'
+        de: 'IN FEHLER'
+        it: 'IN GUASTO'
+        pl: 'W USTERCE'
+        ru: 'В НЕИСПРАВНОСТИ'
+        zh: '故障中'
+        hu: 'HIBÁBAN'
+        pt: 'EM FALHA'
+
+  UNUSED_2:
+    bits: '1.3-1.0'
+    unused: true

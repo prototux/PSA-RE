@@ -1,0 +1,91 @@
+id: 0x1B4
+name: 'VEHICLE_DYNAMICS_WHEELS_2'
+type: 'can'
+length: 5
+comment:
+  en: 'Vehicle speed, distance and longitudinal acceleration computed from the wheels, plus a warning-lamp request.'
+  fr: 'Vitesse véhicule, distance et accélération longitudinale calculées à partir des roues, ainsi qu''une demande de voyant.'
+  es: 'Velocidad del vehículo, distancia y aceleración longitudinal calculadas a partir de las ruedas, además de una solicitud de testigo.'
+  de: 'Aus den Rädern berechnete Fahrzeuggeschwindigkeit, Strecke und Längsbeschleunigung, sowie eine Kontrollleuchtenanforderung.'
+  it: 'Velocità veicolo, distanza e accelerazione longitudinale calcolate dalle ruote, oltre a una richiesta spia.'
+  pl: 'Prędkość pojazdu, dystans i przyspieszenie wzdłużne obliczone na podstawie kół, oraz żądanie kontrolki.'
+  ru: 'Скорость автомобиля, расстояние и продольное ускорение, рассчитанные по колёсам, а также запрос индикатора.'
+  zh: '根据车轮计算的车速、距离和纵向加速度,以及警示灯请求。'
+  hu: 'A kerekekből számított jármű sebesség, táv és hosszirányú gyorsulás, valamint egy jelzőlámpa-kérés.'
+  pt: 'Velocidade do veículo, distância e aceleração longitudinal calculadas a partir das rodas, além de um pedido da luz avisadora.'
+periodicity: ['100ms']
+senders: ['BSI']
+receivers: ['DEF']
+
+signals:
+  VEHICLE_SPEED_WHEEL_SENSORS:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Vehicle speed (wheel sensors)'
+      fr: 'Vitesse du véhicule (capteurs de roues)'
+      es: 'Velocidad del vehículo (sensores de rueda)'
+      de: 'Fahrzeuggeschwindigkeit (Raddrehzahlsensoren)'
+      it: 'Velocità del veicolo (sensori ruota)'
+      pl: 'Prędkość pojazdu (czujniki kół)'
+      ru: 'Скорость автомобиля (датчики колёс)'
+      zh: '车速(车轮传感器)'
+      hu: 'Járműsebesség (kerékérzékelők)'
+      pt: 'Velocidade do veículo (sensores de roda)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+
+  ODOMETER_WHEEL_SENSOR:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Odometer distance, from wheel sensors'
+      fr: 'Distance odométrique, mesurée par les capteurs de roue'
+      es: 'Distancia odométrica, medida por los sensores de rueda'
+      de: 'Odometerstrecke, von den Radsensoren gemessen'
+      it: 'Distanza odometrica, misurata dai sensori ruota'
+      pl: 'Odległość odometryczna, mierzona czujnikami koła'
+      ru: 'Одометрическое расстояние, измеренное датчиками колёс'
+      zh: '由轮速传感器测得的里程距离'
+      hu: 'Kilométeróra-távolság, a kerékérzékelők mérése alapján'
+      pt: 'Distância odométrica, medida pelos sensores de roda'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6553.5
+    units: 'm'
+    default: 0x00
+
+  LONGITUDINAL_ACCELERATION_WHEEL_SENSOR:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Longitudinal acceleration, from wheel sensors'
+      fr: 'Accélération longitudinale, mesurée par les capteurs de roue'
+      es: 'Aceleración longitudinal, medida por los sensores de rueda'
+      de: 'Längsbeschleunigung, von den Radsensoren gemessen'
+      it: 'Accelerazione longitudinale, misurata dai sensori ruota'
+      pl: 'Przyspieszenie wzdłużne, mierzone czujnikami koła'
+      ru: 'Продольное ускорение, измеренное датчиками колёс'
+      zh: '由轮速传感器测得的纵向加速度'
+      hu: 'Hosszirányú gyorsulás, a kerékérzékelők mérése alapján'
+      pt: 'Aceleração longitudinal, medida pelos sensores de roda'
+    type: 'enum'
+    factor: 0.08
+    offset: -14
+    units: 'm/s2'
+    invalid: 0xFF
+    default: 0x00
+    values:
+      0x0E:
+        en: 'LONGITUDINAL_ACCELERATION = N*0.08 -'
+        fr: 'LONGITUDINAL_ACCELERATION = N*0,08 -'
+        es: 'LONGITUDINAL_ACCELERATION = N*0,08 -'
+        de: 'LONGITUDINAL_ACCELERATION = N*0,08 -'
+        it: 'LONGITUDINAL_ACCELERATION = N*0,08 -'
+        pl: 'LONGITUDINAL_ACCELERATION = N*0,08 -'
+        ru: 'LONGITUDINAL_ACCELERATION = N*0,08 -'
+        zh: 'LONGITUDINAL_ACCELERATION = N*0.08 -'
+        hu: 'LONGITUDINAL_ACCELERATION = N*0,08 -'
+        pt: 'LONGITUDINAL_ACCELERATION = N*0,08 -'

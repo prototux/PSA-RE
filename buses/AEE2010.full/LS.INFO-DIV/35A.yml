@@ -1,0 +1,227 @@
+id: 0x35A
+name: 'NAV_SPEED_SECTION_COMMAND'
+type: 'can'
+length: 8
+comment:
+  en: 'Navigation speed-limit section data sent to the powertrain ECU: activation, remaining distance and time, and distance to up to five upcoming speed sections.'
+  fr: 'Données des tronçons de limitation de vitesse de la navigation envoyées au calculateur de motorisation : activation, distance et temps restants, et distance jusqu''à cinq tronçons de vitesse à venir.'
+  es: 'Datos de los tramos de límite de velocidad de la navegación enviados a la centralita de motorización: activación, distancia y tiempo restantes, y distancia hasta cinco tramos de velocidad próximos.'
+  de: 'Von der Navigation gesendete Geschwindigkeitsbegrenzungsabschnittsdaten an das Antriebssteuergerät: Aktivierung, verbleibende Distanz und Zeit sowie Distanz zu bis zu fünf kommenden Geschwindigkeitsabschnitten.'
+  it: 'Dati dei tratti di limite di velocità della navigazione inviati alla centralina della motorizzazione: attivazione, distanza e tempo restanti, e distanza fino a cinque tratti di velocità futuri.'
+  pl: 'Dane odcinków ograniczenia prędkości z nawigacji wysyłane do sterownika napędu: aktywacja, pozostały dystans i czas oraz odległość do maksymalnie pięciu nadchodzących odcinków prędkości.'
+  ru: 'Данные участков ограничения скорости от навигации, отправляемые в ЭБУ силовой установки: активация, оставшееся расстояние и время, а также расстояние до пяти предстоящих участков скорости.'
+  zh: '由导航发送给动力总成ECU的限速路段数据：激活状态、剩余距离和时间，以及最多五个即将到来的限速路段的距离。'
+  hu: 'A navigáció sebességkorlátozási szakaszadatai, amelyeket a hajtáslánc-vezérlőegységnek küldenek: aktiválás, hátralévő táv és idő, valamint a táv legfeljebb öt közelgő sebességszakaszig.'
+  pt: 'Dados de secções de limite de velocidade da navegação enviados à unidade de controlo do grupo motopropulsor: ativação, distância e tempo restantes, e distância até cinco secções de velocidade seguintes.'
+periodicity: ['1000585ms']
+senders: ['BTEL', 'OVIP']
+receivers: ['BSI']
+
+signals:
+  REMAINING_DISTANCE_SPEED_0_30:
+    bits: '1.7-1.1'
+    comment:
+      en: 'Percentage of remaining distance at 0-30 km/h'
+      fr: 'Pourcentage de distance restante à une vitesse de 0 à 30 km/h'
+      es: 'Porcentaje de distancia restante a una velocidad de 0 a 30 km/h'
+      de: 'Prozentsatz der Restdistanz bei 0-30 km/h'
+      it: 'Percentuale di distanza rimanente a una velocità di 0-30 km/h'
+      pl: 'Procent pozostałego dystansu przy prędkości 0-30 km/h'
+      ru: 'Процент оставшегося расстояния при скорости 0-30 км/ч'
+      zh: '0-30 km/h 速度下的剩余距离百分比'
+      hu: 'Hátralévő távolság százaléka 0-30 km/h sebességnél'
+      pt: 'Percentagem de distância restante a uma velocidade de 0 a 30 km/h'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  RANGE_BY_SPEED_ACTIVATION:
+    bits: '1.0'
+    comment:
+      en: 'Range-by-speed-section function activation'
+      fr: 'Activation de la fonction de calcul d''autonomie par tranche de vitesse'
+      es: 'Activación de la función de cálculo de autonomía por tramo de velocidad'
+      de: 'Aktivierung der Reichweitenberechnung nach Geschwindigkeitsbereich'
+      it: 'Attivazione della funzione di calcolo dell''autonomia per fascia di velocità'
+      pl: 'Aktywacja funkcji obliczania zasięgu według przedziału prędkości'
+      ru: 'Активация функции расчёта запаса хода по диапазонам скорости'
+      zh: '按速度区间续航计算功能激活'
+      hu: 'Sebességtartomány szerinti hatótávszámítás aktiválása'
+      pt: 'Ativação da função de cálculo de autonomia por escalão de velocidade'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+      0x01:
+        en: 'Trigger'
+        fr: 'Déclencheur'
+        es: 'Disparador'
+        de: 'Auslöser'
+        it: 'Trigger'
+        pl: 'Wyzwalacz'
+        ru: 'Триггер'
+        zh: '触发器'
+        hu: 'Kiváltó jel'
+        pt: 'Disparador'
+
+  REMAINING_DISTANCE_SPEED_30_50:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Percentage of remaining distance at 30-50 km/h'
+      fr: 'Pourcentage de distance restante à une vitesse de 30 à 50 km/h'
+      es: 'Porcentaje de distancia restante a una velocidad de 30 a 50 km/h'
+      de: 'Prozentsatz der Restdistanz bei 30-50 km/h'
+      it: 'Percentuale di distanza rimanente a una velocità di 30-50 km/h'
+      pl: 'Procent pozostałego dystansu przy prędkości 30-50 km/h'
+      ru: 'Процент оставшегося расстояния при скорости 30-50 км/ч'
+      zh: '30-50 km/h 速度下的剩余距离百分比'
+      hu: 'Hátralévő távolság százaléka 30-50 km/h sebességnél'
+      pt: 'Percentagem de distância restante a uma velocidade de 30 a 50 km/h'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  UNUSED_1:
+    bits: '2.0'
+    unused: true
+
+  REMAINING_DISTANCE_SPEED_50_70:
+    bits: '3.7-3.1'
+    comment:
+      en: 'Percentage of remaining distance at 50-70 km/h'
+      fr: 'Pourcentage de distance restante à une vitesse de 50 à 70 km/h'
+      es: 'Porcentaje de distancia restante a una velocidad de 50 a 70 km/h'
+      de: 'Prozentsatz der Restdistanz bei 50-70 km/h'
+      it: 'Percentuale di distanza rimanente a una velocità di 50-70 km/h'
+      pl: 'Procent pozostałego dystansu przy prędkości 50-70 km/h'
+      ru: 'Процент оставшегося расстояния при скорости 50-70 км/ч'
+      zh: '50-70 km/h 速度下的剩余距离百分比'
+      hu: 'Hátralévő távolság százaléka 50-70 km/h sebességnél'
+      pt: 'Percentagem de distância restante a uma velocidade de 50 a 70 km/h'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  UNUSED_2:
+    bits: '3.0'
+    unused: true
+
+  REMAINING_DISTANCE_SPEED_70_90:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Percentage of remaining distance at 70-90 km/h'
+      fr: 'Pourcentage de distance restante à une vitesse de 70 à 90 km/h'
+      es: 'Porcentaje de distancia restante a una velocidad de 70 a 90 km/h'
+      de: 'Prozentsatz der Restdistanz bei 70-90 km/h'
+      it: 'Percentuale di distanza rimanente a una velocità di 70-90 km/h'
+      pl: 'Procent pozostałego dystansu przy prędkości 70-90 km/h'
+      ru: 'Процент оставшегося расстояния при скорости 70-90 км/ч'
+      zh: '70-90 km/h 速度下的剩余距离百分比'
+      hu: 'Hátralévő távolság százaléka 70-90 km/h sebességnél'
+      pt: 'Percentagem de distância restante a uma velocidade de 70 a 90 km/h'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  UNUSED_3:
+    bits: '4.0'
+    unused: true
+
+  REMAINING_DISTANCE_SPEED_ABOVE_90:
+    bits: '5.7-5.1'
+    comment:
+      en: 'Percentage of remaining distance above 90 km/h'
+      fr: 'Pourcentage de distance restante à une vitesse supérieure à 90 km/h'
+      es: 'Porcentaje de distancia restante a una velocidad superior a 90 km/h'
+      de: 'Prozentsatz der Restdistanz über 90 km/h'
+      it: 'Percentuale di distanza rimanente a una velocità superiore a 90 km/h'
+      pl: 'Procent pozostałego dystansu przy prędkości powyżej 90 km/h'
+      ru: 'Процент оставшегося расстояния при скорости более 90 км/ч'
+      zh: '高于90 km/h 速度下的剩余距离百分比'
+      hu: 'Hátralévő távolság százaléka 90 km/h feletti sebességnél'
+      pt: 'Percentagem de distância restante a uma velocidade superior a 90 km/h'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  UNUSED_4:
+    bits: '5.0'
+    unused: true
+
+  TOTAL_REMAINING_DISTANCE:
+    bits: '6.7-7.4'
+    comment:
+      en: 'Total remaining distance'
+      fr: 'Distance totale restante'
+      es: 'Distancia total restante'
+      de: 'Gesamte Restdistanz'
+      it: 'Distanza totale rimanente'
+      pl: 'Całkowity pozostały dystans'
+      ru: 'Общее оставшееся расстояние'
+      zh: '剩余总距离'
+      hu: 'Teljes hátralévő távolság'
+      pt: 'Distância total restante'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 4095
+    units: 'km'
+    invalid: 0xFFF
+
+  TOTAL_REMAINING_TIME:
+    bits: '7.3-8.0'
+    comment:
+      en: 'Total remaining time'
+      fr: 'Temps total restant'
+      es: 'Tiempo total restante'
+      de: 'Gesamte Restzeit'
+      it: 'Tempo totale rimanente'
+      pl: 'Całkowity pozostały czas'
+      ru: 'Общее оставшееся время'
+      zh: '剩余总时间'
+      hu: 'Teljes hátralévő idő'
+      pt: 'Tempo total restante'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 4095
+    units: 'min'
+    invalid: 0xFFF
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 1000ms'
+      fr: 'Aussi observée avec une période de 1000ms'
+      es: 'También observada con un periodo de 1000ms'
+      de: 'Auch mit einer Periode von 1000ms beobachtet'
+      it: 'Osservata anche con un periodo di 1000ms'
+      pl: 'Obserwowana także z okresem 1000ms'
+      ru: 'Также наблюдалась с периодом 1000ms'
+      zh: '也观察到周期为1000ms'
+      hu: 'Megfigyelve 1000ms periódussal is'
+      pt: 'Também observada com um período de 1000ms'
+    periodicity: ['1000ms']

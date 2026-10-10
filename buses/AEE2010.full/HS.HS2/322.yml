@@ -1,0 +1,416 @@
+id: 0x322
+name: 'ELECTRONIC_BRAKE_BOOSTER_DATA_2'
+type: 'can'
+length: 5
+comment:
+  en: 'Electronic brake booster data: brake-pedal position and activation state, plus external braking-request priority and status.'
+  fr: 'Données de l''amplificateur de freinage électronique : position et activation de la pédale de frein, ainsi que priorité et état des demandes de freinage externes.'
+  es: 'Datos del servofreno electrónico: posición y activación del pedal de freno, así como prioridad y estado de las solicitudes de frenado externas.'
+  de: 'Daten des elektronischen Bremskraftverstärkers: Bremspedalposition und -aktivierung sowie Priorität und Status externer Bremsanforderungen.'
+  it: 'Dati del servofreno elettronico: posizione e attivazione del pedale del freno, nonché priorità e stato delle richieste di frenata esterne.'
+  pl: 'Dane elektronicznego wspomagania hamowania: pozycja i aktywacja pedału hamulca oraz priorytet i stan zewnętrznych żądań hamowania.'
+  ru: 'Данные электронного усилителя тормозов: положение и активация педали тормоза, а также приоритет и статус внешних запросов торможения.'
+  zh: '电子制动助力器数据:制动踏板位置及激活状态,以及外部制动请求的优先级和状态。'
+  hu: 'Az elektronikus fékrásegítő adatai: a fékpedál helyzete és aktiválása, valamint a külső fékezési kérések prioritása és állapota.'
+  pt: 'Dados do servofreio eletrónico: posição e estado de ativação do pedal do travão, além de prioridade e estado do pedido de travagem externo.'
+periodicity: ['20ms']
+senders: ['EBB']
+receivers: ['ABS', 'BSI', 'CMM']
+
+signals:
+  EBB_REGEN_BRAKE_BLENDING_POTENTIAL:
+    bits: '1.7-1.0'
+    comment:
+      en: 'iBooster force (pressure) compensation potential for the ESP regenerative brake blending function'
+      fr: 'Potentiel de compensation d''effort (pression) de l''iBooster pour la fonction de freinage récupératif piloté par l''ESP'
+      es: 'Potencial de compensación de esfuerzo (presión) del iBooster para la función de frenado regenerativo controlado por el ESP'
+      de: 'Kraft-(Druck-)Kompensationspotenzial des iBoosters für die vom ESP gesteuerte Rekuperationsbrems-Überblendung'
+      it: 'Potenziale di compensazione dello sforzo (pressione) dell''iBooster per la funzione di frenata rigenerativa gestita dall''ESP'
+      pl: 'Potencjał kompensacji siły (ciśnienia) iBoostera dla funkcji mieszania hamowania odzyskowego sterowanej przez ESP'
+      ru: 'Потенциал компенсации усилия (давления) iBooster для функции регенеративного торможения, управляемой ESP'
+      zh: 'iBooster为ESP控制的再生制动混合功能提供的力(压力)补偿潜力'
+      hu: 'Az iBooster erő-(nyomás-)kompenzációs potenciálja az ESP által vezérelt regeneratív fékkeveréshez'
+      pt: 'Potencial de compensação de esforço (pressão) do iBooster para a função de travagem regenerativa controlada pelo ESP'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 125
+    units: 'bar'
+    invalid: 0xFF
+
+  EBB_BRAKE_ASSIST_SATURATION_PRESSURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Saturation pressure of the brake assistance provided by the EBB'
+      fr: 'Pression de saturation de l''assistance de freinage fournie par l''EBB'
+      es: 'Presión de saturación de la asistencia de frenado proporcionada por el EBB'
+      de: 'Sättigungsdruck der vom EBB bereitgestellten Bremsunterstützung'
+      it: 'Pressione di saturazione dell''assistenza alla frenata fornita dall''EBB'
+      pl: 'Ciśnienie nasycenia wspomagania hamowania zapewnianego przez EBB'
+      ru: 'Давление насыщения тормозного усиления, обеспечиваемого EBB'
+      zh: 'EBB提供的制动助力饱和压力'
+      hu: 'Az EBB által biztosított fékrásegítés telítési nyomása'
+      pt: 'Pressão de saturação da assistência à travagem fornecida pelo EBB'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'bar'
+    invalid: 0xFF
+
+  CDA_FUNCTION_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Request for the CDA backup braking function in case of EBB malfunction'
+      fr: 'Requête de la fonction de secours CDA en cas de dysfonctionnement de l''EBB'
+      es: 'Solicitud de la función de respaldo CDA en caso de fallo del EBB'
+      de: 'Anforderung der CDA-Rückfallfunktion bei Fehlfunktion des EBB'
+      it: 'Richiesta della funzione di riserva CDA in caso di malfunzionamento dell''EBB'
+      pl: 'Żądanie funkcji zapasowej CDA w przypadku awarii EBB'
+      ru: 'Запрос резервной функции CDA в случае неисправности EBB'
+      zh: 'EBB故障时的CDA备用制动功能请求'
+      hu: 'A CDA tartalék fékfunkció kérése az EBB meghibásodása esetén'
+      pt: 'Pedido da função de socorro CDA em caso de mau funcionamento do EBB'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No CDA request'
+        fr: 'Pas de demande CDA'
+        es: 'Sin solicitud CDA'
+        de: 'Keine CDA-Anforderung'
+        it: 'Nessuna richiesta CDA'
+        pl: 'Brak żądania CDA'
+        ru: 'Нет запроса CDA'
+        zh: '无CDA请求'
+        hu: 'Nincs CDA kérés'
+        pt: 'Sem pedido CDA'
+      0x01:
+        en: 'CDA function request'
+        fr: 'Requête fonction CDA'
+        es: 'Solicitud función CDA'
+        de: 'CDA-Funktionsanforderung'
+        it: 'Richiesta funzione CDA'
+        pl: 'Żądanie funkcji CDA'
+        ru: 'Запрос функции CDA'
+        zh: 'CDA功能请求'
+        hu: 'CDA funkció kérés'
+        pt: 'Pedido de função CDA'
+
+  EBB_BRAKE_PEDAL_STATUS:
+    bits: '3.6-3.5'
+    comment:
+      en: 'Brake pedal state sent by the electric brake booster (EBB)'
+      fr: 'Etat de la pédale de frein transmis par le servofrein électrique (EBB)'
+      es: 'Estado del pedal de freno transmitido por el servofreno eléctrico (EBB)'
+      de: 'Vom elektrischen Bremskraftverstärker (EBB) übermittelter Bremspedalzustand'
+      it: 'Stato del pedale del freno trasmesso dal servofreno elettrico (EBB)'
+      pl: 'Stan pedału hamulca przesyłany przez elektryczny wspomagacz hamulca (EBB)'
+      ru: 'Состояние педали тормоза, передаваемое электрическим усилителем тормозов (EBB)'
+      zh: '电子制动助力器(EBB)发送的刹车踏板状态'
+      hu: 'Az elektromos fékrásegítő (EBB) által küldött fékpedál-állapot'
+      pt: 'Estado do pedal do travão transmitido pelo servofreio elétrico (EBB)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Brake pedal released'
+        fr: 'Pédale de frein relâchée'
+        es: 'Pedal de freno soltado'
+        de: 'Bremspedal losgelassen'
+        it: 'Pedale del freno rilasciato'
+        pl: 'Pedał hamulca zwolniony'
+        ru: 'Педаль тормоза отпущена'
+        zh: '制动踏板已松开'
+        hu: 'Fékpedál elengedve'
+        pt: 'Pedal de travão solto'
+      0x02:
+        en: 'Brake pedal pressed'
+        fr: 'Pédale de frein enfoncée'
+        es: 'Pedal de freno pulsado'
+        de: 'Bremspedal betätigt'
+        it: 'Pedale del freno premuto'
+        pl: 'Naciśnięty pedał hamulca'
+        ru: 'Педаль тормоза нажата'
+        zh: '制动踏板已踩下'
+        hu: 'A fékpedál lenyomva'
+        pt: 'Pedal de travão premido'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  EBB_SOFTWARE_COMPATIBILITY_INDEX:
+    bits: '3.4-3.1'
+    comment:
+      en: 'EBB software reference/compatibility index'
+      fr: 'Référence logicielle / indice de compatibilité de l''EBB'
+      es: 'Referencia de software / índice de compatibilidad del EBB'
+      de: 'Softwarereferenz / Kompatibilitätsindex des EBB'
+      it: 'Riferimento software / indice di compatibilità dell''EBB'
+      pl: 'Referencja oprogramowania / wskaźnik zgodności EBB'
+      ru: 'Ссылка на ПО / индекс совместимости EBB'
+      zh: 'EBB软件版本/兼容性索引'
+      hu: 'Az EBB szoftverhivatkozása / kompatibilitási indexe'
+      pt: 'Referência de software / índice de compatibilidade do EBB'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 15
+
+  EBB_DIAGNOSTIC_MODE_STATUS:
+    bits: '3.0'
+    comment:
+      en: 'iBooster diagnostic mode status'
+      fr: 'Etat du mode diagnostic de l''iBooster'
+      es: 'Estado del modo de diagnóstico del iBooster'
+      de: 'Status des Diagnosemodus des iBoosters'
+      it: 'Stato della modalità diagnostica dell''iBooster'
+      pl: 'Stan trybu diagnostycznego iBoostera'
+      ru: 'Состояние диагностического режима iBooster'
+      zh: 'iBooster诊断模式状态'
+      hu: 'Az iBooster diagnosztikai üzemmódjának állapota'
+      pt: 'Estado do modo de diagnóstico do iBooster'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'iBooster diagnosis inactive'
+        fr: 'Diagnostic iBooster inactif'
+        es: 'Diagnóstico iBooster inactivo'
+        de: 'iBooster-Diagnose inaktiv'
+        it: 'Diagnosi iBooster inattiva'
+        pl: 'Diagnostyka iBooster nieaktywna'
+        ru: 'Диагностика iBooster неактивна'
+        zh: 'iBooster诊断未激活'
+        hu: 'iBooster diagnosztika inaktív'
+        pt: 'Diagnóstico iBooster inativo'
+      0x01:
+        en: 'iBooster diagnosis active'
+        fr: 'Diagnostic iBooster actif'
+        es: 'Diagnóstico iBooster activo'
+        de: 'iBooster-Diagnose aktiv'
+        it: 'Diagnostica iBooster attiva'
+        pl: 'Aktywna diagnostyka iBooster'
+        ru: 'Диагностика iBooster активна'
+        zh: 'iBooster诊断激活'
+        hu: 'iBooster diagnosztika aktív'
+        pt: 'Diagnóstico do iBooster ativo'
+
+  PROCESS_COUNTER:
+    bits: '4.7-4.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM:
+    bits: '4.3-4.0'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  EBB_RESIDUAL_PRESSURE_STRATEGY:
+    bits: '5.7-5.5'
+    comment:
+      en: 'Strategy requested by the EBB to control the residual brake pressure'
+      fr: 'Stratégie demandée par l''EBB pour régler la pression résiduelle de frein'
+      es: 'Estrategia solicitada por el EBB para regular la presión residual de freno'
+      de: 'Vom EBB angeforderte Strategie zur Regelung des Bremsrestdrucks'
+      it: 'Strategia richiesta dall''EBB per regolare la pressione residua del freno'
+      pl: 'Strategia żądana przez EBB do regulacji szczątkowego ciśnienia hamulca'
+      ru: 'Стратегия, запрошенная EBB для регулирования остаточного давления тормозов'
+      zh: 'EBB请求的制动余压调节策略'
+      hu: 'Az EBB által kért stratégia a maradék fékreziduál-nyomás szabályozására'
+      pt: 'Estratégia solicitada pelo EBB para regular a pressão residual de travão'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'RPR passive'
+        fr: 'RPR passif'
+        es: 'RPR pasivo'
+        de: 'RPR passiv'
+        it: 'RPR passivo'
+        pl: 'RPR pasywny'
+        ru: 'RPR пассивный'
+        zh: 'RPR被动'
+        hu: 'RPR passzív'
+        pt: 'RPR passivo'
+      0x01:
+        en: 'RPR preload'
+        fr: 'Précharge RPR'
+        es: 'Precarga RPR'
+        de: 'RPR-Vorspannung'
+        it: 'Precarico RPR'
+        pl: 'Wstępne obciążenie RPR'
+        ru: 'Предварительная нагрузка RPR'
+        zh: 'RPR预加载'
+        hu: 'RPR előfeszítés'
+        pt: 'Pré-carga RPR'
+      0x02:
+        en: 'RPR hold'
+        fr: 'Maintien RPR'
+        es: 'Mantenimiento RPR'
+        de: 'RPR-Halten'
+        it: 'Mantenimento RPR'
+        pl: 'Podtrzymanie RPR'
+        ru: 'Удержание RPR'
+        zh: 'RPR保持'
+        hu: 'RPR tartás'
+        pt: 'RPR em retenção'
+      0x03:
+        en: 'RPR_Suction'
+        fr: 'RPR_Suction'
+        es: 'RPR_Suction'
+        de: 'RPR_Suction'
+        it: 'RPR_Suction'
+        pl: 'RPR_Suction'
+        ru: 'RPR_Suction'
+        zh: 'RPR_Suction'
+        hu: 'RPR_Suction'
+        pt: 'RPR_Suction'
+      0x04:
+        en: 'RPR_HoldLowPressure'
+        fr: 'RPR_HoldLowPressure'
+        es: 'RPR_HoldLowPressure'
+        de: 'RPR_HoldLowPressure'
+        it: 'RPR_HoldLowPressure'
+        pl: 'RPR_HoldLowPressure'
+        ru: 'RPR_HoldLowPressure'
+        zh: 'RPR_HoldLowPressure'
+        hu: 'RPR_HoldLowPressure'
+        pt: 'RPR_HoldLowPressure'
+      0x05:
+        en: 'RPR abort'
+        fr: 'RPR_Abort'
+        es: 'Aborto RPR'
+        de: 'RPR-Abbruch'
+        it: 'RPR_Abort'
+        pl: 'Przerwanie RPR'
+        ru: 'Прерывание RPR'
+        zh: 'RPR中止'
+        hu: 'RPR megszakítás'
+        pt: 'Abandono RPR'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  EBB_ASSIST_FAULT_LAMP_REQUEST:
+    bits: '5.4'
+    comment:
+      en: 'Request to light the brake assist fault warning lamp'
+      fr: 'Demande d''allumage du témoin de défaut d''assistance au freinage'
+      es: 'Solicitud de encendido del testigo de fallo de asistencia de frenado'
+      de: 'Anforderung zum Einschalten der Kontrollleuchte für Bremsassistenz-Störung'
+      it: 'Richiesta di accensione della spia di guasto dell''assistenza frenata'
+      pl: 'Żądanie zapalenia kontrolki usterki wspomagania hamowania'
+      ru: 'Запрос на включение лампы неисправности усилителя тормозов'
+      zh: '制动辅助故障警告灯点亮请求'
+      hu: 'A fékrásegítés-hiba jelzőlámpájának bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho de falha de assistência de travagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Brake fault'
+        fr: 'Défaut de frein'
+        es: 'Fallo de freno'
+        de: 'Bremsfehler'
+        it: 'Guasto freno'
+        pl: 'Usterka hamulca'
+        ru: 'Неисправность тормоза'
+        zh: '制动故障'
+        hu: 'Fékhiba'
+        pt: 'Avaria de travagem'
+
+  EBB_MIL_LAMP_REQUEST:
+    bits: '5.3'
+    comment:
+      en: 'Request to light the MIL lamp steadily (EBB)'
+      fr: 'Demande d''allumage fixe du témoin MIL (EBB)'
+      es: 'Solicitud de encendido fijo del testigo MIL (EBB)'
+      de: 'Anforderung des dauerhaften Einschaltens der MIL-Warnleuchte (EBB)'
+      it: 'Richiesta di accensione fissa della spia MIL (EBB)'
+      pl: 'Żądanie stałego zapalenia kontrolki MIL (EBB)'
+      ru: 'Запрос постоянного включения лампы MIL (EBB)'
+      zh: '请求常亮MIL故障灯(EBB)'
+      hu: 'A MIL jelzőlámpa folyamatos bekapcsolási kérése (EBB)'
+      pt: 'Pedido de acendimento fixo da luz avisadora MIL (EBB)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'MIL lamp continuous lighting request'
+        fr: 'Demande d''allumage continu du témoin MIL'
+        es: 'Solicitud de encendido continuo del testigo MIL'
+        de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte'
+        it: 'Richiesta di accensione continua della spia MIL'
+        pl: 'Żądanie ciągłego świecenia kontrolki MIL'
+        ru: 'Запрос постоянного включения индикатора MIL'
+        zh: 'MIL 灯常亮请求'
+        hu: 'MIL lámpa folyamatos világításának kérése'
+        pt: 'Pedido de acendimento contínuo da luz MIL'
+
+  UNUSED_1:
+    bits: '5.2-5.0'
+    unused: true

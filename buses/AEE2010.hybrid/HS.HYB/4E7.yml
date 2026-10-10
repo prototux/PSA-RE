@@ -1,0 +1,845 @@
+id: 0x4E7
+name: 'HYBRID_VEHICLE_STOP_TIMER_2'
+type: 'can'
+length: 3
+comment:
+  en: 'Hybrid control data: time before vehicle stop.'
+  fr: 'Données du contrôle hybride : temps avant arrêt du véhicule.'
+  es: 'Datos del control híbrido: tiempo antes de la parada del vehículo.'
+  de: 'Hybridsteuerungsdaten: Zeit bis zum Fahrzeugstillstand.'
+  it: 'Dati del controllo ibrido: tempo prima dell''arresto del veicolo.'
+  pl: 'Dane kontroli hybrydowej: czas do zatrzymania pojazdu.'
+  ru: 'Данные гибридного управления: время до остановки автомобиля.'
+  zh: '混合动力控制数据:车辆停止前的时间。'
+  hu: 'Hibrid vezérlési adatok: a jármű megállásáig hátralévő idő.'
+  pt: 'Dados de controlo híbrido: tempo até à paragem do veículo.'
+periodicity: ['100ms']
+senders: ['HCU1']
+receivers: ['HCU2', 'TBMU']
+
+signals:
+  CHECKSUM_FRAME_4E7:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_4E7:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  HYBRID_POWERTRAIN_OPERATING_STATE:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Hybrid powertrain operating state'
+      fr: 'État de fonctionnement du GMP hybride'
+      es: 'Estado de funcionamiento de la cadena cinemática híbrida'
+      de: 'Betriebszustand des Hybridantriebsstrangs'
+      it: 'Stato di funzionamento del powertrain ibrido'
+      pl: 'Stan pracy hybrydowego układu napędowego'
+      ru: 'Рабочее состояние гибридного силового агрегата'
+      zh: '混合动力总成运行状态'
+      hu: 'A hibrid hajtáslánc üzemi állapota'
+      pt: 'Estado de funcionamento da cadeia cinemática híbrida'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Powertrain inactive'
+        fr: 'Groupe motopropulseur inactif'
+        es: 'Grupo motopropulsor inactivo'
+        de: 'Antriebsstrang inaktiv'
+        it: 'Gruppo propulsore inattivo'
+        pl: 'Zespół napędowy nieaktywny'
+        ru: 'Силовой агрегат неактивен'
+        zh: '动力总成未激活'
+        hu: 'Erőátviteli rendszer inaktív'
+        pt: 'Grupo motopropulsor inativo'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        en: 'Powertrain activation'
+        fr: 'Activation du groupe motopropulseur'
+        es: 'Activación del grupo motopropulsor'
+        de: 'Aktivierung des Antriebsstrangs'
+        it: 'Attivazione del gruppo propulsore'
+        pl: 'Aktywacja układu napędowego'
+        ru: 'Активация силового агрегата'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktiválása'
+        pt: 'Ativação do grupo motopropulsor'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        en: 'Powertrain active'
+        fr: 'Groupe motopropulseur actif'
+        es: 'Grupo motopropulsor activo'
+        de: 'Antriebsstrang aktiv'
+        it: 'Gruppo propulsore attivo'
+        pl: 'Zespół napędowy aktywny'
+        ru: 'Силовой агрегат активен'
+        zh: '动力总成激活'
+        hu: 'Hajtáslánc aktív'
+        pt: 'Grupo motopropulsor ativo'
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Powertrain deactivation'
+        fr: 'désactivation_GMP'
+        es: 'Desactivación del GMP'
+        de: 'Deaktivierung des Antriebsstrangs'
+        it: 'Disattivazione del GMP'
+        pl: 'Dezaktywacja układu napędowego'
+        ru: 'Деактивация силового агрегата'
+        zh: '动力总成停用'
+        hu: 'Hajtáslánc kikapcsolása'
+        pt: 'Desativação do GMP'
+      0x0B:
+        unused: true
+      0x0C:
+        en: 'Powertrain held after deactivation'
+        fr: 'Maintien du groupe motopropulseur après désactivation'
+        es: 'Retención del grupo motopropulsor tras la desactivación'
+        de: 'Antriebsstrang gehalten nach Deaktivierung'
+        it: 'Gruppo propulsore mantenuto dopo la disattivazione'
+        pl: 'Podtrzymanie układu napędowego po dezaktywacji'
+        ru: 'Удержание силового агрегата после деактивации'
+        zh: '动力总成停用后保持'
+        hu: 'Hajtáslánc tartva kikapcsolás után'
+        pt: 'Manutenção do grupo motopropulsor após desativação'
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Powertrain at rest'
+        fr: 'Groupe motopropulseur au repos'
+        es: 'Grupo motopropulsor en reposo'
+        de: 'Antriebsstrang im Ruhezustand'
+        it: 'Gruppo propulsore a riposo'
+        pl: 'Zespół napędowy w spoczynku'
+        ru: 'Силовой агрегат в состоянии покоя'
+        zh: '动力总成静止'
+        hu: 'Hajtáslánc nyugalmi állapotban'
+        pt: 'Grupo motopropulsor em repouso'
+      0x0F:
+        unused: true
+
+  HYBRID_OPERATING_MODE:
+    bits: '2.2-2.0'
+    comment:
+      en: 'Hybrid powertrain operating mode (4x4, Sport, Hybrid, ZEV)'
+      fr: 'Mode d''utilisation du GMP hybride (4x4, Sport, Hybride, ZEV)'
+      es: 'Modo de uso de la cadena cinemática híbrida (4x4, Sport, Híbrido, ZEV)'
+      de: 'Nutzungsmodus des Hybridantriebsstrangs (4x4, Sport, Hybrid, ZEV)'
+      it: 'Modalità di utilizzo del powertrain ibrido (4x4, Sport, Ibrido, ZEV)'
+      pl: 'Tryb użytkowania hybrydowego układu napędowego (4x4, Sport, Hybryda, ZEV)'
+      ru: 'Режим использования гибридного силового агрегата (4x4, Спорт, Гибрид, ZEV)'
+      zh: '混合动力总成使用模式(4x4、运动、混合动力、纯电动)'
+      hu: 'A hibrid hajtáslánc használati módja (4x4, Sport, Hibrid, ZEV)'
+      pt: 'Modo de utilização do GMP híbrido (4x4, Sport, Hybrid, ZEV)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: '4x4'
+        fr: '4x4'
+        es: '4x4'
+        de: '4x4'
+        it: '4x4'
+        pl: '4x4'
+        ru: '4x4'
+        zh: '4x4'
+        hu: '4x4'
+        pt: '4x4'
+      0x01:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x02:
+        en: 'HY'
+        fr: 'HY'
+        es: 'HY'
+        de: 'HY'
+        it: 'HY'
+        pl: 'HY'
+        ru: 'HY'
+        zh: 'HY'
+        hu: 'HY'
+        pt: 'HY'
+      0x03:
+        en: 'ZEV'
+        fr: 'ZEV'
+        es: 'ZEV'
+        de: 'ZEV'
+        it: 'ZEV'
+        pl: 'ZEV'
+        ru: 'ZEV'
+        zh: 'ZEV'
+        hu: 'ZEV'
+        pt: 'ZEV'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  AC_ACTIVATION_COMMAND:
+    bits: '3.7'
+    comment:
+      en: 'Air conditioning activation command'
+      fr: 'Commande d''activation de la climatisation'
+      es: 'Mando de activación del aire acondicionado'
+      de: 'Ansteuerbefehl zur Aktivierung der Klimaanlage'
+      it: 'Comando di attivazione del climatizzatore'
+      pl: 'Polecenie aktywacji klimatyzacji'
+      ru: 'Команда активации кондиционера'
+      zh: '空调激活指令'
+      hu: 'A klímaberendezés aktiválási parancsa'
+      pt: 'Comando de ativação do ar condicionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  DIAG_STATUS:
+    bits: '3.6'
+    comment:
+      en: 'Multiplexed communication diagnostic status'
+      fr: 'État du diagnostic de communication multiplexée'
+      es: 'Estado del diagnóstico de comunicación multiplexada'
+      de: 'Status der Diagnose der multiplexierten Kommunikation'
+      it: 'Stato della diagnosi di comunicazione multiplata'
+      pl: 'Stan diagnostyki komunikacji multipleksowanej'
+      ru: 'Статус диагностики мультиплексной связи'
+      zh: '多路复用通信诊断状态'
+      hu: 'A multiplex kommunikáció diagnosztikai állapota'
+      pt: 'Estado do diagnóstico de comunicação multiplexada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No communication diagnostic'
+        fr: 'Pas de diagnostic de communication'
+        es: 'Sin diagnóstico de comunicación'
+        de: 'Keine Kommunikationsdiagnose'
+        it: 'Nessuna diagnostica di comunicazione'
+        pl: 'Brak diagnostyki komunikacji'
+        ru: 'Нет диагностики связи'
+        zh: '无通信诊断'
+        hu: 'Nincs kommunikációs diagnosztika'
+        pt: 'Sem diagnóstico de comunicação'
+      0x01:
+        en: 'Communication diagnostic on'
+        fr: 'Diagnostic de communication actif'
+        es: 'Diagnóstico de comunicación activo'
+        de: 'Kommunikationsdiagnose aktiv'
+        it: 'Diagnosi di comunicazione attiva'
+        pl: 'Aktywna diagnostyka komunikacji'
+        ru: 'Активна диагностика связи'
+        zh: '通信诊断已开启'
+        hu: 'Kommunikációs diagnosztika aktív'
+        pt: 'Diagnóstico de comunicação ativo'
+
+  HYBRID_CAN_LIFE_STATE:
+    bits: '3.5-3.4'
+    comment:
+      en: 'CAN network life state (supply situation)'
+      fr: 'État de vie du réseau CAN (situation d''alimentation)'
+      es: 'Estado de vida de la red CAN (situación de alimentación)'
+      de: 'Lebenszustand des CAN-Netzwerks (Versorgungssituation)'
+      it: 'Stato di vita della rete CAN (situazione di alimentazione)'
+      pl: 'Stan życia sieci CAN (sytuacja zasilania)'
+      ru: 'Состояние жизненного цикла сети CAN (ситуация питания)'
+      zh: 'CAN网络生命周期状态(供电情况)'
+      hu: 'A CAN hálózat élet-állapota (tápellátási helyzet)'
+      pt: 'Estado de vida da rede CAN (situação de alimentação)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Absent or invalid'
+        fr: 'Absent ou invalide'
+        es: 'Ausente o inválido'
+        de: 'Nicht vorhanden oder ungültig'
+        it: 'Assente o non valido'
+        pl: 'Nieobecne lub nieprawidłowe'
+        ru: 'Отсутствует или недействительно'
+        zh: '缺失或无效'
+        hu: 'Hiányzik vagy érvénytelen'
+        pt: 'Ausente ou inválido'
+      0x01:
+        en: 'Main wake-up'
+        fr: 'Réveil principal'
+        es: 'Activación principal'
+        de: 'Hauptaufwachen'
+        it: 'Risveglio principale'
+        pl: 'Główne wybudzenie'
+        ru: 'Основное пробуждение'
+        zh: '主唤醒'
+        hu: 'Fő ébresztés'
+        pt: 'Ativação principal'
+      0x02:
+        en: 'Power latch'
+        fr: 'Maintien d''alimentation'
+        es: 'Retención de alimentación'
+        de: 'Selbsthaltung der Versorgung'
+        it: 'Autoalimentazione (power latch)'
+        pl: 'Podtrzymanie zasilania'
+        ru: 'Самоблокировка питания'
+        zh: '电源自锁'
+        hu: 'Tápellátás önfenntartás'
+        pt: 'Retenção de potência'
+      0x03:
+        en: 'Standby mode'
+        fr: 'Mise en veille'
+        es: 'Modo en espera'
+        de: 'Standby-Modus'
+        it: 'Modalità standby'
+        pl: 'Tryb czuwania'
+        ru: 'Режим ожидания'
+        zh: '待机模式'
+        hu: 'Készenléti üzemmód'
+        pt: 'Colocação em repouso'
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['100ms', 'trigger']
+    senders: ['HCU1']
+    receivers: ['HCU2', 'TBMU', 'CMM']
+    signals:
+      ENGINE_RUN_NEED:
+        bits: '1.7'
+        comment:
+          en: 'Need for the combustion engine to run'
+          fr: 'Besoin de fonctionnement du moteur thermique'
+          es: 'Necesidad de funcionamiento del motor térmico'
+          de: 'Bedarf für den Betrieb des Verbrennungsmotors'
+          it: 'Necessità di funzionamento del motore termico'
+          pl: 'Potrzeba pracy silnika spalinowego'
+          ru: 'Потребность в работе двигателя внутреннего сгорания'
+          zh: '内燃机运转需求'
+          hu: 'A belső égésű motor működésének szükségessége'
+          pt: 'Necessidade de funcionamento do motor térmico'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No running need'
+            fr: 'Pas de besoin de marche'
+            es: 'Sin necesidad de funcionamiento'
+            de: 'Kein Betriebsbedarf'
+            it: 'Nessuna necessità di funzionamento'
+            pl: 'Brak potrzeby pracy'
+            ru: 'Нет потребности в работе'
+            zh: '无运行需求'
+            hu: 'Nincs működési igény'
+            pt: 'Sem necessidade de funcionamento'
+          0x01:
+            en: 'Start needed'
+            fr: 'Besoin de marche'
+            es: 'Necesidad de arranque'
+            de: 'Startbedarf'
+            it: 'Necessità di avviamento'
+            pl: 'Potrzeba uruchomienia'
+            ru: 'Требуется запуск'
+            zh: '需要启动'
+            hu: 'Indítási igény'
+            pt: 'Necessidade de arranque'
+      COOLING_FAN_ACTIVATION_REQUEST:
+        bits: '1.6-1.0'
+        comment:
+          en: 'Cooling fan activation request for HPCU cooling needs'
+          fr: 'Demande d''activation du groupe moto-ventilateur (GMV) pour le besoin de l''HPCU'
+          es: 'Solicitud de activación del electroventilador para las necesidades del HPCU'
+          de: 'Anforderung zur Aktivierung des Kühlerlüfters für den HPCU-Kühlbedarf'
+          it: 'Richiesta di attivazione dell''elettroventola per le esigenze dell''HPCU'
+          pl: 'Żądanie aktywacji wentylatora chłodzącego na potrzeby HPCU'
+          ru: 'Запрос активации вентилятора охлаждения для нужд HPCU'
+          zh: '为HPCU散热需求请求启动冷却风扇'
+          hu: 'A hűtőventilátor aktiválási kérése a HPCU hűtési igénye miatt'
+          pt: 'Pedido de ativação do grupo motoventilador (GMV) para a necessidade do HPCU'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 110
+        units: '%'
+        invalid: 0x7F
+        default: 0x00
+      DEMISTING_REQUEST:
+        bits: '2.7-2.6'
+        comment:
+          en: 'Demisting request'
+          fr: 'Demande de désembuage'
+          es: 'Solicitud de desempañado'
+          de: 'Anforderung der Scheibenentfeuchtung'
+          it: 'Richiesta di disappannamento'
+          pl: 'Żądanie odparowania szyb'
+          ru: 'Запрос осушения (антизапотевания)'
+          zh: '除雾请求'
+          hu: 'Páramentesítési kérés'
+          pt: 'Pedido de desembaciamento'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request'
+            fr: 'Pas de demande'
+            es: 'Sin solicitud'
+            de: 'Keine Anforderung'
+            it: 'Nessuna richiesta'
+            pl: 'Brak żądania'
+            ru: 'Нет запроса'
+            zh: '无请求'
+            hu: 'Nincs kérés'
+            pt: 'Sem pedido'
+          0x01:
+            en: 'Requested'
+            fr: 'Demandé'
+            es: 'Solicitado'
+            de: 'Angefordert'
+            it: 'Richiesto'
+            pl: 'Żądane'
+            ru: 'Запрошено'
+            zh: '已请求'
+            hu: 'Kérve'
+            pt: 'Pedido'
+          0x02:
+            unused: true
+          0x03:
+            en: 'Invalid'
+            fr: 'Invalide'
+            es: 'Inválido'
+            de: 'Ungültig'
+            it: 'Non valido'
+            pl: 'Nieprawidłowe'
+            ru: 'Недействительно'
+            zh: '无效'
+            hu: 'Érvénytelen'
+            pt: 'Inválido'
+      AC_ACTIVATION_COMMAND:
+        bits: '2.5'
+        comment:
+          en: 'Air conditioning activation command'
+          fr: 'Commande d''activation de la climatisation'
+          es: 'Mando de activación del aire acondicionado'
+          de: 'Ansteuerbefehl zur Aktivierung der Klimaanlage'
+          it: 'Comando di attivazione del climatizzatore'
+          pl: 'Polecenie aktywacji klimatyzacji'
+          ru: 'Команда активации кондиционера'
+          zh: '空调激活指令'
+          hu: 'A klímaberendezés aktiválási parancsa'
+          pt: 'Comando de ativação do ar condicionado'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request'
+            fr: 'Pas de demande'
+            es: 'Sin solicitud'
+            de: 'Keine Anforderung'
+            it: 'Nessuna richiesta'
+            pl: 'Brak żądania'
+            ru: 'Нет запроса'
+            zh: '无请求'
+            hu: 'Nincs kérés'
+            pt: 'Sem pedido'
+          0x01:
+            en: 'Requested'
+            fr: 'Demandé'
+            es: 'Solicitado'
+            de: 'Angefordert'
+            it: 'Richiesto'
+            pl: 'Żądane'
+            ru: 'Запрошено'
+            zh: '已请求'
+            hu: 'Kérve'
+            pt: 'Pedido'
+      MEAP_OPENING_REQUEST:
+        bits: '2.4'
+        comment:
+          en: 'MEAP opening request for the PTMU'
+          fr: 'Besoin d''ouverture du MEAP pour le PTMU'
+          es: 'Necesidad de apertura del MEAP para el PTMU'
+          de: 'Öffnungsanforderung des MEAP für die PTMU'
+          it: 'Richiesta di apertura del MEAP per la PTMU'
+          pl: 'Żądanie otwarcia MEAP na potrzeby PTMU'
+          ru: 'Запрос открытия MEAP для PTMU'
+          zh: 'PTMU请求打开MEAP'
+          hu: 'MEAP nyitási igénye a PTMU számára'
+          pt: 'Necessidade de abertura do MEAP para o PTMU'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request'
+            fr: 'Pas de demande'
+            es: 'Sin solicitud'
+            de: 'Keine Anforderung'
+            it: 'Nessuna richiesta'
+            pl: 'Brak żądania'
+            ru: 'Нет запроса'
+            zh: '无请求'
+            hu: 'Nincs kérés'
+            pt: 'Sem pedido'
+          0x01:
+            en: 'Requested'
+            fr: 'Demandé'
+            es: 'Solicitado'
+            de: 'Angefordert'
+            it: 'Richiesto'
+            pl: 'Żądane'
+            ru: 'Запрошено'
+            zh: '已请求'
+            hu: 'Kérve'
+            pt: 'Pedido'
+      ENGINE_SPEED_REGULATION_REQUEST:
+        bits: '2.3'
+        comment:
+          en: 'Engine speed regulation request'
+          fr: 'Demande de régulation de régime moteur'
+          es: 'Solicitud de regulación de régimen del motor'
+          de: 'Anforderung der Motordrehzahlregelung'
+          it: 'Richiesta di regolazione del regime motore'
+          pl: 'Żądanie regulacji prędkości obrotowej silnika'
+          ru: 'Запрос регулирования частоты вращения двигателя'
+          zh: '发动机转速调节请求'
+          hu: 'Motorfordulatszám-szabályozási kérés'
+          pt: 'Pedido de regulação do regime do motor'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'No engine-speed regulation request'
+            fr: 'Pas de demande de régulation de régime'
+            es: 'Sin solicitud de regulación de régimen'
+            de: 'Keine Anforderung Drehzahlregelung'
+            it: 'Nessuna richiesta di regolazione del regime'
+            pl: 'Brak żądania regulacji prędkości obrotowej'
+            ru: 'Нет запроса регулирования оборотов двигателя'
+            zh: '无发动机转速调节请求'
+            hu: 'Nincs fordulatszám-szabályozási kérés'
+            pt: 'Sem pedido de regulação de velocidade do motor'
+          0x01:
+            en: 'Engine-speed regulation request active'
+            fr: 'Demande de régulation de régime activée'
+            es: 'Solicitud de regulación de régimen activada'
+            de: 'Anforderung Drehzahlregelung aktiv'
+            it: 'Richiesta di regolazione del regime attiva'
+            pl: 'Aktywne żądanie regulacji prędkości obrotowej'
+            ru: 'Активен запрос регулирования оборотов двигателя'
+            zh: '发动机转速调节请求激活'
+            hu: 'Fordulatszám-szabályozási kérés aktív'
+            pt: 'Pedido de regulação de velocidade do motor ativo'
+      ENGINE_CUTOFF_REQUEST:
+        bits: '2.2'
+        comment:
+          en: 'Combustion engine cutoff request'
+          fr: 'Demande de coupure du moteur thermique'
+          es: 'Solicitud de corte del motor térmico'
+          de: 'Abschaltanforderung des Verbrennungsmotors'
+          it: 'Richiesta di interruzione del motore termico'
+          pl: 'Żądanie odcięcia silnika spalinowego'
+          ru: 'Запрос отключения двигателя внутреннего сгорания'
+          zh: '内燃机切断请求'
+          hu: 'A belső égésű motor leállítási kérése (megszakítás)'
+          pt: 'Pedido de corte do motor térmico'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No engine stop request'
+            fr: 'Pas de demande de coupure moteur'
+            es: 'Sin solicitud de parada del motor'
+            de: 'Keine Anforderung zum Motorstopp'
+            it: 'Nessuna richiesta di arresto motore'
+            pl: 'Brak żądania zatrzymania silnika'
+            ru: 'Нет запроса на остановку двигателя'
+            zh: '无发动机熄火请求'
+            hu: 'Nincs motorleállítási kérés'
+            pt: 'Sem pedido de paragem do motor'
+          0x01:
+            en: 'Engine stop request present'
+            fr: 'Demande de coupure moteur présente'
+            es: 'Solicitud de parada del motor presente'
+            de: 'Motorabschaltanforderung vorhanden'
+            it: 'Richiesta di interruzione motore presente'
+            pl: 'Obecne żądanie zatrzymania silnika'
+            ru: 'Присутствует запрос остановки двигателя'
+            zh: '存在发动机熄火请求'
+            hu: 'Motorleállítási kérés jelen van'
+            pt: 'Pedido de corte do motor presente'
+      UNUSED_1:
+        bits: '2.1'
+        unused: true
+      EGR_INHIBIT_REQUEST:
+        bits: '2.0'
+        comment:
+          en: 'EGR inhibition request'
+          fr: 'Demande d''inhibition de l''EGR'
+          es: 'Solicitud de inhibición de la EGR'
+          de: 'Anforderung zur AGR-Deaktivierung'
+          it: 'Richiesta di inibizione dell''EGR'
+          pl: 'Żądanie zablokowania recyrkulacji spalin (EGR)'
+          ru: 'Запрос отключения рециркуляции отработавших газов (EGR)'
+          zh: 'EGR禁用请求'
+          hu: 'EGR letiltási kérés'
+          pt: 'Pedido de inibição da EGR'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No EGR inhibition request'
+            fr: 'Pas de demande d''inhibition EGR'
+            es: 'Sin solicitud de inhibición de la EGR'
+            de: 'Keine AGR-Sperranforderung'
+            it: 'Nessuna richiesta di inibizione EGR'
+            pl: 'Brak żądania zablokowania EGR'
+            ru: 'Нет запроса блокировки EGR'
+            zh: '无EGR禁用请求'
+            hu: 'Nincs EGR letiltási kérés'
+            pt: 'Sem pedido de inibição da EGR'
+          0x01:
+            en: 'EGR inhibition requested'
+            fr: 'Demande d''inhibition EGR'
+            es: 'Solicitud de inhibición de EGR'
+            de: 'Anforderung AGR-Deaktivierung'
+            it: 'Richiesta di inibizione EGR'
+            pl: 'Żądanie wyłączenia EGR'
+            ru: 'Запрошено отключение EGR'
+            zh: '请求禁用EGR'
+            hu: 'EGR letiltási kérés'
+            pt: 'Inibição de EGR pedida'
+      CURATIVE_DRIVEABILITY_INHIBIT:
+        bits: '3.7'
+        comment:
+          en: 'Inhibition of the curative driveability correction'
+          fr: 'Inhibition de la correction d''agrément curative'
+          es: 'Inhibición de la corrección de confort de conducción curativa'
+          de: 'Deaktivierung der kurativen Fahrbarkeitskorrektur'
+          it: 'Inibizione della correzione di guidabilità curativa'
+          pl: 'Zablokowanie korekty komfortu jazdy (naprawczej)'
+          ru: 'Блокировка корректирующей регулировки комфорта движения'
+          zh: '禁用纠正性驾驶性修正'
+          hu: 'A javító jellegű menetkomfort-korrekció letiltása'
+          pt: 'Inibição da correção curativa de agressividade de condução'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request to inhibit curative agreement'
+            fr: 'Pas de demande d''inhibition de l''agrément curatif'
+            es: 'Sin solicitud de inhibición del consentimiento curativo'
+            de: 'Keine Anforderung zur Sperrung der kurativen Freigabe'
+            it: 'Nessuna richiesta di inibizione del consenso curativo'
+            pl: 'Brak żądania zablokowania zgody naprawczej'
+            ru: 'Нет запроса блокировки лечебного согласия'
+            zh: '无禁用纠正性认可的请求'
+            hu: 'Nincs kérés a javító engedély tiltására'
+            pt: 'Sem pedido de inibição do acordo curativo'
+          0x01:
+            en: 'Curative-agreement inhibition request active'
+            fr: 'Demande d''inhibition d''agrément curatif activée'
+            es: 'Solicitud de inhibición de acuerdo curativo activada'
+            de: 'Anforderung zur Sperrung der kurativen Freigabe aktiv'
+            it: 'Richiesta di inibizione dell''accordo curativo attiva'
+            pl: 'Aktywne żądanie zablokowania zgody naprawczej'
+            ru: 'Активен запрос блокировки лечебного согласования'
+            zh: '治愈性协议抑制请求激活'
+            hu: 'Javító engedély letiltási kérése aktív'
+            pt: 'Pedido de inibição por acordo curativo ativo'
+      DECELERATION_ACTIVATION_REQUEST:
+        bits: '3.6'
+        comment:
+          en: 'Deceleration activation request'
+          fr: 'Demande d''activation de la décélération'
+          es: 'Solicitud de activación de la deceleración'
+          de: 'Aktivierungsanforderung der Verzögerung'
+          it: 'Richiesta di attivazione della decelerazione'
+          pl: 'Żądanie aktywacji hamowania'
+          ru: 'Запрос активации замедления'
+          zh: '减速激活请求'
+          hu: 'A lassítás aktiválási kérése'
+          pt: 'Pedido de ativação da desaceleração'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'no request activation deceleration'
+            fr: 'pas de demande activation deceleration'
+            es: 'sin solicitud de activación de deceleración'
+            de: 'keine Anforderung Aktivierung Verzögerung'
+            it: 'nessuna richiesta di attivazione della decelerazione'
+            pl: 'brak żądania aktywacji zwalniania'
+            ru: 'нет запроса активации замедления'
+            zh: '无减速激活请求'
+            hu: 'nincs lassítási aktiválási kérés'
+            pt: 'sem pedido de ativação da desaceleração'
+          0x01:
+            en: 'Deceleration activation request'
+            fr: 'Demande d''activation de la décélération'
+            es: 'Solicitud de activación de la deceleración'
+            de: 'Anforderung Aktivierung der Verzögerung'
+            it: 'Richiesta di attivazione della decelerazione'
+            pl: 'Żądanie aktywacji zwalniania'
+            ru: 'Запрос активации замедления'
+            zh: '减速激活请求'
+            hu: 'Lassítás aktiválásának kérése'
+            pt: 'Pedido de ativação de desaceleração'
+      WARMUP_SUBSTATE:
+        bits: '3.5-3.3'
+        comment:
+          en: 'Sub-state of the warm-up mode'
+          fr: 'Sous-état du mode de préchauffage'
+          es: 'Subestado del modo de calentamiento'
+          de: 'Unterzustand des Warmlaufmodus'
+          it: 'Sottostato della modalità di riscaldamento'
+          pl: 'Podstan trybu rozgrzewania'
+          ru: 'Подсостояние режима прогрева'
+          zh: '预热模式子状态'
+          hu: 'A bemelegítési mód alállapota'
+          pt: 'Subestado do modo de aquecimento'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No warm up'
+            fr: 'Pas de Warmup'
+            es: 'Sin calentamiento'
+            de: 'Kein Warmlauf'
+            it: 'Nessun riscaldamento'
+            pl: 'Brak nagrzewania'
+            ru: 'Нет прогрева'
+            zh: '无预热'
+            hu: 'Nincs bemelegítés'
+            pt: 'Sem aquecimento'
+          0x01:
+            en: 'High-voltage battery charged, engine cold'
+            fr: 'Batterie haute tension chargée, moteur froid'
+            es: 'Batería de alta tensión cargada, motor frío'
+            de: 'Hochvoltbatterie geladen, Motor kalt'
+            it: 'Batteria ad alta tensione carica, motore freddo'
+            pl: 'Akumulator wysokiego napięcia naładowany, silnik zimny'
+            ru: 'Высоковольтная батарея заряжена, двигатель холодный'
+            zh: '高压电池已充满,发动机冷'
+            hu: 'Nagyfeszültségű akkumulátor feltöltve, motor hideg'
+            pt: 'Bateria de alta tensão carregada, motor frio'
+          0x02:
+            en: 'HV battery discharged, engine cold'
+            fr: 'Batterie haute tension déchargée, moteur froid'
+            es: 'Batería de alta tensión descargada, motor frío'
+            de: 'Hochvoltbatterie entladen, Motor kalt'
+            it: 'Batteria ad alta tensione scarica, motore freddo'
+            pl: 'Rozładowany akumulator wysokiego napięcia, zimny silnik'
+            ru: 'Высоковольтная батарея разряжена, двигатель холодный'
+            zh: '高压电池亏电,发动机冷态'
+            hu: 'A nagyfeszültségű akkumulátor lemerült, a motor hideg'
+            pt: 'Bateria de alta tensão descarregada, motor frio'
+          0x03:
+            en: 'Engine hot'
+            fr: 'Moteur chaud'
+            es: 'Motor caliente'
+            de: 'Motor heiß'
+            it: 'Motore caldo'
+            pl: 'Silnik gorący'
+            ru: 'Двигатель горячий'
+            zh: '发动机高温'
+            hu: 'Forró motor'
+            pt: 'Motor quente'
+          0x04:
+            en: 'Engine very cold'
+            fr: 'Moteur très froid'
+            es: 'Motor muy frío'
+            de: 'Motor sehr kalt'
+            it: 'Motore molto freddo'
+            pl: 'Silnik bardzo zimny'
+            ru: 'Двигатель очень холодный'
+            zh: '发动机极冷'
+            hu: 'A motor nagyon hideg'
+            pt: 'Motor muito frio'
+          0x05:
+            unused: true
+          0x06:
+            unused: true
+          0x07:
+            unused: true
+      UNUSED_2:
+        bits: '3.2-3.0'
+        unused: true

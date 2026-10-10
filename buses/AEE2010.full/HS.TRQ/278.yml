@@ -1,0 +1,331 @@
+id: 0x278
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_6'
+type: 'can'
+length: 5
+comment:
+  en: 'Real-time engine torque data for hybrid coordination: engine and resistive torque, torque limits and target idle speed'
+  fr: 'Données dynamiques de couple moteur pour la coordination hybride : couple moteur et résistant, limites de couple et régime de ralenti cible'
+  es: 'Datos dinámicos del par motor para la coordinación híbrida: par motor y resistente, límites de par y régimen de ralentí objetivo'
+  de: 'Dynamische Motordrehmomentdaten für die Hybridkoordination: Motor- und Widerstandsmoment, Drehmomentgrenzen und Ziel-Leerlaufdrehzahl'
+  it: 'Dati dinamici di coppia motore per il coordinamento ibrido: coppia motore e resistente, limiti di coppia e regime del minimo target'
+  pl: 'Dynamiczne dane momentu obrotowego silnika do koordynacji hybrydowej: moment silnika i moment oporowy, limity momentu i docelowe obroty biegu jałowego'
+  ru: 'Динамические данные крутящего момента двигателя для гибридной координации: момент двигателя и момент сопротивления, пределы момента и целевые обороты холостого хода'
+  zh: '用于混动协调的发动机转矩动态数据:发动机转矩与阻力转矩、转矩限值及目标怠速'
+  hu: 'A hibrid koordinációhoz szükséges dinamikus motornyomaték-adatok: motor- és ellennyomaték, nyomatékhatárok és cél alapjárati fordulatszám'
+  pt: 'Dados de binário do motor em tempo real para a coordenação híbrida: binário do motor e resistente, limites de binário e regime de ralenti alvo.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers: ['HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ENGINE_RPM_UNFILTERED:
+    bits: '2.7-3.3'
+    comment:
+      en: 'Unfiltered engine speed.'
+      fr: 'Régime moteur non filtré.'
+      es: 'Régimen del motor sin filtrar.'
+      de: 'Ungefilterte Motordrehzahl.'
+      it: 'Regime motore non filtrato.'
+      pl: 'Niefiltrowana prędkość obrotowa silnika.'
+      ru: 'Нефильтрованная частота вращения двигателя.'
+      zh: '未滤波发动机转速。'
+      hu: 'Szűretlen motorfordulatszám.'
+      pt: 'Regime do motor não filtrado.'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 8190
+    units: 'rpm'
+    invalid: 0x1FFF
+    default: 0x1FFE
+
+  ENGINE_START_REQUEST_COORDINATED:
+    bits: '3.2'
+    comment:
+      en: 'Coordinated request to start the combustion engine'
+      fr: 'Demande coordonnée de démarrage du moteur thermique'
+      es: 'Solicitud coordinada de arranque del motor térmico'
+      de: 'Koordinierte Startanforderung des Verbrennungsmotors'
+      it: 'Richiesta coordinata di avviamento del motore termico'
+      pl: 'Skoordynowane żądanie uruchomienia silnika spalinowego'
+      ru: 'Согласованный запрос запуска теплового двигателя'
+      zh: '内燃机启动协调请求'
+      hu: 'A belső égésű motor összehangolt indítási kérése'
+      pt: 'Pedido coordenado de arranque do motor térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No start request'
+        fr: 'Pas de demande de marche'
+        es: 'Sin solicitud de arranque'
+        de: 'Keine Startanforderung'
+        it: 'Nessuna richiesta di avvio'
+        pl: 'Brak żądania uruchomienia'
+        ru: 'Нет запроса запуска'
+        zh: '无启动请求'
+        hu: 'Nincs indítási kérés'
+        pt: 'Sem pedido de arranque'
+      0x01:
+        en: 'Start request'
+        fr: 'Demande de marche'
+        es: 'Solicitud de marcha'
+        de: 'Startanforderung'
+        it: 'Richiesta di marcia'
+        pl: 'Żądanie uruchomienia'
+        ru: 'Запрос запуска'
+        zh: '启动请求'
+        hu: 'Indítási kérés'
+        pt: 'Pedido de arranque'
+
+  ENGINE_STOP_AUTHORIZATION:
+    bits: '3.1'
+    comment:
+      en: 'Authorization to stop the engine'
+      fr: 'Autorisation d''arrêt du moteur thermique'
+      es: 'Autorización de parada del motor térmico'
+      de: 'Freigabe zum Abstellen des Verbrennungsmotors'
+      it: 'Autorizzazione all''arresto del motore termico'
+      pl: 'Zezwolenie na zatrzymanie silnika spalinowego'
+      ru: 'Разрешение остановки теплового двигателя'
+      zh: '内燃机停机授权'
+      hu: 'A belső égésű motor leállításának engedélyezése'
+      pt: 'Autorização de paragem do motor térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'not authorization'
+        fr: 'pas d''autorisation'
+        es: 'sin autorización'
+        de: 'keine Genehmigung'
+        it: 'nessuna autorizzazione'
+        pl: 'brak autoryzacji'
+        ru: 'нет разрешения'
+        zh: '无授权'
+        hu: 'nincs engedélyezve'
+        pt: 'sem autorização'
+      0x01:
+        en: 'Authorization'
+        fr: 'Autorisation'
+        es: 'Autorización'
+        de: 'Freigabe'
+        it: 'Autorizzazione'
+        pl: 'Zezwolenie'
+        ru: 'Разрешение'
+        zh: '授权'
+        hu: 'Engedély'
+        pt: 'Autorização'
+
+  INJECTION_CUT_STATUS:
+    bits: '3.0'
+    comment:
+      en: 'Fuel injection cut-off status.'
+      fr: 'État de la coupure d''injection.'
+      es: 'Estado del corte de inyección.'
+      de: 'Status der Einspritzabschaltung.'
+      it: 'Stato dell''interruzione dell''iniezione.'
+      pl: 'Stan odcięcia wtrysku.'
+      ru: 'Состояние отключения впрыска.'
+      zh: '喷油切断状态。'
+      hu: 'Az befecskendezés-megszakítás állapota.'
+      pt: 'Estado do corte de injeção.'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Injection not cut off'
+        fr: 'Injection non coupée'
+        es: 'Inyección no cortada'
+        de: 'Einspritzung nicht abgeschaltet'
+        it: 'Iniezione non interrotta'
+        pl: 'Wtrysk niewyłączony'
+        ru: 'Впрыск не отключён'
+        zh: '喷油未切断'
+        hu: 'Befecskendezés nincs lekapcsolva'
+        pt: 'Injeção não cortada'
+      0x01:
+        en: 'Injection cut off'
+        fr: 'Injection coupée'
+        es: 'Inyección cortada'
+        de: 'Einspritzung abgeschaltet'
+        it: 'Iniezione disattivata'
+        pl: 'Wtrysk odcięty'
+        ru: 'Впрыск отключён'
+        zh: '喷油已切断'
+        hu: 'Befecskendezés megszakítva'
+        pt: 'Corte de injeção'
+
+  UNUSED_1:
+    bits: '4.7-4.0'
+    unused: true
+
+  UNUSED_2:
+    bits: '5.7-5.5'
+    unused: true
+
+  ENGINE_OPERATING_STATE_RAW:
+    bits: '5.4-5.1'
+    comment:
+      en: 'Raw combustion engine operating state (locked/stalled/cranking/running/stopped)'
+      fr: 'État brut de fonctionnement du moteur thermique (verrouillé/calé/entraîné/tournant/arrêté)'
+      es: 'Estado bruto de funcionamiento del motor térmico (bloqueado/calado/arrancando/en marcha/parado)'
+      de: 'Rohbetriebszustand des Verbrennungsmotors (gesperrt/abgewürgt/gestartet/läuft/gestoppt)'
+      it: 'Stato grezzo di funzionamento del motore termico (bloccato/spento/avviamento/in moto/fermo)'
+      pl: 'Surowy stan pracy silnika spalinowego (zablokowany/zgaszony/rozruch/pracuje/zatrzymany)'
+      ru: 'Необработанное рабочее состояние теплового двигателя (заблокирован/заглох/пуск/работает/остановлен)'
+      zh: '内燃机原始运行状态(锁定/熄火/起动中/运转/停止)'
+      hu: 'A belső égésű motor nyers üzemállapota (zárolt/leállt/indítás alatt/jár/leállítva)'
+      pt: 'Estado bruto de funcionamento do motor térmico (bloqueado/calado/a ser arrastado/em funcionamento/parado)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Stalled (engine off)'
+        fr: 'Coupé calé'
+        es: 'Parado (calado)'
+        de: 'Abgewürgt (Motor aus)'
+        it: 'Spento (in stallo)'
+        pl: 'Zgaszony (zdławiony)'
+        ru: 'Заглох (двигатель выключен)'
+        zh: '熄火(发动机关闭)'
+        hu: 'Leállt (motor kikapcsolva)'
+        pt: 'Calado (motor desligado)'
+      0x02:
+        en: 'Starting (driven)'
+        fr: 'Démarrage entraîné'
+        es: 'Arranque accionado'
+        de: 'Angetriebener Start'
+        it: 'Avviamento trainato'
+        pl: 'Rozruch napędzany'
+        ru: 'Запуск с приводом'
+        zh: '带动启动'
+        hu: 'Hajtott indítás'
+        pt: 'Arranque acionado'
+      0x03:
+        en: 'Engine running'
+        fr: 'Moteur tournant'
+        es: 'Motor en marcha'
+        de: 'Motor läuft'
+        it: 'Motore in funzione'
+        pl: 'Silnik pracujący'
+        ru: 'Двигатель работает'
+        zh: '发动机运转中'
+        hu: 'A motor jár'
+        pt: 'Motor em funcionamento'
+      0x04:
+        en: 'Stopped'
+        fr: 'Arrêté'
+        es: 'Detenido'
+        de: 'Angehalten'
+        it: 'Fermato'
+        pl: 'Zatrzymane'
+        ru: 'Остановлено'
+        zh: '已停止'
+        hu: 'Leállítva'
+        pt: 'Parado'
+      0x05:
+        en: 'Driven restart'
+        fr: 'Redémarrage entrainé'
+        es: 'Reinicio por arrastre'
+        de: 'Neustart durch Schleppen'
+        it: 'Riavvio trainato'
+        pl: 'Ponowne uruchomienie przez holowanie'
+        ru: 'Перезапуск буксировкой'
+        zh: '拖动重启'
+        hu: 'Vontatásos újraindítás'
+        pt: 'Reinício por arrasto'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Engine preparing'
+        fr: 'En préparation'
+        es: 'En preparación'
+        de: 'In Vorbereitung'
+        it: 'In preparazione'
+        pl: 'W przygotowaniu'
+        ru: 'Идёт подготовка'
+        zh: '准备中'
+        hu: 'Előkészítés alatt'
+        pt: 'Em preparação'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Autonomous starting'
+        fr: 'Démarrage autonome'
+        es: 'Arranque autónomo'
+        de: 'Autonomer Start'
+        it: 'Avviamento autonomo'
+        pl: 'Rozruch autonomiczny'
+        ru: 'Автономный пуск'
+        zh: '自主启动'
+        hu: 'Önálló indítás'
+        pt: 'Arranque autónomo'
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        en: 'Autonomous restart'
+        fr: 'Redémarrage autonome'
+        es: 'Reinicio autónomo'
+        de: 'Autonomer Neustart'
+        it: 'Riavvio autonomo'
+        pl: 'Autonomiczny restart'
+        ru: 'Автономный перезапуск'
+        zh: '自主重启'
+        hu: 'Autonóm újraindítás'
+        pt: 'Reinício autónomo'
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_3:
+    bits: '5.0'
+    unused: true

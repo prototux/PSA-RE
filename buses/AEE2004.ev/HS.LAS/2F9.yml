@@ -1,0 +1,376 @@
+id: 0x2F9
+name: 'YAW_LATERAL_LONGITUDINAL_SENSOR_DATA'
+type: 'can'
+length: 7
+comment:
+  en: 'Bosch triple sensor data: lateral and longitudinal acceleration, yaw rate, raw-value validity flags and under/over-voltage status.'
+  fr: 'Données du tricapteur Bosch : accélération latérale et longitudinale, vitesse de lacet, indicateurs de validité des valeurs brutes et état de sous/surtension.'
+  es: 'Datos del tricapteur Bosch: aceleración lateral y longitudinal, velocidad de guiñada, indicadores de validez de los valores brutos y estado de sub/sobretensión.'
+  de: 'Daten des Bosch-Dreifachsensors: Quer- und Längsbeschleunigung, Gierrate, Gültigkeitsflags der Rohwerte und Unter-/Überspannungsstatus.'
+  it: 'Dati del triplo sensore Bosch: accelerazione laterale e longitudinale, velocità di imbardata, indicatori di validità dei valori grezzi e stato di sotto/sovratensione.'
+  pl: 'Dane potrójnego czujnika Bosch: przyspieszenie boczne i wzdłużne, prędkość odchylania, flagi ważności wartości surowych oraz stan pod-/przenapięcia.'
+  ru: 'Данные тройного датчика Bosch: боковое и продольное ускорение, скорость рыскания, флаги достоверности сырых значений и статус пониженного/повышенного напряжения.'
+  zh: '博世三合一传感器数据:横向和纵向加速度、横摆角速度、原始值有效性标志以及欠压/过压状态。'
+  hu: 'A Bosch hármas érzékelő adatai: keresztirányú és hosszirányú gyorsulás, legyezési szögsebesség, a nyers értékek érvényességi jelzői, valamint az alul-/túlfeszültség állapota.'
+  pt: 'Dados do sensor triplo Bosch: aceleração lateral e longitudinal, velocidade de guinada, indicadores de validade dos valores em bruto e estado de subtensão/sobretensão.'
+periodicity: ['10ms']
+senders: ['ACCEL_SENSOR']
+receivers: ['ABS']
+
+signals:
+  SENSOR_CLUSTER_CRC:
+    bits: '1.7-1.0'
+    comment:
+      en: 'CRC of the inertial sensor cluster'
+      fr: 'CRC du tricapteur inertiel'
+      es: 'CRC del clúster de sensores inerciales'
+      de: 'CRC des Inertialsensor-Clusters'
+      it: 'CRC del cluster di sensori inerziali'
+      pl: 'CRC klastra czujników inercyjnych'
+      ru: 'CRC инерциального блока датчиков'
+      zh: '惯性传感器组CRC'
+      hu: 'A tehetetlenségi érzékelő-egység CRC-je'
+      pt: 'CRC do conjunto de sensores inerciais'
+    type: 'uint'
+    min: 0
+    max: 255
+
+  RAW_LONGITUDINAL_ACCELERATION_STATUS:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Status of the raw longitudinal acceleration signal'
+      fr: 'Etat du signal d''accélération longitudinale brute'
+      es: 'Estado de la señal de aceleración longitudinal bruta'
+      de: 'Status des rohen Längsbeschleunigungssignals'
+      it: 'Stato del segnale di accelerazione longitudinale grezza'
+      pl: 'Stan surowego sygnału przyspieszenia wzdłużnego'
+      ru: 'Состояние необработанного сигнала продольного ускорения'
+      zh: '原始纵向加速度信号状态'
+      hu: 'A nyers hosszirányú gyorsulásjel állapota'
+      pt: 'Estado do sinal de aceleração longitudinal bruta'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Signal within measurement range'
+        fr: 'Signal dans la plage de mesure'
+        es: 'Señal dentro del rango de medición'
+        de: 'Signal im Messbereich'
+        it: 'Segnale nel range di misura'
+        pl: 'Sygnał w zakresie pomiarowym'
+        ru: 'Сигнал в пределах диапазона измерения'
+        zh: '信号在测量范围内'
+        hu: 'Jel a mérési tartományon belül'
+        pt: 'Sinal dentro da gama de medição'
+      0x01:
+        en: 'Temporary signal error'
+        fr: 'Erreur temporaire'
+        es: 'Error temporal'
+        de: 'Vorübergehender Fehler'
+        it: 'Errore temporaneo'
+        pl: 'Chwilowy błąd'
+        ru: 'Временная ошибка'
+        zh: '临时信号错误'
+        hu: 'Átmeneti hiba'
+        pt: 'Erro temporário'
+      0x02:
+        en: 'Permanent signal error'
+        fr: 'Erreur permanente'
+        es: 'Error permanente'
+        de: 'Dauerhafter Fehler'
+        it: 'Errore permanente'
+        pl: 'Błąd trwały'
+        ru: 'Постоянная ошибка'
+        zh: '永久性错误'
+        hu: 'Állandó hiba'
+        pt: 'Erro de sinal permanente'
+      0x03:
+        en: 'Sensor initializing'
+        fr: 'Capteur en cours d''initialisation'
+        es: 'Sensor inicializándose'
+        de: 'Sensor wird initialisiert'
+        it: 'Sensore in fase di inizializzazione'
+        pl: 'Czujnik w trakcie inicjalizacji'
+        ru: 'Датчик инициализируется'
+        zh: '传感器初始化中'
+        hu: 'Érzékelő inicializálás alatt'
+        pt: 'Sensor a inicializar'
+
+  RAW_LATERAL_ACCELERATION_STATUS:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Status of the raw lateral acceleration signal'
+      fr: 'Etat du signal d''accélération latérale brute'
+      es: 'Estado de la señal de aceleración lateral bruta'
+      de: 'Status des rohen Querbeschleunigungssignals'
+      it: 'Stato del segnale di accelerazione laterale grezza'
+      pl: 'Stan surowego sygnału przyspieszenia poprzecznego'
+      ru: 'Состояние необработанного сигнала поперечного ускорения'
+      zh: '原始横向加速度信号状态'
+      hu: 'A nyers keresztirányú gyorsulásjel állapota'
+      pt: 'Estado do sinal de aceleração lateral bruta'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Signal within measurement range'
+        fr: 'Signal dans la plage de mesure'
+        es: 'Señal dentro del rango de medición'
+        de: 'Signal im Messbereich'
+        it: 'Segnale nel range di misura'
+        pl: 'Sygnał w zakresie pomiarowym'
+        ru: 'Сигнал в пределах диапазона измерения'
+        zh: '信号在测量范围内'
+        hu: 'Jel a mérési tartományon belül'
+        pt: 'Sinal dentro da gama de medição'
+      0x01:
+        en: 'Temporary signal error'
+        fr: 'Erreur temporaire'
+        es: 'Error temporal'
+        de: 'Vorübergehender Fehler'
+        it: 'Errore temporaneo'
+        pl: 'Chwilowy błąd'
+        ru: 'Временная ошибка'
+        zh: '临时信号错误'
+        hu: 'Átmeneti hiba'
+        pt: 'Erro temporário'
+      0x02:
+        en: 'Permanent signal error'
+        fr: 'Erreur permanente'
+        es: 'Error permanente'
+        de: 'Dauerhafter Fehler'
+        it: 'Errore permanente'
+        pl: 'Błąd trwały'
+        ru: 'Постоянная ошибка'
+        zh: '永久性错误'
+        hu: 'Állandó hiba'
+        pt: 'Erro de sinal permanente'
+      0x03:
+        en: 'Sensor initializing'
+        fr: 'Capteur en cours d''initialisation'
+        es: 'Sensor inicializándose'
+        de: 'Sensor wird initialisiert'
+        it: 'Sensore in fase di inizializzazione'
+        pl: 'Czujnik w trakcie inicjalizacji'
+        ru: 'Датчик инициализируется'
+        zh: '传感器初始化中'
+        hu: 'Érzékelő inicializálás alatt'
+        pt: 'Sensor a inicializar'
+
+  RAW_YAW_RATE_STATUS:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Status of the raw yaw rate signal'
+      fr: 'Etat du signal de vitesse de lacet brute'
+      es: 'Estado de la señal de velocidad de guiñada bruta'
+      de: 'Status des rohen Gierratensignals'
+      it: 'Stato del segnale di velocità di imbardata grezza'
+      pl: 'Stan surowego sygnału prędkości odchylania'
+      ru: 'Состояние необработанного сигнала угловой скорости рыскания'
+      zh: '原始横摆角速度信号状态'
+      hu: 'A nyers legyezési szögsebesség jel állapota'
+      pt: 'Estado do sinal bruto da velocidade de guinada'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Signal within measurement range'
+        fr: 'Signal dans la plage de mesure'
+        es: 'Señal dentro del rango de medición'
+        de: 'Signal im Messbereich'
+        it: 'Segnale nel range di misura'
+        pl: 'Sygnał w zakresie pomiarowym'
+        ru: 'Сигнал в пределах диапазона измерения'
+        zh: '信号在测量范围内'
+        hu: 'Jel a mérési tartományon belül'
+        pt: 'Sinal dentro da gama de medição'
+      0x01:
+        en: 'Temporary signal error'
+        fr: 'Erreur temporaire'
+        es: 'Error temporal'
+        de: 'Vorübergehender Fehler'
+        it: 'Errore temporaneo'
+        pl: 'Chwilowy błąd'
+        ru: 'Временная ошибка'
+        zh: '临时信号错误'
+        hu: 'Átmeneti hiba'
+        pt: 'Erro temporário'
+      0x02:
+        en: 'Permanent signal error'
+        fr: 'Erreur permanente'
+        es: 'Error permanente'
+        de: 'Dauerhafter Fehler'
+        it: 'Errore permanente'
+        pl: 'Błąd trwały'
+        ru: 'Постоянная ошибка'
+        zh: '永久性错误'
+        hu: 'Állandó hiba'
+        pt: 'Erro de sinal permanente'
+      0x03:
+        en: 'Sensor initializing'
+        fr: 'Capteur en cours d''initialisation'
+        es: 'Sensor inicializándose'
+        de: 'Sensor wird initialisiert'
+        it: 'Sensore in fase di inizializzazione'
+        pl: 'Czujnik w trakcie inicjalizacji'
+        ru: 'Датчик инициализируется'
+        zh: '传感器初始化中'
+        hu: 'Érzékelő inicializálás alatt'
+        pt: 'Sensor a inicializar'
+
+  SENSOR_UNDERVOLTAGE_OVERVOLTAGE:
+    bits: '2.1'
+    comment:
+      en: 'Sensor undervoltage / overvoltage'
+      fr: 'Sous-tension / surtension du capteur'
+      es: 'Subtensión / sobretensión del sensor'
+      de: 'Unterspannung/Überspannung des Sensors'
+      it: 'Sottotensione / sovratensione del sensore'
+      pl: 'Niedomiar/przepięcie zasilania czujnika'
+      ru: 'Пониженное/повышенное напряжение датчика'
+      zh: '传感器欠压/过压'
+      hu: 'Az érzékelő alulfeszültsége / túlfeszültsége'
+      pt: 'Subtensão / sobretensão do sensor'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No undervoltage / overvoltage detected'
+        fr: 'Pas de sous-tension / surtension détectée'
+        es: 'Sin subtensión / sobretensión detectada'
+        de: 'Keine Unterspannung / Überspannung erkannt'
+        it: 'Nessuna sottotensione / sovratensione rilevata'
+        pl: 'Brak podnapięcia / wykryto przepięcie'
+        ru: 'Пониженное напряжение отсутствует / обнаружено перенапряжение'
+        zh: '无欠压/检测到过压'
+        hu: 'Nincs alacsony feszültség / túlfeszültség észlelve'
+        pt: 'Sem subtensão / sobretensão detetada'
+      0x01:
+        en: 'Overvoltage / undervoltage detected (Bosch)'
+        fr: 'Sous-tension / surtension détectée (Bosch)'
+        es: 'Sobretensión / subtensión detectada (Bosch)'
+        de: 'Über-/Unterspannung erkannt (Bosch)'
+        it: 'Sovratensione / sottotensione rilevata (Bosch)'
+        pl: 'Wykryto przepięcie / niedomiar napięcia (Bosch)'
+        ru: 'Обнаружено перенапряжение/пониженное напряжение (Bosch)'
+        zh: '检测到过压/欠压(博世)'
+        hu: 'Túlfeszültség / alulfeszültség észlelve (Bosch)'
+        pt: 'Sobretensão / subtensão detetada (Bosch)'
+
+  SENSOR_INTERNAL_PROCESSING_ERROR:
+    bits: '2.0'
+    comment:
+      en: 'Internal processing error'
+      fr: 'Erreur de traitement interne'
+      es: 'Error de procesamiento interno'
+      de: 'Interner Verarbeitungsfehler'
+      it: 'Errore di elaborazione interno'
+      pl: 'Wewnętrzny błąd przetwarzania'
+      ru: 'Внутренняя ошибка обработки'
+      zh: '内部处理错误'
+      hu: 'Belső feldolgozási hiba'
+      pt: 'Erro de processamento interno'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No internal processing error detected'
+        fr: 'Pas d''erreur de traitement interne détectée'
+        es: 'No se detectó ningún error de procesamiento interno'
+        de: 'Kein interner Verarbeitungsfehler erkannt'
+        it: 'Nessun errore di elaborazione interna rilevato'
+        pl: 'Nie wykryto błędu przetwarzania wewnętrznego'
+        ru: 'Внутренняя ошибка обработки не обнаружена'
+        zh: '未检测到内部处理错误'
+        hu: 'Nem észlelhető belső feldolgozási hiba'
+        pt: 'Nenhum erro de processamento interno detetado'
+      0x01:
+        en: 'Internal processing error detected'
+        fr: 'Erreur de traitement interne détectée'
+        es: 'Error de procesamiento interno detectado'
+        de: 'Interner Verarbeitungsfehler erkannt'
+        it: 'Errore di elaborazione interno rilevato'
+        pl: 'Wykryto wewnętrzny błąd przetwarzania'
+        ru: 'Обнаружена внутренняя ошибка обработки'
+        zh: '检测到内部处理错误'
+        hu: 'Belső feldolgozási hiba észlelve'
+        pt: 'Erro de processamento interno detetado'
+
+  SENSOR_MESSAGE_COUNTER:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Message counter'
+      fr: 'Compteur de message'
+      es: 'Contador de mensajes'
+      de: 'Nachrichtenzähler'
+      it: 'Contatore dei messaggi'
+      pl: 'Licznik komunikatów'
+      ru: 'Счётчик сообщений'
+      zh: '消息计数器'
+      hu: 'Üzenetszámláló'
+      pt: 'Contador de mensagens'
+    type: 'uint'
+    min: 0
+    max: 15
+
+  RAW_LONGITUDINAL_ACCELERATION_12BIT:
+    bits: '3.3-4.0'
+    comment:
+      en: '12-bit raw (unfiltered) longitudinal acceleration'
+      fr: 'Accélération longitudinale brute 12 bits'
+      es: 'Aceleración longitudinal bruta de 12 bits'
+      de: '12-Bit unverarbeitete Längsbeschleunigung'
+      it: 'Accelerazione longitudinale grezza a 12 bit'
+      pl: '12-bitowe surowe przyspieszenie wzdłużne'
+      ru: '12-битное необработанное продольное ускорение'
+      zh: '12位原始纵向加速度'
+      hu: '12 bites nyers (szűretlen) hosszirányú gyorsulás'
+      pt: 'Aceleração longitudinal bruta de 12 bits (não filtrada)'
+    type: 'uint'
+    factor: 0.02
+    offset: -40.96
+    min: -40.96
+    max: 40.92
+    units: 'm/s2'
+    invalid: 0xFFF
+    default: 0x00
+
+  RAW_LATERAL_ACCELERATION_12BIT:
+    bits: '5.7-6.4'
+    comment:
+      en: '12-bit raw (unfiltered) lateral acceleration'
+      fr: 'Accélération latérale brute 12 bits'
+      es: 'Aceleración lateral bruta de 12 bits'
+      de: '12-Bit unverarbeitete Querbeschleunigung'
+      it: 'Accelerazione laterale grezza a 12 bit'
+      pl: '12-bitowe surowe przyspieszenie poprzeczne'
+      ru: '12-битное необработанное поперечное ускорение'
+      zh: '12位原始横向加速度'
+      hu: '12 bites nyers (szűretlen) keresztirányú gyorsulás'
+      pt: 'Aceleração lateral bruta de 12 bits (não filtrada)'
+    type: 'uint'
+    factor: 0.02
+    offset: -40.96
+    min: -40.96
+    max: 40.92
+    units: 'm/s2'
+    invalid: 0xFFF
+    default: 0x00
+
+  RAW_YAW_RATE_12BIT:
+    bits: '6.3-7.0'
+    comment:
+      en: '12-bit raw (unfiltered) yaw rate'
+      fr: 'Vitesse de lacet brute 12 bits'
+      es: 'Velocidad de guiñada bruta de 12 bits'
+      de: '12-Bit unverarbeitete Gierrate'
+      it: 'Velocità di imbardata grezza a 12 bit'
+      pl: '12-bitowa surowa prędkość odchylania'
+      ru: '12-битная необработанная угловая скорость рыскания'
+      zh: '12位原始横摆角速度'
+      hu: '12 bites nyers (szűretlen) legyezési szögsebesség'
+      pt: 'Velocidade de guinada bruta de 12 bits (não filtrada)'
+    type: 'uint'
+    factor: 0.08
+    offset: -163.84
+    min: -163.84
+    max: 163.68
+    units: '°/s'
+    invalid: 0xFFF
+    default: 0x00

@@ -1,0 +1,141 @@
+id: 0x454
+name: 'HV_BATTERY_MANAGEMENT_DATA_3'
+type: 'can'
+length: 8
+comment:
+  en: 'HV battery management data: engine auto-stop authorisation, warning-lamp reset command and request, climate-control inhibition, engine action request, and battery state of charge/state of health.'
+  fr: 'Données de gestion batterie HT : autorisation d''arrêt automatique moteur, commande et demande de remise à zéro du voyant, inhibition climatisation, demande d''action moteur, et état de charge/état de santé de la batterie.'
+  es: 'Datos de gestión de batería de alta tensión: autorización de parada automática del motor, comando y solicitud de reinicio del testigo, inhibición de la climatización, solicitud de acción del motor, y estado de carga/estado de salud de la batería.'
+  de: 'Hochvoltbatterie-Managementdaten: Freigabe des automatischen Motorstopps, Rücksetzbefehl und -anforderung der Kontrollleuchte, Klimaanlagensperre, Motoraktionsanforderung sowie Ladezustand/Alterungszustand der Batterie.'
+  it: 'Dati di gestione batteria AT: autorizzazione arresto automatico motore, comando e richiesta di reset spia, inibizione climatizzazione, richiesta di azione motore, e stato di carica/stato di salute della batteria.'
+  pl: 'Dane zarządzania akumulatorem WN: autoryzacja automatycznego zatrzymania silnika, polecenie i żądanie kasowania kontrolki, blokada klimatyzacji, żądanie działania silnika oraz stan naładowania/stan zdrowia akumulatora.'
+  ru: 'Данные управления высоковольтной батареей: разрешение автоматической остановки двигателя, команда и запрос сброса индикатора, блокировка кондиционера, запрос действия двигателя, а также уровень заряда/состояние батареи.'
+  zh: '高压电池管理数据:发动机自动停止授权、警示灯复位命令和请求、空调抑制、发动机动作请求,以及电池充电状态/健康状态。'
+  hu: 'Nagyfeszültségű akkumulátor kezelési adatok: motor automatikus leállásának engedélyezése, jelzőlámpa visszaállítási parancs és kérés, klíma letiltása, motorművelet kérése, valamint az akkumulátor töltöttségi/állapotszintje.'
+  pt: 'Dados de gestão da bateria de alta tensão: autorização de paragem automática do motor, comando e pedido de reposição da luz avisadora, inibição da climatização, pedido de ação do motor, e estado de carga/estado de saúde da bateria.'
+periodicity: ['1000ms']
+senders: ['VCU', 'E_VCU']
+receivers: ['MDS', 'BSI']
+
+signals:
+  MAIN_RELAY_ACTUATION_COUNTER:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Number of times the main HV contactor relay has been actuated'
+      fr: 'Nombre d''activations du relais principal (contacteur HT)'
+      es: 'Número de activaciones del relé principal (contactor de alta tensión)'
+      de: 'Anzahl der Schaltvorgänge des Hauptrelais (HV-Schütz)'
+      it: 'Numero di attivazioni del relè principale (contattore HT)'
+      pl: 'Liczba załączeń przekaźnika głównego (stycznika wysokiego napięcia)'
+      ru: 'Количество срабатываний главного реле (высоковольтного контактора)'
+      zh: '主继电器(高压接触器)动作次数'
+      hu: 'A fő relé (nagyfeszültségű kontaktor) működtetéseinek száma'
+      pt: 'Número de ativações do relé principal (contactor de alta tensão)'
+    type: 'uint'
+    factor: 200
+    min: 0
+    max: 200000
+    invalid: 0x3FF
+
+  DC_CHARGE_RELAY_ACTUATION_COUNTER:
+    bits: '2.5-3.4'
+    comment:
+      en: 'Number of times the DC charging relay has been actuated'
+      fr: 'Nombre d''activations du relais de charge DC'
+      es: 'Número de activaciones del relé de carga DC'
+      de: 'Anzahl der Schaltvorgänge des DC-Laderelais'
+      it: 'Numero di attivazioni del relè di carica DC'
+      pl: 'Liczba załączeń przekaźnika ładowania DC'
+      ru: 'Количество срабатываний реле DC-зарядки'
+      zh: 'DC充电继电器动作次数'
+      hu: 'A DC töltőrelé működtetéseinek száma'
+      pt: 'Número de ativações do relé de carga DC'
+    type: 'uint'
+    factor: 200
+    min: 0
+    max: 200000
+    invalid: 0x3FF
+
+  HV_BATTERY_SOH_CAPACITY:
+    bits: '3.3-4.5'
+    comment:
+      en: 'HV battery state of health, capacity-based'
+      fr: 'État de santé de la batterie HT, basé sur la capacité'
+      es: 'Estado de salud de la batería de alta tensión, basado en la capacidad'
+      de: 'Alterungszustand (SOH) der HV-Batterie, kapazitätsbasiert'
+      it: 'Stato di salute della batteria HT, basato sulla capacità'
+      pl: 'Stan zdrowia akumulatora wysokiego napięcia, na podstawie pojemności'
+      ru: 'Состояние работоспособности (SOH) ВВ батареи по ёмкости'
+      zh: '基于容量的高压电池健康状态(SOH)'
+      hu: 'A nagyfeszültségű akkumulátor állapota (SOH), kapacitás alapján'
+      pt: 'Estado de saúde da bateria de alta tensão, baseado na capacidade'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  HV_BATTERY_SOH_RESISTANCE:
+    bits: '4.4-5.6'
+    comment:
+      en: 'HV battery state of health, resistance-based'
+      fr: 'État de santé de la batterie HT, basé sur la résistance'
+      es: 'Estado de salud de la batería de alta tensión, basado en la resistencia'
+      de: 'Alterungszustand (SOH) der HV-Batterie, widerstandsbasiert'
+      it: 'Stato di salute della batteria HT, basato sulla resistenza'
+      pl: 'Stan zdrowia akumulatora wysokiego napięcia, na podstawie rezystancji'
+      ru: 'Состояние работоспособности (SOH) ВВ батареи по сопротивлению'
+      zh: '基于内阻的高压电池健康状态(SOH)'
+      hu: 'A nagyfeszültségű akkumulátor állapota (SOH), ellenállás alapján'
+      pt: 'Estado de saúde da bateria de alta tensão, baseado na resistência'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+
+  TIME_HV_BATT_OVER_TEMPERATURE:
+    bits: '5.5-6.1'
+    comment:
+      en: 'Cumulative time the HV battery has spent above the maximum allowed temperature'
+      fr: 'Durée cumulée pendant laquelle la batterie HT a dépassé la température maximale autorisée'
+      es: 'Tiempo acumulado en el que la batería de alta tensión ha superado la temperatura máxima permitida'
+      de: 'Kumulierte Zeit, in der die HV-Batterie die maximal zulässige Temperatur überschritten hat'
+      it: 'Tempo cumulativo in cui la batteria HT ha superato la temperatura massima consentita'
+      pl: 'Łączny czas, przez jaki akumulator wysokiego napięcia przekraczał maksymalną dopuszczalną temperaturę'
+      ru: 'Суммарное время, в течение которого ВВ батарея превышала максимально допустимую температуру'
+      zh: '高压电池超过最高允许温度的累计时间'
+      hu: 'Az az összesített idő, amíg a nagyfeszültségű akkumulátor túllépte a megengedett maximális hőmérsékletet'
+      pt: 'Tempo acumulado em que a bateria de alta tensão ultrapassou a temperatura máxima permitida'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 600
+    units: 'h'
+    invalid: 0x1FFF
+
+  HV_BATTERY_TOTAL_POSITIVE_CURRENT_AH:
+    bits: '6.0-8.5'
+    comment:
+      en: 'Total positive (charge) current quantity of the HV battery'
+      fr: 'Quantité totale de courant positif (charge) de la batterie haute tension'
+      es: 'Cantidad total de corriente positiva (carga) de la batería de alta tensión'
+      de: 'Gesamtmenge des positiven (Lade-)Stroms der Hochvoltbatterie'
+      it: 'Quantità totale di corrente positiva (carica) della batteria ad alta tensione'
+      pl: 'Całkowita ilość prądu dodatniego (ładowania) akumulatora wysokiego napięcia'
+      ru: 'Общее количество положительного тока (заряда) высоковольтной батареи'
+      zh: '高压电池正电流(充电)总量'
+      hu: 'A nagyfeszültségű akkumulátor pozitív (töltési) áram összmennyisége'
+      pt: 'Quantidade total de corrente positiva (carga) da bateria de alta tensão'
+    type: 'uint'
+    factor: 125
+    min: 0
+    max: 500000
+    units: 'Ah'
+    invalid: 0xFFF
+
+  UNUSED_1:
+    bits: '8.4-8.0'
+    unused: true

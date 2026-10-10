@@ -1,0 +1,162 @@
+id: 0x341
+name: 'WIRELESS_CHARGER_STATUS'
+type: 'can'
+length: 6
+comment:
+  en: 'On-board charger DC/DC converter data: measured high- and low-voltage current/voltage and load.'
+  fr: 'Données du convertisseur DC/DC du chargeur embarqué : courant/tension haute et basse tension mesurés et charge.'
+  es: 'Datos del convertidor DC/DC del cargador embarcado: corriente/tensión de alta y baja tensión medidas y carga.'
+  de: 'Daten des DC/DC-Wandlers des Onboard-Laders: gemessener Hoch- und Niedervoltstrom/-spannung sowie Last.'
+  it: 'Dati del convertitore DC/DC del caricabatterie di bordo: corrente/tensione alta e bassa misurate e carico.'
+  pl: 'Dane przetwornicy DC/DC ładowarki pokładowej: zmierzony prąd/napięcie wysokiego i niskiego napięcia oraz obciążenie.'
+  ru: 'Данные преобразователя DC/DC бортового зарядного устройства: измеренные ток/напряжение высокой и низкой стороны, а также нагрузка.'
+  zh: '车载充电器DC/DC变换器数据:实测高压/低压电流、电压及负载。'
+  hu: 'A fedélzeti töltő DC/DC átalakítójának adatai: a mért nagy- és kisfeszültségű áram/feszültség, valamint a terhelés.'
+  pt: 'Dados do conversor DC/DC do carregador de bordo: corrente/tensão de alta e baixa tensão medidas e carga.'
+periodicity: ['40ms']
+senders: ['OBC']
+receivers: ['CMM']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  DCDC_OUTPUT_CURRENT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'DC/DC converter output current'
+      fr: 'Courant de sortie du convertisseur DC/DC'
+      es: 'Corriente de salida del convertidor DC/DC'
+      de: 'Ausgangsstrom des DC/DC-Wandlers'
+      it: 'Corrente di uscita del convertitore DC/DC'
+      pl: 'Prąd wyjściowy przetwornicy DC/DC'
+      ru: 'Выходной ток DC/DC преобразователя'
+      zh: 'DC/DC转换器输出电流'
+      hu: 'A DC/DC átalakító kimeneti árama'
+      pt: 'Corrente de saída do conversor DC/DC'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'A'
+    invalid: 0xFF
+    default: 0x00
+
+  DCDC_HV_SUPPLY_CURRENT:
+    bits: '3.7-3.1'
+    comment:
+      en: 'DC/DC converter supply current'
+      fr: 'Courant d''alimentation du convertisseur DC/DC'
+      es: 'Corriente de alimentación del convertidor DC/DC'
+      de: 'Versorgungsstrom des DC/DC-Wandlers'
+      it: 'Corrente di alimentazione del convertitore DC/DC'
+      pl: 'Prąd zasilania przetwornicy DC/DC'
+      ru: 'Ток питания DC/DC-преобразователя'
+      zh: 'DC/DC转换器供电电流'
+      hu: 'A DC/DC átalakító tápárama'
+      pt: 'Corrente de alimentação do conversor DC/DC'
+    type: 'uint'
+    factor: 0.2
+    min: 0
+    max: 25
+    units: 'A'
+    invalid: 0x7F
+    default: 0x00
+
+  DCDC_LV_OUTPUT_VOLTAGE:
+    bits: '3.0-4.2'
+    comment:
+      en: 'DC/DC converter output voltage'
+      fr: 'Tension de sortie du convertisseur DC/DC'
+      es: 'Tensión de salida del convertidor DC/DC'
+      de: 'Ausgangsspannung des DC/DC-Wandlers'
+      it: 'Tensione di uscita del convertitore DC/DC'
+      pl: 'Napięcie wyjściowe przetwornicy DC/DC'
+      ru: 'Выходное напряжение DC/DC-преобразователя'
+      zh: 'DC/DC转换器输出电压'
+      hu: 'A DC/DC átalakító kimeneti feszültsége'
+      pt: 'Tensão de saída do conversor DC/DC'
+    type: 'uint'
+    factor: 0.1
+    offset: 5.4
+    min: 5.4
+    max: 18
+    units: 'V'
+    invalid: 0x7F
+    default: 0x00
+
+  DCDC_HV_SUPPLY_VOLTAGE:
+    bits: '4.1-5.1'
+    comment:
+      en: 'DC/DC converter supply voltage'
+      fr: 'Tension d''alimentation du convertisseur DC/DC'
+      es: 'Tensión de alimentación del convertidor DC/DC'
+      de: 'Versorgungsspannung des DC/DC-Wandlers'
+      it: 'Tensione di alimentazione del convertitore DC/DC'
+      pl: 'Napięcie zasilania przetwornicy DC/DC'
+      ru: 'Напряжение питания DC/DC-преобразователя'
+      zh: 'DC/DC转换器供电电压'
+      hu: 'A DC/DC átalakító tápfeszültsége'
+      pt: 'Tensão de alimentação do conversor DC/DC'
+    type: 'sint'
+    factor: 1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FF
+    default: 0x00
+
+  DCDC_REAL_TIME_LOAD:
+    bits: '5.0-6.4'
+    comment:
+      en: 'Real-time load of the DC/DC converter'
+      fr: 'Etat de charge du convertisseur DC/DC en temps réel'
+      es: 'Estado de carga del convertidor DC/DC en tiempo real'
+      de: 'Echtzeitlast des DC/DC-Wandlers'
+      it: 'Carico in tempo reale del convertitore DC/DC'
+      pl: 'Obciążenie przetwornicy DC/DC w czasie rzeczywistym'
+      ru: 'Нагрузка DC/DC-преобразователя в реальном времени'
+      zh: 'DC/DC转换器实时负载'
+      hu: 'A DC/DC átalakító valós idejű terhelése'
+      pt: 'Estado de carga do conversor DC/DC em tempo real'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x1F
+    default: 0x00
+
+  UNUSED_1:
+    bits: '6.3-6.0'
+    unused: true

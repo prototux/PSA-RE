@@ -1,0 +1,248 @@
+id: 0x00E
+name: 'AVE_COMMAND'
+type: 'can'
+length: 8
+comment:
+  en: 'Commands sent by the BSI to the AVE (electric steering lock) module: channel commands, reset and authentication seed bytes.'
+  fr: 'Commandes envoyées par la BSI au module AVE (antivol électrique de direction) : commandes de canal, reset et octets de graine d''authentification.'
+  es: 'Órdenes enviadas por la BSI al módulo AVE (bloqueo de dirección eléctrico): órdenes de canal, reset y bytes de semilla de autenticación.'
+  de: 'Von der BSI an das AVE-Modul (elektrische Lenkradsperre) gesendete Befehle: Kanalbefehle, Reset und Authentifizierungs-Seed-Bytes.'
+  it: 'Comandi inviati dalla BSI al modulo AVE (bloccasterzo elettrico): comandi di canale, reset e byte di seed di autenticazione.'
+  pl: 'Polecenia wysyłane przez BSI do modułu AVE (elektryczna blokada kierownicy): polecenia kanału, reset i bajty ziarna uwierzytelnienia.'
+  ru: 'Команды, отправляемые BSI в модуль AVE (электрический замок рулевой колонки): команды каналов, сброс и байты начального числа аутентификации.'
+  zh: '由BSI发送给AVE（电子转向锁）模块的命令：通道命令、复位及认证种子字节。'
+  hu: 'A BSI parancsai az AVE (elektromos kormányzár) modul felé: csatornaparancsok, reset és hitelesítési seed bájtok.'
+  pt: 'Comandos enviados pela BSI ao módulo AVE (bloqueio elétrico da direção): comandos de canal, reinício e bytes de semente de autenticação.'
+periodicity: ['trigger']
+senders: ['BSI']
+receivers: ['AVE']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.5'
+    unused: true
+
+  FORCED_RESET_COMMAND:
+    bits: '1.4'
+    comment:
+      en: 'Forced reset command'
+      fr: 'Commande de forçage du reset'
+      es: 'Mando de forzado del reinicio'
+      de: 'Befehl zum erzwungenen Reset'
+      it: 'Comando di forzatura del reset'
+      pl: 'Polecenie wymuszonego resetu'
+      ru: 'Команда принудительного сброса'
+      zh: '强制复位指令'
+      hu: 'Kényszerített visszaállítás (reset) parancs'
+      pt: 'Comando de forçagem do reinício'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  UNUSED_2:
+    bits: '1.3-1.0'
+    unused: true
+
+  REMOTE_CHANNEL1_COMMAND:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Remote control lock/unlock command, channel 1'
+      fr: 'Commande de verrouillage/déverrouillage de la télécommande, canal 1'
+      es: 'Mando de bloqueo/desbloqueo del mando a distancia, canal 1'
+      de: 'Verriegelungs-/Entriegelungsbefehl der Fernbedienung, Kanal 1'
+      it: 'Comando di blocco/sblocco del telecomando, canale 1'
+      pl: 'Polecenie zamykania/otwierania z pilota, kanał 1'
+      ru: 'Команда блокировки/разблокировки брелока, канал 1'
+      zh: '遥控器锁止/解锁指令,通道1'
+      hu: 'A távirányító zárás/nyitás parancsa, 1. csatorna'
+      pt: 'Comando de bloqueio/desbloqueio do comando à distância, canal 1'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Rien'
+        es: 'Nada'
+        de: 'Nichts'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Ничего'
+        zh: '无'
+        hu: 'Semmi'
+        pt: 'Nada'
+      0xBD:
+        en: 'Unlocking'
+        fr: 'Déverrouillage'
+        es: 'Desbloqueo'
+        de: 'Entriegelung'
+        it: 'Sblocco'
+        pl: 'Odblokowanie'
+        ru: 'Разблокировка'
+        zh: '解锁'
+        hu: 'Kioldás'
+        pt: 'Desbloqueio'
+      0xC6:
+        en: 'Lock'
+        fr: 'Verrouillage'
+        es: 'Bloqueo'
+        de: 'Verriegelung'
+        it: 'Blocco'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '锁止'
+        hu: 'Zárás'
+        pt: 'Bloqueio'
+
+  REMOTE_CHANNEL2_COMMAND:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Remote control lock/unlock command, channel 2'
+      fr: 'Commande de verrouillage/déverrouillage de la télécommande, canal 2'
+      es: 'Mando de bloqueo/desbloqueo del mando a distancia, canal 2'
+      de: 'Verriegelungs-/Entriegelungsbefehl der Fernbedienung, Kanal 2'
+      it: 'Comando di blocco/sblocco del telecomando, canale 2'
+      pl: 'Polecenie zamykania/otwierania z pilota, kanał 2'
+      ru: 'Команда блокировки/разблокировки брелока, канал 2'
+      zh: '遥控器锁止/解锁指令,通道2'
+      hu: 'A távirányító zárás/nyitás parancsa, 2. csatorna'
+      pt: 'Comando de bloqueio/desbloqueio do comando à distância, canal 2'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Rien'
+        es: 'Nada'
+        de: 'Nichts'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Ничего'
+        zh: '无'
+        hu: 'Semmi'
+        pt: 'Nada'
+      0x54:
+        en: 'Unlocking'
+        fr: 'Déverrouillage'
+        es: 'Desbloqueo'
+        de: 'Entriegelung'
+        it: 'Sblocco'
+        pl: 'Odblokowanie'
+        ru: 'Разблокировка'
+        zh: '解锁'
+        hu: 'Kioldás'
+        pt: 'Desbloqueio'
+      0xAB:
+        en: 'Lock'
+        fr: 'Verrouillage'
+        es: 'Bloqueo'
+        de: 'Verriegelung'
+        it: 'Blocco'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '锁止'
+        hu: 'Zárás'
+        pt: 'Bloqueio'
+
+  SEQUENCER_INIT_RANDOM:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Random integer initializing the sequencer'
+      fr: 'Entier aléatoire initialisant le séquenceur'
+      es: 'Entero aleatorio que inicializa el secuenciador'
+      de: 'Zufällige Ganzzahl zur Initialisierung des Sequenzers'
+      it: 'Intero casuale che inizializza il sequenziatore'
+      pl: 'Losowa liczba całkowita inicjująca sekwencer'
+      ru: 'Случайное целое число для инициализации секвенсора'
+      zh: '用于初始化定序器的随机整数'
+      hu: 'A szekvenszert inicializáló véletlen egész szám'
+      pt: 'Número inteiro aleatório de inicialização do sequenciador'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  SEED_RESPONSE_1:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Response to the random challenge code, byte 1'
+      fr: 'Réponse au code aléatoire, octet 1'
+      es: 'Respuesta al código aleatorio, byte 1'
+      de: 'Antwort auf den Zufallscode, Byte 1'
+      it: 'Risposta al codice casuale, byte 1'
+      pl: 'Odpowiedź na kod losowy, bajt 1'
+      ru: 'Ответ на случайный код, байт 1'
+      zh: '随机码响应,字节1'
+      hu: 'Válasz a véletlen kódra, 1. bájt'
+      pt: 'Resposta ao código de desafio aleatório, byte 1'
+    type: 'uint'
+    default: 0x00
+
+  SEED_RESPONSE_2:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Response to the random challenge code, byte 2'
+      fr: 'Réponse au code aléatoire, octet 2'
+      es: 'Respuesta al código aleatorio, byte 2'
+      de: 'Antwort auf den Zufallscode, Byte 2'
+      it: 'Risposta al codice casuale, byte 2'
+      pl: 'Odpowiedź na kod losowy, bajt 2'
+      ru: 'Ответ на случайный код, байт 2'
+      zh: '随机码响应,字节2'
+      hu: 'Válasz a véletlen kódra, 2. bájt'
+      pt: 'Resposta ao código de desafio aleatório, byte 2'
+    type: 'uint'
+    default: 0x00
+
+  SEED_RESPONSE_3:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Response to the random challenge code, byte 3'
+      fr: 'Réponse au code aléatoire, octet 3'
+      es: 'Respuesta al código aleatorio, byte 3'
+      de: 'Antwort auf den Zufallscode, Byte 3'
+      it: 'Risposta al codice casuale, byte 3'
+      pl: 'Odpowiedź na kod losowy, bajt 3'
+      ru: 'Ответ на случайный код, байт 3'
+      zh: '随机码响应,字节3'
+      hu: 'Válasz a véletlen kódra, 3. bájt'
+      pt: 'Resposta ao código de desafio aleatório, byte 3'
+    type: 'uint'
+    default: 0x00
+
+  SEED_RESPONSE_4:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Response to the random challenge code, byte 4'
+      fr: 'Réponse au code aléatoire, octet 4'
+      es: 'Respuesta al código aleatorio, byte 4'
+      de: 'Antwort auf den Zufallscode, Byte 4'
+      it: 'Risposta al codice casuale, byte 4'
+      pl: 'Odpowiedź na kod losowy, bajt 4'
+      ru: 'Ответ на случайный код, байт 4'
+      zh: '随机码响应,字节4'
+      hu: 'Válasz a véletlen kódra, 4. bájt'
+      pt: 'Resposta ao código de desafio aleatório, byte 4'
+    type: 'uint'
+    default: 0x00

@@ -1,0 +1,238 @@
+id: 0x521
+name: 'SCR_SYSTEM_DATA'
+type: 'can'
+length: 6
+comment:
+  en: 'SCR system data: secure-dosing feedback counters and event timing, heater electrical power (3 zones plus supply), secure-valve and system status.'
+  fr: 'Données système SCR : compteurs de retour de dosage sécurisé et horodatage d''événement, puissance électrique de chauffage (3 zones plus alimentation), état de la vanne sécurisée et état système.'
+  es: 'Datos del sistema SCR: contadores de retorno de dosificación segura y sincronización de eventos, potencia eléctrica de calefacción (3 zonas más alimentación), estado de la válvula segura y estado del sistema.'
+  de: 'SCR-Systemdaten: Rückmeldezähler der Sicherheitsdosierung und Ereigniszeitpunkt, elektrische Heizleistung (3 Zonen plus Versorgung), Status des Sicherheitsventils und Systemstatus.'
+  it: 'Dati del sistema SCR: contatori di riscontro dosaggio sicuro e tempistica evento, potenza elettrica di riscaldamento (3 zone più alimentazione), stato della valvola di sicurezza e stato del sistema.'
+  pl: 'Dane systemu SCR: liczniki sprzężenia zwrotnego bezpiecznego dozowania i czas zdarzenia, moc elektryczna grzania (3 strefy plus zasilanie), stan zaworu bezpieczeństwa i stan systemu.'
+  ru: 'Данные системы SCR: счётчики обратной связи безопасного дозирования и время события, электрическая мощность нагрева (3 зоны плюс питание), статус предохранительного клапана и статус системы.'
+  zh: 'SCR系统数据:安全计量反馈计数器和事件计时、加热电功率(3个区域加供电)、安全阀和系统状态。'
+  hu: 'SCR rendszer adatok: biztonságos adagolás visszajelző számlálói és eseményidőzítés, fűtési elektromos teljesítmény (3 zóna plusz tápellátás), biztonsági szelep és rendszerállapot.'
+  pt: 'Dados do sistema SCR: contadores de retorno de dosagem segura e temporização de eventos, potência elétrica do aquecedor (3 zonas mais alimentação), estado da válvula segura e do sistema.'
+periodicity: ['100ms']
+senders: ['SCR']
+receivers: ['CMM']
+
+signals:
+  SCR_SUPPLY_MASS_FLOW:
+    bits: '1.7-2.2'
+    comment:
+      en: 'Mass flow rate of urea supplied by the SCR system'
+      fr: 'Débit massique d''urée fourni par le système SCR'
+      es: 'Caudal másico de urea suministrado por el sistema SCR'
+      de: 'Vom SCR-System geförderter Harnstoff-Massenstrom'
+      it: 'Portata massica di urea erogata dal sistema SCR'
+      pl: 'Strumień masowy mocznika dostarczany przez układ SCR'
+      ru: 'Массовый расход мочевины, подаваемой системой SCR'
+      zh: 'SCR系统供给的尿素质量流量'
+      hu: 'Az SCR rendszer által adagolt karbamid tömegárama'
+      pt: 'Caudal mássico de ureia fornecido pelo sistema SCR'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 1638.1
+    units: 'mg/s'
+    invalid: 0x3FFF
+    default: 0x3FE
+
+  SCR_REMAINING_VOLUME_STATE:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Status of the remaining usable urea volume (available / low limit / high limit / reserved)'
+      fr: 'État de l''information de volume utile restant (disponible / butée basse / butée haute / réservé)'
+      es: 'Estado del volumen útil restante de urea (disponible / límite inferior / límite superior / reservado)'
+      de: 'Status des verbleibenden nutzbaren Harnstoffvolumens (verfügbar / unterer Anschlag / oberer Anschlag / reserviert)'
+      it: 'Stato del volume utile residuo di urea (disponibile / limite inferiore / limite superiore / riservato)'
+      pl: 'Stan pozostałej użytecznej objętości mocznika (dostępna / ograniczenie dolne / ograniczenie górne / zarezerwowane)'
+      ru: 'Статус оставшегося полезного объёма мочевины (доступен / нижний предел / верхний предел / резерв)'
+      zh: '剩余可用尿素容积状态(可用/下限/上限/保留)'
+      hu: 'A megmaradó felhasználható karbamidtérfogat állapota (elérhető / alsó határ / felső határ / fenntartott)'
+      pt: 'Estado da informação de volume útil restante (disponível / limite inferior / limite superior / reservado)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x01:
+        en: 'Lower stop'
+        fr: 'Butée basse'
+        es: 'Tope inferior'
+        de: 'Unterer Anschlag'
+        it: 'Fine corsa inferiore'
+        pl: 'Dolny ogranicznik'
+        ru: 'Нижний упор'
+        zh: '下限位'
+        hu: 'Alsó ütköző'
+        pt: 'Batente inferior'
+      0x02:
+        en: 'Upper stop'
+        fr: 'Butée haute'
+        es: 'Tope superior'
+        de: 'Oberer Anschlag'
+        it: 'Arresto superiore'
+        pl: 'Górny ogranicznik'
+        ru: 'Верхний упор'
+        zh: '上限位'
+        hu: 'Felső ütköző'
+        pt: 'Batente superior'
+      0x03:
+        unused: true
+
+  SCR_UREA_PRESSURE:
+    bits: '3.7-4.6'
+    comment:
+      en: 'Urea pressure measured or estimated in the SCR supply line'
+      fr: 'Pression d''urée mesurée ou estimée dans la canalisation SCR'
+      es: 'Presión de urea medida o estimada en la línea del SCR'
+      de: 'Im SCR-Leitungssystem gemessener oder geschätzter Harnstoffdruck'
+      it: 'Pressione dell''urea misurata o stimata nella linea SCR'
+      pl: 'Zmierzone lub oszacowane ciśnienie mocznika w przewodzie SCR'
+      ru: 'Измеренное или расчётное давление мочевины в магистрали SCR'
+      zh: 'SCR管路中测得或估算的尿素压力'
+      hu: 'Az SCR vezetékben mért vagy becsült karbamidnyomás'
+      pt: 'Pressão de ureia medida ou estimada na linha SCR'
+    type: 'uint'
+    factor: 0.015
+    offset: -1
+    min: -1
+    max: 14.315
+    units: 'bar'
+    invalid: 0x3FF
+    default: 0x3FE
+
+  SCR_SUPPLY_UNIT_STATE:
+    bits: '4.5-4.3'
+    comment:
+      en: 'Operating state of the SCR supply module (inactive / active-supply / active-purge / protection / faulty)'
+      fr: 'État de fonctionnement du module d''alimentation SCR (inactif / actif - alimentation / actif - purge / protection / défaillant)'
+      es: 'Estado de funcionamiento del módulo de alimentación del SCR (inactivo / activo-suministro / activo-purga / protección / avería)'
+      de: 'Betriebszustand des SCR-Versorgungsmoduls (inaktiv / aktiv – Förderbetrieb / aktiv – Spülbetrieb / Schutzmodus / gestört)'
+      it: 'Stato di funzionamento del modulo di alimentazione SCR (inattivo / attivo - erogazione / attivo - spurgo / protezione / guasto)'
+      pl: 'Stan pracy modułu zasilania SCR (nieaktywny / aktywny - zasilanie / aktywny - przedmuch / ochrona / uszkodzony)'
+      ru: 'Рабочее состояние модуля подачи SCR (неактивен / активен - подача / активен - продувка / защита / неисправность)'
+      zh: 'SCR供给模块工作状态(未激活/激活-供给模式/激活-吹扫模式/保护/故障)'
+      hu: 'Az SCR adagolómodul üzemállapota (inaktív / aktív – adagolás / aktív – öblítés / védelem / hibás)'
+      pt: 'Estado de funcionamento do módulo de alimentação SCR (inativo / ativo-alimentação / ativo-purga / proteção / avariado)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active - supply mode'
+        fr: 'Actif - mode alimentation'
+        es: 'Activo - modo alimentación'
+        de: 'Aktiv - Versorgungsmodus'
+        it: 'Attivo - modalità alimentazione'
+        pl: 'Aktywny - tryb zasilania'
+        ru: 'Активно - режим питания'
+        zh: '激活-供电模式'
+        hu: 'Aktív - tápellátási mód'
+        pt: 'Ativo - modo de alimentação'
+      0x02:
+        en: 'Active - purge mode'
+        fr: 'Actif - Mode purge'
+        es: 'Activo - Modo purga'
+        de: 'Aktiv - Spülmodus'
+        it: 'Attivo - Modalità spurgo'
+        pl: 'Aktywny - Tryb przedmuchu'
+        ru: 'Активно - режим продувки'
+        zh: '激活-吹扫模式'
+        hu: 'Aktív - öblítő üzemmód'
+        pt: 'Ativo - Modo de purga'
+      0x03:
+        en: 'Protection'
+        fr: 'Protection'
+        es: 'Protección'
+        de: 'Schutz'
+        it: 'Protezione'
+        pl: 'Ochrona'
+        ru: 'Защита'
+        zh: '保护'
+        hu: 'Védelem'
+        pt: 'Proteção'
+      0x04:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  UNUSED_1:
+    bits: '4.2-4.0'
+    unused: true
+
+  SCR_ACCUMULATOR_VOLUME:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Volume of the pressurized buffer accumulator in the SCR dosing system'
+      fr: 'Volume de l''accumulateur tampon sous pression du système de dosage SCR'
+      es: 'Volumen del acumulador tampón presurizado del sistema de dosificación SCR'
+      de: 'Volumen des unter Druck stehenden Pufferspeichers im SCR-Dosiersystem'
+      it: 'Volume dell''accumulatore tampone in pressione del sistema di dosaggio SCR'
+      pl: 'Objętość ciśnieniowego zbiornika buforowego w układzie dozowania SCR'
+      ru: 'Объём буферного аккумулятора под давлением в системе дозирования SCR'
+      zh: 'SCR供给系统中加压缓冲蓄能器的容积'
+      hu: 'Az SCR adagolórendszer nyomás alatti puffertárolójának térfogata'
+      pt: 'Volume do acumulador tampão sob pressão do sistema de dosagem SCR'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 60
+    units: 'mL'
+    invalid: 0xFF
+    default: 0x00
+
+  SCR_REMAINING_VOLUME:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Remaining usable urea volume in the SCR tank'
+      fr: 'Volume utile d''urée restant dans le réservoir SCR'
+      es: 'Volumen útil de urea restante en el depósito SCR'
+      de: 'Verbleibendes nutzbares Harnstoffvolumen im SCR-Tank'
+      it: 'Volume utile residuo di urea nel serbatoio SCR'
+      pl: 'Pozostała użyteczna objętość mocznika w zbiorniku SCR'
+      ru: 'Оставшийся полезный объём мочевины в баке SCR'
+      zh: 'SCR箱内剩余可用尿素容积'
+      hu: 'Az SCR tartályban maradó felhasználható karbamidtérfogat'
+      pt: 'Volume útil de ureia restante no depósito SCR'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.3
+    units: 'L'
+    invalid: 0xFF
+    default: 0xFE

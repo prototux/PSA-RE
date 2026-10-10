@@ -1,0 +1,519 @@
+id: 0x229
+name: 'NAV_EXPORT_PAYLOAD'
+type: 'can'
+length: 6
+comment:
+  en: 'Gearbox dynamic data: gear-change refused, estimated/maximum/minimum clutch torque, warning-lamp request, emergency-stop request, redemption request and hybrid paddle-actuator state.'
+  fr: 'Données dynamiques boîte : changement de rapport refusé, couple d''embrayage estimé/max/mini, demande de voyant, demande d''arrêt d''urgence, demande de rachat et état de l''actionneur palette hybride.'
+  es: 'Datos dinámicos de la caja de cambios: cambio de marcha rechazado, par de embrague estimado/máximo/mínimo, solicitud de testigo, solicitud de parada de emergencia, solicitud de canje y estado del actuador de paleta híbrida.'
+  de: 'Getriebe-Dynamikdaten: Gangwechsel abgelehnt, geschätztes/maximales/minimales Kupplungsmoment, Kontrollleuchtenanforderung, Notstopp-Anforderung, Einlöseanforderung und Zustand des Hybrid-Schaltwippenaktuators.'
+  it: 'Dati dinamici del cambio: cambio marcia rifiutato, coppia frizione stimata/massima/minima, richiesta spia, richiesta di arresto di emergenza, richiesta di riscatto e stato dell''attuatore paddle ibrido.'
+  pl: 'Dane dynamiczne skrzyni biegów: odmowa zmiany biegu, szacowany/maksymalny/minimalny moment sprzęgła, żądanie kontrolki, żądanie zatrzymania awaryjnego, żądanie wykupu i stan siłownika łopatki hybrydowej.'
+  ru: 'Динамические данные коробки передач: отказ переключения передачи, расчётный/максимальный/минимальный момент сцепления, запрос индикатора, запрос аварийной остановки, запрос погашения и состояние гибридного привода лепестков.'
+  zh: '变速箱动态数据:换挡被拒绝、估计/最大/最小离合器扭矩、警示灯请求、紧急停止请求、兑换请求和混合动力拨片执行器状态。'
+  hu: 'Váltó dinamikus adatok: fokozatváltás elutasítva, becsült/maximális/minimális kuplungnyomaték, jelzőlámpa-kérés, vészleállítási kérés, beváltási kérés és hibrid váltófül aktuátor állapota.'
+  pt: 'Dados dinâmicos da caixa de velocidades: mudança recusada, binário de embraiagem estimado/máximo/mínimo, pedido da luz avisadora, pedido de paragem de emergência, pedido de resgate e estado do atuador de patilhas híbrido.'
+periodicity: ['10ms']
+senders: ['BVA']
+receivers: ['HCU1', 'CMM', 'ABS', 'CSS', 'BSI']
+
+signals:
+  CLUTCH_TORQUE_ESTIMATED:
+    bits: '1.7-2.5'
+    comment:
+      en: 'Estimated clutch torque'
+      fr: 'Couple d''embrayage estimé'
+      es: 'Par de embrague estimado'
+      de: 'Geschätztes Kupplungsmoment'
+      it: 'Coppia frizione stimata'
+      pl: 'Szacowany moment sprzęgła'
+      ru: 'Расчётный момент сцепления'
+      zh: '估算离合器扭矩'
+      hu: 'Becsült kuplungnyomaték'
+      pt: 'Binário de embraiagem estimado'
+    type: 'uint'
+    factor: 0.5
+    offset: -200
+    min: -200
+    max: 599.5
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x190
+
+  GEARBOX_LEVER_POSITION_RAW:
+    bits: '2.4-2.1'
+    comment:
+      en: 'Raw gearbox selector lever position'
+      fr: 'Position brute du levier de sélection de la boîte de vitesses'
+      es: 'Posición bruta de la palanca selectora de la caja de cambios'
+      de: 'Rohsignal der Getriebewählhebelposition'
+      it: 'Posizione grezza della leva selettrice del cambio'
+      pl: 'Surowe położenie dźwigni wyboru skrzyni biegów'
+      ru: 'Необработанное положение селектора коробки передач'
+      zh: '变速箱选挡杆原始位置'
+      hu: 'A váltó választókarjának nyers helyzete'
+      pt: 'Posição bruta da alavanca seletora da caixa de velocidades'
+    type: 'enum'
+    default: 0x0F
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'R'
+        fr: 'R'
+        es: 'R'
+        de: 'R'
+        it: 'R'
+        pl: 'R'
+        ru: 'R'
+        zh: 'R'
+        hu: 'R'
+        pt: 'R'
+      0x02:
+        en: 'N'
+        fr: 'N'
+        es: 'N'
+        de: 'N'
+        it: 'N'
+        pl: 'N'
+        ru: 'N'
+        zh: 'N'
+        hu: 'N'
+        pt: 'N'
+      0x03:
+        en: 'A'
+        fr: 'A'
+        es: 'A'
+        de: 'A'
+        it: 'A'
+        pl: 'A'
+        ru: 'A'
+        zh: 'A'
+        hu: 'A'
+        pt: 'A'
+      0x04:
+        en: 'M'
+        fr: 'M'
+        es: 'M'
+        de: 'M'
+        it: 'M'
+        pl: 'M'
+        ru: 'M'
+        zh: 'M'
+        hu: 'M'
+        pt: 'M'
+      0x05:
+        en: '+'
+        fr: '+'
+        es: '+'
+        de: '+'
+        it: '+'
+        pl: '+'
+        ru: '+'
+        zh: '+'
+        hu: '+'
+        pt: '+'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Intermediate position'
+        fr: 'Position intermédiaire'
+        es: 'Posición intermedia'
+        de: 'Zwischenposition'
+        it: 'Posizione intermedia'
+        pl: 'Pozycja pośrednia'
+        ru: 'Промежуточное положение'
+        zh: '中间位置'
+        hu: 'Köztes helyzet'
+        pt: 'Posição intermédia'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  GEAR_CHANGE_REFUSED:
+    bits: '2.0'
+    comment:
+      en: 'Gear change refused'
+      fr: 'Changement de rapport refusé'
+      es: 'Cambio de marcha rechazado'
+      de: 'Gangwechsel abgelehnt'
+      it: 'Cambio marcia rifiutato'
+      pl: 'Zmiana biegu odrzucona'
+      ru: 'Переключение передачи отклонено'
+      zh: '换挡被拒绝'
+      hu: 'Fokozatváltás elutasítva'
+      pt: 'Mudança de marcha rejeitada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Gear shift performed'
+        fr: 'Changement de rapport effectué'
+        es: 'Cambio de marcha realizado'
+        de: 'Gangwechsel durchgeführt'
+        it: 'Cambio marcia effettuato'
+        pl: 'Wykonano zmianę biegu'
+        ru: 'Переключение передачи выполнено'
+        zh: '已完成换挡'
+        hu: 'Fokozatváltás megtörtént'
+        pt: 'Mudança de velocidade efetuada'
+      0x01:
+        en: 'Gear shift refused'
+        fr: 'Changement de rapport refusé'
+        es: 'Cambio de marcha rechazado'
+        de: 'Schaltvorgang abgelehnt'
+        it: 'Cambiata rifiutata'
+        pl: 'Odmowa zmiany biegu'
+        ru: 'Переключение передачи отклонено'
+        zh: '换挡被拒绝'
+        hu: 'A fokozatváltás elutasítva'
+        pt: 'Mudança de velocidade recusada'
+
+  CLUTCH_TORQUE_MAX:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Maximum clutch torque'
+      fr: 'Couple d''embrayage maximal'
+      es: 'Par de embrague máximo'
+      de: 'Maximales Kupplungsmoment'
+      it: 'Coppia frizione massima'
+      pl: 'Maksymalny moment sprzęgła'
+      ru: 'Максимальный момент сцепления'
+      zh: '最大离合器扭矩'
+      hu: 'Maximális kuplungnyomaték'
+      pt: 'Binário máximo de embraiagem'
+    type: 'uint'
+    factor: 2.5
+    min: 0
+    max: 635
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x90
+
+  CHECKSUM:
+    bits: '4.7-4.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '4.3-4.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  CLUTCH_TORQUE_MIN:
+    bits: '5.7-5.1'
+    comment:
+      en: 'Minimum clutch torque'
+      fr: 'Couple d''embrayage minimal'
+      es: 'Par de embrague mínimo'
+      de: 'Minimales Kupplungsmoment'
+      it: 'Coppia frizione minima'
+      pl: 'Minimalny moment sprzęgła'
+      ru: 'Минимальный момент сцепления'
+      zh: '最小离合器扭矩'
+      hu: 'Minimális kuplungnyomaték'
+      pt: 'Binário mínimo de embraiagem'
+    type: 'uint'
+    factor: 2.5
+    offset: -200
+    min: -200
+    max: 0
+    units: 'Nm'
+    invalid: 0x7F
+    default: 0x1D
+
+  GEARBOX_SERVICE_LAMP_REQUEST:
+    bits: '5.0'
+    comment:
+      en: 'Gearbox service warning lamp (WL) steady lighting request'
+      fr: 'Demande d''allumage fixe du témoin de service boîte de vitesses (WL)'
+      es: 'Solicitud de encendido fijo del testigo de servicio de la caja de cambios (WL)'
+      de: 'Anforderung für dauerhaftes Leuchten der Getriebe-Service-Kontrollleuchte (WL)'
+      it: 'Richiesta di accensione fissa della spia di servizio cambio (WL)'
+      pl: 'Żądanie stałego świecenia kontrolki serwisowej skrzyni biegów (WL)'
+      ru: 'Запрос постоянного включения сервисной лампы коробки передач (WL)'
+      zh: '变速箱维修警示灯(WL)常亮请求'
+      hu: 'A váltó szervizlámpájának (WL) folyamatos világítási kérése'
+      pt: 'Pedido de acendimento fixo da luz avisadora de serviço da caixa de velocidades (WL)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No ignition request'
+        fr: 'Pas de demande d''allumage'
+        es: 'Sin solicitud de encendido'
+        de: 'Keine Zündanforderung'
+        it: 'Nessuna richiesta di accensione'
+        pl: 'Brak żądania zapłonu'
+        ru: 'Нет запроса зажигания'
+        zh: '无点火请求'
+        hu: 'Nincs gyújtási kérés'
+        pt: 'Sem pedido de ignição'
+      0x01:
+        en: 'WL orange lamp steady lighting request'
+        fr: 'Demande d''allumage fixe du témoin orange WL'
+        es: 'Solicitud de encendido fijo del testigo naranja WL'
+        de: 'Anforderung Dauerleuchten der orangen WL-Kontrollleuchte'
+        it: 'Richiesta di accensione fissa della spia arancione WL'
+        pl: 'Żądanie ciągłego zapalenia pomarańczowej kontrolki WL'
+        ru: 'Запрос постоянного включения оранжевого индикатора WL'
+        zh: 'WL 橙色指示灯常亮请求'
+        hu: 'WL narancssárga lámpa folyamatos világítás kérés'
+        pt: 'Pedido de acendimento fixo da luz avisadora laranja WL'
+
+  PADDLE_SHIFTER_ACTION_STATUS:
+    bits: '6.7-6.5'
+    comment:
+      en: 'Paddle shifter action status'
+      fr: 'État d''action des palettes au volant'
+      es: 'Estado de acción de las levas de cambio'
+      de: 'Status der Schaltwippenbetätigung'
+      it: 'Stato di azione dei paddle al volante'
+      pl: 'Stan zadziałania łopatek zmiany biegów'
+      ru: 'Статус действия подрулевых лепестков переключения передач'
+      zh: '换挡拨片动作状态'
+      hu: 'A váltófülek működési állapota'
+      pt: 'Estado de ação das patilhas no volante'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'No action on the paddles'
+        fr: 'Pas d''action sur les palettes'
+        es: 'Sin acción en las levas'
+        de: 'Keine Betätigung der Schaltwippen'
+        it: 'Nessuna azione sulle levette'
+        pl: 'Brak działania na łopatkach'
+        ru: 'Нет действия на лепестках'
+        zh: '拨片无操作'
+        hu: 'Nincs paddle művelet'
+        pt: 'Sem ação nas patilhas'
+      0x01:
+        en: 'Press on the + paddle'
+        fr: 'Appui sur la palette +'
+        es: 'Pulsación de la leva +'
+        de: 'Betätigung der +-Schaltwippe'
+        it: 'Pressione sulla levetta +'
+        pl: 'Naciśnięcie łopatki +'
+        ru: 'Нажатие лепестка +'
+        zh: '按下+拨片'
+        hu: 'A + váltófül megnyomása'
+        pt: 'Pressão na patilha +'
+      0x02:
+        en: 'Action on the ''-'' paddle'
+        fr: 'Action sur la palette « - »'
+        es: 'Acción sobre la paleta «-»'
+        de: 'Betätigung der „-“-Schaltwippe'
+        it: 'Azione sulla leva «-»'
+        pl: 'Naciśnięcie łopatki „-”'
+        ru: 'Действие на лепестке «-»'
+        zh: '按下"-"拨片'
+        hu: 'A „-” váltófül működtetése'
+        pt: 'Ação na patilha ''-'''
+      0x03:
+        en: 'Both paddles pressed simultaneously'
+        fr: 'Action simultanée sur les deux palettes'
+        es: 'Acción simultánea sobre ambas levas'
+        de: 'Gleichzeitige Betätigung beider Schaltwippen'
+        it: 'Azione simultanea su entrambe le levette'
+        pl: 'Jednoczesne naciśnięcie obu łopatek'
+        ru: 'Одновременное нажатие обоих лепестков'
+        zh: '同时操作两个换挡拨片'
+        hu: 'Mindkét váltófül egyidejű működtetése'
+        pt: 'Ação simultânea sobre as duas patilhas'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid paddle shifters'
+        fr: 'Palettes invalides'
+        es: 'Levas inválidas'
+        de: 'Ungültige Schaltwippen'
+        it: 'Levette al volante non valide'
+        pl: 'Nieprawidłowe łopatki zmiany biegów'
+        ru: 'Недействительные лепестки переключения передач'
+        zh: '换挡拨片无效'
+        hu: 'Érvénytelen váltófülek'
+        pt: 'Patilhas de mudança inválidas'
+
+  GEARBOX_EMERGENCY_ENGINE_STOP_REQUEST:
+    bits: '6.4-6.3'
+    comment:
+      en: 'Emergency engine stop request from the gearbox'
+      fr: 'Demande d''arrêt d''urgence moteur par la boîte de vitesses'
+      es: 'Solicitud de parada de emergencia del motor por la caja de cambios'
+      de: 'Motornotstoppanforderung durch das Getriebe'
+      it: 'Richiesta di arresto motore di emergenza dal cambio'
+      pl: 'Żądanie awaryjnego zatrzymania silnika przez skrzynię biegów'
+      ru: 'Запрос экстренной остановки двигателя от коробки передач'
+      zh: '变速箱请求紧急停机'
+      hu: 'A váltó vészleállítási kérése a motor felé'
+      pt: 'Pedido de paragem de emergência do motor pela caixa de velocidades'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'No engine emergency stop request from the gearbox'
+        fr: 'Pas de demande d''arrêt d''urgence moteur par la boîte de vitesses'
+        es: 'Sin solicitud de parada de emergencia del motor por la caja de cambios'
+        de: 'Keine Motornotstoppanforderung vom Getriebe'
+        it: 'Nessuna richiesta di arresto di emergenza motore dal cambio'
+        pl: 'Brak żądania awaryjnego zatrzymania silnika ze skrzyni biegów'
+        ru: 'Нет запроса аварийной остановки двигателя от коробки передач'
+        zh: '变速箱未发出发动机紧急停机请求'
+        hu: 'Nincs motor-vészleállítási kérés a váltótól'
+        pt: 'Sem pedido de paragem de emergência do motor pela caixa de velocidades'
+      0x02:
+        en: 'Engine emergency stop request from the gearbox'
+        fr: 'Demande d''arrêt d''urgence moteur par la boîte de vitesses'
+        es: 'Solicitud de parada de emergencia del motor por la caja de cambios'
+        de: 'Motornotstoppanforderung vom Getriebe'
+        it: 'Richiesta di arresto di emergenza motore dal cambio'
+        pl: 'Żądanie awaryjnego zatrzymania silnika ze skrzyni biegów'
+        ru: 'Запрос аварийной остановки двигателя от коробки передач'
+        zh: '变速箱发出的发动机紧急停机请求'
+        hu: 'Motor-vészleállítási kérés a váltótól'
+        pt: 'Pedido de paragem de emergência do motor pela caixa de velocidades'
+      0x03:
+        unused: true
+
+  GEP_TEMPERATURE_THRESHOLD:
+    bits: '6.2-6.1'
+    comment:
+      en: 'Hydraulic pump (GEP) temperature threshold exceeded'
+      fr: 'Seuil de température de la pompe hydraulique (GEP) dépassé'
+      es: 'Umbral de temperatura de la bomba hidráulica (GEP) superado'
+      de: 'Temperaturschwellenwert der Hydraulikpumpe (GEP) überschritten'
+      it: 'Soglia di temperatura della pompa idraulica (GEP) superata'
+      pl: 'Przekroczony próg temperatury pompy hydraulicznej (GEP)'
+      ru: 'Превышен температурный порог гидронасоса (GEP)'
+      zh: '液压泵(GEP)温度阈值超限'
+      hu: 'A hidraulikaszivattyú (GEP) hőmérséklet-küszöbének túllépése'
+      pt: 'Limiar de temperatura da bomba hidráulica (GEP) ultrapassado'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No threshold exceeded'
+        fr: 'Pas de seuil dépassé'
+        es: 'Sin umbral superado'
+        de: 'Kein Schwellwert überschritten'
+        it: 'Nessuna soglia superata'
+        pl: 'Brak przekroczonego progu'
+        ru: 'Порог не превышен'
+        zh: '未超过阈值'
+        hu: 'Nincs túllépett küszöbérték'
+        pt: 'Nenhum limiar excedido'
+      0x01:
+        en: 'Threshold 1 exceeded'
+        fr: 'Seuil 1 dépassé'
+        es: 'Umbral 1 superado'
+        de: 'Schwelle 1 überschritten'
+        it: 'Soglia 1 superata'
+        pl: 'Przekroczono próg 1'
+        ru: 'Порог 1 превышен'
+        zh: '超过阈值1'
+        hu: 'Az 1. küszöbérték túllépve'
+        pt: 'Limiar 1 ultrapassado'
+      0x02:
+        en: 'Threshold 2 exceeded'
+        fr: 'Seuil 2 dépassé'
+        es: 'Umbral 2 superado'
+        de: 'Schwelle 2 überschritten'
+        it: 'Soglia 2 superata'
+        pl: 'Przekroczono próg 2'
+        ru: 'Порог 2 превышен'
+        zh: '超过阈值2'
+        hu: '2. küszöb túllépve'
+        pt: 'Limiar 2 excedido'
+      0x03:
+        unused: true
+
+  GEARBOX_RESTART_REQUEST:
+    bits: '6.0'
+    comment:
+      en: 'Engine restart request from the gearbox (Stop & Start)'
+      fr: 'Demande de redémarrage moteur par la boîte de vitesses (Stop & Start)'
+      es: 'Solicitud de reinicio del motor por la caja de cambios (Stop & Start)'
+      de: 'Motorneustartanforderung durch das Getriebe (Stop & Start)'
+      it: 'Richiesta di riavvio motore dal cambio (Stop & Start)'
+      pl: 'Żądanie ponownego uruchomienia silnika przez skrzynię biegów (Stop & Start)'
+      ru: 'Запрос перезапуска двигателя от коробки передач (Стоп-Старт)'
+      zh: '变速箱请求发动机重启(启停)'
+      hu: 'A váltó motor-újraindítási kérése (Stop & Start)'
+      pt: 'Pedido de reinício do motor pela caixa de velocidades (Stop & Start)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No need for restart'
+        fr: 'Pas de besoin de redémarrage'
+        es: 'Sin necesidad de reinicio'
+        de: 'Kein Neustart erforderlich'
+        it: 'Nessuna necessità di riavvio'
+        pl: 'Brak potrzeby ponownego uruchomienia'
+        ru: 'Нет необходимости перезапуска'
+        zh: '无需重新启动'
+        hu: 'Nincs szükség újraindításra'
+        pt: 'Sem necessidade de reinício'
+      0x01:
+        en: 'Restart needed'
+        fr: 'Demande de redémarrage'
+        es: 'Necesidad de reinicio'
+        de: 'Neustart erforderlich'
+        it: 'Necessità di riavvio'
+        pl: 'Wymagany ponowny rozruch'
+        ru: 'Требуется перезапуск'
+        zh: '需要重启'
+        hu: 'Újraindítás szükséges'
+        pt: 'Necessidade de reinício'

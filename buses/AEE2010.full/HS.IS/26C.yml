@@ -1,0 +1,166 @@
+id: 0x26C
+name: 'GAS_SYSTEM_DYNAMIC_DATA'
+type: 'can'
+length: 6
+comment:
+  en: 'LPG/CNG system data: system state, ignition-timing and lambda corrections.'
+  fr: 'Données du système gaz (GPL/GNV) : état du système, corrections d''avance à l''allumage et de richesse (lambda).'
+  es: 'Datos del sistema de gas (GLP/GNC): estado del sistema, correcciones de avance de encendido y de riqueza (lambda).'
+  de: 'Daten des Gassystems (LPG/CNG): Systemzustand sowie Korrekturen von Zündwinkel und Lambda-Wert.'
+  it: 'Dati del sistema a gas (GPL/GNC): stato del sistema, correzioni dell''anticipo di accensione e della miscela (lambda).'
+  pl: 'Dane instalacji gazowej (LPG/CNG): stan układu oraz korekty kąta wyprzedzenia zapłonu i współczynnika lambda.'
+  ru: 'Данные газовой системы (СНГ/КПГ): состояние системы, коррекции угла опережения зажигания и коэффициента лямбда.'
+  zh: '燃气系统(LPG/CNG)数据:系统状态、点火提前角及空燃比(氧传感器)修正。'
+  hu: 'A gázrendszer (LPG/CNG) adatai: rendszerállapot, valamint a gyújtásidőzítés és a lambda-érték korrekciói.'
+  pt: 'Dados do sistema GPL/GNC: estado do sistema, correções de avanço à ignição e de lambda.'
+periodicity: ['10ms']
+senders: ['GAS']
+receivers: ['CMM']
+
+signals:
+  LPG_DOWNSTREAM_PROBE_DELTA:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Delta setpoint voltage of the downstream oxygen probe, in millivolts'
+      fr: 'Écart de consigne de tension de la sonde aval, en millivolts'
+      es: 'Delta de la tensión de consigna de la sonda de oxígeno posterior, en milivoltios'
+      de: 'Delta der Sollspannung der nachgeschalteten Lambdasonde, in Millivolt'
+      it: 'Delta della tensione di setpoint della sonda a valle, in millivolt'
+      pl: 'Różnica napięcia zadanego sondy tylnej, w miliwoltach'
+      ru: 'Дельта заданного напряжения датчика кислорода за катализатором, в милливольтах'
+      zh: '下游氧传感器设定电压差值(毫伏)'
+      hu: 'Az utólagos lambdaszonda feszültség-alapértékének eltérése, millivoltban'
+      pt: 'Diferença da consigna de tensão da sonda a jusante, em milivolts'
+    type: 'uint'
+    factor: 0.0048828125
+    offset: -1
+    min: -1
+    max: 318.99
+    units: 'V'
+    default: 0x00
+
+  LPG_LAMBDA_DELTA:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Lambda delta in LPG mode'
+      fr: 'Écart de richesse (lambda) en mode GPL'
+      es: 'Delta de lambda en modo GLP'
+      de: 'Lambda-Delta im LPG-Betrieb'
+      it: 'Delta lambda in modalità GPL'
+      pl: 'Różnica współczynnika lambda w trybie LPG'
+      ru: 'Дельта лямбда в режиме LPG'
+      zh: 'LPG模式下的λ值差'
+      hu: 'Lambda eltérés LPG üzemmódban'
+      pt: 'Diferença de riqueza (lambda) em modo GPL'
+    type: 'uint'
+    factor: 0.00023622
+    offset: -0.03
+    min: -0.03
+    max: 0.03
+    invalid: 0xFF
+    default: 0x7F
+
+  LPG_IGNITION_ADVANCE_DELTA:
+    bits: '4.7-4.3'
+    comment:
+      en: 'Ignition timing advance delta in LPG mode'
+      fr: 'Écart d''avance à l''allumage en mode GPL'
+      es: 'Delta de avance del encendido en modo GLP'
+      de: 'Zündwinkel-Verstellungsdelta im LPG-Betrieb'
+      it: 'Delta di anticipo di accensione in modalità GPL'
+      pl: 'Różnica wyprzedzenia zapłonu w trybie LPG'
+      ru: 'Дельта угла опережения зажигания в режиме LPG'
+      zh: 'LPG模式下的点火提前角差值'
+      hu: 'A gyújtáselőállítás eltérése LPG üzemmódban'
+      pt: 'Diferença de avanço da ignição em modo GPL'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 30
+    units: '°'
+    default: 0x00
+
+  LPG_SYSTEM_STATUS:
+    bits: '4.2-4.1'
+    comment:
+      en: 'LPG system status (gas mode, transitioning to/from petrol)'
+      fr: 'État du système GPL (mode gaz, transition vers/depuis l''essence)'
+      es: 'Estado del sistema de GLP (modo gas, transición hacia/desde gasolina)'
+      de: 'Status des Flüssiggassystems (Gasbetrieb, Übergang zu/von Benzin)'
+      it: 'Stato del sistema GPL (modalità gas, transizione da/verso benzina)'
+      pl: 'Stan instalacji LPG (tryb gazowy, przejście do/z benzyny)'
+      ru: 'Состояние газовой системы (газовый режим, переход на бензин/с бензина)'
+      zh: '液化石油气(LPG)系统状态(燃气模式,与汽油模式切换中)'
+      hu: 'Az LPG-rendszer állapota (gázüzem, átállás benzinre/benzinről)'
+      pt: 'Estado do sistema de GPL (modo gás, transição de/para gasolina)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Gas mode'
+        fr: 'Mode gaz'
+        es: 'Modo gas'
+        de: 'Gasmodus'
+        it: 'Modalità gas'
+        pl: 'Tryb gazowy'
+        ru: 'Газовый режим'
+        zh: '燃气模式'
+        hu: 'Gázüzemmód'
+        pt: 'Modo gás'
+      0x01:
+        en: 'Transition gas → petrol'
+        fr: 'Transition gaz vers essence'
+        es: 'Transición gas a gasolina'
+        de: 'Übergang Gas zu Benzin'
+        it: 'Transizione gas a benzina'
+        pl: 'Przejście z gazu na benzynę'
+        ru: 'Переход с газа на бензин'
+        zh: '燃气转汽油'
+        hu: 'Átállás gázról benzinre'
+        pt: 'Transição gás → gasolina'
+      0x02:
+        en: 'Transition petrol to gas'
+        fr: 'Transition essence vers gaz'
+        es: 'Transición de gasolina a gas'
+        de: 'Übergang Benzin zu Gas'
+        it: 'Transizione benzina verso gas'
+        pl: 'Przejście z benzyny na gaz'
+        ru: 'Переход с бензина на газ'
+        zh: '汽油转燃气过渡'
+        hu: 'Átállás benzinről gázra'
+        pt: 'Transição de gasolina para gás'
+      0x03:
+        en: 'Petrol mode'
+        fr: 'Mode essence'
+        es: 'Modo gasolina'
+        de: 'Benzinmodus'
+        it: 'Modalità benzina'
+        pl: 'Tryb benzynowy'
+        ru: 'Бензиновый режим'
+        zh: '汽油模式'
+        hu: 'Benzin üzemmód'
+        pt: 'Modo gasolina'
+
+  UNUSED_1:
+    bits: '4.0'
+    unused: true
+
+  LPG_INJECTION_TIME_2:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Injection time in gas mode'
+      fr: 'Temps d''injection en mode gaz'
+      es: 'Tiempo de inyección en modo gas'
+      de: 'Einspritzzeit im Gasmodus'
+      it: 'Tempo di iniezione in modalità gas'
+      pl: 'Czas wtrysku w trybie gazowym'
+      ru: 'Время впрыска в газовом режиме'
+      zh: '燃气模式下的喷射时间'
+      hu: 'Befecskendezési idő gáz üzemmódban'
+      pt: 'Tempo de injeção em modo a gás'
+    type: 'uint'
+    factor: 0.0032
+    min: 0
+    max: 209.712
+    units: 'ms'
+    default: 0x00

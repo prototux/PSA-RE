@@ -1,0 +1,751 @@
+id: 0x5F6
+name: 'CAMERA_ADAS_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Camera-based ADAS status 2: ACC, AEB, FCW and HBA enabled flags, camera focus fault, driving side and daytime indicator.'
+  fr: 'État ADAS caméra 2 : indicateurs d''activation ACC, AEB, FCW et HBA, défaut de mise au point caméra, sens de conduite et indicateur jour.'
+  es: 'Estado ADAS de la cámara 2: indicadores de activación ACC, AEB, FCW y HBA, fallo de enfoque de cámara, lado de conducción e indicador diurno.'
+  de: 'Kamerabasierter ADAS-Status 2: Aktivierungskennzeichen für ACC, AEB, FCW und HBA, Kamera-Fokusfehler, Fahrseite und Tageslichtanzeige.'
+  it: 'Stato ADAS telecamera 2: indicatori di attivazione ACC, AEB, FCW e HBA, guasto messa a fuoco telecamera, lato di guida e indicatore diurno.'
+  pl: 'Stan ADAS kamery 2: flagi aktywacji ACC, AEB, FCW i HBA, usterka ostrości kamery, strona ruchu i wskaźnik dzienny.'
+  ru: 'Статус ADAS камеры 2: флаги активации ACC, AEB, FCW и HBA, ошибка фокусировки камеры, сторона движения и дневной индикатор.'
+  zh: '基于摄像头的ADAS状态2:ACC、AEB、FCW和HBA启用标志、摄像头失焦故障、行驶方向和白天指示。'
+  hu: 'Kamera alapú ADAS állapot 2: ACC, AEB, FCW és HBA aktiválási jelzők, kamera fókuszhiba, közlekedési oldal és nappali jelző.'
+  pt: 'Estado 2 do ADAS baseado em câmara: indicadores de ativação de ACC, AEB, FCW e HBA, avaria de focagem da câmara, lado de condução e indicador diurno.'
+observations:
+  en: 'Event-triggered frame with a 40 ms exclusion time, sent on each computation cycle, i.e. every 40/50 ms; set as mixed'
+  fr: 'Trame événementielle avec un temps d''exclusion de 40 ms, émise à chaque cycle de calcul, soit toutes les 40/50 ms ; définie en mixte'
+  es: 'Trama basada en eventos con un tiempo de exclusión de 40 ms, enviada en cada ciclo de cálculo, es decir cada 40/50 ms; definida como mixta'
+  de: 'Ereignisgesteuerter Frame mit 40 ms Sperrzeit, gesendet bei jedem Berechnungszyklus, also alle 40/50 ms; als mixte definiert'
+  it: 'Frame basato su eventi con tempo di esclusione di 40 ms, inviato a ogni ciclo di calcolo, ossia ogni 40/50 ms; definito misto'
+  pl: 'Ramka zdarzeniowa z 40 ms czasem wykluczenia, wysyłana przy każdym cyklu obliczeniowym, czyli co 40/50 ms; ustawiona jako mieszana'
+  ru: 'Событийный кадр с временем исключения 40 мс, отправляется на каждом цикле вычисления, то есть каждые 40/50 мс; задан как смешанный'
+  zh: '事件触发帧,排除时间为40毫秒,每个计算周期(即每40/50毫秒)发送;设为混合类型'
+  hu: 'Eseményvezérelt keret 40 ms kizárási idővel, minden számítási ciklusban, azaz 40/50 ms-onként küldve; mixte típusúként megadva'
+  pt: 'Trama baseada em eventos com um tempo de exclusão de 40 ms, enviada em cada ciclo de cálculo, ou seja, a cada 40/50 ms; definida como mista'
+periodicity: ['55ms', 'trigger']
+senders: ['CVM']
+receivers: ['ARTIV']
+
+signals:
+  VIDEO_FRAME_ID:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Frame identifier'
+      fr: 'Identifiant de la trame'
+      es: 'Identificador de trama'
+      de: 'Rahmenkennung'
+      it: 'Identificatore del frame'
+      pl: 'Identyfikator ramki'
+      ru: 'Идентификатор кадра'
+      zh: '帧标识符'
+      hu: 'Keretazonosító'
+      pt: 'Identificador da trama'
+    type: 'uint'
+    min: 0
+    max: 65535
+
+  ESTIMATED_CAN_LATENCY:
+    bits: '3.7-4.7'
+    comment:
+      en: 'Estimated CAN latency'
+      fr: 'Latence CAN estimée'
+      es: 'Latencia CAN estimada'
+      de: 'Geschätzte CAN-Latenz'
+      it: 'Latenza CAN stimata'
+      pl: 'Szacowane opóźnienie CAN'
+      ru: 'Оценочная задержка CAN'
+      zh: '估计CAN延迟'
+      hu: 'Becsült CAN késleltetés'
+      pt: 'Latência CAN estimada'
+    type: 'uint'
+    factor: 0.001
+    min: 0
+    max: 0.511
+    units: 's'
+
+  SENSOR_STATUS:
+    bits: '4.6-4.3'
+    comment:
+      en: 'Sensor state'
+      fr: 'État du capteur'
+      es: 'Estado del sensor'
+      de: 'Sensorzustand'
+      it: 'Stato del sensore'
+      pl: 'Stan czujnika'
+      ru: 'Состояние датчика'
+      zh: '传感器状态'
+      hu: 'Érzékelő állapota'
+      pt: 'Estado do sensor'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'System error'
+        fr: 'Erreur système'
+        es: 'Error del sistema'
+        de: 'Systemfehler'
+        it: 'Errore di sistema'
+        pl: 'Błąd systemu'
+        ru: 'Системная ошибка'
+        zh: '系统错误'
+        hu: 'Rendszerhiba'
+        pt: 'Erro do sistema'
+      0x01:
+        en: 'Status not available'
+        fr: 'État non disponible'
+        es: 'Estado no disponible'
+        de: 'Status nicht verfügbar'
+        it: 'Stato non disponibile'
+        pl: 'Stan niedostępny'
+        ru: 'Статус недоступен'
+        zh: '状态不可用'
+        hu: 'Az állapot nem érhető el'
+        pt: 'Estado não disponível'
+      0x02:
+        en: 'System initializing / warming up'
+        fr: 'Système en initialisation / préchauffage'
+        es: 'Sistema inicializando / calentando'
+        de: 'System initialisiert / wärmt sich auf'
+        it: 'Sistema in inizializzazione / riscaldamento'
+        pl: 'System inicjalizujący się / rozgrzewający się'
+        ru: 'Система инициализируется / прогревается'
+        zh: '系统初始化/预热中'
+        hu: 'A rendszer inicializálódik / bemelegszik'
+        pt: 'Sistema a inicializar / a aquecer'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        en: 'Camera blocked / no image'
+        fr: 'Caméra bloquée / pas d''image'
+        es: 'Cámara bloqueada / sin imagen'
+        de: 'Kamera blockiert / kein Bild'
+        it: 'Telecamera bloccata / nessuna immagine'
+        pl: 'Kamera zablokowana / brak obrazu'
+        ru: 'Камера заблокирована / нет изображения'
+        zh: '摄像头被遮挡/无图像'
+        hu: 'A kamera blokkolva / nincs kép'
+        pt: 'Câmara bloqueada / sem imagem'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Camera degraded'
+        fr: 'Caméra dégradée'
+        es: 'Cámara degradada'
+        de: 'Kamera beeinträchtigt'
+        it: 'Telecamera degradata'
+        pl: 'Kamera w trybie ograniczonym'
+        ru: 'Камера в ухудшенном состоянии'
+        zh: '摄像头性能降级'
+        hu: 'A kamera működése korlátozott'
+        pt: 'Câmara degradada'
+      0x08:
+        unused: true
+      0x09:
+        en: 'System fully operational'
+        fr: 'System fully operational'
+        es: 'Sistema totalmente operativo'
+        de: 'System vollständig betriebsbereit'
+        it: 'Sistema completamente operativo'
+        pl: 'System w pełni sprawny'
+        ru: 'Система полностью работоспособна'
+        zh: '系统完全正常运行'
+        hu: 'A rendszer teljesen üzemképes'
+        pt: 'Sistema totalmente operacional'
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  TIME_OF_DAY_INDICATOR:
+    bits: '4.2-4.1'
+    comment:
+      en: 'Time of day indicator'
+      fr: 'Indicateur du moment de la journée'
+      es: 'Indicador del momento del día'
+      de: 'Tageszeitanzeige'
+      it: 'Indicatore del momento della giornata'
+      pl: 'Wskaźnik pory dnia'
+      ru: 'Индикатор времени суток'
+      zh: '时段指示器'
+      hu: 'Napszak jelző'
+      pt: 'Indicador do momento do dia'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Day'
+        fr: 'Jour'
+        es: 'Día'
+        de: 'Tag'
+        it: 'Giorno'
+        pl: 'Dzień'
+        ru: 'День'
+        zh: '白天'
+        hu: 'Nappal'
+        pt: 'Dia'
+      0x01:
+        en: 'Night'
+        fr: 'Nuit'
+        es: 'Noche'
+        de: 'Nacht'
+        it: 'Notte'
+        pl: 'Noc'
+        ru: 'Ночь'
+        zh: '夜间'
+        hu: 'Éjszaka'
+        pt: 'Noite'
+      0x02:
+        en: 'Dusk'
+        fr: 'Crépuscule'
+        es: 'Anochecer'
+        de: 'Dämmerung'
+        it: 'Crepuscolo'
+        pl: 'Zmierzch'
+        ru: 'Сумерки'
+        zh: '黄昏'
+        hu: 'Alkony'
+        pt: 'Anoitecer'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '4.0'
+    unused: true
+
+  DETECTED_DRIVING_SIDE:
+    bits: '5.7-5.6'
+    comment:
+      en: 'Detected driving side'
+      fr: 'Côté de circulation détecté'
+      es: 'Lado de circulación detectado'
+      de: 'Erkannte Verkehrsseite'
+      it: 'Lato di circolazione rilevato'
+      pl: 'Wykryta strona ruchu drogowego'
+      ru: 'Определённая сторона движения'
+      zh: '检测到的行驶方向(左/右舵)'
+      hu: 'Érzékelt közlekedési oldal'
+      pt: 'Lado de circulação detetado'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Left'
+        fr: 'Gauche'
+        es: 'Izquierda'
+        de: 'Links'
+        it: 'Sinistra'
+        pl: 'Lewo'
+        ru: 'Слева'
+        zh: '左'
+        hu: 'Bal'
+        pt: 'Esquerda'
+      0x01:
+        en: 'Right'
+        fr: 'Droite'
+        es: 'Derecha'
+        de: 'Rechts'
+        it: 'Destra'
+        pl: 'Prawo'
+        ru: 'Справа'
+        zh: '右侧'
+        hu: 'Jobb'
+        pt: 'Direita'
+      0x02:
+        en: 'unknown'
+        fr: 'unknown'
+        es: 'desconocido'
+        de: 'unbekannt'
+        it: 'sconosciuto'
+        pl: 'nieznane'
+        ru: 'неизвестно'
+        zh: '未知'
+        hu: 'ismeretlen'
+        pt: 'desconhecido'
+      0x03:
+        en: 'Forbidden value'
+        fr: 'Valeur interdite'
+        es: 'Valor prohibido'
+        de: 'Unzulässiger Wert'
+        it: 'Valore non consentito'
+        pl: 'Wartość niedozwolona'
+        ru: 'Запрещённое значение'
+        zh: '禁止的值'
+        hu: 'Tiltott érték'
+        pt: 'Valor proibido'
+
+  MESSAGE_COUNTER_DAT2:
+    bits: '5.5-5.4'
+    comment:
+      en: 'Message counter'
+      fr: 'Compteur de message'
+      es: 'Contador de mensajes'
+      de: 'Nachrichtenzähler'
+      it: 'Contatore messaggi'
+      pl: 'Licznik komunikatów'
+      ru: 'Счётчик сообщений'
+      zh: '消息计数器'
+      hu: 'Üzenetszámláló'
+      pt: 'Contador de mensagens'
+    type: 'uint'
+    min: 0
+    max: 3
+
+  LDW_ENABLED:
+    bits: '5.3'
+    comment:
+      en: 'LDW function available'
+      fr: 'Fonction LDW disponible'
+      es: 'Función LDW disponible'
+      de: 'LDW-Funktion verfügbar'
+      it: 'Funzione LDW disponibile'
+      pl: 'Funkcja LDW dostępna'
+      ru: 'Функция LDW доступна'
+      zh: 'LDW功能可用'
+      hu: 'LDW funkció elérhető'
+      pt: 'Função LDW disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  FCW_ENABLED:
+    bits: '5.2'
+    comment:
+      en: 'FCW function available'
+      fr: 'Fonction FCW disponible'
+      es: 'Función FCW disponible'
+      de: 'FCW-Funktion verfügbar'
+      it: 'Funzione FCW disponibile'
+      pl: 'Funkcja FCW dostępna'
+      ru: 'Функция FCW доступна'
+      zh: 'FCW功能可用'
+      hu: 'FCW funkció elérhető'
+      pt: 'Função FCW disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  AEB_ENABLED:
+    bits: '5.1'
+    comment:
+      en: 'AEB function available'
+      fr: 'Fonction AEB disponible'
+      es: 'Función AEB disponible'
+      de: 'AEB-Funktion verfügbar'
+      it: 'Funzione AEB disponibile'
+      pl: 'Funkcja AEB dostępna'
+      ru: 'Функция AEB доступна'
+      zh: 'AEB功能可用'
+      hu: 'AEB funkció elérhető'
+      pt: 'Função AEB disponível'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  ACC_ENABLED:
+    bits: '5.0'
+    comment:
+      en: 'ACC function available'
+      fr: 'Fonction ACC disponible'
+      es: 'Función ACC disponible'
+      de: 'ACC-Funktion verfügbar'
+      it: 'Funzione ACC disponibile'
+      pl: 'Funkcja ACC dostępna'
+      ru: 'Функция ACC доступна'
+      zh: 'ACC功能可用'
+      hu: 'ACC funkció elérhető'
+      pt: 'Função ACC disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  LKA_ENABLED:
+    bits: '6.7'
+    comment:
+      en: 'LKA function available'
+      fr: 'Fonction LKA disponible'
+      es: 'Función LKA disponible'
+      de: 'LKA-Funktion verfügbar'
+      it: 'Funzione LKA disponibile'
+      pl: 'Funkcja LKA dostępna'
+      ru: 'Функция LKA доступна'
+      zh: 'LKA功能可用'
+      hu: 'LKA funkció elérhető'
+      pt: 'Função LKA disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  HBA_ENABLED:
+    bits: '6.6'
+    comment:
+      en: 'HBA function available'
+      fr: 'Fonction HBA disponible'
+      es: 'Función HBA disponible'
+      de: 'HBA-Funktion verfügbar'
+      it: 'Funzione HBA disponibile'
+      pl: 'Funkcja HBA dostępna'
+      ru: 'Функция HBA доступна'
+      zh: 'HBA功能可用'
+      hu: 'HBA funkció elérhető'
+      pt: 'Função HBA disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  CAMERA_OUT_OF_FOCUS:
+    bits: '6.5'
+    comment:
+      en: 'Camera out of focus'
+      fr: 'Caméra déréglée (hors focus)'
+      es: 'Cámara desenfocada'
+      de: 'Kamera unscharf (außer Fokus)'
+      it: 'Telecamera fuori fuoco'
+      pl: 'Kamera rozogniskowana'
+      ru: 'Камера не в фокусе'
+      zh: '摄像头失焦'
+      hu: 'Kamera fókuszvesztése'
+      pt: 'Câmara desfocada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  BASIC_YAW_AXIS_MISALIGNMENT:
+    bits: '6.4'
+    comment:
+      en: 'Basic yaw axis misalignment'
+      fr: 'Désalignement de base de l''axe de lacet'
+      es: 'Desalineación básica del eje de guiñada'
+      de: 'Grundlegende Fehlausrichtung der Gierachse'
+      it: 'Disallineamento di base dell''asse di imbardata'
+      pl: 'Podstawowe rozosiowanie osi odchylania'
+      ru: 'Базовая несоосность по оси рыскания'
+      zh: '基本横摆轴失准'
+      hu: 'Alap legyezési tengely elállítottsága'
+      pt: 'Desalinhamento base do eixo de guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  SEVERE_YAW_AXIS_MISALIGNMENT:
+    bits: '6.3'
+    comment:
+      en: 'Severe yaw axis misalignment'
+      fr: 'Désalignement sévère de l''axe de lacet'
+      es: 'Desalineación severa del eje de guiñada'
+      de: 'Starke Fehlausrichtung der Gierachse'
+      it: 'Disallineamento grave dell''asse di imbardata'
+      pl: 'Poważne rozosiowanie osi odchylania'
+      ru: 'Сильная несоосность по оси рыскания'
+      zh: '严重横摆轴失准'
+      hu: 'Súlyos legyezési tengely elállítottsága'
+      pt: 'Desalinhamento severo do eixo de guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  BASIC_PITCH_AXIS_MISALIGNMENT:
+    bits: '6.2'
+    comment:
+      en: 'Basic pitch axis misalignment'
+      fr: 'Désalignement de base de l''axe de tangage'
+      es: 'Desalineación básica del eje de cabeceo'
+      de: 'Grundlegende Fehlausrichtung der Nickachse'
+      it: 'Disallineamento di base dell''asse di beccheggio'
+      pl: 'Podstawowe rozosiowanie osi pochylenia'
+      ru: 'Базовая несоосность по оси тангажа'
+      zh: '基本俯仰轴失准'
+      hu: 'Alap bólintási tengely elállítottsága'
+      pt: 'Desalinhamento base do eixo de arfagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  SEVERE_PITCH_AXIS_MISALIGNMENT:
+    bits: '6.1'
+    comment:
+      en: 'Severe pitch axis misalignment'
+      fr: 'Désalignement sévère de l''axe de tangage'
+      es: 'Desalineación severa del eje de cabeceo'
+      de: 'Starke Fehlausrichtung der Nickachse'
+      it: 'Disallineamento grave dell''asse di beccheggio'
+      pl: 'Poważne rozosiowanie osi pochylenia'
+      ru: 'Сильная несоосность по оси тангажа'
+      zh: '严重俯仰轴失准'
+      hu: 'Súlyos bólintási tengely elállítottsága'
+      pt: 'Desalinhamento severo do eixo de picada (arfagem)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  UNUSED_2:
+    bits: '6.0'
+    unused: true
+
+  VIDEO_FRAME_ID_H:
+    bits: '7.7-8.0'
+    comment:
+      en: 'Frame identifier (high byte)'
+      fr: 'Identifiant de la trame (octet fort)'
+      es: 'Identificador de trama (byte alto)'
+      de: 'Rahmenkennung (High-Byte)'
+      it: 'Identificatore del frame (byte alto)'
+      pl: 'Identyfikator ramki (starszy bajt)'
+      ru: 'Идентификатор кадра (старший байт)'
+      zh: '帧标识符(高字节)'
+      hu: 'Keretazonosító (felső bájt)'
+      pt: 'Identificador de trama (byte alto)'
+    type: 'uint'
+    min: 0
+    max: 65535
+    default: 0x00

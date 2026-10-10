@@ -1,0 +1,742 @@
+id: 0x50D
+name: 'BRAKE_ABR_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'ABR (hill-descent assist) data from the ABS unit: brake fluid alert, wheel pulse counters and faults, AAFD/SFU function status, reference regulation and warning-lamp requests.'
+  fr: 'Données ABR (aide au démarrage en côte/frein moteur) du calculateur ABS : alerte liquide de frein, compteurs et défauts d''impulsions roue, état des fonctions AAFD/SFU, régulation de référence et demandes de voyant.'
+  es: 'Datos ABR (asistencia en pendiente) de la unidad ABS: alerta de líquido de frenos, contadores y fallos de impulsos de rueda, estado de las funciones AAFD/SFU, regulación de referencia y solicitudes de testigo.'
+  de: 'ABR-Daten (Bergabfahrhilfe) vom ABS-Steuergerät: Bremsflüssigkeitswarnung, Radimpulszähler und -fehler, Status der AAFD-/SFU-Funktionen, Referenzregelung und Kontrollleuchtenanforderungen.'
+  it: 'Dati ABR (assistenza in discesa) dell''unità ABS: allarme liquido freni, contatori e guasti impulsi ruota, stato delle funzioni AAFD/SFU, regolazione di riferimento e richieste spia.'
+  pl: 'Dane ABR (asysta zjazdu ze wzniesienia) ze sterownika ABS: alarm płynu hamulcowego, liczniki i usterki impulsów koła, stan funkcji AAFD/SFU, regulacja odniesienia i żądania kontrolki.'
+  ru: 'Данные ABR (система помощи при спуске) от блока ABS: сигнал тормозной жидкости, счётчики импульсов колёс и неисправности, статус функций AAFD/SFU, эталонное регулирование и запросы индикатора.'
+  zh: '来自ABS单元的ABR(坡道辅助)数据:刹车液警报、车轮脉冲计数器和故障、AAFD/SFU功能状态、基准调节和警示灯请求。'
+  hu: 'ABR (lejtőn induláshoz segítő funkció) adatok az ABS egységtől: fékfolyadék riasztás, kerékimpulzus-számlálók és hibák, AAFD/SFU funkció állapota, referencia-szabályozás és jelzőlámpa-kérések.'
+  pt: 'Dados ABR (assistência à descida de encostas) da unidade ABS: alerta de líquido de travões, contadores e avarias de impulsos das rodas, estado das funções AAFD/SFU, regulação de referência e pedidos de luz avisadora.'
+periodicity: ['100ms']
+senders: ['ABS']
+receivers: ['CVM', 'HCU1', 'BSM', 'ARTIV', 'DAE', 'BSI', 'CMM', 'FSE', 'CSS', 'BVA', 'AR2S', 'AAS']
+
+signals:
+  REF_FAULT_LAMP:
+    bits: '1.7'
+    comment:
+      en: 'Electronic brake force distribution (REF) fault warning lamp activation request'
+      fr: 'Demande d''allumage du témoin de défaut de répartition électronique de freinage (REF)'
+      es: 'Solicitud de encendido del testigo de fallo de distribución electrónica de frenada (REF)'
+      de: 'Anforderung zum Einschalten der Fehlerkontrollleuchte der elektronischen Bremskraftverteilung (REF)'
+      it: 'Richiesta di accensione della spia di guasto della ripartizione elettronica della frenata (REF)'
+      pl: 'Żądanie zaświecenia kontrolki usterki elektronicznego rozdziału siły hamowania (REF)'
+      ru: 'Запрос включения лампы неисправности электронного распределения тормозных усилий (REF)'
+      zh: '电子制动力分配(REF)故障指示灯点亮请求'
+      hu: 'Az elektronikus fékerő-elosztás (REF) hibajelző lámpájának bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho de falha da repartição eletrónica de travagem (REF)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  UNUSED_1:
+    bits: '1.6'
+    unused: true
+
+  ABS_IN_PROGRESS:
+    bits: '1.5'
+    comment:
+      en: 'ABS regulation in progress'
+      fr: 'Régulation ABS en cours'
+      es: 'Regulación ABS en curso'
+      de: 'ABS-Regelung aktiv'
+      it: 'Regolazione ABS in corso'
+      pl: 'Regulacja ABS w toku'
+      ru: 'Идёт регулирование ABS'
+      zh: 'ABS调节进行中'
+      hu: 'ABS-szabályozás folyamatban'
+      pt: 'Regulação ABS em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  AUTOMATIC_HAZARD_LIGHTS_BY_UC_BRAKE:
+    bits: '1.4'
+    comment:
+      en: 'Indicates whether the automatic hazard warning lights function is implemented in the brake ECU'
+      fr: 'Indique si la fonction d''allumage automatique des feux de détresse est implémentée dans l''UC Frein'
+      es: 'Indica si la función de encendido automático de las luces de emergencia está implementada en la centralita de frenos'
+      de: 'Zeigt an, ob die Funktion zum automatischen Einschalten der Warnblinkanlage im Brems-Steuergerät implementiert ist'
+      it: 'Indica se la funzione di accensione automatica delle luci di emergenza è implementata nella centralina freni'
+      pl: 'Wskazuje, czy funkcja automatycznego włączania świateł awaryjnych jest zaimplementowana w sterowniku hamulców'
+      ru: 'Указывает, реализована ли функция автоматического включения аварийной сигнализации в блоке управления тормозами'
+      zh: '指示制动ECU是否实现了危险警示灯自动开启功能'
+      hu: 'Jelzi, hogy a vészvillogó automatikus bekapcsolása funkció megvalósítva van-e a fékvezérlő egységben'
+      pt: 'Indica se a função automática de luzes de emergência está implementada na ECU de travagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'AAFD function not present in the brake ECU'
+        fr: 'Fonction AAFD non présente dans le calculateur de frein'
+        es: 'Función AAFD no presente en la centralita de frenos'
+        de: 'AAFD-Funktion im Bremssteuergerät nicht vorhanden'
+        it: 'Funzione AAFD non presente nella centralina freni'
+        pl: 'Funkcja AAFD nieobecna w sterowniku hamulców'
+        ru: 'Функция AAFD отсутствует в ЭБУ тормозов'
+        zh: '制动ECU中不存在AAFD功能'
+        hu: 'Az AAFD funkció nincs jelen a fékvezérlő egységben'
+        pt: 'Função AAFD não presente na unidade de controlo de travões'
+      0x01:
+        en: 'AAFD function present in the brake ECU'
+        fr: 'Fonction AAFD présente dans l''UC frein'
+        es: 'Función AAFD presente en la centralita de frenos'
+        de: 'AAFD-Funktion im Bremssteuergerät vorhanden'
+        it: 'Funzione AAFD presente nella centralina freni'
+        pl: 'Funkcja AAFD obecna w sterowniku hamulców'
+        ru: 'Функция AAFD присутствует в блоке управления тормозами'
+        zh: '制动控制单元中存在AAFD功能'
+        hu: 'Az AAFD funkció jelen van a fékvezérlőben'
+        pt: 'Função AAFD presente na centralina de travagem'
+
+  REF_IN_PROGRESS:
+    bits: '1.3'
+    comment:
+      en: 'Electronic brake force distribution (REF) regulation in progress'
+      fr: 'Régulation de la répartition électronique de freinage (REF) en cours'
+      es: 'Regulación de la distribución electrónica de frenada (REF) en curso'
+      de: 'Regelung der elektronischen Bremskraftverteilung (REF) aktiv'
+      it: 'Regolazione della ripartizione elettronica della frenata (REF) in corso'
+      pl: 'Regulacja elektronicznego rozdziału siły hamowania (REF) w toku'
+      ru: 'Идёт регулирование электронного распределения тормозных усилий (REF)'
+      zh: '电子制动力分配(REF)调节进行中'
+      hu: 'Az elektronikus fékerő-elosztás (REF) szabályozása folyamatban'
+      pt: 'Regulação da repartição eletrónica de travagem (REF) em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  WORN_BRAKE_PADS_INDICATOR:
+    bits: '1.2'
+    comment:
+      en: 'Brake pad wear indicator'
+      fr: 'Indicateur d''usure des plaquettes de frein'
+      es: 'Indicador de desgaste de las pastillas de freno'
+      de: 'Verschleißanzeige der Bremsbeläge'
+      it: 'Indicatore di usura delle pastiglie dei freni'
+      pl: 'Wskaźnik zużycia klocków hamulcowych'
+      ru: 'Индикатор износа тормозных колодок'
+      zh: '刹车片磨损指示器'
+      hu: 'Fékbetét-kopásjelző'
+      pt: 'Indicador de desgaste das pastilhas de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Brake pads OK'
+        fr: 'Plaquettes en bon état'
+        es: 'Pastillas en buen estado'
+        de: 'Bremsbeläge in Ordnung'
+        it: 'Pastiglie in buono stato'
+        pl: 'Klocki w dobrym stanie'
+        ru: 'Тормозные колодки в норме'
+        zh: '刹车片状态良好'
+        hu: 'Fékbetétek jó állapotban'
+        pt: 'Pastilhas de travão OK'
+      0x01:
+        en: 'Brake pads worn'
+        fr: 'Plaquettes de frein usées'
+        es: 'Pastillas de freno desgastadas'
+        de: 'Bremsbeläge verschlissen'
+        it: 'Pastiglie dei freni usurate'
+        pl: 'Zużyte klocki hamulcowe'
+        ru: 'Тормозные колодки изношены'
+        zh: '刹车片磨损'
+        hu: 'Fékbetétek elkoptak'
+        pt: 'Pastilhas de travão gastas'
+
+  BRAKE_FLUID_LEVEL_ALERT:
+    bits: '1.1'
+    comment:
+      en: 'Brake fluid level alert'
+      fr: 'Alerte de niveau de liquide de frein'
+      es: 'Alerta de nivel de líquido de frenos'
+      de: 'Warnung wegen Bremsflüssigkeitsstand'
+      it: 'Avviso livello liquido dei freni'
+      pl: 'Ostrzeżenie o poziomie płynu hamulcowego'
+      ru: 'Предупреждение об уровне тормозной жидкости'
+      zh: '制动液液位警告'
+      hu: 'Fékfolyadékszint-figyelmeztetés'
+      pt: 'Alerta de nível do líquido de travões'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  ABS_FAULT_LAMP_REQUEST:
+    bits: '1.0'
+    comment:
+      en: 'ABS fault warning lamp activation request'
+      fr: 'Demande d''allumage du témoin de défaut ABS'
+      es: 'Solicitud de encendido del testigo de fallo del ABS'
+      de: 'Anforderung zum Einschalten der ABS-Fehlerkontrollleuchte'
+      it: 'Richiesta di accensione della spia di guasto ABS'
+      pl: 'Żądanie zaświecenia kontrolki usterki ABS'
+      ru: 'Запрос включения лампы неисправности ABS'
+      zh: 'ABS故障指示灯点亮请求'
+      hu: 'Az ABS-hibajelző lámpa bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho de falha do ABS'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  REAR_LEFT_WHEEL_SPEED_SENSOR_FAULT:
+    bits: '2.7'
+    comment:
+      en: 'Rear left wheel-speed pulse counter malfunction'
+      fr: 'Défaut du compteur d''impulsions de vitesse de la roue arrière gauche'
+      es: 'Fallo del contador de impulsos de velocidad de la rueda trasera izquierda'
+      de: 'Störung des Raddrehzahl-Impulszählers hinten links'
+      it: 'Guasto del contatore di impulsi di velocità della ruota posteriore sinistra'
+      pl: 'Usterka licznika impulsów prędkości koła tylnego lewego'
+      ru: 'Неисправность счётчика импульсов скорости заднего левого колеса'
+      zh: '左后轮速脉冲计数器故障'
+      hu: 'Hátsó bal kerék sebességimpulzus-számlálójának hibája'
+      pt: 'Falha do contador de impulsos de velocidade da roda traseira esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault on the RRL pulse counter'
+        fr: 'Pas de défaut sur le compteur de tops arrière gauche'
+        es: 'Sin fallo en el contador de impulsos trasero izquierdo'
+        de: 'Kein Fehler am Impulszähler hinten links'
+        it: 'Nessun guasto sul contatore di impulsi posteriore sinistro'
+        pl: 'Brak usterki licznika impulsów tylnego lewego koła'
+        ru: 'Нет неисправности счётчика импульсов заднего левого колеса'
+        zh: '左后脉冲计数器无故障'
+        hu: 'Nincs hiba a bal hátsó impulzusszámlálón'
+        pt: 'Sem falha no contador de impulsos traseiro esquerdo'
+      0x01:
+        en: 'Fault on the rear left pulse counter'
+        fr: 'Défaut du compteur d''impulsions arrière gauche'
+        es: 'Fallo en el contador de impulsos trasero izquierdo'
+        de: 'Fehler am Impulszähler hinten links'
+        it: 'Guasto nel contatore di impulsi posteriore sinistro'
+        pl: 'Usterka licznika impulsów tylnego lewego'
+        ru: 'Неисправность счётчика импульсов заднего левого колеса'
+        zh: '后左脉冲计数器故障'
+        hu: 'Hiba a hátsó bal impulzusszámlálóban'
+        pt: 'Avaria no contador de impulsos traseiro esquerdo'
+
+  REAR_LEFT_WHEEL_SPIN_COUNTER:
+    bits: '2.6-3.0'
+    comment:
+      en: 'Free-running rear left wheel speed sensor pulse counter'
+      fr: 'Compteur en roue libre des impulsions du capteur de vitesse de la roue arrière gauche'
+      es: 'Contador libre de impulsos del sensor de velocidad de la rueda trasera izquierda'
+      de: 'Freilaufender Impulszähler des Raddrehzahlsensors hinten links'
+      it: 'Contatore libero degli impulsi del sensore di velocità della ruota posteriore sinistra'
+      pl: 'Swobodnie zliczający licznik impulsów czujnika prędkości koła tylnego lewego'
+      ru: 'Свободно считающий счётчик импульсов датчика скорости заднего левого колеса'
+      zh: '左后轮速传感器自由运行脉冲计数器'
+      hu: 'A hátsó bal kerék sebességérzékelőjének szabadonfutó impulzusszámlálója'
+      pt: 'Contador livre de impulsos do sensor de velocidade da roda traseira esquerda'
+    type: 'uint'
+    min: 0
+    max: 32767
+    default: 0x00
+
+  REAR_RIGHT_WHEEL_SPEED_SENSOR_FAULT:
+    bits: '4.7'
+    comment:
+      en: 'Rear right wheel-speed pulse counter malfunction'
+      fr: 'Défaut du compteur d''impulsions de vitesse de la roue arrière droite'
+      es: 'Fallo del contador de impulsos de velocidad de la rueda trasera derecha'
+      de: 'Störung des Raddrehzahl-Impulszählers hinten rechts'
+      it: 'Guasto del contatore di impulsi di velocità della ruota posteriore destra'
+      pl: 'Usterka licznika impulsów prędkości koła tylnego prawego'
+      ru: 'Неисправность счётчика импульсов скорости заднего правого колеса'
+      zh: '右后轮速脉冲计数器故障'
+      hu: 'Hátsó jobb kerék sebességimpulzus-számlálójának hibája'
+      pt: 'Falha do contador de impulsos de velocidade da roda traseira direita'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Rear-right pulse counter fault'
+        fr: 'Défaut du compteur de tops arrière droit'
+        es: 'Fallo del contador de pulsos trasero derecho'
+        de: 'Fehler des Impulszählers hinten rechts'
+        it: 'Guasto del contatore di impulsi posteriore destro'
+        pl: 'Usterka licznika impulsów tylnego prawego'
+        ru: 'Неисправность счётчика импульсов заднего правого колеса'
+        zh: '右后脉冲计数器故障'
+        hu: 'Hátsó jobb impulzusszámláló hiba'
+        pt: 'Avaria do contador de impulsos traseiro direito'
+
+  REAR_RIGHT_WHEEL_SPIN_COUNTER:
+    bits: '4.6-5.0'
+    comment:
+      en: 'Free-running rear right wheel speed sensor pulse counter'
+      fr: 'Compteur en roue libre des impulsions du capteur de vitesse de la roue arrière droite'
+      es: 'Contador libre de impulsos del sensor de velocidad de la rueda trasera derecha'
+      de: 'Freilaufender Impulszähler des Raddrehzahlsensors hinten rechts'
+      it: 'Contatore libero degli impulsi del sensore di velocità della ruota posteriore destra'
+      pl: 'Swobodnie zliczający licznik impulsów czujnika prędkości koła tylnego prawego'
+      ru: 'Свободно считающий счётчик импульсов датчика скорости заднего правого колеса'
+      zh: '右后轮速传感器自由运行脉冲计数器'
+      hu: 'A hátsó jobb kerék sebességérzékelőjének szabadonfutó impulzusszámlálója'
+      pt: 'Contador livre de impulsos do sensor de velocidade da roda traseira direita'
+    type: 'uint'
+    min: 0
+    max: 32767
+    default: 0x00
+
+  BATTERY_VOLTAGE_UC_BRAKE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Battery voltage measured by the brake ECU'
+      fr: 'Tension de la batterie mesurée par l''UC Frein'
+      es: 'Tensión de la batería medida por la centralita de frenos'
+      de: 'Von dem Brems-Steuergerät gemessene Batteriespannung'
+      it: 'Tensione della batteria misurata dalla centralina freni'
+      pl: 'Napięcie akumulatora zmierzone przez sterownik hamulców'
+      ru: 'Напряжение батареи, измеренное блоком управления тормозами'
+      zh: '制动ECU测得的电池电压'
+      hu: 'A fékvezérlő egység által mért akkumulátorfeszültség'
+      pt: 'Tensão da bateria medida pela centralina de travões'
+    type: 'uint'
+    factor: 0.05
+    offset: 7
+    min: 7
+    max: 18.5
+    units: 'V'
+    invalid: 0xFF
+
+  EMERGENCY_BRAKING_SIGNALIZATION_BY_UC_BRAKE:
+    bits: '7.7'
+    comment:
+      en: 'Indicates whether the emergency braking signal function is implemented in the brake ECU'
+      fr: 'Indique si la fonction de signalisation de freinage d''urgence est implémentée dans l''UC Frein'
+      es: 'Indica si la función de señalización de frenado de emergencia está implementada en la centralita de frenos'
+      de: 'Zeigt an, ob die Funktion zur Notbremssignalisierung im Brems-Steuergerät implementiert ist'
+      it: 'Indica se la funzione di segnalazione della frenata di emergenza è implementata nella centralina freni'
+      pl: 'Wskazuje, czy funkcja sygnalizacji hamowania awaryjnego jest zaimplementowana w sterowniku hamulców'
+      ru: 'Указывает, реализована ли функция сигнализации экстренного торможения в блоке управления тормозами'
+      zh: '指示制动ECU是否实现了紧急制动信号功能'
+      hu: 'Jelzi, hogy a vészfékjelzés funkció megvalósítva van-e a fékvezérlő egységben'
+      pt: 'Indica se a função de sinalização de travagem de emergência está implementada na ECU de travagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'SFU function absent from the brake ECU'
+        fr: 'Fonction SFU absente du calculateur de freinage'
+        es: 'Función SFU ausente en la ECU de frenos'
+        de: 'SFU-Funktion im Bremssteuergerät fehlt'
+        it: 'Funzione SFU assente dalla centralina freni'
+        pl: 'Funkcja SFU nieobecna w sterowniku hamulców'
+        ru: 'Функция SFU отсутствует в блоке управления тормозами'
+        zh: '制动ECU中不存在SFU功能'
+        hu: 'Az SFU funkció hiányzik a fékrendszer vezérlőegységéből'
+        pt: 'Função SFU ausente da unidade de controlo de travagem'
+      0x01:
+        en: 'EBS function present in the brake ECU'
+        fr: 'Fonction EBS présente dans le calculateur de frein'
+        es: 'Función EBS presente en la centralita de frenos'
+        de: 'EBS-Funktion im Bremssteuergerät vorhanden'
+        it: 'Funzione EBS presente nella centralina freni'
+        pl: 'Funkcja EBS obecna w sterowniku hamulców'
+        ru: 'Функция EBS присутствует в ЭБУ тормозов'
+        zh: '制动ECU中存在EBS功能'
+        hu: 'Az EBS funkció jelen van a fékvezérlő egységben'
+        pt: 'Função EBS presente na unidade de controlo de travões'
+
+  BRAKE_ECU_POWER_MANAGEMENT_FAULT:
+    bits: '7.6'
+    comment:
+      en: 'Electrical power management fault detected by the brake ECU'
+      fr: 'Défaut de gestion de l''énergie électrique détecté par l''UC Frein'
+      es: 'Fallo de gestión de energía eléctrica detectado por la centralita de frenos'
+      de: 'Vom Brems-Steuergerät erkannter Fehler der elektrischen Energieverwaltung'
+      it: 'Guasto di gestione dell''energia elettrica rilevato dalla centralina freni'
+      pl: 'Usterka zarządzania energią elektryczną wykryta przez sterownik hamulców'
+      ru: 'Неисправность управления электропитанием, обнаруженная блоком управления тормозами'
+      zh: '制动ECU检测到的电能管理故障'
+      hu: 'A fékvezérlő egység által észlelt elektromosenergia-gazdálkodási hiba'
+      pt: 'Falha de gestão de energia elétrica detetada pela unidade de controlo de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  BRAKE_FUNCTION_NEED_FOR_START_STOP:
+    bits: '7.5-7.4'
+    comment:
+      en: 'Brake function requirement for the stop-start (STT) system'
+      fr: 'Besoin de la fonction frein pour le système stop & start (STT)'
+      es: 'Requisito de la función de freno para el sistema stop & start (STT)'
+      de: 'Bremsfunktionsanforderung für das Stop & Start System (STT)'
+      it: 'Esigenza della funzione freno per il sistema stop & start (STT)'
+      pl: 'Wymaganie funkcji hamulca dla systemu stop & start (STT)'
+      ru: 'Требование тормозной функции для системы старт-стоп (STT)'
+      zh: '启停系统(STT)对制动功能的需求'
+      hu: 'A fékfunkció igénye a stop-start (STT) rendszer számára'
+      pt: 'Necessidade da função de travão para o sistema stop & start (STT)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No need, per brake function'
+        fr: 'Pas de besoin, selon la fonction frein'
+        es: 'Sin necesidad, según la función de freno'
+        de: 'Kein Bedarf gemäß Bremsfunktion'
+        it: 'Non necessario, secondo la funzione freno'
+        pl: 'Brak potrzeby wg funkcji hamulca'
+        ru: 'Нет необходимости по функции тормоза'
+        zh: '按制动功能判断无需求'
+        hu: 'Nincs igény a fékfunkció szerint'
+        pt: 'Sem necessidade, segundo a função de travão'
+      0x01:
+        en: 'Stop transition inhibition'
+        fr: 'Inhibition du passage en stop'
+        es: 'Inhibición de la transición a parada'
+        de: 'Sperrung des Übergangs in den Stopp'
+        it: 'Inibizione della transizione in stop'
+        pl: 'Blokada przejścia w tryb zatrzymania'
+        ru: 'Блокировка перехода в остановку'
+        zh: '抑制转入停机状态'
+        hu: 'A leállásba való átmenet tiltása'
+        pt: 'Inibição da passagem a Stop'
+      0x02:
+        en: 'Restart needed'
+        fr: 'Demande de redémarrage'
+        es: 'Necesidad de reinicio'
+        de: 'Neustart erforderlich'
+        it: 'Necessità di riavvio'
+        pl: 'Wymagany ponowny rozruch'
+        ru: 'Требуется перезапуск'
+        zh: '需要重启'
+        hu: 'Újraindítás szükséges'
+        pt: 'Necessidade de reinício'
+      0x03:
+        en: 'Stop transition and restart inhibited'
+        fr: 'Inhibition de passage en Stop et de redémarrage'
+        es: 'Inhibición de paso a Stop y de reinicio'
+        de: 'Sperrung des Übergangs in Stop und des Neustarts'
+        it: 'Inibizione del passaggio in Stop e del riavvio'
+        pl: 'Zablokowanie przejścia w tryb Stop i ponownego uruchomienia'
+        ru: 'Блокировка перехода в Stop и перезапуска'
+        zh: '禁止进入停机及重启'
+        hu: 'A Stop állapotba lépés és az újraindítás letiltva'
+        pt: 'Inibição de passagem a Stop e de reinício'
+
+  STATIC_SLOPE_STATE:
+    bits: '7.3-7.2'
+    comment:
+      en: 'Static road slope state (uphill/downhill)'
+      fr: 'État de la pente statique de la route (montée/descente)'
+      es: 'Estado de la pendiente estática de la carretera (subida/bajada)'
+      de: 'Statischer Fahrbahnneigungszustand (Steigung/Gefälle)'
+      it: 'Stato della pendenza statica della strada (salita/discesa)'
+      pl: 'Stan statycznego nachylenia drogi (podjazd/zjazd)'
+      ru: 'Статус статического уклона дороги (подъём/спуск)'
+      zh: '静态道路坡度状态(上坡/下坡)'
+      hu: 'Az útemelkedés statikus állapota (felfelé/lefelé)'
+      pt: 'Estado do declive estático da via (subida/descida)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Low slope'
+        fr: 'Pente faible'
+        es: 'Pendiente baja'
+        de: 'Geringe Steigung'
+        it: 'Pendenza bassa'
+        pl: 'Małe nachylenie'
+        ru: 'Небольшой уклон'
+        zh: '低坡度'
+        hu: 'Kis lejtés'
+        pt: 'Inclinação baixa'
+      0x01:
+        en: 'Steep uphill slope'
+        fr: 'Forte pente montante'
+        es: 'Pendiente ascendente pronunciada'
+        de: 'Starke Steigung'
+        it: 'Forte pendenza in salita'
+        pl: 'Silne wzniesienie'
+        ru: 'Крутой подъём'
+        zh: '陡峭上坡'
+        hu: 'Meredek emelkedő'
+        pt: 'Subida acentuada'
+      0x02:
+        en: 'high downhill slope'
+        fr: 'Forte pente descendante'
+        es: 'Pendiente descendente pronunciada'
+        de: 'Starkes Gefälle'
+        it: 'Forte pendenza in discesa'
+        pl: 'Duże nachylenie w dół'
+        ru: 'Крутой спуск'
+        zh: '陡峭下坡'
+        hu: 'Meredek lejtő'
+        pt: 'Inclinação descendente acentuada'
+      0x03:
+        en: 'Slope undefined'
+        fr: 'Pente indéterminée'
+        es: 'Pendiente indeterminada'
+        de: 'Steigung unbestimmt'
+        it: 'Pendenza indeterminata'
+        pl: 'Nieokreślone nachylenie'
+        ru: 'Уклон не определён'
+        zh: '坡度未确定'
+        hu: 'Meghatározatlan lejtés'
+        pt: 'Inclinação indeterminada'
+
+  BRAKE_ASSIST_FAULT_LAMP_REQUEST:
+    bits: '7.1'
+    comment:
+      en: 'Brake assist fault warning lamp activation request'
+      fr: 'Demande d''allumage du témoin de défaut d''assistance de freinage'
+      es: 'Solicitud de encendido del testigo de fallo del asistente de frenado'
+      de: 'Anforderung zum Einschalten der Bremsassistent-Fehlerkontrollleuchte'
+      it: 'Richiesta di accensione della spia di guasto dell''assistenza frenata'
+      pl: 'Żądanie zaświecenia kontrolki usterki asystenta hamowania'
+      ru: 'Запрос включения лампы неисправности усилителя торможения'
+      zh: '制动辅助故障指示灯点亮请求'
+      hu: 'A fékrásegítő hibajelző lámpájának bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho de falha do assistente de travagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No ignition request'
+        fr: 'Pas de demande d''allumage'
+        es: 'Sin solicitud de encendido'
+        de: 'Keine Zündanforderung'
+        it: 'Nessuna richiesta di accensione'
+        pl: 'Brak żądania zapłonu'
+        ru: 'Нет запроса зажигания'
+        zh: '无点火请求'
+        hu: 'Nincs gyújtási kérés'
+        pt: 'Sem pedido de ignição'
+      0x01:
+        en: 'Fault lamp lighting request'
+        fr: 'Demande d''allumage du témoin de défaut'
+        es: 'Solicitud de encendido del testigo de fallo'
+        de: 'Anforderung Fehlerlampe Aufleuchten'
+        it: 'Richiesta di accensione della spia di guasto'
+        pl: 'Żądanie zapalenia kontrolki usterki'
+        ru: 'Запрос включения индикатора неисправности'
+        zh: '故障灯点亮请求'
+        hu: 'Hibalámpa bekapcsolási kérés'
+        pt: 'Pedido de acendimento da luz avisadora de falha'
+
+  ESP_DISCONNECT_REQUEST:
+    bits: '7.0'
+    comment:
+      en: 'ESP disconnection status requested by a diagnostic tool'
+      fr: 'État de déconnexion de l''ESP demandée par un outil de diagnostic'
+      es: 'Estado de desconexión del ESP solicitada por una herramienta de diagnóstico'
+      de: 'Status der ESP-Abschaltung durch ein Diagnosewerkzeug'
+      it: 'Stato di disconnessione dell''ESP richiesta da uno strumento diagnostico'
+      pl: 'Stan odłączenia ESP zażądanego przez narzędzie diagnostyczne'
+      ru: 'Статус отключения ESP по запросу диагностического прибора'
+      zh: '诊断工具请求的ESP断开状态'
+      hu: 'A diagnosztikai eszköz által kért ESP-lekapcsolás állapota'
+      pt: 'Estado de desligação do ESP solicitada por uma ferramenta de diagnóstico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Connected by diagnostic tool'
+        fr: 'Connecté par outil de diagnostic'
+        es: 'Conectado mediante herramienta de diagnóstico'
+        de: 'Über Diagnosewerkzeug verbunden'
+        it: 'Connesso tramite strumento diagnostico'
+        pl: 'Połączono narzędziem diagnostycznym'
+        ru: 'Подключено с помощью диагностического инструмента'
+        zh: '通过诊断工具连接'
+        hu: 'Diagnosztikai eszközzel csatlakoztatva'
+        pt: 'Ligado por ferramenta de diagnóstico'
+      0x01:
+        en: 'Disconnected by diagnostic tool'
+        fr: 'Déconnecté par l''outil de diagnostic'
+        es: 'Desconectado por la herramienta de diagnóstico'
+        de: 'Durch Diagnosegerät getrennt'
+        it: 'Disconnesso dallo strumento diagnostico'
+        pl: 'Odłączone przez narzędzie diagnostyczne'
+        ru: 'Отключено диагностическим прибором'
+        zh: '被诊断工具断开'
+        hu: 'Diagnosztikai eszköz által lekapcsolva'
+        pt: 'Desligado pela ferramenta de diagnóstico'
+
+  PROCESS_COUNTER_50D:
+    bits: '8.7-8.4'
+    comment:
+      en: '4-bit rolling process counter of frame 0x50D'
+      fr: 'Compteur de process 4 bits (compteur tournant) de la trame 0x50D'
+      es: 'Contador de proceso de 4 bits (contador rotativo) de la trama 0x50D'
+      de: '4-Bit-Prozesszähler (Rollierender Zähler) des Rahmens 0x50D'
+      it: 'Contatore di processo a 4 bit (contatore rotante) del frame 0x50D'
+      pl: '4-bitowy licznik procesu (licznik obrotowy) ramki 0x50D'
+      ru: '4-битный счётчик процесса (циклический счётчик) кадра 0x50D'
+      zh: '帧0x50D的4位循环处理计数器'
+      hu: 'A 0x50D keret 4 bites (körforgó) folyamatszámlálója'
+      pt: 'Contador de processo de 4 bits (contador rotativo) da trama 0x50D'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  BRAKE_ECU_FRAME5_CHECKSUM:
+    bits: '8.3-8.0'
+    comment:
+      en: 'Checksum of dynamic frame 5 from the brake ECU'
+      fr: 'Somme de contrôle de la trame dynamique 5 de l''UC Frein'
+      es: 'Suma de comprobación de la trama dinámica 5 de la centralita de frenos'
+      de: 'Prüfsumme des dynamischen Rahmens 5 des Brems-Steuergeräts'
+      it: 'Checksum del frame dinamico 5 della centralina freni'
+      pl: 'Suma kontrolna ramki dynamicznej 5 sterownika hamulców'
+      ru: 'Контрольная сумма динамического кадра 5 блока управления тормозами'
+      zh: '制动ECU动态帧5的校验和'
+      hu: 'A fékvezérlő egység 5. dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica 5 da unidade de controlo de travão'
+    type: 'uint'

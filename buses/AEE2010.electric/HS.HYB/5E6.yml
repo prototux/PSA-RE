@@ -1,0 +1,197 @@
+id: 0x5E6
+name: 'WIRELESS_CHARGER_VERSION'
+type: 'can'
+length: 4
+comment:
+  en: 'On-board charger / DC-DC converter wake-up requests: cabin cooling, blower, disconnector hold, HV battery recharge and MEAP cooling.'
+  fr: 'Demandes de réveil du chargeur embarqué / convertisseur DC-DC : refroidissement habitacle, pulseur, maintien du disjoncteur, recharge batterie HT et refroidissement MEAP.'
+  es: 'Solicitudes de activación del cargador embarcado / convertidor DC-DC: refrigeración del habitáculo, ventilador, mantenimiento del seccionador, recarga de batería de alta tensión y refrigeración MEAP.'
+  de: 'Weckanforderungen des Onboard-Ladegeräts / DC-DC-Wandlers: Innenraumkühlung, Gebläse, Halten des Trennschalters, Hochvoltbatterie-Nachladung und MEAP-Kühlung.'
+  it: 'Richieste di risveglio del caricabatterie di bordo / convertitore DC-DC: raffreddamento abitacolo, ventola, mantenimento del sezionatore, ricarica batteria AT e raffreddamento MEAP.'
+  pl: 'Żądania wybudzenia ładowarki pokładowej / przetwornicy DC-DC: chłodzenie kabiny, dmuchawa, podtrzymanie rozłącznika, doładowanie akumulatora WN i chłodzenie MEAP.'
+  ru: 'Запросы пробуждения бортового зарядного устройства / преобразователя DC-DC: охлаждение салона, вентилятор, удержание разъединителя, подзарядка высоковольтной батареи и охлаждение MEAP.'
+  zh: '车载充电器/DC-DC转换器唤醒请求:座舱冷却、鼓风机、断路器保持、高压电池补充充电和MEAP冷却。'
+  hu: 'A fedélzeti töltő / DC-DC átalakító ébresztési kérései: utastér hűtés, fűtőventilátor, megszakító tartása, nagyfeszültségű akkumulátor újratöltése és MEAP hűtés.'
+  pt: 'Pedidos de ativação do carregador de bordo / conversor DC-DC: arrefecimento do habitáculo, ventilador, manutenção do disjuntor, recarga da bateria de alta tensão e arrefecimento MEAP.'
+observations:
+  en: 'On state change of: CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+  fr: 'Sur changement d''état de : CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+  es: 'Al cambiar el estado de: CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+  de: 'Bei Statusänderung von: CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+  it: 'Al cambiamento di stato di: CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+  ru: 'При изменении состояния: CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+  zh: '当OBC_PUSH_CHARGE_TYPE, CCE_ACTIVATION_REQ状态变化时'
+  hu: 'A(z) CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: CHARGE_PUSH_BUTTON_PRESSED, CHILLER_ACTIVATION_REQUEST'
+periodicity: ['1000ms', 'trigger']
+senders: ['OBC']
+receivers: ['CMM', 'TBMU', 'VCU']
+
+signals:
+  OBC_AVAILABLE_POWER:
+    bits: '1.7-2.6'
+    comment:
+      en: 'On-board charger available power'
+      fr: 'Puissance disponible du chargeur embarqué'
+      es: 'Potencia disponible del cargador embarcado'
+      de: 'Verfügbare Leistung des On-Board-Ladegeräts'
+      it: 'Potenza disponibile del caricabatterie di bordo'
+      pl: 'Moc dostępna ładowarki pokładowej'
+      ru: 'Доступная мощность бортового зарядного устройства'
+      zh: '车载充电器可用功率'
+      hu: 'A fedélzeti töltő rendelkezésre álló teljesítménye'
+      pt: 'Potência disponível do carregador de bordo'
+    type: 'uint'
+    factor: 100
+    min: 0
+    max: 100000
+    units: 'W'
+    invalid: 0x3FF
+    default: 0x00
+
+  CHARGE_PUSH_BUTTON_PRESSED:
+    bits: '2.5'
+    comment:
+      en: 'Charge port push-button pressed'
+      fr: 'Bouton poussoir de la prise de charge appuyé'
+      es: 'Botón pulsador de la toma de carga presionado'
+      de: 'Drucktaste des Ladeanschlusses betätigt'
+      it: 'Pulsante della presa di ricarica premuto'
+      pl: 'Naciśnięty przycisk gniazda ładowania'
+      ru: 'Нажата кнопка зарядного разъёма'
+      zh: '充电口按钮已按下'
+      hu: 'A töltőaljzat nyomógombja megnyomva'
+      pt: 'Botão pulsador da tomada de carregamento pressionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Switch off'
+        fr: 'Non appuyé'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Desligar'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Premido'
+
+  CHILLER_ACTIVATION_REQUEST:
+    bits: '2.4'
+    comment:
+      en: 'Chiller activation request'
+      fr: 'Demande d''activation du refroidisseur (chiller)'
+      es: 'Solicitud de activación del enfriador (chiller)'
+      de: 'Anforderung zur Aktivierung des Chillers'
+      it: 'Richiesta di attivazione del chiller'
+      pl: 'Żądanie aktywacji chłodnicy (chillera)'
+      ru: 'Запрос активации чиллера'
+      zh: '冷却器(chiller)激活请求'
+      hu: 'A hűtő (chiller) aktiválási kérése'
+      pt: 'Pedido de ativação do arrefecedor (chiller)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  DCDC_POWER_STAGE_DIAG:
+    bits: '2.3'
+    comment:
+      en: 'Power stage diagnostic of the onboard charger / DC-DC converter'
+      fr: 'Diagnostic de l''étage de puissance du chargeur embarqué / convertisseur DC-DC'
+      es: 'Diagnóstico de la etapa de potencia del cargador integrado / convertidor DC-DC'
+      de: 'Diagnose der Leistungsstufe des Onboard-Laders / DC-DC-Wandlers'
+      it: 'Diagnosi dello stadio di potenza del caricabatterie di bordo / convertitore DC-DC'
+      pl: 'Diagnostyka stopnia mocy ładowarki pokładowej / przetwornicy DC-DC'
+      ru: 'Диагностика силового каскада бортового зарядного устройства / преобразователя DC-DC'
+      zh: '车载充电机/DC-DC变换器功率级诊断'
+      hu: 'A fedélzeti töltő / DC-DC átalakító teljesítményfokozatának diagnosztikája'
+      pt: 'Diagnóstico do andar de potência do carregador de bordo / conversor DC-DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  UNUSED_1:
+    bits: '2.2-2.0'
+    unused: true
+
+  BATTERY_SHORT_LOOP_COOLANT_TEMP_SETPOINT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Requested coolant temperature on the short loop for battery cooling'
+      fr: 'Température d''eau demandée sur la boucle courte pour le refroidissement de la batterie'
+      es: 'Temperatura de refrigerante solicitada en el circuito corto para la refrigeración de la batería'
+      de: 'Angeforderte Kühlmitteltemperatur im Kurzkreislauf für die Batteriekühlung'
+      it: 'Temperatura del liquido di raffreddamento richiesta sul circuito corto per il raffreddamento della batteria'
+      pl: 'Żądana temperatura chłodziwa w krótkim obiegu do chłodzenia akumulatora'
+      ru: 'Запрошенная температура охлаждающей жидкости в коротком контуре для охлаждения батареи'
+      zh: '电池冷却短回路的请求冷却液温度'
+      hu: 'A rövid körben kért hűtőfolyadék-hőmérséklet az akkumulátor hűtéséhez'
+      pt: 'Temperatura de líquido de refrigeração solicitada no circuito curto para o arrefecimento da bateria'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 200
+    units: '°C'
+    invalid: 0xFF
+
+  UNUSED_2:
+    bits: '4.7-4.0'
+    unused: true

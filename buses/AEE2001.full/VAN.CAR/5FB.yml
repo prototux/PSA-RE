@@ -1,0 +1,341 @@
+id: 0x5FB
+name: 'FRONT_LIGHTING_STATUS'
+type: 'van'
+length: 2
+comment:
+  en: 'Front lighting unit bulb diagnostic status (read-back of each bulb output).'
+  fr: 'État des ampoules de feux de position, de croisement, de route et antibrouillard avant.'
+  es: 'Estado de diagnóstico de las bombillas de la unidad de iluminación delantera (lectura de cada salida de bombilla).'
+  de: 'Diagnosestatus der Lampen der vorderen Beleuchtungseinheit (Rücklesung jedes Lampenausgangs).'
+  it: 'Stato diagnostico delle lampadine dell''unità di illuminazione anteriore (rilettura di ciascuna uscita lampadina).'
+  pl: 'Stan diagnostyczny żarówek przedniego modułu oświetlenia (odczyt zwrotny każdego wyjścia żarówki).'
+  ru: 'Диагностический статус ламп переднего светового модуля (обратное считывание каждого выхода лампы).'
+  zh: '前照明单元灯泡诊断状态(每个灯泡输出的回读)。'
+  hu: 'Az elülső világítóegység izzóinak diagnosztikai állapota (minden izzókimenet visszaolvasása).'
+  pt: 'Estado de diagnóstico das lâmpadas do bloco ótico dianteiro (releitura de cada saída de lâmpada).'
+periodicity: ['50ms']
+senders: ['BOP']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.0'
+    unused: true
+
+  RIGHT_LOW_BEAM_STATUS:
+    bits: '2.7'
+    comment:
+      en: 'Right low beam bulb status (0 = fault, 1 = OK; polarity differs from the other bulbs)'
+      fr: 'État de l''ampoule du feu de croisement droit (0 = défaut, 1 = normal ; polarité différente des autres ampoules)'
+      es: 'Estado de la bombilla de la luz de cruce derecha (0 = fallo, 1 = normal; polaridad diferente de las demás bombillas)'
+      de: 'Status der rechten Abblendlichtlampe (0 = Fehler, 1 = normal; Polarität abweichend von den anderen Lampen)'
+      it: 'Stato della lampadina dell''anabbagliante destro (0 = guasto, 1 = normale; polarità diversa dalle altre lampadine)'
+      pl: 'Stan żarówki prawego światła mijania (0 = usterka, 1 = normalny; biegunowość inna niż pozostałych żarówek)'
+      ru: 'Состояние правой лампы ближнего света (0 = неисправность, 1 = норма; полярность отличается от других ламп)'
+      zh: '右近光灯灯泡状态(0=故障,1=正常;极性与其他灯泡不同)'
+      hu: 'A jobb tompított fényszóró izzójának állapota (0 = hiba, 1 = normál; a polaritás eltér a többi izzóétól)'
+      pt: 'Estado da lâmpada da luz de cruzamento direita (0 = falha, 1 = normal; polaridade diferente das outras lâmpadas)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+      0x01:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+
+  LEFT_HIGH_BEAM_STATUS:
+    bits: '2.6'
+    comment:
+      en: 'Left high beam bulb status (1 = fault)'
+      fr: 'État de l''ampoule du feu de route gauche (1 = défaut)'
+      es: 'Estado de la bombilla de la luz de carretera izquierda (1 = fallo)'
+      de: 'Status der linken Fernlichtlampe (1 = Fehler)'
+      it: 'Stato della lampadina dell''abbagliante sinistro (1 = guasto)'
+      pl: 'Stan żarówki lewego światła drogowego (1 = usterka)'
+      ru: 'Состояние левой лампы дальнего света (1 = неисправность)'
+      zh: '左远光灯灯泡状态(1=故障)'
+      hu: 'A bal távolsági fényszóró izzójának állapota (1 = hiba)'
+      pt: 'Estado da lâmpada do farol de máximos esquerdo (1 = falha)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  LEFT_FRONT_FOG_STATUS:
+    bits: '2.5'
+    comment:
+      en: 'Left front fog lamp bulb status (1 = fault)'
+      fr: 'État de l''ampoule de l''antibrouillard avant gauche (1 = défaut)'
+      es: 'Estado de la bombilla del antiniebla delantero izquierdo (1 = fallo)'
+      de: 'Status der linken Nebelscheinwerferlampe (1 = Fehler)'
+      it: 'Stato della lampadina del fendinebbia anteriore sinistro (1 = guasto)'
+      pl: 'Stan żarówki przedniego lewego światła przeciwmgielnego (1 = usterka)'
+      ru: 'Состояние левой передней противотуманной лампы (1 = неисправность)'
+      zh: '左前雾灯灯泡状态(1=故障)'
+      hu: 'A bal elülső ködlámpa izzójának állapota (1 = hiba)'
+      pt: 'Estado da lâmpada do farol antinevoeiro dianteiro esquerdo (1 = falha)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  LEFT_SIDE_LAMP_STATUS:
+    bits: '2.4'
+    comment:
+      en: 'Left side (position) lamp bulb status (1 = fault)'
+      fr: 'État de l''ampoule du feu de position gauche (1 = défaut)'
+      es: 'Estado de la bombilla de la luz de posición izquierda (1 = fallo)'
+      de: 'Status der linken Standlichtlampe (1 = Fehler)'
+      it: 'Stato della lampadina della luce di posizione sinistra (1 = guasto)'
+      pl: 'Stan żarówki lewego światła pozycyjnego (1 = usterka)'
+      ru: 'Состояние левой габаритной лампы (1 = неисправность)'
+      zh: '左侧示宽灯灯泡状态(1=故障)'
+      hu: 'A bal helyzetjelző lámpa izzójának állapota (1 = hiba)'
+      pt: 'Estado da lâmpada de presença esquerda (1 = avaria)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  RIGHT_HIGH_BEAM_STATUS:
+    bits: '2.3'
+    comment:
+      en: 'Right high beam bulb status (1 = fault)'
+      fr: 'État de l''ampoule du feu de route droit (1 = défaut)'
+      es: 'Estado de la bombilla de la luz de carretera derecha (1 = fallo)'
+      de: 'Status der rechten Fernlichtlampe (1 = Fehler)'
+      it: 'Stato della lampadina dell''abbagliante destro (1 = guasto)'
+      pl: 'Stan żarówki prawego światła drogowego (1 = usterka)'
+      ru: 'Состояние правой лампы дальнего света (1 = неисправность)'
+      zh: '右远光灯灯泡状态(1=故障)'
+      hu: 'A jobb távolsági fényszóró izzójának állapota (1 = hiba)'
+      pt: 'Estado da lâmpada do farol de máximos direito (1 = falha)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  RIGHT_FRONT_FOG_STATUS:
+    bits: '2.2'
+    comment:
+      en: 'Right front fog lamp bulb status (0 = fault, 1 = OK; polarity differs from the other bulbs)'
+      fr: 'État de l''ampoule de l''antibrouillard avant droit (0 = défaut, 1 = normal ; polarité différente des autres ampoules)'
+      es: 'Estado de la bombilla del antiniebla delantero derecho (0 = fallo, 1 = normal; polaridad diferente de las demás bombillas)'
+      de: 'Status der rechten Nebelscheinwerferlampe (0 = Fehler, 1 = normal; Polarität abweichend von den anderen Lampen)'
+      it: 'Stato della lampadina del fendinebbia anteriore destro (0 = guasto, 1 = normale; polarità diversa dalle altre lampadine)'
+      pl: 'Stan żarówki przedniego prawego światła przeciwmgielnego (0 = usterka, 1 = normalny; biegunowość inna niż pozostałych żarówek)'
+      ru: 'Состояние правой передней противотуманной лампы (0 = неисправность, 1 = норма; полярность отличается от других ламп)'
+      zh: '右前雾灯灯泡状态(0=故障,1=正常;极性与其他灯泡不同)'
+      hu: 'A jobb elülső ködlámpa izzójának állapota (0 = hiba, 1 = normál; a polaritás eltér a többi izzóétól)'
+      pt: 'Estado da lâmpada do farol antinevoeiro dianteiro direito (0 = falha, 1 = normal; polaridade diferente das outras lâmpadas)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+      0x01:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+
+  RIGHT_SIDE_LAMP_STATUS:
+    bits: '2.1'
+    comment:
+      en: 'Right side (position) lamp bulb status (1 = fault)'
+      fr: 'État de l''ampoule du feu de position droit (1 = défaut)'
+      es: 'Estado de la bombilla de la luz de posición derecha (1 = fallo)'
+      de: 'Status der rechten Standlichtlampe (1 = Fehler)'
+      it: 'Stato della lampadina della luce di posizione destra (1 = guasto)'
+      pl: 'Stan żarówki prawego światła pozycyjnego (1 = usterka)'
+      ru: 'Состояние правой габаритной лампы (1 = неисправность)'
+      zh: '右侧示宽灯灯泡状态(1=故障)'
+      hu: 'A jobb helyzetjelző lámpa izzójának állapota (1 = hiba)'
+      pt: 'Estado da lâmpada de presença direita (1 = avaria)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  LEFT_LOW_BEAM_STATUS:
+    bits: '2.0'
+    comment:
+      en: 'Left low beam bulb status (0 = fault, 1 = OK; polarity differs from the other bulbs)'
+      fr: 'État de l''ampoule du feu de croisement gauche (0 = défaut, 1 = normal ; polarité différente des autres ampoules)'
+      es: 'Estado de la bombilla de la luz de cruce izquierda (0 = fallo, 1 = normal; polaridad diferente de las demás bombillas)'
+      de: 'Status der linken Abblendlichtlampe (0 = Fehler, 1 = normal; Polarität abweichend von den anderen Lampen)'
+      it: 'Stato della lampadina dell''anabbagliante sinistro (0 = guasto, 1 = normale; polarità diversa dalle altre lampadine)'
+      pl: 'Stan żarówki lewego światła mijania (0 = usterka, 1 = normalny; biegunowość inna niż pozostałych żarówek)'
+      ru: 'Состояние левой лампы ближнего света (0 = неисправность, 1 = норма; полярность отличается от других ламп)'
+      zh: '左近光灯灯泡状态(0=故障,1=正常;极性与其他灯泡不同)'
+      hu: 'A bal tompított fényszóró izzójának állapota (0 = hiba, 1 = normál; a polaritás eltér a többi izzóétól)'
+      pt: 'Estado da lâmpada da luz de cruzamento esquerda (0 = falha, 1 = normal; polaridade diferente das outras lâmpadas)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+      0x01:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'

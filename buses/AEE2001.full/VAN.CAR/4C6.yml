@@ -1,0 +1,293 @@
+id: 0x4C6
+name: 'ROLLOVER_HANDSHAKE_2'
+type: 'van'
+length: 6
+comment:
+  en: 'Rollover link-securing frame from the body computer: acknowledge / initialisation request for the process-counter handshake, and rollover information/confirmation codes.'
+  fr: 'Trame de sécurisation du lien retournement issue de la BSI : acquittement/demande d''initialisation du compteur de processus, et codes d''information/confirmation de retournement.'
+  es: 'Trama de aseguramiento del enlace de vuelco de la BSI: confirmación/solicitud de inicialización del contador de proceso, y códigos de información/confirmación de vuelco.'
+  de: 'Überschlag-Sicherungsrahmen der BSI: Bestätigung/Initialisierungsanforderung für den Prozesszähler-Handshake sowie Überschlag-Informations-/Bestätigungscodes.'
+  it: 'Trama di protezione del collegamento di ribaltamento della BSI: conferma/richiesta di inizializzazione del contatore di processo, e codici di informazione/conferma di ribaltamento.'
+  pl: 'Ramka zabezpieczenia łącza przewrócenia z BSI: potwierdzenie/żądanie inicjalizacji licznika procesu oraz kody informacji/potwierdzenia przewrócenia.'
+  ru: 'Кадр защиты канала опрокидывания от BSI: подтверждение/запрос инициализации счётчика процесса, а также коды информации/подтверждения опрокидывания.'
+  zh: '来自车身控制器的翻车链路安全帧:过程计数器握手的确认/初始化请求,以及翻车信息/确认代码。'
+  hu: 'A BSI borulásbiztosító kerete: a folyamatszámláló kézfogás nyugtázása/inicializálási kérése, valamint borulási információs/megerősítési kódok.'
+  pt: 'Trama de segurança da ligação de capotamento do computador de servidão: confirmação / pedido de inicialização para o acordo do contador de processo, e códigos de informação/confirmação de capotamento.'
+periodicity: ['50ms']
+senders: ['ROLLOVER']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  ROLLOVER_INFO:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Rollover information code (0x2A = rollover; any other value invalid)'
+      fr: 'Information retournement : 0x2A = retournement ; autres valeurs invalides'
+      es: 'Código de información de vuelco (0x2A = vuelco; cualquier otro valor no es válido)'
+      de: 'Informationscode für Überschlag (0x2A = Überschlag; jeder andere Wert ungültig)'
+      it: 'Codice informativo di ribaltamento (0x2A = ribaltamento; qualsiasi altro valore non valido)'
+      pl: 'Kod informacji o dachowaniu (0x2A = dachowanie; każda inna wartość nieprawidłowa)'
+      ru: 'Информационный код опрокидывания (0x2A = опрокидывание; любое другое значение недействительно)'
+      zh: '侧翻信息代码（0x2A = 侧翻；其他值均无效）'
+      hu: 'Borulási információs kód (0x2A = borulás; minden más érték érvénytelen)'
+      pt: 'Código de informação de capotamento (0x2A = capotamento; qualquer outro valor é inválido)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x2A:
+        en: 'Rollover'
+        fr: 'Retournement'
+        es: 'Vuelco'
+        de: 'Überschlag'
+        it: 'Ribaltamento'
+        pl: 'Dachowanie'
+        ru: 'Опрокидывание'
+        zh: '翻车'
+        hu: 'Borulás'
+        pt: 'Capotamento'
+
+  ROLLOVER_CONFIRM:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Rollover confirmation code (0xF3 = rollover confirmed; any other value invalid)'
+      fr: 'Confirmation retournement : 0xF3 = retournement confirmé ; autres valeurs invalides'
+      es: 'Código de confirmación de vuelco (0xF3 = vuelco confirmado; cualquier otro valor no es válido)'
+      de: 'Bestätigungscode für Überschlag (0xF3 = Überschlag bestätigt; jeder andere Wert ungültig)'
+      it: 'Codice di conferma del ribaltamento (0xF3 = ribaltamento confermato; qualsiasi altro valore non valido)'
+      pl: 'Kod potwierdzenia dachowania (0xF3 = dachowanie potwierdzone; każda inna wartość nieprawidłowa)'
+      ru: 'Код подтверждения опрокидывания (0xF3 = опрокидывание подтверждено; любое другое значение недействительно)'
+      zh: '侧翻确认代码（0xF3 = 侧翻确认；其他值均无效）'
+      hu: 'Borulás megerősítési kód (0xF3 = borulás megerősítve; minden más érték érvénytelen)'
+      pt: 'Código de confirmação de capotamento (0xF3 = capotamento confirmado; qualquer outro valor é inválido)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0xF3:
+        en: 'Rollover confirmed'
+        fr: 'Retournement confirmé'
+        es: 'Vuelco confirmado'
+        de: 'Überschlag bestätigt'
+        it: 'Ribaltamento confermato'
+        pl: 'Potwierdzone dachowanie'
+        ru: 'Опрокидывание подтверждено'
+        zh: '已确认侧翻'
+        hu: 'A borulás megerősítve'
+        pt: 'Capotamento confirmado'
+
+  UNUSED_1:
+    bits: '4.7'
+    unused: true
+
+  ROLL_BAR_FIRED:
+    bits: '4.6'
+    comment:
+      en: 'Pop-up roll-bar pyrotechnic igniters fired'
+      fr: 'État des allumeurs pyrotechniques des arceaux'
+      es: 'Disparo de los iniciadores pirotécnicos del arco antivuelco'
+      de: 'Auslösung der pyrotechnischen Zünder des Überrollbügels'
+      it: 'Attivazione degli inneschi pirotecnici del roll-bar'
+      pl: 'Zadziałanie pirotechnicznych zapłonników pałąka przeciwdachowaniowego'
+      ru: 'Срабатывание пиротехнических воспламенителей дуги безопасности'
+      zh: '防翻滚杆烟火点火器已触发'
+      hu: 'A borulásgátló ív pirotechnikai gyújtóinak aktiválása'
+      pt: 'Disparo dos inflamadores pirotécnicos dos arcos de proteção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  ROLLOVER_TRIGGERED:
+    bits: '4.5'
+    comment:
+      en: 'Rollover that fired the pyrotechnic elements since ignition on'
+      fr: 'Retournement ayant provoqué le déclenchement des éléments pyrotechniques depuis + APC'
+      es: 'Vuelco que provocó el disparo de los elementos pirotécnicos desde el encendido'
+      de: 'Überschlag, der seit Zündung ein die pyrotechnischen Elemente ausgelöst hat'
+      it: 'Ribaltamento che ha provocato l''attivazione degli elementi pirotecnici dall''accensione'
+      pl: 'Dachowanie, które spowodowało zadziałanie elementów pirotechnicznych od włączenia zapłonu'
+      ru: 'Опрокидывание, вызвавшее срабатывание пиротехнических элементов с момента включения зажигания'
+      zh: '自点火开启以来触发烟火装置的侧翻事件'
+      hu: 'Borulás, amely a gyújtás bekapcsolása óta kioldotta a pirotechnikai elemeket'
+      pt: 'Capotamento que disparou os elementos pirotécnicos desde a ligação da ignição'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No rollover'
+        fr: 'Pas de retournement'
+        es: 'Sin vuelco'
+        de: 'Kein Überschlag'
+        it: 'Nessun ribaltamento'
+        pl: 'Brak przewrócenia'
+        ru: 'Нет опрокидывания'
+        zh: '无侧翻'
+        hu: 'Nincs felborulás'
+        pt: 'Sem capotamento'
+      0x01:
+        en: 'Rollover that triggered the pyrotechnics (since ignition on)'
+        fr: 'Retournement ayant provoqué le déclenchement des éléments pyrotechniques (depuis le contact)'
+        es: 'Vuelco que provocó el disparo de los elementos pirotécnicos (desde el encendido)'
+        de: 'Überschlag, der die Pyrotechnik ausgelöst hat (seit Zündung ein)'
+        it: 'Ribaltamento che ha causato l''attivazione degli elementi pirotecnici (da accensione inserita)'
+        pl: 'Dachowanie, które spowodowało zadziałanie elementów pirotechnicznych (od włączenia zapłonu)'
+        ru: 'Опрокидывание, вызвавшее срабатывание пиротехнических элементов (с момента включения зажигания)'
+        zh: '导致烟火装置触发的侧翻(自点火开启以来)'
+        hu: 'A pirotechnikai elemek kiváltását okozó borulás (a gyújtás bekapcsolása óta)'
+        pt: 'Capotamento que provocou o disparo dos elementos pirotécnicos (desde a ignição ligada)'
+
+  ROLLOVER_LAMP_MODE:
+    bits: '4.4'
+    comment:
+      en: 'Rollover lamp steady or flashing'
+      fr: 'Fréquence d''allumage du voyant RBCU'
+      es: 'Testigo de vuelco fijo o parpadeante'
+      de: 'Überschlag-Kontrollleuchte dauerhaft oder blinkend'
+      it: 'Spia di ribaltamento fissa o lampeggiante'
+      pl: 'Kontrolka dachowania świeci ciągle lub miga'
+      ru: 'Индикатор опрокидывания горит постоянно или мигает'
+      zh: '侧翻警示灯常亮或闪烁'
+      hu: 'A borulásjelző lámpa folyamatosan világít vagy villog'
+      pt: 'Indicador de capotamento fixo ou intermitente'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Flashing'
+        fr: 'Clignotant'
+        es: 'Intermitente'
+        de: 'Blinkend'
+        it: 'Lampeggiante'
+        pl: 'Migający'
+        ru: 'Мигающий'
+        zh: '闪烁'
+        hu: 'Villogó'
+        pt: 'Intermitente'
+      0x01:
+        en: 'Steady'
+        fr: 'Fixe'
+        es: 'Fijo'
+        de: 'Dauerlicht'
+        it: 'Fisso'
+        pl: 'Ciągłe'
+        ru: 'Постоянно'
+        zh: '常亮'
+        hu: 'Folyamatos'
+        pt: 'Fixo'
+
+  ROLLOVER_LAMP_STATE:
+    bits: '4.3'
+    comment:
+      en: 'Instrument cluster rollover (RBCU) warning lamp lit'
+      fr: 'Allumage du témoin de retournement (RBCU) du combiné'
+      es: 'Encendido del testigo de vuelco (RBCU) del cuadro de instrumentos'
+      de: 'Einschalten der Überschlagwarnleuchte (RBCU) im Kombiinstrument'
+      it: 'Accensione della spia di ribaltamento (RBCU) del quadro strumenti'
+      pl: 'Zapalenie kontrolki dachowania (RBCU) w zestawie wskaźników'
+      ru: 'Включение индикатора опрокидывания (RBCU) на приборной панели'
+      zh: '仪表盘翻车指示灯(RBCU)点亮'
+      hu: 'A műszerfal borulásjelző (RBCU) lámpájának bekapcsolása'
+      pt: 'Indicador luminoso de capotamento (RBCU) do quadrante aceso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  UNUSED_2:
+    bits: '4.2-4.0'
+    unused: true
+
+  PROCESS_COUNTER:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Process counter, incremented by 1 each update loop, wraps to 0.'
+      fr: 'Compteur de processus, incrémenté de 1 à chaque boucle de mise à jour, revient à 0 en fin de course.'
+      es: 'Contador de proceso, incrementado en 1 en cada ciclo de actualización, vuelve a 0 al llegar al máximo'
+      de: 'Prozesszähler, bei jedem Aktualisierungszyklus um 1 erhöht, springt auf 0 zurück'
+      it: 'Contatore di processo, incrementato di 1 a ogni ciclo di aggiornamento, torna a 0 al termine'
+      pl: 'Licznik procesu, zwiększany o 1 w każdym cyklu aktualizacji, zawija się do 0'
+      ru: 'Счётчик процесса, увеличивается на 1 в каждом цикле обновления, обнуляется по достижении максимума'
+      zh: '处理计数器，每次更新循环加 1，达到上限后归零'
+      hu: 'Folyamatszámláló, minden frissítési ciklusban 1-gyel nő, majd 0-ra ugrik vissza'
+      pt: 'Contador de processo, incrementado em 1 a cada ciclo de atualização, volta a 0 no fim do curso'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  FOOTER:
+    bits: '6.7-6.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

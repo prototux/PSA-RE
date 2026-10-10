@@ -1,46 +1,263 @@
 id: 0x38D
-name: 'ABS_GENERIC_DATA'
+name: 'VEHICLE_DYNAMICS_WHEELS'
+alt_names: ['ABS_GENERIC_DATA']
+type: 'can'
 length: 7
 comment:
-  en: 'Generic ABS data like speed, acceleration'
-  fr: "Données ABS génériques telles que la vitesse, l'accélération"
-  de: 'Allgemeine Daten des ABS wie Fahrzeuggeschwindigkeit, Beschleunigung'
-type: 'can'
-periodicity: 40
-senders:
-  - 'ABS'
+  en: 'Vehicle speed, distance and longitudinal acceleration computed from the wheels, plus a warning-lamp request.'
+  fr: 'Vitesse véhicule, distance et accélération longitudinale calculées à partir des roues, ainsi qu''une demande de voyant.'
+  es: 'Velocidad del vehículo, distancia y aceleración longitudinal calculadas a partir de las ruedas, además de una solicitud de testigo.'
+  de: 'Aus den Rädern berechnete Fahrzeuggeschwindigkeit, Strecke und Längsbeschleunigung, sowie eine Kontrollleuchtenanforderung.'
+  it: 'Velocità veicolo, distanza e accelerazione longitudinale calcolate dalle ruote, oltre a una richiesta spia.'
+  pl: 'Prędkość pojazdu, dystans i przyspieszenie wzdłużne obliczone na podstawie kół, oraz żądanie kontrolki.'
+  ru: 'Скорость автомобиля, расстояние и продольное ускорение, рассчитанные по колёсам, а также запрос индикатора.'
+  zh: '根据车轮计算的车速、距离和纵向加速度,以及警示灯请求。'
+  hu: 'A kerekekből számított jármű sebesség, táv és hosszirányú gyorsulás, valamint egy jelzőlámpa-kérés.'
+  pt: 'Velocidade do veículo, distância e aceleração longitudinal calculadas a partir das rodas, além de um pedido da luz avisadora.'
+periodicity: ['40ms']
+senders: ['ABS']
 receivers:
+  - 'ARTIV'
+  - 'BEBA'
+  - 'DAE'
+  - 'SCDT'
+  - 'BCP'
+  - 'FSE'
+  - 'CSS'
+  - 'CMM'
+  - 'CAAR'
+  - 'BVA'
+  - 'AR2S'
+  - 'DSG'
   - 'BSI'
+  - 'HCU1'
+  - 'PIU'
+  - 'BHI'
+  - 'AMVAR'
+  - 'ACC'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'DIAG_TOOL'
+  - 'SBW'
+  - 'TBMU'
 
 signals:
-  VEHICLE_SPEED:
+  VEHICLE_SPEED_WHEEL_SENSORS:
     bits: '1.7-2.0'
-    type: 'float'
+    alt_names: ['VEHICLE_SPEED']
+    comment:
+      en: 'Vehicle speed (wheel sensors)'
+      fr: 'Vitesse du véhicule (capteurs de roues)'
+      es: 'Velocidad del vehículo (sensores de rueda)'
+      de: 'Fahrzeuggeschwindigkeit (Raddrehzahlsensoren)'
+      it: 'Velocità del veicolo (sensori ruota)'
+      pl: 'Prędkość pojazdu (czujniki kół)'
+      ru: 'Скорость автомобиля (датчики колёс)'
+      zh: '车速(车轮传感器)'
+      hu: 'Járműsebesség (kerékérzékelők)'
+      pt: 'Velocidade do veículo (sensores de roda)'
+    type: 'uint'
     factor: 0.01
     min: 0
-    max: 655.35 # 0xFFFF * 0.01
-    comment: 
-      en: 'Vehicle speed'
-      fr: 'Vitesse du véhicule'
-      de: 'Fahrzeuggeschwindigkeit'
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
 
-  UNKNOWN_1: 
+  ODOMETER_WHEEL_SENSOR:
     bits: '3.7-4.0'
-  
-  ACCELERATION_LONGITUDINALE:
+    comment:
+      en: 'Odometer distance, from wheel sensors'
+      fr: 'Distance odométrique, mesurée par les capteurs de roue'
+      es: 'Distancia odométrica, medida por los sensores de rueda'
+      de: 'Odometerstrecke, von den Radsensoren gemessen'
+      it: 'Distanza odometrica, misurata dai sensori ruota'
+      pl: 'Odległość odometryczna, mierzona czujnikami koła'
+      ru: 'Одометрическое расстояние, измеренное датчиками колёс'
+      zh: '由轮速传感器测得的里程距离'
+      hu: 'Kilométeróra-távolság, a kerékérzékelők mérése alapján'
+      pt: 'Distância odométrica, medida pelos sensores de roda'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6553.5
+    units: 'm'
+    default: 0x00
+
+  LONGITUDINAL_ACCELERATION_WHEEL_SENSOR:
     bits: '5.7-5.0'
-    type: 'float'
+    alt_names: ['ACCELERATION_LONGITUDINALE']
+    comment:
+      en: 'Longitudinal acceleration, from wheel sensors'
+      fr: 'Accélération longitudinale, mesurée par les capteurs de roue'
+      es: 'Aceleración longitudinal, medida por los sensores de rueda'
+      de: 'Längsbeschleunigung, von den Radsensoren gemessen'
+      it: 'Accelerazione longitudinale, misurata dai sensori ruota'
+      pl: 'Przyspieszenie wzdłużne, mierzone czujnikami koła'
+      ru: 'Продольное ускорение, измеренное датчиками колёс'
+      zh: '由轮速传感器测得的纵向加速度'
+      hu: 'Hosszirányú gyorsulás, a kerékérzékelők mérése alapján'
+      pt: 'Aceleração longitudinal, medida pelos sensores de roda'
+    type: 'uint'
     factor: 0.08
     offset: -14
     min: -14
-    max: 6.4 # (0xFF * 0.08) - 14
-    comment: 
-      en: 'Longitudinale acceleration'
-      fr: 'Accélération longitudinale'
-      de: 'Längsschnittige Beschleunigung'
+    max: 6.32
+    units: 'm/s2'
+    invalid: 0xFF
+    default: 0xAF
 
-  UNKNOWN_2: 
-    bits: '6.7-6.0'
+  PROCESS_COUNTER_4BIT:
+    bits: '6.7-6.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
 
-  UNKNOWN_3: 
-    bits: '7.7-7.0'
+  ABR_DYNAMIC_FRAME_CHECKSUM:
+    bits: '6.3-6.0'
+    comment:
+      en: 'ABR dynamic vehicle frame checksum'
+      fr: 'Somme de contrôle de la trame dynamique véhicule ABR'
+      es: 'Suma de comprobación de la trama dinámica de vehículo ABR'
+      de: 'Prüfsumme des dynamischen Fahrzeug-Frames ABR'
+      it: 'Checksum del frame dinamico veicolo ABR'
+      pl: 'Suma kontrolna ramki dynamicznej pojazdu ABR'
+      ru: 'Контрольная сумма динамического кадра автомобиля ABR'
+      zh: 'ABR 车辆动态帧校验和'
+      hu: 'Az ABR jármű dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica de veículo ABR'
+    type: 'uint'
+
+  HAZARD_LIGHTS_REQUEST:
+    bits: '7.7'
+    comment:
+      en: 'Hazard warning lights request'
+      fr: 'Demande d''allumage des feux de détresse'
+      es: 'Solicitud de encendido de las luces de emergencia'
+      de: 'Anforderung der Warnblinkleuchten'
+      it: 'Richiesta di accensione delle luci di emergenza'
+      pl: 'Żądanie włączenia świateł awaryjnych'
+      ru: 'Запрос включения аварийной сигнализации'
+      zh: '危险警示灯请求'
+      hu: 'Vészvillogó bekapcsolási kérése'
+      pt: 'Pedido de acendimento das luzes de emergência'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  HILL_ASSIST_STOP_AUTHORIZATION_STT:
+    bits: '7.6'
+    comment:
+      en: 'Hill assist stop authorization for Stop & Start'
+      fr: 'Autorisation d''arrêt de l''assistance au démarrage en côte, pour le Stop & Start'
+      es: 'Autorización de parada de la asistencia de arranque en pendiente, para el Stop & Start'
+      de: 'Freigabe zum Stoppen der Berganfahrhilfe für Stop & Start'
+      it: 'Autorizzazione di arresto dell''Hill Assist, per lo Stop & Start'
+      pl: 'Zezwolenie na zatrzymanie asystenta ruszania pod górę dla funkcji Stop & Start'
+      ru: 'Разрешение остановки ассистента старта на подъёме для системы Стоп-Старт'
+      zh: '坡道辅助停止授权,用于启停功能'
+      hu: 'A hegyi indítássegítő leállítási engedélye a Stop & Start számára'
+      pt: 'Autorização de paragem da assistência de arranque em subida, para o Stop & Start'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Hill Assist not ready to hold'
+        fr: 'Hill Assist pas prêt à maintenir l''arrêt'
+        es: 'Hill Assist no listo para mantener la parada'
+        de: 'Hill Assist nicht bereit zum Halten'
+        it: 'Hill Assist non pronto per l''arresto'
+        pl: 'Hill Assist niegotowy do przytrzymania'
+        ru: 'Hill Assist не готов к удержанию'
+        zh: '坡道辅助未准备好驻停'
+        hu: 'A Hill Assist nem áll készen a megtartásra'
+        pt: 'Hill Assist não pronto para reter'
+      0x01:
+        en: 'Hill Assist ready for stop'
+        fr: 'Hill Assist prêt à l''arrêt'
+        es: 'Hill Assist listo para detenerse'
+        de: 'Berganfahrhilfe bereit zum Halt'
+        it: 'Hill Assist pronto per l''arresto'
+        pl: 'Asystent ruszania pod górę gotowy do zatrzymania'
+        ru: 'Система помощи при старте на подъёме готова к остановке'
+        zh: '上坡辅助准备停车'
+        hu: 'Hegymeneti indítássegítő megállásra kész'
+        pt: 'Hill Assist pronto para parar'
+
+  STEERING_WHEEL_SPEED_VALIDITY:
+    bits: '7.5-7.4'
+    comment:
+      en: 'Steering wheel rotation speed validity'
+      fr: 'Validité de la vitesse de rotation du volant'
+      es: 'Validez de la velocidad de rotación del volante'
+      de: 'Gültigkeit der Lenkraddrehgeschwindigkeit'
+      it: 'Validità della velocità di rotazione del volante'
+      pl: 'Ważność prędkości obrotu kierownicy'
+      ru: 'Достоверность скорости вращения рулевого колеса'
+      zh: '方向盘转速有效性'
+      hu: 'A kormánykerék forgási sebességének érvényessége'
+      pt: 'Validade da velocidade de rotação do volante'
+    type: 'enum'
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Steering wheel rotation speed consistent'
+        fr: 'Vitesse de rotation du volant cohérente'
+        es: 'Velocidad de rotación del volante coherente'
+        de: 'Lenkraddrehzahl plausibel'
+        it: 'Velocità di rotazione del volante coerente'
+        pl: 'Spójna prędkość obrotowa kierownicy'
+        ru: 'Согласованная скорость вращения руля'
+        zh: '方向盘转速一致'
+        hu: 'A kormánykerék forgási sebessége konzisztens'
+        pt: 'Velocidade de rotação do volante coerente'
+      0x02:
+        en: 'Steering wheel rotation speed inconsistent'
+        fr: 'Vitesse de rotation du volant incohérente'
+        es: 'Velocidad de rotación del volante incoherente'
+        de: 'Lenkraddrehgeschwindigkeit inkonsistent'
+        it: 'Velocità di rotazione del volante incoerente'
+        pl: 'Niespójna prędkość obrotu kierownicy'
+        ru: 'Несогласованная скорость вращения руля'
+        zh: '方向盘转动速度不一致'
+        hu: 'Inkonzisztens kormánykerék-forgási sebesség'
+        pt: 'Velocidade de rotação do volante incoerente'
+      0x03:
+        unused: true

@@ -1,0 +1,298 @@
+id: 0x47E
+name: 'CAMERA_LANE_TRACKING_DATA_4'
+type: 'can'
+length: 8
+comment:
+  en: 'Camera lane-tracking data: lead-vehicle lane-crossing flags, cluster angle/distance left and right, minimum cluster distance/angle and perception status.'
+  fr: 'Données de suivi de voie de la caméra : indicateurs de franchissement de voie du véhicule leader, angle/distance de cluster gauche et droite, distance/angle minimal du cluster et état de perception.'
+  es: 'Datos de seguimiento de carril de la cámara: indicadores de cruce de carril del vehículo líder, ángulo/distancia del clúster izquierdo y derecho, distancia/ángulo mínimo del clúster y estado de percepción.'
+  de: 'Spurführungsdaten der Kamera: Fahrspurüberquerungskennzeichen des vorausfahrenden Fahrzeugs, Cluster-Winkel/-Abstand links und rechts, minimaler Cluster-Abstand/-Winkel und Wahrnehmungsstatus.'
+  it: 'Dati di tracciamento corsia della telecamera: indicatori di attraversamento corsia del veicolo che precede, angolo/distanza del cluster sinistro e destro, distanza/angolo minimo del cluster e stato di percezione.'
+  pl: 'Dane śledzenia pasa ruchu z kamery: flagi przekroczenia pasa przez pojazd poprzedzający, kąt/odległość klastra lewego i prawego, minimalna odległość/kąt klastra i stan percepcji.'
+  ru: 'Данные слежения за полосой от камеры: флаги пересечения полосы ведущим автомобилем, угол/расстояние кластера слева и справа, минимальное расстояние/угол кластера и статус восприятия.'
+  zh: '摄像头车道追踪数据:前车压线标志、左右聚类角度/距离、最小聚类距离/角度和感知状态。'
+  hu: 'A kamera sávkövetési adatai: az előttünk haladó jármű sávelhagyási jelzői, bal és jobb oldali klaszterszög/-távolság, minimális klasztertávolság/-szög és érzékelési állapot.'
+  pt: 'Dados de seguimento de faixa da câmara: indicadores de cruzamento de faixa do veículo da frente, ângulo/distância do agrupamento à esquerda e à direita, distância/ângulo mínimo do agrupamento e estado de perceção.'
+periodicity: ['55ms']
+senders: ['CVM']
+receivers: ['CSS']
+
+signals:
+  ROAD_PROFILE_LEFT_POINT_7:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Point 7 of the left-side road profile (m)'
+      fr: 'Point 7 du profil de route côté gauche (m)'
+      es: 'Punto 7 del perfil de carretera del lado izquierdo (m)'
+      de: 'Punkt 7 des Fahrbahnprofils links (m)'
+      it: 'Punto 7 del profilo stradale lato sinistro (m)'
+      pl: 'Punkt 7 profilu drogi po lewej stronie (m)'
+      ru: 'Точка 7 профиля дороги слева (м)'
+      zh: '左侧路面轮廓点7(m)'
+      hu: 'A bal oldali útprofil 7. pontja (m)'
+      pt: 'Ponto 7 do perfil da estrada do lado esquerdo (m)'
+    type: 'uint'
+    factor: 0.002
+    offset: -0.25
+    min: -0.25
+    max: 0.25
+    units: 'm'
+    invalid: 0xFF
+    default: 0xFE
+
+  ROAD_PROFILE_RIGHT_POINT_7:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Point 7 of the right-side road profile (m)'
+      fr: 'Point 7 du profil de route côté droit (m)'
+      es: 'Punto 7 del perfil de carretera del lado derecho (m)'
+      de: 'Punkt 7 des Fahrbahnprofils rechts (m)'
+      it: 'Punto 7 del profilo stradale lato destro (m)'
+      pl: 'Punkt 7 profilu drogi po prawej stronie (m)'
+      ru: 'Точка 7 профиля дороги справа (м)'
+      zh: '右侧路面轮廓点7(m)'
+      hu: 'A jobb oldali útprofil 7. pontja (m)'
+      pt: 'Ponto 7 do perfil da estrada do lado direito (m)'
+    type: 'uint'
+    factor: 0.002
+    offset: -0.25
+    min: -0.25
+    max: 0.25
+    units: 'm'
+    invalid: 0xFF
+    default: 0xFE
+
+  ROAD_OBSTACLE_TYPE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Type of road obstacle detected (speed reducer, speed bump, oscillation...)'
+      fr: 'Type d''obstacle routier détecté (ralentisseur, dos d''âne, oscillation...)'
+      es: 'Tipo de obstáculo en la carretera detectado (reductor de velocidad, badén, oscilación...)'
+      de: 'Art des erkannten Fahrbahnhindernisses (Bremsschwelle, Bodenwelle, Schwingung...)'
+      it: 'Tipo di ostacolo stradale rilevato (dosso, dosso di rallentamento, oscillazione...)'
+      pl: 'Rodzaj wykrytej przeszkody drogowej (próg zwalniający, garb, oscylacja...)'
+      ru: 'Тип обнаруженного дорожного препятствия (замедлитель, лежачий полицейский, колебание...)'
+      zh: '检测到的道路障碍物类型(减速带、路拱、颠簸等)'
+      hu: 'Az észlelt útakadály típusa (fekvőrendőr, küszöb, hullámosság...)'
+      pt: 'Tipo de obstáculo rodoviário detetado (redutor de velocidade, lomba, oscilação...)'
+    type: 'enum'
+    default: 0xFE
+    values:
+      0x00:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Нет препятствия'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+      0x01:
+        en: 'Speed reducer'
+        fr: 'Réducteur de vitesse'
+        es: 'Reductor de velocidad'
+        de: 'Geschwindigkeitsreduzierer'
+        it: 'Riduttore di velocità'
+        pl: 'Reduktor prędkości'
+        ru: 'Замедлитель скорости'
+        zh: '减速器'
+        hu: 'Sebességcsökkentő'
+        pt: 'Redutor de velocidade'
+      0x02:
+        en: 'Speed bump, plate type'
+        fr: 'Dos d''âne de type plaque'
+        es: 'Badén de tipo placa'
+        de: 'Bodenschwelle, Plattenbauart'
+        it: 'Dosso di tipo a piastra'
+        pl: 'Próg zwalniający typu płytowego'
+        ru: 'Лежачий полицейский пластинчатого типа'
+        zh: '板式减速带'
+        hu: 'Lemez típusú fekvőrendőr'
+        pt: 'Lomba de tipo placa'
+      0x03:
+        en: 'Half-round type speed bump'
+        fr: 'Ralentisseur de type demi-rond'
+        es: 'Badén de tipo semicircular'
+        de: 'Bodenschwelle vom Typ Halbrund'
+        it: 'Dosso di tipo semicircolare'
+        pl: 'Próg zwalniający typu półokrągłego'
+        ru: 'Лежачий полицейский полукруглого типа'
+        zh: '半圆形减速带'
+        hu: 'Félkör alakú fekvőrendőr'
+        pt: 'Lombas de meia-volta'
+      0x04:
+        en: 'Obstacle of oscillation type'
+        fr: 'Obstacle de type oscillation'
+        es: 'Obstáculo de tipo oscilación'
+        de: 'Hindernis vom Typ Schwingung'
+        it: 'Ostacolo di tipo oscillazione'
+        pl: 'Przeszkoda typu oscylacyjnego'
+        ru: 'Препятствие колебательного типа'
+        zh: '振荡类型障碍物'
+        hu: 'Oszcillációs típusú akadály'
+        pt: 'Obstáculo do tipo oscilação'
+      0x05:
+        en: 'Severe pothole'
+        fr: 'Nid-de-poule sévère'
+        es: 'Bache severo'
+        de: 'Schweres Schlagloch'
+        it: 'Buca grave'
+        pl: 'Poważny ubytek nawierzchni'
+        ru: 'Сильная выбоина'
+        zh: '严重坑洼'
+        hu: 'Súlyos útkátyú'
+        pt: 'Buraco severo'
+      0x06:
+        en: 'Obstacle of type Berlin cushion'
+        fr: 'Obstacle de type coussin berlinois'
+        es: 'Obstáculo de tipo cojín berlinés'
+        de: 'Hindernis vom Typ Berliner Kissen'
+        it: 'Ostacolo di tipo cuscino berlinese'
+        pl: 'Przeszkoda typu poduszka berlińska'
+        ru: 'Препятствие типа «берлинская подушка»'
+        zh: '柏林垫式障碍物'
+        hu: 'Berlini párna típusú akadály'
+        pt: 'Obstáculo do tipo lomba berlinesa'
+      0x07:
+        en: 'Right obstacle, no left obstacle'
+        fr: 'Obstacle à droite, pas d''obstacle à gauche'
+        es: 'Obstáculo a la derecha, sin obstáculo a la izquierda'
+        de: 'Hindernis rechts, kein Hindernis links'
+        it: 'Ostacolo a destra, nessun ostacolo a sinistra'
+        pl: 'Przeszkoda z prawej, brak przeszkody z lewej'
+        ru: 'Препятствие справа, препятствия слева нет'
+        zh: '右侧有障碍物,左侧无障碍物'
+        hu: 'Jobb oldali akadály, bal oldalon nincs akadály'
+        pt: 'Obstáculo à direita, sem obstáculo à esquerda'
+
+  ROAD_SURFACE_CONDITION:
+    bits: '4.7-4.3'
+    comment:
+      en: 'Road surface condition'
+      fr: 'État du revêtement de la route'
+      es: 'Estado del pavimento de la carretera'
+      de: 'Zustand des Fahrbahnbelags'
+      it: 'Condizione del manto stradale'
+      pl: 'Stan nawierzchni drogi'
+      ru: 'Состояние дорожного покрытия'
+      zh: '路面状况'
+      hu: 'Az útburkolat állapota'
+      pt: 'Estado do pavimento da estrada'
+    type: 'uint'
+    factor: 0.05
+    min: 0
+    max: 1
+    invalid: 0x1F
+    default: 0x1E
+
+  UNUSED_1:
+    bits: '4.2-4.0'
+    unused: true
+
+  NEXT_ROAD_OBSTACLE_DISTANCE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Distance between the next detected road obstacle and the vehicle (m)'
+      fr: 'Distance entre le prochain obstacle routier détecté et le véhicule (m)'
+      es: 'Distancia entre el próximo obstáculo de la carretera detectado y el vehículo (m)'
+      de: 'Abstand zwischen dem nächsten erkannten Fahrbahnhindernis und dem Fahrzeug (m)'
+      it: 'Distanza tra il prossimo ostacolo stradale rilevato e il veicolo (m)'
+      pl: 'Odległość między następną wykrytą przeszkodą drogową a pojazdem (m)'
+      ru: 'Расстояние между следующим обнаруженным дорожным препятствием и автомобилем (м)'
+      zh: '下一个检测到的道路障碍物与车辆之间的距离(m)'
+      hu: 'A következő észlelt útakadály és a jármű közötti távolság (m)'
+      pt: 'Distância entre o próximo obstáculo rodoviário detetado e o veículo (m)'
+    type: 'uint'
+    factor: 0.03
+    offset: 5
+    min: 5
+    max: 12.02
+    units: 'm'
+    invalid: 0xFF
+    default: 0xEA
+
+  LEFT_SHOCK_DISTANCE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Distance between the detected left-side shock geometry and the vehicle (m)'
+      fr: 'Distance entre la géométrie de choc détectée côté gauche et le véhicule (m)'
+      es: 'Distancia entre la geometría de choque detectada en el lado izquierdo y el vehículo (m)'
+      de: 'Abstand zwischen der links erkannten Stoßgeometrie und dem Fahrzeug (m)'
+      it: 'Distanza tra la geometria d''urto rilevata sul lato sinistro e il veicolo (m)'
+      pl: 'Odległość między wykrytą geometrią uderzenia po lewej stronie a pojazdem (m)'
+      ru: 'Расстояние между обнаруженной геометрией удара слева и автомобилем (м)'
+      zh: '检测到的左侧冲击几何形状与车辆之间的距离(m)'
+      hu: 'A bal oldalon észlelt ütközési geometria és a jármű közötti távolság (m)'
+      pt: 'Distância entre a geometria de colisão detetada do lado esquerdo e o veículo (m)'
+    type: 'uint'
+    factor: 0.03
+    offset: 5
+    min: 5
+    max: 12.02
+    units: 'm'
+    invalid: 0xFF
+    default: 0xEA
+
+  RIGHT_SHOCK_DISTANCE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Distance between the detected right-side shock geometry and the vehicle (m)'
+      fr: 'Distance entre la géométrie de choc détectée côté droit et le véhicule (m)'
+      es: 'Distancia entre la geometría de choque detectada en el lado derecho y el vehículo (m)'
+      de: 'Abstand zwischen der rechts erkannten Stoßgeometrie und dem Fahrzeug (m)'
+      it: 'Distanza tra la geometria d''urto rilevata sul lato destro e il veicolo (m)'
+      pl: 'Odległość między wykrytą geometrią uderzenia po prawej stronie a pojazdem (m)'
+      ru: 'Расстояние между обнаруженной геометрией удара справа и автомобилем (м)'
+      zh: '检测到的右侧冲击几何形状与车辆之间的距离(m)'
+      hu: 'A jobb oldalon észlelt ütközési geometria és a jármű közötti távolság (m)'
+      pt: 'Distância entre a geometria de colisão detetada do lado direito e o veículo (m)'
+    type: 'uint'
+    factor: 0.03
+    offset: 5
+    min: 5
+    max: 12.02
+    units: 'm'
+    invalid: 0xFF
+    default: 0xEA
+
+  LEFT_SHOCK_GEOMETRY:
+    bits: '8.7-8.4'
+    comment:
+      en: 'Type of shock geometry detected on the left side'
+      fr: 'Type de géométrie de choc détectée du côté gauche'
+      es: 'Tipo de geometría de choque detectada en el lado izquierdo'
+      de: 'Art der links erkannten Stoßgeometrie'
+      it: 'Tipo di geometria d''urto rilevata sul lato sinistro'
+      pl: 'Rodzaj geometrii uderzenia wykrytej po lewej stronie'
+      ru: 'Тип геометрии удара, обнаруженной слева'
+      zh: '左侧检测到的冲击几何类型'
+      hu: 'A bal oldalon észlelt ütközési geometria típusa'
+      pt: 'Tipo de geometria de impacto detetada no lado esquerdo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 12
+    invalid: 0x0F
+    default: 0x00
+
+  RIGHT_SHOCK_GEOMETRY:
+    bits: '8.3-8.0'
+    comment:
+      en: 'Type of shock geometry detected on the right side'
+      fr: 'Type de géométrie de choc détectée du côté droit'
+      es: 'Tipo de geometría de choque detectada en el lado derecho'
+      de: 'Art der rechts erkannten Stoßgeometrie'
+      it: 'Tipo di geometria d''urto rilevata sul lato destro'
+      pl: 'Rodzaj geometrii uderzenia wykrytej po prawej stronie'
+      ru: 'Тип геометрии удара, обнаруженной справа'
+      zh: '右侧检测到的冲击几何类型'
+      hu: 'A jobb oldalon észlelt ütközési geometria típusa'
+      pt: 'Tipo de geometria de impacto detetada no lado direito'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 12
+    invalid: 0x0F
+    default: 0x00

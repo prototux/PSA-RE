@@ -1,0 +1,1061 @@
+id: 0x4E1
+name: 'OBC_DCDC_WAKEUP_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'On-board charger / DC-DC converter wake-up requests: cabin cooling, blower, disconnector hold, HV battery recharge and MEAP cooling.'
+  fr: 'Demandes de réveil du chargeur embarqué / convertisseur DC-DC : refroidissement habitacle, pulseur, maintien du disjoncteur, recharge batterie HT et refroidissement MEAP.'
+  es: 'Solicitudes de activación del cargador embarcado / convertidor DC-DC: refrigeración del habitáculo, ventilador, mantenimiento del seccionador, recarga de batería de alta tensión y refrigeración MEAP.'
+  de: 'Weckanforderungen des Onboard-Ladegeräts / DC-DC-Wandlers: Innenraumkühlung, Gebläse, Halten des Trennschalters, Hochvoltbatterie-Nachladung und MEAP-Kühlung.'
+  it: 'Richieste di risveglio del caricabatterie di bordo / convertitore DC-DC: raffreddamento abitacolo, ventola, mantenimento del sezionatore, ricarica batteria AT e raffreddamento MEAP.'
+  pl: 'Żądania wybudzenia ładowarki pokładowej / przetwornicy DC-DC: chłodzenie kabiny, dmuchawa, podtrzymanie rozłącznika, doładowanie akumulatora WN i chłodzenie MEAP.'
+  ru: 'Запросы пробуждения бортового зарядного устройства / преобразователя DC-DC: охлаждение салона, вентилятор, удержание разъединителя, подзарядка высоковольтной батареи и охлаждение MEAP.'
+  zh: '车载充电器/DC-DC转换器唤醒请求:座舱冷却、鼓风机、断路器保持、高压电池补充充电和MEAP冷却。'
+  hu: 'A fedélzeti töltő / DC-DC átalakító ébresztési kérései: utastér hűtés, fűtőventilátor, megszakító tartása, nagyfeszültségű akkumulátor újratöltése és MEAP hűtés.'
+  pt: 'Pedidos de ativação do carregador de bordo / conversor DC-DC: arrefecimento do habitáculo, ventilador, manutenção do disjuntor, recarga da bateria de alta tensão e arrefecimento MEAP.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['100ms', 'trigger']
+senders: ['OBC']
+receivers: ['CMM', 'VCU', 'TBMU']
+
+signals:
+  CHECKSUM_FRAME_4E1:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_4E1:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  CHARGING_PLUG_VOLTAGE_DETECTION:
+    bits: '2.7'
+    comment:
+      en: 'Voltage detection at the charging plug'
+      fr: 'Détection de tension au niveau de la prise de charge'
+      es: 'Detección de tensión en la toma de carga'
+      de: 'Spannungserkennung am Ladestecker'
+      it: 'Rilevamento di tensione sulla presa di ricarica'
+      pl: 'Wykrywanie napięcia na wtyczce ładowania'
+      ru: 'Обнаружение напряжения на зарядном разъёме'
+      zh: '充电插头电压检测'
+      hu: 'Feszültségérzékelés a töltőcsatlakozón'
+      pt: 'Deteção de tensão na tomada de carregamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Absent'
+        fr: 'Absent'
+        es: 'Ausente'
+        de: 'Nicht vorhanden'
+        it: 'Assente'
+        pl: 'Brak'
+        ru: 'Отсутствует'
+        zh: '缺失'
+        hu: 'Hiányzik'
+        pt: 'Ausente'
+      0x01:
+        en: 'Present'
+        fr: 'present'
+        es: 'Presente'
+        de: 'Vorhanden'
+        it: 'Presente'
+        pl: 'Obecny'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presente'
+
+  OBC_DCDC_STATE:
+    bits: '2.6-2.4'
+    comment:
+      en: 'On-board charger DC/DC converter state'
+      fr: 'État du convertisseur DC/DC du chargeur embarqué'
+      es: 'Estado del convertidor DC/DC del cargador embarcado'
+      de: 'Status des DC/DC-Wandlers des Onboard-Laders'
+      it: 'Stato del convertitore DC/DC del caricabatterie di bordo'
+      pl: 'Stan przetwornicy DC/DC ładowarki pokładowej'
+      ru: 'Состояние DC/DC преобразователя бортового зарядного устройства'
+      zh: '车载充电机DC/DC转换器状态'
+      hu: 'A fedélzeti töltő DC/DC átalakítójának állapota'
+      pt: 'Estado do conversor DC/DC do carregador de bordo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off mode'
+        fr: 'Coupé'
+        es: 'Modo apagado'
+        de: 'Aus-Modus'
+        it: 'Modalità spenta'
+        pl: 'Tryb wyłączony'
+        ru: 'Режим выключено'
+        zh: '关闭模式'
+        hu: 'Kikapcsolt mód'
+        pt: 'Modo desligado'
+      0x01:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x02:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Czuwanie'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x03:
+        en: 'Conversion'
+        fr: 'Conversion'
+        es: 'Conversión'
+        de: 'Umwandlung'
+        it: 'Conversione'
+        pl: 'Konwersja'
+        ru: 'Преобразование'
+        zh: '转换'
+        hu: 'Átalakítás'
+        pt: 'Conversão'
+      0x04:
+        en: 'Derating'
+        fr: 'Réduction de puissance'
+        es: 'Reducción de potencia'
+        de: 'Leistungsreduzierung'
+        it: 'Riduzione di potenza'
+        pl: 'Ograniczenie mocy'
+        ru: 'Снижение мощности'
+        zh: '降额'
+        hu: 'Teljesítménycsökkentés'
+        pt: 'Redução de potência'
+      0x05:
+        en: 'Protection'
+        fr: 'Protection'
+        es: 'Protección'
+        de: 'Schutz'
+        it: 'Protezione'
+        pl: 'Ochrona'
+        ru: 'Защита'
+        zh: '保护'
+        hu: 'Védelem'
+        pt: 'Proteção'
+      0x06:
+        en: 'Active discharge'
+        fr: 'Décharge active'
+        es: 'Descarga activa'
+        de: 'Aktive Entladung'
+        it: 'Scarica attiva'
+        pl: 'Aktywne rozładowanie'
+        ru: 'Активный разряд'
+        zh: '主动放电'
+        hu: 'Aktív kisütés'
+        pt: 'Descarga ativa'
+      0x07:
+        unused: true
+
+  CHARGING_PLUG_STATE:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Charging plug connection state'
+      fr: 'État de connexion de la prise de charge'
+      es: 'Estado de conexión de la toma de carga'
+      de: 'Verbindungsstatus des Ladesteckers'
+      it: 'Stato di connessione della presa di ricarica'
+      pl: 'Stan podłączenia wtyczki ładowania'
+      ru: 'Статус подключения зарядного разъёма'
+      zh: '充电插头连接状态'
+      hu: 'A töltőcsatlakozó kapcsolódási állapota'
+      pt: 'Estado de ligação da tomada de carregamento'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Plugged in'
+        fr: 'Branché'
+        es: 'Enchufado'
+        de: 'Eingesteckt'
+        it: 'Collegato'
+        pl: 'Podłączony'
+        ru: 'Подключено'
+        zh: '已插入'
+        hu: 'Csatlakoztatva'
+        pt: 'Ligado à tomada'
+      0x01:
+        en: 'Unplugged'
+        fr: 'Débranché'
+        es: 'Desconectado'
+        de: 'Ausgesteckt'
+        it: 'Scollegato'
+        pl: 'Odłączony'
+        ru: 'Отключено'
+        zh: '已拔出'
+        hu: 'Kihúzva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x03:
+        unused: true
+
+  HV_BATTERY_WATER_DETECTION:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Water detection in the HV battery cooling circuit'
+      fr: 'Détection d''eau dans le circuit de refroidissement de la batterie haute tension'
+      es: 'Detección de agua en el circuito de refrigeración de la batería de alta tensión'
+      de: 'Wassererkennung im Kühlkreislauf der Hochvoltbatterie'
+      it: 'Rilevamento di acqua nel circuito di raffreddamento della batteria ad alta tensione'
+      pl: 'Wykrywanie wody w obiegu chłodzenia akumulatora wysokiego napięcia'
+      ru: 'Обнаружение воды в контуре охлаждения высоковольтной батареи'
+      zh: '高压电池冷却回路的水检测'
+      hu: 'Vízérzékelés a nagyfeszültségű akkumulátor hűtőkörében'
+      pt: 'Deteção de água no circuito de arrefecimento da bateria de alta tensão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No mode active'
+        fr: 'Aucun mode actif'
+        es: 'Ningún modo activo'
+        de: 'Kein Modus aktiv'
+        it: 'Nessuna modalità attiva'
+        pl: 'Brak aktywnego trybu'
+        ru: 'Нет активного режима'
+        zh: '无激活模式'
+        hu: 'Nincs aktív mód'
+        pt: 'Nenhum modo ativo'
+      0x01:
+        en: 'Mode active without water'
+        fr: 'Mode actif sans eau'
+        es: 'Modo activo sin agua'
+        de: 'Modus aktiv ohne Wasser'
+        it: 'Modalità attiva senza acqua'
+        pl: 'Tryb aktywny bez wody'
+        ru: 'Режим активен без воды'
+        zh: '无水激活模式'
+        hu: 'Aktív mód víz nélkül'
+        pt: 'Modo ativo sem água'
+      0x02:
+        en: 'Active mode with water'
+        fr: 'Mode actif avec eau'
+        es: 'Modo activo con agua'
+        de: 'Aktiver Modus mit Wasser'
+        it: 'Modalità attiva con acqua'
+        pl: 'Tryb aktywny z wodą'
+        ru: 'Активный режим с водой'
+        zh: '含水激活模式'
+        hu: 'Aktív mód vízzel'
+        pt: 'Modo ativo com água'
+      0x03:
+        en: 'Filling in progress'
+        fr: 'Remplissage en cours'
+        es: 'Llenado en curso'
+        de: 'Befüllung läuft'
+        it: 'Riempimento in corso'
+        pl: 'Trwa napełnianie'
+        ru: 'Выполняется заправка'
+        zh: '正在加注'
+        hu: 'Feltöltés folyamatban'
+        pt: 'Enchimento em curso'
+
+  STOP_SERVICE_LAMP_BLINK_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Request to blink the stop/service warning lamp on the display'
+      fr: 'Demande de clignotement du témoin d''arrêt et de service sur l''afficheur'
+      es: 'Solicitud de parpadeo del testigo de parada y servicio en la pantalla'
+      de: 'Anforderung zum Blinken der Stopp-/Service-Kontrollleuchte im Display'
+      it: 'Richiesta di lampeggio della spia di stop e servizio sul display'
+      pl: 'Żądanie migania lampki zatrzymania i serwisu na wyświetlaczu'
+      ru: 'Запрос на мигание индикатора остановки и обслуживания на дисплее'
+      zh: '请求显示屏上的停止/维修警示灯闪烁'
+      hu: 'A leállás/szerviz jelzőlámpa villogtatásának kérése a kijelzőn'
+      pt: 'Pedido de intermitência da luz avisadora de paragem e serviço no visor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  THERMAL_SYSTEM_PUMP_2_REQUEST:
+    bits: '3.6-3.0'
+    comment:
+      en: 'Coolant pump request for the electronics cooling system'
+      fr: 'Demande de la pompe à eau pour le refroidissement de l''électronique'
+      es: 'Solicitud de la bomba de refrigerante para el sistema de refrigeración de la electrónica'
+      de: 'Kühlmittelpumpenanforderung für die Kühlung der Elektronik'
+      it: 'Richiesta della pompa del liquido di raffreddamento per il sistema di raffreddamento dell''elettronica'
+      pl: 'Żądanie pompy chłodziwa do układu chłodzenia elektroniki'
+      ru: 'Запрос насоса охлаждающей жидкости для системы охлаждения электроники'
+      zh: '电子设备冷却系统的冷却泵请求'
+      hu: 'Hűtőfolyadék-szivattyú igénylése az elektronika hűtőrendszeréhez'
+      pt: 'Pedido da bomba de líquido de refrigeração para o sistema de refrigeração da eletrónica'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    invalid: 0x7F
+    default: 0x00
+
+  PLUGIN_THERMAL_SYSTEM_MAX_POWER:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Maximum power allocated to the plug-in thermal system'
+      fr: 'Puissance maximale allouée au système thermique du plug-in'
+      es: 'Potencia máxima asignada al sistema térmico del plug-in'
+      de: 'Maximale dem Plug-in-Thermosystem zugewiesene Leistung'
+      it: 'Potenza massima assegnata al sistema termico del plug-in'
+      pl: 'Maksymalna moc przydzielona do systemu termicznego plug-in'
+      ru: 'Максимальная мощность, выделенная тепловой системе plug-in'
+      zh: '分配给插电式热管理系统的最大功率'
+      hu: 'A plug-in hőrendszerhez rendelt maximális teljesítmény'
+      pt: 'Potência máxima atribuída ao sistema térmico do plug-in'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 5000
+    units: 'W'
+    invalid: 0x7F
+    default: 0x00
+
+  PLUG_OVERTEMPERATURE_FAULT:
+    bits: '4.0'
+    comment:
+      en: 'Charging plug overtemperature fault'
+      fr: 'Défaut de surchauffe de la prise de charge'
+      es: 'Fallo por sobretemperatura de la toma de carga'
+      de: 'Übertemperaturfehler des Ladesteckers'
+      it: 'Guasto per surriscaldamento della presa di ricarica'
+      pl: 'Usterka przegrzania wtyczki ładowania'
+      ru: 'Неисправность из-за перегрева зарядной вилки'
+      zh: '充电插头过热故障'
+      hu: 'A töltőcsatlakozó túlmelegedési hibája'
+      pt: 'Falha de sobreaquecimento da tomada de carregamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Failure'
+        fr: 'Échec'
+        es: 'Fallo'
+        de: 'Fehlschlag'
+        it: 'Fallimento'
+        pl: 'Niepowodzenie'
+        ru: 'Сбой'
+        zh: '失败'
+        hu: 'Sikertelen'
+        pt: 'Falha'
+
+  OBC_STATE:
+    bits: '5.7-5.5'
+    comment:
+      en: 'On-board charger state'
+      fr: 'État du chargeur embarqué'
+      es: 'Estado del cargador embarcado'
+      de: 'Zustand des On-Board-Ladegeräts'
+      it: 'Stato del caricabatterie di bordo'
+      pl: 'Stan ładowarki pokładowej'
+      ru: 'Состояние бортового зарядного устройства'
+      zh: '车载充电器状态'
+      hu: 'A fedélzeti töltő állapota'
+      pt: 'Estado do carregador de bordo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not connected'
+        fr: 'Non connecté'
+        es: 'No conectado'
+        de: 'Nicht verbunden'
+        it: 'Non connesso'
+        pl: 'Niepodłączony'
+        ru: 'Не подключено'
+        zh: '未连接'
+        hu: 'Nincs csatlakoztatva'
+        pt: 'Não ligado'
+      0x01:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x02:
+        en: 'Energy transfer'
+        fr: 'Transfert d''énergie'
+        es: 'Transferencia de energía'
+        de: 'Energieübertragung'
+        it: 'Trasferimento di energia'
+        pl: 'Przesył energii'
+        ru: 'Передача энергии'
+        zh: '能量传输'
+        hu: 'Energiaátvitel'
+        pt: 'Transferência de energia'
+      0x03:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x04:
+        en: 'Error'
+        fr: 'Erreur'
+        es: 'Error'
+        de: 'Fehler'
+        it: 'Errore'
+        pl: 'Błąd'
+        ru: 'Ошибка'
+        zh: '错误'
+        hu: 'Hiba'
+        pt: 'Erro'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  HV_BATTERY_WATER_PUMP_FAULT:
+    bits: '5.4'
+    comment:
+      en: 'High-voltage battery coolant pump low-temperature fault'
+      fr: 'Défaut thermique basse température de la pompe à eau de la batterie haute tension'
+      es: 'Fallo térmico de baja temperatura de la bomba de refrigerante de la batería de alta tensión'
+      de: 'Thermischer Niedertemperaturfehler der Kühlmittelpumpe der Hochvoltbatterie'
+      it: 'Guasto termico a bassa temperatura della pompa del liquido di raffreddamento della batteria ad alta tensione'
+      pl: 'Usterka termiczna niskiej temperatury pompy wody chłodzącej akumulatora wysokiego napięcia'
+      ru: 'Термическая неисправность низкой температуры насоса охлаждающей жидкости высоковольтной батареи'
+      zh: '高压电池冷却水泵低温热故障'
+      hu: 'A nagyfeszültségű akkumulátor hűtőfolyadék-szivattyújának alacsony hőmérsékletű termikus hibája'
+      pt: 'Avaria de baixa temperatura da bomba de líquido de refrigeração da bateria de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'HV battery PAE fault'
+        fr: 'Défaut PAE de la batterie HT'
+        es: 'Fallo PAE de la batería de alta tensión'
+        de: 'PAE-Fehler der HV-Batterie'
+        it: 'Guasto PAE della batteria AT'
+        pl: 'Usterka PAE akumulatora wysokiego napięcia'
+        ru: 'Неисправность PAE высоковольтной батареи'
+        zh: '高压电池PAE故障'
+        hu: 'A nagyfeszültségű akkumulátor PAE hibája'
+        pt: 'Falha PAE da bateria de alta tensão'
+
+  INVERTER_WATER_PUMP_FAULT:
+    bits: '5.3'
+    comment:
+      en: 'Inverter coolant pump low-temperature fault (40 W)'
+      fr: 'Défaut thermique basse température de la pompe à eau de l''onduleur 40W'
+      es: 'Fallo térmico de baja temperatura de la bomba de refrigerante del inversor (40 W)'
+      de: 'Thermischer Niedertemperaturfehler der Kühlmittelpumpe des Wechselrichters (40 W)'
+      it: 'Guasto termico a bassa temperatura della pompa del liquido di raffreddamento dell''inverter (40 W)'
+      pl: 'Usterka termiczna niskiej temperatury pompy wody chłodzącej falownika (40 W)'
+      ru: 'Термическая неисправность низкой температуры насоса охлаждающей жидкости инвертора (40 Вт)'
+      zh: '逆变器冷却水泵低温热故障(40W)'
+      hu: 'Az inverter hűtőfolyadék-szivattyújának alacsony hőmérsékletű termikus hibája (40 W)'
+      pt: 'Avaria de baixa temperatura da bomba de líquido de refrigeração do inversor (40 W)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'HV battery PAE fault'
+        fr: 'Défaut PAE de la batterie HT'
+        es: 'Fallo PAE de la batería de alta tensión'
+        de: 'PAE-Fehler der HV-Batterie'
+        it: 'Guasto PAE della batteria AT'
+        pl: 'Usterka PAE akumulatora wysokiego napięcia'
+        ru: 'Неисправность PAE высоковольтной батареи'
+        zh: '高压电池PAE故障'
+        hu: 'A nagyfeszültségű akkumulátor PAE hibája'
+        pt: 'Falha PAE da bateria de alta tensão'
+
+  DCDC_SETPOINT_FOLLOWED_STATE:
+    bits: '5.2'
+    comment:
+      en: 'Status indicating whether the current setpoint is being followed'
+      fr: 'État indiquant si la consigne actuelle est suivie'
+      es: 'Estado que indica si la consigna actual se está siguiendo'
+      de: 'Status, der anzeigt, ob der aktuelle Sollwert eingehalten wird'
+      it: 'Stato che indica se il valore di riferimento attuale viene seguito'
+      pl: 'Stan wskazujący, czy bieżąca nastawa jest realizowana'
+      ru: 'Статус, указывающий, отслеживается ли текущее заданное значение'
+      zh: '表示当前设定值是否被跟随的状态'
+      hu: 'Állapot, amely jelzi, hogy az aktuális alapjelet követik-e'
+      pt: 'Estado que indica se a consigna atual está a ser seguida'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  DCDC_HV_CONNECTOR_UNLOCKED:
+    bits: '5.1'
+    comment:
+      en: 'HV connector of the onboard charger / DC-DC converter unlocked'
+      fr: 'Connecteur haute tension du chargeur embarqué / convertisseur DC-DC déverrouillé'
+      es: 'Conector de alta tensión del cargador integrado / convertidor DC-DC desbloqueado'
+      de: 'Hochvoltsteckverbinder des Onboard-Laders / DC-DC-Wandlers entriegelt'
+      it: 'Connettore alta tensione del caricabatterie di bordo / convertitore DC-DC sbloccato'
+      pl: 'Odblokowane złącze wysokiego napięcia ładowarki pokładowej / przetwornicy DC-DC'
+      ru: 'Разблокирован высоковольтный разъём бортового зарядного устройства / преобразователя DC-DC'
+      zh: '车载充电机/DC-DC变换器高压连接器解锁'
+      hu: 'A fedélzeti töltő / DC-DC átalakító nagyfeszültségű csatlakozója kireteszelve'
+      pt: 'Conector de alta tensão do carregador de bordo / conversor DC-DC desbloqueado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  DCDC_OVERTEMPERATURE:
+    bits: '5.0'
+    comment:
+      en: 'DC/DC converter overheating'
+      fr: 'Surchauffe du convertisseur DC/DC'
+      es: 'Sobrecalentamiento del convertidor DC/DC'
+      de: 'Überhitzung des DC/DC-Wandlers'
+      it: 'Surriscaldamento del convertitore DC/DC'
+      pl: 'Przegrzanie przetwornicy DC/DC'
+      ru: 'Перегрев преобразователя DC/DC'
+      zh: 'DC/DC变换器过热'
+      hu: 'A DC/DC átalakító túlmelegedése'
+      pt: 'Sobreaquecimento do conversor DC/DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  THERMAL_SYSTEM_FAN_REQUEST:
+    bits: '6.7-6.1'
+    comment:
+      en: 'Cooling fan request for the power electronics thermal system'
+      fr: 'Demande de ventilation pour le refroidissement du système de puissance'
+      es: 'Solicitud de ventilación para la refrigeración del sistema de electrónica de potencia'
+      de: 'Lüfteranforderung zur Kühlung des Leistungselektronik-Systems'
+      it: 'Richiesta di ventilazione per il raffreddamento del sistema di elettronica di potenza'
+      pl: 'Żądanie wentylacji do chłodzenia układu elektroniki mocy'
+      ru: 'Запрос вентиляции для охлаждения системы силовой электроники'
+      zh: '电力电子系统冷却风扇请求'
+      hu: 'Hűtőventilátor igénylése a teljesítményelektronikai rendszer hűtéséhez'
+      pt: 'Pedido de ventilação para a refrigeração do sistema de potência'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 110
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  OBC_CLEAR_DTC_REQUEST:
+    bits: '6.0'
+    comment:
+      en: 'Request to clear OBD faults of the WLC and VCU'
+      fr: 'Demande d''effacement des défauts OBD du WLC et du VCU'
+      es: 'Solicitud de borrado de los fallos OBD del WLC y del VCU'
+      de: 'Anforderung zum Löschen der OBD-Fehler von WLC und VCU'
+      it: 'Richiesta di cancellazione dei guasti OBD di WLC e VCU'
+      pl: 'Żądanie skasowania usterek OBD modułów WLC i VCU'
+      ru: 'Запрос на удаление ошибок OBD модулей WLC и VCU'
+      zh: '请求清除WLC和VCU的OBD故障码'
+      hu: 'A WLC és a VCU OBD hibáinak törlésére vonatkozó kérés'
+      pt: 'Pedido de eliminação das falhas OBD do WLC e do VCU'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault reset not requested'
+        fr: 'Pas de demande d''effacement des défauts'
+        es: 'Sin solicitud de borrado de fallos'
+        de: 'Keine Anforderung zum Löschen der Fehler'
+        it: 'Nessuna richiesta di cancellazione dei guasti'
+        pl: 'Brak żądania kasowania usterek'
+        ru: 'Сброс неисправностей не запрошен'
+        zh: '未请求故障清除'
+        hu: 'Hibatörlés nincs kérve'
+        pt: 'Sem pedido de apagamento de falhas'
+      0x01:
+        en: 'Fault reset requested'
+        fr: 'Demande d''effacement des défauts'
+        es: 'Solicitud de borrado de fallos'
+        de: 'Fehlerlöschung angefordert'
+        it: 'Richiesta di cancellazione guasti'
+        pl: 'Żądanie kasowania usterek'
+        ru: 'Запрошен сброс неисправностей'
+        zh: '已请求清除故障'
+        hu: 'Hibatörlés kérve'
+        pt: 'Pedido de apagamento das falhas'
+
+  HV_BATTERY_COOLANT_FLOW_RATE:
+    bits: '7.7-7.1'
+    comment:
+      en: 'HV battery coolant flow rate'
+      fr: 'Débit d''eau de refroidissement de la batterie haute tension'
+      es: 'Caudal de refrigerante de la batería de alta tensión'
+      de: 'Kühlmitteldurchflussrate der Hochvoltbatterie'
+      it: 'Portata del liquido di raffreddamento della batteria ad alta tensione'
+      pl: 'Natężenie przepływu chłodziwa akumulatora wysokiego napięcia'
+      ru: 'Расход охлаждающей жидкости высоковольтной батареи'
+      zh: '高压电池冷却液流量'
+      hu: 'A nagyfeszültségű akkumulátor hűtőfolyadék-áramlási sebessége'
+      pt: 'Caudal do líquido de refrigeração da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  MIL_STEADY_ILLUMINATION_REQUEST:
+    bits: '7.0'
+    comment:
+      en: 'Steady MIL warning lamp request'
+      fr: 'Demande d''allumage fixe du témoin MIL'
+      es: 'Solicitud de encendido fijo del testigo MIL'
+      de: 'Anforderung für dauerhaft leuchtende MIL-Kontrollleuchte'
+      it: 'Richiesta di accensione fissa della spia MIL'
+      pl: 'Żądanie stałego zapalenia lampki MIL'
+      ru: 'Запрос на постоянное включение лампы MIL'
+      zh: '请求MIL故障灯常亮显示'
+      hu: 'MIL jelzőlámpa folyamatos világításának kérése'
+      pt: 'Pedido de acendimento fixo da luz avisadora MIL'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'MIL lamp continuous lighting request'
+        fr: 'Demande d''allumage continu du témoin MIL'
+        es: 'Solicitud de encendido continuo del testigo MIL'
+        de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte'
+        it: 'Richiesta di accensione continua della spia MIL'
+        pl: 'Żądanie ciągłego świecenia kontrolki MIL'
+        ru: 'Запрос постоянного включения индикатора MIL'
+        zh: 'MIL 灯常亮请求'
+        hu: 'MIL lámpa folyamatos világításának kérése'
+        pt: 'Pedido de acendimento contínuo da luz MIL'
+
+  DCDC_LV_OVERCURRENT:
+    bits: '8.7'
+    comment:
+      en: 'LV-side overcurrent on the onboard charger / DC-DC converter'
+      fr: 'Surintensité côté basse tension du chargeur embarqué / convertisseur DC-DC'
+      es: 'Sobrecorriente en el lado de baja tensión del cargador integrado / convertidor DC-DC'
+      de: 'Überstrom auf der Niedervoltseite des Onboard-Laders / DC-DC-Wandlers'
+      it: 'Sovracorrente lato bassa tensione del caricabatterie di bordo / convertitore DC-DC'
+      pl: 'Nadmierny prąd po stronie niskiego napięcia ładowarki pokładowej / przetwornicy DC-DC'
+      ru: 'Перегрузка по току на низковольтной стороне бортового зарядного устройства / преобразователя DC-DC'
+      zh: '车载充电机/DC-DC变换器低压侧过流'
+      hu: 'Túláram a fedélzeti töltő / DC-DC átalakító kisfeszültségű oldalán'
+      pt: 'Sobrecorrente no lado de baixa tensão do carregador de bordo / conversor DC-DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  DCDC_LV_OVERVOLTAGE:
+    bits: '8.6'
+    comment:
+      en: 'LV-side overvoltage on the onboard charger / DC-DC converter'
+      fr: 'Surtension côté basse tension du chargeur embarqué / convertisseur DC-DC'
+      es: 'Sobretensión en el lado de baja tensión del cargador integrado / convertidor DC-DC'
+      de: 'Überspannung auf der Niedervoltseite des Onboard-Laders / DC-DC-Wandlers'
+      it: 'Sovratensione lato bassa tensione del caricabatterie di bordo / convertitore DC-DC'
+      pl: 'Przepięcie po stronie niskiego napięcia ładowarki pokładowej / przetwornicy DC-DC'
+      ru: 'Перенапряжение на низковольтной стороне бортового зарядного устройства / преобразователя DC-DC'
+      zh: '车载充电机/DC-DC变换器低压侧过压'
+      hu: 'Túlfeszültség a fedélzeti töltő / DC-DC átalakító kisfeszültségű oldalán'
+      pt: 'Sobretensão no lado de baixa tensão do carregador de bordo / conversor DC-DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  DCDC_HV_OVERCURRENT:
+    bits: '8.5'
+    comment:
+      en: 'HV-side overcurrent on the onboard charger / DC-DC converter'
+      fr: 'Surintensité côté haute tension du chargeur embarqué / convertisseur DC-DC'
+      es: 'Sobrecorriente en el lado de alta tensión del cargador integrado / convertidor DC-DC'
+      de: 'Überstrom auf der Hochvoltseite des Onboard-Laders / DC-DC-Wandlers'
+      it: 'Sovracorrente lato alta tensione del caricabatterie di bordo / convertitore DC-DC'
+      pl: 'Nadmierny prąd po stronie wysokiego napięcia ładowarki pokładowej / przetwornicy DC-DC'
+      ru: 'Перегрузка по току на высоковольтной стороне бортового зарядного устройства / преобразователя DC-DC'
+      zh: '车载充电机/DC-DC变换器高压侧过流'
+      hu: 'Túláram a fedélzeti töltő / DC-DC átalakító nagyfeszültségű oldalán'
+      pt: 'Sobrecorrente no lado de alta tensão do carregador de bordo / conversor DC-DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  DCDC_HV_OVERVOLTAGE:
+    bits: '8.4'
+    comment:
+      en: 'HV-side overvoltage on the onboard charger / DC-DC converter'
+      fr: 'Surtension côté haute tension du chargeur embarqué / convertisseur DC-DC'
+      es: 'Sobretensión en el lado de alta tensión del cargador integrado / convertidor DC-DC'
+      de: 'Überspannung auf der Hochvoltseite des Onboard-Laders / DC-DC-Wandlers'
+      it: 'Sovratensione lato alta tensione del caricabatterie di bordo / convertitore DC-DC'
+      pl: 'Przepięcie po stronie wysokiego napięcia ładowarki pokładowej / przetwornicy DC-DC'
+      ru: 'Перенапряжение на высоковольтной стороне бортового зарядного устройства / преобразователя DC-DC'
+      zh: '车载充电机/DC-DC变换器高压侧过压'
+      hu: 'Túlfeszültség a fedélzeti töltő / DC-DC átalakító nagyfeszültségű oldalán'
+      pt: 'Sobretensão no lado de alta tensão do carregador de bordo / conversor DC-DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  OBC_THERMAL_RELAY_REQUEST:
+    bits: '8.3'
+    comment:
+      en: 'On-board charger request to the thermal management relay'
+      fr: 'Consigne de l''OBC pour le pilotage du relais de gestion thermique'
+      es: 'Consigna del cargador embarcado para el control del relé de gestión térmica'
+      de: 'Sollwert des On-Board-Ladegeräts zur Ansteuerung des Thermomanagement-Relais'
+      it: 'Consegna del caricabatterie di bordo per il comando del relè di gestione termica'
+      pl: 'Wartość zadana ładowarki pokładowej do sterowania przekaźnikiem zarządzania termicznego'
+      ru: 'Задание бортового зарядного устройства для управления реле терморегулирования'
+      zh: '车载充电器对热管理继电器的控制指令'
+      hu: 'A fedélzeti töltő beavatkozó jele a hőgazdálkodási relé vezérléséhez'
+      pt: 'Consigna do carregador embarcado para o controlo do relé de gestão térmica'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+      0x01:
+        en: 'Closing'
+        fr: 'Fermeture'
+        es: 'Cierre'
+        de: 'Schließen'
+        it: 'Chiusura'
+        pl: 'Zamykanie'
+        ru: 'Закрытие'
+        zh: '关闭中'
+        hu: 'Zárás'
+        pt: 'A fechar'
+
+  POST_COOLING_REQUEST:
+    bits: '8.2'
+    comment:
+      en: 'Post-cooling request'
+      fr: 'Demande de post-refroidissement'
+      es: 'Solicitud de posenfriamiento'
+      de: 'Anforderung der Nachkühlung'
+      it: 'Richiesta di post-raffreddamento'
+      pl: 'Żądanie chłodzenia końcowego'
+      ru: 'Запрос последующего охлаждения'
+      zh: '后冷却请求'
+      hu: 'Utóhűtés igénylése'
+      pt: 'Pedido de pós-arrefecimento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Post-cooling request'
+        fr: 'Demande de post-refroidissement'
+        es: 'Solicitud de post-enfriamiento'
+        de: 'Anforderung Nachkühlung'
+        it: 'Richiesta di post-raffreddamento'
+        pl: 'Żądanie dochładzania'
+        ru: 'Запрос дополнительного охлаждения'
+        zh: '后冷却请求'
+        hu: 'Utóhűtés kérése'
+        pt: 'Pedido de pós-arrefecimento'
+
+  UNUSED_1:
+    bits: '8.1-8.0'
+    unused: true

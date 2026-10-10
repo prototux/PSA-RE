@@ -1,0 +1,139 @@
+id: 0x370
+name: 'CHASSIS_CONTROL_CSS_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Chassis control (CGC) dynamic data from the CSS node: adaptive-damper fault, split-mu suspension correction, brake force distribution and anti-pitch threshold.'
+  fr: 'Données dynamiques de contrôle châssis (CGC) du module CSS : défaut amortisseurs pilotés, correction suspension split-mu, répartition de freinage et seuil anti-tangage.'
+  es: 'Datos dinámicos de control de chasis (CGC) del módulo CSS: fallo de amortiguadores pilotados, corrección de suspensión split-mu, reparto de frenado y umbral antihundimiento.'
+  de: 'Fahrwerksregelungs-(CGC-)Dynamikdaten des CSS-Moduls: Fehler der adaptiven Dämpfer, Split-Mu-Federungskorrektur, Bremskraftverteilung und Anti-Nick-Schwellwert.'
+  it: 'Dati dinamici di controllo telaio (CGC) del modulo CSS: guasto ammortizzatori pilotati, correzione sospensione split-mu, ripartizione frenata e soglia anti-beccheggio.'
+  pl: 'Dane dynamiczne sterowania podwoziem (CGC) z modułu CSS: usterka amortyzatorów sterowanych, korekta zawieszenia split-mu, rozdział hamowania i próg antyprzysiadu.'
+  ru: 'Динамические данные управления шасси (CGC) от модуля CSS: неисправность адаптивных амортизаторов, коррекция подвески split-mu, распределение тормозных сил и порог анти-клевка.'
+  zh: '来自CSS模块的底盘控制(CGC)动态数据:自适应减震器故障、分离摩擦系数悬挂修正、制动力分配和防点头阈值。'
+  hu: 'A CSS modul alvázvezérlési (CGC) dinamikus adatai: adaptív lengéscsillapító hiba, split-mu felfüggesztés korrekció, fékerő-elosztás és bólintásgátlási küszöb.'
+  pt: 'Dados dinâmicos de controlo de chassis (CGC) do nó CSS: avaria dos amortecedores adaptativos, correção da suspensão split-mu, distribuição da força de travagem e limiar antimergulho.'
+periodicity: ['10ms']
+senders: ['CSS']
+receivers: ['ABS', 'BHI', 'AMVAR']
+
+signals:
+  FRONT_BRAKE_FORCE_DISTRIBUTION:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Front braking force distribution rate'
+      fr: 'Taux de répartition de l''effort de freinage sur l''avant'
+      es: 'Tasa de reparto de la fuerza de frenado en el eje delantero'
+      de: 'Verteilungsrate der Bremskraft auf die Vorderachse'
+      it: 'Tasso di ripartizione della forza frenante sull''avantreno'
+      pl: 'Wskaźnik rozdziału siły hamowania na oś przednią'
+      ru: 'Доля распределения тормозного усилия на переднюю ось'
+      zh: '前轴制动力分配比例'
+      hu: 'Az első tengelyre eső fékerő-elosztási arány'
+      pt: 'Taxa de repartição da força de travagem no eixo dianteiro'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x32
+
+  MU_SPLIT_SUSPENSION_CORRECTION_STATUS:
+    bits: '2.7'
+    comment:
+      en: 'Mu-split suspension correction status'
+      fr: 'État de la correction de suspension mu-split'
+      es: 'Estado de la corrección de suspensión mu-split'
+      de: 'Status der Mu-Split-Fahrwerkskorrektur'
+      it: 'Stato della correzione delle sospensioni mu-split'
+      pl: 'Stan korekcji zawieszenia mu-split'
+      ru: 'Статус коррекции подвески mu-split'
+      zh: 'Mu-split 悬架校正状态'
+      hu: 'A mu-split futóműkorrekció állapota'
+      pt: 'Estado da correção de suspensão mu-split'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No correction'
+        fr: 'Pas de correction'
+        es: 'Sin corrección'
+        de: 'Keine Korrektur'
+        it: 'Nessuna correzione'
+        pl: 'Brak korekty'
+        ru: 'Без коррекции'
+        zh: '无修正'
+        hu: 'Nincs korrekció'
+        pt: 'Sem correção'
+      0x01:
+        en: 'Correction in progress'
+        fr: 'Correction en cours'
+        es: 'Corrección en curso'
+        de: 'Korrektur läuft'
+        it: 'Correzione in corso'
+        pl: 'Trwa korekta'
+        ru: 'Идёт коррекция'
+        zh: '正在校正'
+        hu: 'Korrekció folyamatban'
+        pt: 'Correção em curso'
+
+  AMVAR_LEGACY_FAULT:
+    bits: '2.6'
+    comment:
+      en: 'AMVAR variable damping system fault'
+      fr: 'Défaut du système d''amortissement variable AMVAR'
+      es: 'Fallo del sistema de amortiguación variable AMVAR'
+      de: 'Störung des variablen Dämpfungssystems AMVAR'
+      it: 'Guasto del sistema di ammortizzazione variabile AMVAR'
+      pl: 'Usterka systemu zmiennego tłumienia AMVAR'
+      ru: 'Неисправность системы изменяемого демпфирования AMVAR'
+      zh: 'AMVAR 可变阻尼系统故障'
+      hu: 'Az AMVAR változtatható csillapítású rendszer hibája'
+      pt: 'Falha do sistema de amortecimento variável AMVAR'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'AMVAR faulty'
+        fr: 'AMVAR en défaut'
+        es: 'AMVAR con fallo'
+        de: 'AMVAR fehlerhaft'
+        it: 'AMVAR guasto'
+        pl: 'Usterka AMVAR'
+        ru: 'Неисправность AMVAR'
+        zh: 'AMVAR故障'
+        hu: 'AMVAR hibás'
+        pt: 'AMVAR com falha'
+
+  ANTI_PITCH_THRESHOLD:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Anti-pitch threshold'
+      fr: 'Seuil anti-tangage'
+      es: 'Umbral antihundimiento (anticabeceo)'
+      de: 'Anti-Nick-Schwellenwert'
+      it: 'Soglia anti-beccheggio'
+      pl: 'Próg przeciwdziałania nurkowaniu (anti-pitch)'
+      ru: 'Порог противодействия клевку (anti-pitch)'
+      zh: '抗俯仰阈值'
+      hu: 'Bólintásgátlási küszöbérték'
+      pt: 'Limiar antipicada (anti-arfagem)'
+    type: 'uint'
+    factor: 0.01
+    offset: 1
+    min: 1
+    max: 2
+    invalid: 0xFF
+    default: 0x01

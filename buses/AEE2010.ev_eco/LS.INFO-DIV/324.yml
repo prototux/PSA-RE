@@ -1,0 +1,232 @@
+id: 0x324
+name: 'DST_TIME_CHANGE'
+type: 'can'
+length: 6
+comment:
+  en: 'Daylight saving time change settings (date, time and UTC offset).'
+  fr: 'Paramètres de changement d''heure été/hiver (date, heure et décalage UTC).'
+  es: 'Ajustes de cambio de hora de verano/invierno (fecha, hora y desfase UTC).'
+  de: 'Einstellungen für die Sommer-/Winterzeitumstellung (Datum, Uhrzeit und UTC-Versatz).'
+  it: 'Impostazioni di cambio ora legale/solare (data, ora e scarto UTC).'
+  pl: 'Ustawienia zmiany czasu letniego/zimowego (data, godzina i przesunięcie UTC).'
+  ru: 'Настройки перехода на летнее/зимнее время (дата, время и смещение UTC).'
+  zh: '夏令时/冬令时切换设置（日期、时间和 UTC 偏移）。'
+  hu: 'Nyári/téli időszámítás váltásának beállításai (dátum, idő és UTC-eltolás).'
+  pt: 'Definições de mudança de hora de verão/inverno (data, hora e desvio UTC).'
+periodicity: ['trigger']
+senders: ['BTEL']
+receivers: ['BSI']
+
+signals:
+  UTC_OFFSET:
+    bits: '1.7-1.1'
+    comment:
+      en: 'Offset relative to UTC'
+      fr: 'Décalage par rapport à l''UTC'
+      es: 'Desfase respecto al UTC'
+      de: 'Abweichung gegenüber UTC'
+      it: 'Scostamento rispetto all''UTC'
+      pl: 'Przesunięcie względem UTC'
+      ru: 'Смещение относительно UTC'
+      zh: '相对于UTC的偏移量'
+      hu: 'UTC-hez viszonyított eltolás'
+      pt: 'Desfasamento em relação ao UTC'
+    type: 'uint'
+    factor: 0.25
+    offset: -12
+    min: -12
+    max: 14
+    invalid: 0x7F
+
+  DST_CHANGE_DIRECTION:
+    bits: '1.0'
+    comment:
+      en: 'Direction of the next daylight-saving change (add or subtract one hour)'
+      fr: 'Sens du prochain changement d''heure d''été/hiver (ajout ou retrait d''une heure)'
+      es: 'Sentido del próximo cambio de horario de verano/invierno (sumar o restar una hora)'
+      de: 'Richtung der nächsten Sommer-/Winterzeitumstellung (eine Stunde vor oder zurück)'
+      it: 'Direzione del prossimo cambio ora legale/solare (aggiunta o sottrazione di un''ora)'
+      pl: 'Kierunek najbliższej zmiany czasu letniego/zimowego (dodanie lub odjęcie godziny)'
+      ru: 'Направление следующего перехода на летнее/зимнее время (плюс или минус один час)'
+      zh: '下次夏令时/冬令时切换的方向(加一小时或减一小时)'
+      hu: 'A következő nyári/téli időszámítás-váltás iránya (egy óra hozzáadása vagy levonása)'
+      pt: 'Sentido da próxima mudança de hora de verão/inverno (adicionar ou subtrair uma hora)'
+    type: 'bool'
+    values:
+      0x00:
+        en: '-1h'
+        fr: '-1h'
+        es: '-1 h'
+        de: '-1 h'
+        it: '-1 h'
+        pl: '-1 h'
+        ru: '-1 ч'
+        zh: '-1小时'
+        hu: '-1 óra'
+        pt: '-1h'
+      0x01:
+        en: '+1 h'
+        fr: '+1 h'
+        es: '+1 h'
+        de: '+1 h'
+        it: '+1 h'
+        pl: '+1 h'
+        ru: '+1 ч'
+        zh: '+1小时'
+        hu: '+1 óra'
+        pt: '+1 h'
+
+  DST_CHANGE_MINUTE:
+    bits: '2.7-2.2'
+    comment:
+      en: 'Minute of the next summer/winter time change'
+      fr: 'Minute du prochain changement d''heure été/hiver'
+      es: 'Minuto del próximo cambio de hora verano/invierno'
+      de: 'Minute der nächsten Sommer-/Winterzeitumstellung'
+      it: 'Minuto del prossimo cambio ora legale/solare'
+      pl: 'Minuta najbliższej zmiany czasu letniego/zimowego'
+      ru: 'Минута следующего перехода на летнее/зимнее время'
+      zh: '下次夏令时/冬令时切换的分钟'
+      hu: 'A következő nyári/téli időszámítás-váltás perce'
+      pt: 'Minuto da próxima mudança de hora verão/inverno'
+    type: 'uint'
+    min: 0
+    max: 59
+    invalid: 0x3F
+
+  DATETIME_SETTING_MODE:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Date and time setting mode (manual/automatic/UTC)'
+      fr: 'Mode de réglage de la date et de l''heure (manuel/automatique/UTC)'
+      es: 'Modo de ajuste de fecha y hora (manual/automático/UTC)'
+      de: 'Einstellmodus für Datum und Uhrzeit (manuell/automatisch/UTC)'
+      it: 'Modalità di impostazione data e ora (manuale/automatica/UTC)'
+      pl: 'Tryb ustawiania daty i godziny (ręczny/automatyczny/UTC)'
+      ru: 'Режим установки даты и времени (ручной/автоматический/UTC)'
+      zh: '日期和时间设置模式(手动/自动/UTC)'
+      hu: 'Dátum- és időbeállítási mód (kézi/automatikus/UTC)'
+      pt: 'Modo de ajuste da data e da hora (manual/automático/UTC)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Manual'
+        fr: 'Manuel'
+        es: 'Manual'
+        de: 'Manuell'
+        it: 'Manuale'
+        pl: 'Ręczny'
+        ru: 'Ручной'
+        zh: '手动'
+        hu: 'Kézi'
+        pt: 'Manual'
+      0x01:
+        en: 'Automatic'
+        fr: 'Automatique'
+        es: 'Automático'
+        de: 'Automatisch'
+        it: 'Automatico'
+        pl: 'Automatyczny'
+        ru: 'Автоматически'
+        zh: '自动'
+        hu: 'Automatikus'
+        pt: 'Automático'
+      0x02:
+        en: 'UTC'
+        fr: 'UTC'
+        es: 'UTC'
+        de: 'UTC'
+        it: 'UTC'
+        pl: 'UTC'
+        ru: 'UTC'
+        zh: 'UTC'
+        hu: 'UTC'
+        pt: 'UTC'
+      0x03:
+        unused: true
+
+  DST_CHANGE_YEAR:
+    bits: '3.7-3.1'
+    comment:
+      en: 'Year of the next summer/winter time change'
+      fr: 'Année du prochain changement d''heure été/hiver'
+      es: 'Año del próximo cambio de hora verano/invierno'
+      de: 'Jahr der nächsten Sommer-/Winterzeitumstellung'
+      it: 'Anno del prossimo cambio ora legale/solare'
+      pl: 'Rok najbliższej zmiany czasu letniego/zimowego'
+      ru: 'Год следующего перехода на летнее/зимнее время'
+      zh: '下次夏令时/冬令时切换的年份'
+      hu: 'A következő nyári/téli időszámítás-váltás éve'
+      pt: 'Ano da próxima mudança de hora verão/inverno'
+    type: 'uint'
+    factor: 12000
+    min: 2000
+    max: 2125
+    invalid: 0x7F
+
+  DST_CHANGE_MONTH:
+    bits: '4.7-4.4'
+    comment:
+      en: 'Month of the next summer/winter time change'
+      fr: 'Mois du prochain changement d''heure été/hiver'
+      es: 'Mes del próximo cambio de hora verano/invierno'
+      de: 'Monat der nächsten Sommer-/Winterzeitumstellung'
+      it: 'Mese del prossimo cambio ora legale/solare'
+      pl: 'Miesiąc najbliższej zmiany czasu letniego/zimowego'
+      ru: 'Месяц следующего перехода на летнее/зимнее время'
+      zh: '下次夏令时/冬令时切换的月份'
+      hu: 'A következő nyári/téli időszámítás-váltás hónapja'
+      pt: 'Mês da próxima mudança de hora verão/inverno'
+    type: 'uint'
+    min: 1
+    max: 12
+    invalid: 0x0F
+
+  UNUSED_1:
+    bits: '4.3-4.0'
+    unused: true
+
+  DST_CHANGE_HOUR:
+    bits: '5.7-5.3'
+    comment:
+      en: 'Hour of the next summer/winter time change'
+      fr: 'Heure du prochain changement d''heure été/hiver'
+      es: 'Hora del próximo cambio de hora verano/invierno'
+      de: 'Uhrzeit der nächsten Sommer-/Winterzeitumstellung'
+      it: 'Ora del prossimo cambio ora legale/solare'
+      pl: 'Godzina najbliższej zmiany czasu letniego/zimowego'
+      ru: 'Час следующего перехода на летнее/зимнее время'
+      zh: '下次夏令时/冬令时切换的小时'
+      hu: 'A következő nyári/téli időszámítás-váltás órája'
+      pt: 'Hora da próxima mudança de hora verão/inverno'
+    type: 'uint'
+    min: 0
+    max: 23
+    invalid: 0x1F
+
+  UNUSED_2:
+    bits: '5.2-5.0'
+    unused: true
+
+  DST_CHANGE_DAY:
+    bits: '6.7-6.2'
+    comment:
+      en: 'Day of the next summer/winter time change'
+      fr: 'Jour du prochain changement d''heure été/hiver'
+      es: 'Día del próximo cambio de hora verano/invierno'
+      de: 'Tag der nächsten Sommer-/Winterzeitumstellung'
+      it: 'Giorno del prossimo cambio ora legale/solare'
+      pl: 'Dzień najbliższej zmiany czasu letniego/zimowego'
+      ru: 'День следующего перехода на летнее/зимнее время'
+      zh: '下次夏令时/冬令时切换的日期'
+      hu: 'A következő nyári/téli időszámítás-váltás napja'
+      pt: 'Dia da próxima mudança de hora verão/inverno'
+    type: 'uint'
+    factor: 11
+    min: 1
+    max: 31
+    invalid: 0x3F
+
+  UNUSED_3:
+    bits: '6.1-6.0'
+    unused: true

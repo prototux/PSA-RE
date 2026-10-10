@@ -1,0 +1,398 @@
+id: 0x1A0
+name: 'CD_CHANGER_CONFIG_STATUS'
+type: 'can'
+length: 2
+comment:
+  en: 'CD changer configuration and status: scan, random track and repertoire settings.'
+  fr: 'Configuration et état du changeur CD : balayage, lecture aléatoire et répertoire.'
+  es: 'Configuración y estado del cambiador de CD: escaneo, reproducción aleatoria y repertorio.'
+  de: 'Konfiguration und Status des CD-Wechslers: Scan, Zufallswiedergabe und Verzeichnis.'
+  it: 'Configurazione e stato del cambia CD: scansione, riproduzione casuale e repertorio.'
+  pl: 'Konfiguracja i stan zmieniarki CD: skanowanie, odtwarzanie losowe i repertuar.'
+  ru: 'Конфигурация и статус CD-чейнджера: сканирование, случайное воспроизведение и репертуар.'
+  zh: 'CD换碟机的配置和状态:扫描、随机播放和曲目列表。'
+  hu: 'A CD-váltó konfigurációja és állapota: pásztázás, véletlen lejátszás és tartalomjegyzék.'
+  pt: 'Configuração e estado do leitor de CD: varrimento, faixa aleatória e definições de repertório.'
+observations:
+  en: 'On parameter change'
+  fr: 'Sur modification d''un paramètre'
+  es: 'Al modificar un parámetro'
+  de: 'Bei Parameteränderung'
+  it: 'Alla modifica di un parametro'
+  pl: 'Przy zmianie wartości parametru'
+  ru: 'При изменении параметра'
+  zh: '参数被修改时'
+  hu: 'Paraméter módosításakor'
+  pt: 'Na mudança de parâmetro'
+periodicity: ['500ms', 'trigger']
+senders: ['ICSV', 'CDC']
+receivers: ['EMF', 'BTEL', 'RAD', 'OVIP']
+
+signals:
+  CD_CHANGER_TRACK_INTRO_OPTION:
+    bits: '1.7-1.6'
+    comment:
+      en: 'CD changer track intro-scan mode option'
+      fr: 'Option du mode de lecture intro-scan du changeur de CD'
+      es: 'Opción del modo de reproducción intro-scan del cambiador de CD'
+      de: 'Option des Intro-Scan-Modus des CD-Wechslers'
+      it: 'Opzione della modalità intro-scan del cambia CD'
+      pl: 'Opcja trybu odtwarzania intro-scan zmieniarki CD'
+      ru: 'Опция режима интро-сканирования сменщика CD'
+      zh: 'CD换碟机曲目片段扫描选项'
+      hu: 'CD-váltó bevezető-pásztázás módjának beállítása'
+      pt: 'Opção do modo de pré-audição de faixas do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
+      0x01:
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
+      0x02:
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
+
+  TRACK_INTRO_ENABLED:
+    bits: '1.5'
+    comment:
+      en: 'Track intro-scan mode activation status'
+      fr: 'État d''activation du mode de lecture intro-scan'
+      es: 'Estado de activación del modo de reproducción intro-scan'
+      de: 'Aktivierungsstatus des Intro-Scan-Modus'
+      it: 'Stato di attivazione della modalità intro-scan'
+      pl: 'Stan aktywacji trybu odtwarzania intro-scan'
+      ru: 'Статус активации режима интро-сканирования'
+      zh: '曲目片段扫描模式激活状态'
+      hu: 'Bevezető-pásztázás mód aktiválási állapota'
+      pt: 'Estado de ativação do modo de pré-audição de faixas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja dezaktywowana'
+        ru: 'Опция деактивирована'
+        zh: '选项已停用'
+        hu: 'Opció kikapcsolva'
+        pt: 'Opção desativada'
+      0x01:
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
+
+  CD_CHANGER_RANDOM_TRACK_OPTION:
+    bits: '1.4-1.3'
+    comment:
+      en: 'CD changer random track/file playback mode option'
+      fr: 'Option du mode de lecture aléatoire des plages/fichiers du changeur de CD'
+      es: 'Opción del modo de reproducción aleatoria de pistas/archivos del cambiador de CD'
+      de: 'Option des Zufallswiedergabemodus für Titel/Dateien des CD-Wechslers'
+      it: 'Opzione della modalità di riproduzione casuale di tracce/file del cambia CD'
+      pl: 'Opcja trybu losowego odtwarzania utworów/plików zmieniarki CD'
+      ru: 'Опция режима случайного воспроизведения треков/файлов сменщика CD'
+      zh: 'CD换碟机曲目/文件随机播放选项'
+      hu: 'CD-váltó szám/fájl véletlenszerű lejátszásának beállítása'
+      pt: 'Opção do modo de reprodução aleatória de faixas/ficheiros do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
+      0x01:
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
+      0x02:
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
+
+  RANDOM_ENABLED:
+    bits: '1.2'
+    comment:
+      en: 'Track/file shuffle mode activation status'
+      fr: 'État d''activation du mode de lecture aléatoire des plages/fichiers'
+      es: 'Estado de activación del modo de reproducción aleatoria de pistas/archivos'
+      de: 'Aktivierungsstatus des Zufallswiedergabemodus für Titel/Dateien'
+      it: 'Stato di attivazione della modalità di riproduzione casuale di tracce/file'
+      pl: 'Stan aktywacji trybu losowego odtwarzania utworów/plików'
+      ru: 'Статус активации режима случайного воспроизведения треков/файлов'
+      zh: '曲目/文件随机播放模式激活状态'
+      hu: 'Szám/fájl véletlenszerű lejátszásának aktiválási állapota'
+      pt: 'Estado de ativação do modo de reprodução aleatória de faixas/ficheiros'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja dezaktywowana'
+        ru: 'Опция деактивирована'
+        zh: '选项已停用'
+        hu: 'Opció kikapcsolva'
+        pt: 'Opção desativada'
+      0x01:
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
+
+  CD_CHANGER_DISC_REPEAT_OPTION:
+    bits: '1.1-1.0'
+    comment:
+      en: 'CD changer disc/directory repeat mode option'
+      fr: 'Option du mode de répétition disque/répertoire du changeur de CD'
+      es: 'Opción del modo de repetición de disco/directorio del cambiador de CD'
+      de: 'Option des Wiederholungsmodus für Disc/Verzeichnis des CD-Wechslers'
+      it: 'Opzione della modalità di ripetizione disco/cartella del cambia CD'
+      pl: 'Opcja trybu powtarzania płyty/katalogu zmieniarki CD'
+      ru: 'Опция режима повтора диска/каталога сменщика CD'
+      zh: 'CD换碟机光盘/目录重复播放选项'
+      hu: 'CD-váltó lemez-/könyvtár-ismétlésének beállítása'
+      pt: 'Opção do modo de repetição de disco/diretório do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
+      0x01:
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
+      0x02:
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
+
+  REPEAT_ENABLED:
+    bits: '2.7'
+    comment:
+      en: 'Disc/directory repeat mode activation status'
+      fr: 'État d''activation du mode de répétition disque/répertoire'
+      es: 'Estado de activación del modo de repetición de disco/directorio'
+      de: 'Aktivierungsstatus des Wiederholungsmodus für Disc/Verzeichnis'
+      it: 'Stato di attivazione della modalità di ripetizione disco/cartella'
+      pl: 'Stan aktywacji trybu powtarzania płyty/katalogu'
+      ru: 'Статус активации режима повтора диска/каталога'
+      zh: '光盘/目录重复播放模式激活状态'
+      hu: 'Lemez/könyvtár ismétlési mód aktiválási állapota'
+      pt: 'Estado de ativação do modo de repetição de disco/diretório'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja dezaktywowana'
+        ru: 'Опция деактивирована'
+        zh: '选项已停用'
+        hu: 'Opció kikapcsolva'
+        pt: 'Opção desativada'
+      0x01:
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
+
+  CD_CHANGER_ALBUM_SHUFFLE_OPTION:
+    bits: '2.6-2.5'
+    comment:
+      en: 'CD changer album shuffle mode option'
+      fr: 'Option du mode de lecture aléatoire de l''album du changeur de CD'
+      es: 'Opción del modo de reproducción aleatoria del álbum del cambiador de CD'
+      de: 'Option des Zufallswiedergabemodus für Alben des CD-Wechslers'
+      it: 'Opzione della modalità di riproduzione casuale dell''album del cambia CD'
+      pl: 'Opcja trybu losowego odtwarzania albumu zmieniarki CD'
+      ru: 'Опция режима случайного воспроизведения альбома сменщика CD'
+      zh: 'CD换碟机专辑随机播放选项'
+      hu: 'CD-váltó album-véletlenszerű lejátszásának beállítása'
+      pt: 'Opção do modo de reprodução aleatória do álbum do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
+      0x01:
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
+      0x02:
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опция может быть активирована'
+        zh: '选项可激活'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
+
+  CD_CHANGER_ALBUM_SHUFFLE_STATUS:
+    bits: '2.4'
+    comment:
+      en: 'CD changer album shuffle mode activation status'
+      fr: 'État d''activation du mode de lecture aléatoire de l''album du changeur de CD'
+      es: 'Estado de activación del modo de reproducción aleatoria del álbum'
+      de: 'Aktivierungsstatus des Zufallswiedergabemodus für Alben'
+      it: 'Stato di attivazione della modalità di riproduzione casuale dell''album'
+      pl: 'Stan aktywacji trybu losowego odtwarzania albumu'
+      ru: 'Статус активации режима случайного воспроизведения альбома'
+      zh: 'CD换碟机专辑随机播放激活状态'
+      hu: 'Album-véletlenszerű lejátszás aktiválási állapota'
+      pt: 'Estado de ativação do modo de reprodução aleatória do álbum'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
+      0x01:
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
+
+  UNUSED_1:
+    bits: '2.3-2.0'
+    unused: true

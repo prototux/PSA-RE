@@ -1,0 +1,179 @@
+id: 0x227
+name: 'PUSH_BUTTON_LED_CONTROL'
+type: 'can'
+length: 8
+comment:
+  en: 'Hybrid control unit engine coordination: start/stop requests, injection cut-off, deceleration and speed-regulation setpoint'
+  fr: 'Coordination moteur par le calculateur hybride : demandes de démarrage/arrêt, coupure injection, décélération et consigne de régulation de régime'
+  es: 'Coordinación del motor por la centralita híbrida: solicitudes de arranque/parada, corte de inyección, deceleración y consigna de regulación de régimen'
+  de: 'Motorkoordination durch das Hybridsteuergerät: Start-/Stopp-Anforderungen, Einspritzabschaltung, Verzögerung und Drehzahlregelungs-Sollwert'
+  it: 'Coordinamento motore da parte della centralina ibrida: richieste di avvio/arresto, taglio iniezione, decelerazione e valore di riferimento di regolazione regime'
+  pl: 'Koordynacja silnika przez sterownik hybrydowy: żądania startu/zatrzymania, odcięcie wtrysku, hamowanie silnikiem i wartość zadana regulacji obrotów'
+  ru: 'Координация двигателя гибридным блоком управления: запросы пуска/останова, отключение впрыска, замедление и уставка регулирования оборотов'
+  zh: '混动控制单元的发动机协调:起停请求、喷油切断、减速及转速调节设定值'
+  hu: 'A hibrid vezérlőegység motorkoordinációja: indítási/leállítási kérések, befecskendezés-lekapcsolás, lassítás és fordulatszám-szabályozási alapjel'
+  pt: 'Coordenação do motor pela unidade de controlo híbrida: pedidos de arranque/paragem, corte de injeção, desaceleração e consigna de regulação de regime.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['CMM', 'ABS']
+
+signals:
+  PROCESS_COUNTER:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  AXLE_TORQUE_BEFORE_PROCESSING:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Torque before processing, expressed at the axle.'
+      fr: 'Couple avant traitement, exprimé à l''essieu.'
+      es: 'Par antes del procesamiento, expresado en el eje.'
+      de: 'Drehmoment vor der Verarbeitung, bezogen auf die Achse.'
+      it: 'Coppia prima dell''elaborazione, espressa all''asse.'
+      pl: 'Moment obrotowy przed przetworzeniem, wyrażony na osi.'
+      ru: 'Крутящий момент до обработки, приведённый к оси.'
+      zh: '处理前的车轴转矩。'
+      hu: 'Feldolgozás előtti nyomaték, a tengelyre vonatkoztatva.'
+      pt: 'Binário antes do processamento, expresso no eixo'
+    type: 'uint'
+    factor: 16
+    min: -2000
+    max: 2000
+    units: 'Nm'
+    invalid: 0xFF
+
+  AXLE_ACTUAL_POWERTRAIN_TORQUE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Actual powertrain (GMP) torque, expressed at the axle.'
+      fr: 'Couple réel du groupe motopropulseur (GMP), exprimé à l''essieu.'
+      es: 'Par real del grupo motopropulsor (GMP), expresado en el eje.'
+      de: 'Tatsächliches Antriebsstrangdrehmoment (GMP), bezogen auf die Achse.'
+      it: 'Coppia reale del gruppo motopropulsore (GMP), espressa all''asse.'
+      pl: 'Rzeczywisty moment obrotowy zespołu napędowego (GMP), wyrażony na osi.'
+      ru: 'Фактический крутящий момент силового агрегата (GMP), приведённый к оси.'
+      zh: '动力总成(GMP)实际车轴转矩。'
+      hu: 'A hajtáslánc (GMP) tényleges nyomatéka, a tengelyre vonatkoztatva.'
+      pt: 'Binário real do grupo motopropulsor (GMP), expresso no eixo'
+    type: 'uint'
+    factor: 16
+    min: -2000
+    max: 2000
+    units: 'Nm'
+    invalid: 0xFF
+
+  OPEN_LOOP_TORQUE_SPEED_REGULATION:
+    bits: '4.7-5.5'
+    comment:
+      en: 'Open-loop torque during engine speed regulation.'
+      fr: 'Couple en boucle ouverte en régulation de régime.'
+      es: 'Par en lazo abierto durante la regulación del régimen.'
+      de: 'Drehmoment im offenen Regelkreis bei der Drehzahlregelung.'
+      it: 'Coppia ad anello aperto durante la regolazione del regime.'
+      pl: 'Moment obrotowy w pętli otwartej podczas regulacji obrotów.'
+      ru: 'Крутящий момент в разомкнутом контуре при регулировании оборотов.'
+      zh: '转速调节时的开环转矩。'
+      hu: 'Nyílt hurkú nyomaték a fordulatszám-szabályozás során.'
+      pt: 'Binário em malha aberta durante a regulação do regime'
+    type: 'uint'
+    factor: 0.5
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+
+  FRONT_ELECTRIC_MACHINE_ESTIMATED_TORQUE:
+    bits: '5.4-6.2'
+    comment:
+      en: 'Estimated torque of the front electric machine (MEL AV).'
+      fr: 'Couple estimé de la machine électrique avant (MEL AV).'
+      es: 'Par estimado de la máquina eléctrica delantera (MEL AV).'
+      de: 'Geschätztes Drehmoment der vorderen elektrischen Maschine (MEL AV).'
+      it: 'Coppia stimata della macchina elettrica anteriore (MEL AV).'
+      pl: 'Szacowany moment obrotowy przedniej maszyny elektrycznej (MEL AV).'
+      ru: 'Расчётный крутящий момент передней электрической машины (MEL AV).'
+      zh: '前电机(MEL AV)估算转矩。'
+      hu: 'Az elülső elektromos gép (MEL AV) becsült nyomatéka.'
+      pt: 'Binário estimado da máquina elétrica dianteira (MEL AV)'
+    type: 'uint'
+    factor: 0.5
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  THERMAL_ENGINE_AIR_TORQUE:
+    bits: '6.1-8.7'
+    comment:
+      en: 'Thermal engine (MTH) torque for the air path.'
+      fr: 'Couple du moteur thermique (MTH) pour la branche air.'
+      es: 'Par del motor térmico (MTH) para la vía de aire.'
+      de: 'Verbrennungsmotor-Drehmoment (MTH) für den Luftpfad.'
+      it: 'Coppia del motore termico (MTH) per il ramo aria.'
+      pl: 'Moment obrotowy silnika spalinowego (MTH) dla ścieżki powietrza.'
+      ru: 'Крутящий момент теплового двигателя (MTH) по воздушному контуру.'
+      zh: '热力发动机(MTH)空气路径转矩。'
+      hu: 'A hőerőgép (MTH) nyomatéka a légútra.'
+      pt: 'Binário do motor térmico (MTH) para a via de ar'
+    type: 'uint'
+    factor: 0.5
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  RESERVE_TORQUE:
+    bits: '8.6-8.1'
+    comment:
+      en: 'Reserve torque.'
+      fr: 'Couple de réserve.'
+      es: 'Par de reserva.'
+      de: 'Reservedrehmoment.'
+      it: 'Coppia di riserva.'
+      pl: 'Moment obrotowy rezerwowy.'
+      ru: 'Резервный крутящий момент.'
+      zh: '储备转矩。'
+      hu: 'Tartaléknyomaték.'
+      pt: 'Binário de reserva'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 20
+    units: 'Nm'
+    invalid: 0x3F
+    default: 0x3E
+
+  UNUSED_1:
+    bits: '8.0'
+    unused: true

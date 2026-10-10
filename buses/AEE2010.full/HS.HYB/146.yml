@@ -1,0 +1,200 @@
+id: 0x146
+name: 'MOTOR_CONTROL_UNIT_TORQUE_LIMITS'
+type: 'can'
+length: 8
+comment:
+  en: 'Electric motor torque limits (nominal and peak, min and max) and service-warning flash request from the motor control unit.'
+  fr: 'Limites de couple du moteur électrique (nominal et crête, min et max) et demande de clignotement du témoin service, issues du calculateur moteur.'
+  es: 'Límites de par del motor eléctrico (nominal y pico, mín. y máx.) y solicitud de parpadeo del testigo de servicio, procedentes de la centralita del motor.'
+  de: 'Drehmomentgrenzen des Elektromotors (Nenn- und Spitzenwert, min. und max.) sowie Blinkanforderung der Service-Warnleuchte vom Motorsteuergerät.'
+  it: 'Limiti di coppia del motore elettrico (nominale e di picco, min. e max.) e richiesta di lampeggio della spia di servizio, dalla centralina motore.'
+  pl: 'Limity momentu obrotowego silnika elektrycznego (nominalny i szczytowy, min. i maks.) oraz żądanie migania lampki serwisowej ze sterownika silnika.'
+  ru: 'Пределы крутящего момента электродвигателя (номинальный и пиковый, мин. и макс.) и запрос мигания сервисной лампы от блока управления двигателем.'
+  zh: '电动机的扭矩限值(额定值和峰值,最小值和最大值)及来自电机控制单元的服务警告灯闪烁请求。'
+  hu: 'Az elektromos motor nyomatékhatárai (névleges és csúcsérték, min. és max.) valamint a szervizfigyelmeztető lámpa villogtatási kérése a motorvezérlő egységtől.'
+  pt: 'Limites de binário do motor elétrico (nominal e de pico, mínimo e máximo) e pedido de pisca de aviso de serviço da unidade de controlo do motor.'
+periodicity: ['10ms']
+senders: ['CMEL']
+receivers: ['CMM']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRONT_EMOTOR_NOMINAL_MAX_TORQUE:
+    bits: '2.7-3.6'
+    comment:
+      en: 'Front electric machine nominal maximum torque'
+      fr: 'Couple nominal maximum de la machine électrique avant'
+      es: 'Par nominal máximo de la máquina eléctrica delantera'
+      de: 'Maximales Nenndrehmoment der vorderen E-Maschine'
+      it: 'Coppia nominale massima della macchina elettrica anteriore'
+      pl: 'Maksymalny moment nominalny przedniej maszyny elektrycznej'
+      ru: 'Максимальный номинальный момент передней электромашины'
+      zh: '前电机最大额定扭矩'
+      hu: 'Az első elektromos gép maximális névleges nyomatéka'
+      pt: 'Binário nominal máximo da máquina elétrica dianteira'
+    type: 'sint'
+    factor: 1
+    min: -511
+    max: 511
+    units: 'Nm'
+    invalid: 0x200
+    default: 0x201
+
+  FRONT_EMOTOR_NOMINAL_MIN_TORQUE:
+    bits: '3.5-4.4'
+    comment:
+      en: 'Front electric machine nominal minimum torque'
+      fr: 'Couple nominal minimum de la machine électrique avant'
+      es: 'Par nominal mínimo de la máquina eléctrica delantera'
+      de: 'Minimales Nenndrehmoment der vorderen E-Maschine'
+      it: 'Coppia nominale minima della macchina elettrica anteriore'
+      pl: 'Minimalny moment nominalny przedniej maszyny elektrycznej'
+      ru: 'Минимальный номинальный момент передней электромашины'
+      zh: '前电机最小额定扭矩'
+      hu: 'Az első elektromos gép minimális névleges nyomatéka'
+      pt: 'Binário nominal mínimo da máquina elétrica dianteira'
+    type: 'sint'
+    factor: 1
+    min: -511
+    max: 511
+    units: 'Nm'
+    invalid: 0x200
+    default: 0x201
+
+  FRONT_EMOTOR_PEAK_MAX_TORQUE:
+    bits: '4.3-5.2'
+    comment:
+      en: 'Front electric machine maximum peak torque'
+      fr: 'Couple crête maximum de la machine électrique avant'
+      es: 'Par de pico máximo de la máquina eléctrica delantera'
+      de: 'Maximales Spitzendrehmoment der vorderen E-Maschine'
+      it: 'Coppia di picco massima della macchina elettrica anteriore'
+      pl: 'Maksymalny moment szczytowy przedniej maszyny elektrycznej'
+      ru: 'Максимальный пиковый момент передней электромашины'
+      zh: '前电机最大峰值扭矩'
+      hu: 'Az első elektromos gép maximális csúcsnyomatéka'
+      pt: 'Binário de pico máximo da máquina elétrica dianteira'
+    type: 'sint'
+    factor: 1
+    min: -511
+    max: 511
+    units: 'Nm'
+    invalid: 0x200
+    default: 0x201
+
+  FRONT_EMOTOR_PEAK_MIN_TORQUE:
+    bits: '5.1-6.0'
+    comment:
+      en: 'Front electric machine minimum peak torque'
+      fr: 'Couple crête minimum de la machine électrique avant'
+      es: 'Par de pico mínimo de la máquina eléctrica delantera'
+      de: 'Minimales Spitzendrehmoment der vorderen E-Maschine'
+      it: 'Coppia di picco minima della macchina elettrica anteriore'
+      pl: 'Minimalny moment szczytowy przedniej maszyny elektrycznej'
+      ru: 'Минимальный пиковый момент передней электромашины'
+      zh: '前电机最小峰值扭矩'
+      hu: 'Az első elektromos gép minimális csúcsnyomatéka'
+      pt: 'Binário de pico mínimo da máquina elétrica dianteira'
+    type: 'sint'
+    factor: 1
+    min: -511
+    max: 511
+    units: 'Nm'
+    invalid: 0x200
+    default: 0x201
+
+  FRONT_EMOTOR_MIN_PEAK_TORQUE_NO_HV_LIMIT:
+    bits: '7.7-8.6'
+    comment:
+      en: 'Front electric machine minimum peak torque without high-voltage limitation'
+      fr: 'Couple crête minimum de la machine électrique avant sans limitation de haute tension'
+      es: 'Par de pico mínimo de la máquina eléctrica delantera sin limitación de alta tensión'
+      de: 'Minimales Spitzendrehmoment der vorderen E-Maschine ohne Hochvoltbegrenzung'
+      it: 'Coppia di picco minima della macchina elettrica anteriore senza limitazione di alta tensione'
+      pl: 'Minimalny moment szczytowy przedniej maszyny elektrycznej bez ograniczenia wysokiego napięcia'
+      ru: 'Минимальный пиковый момент передней электромашины без ограничения по высокому напряжению'
+      zh: '无高压限制时前电机的最小峰值扭矩'
+      hu: 'Az első elektromos gép minimális csúcsnyomatéka nagyfeszültségű korlátozás nélkül'
+      pt: 'Binário de pico mínimo da máquina elétrica dianteira sem limitação de alta tensão'
+    type: 'sint'
+    factor: 1
+    min: -511
+    max: 511
+    units: 'Nm'
+    invalid: 0x200
+    default: 0x00
+
+  STOP_SERVICE_LAMP_BLINK_REQUEST_MCU:
+    bits: '8.5'
+    comment:
+      en: 'MCU request to flash the stop/service warning lamp on the HMI'
+      fr: 'Demande par le MCU du clignotement du témoin d''arrêt et de service sur l''IHM'
+      es: 'Solicitud del MCU de parpadeo del testigo de parada y servicio en el IHM'
+      de: 'Anforderung des MCU zum Blinken der Stopp-/Service-Warnleuchte im HMI'
+      it: 'Richiesta del MCU di lampeggio della spia di arresto e servizio sull''HMI'
+      pl: 'Żądanie MCU migania kontrolki stop/serwis na wyświetlaczu HMI'
+      ru: 'Запрос MCU на мигание лампы Стоп/Сервис на приборной панели (HMI)'
+      zh: 'MCU请求在人机界面上闪烁停止/维修警示灯'
+      hu: 'Az MCU kérése a stop/szerviz jelzőlámpa villogtatására a kezelőfelületen (HMI)'
+      pt: 'Pedido do MCU de intermitência da luz avisadora de paragem e serviço na IHM'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  UNUSED_1:
+    bits: '8.4-8.0'
+    unused: true

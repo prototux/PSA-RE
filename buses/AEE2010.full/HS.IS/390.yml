@@ -1,0 +1,179 @@
+id: 0x390
+name: 'ADAPTIVE_DAMPER_STATUS'
+type: 'can'
+length: 3
+comment:
+  en: 'Adaptive damper status: measured ride height, fault, state and suspension warning-lamp request.'
+  fr: 'État des amortisseurs pilotés : assiette véhicule mesurée, défaut, état et demande de voyant suspension.'
+  es: 'Estado de los amortiguadores pilotados: altura de marcha medida, fallo, estado y solicitud de testigo de suspensión.'
+  de: 'Status der adaptiven Dämpfer: gemessene Fahrhöhe, Fehler, Zustand und Anforderung der Fahrwerks-Kontrollleuchte.'
+  it: 'Stato degli ammortizzatori pilotati: assetto veicolo misurato, guasto, stato e richiesta spia sospensioni.'
+  pl: 'Stan amortyzatorów sterowanych: zmierzona wysokość jazdy, usterka, stan i żądanie kontrolki zawieszenia.'
+  ru: 'Статус адаптивных амортизаторов: измеренная высота движения, неисправность, состояние и запрос индикатора подвески.'
+  zh: '自适应减震器状态:测得的行驶高度、故障、状态和悬挂警示灯请求。'
+  hu: 'Az adaptív lengéscsillapítók állapota: mért menetmagasság, hiba, állapot és felfüggesztés jelzőlámpa-kérés.'
+  pt: 'Estado dos amortecedores adaptativos: altura medida, avaria, estado e pedido da luz avisadora da suspensão.'
+periodicity: ['40ms']
+senders: ['CSS']
+receivers: ['BSI', 'BCP']
+
+signals:
+  VEHICLE_ATTITUDE_AMVAR:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Vehicle body attitude, measured by the AMVAR+ variable damping system'
+      fr: 'Assiette du véhicule, mesurée par le système d''amortissement variable AMVAR+'
+      es: 'Actitud del vehículo, medida por el sistema de amortiguación variable AMVAR+'
+      de: 'Fahrzeugneigung, vom variablen Dämpfungssystem AMVAR+ gemessen'
+      it: 'Assetto del veicolo, misurato dal sistema di ammortizzazione variabile AMVAR+'
+      pl: 'Pochylenie nadwozia pojazdu, mierzone przez system zmiennego tłumienia AMVAR+'
+      ru: 'Крен кузова автомобиля, измеренный системой изменяемого демпфирования AMVAR+'
+      zh: '由可变阻尼系统 AMVAR+ 测得的车身姿态'
+      hu: 'A jármű dőlése, az AMVAR+ változtatható csillapítású rendszer mérése alapján'
+      pt: 'Atitude do veículo, medida pelo sistema de amortecimento variável AMVAR+'
+    type: 'sint'
+    factor: 0.006
+    min: -3
+    max: 3
+    units: '°'
+    invalid: 0x1FF
+    default: 0x00
+
+  AMVAR_FAULT_LAMP_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'AMVAR+ fault warning lamp request'
+      fr: 'Demande d''allumage du témoin de défaut AMVAR+'
+      es: 'Solicitud de encendido del testigo de fallo AMVAR+'
+      de: 'Anforderung der Warnleuchte für AMVAR+-Fehler'
+      it: 'Richiesta di accensione della spia di guasto AMVAR+'
+      pl: 'Żądanie zapalenia kontrolki usterki AMVAR+'
+      ru: 'Запрос включения лампы неисправности AMVAR+'
+      zh: 'AMVAR+ 故障警示灯请求'
+      hu: 'AMVAR+ hiba jelzőlámpájának kérése'
+      pt: 'Pedido de acendimento do testemunho de falha AMVAR+'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request to light the lamp'
+        fr: 'Pas de demande d''allumage de la lampe'
+        es: 'Sin solicitud de encendido de la lámpara'
+        de: 'Keine Anforderung zum Einschalten der Lampe'
+        it: 'Nessuna richiesta di accensione della lampada'
+        pl: 'Brak żądania zaświecenia lampki'
+        ru: 'Нет запроса включения лампы'
+        zh: '无点亮指示灯请求'
+        hu: 'Nincs lámpa-bekapcsolási kérés'
+        pt: 'Sem pedido de acendimento da lâmpada'
+      0x01:
+        en: 'Lamp lighting request'
+        fr: 'Demande d''allumage de la lampe'
+        es: 'Solicitud de encendido de la lámpara'
+        de: 'Anforderung zum Einschalten der Lampe'
+        it: 'Richiesta di accensione della lampada'
+        pl: 'Żądanie zapalenia lampki'
+        ru: 'Запрос на включение лампы'
+        zh: '请求点亮灯'
+        hu: 'A lámpa bekapcsolási kérése'
+        pt: 'Pedido de acendimento da lâmpada'
+
+  AMVAR_STATUS:
+    bits: '3.6-3.5'
+    comment:
+      en: 'AMVAR+ damping mode (comfort/dynamic/sport)'
+      fr: 'Mode d''amortissement AMVAR+ (confort/dynamique/sport)'
+      es: 'Modo de amortiguación AMVAR+ (confort/dinámico/deportivo)'
+      de: 'AMVAR+ Dämpfungsmodus (Komfort/Dynamik/Sport)'
+      it: 'Modalità di ammortizzazione AMVAR+ (comfort/dinamica/sport)'
+      pl: 'Tryb tłumienia AMVAR+ (komfort/dynamiczny/sport)'
+      ru: 'Режим демпфирования AMVAR+ (комфорт/динамика/спорт)'
+      zh: 'AMVAR+ 阻尼模式(舒适/动态/运动)'
+      hu: 'AMVAR+ csillapítási mód (kényelmi/dinamikus/sport)'
+      pt: 'Modo de amortecimento AMVAR+ (conforto/dinâmico/desportivo)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Comfort state'
+        fr: 'Etat confort'
+        es: 'Estado confort'
+        de: 'Komfortzustand'
+        it: 'Stato comfort'
+        pl: 'Stan komfortowy'
+        ru: 'Комфортное состояние'
+        zh: '舒适状态'
+        hu: 'Komfort állapot'
+        pt: 'Estado de conforto'
+      0x01:
+        en: 'Dynamic state'
+        fr: 'État dynamique'
+        es: 'Estado dinámico'
+        de: 'Dynamischer Zustand'
+        it: 'Stato dinamico'
+        pl: 'Stan dynamiczny'
+        ru: 'Динамическое состояние'
+        zh: '动态状态'
+        hu: 'Dinamikus állapot'
+        pt: 'Estado dinâmico'
+      0x02:
+        en: 'Sport state'
+        fr: 'État Sport'
+        es: 'Estado Sport'
+        de: 'Sport-Zustand'
+        it: 'Stato Sport'
+        pl: 'Stan Sport'
+        ru: 'Спортивный режим'
+        zh: '运动模式状态'
+        hu: 'Sport állapot'
+        pt: 'Estado Sport'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  AMVAR_FAULT:
+    bits: '3.4'
+    comment:
+      en: 'AMVAR+ variable damping system fault'
+      fr: 'Défaut du système d''amortissement variable AMVAR+'
+      es: 'Fallo del sistema de amortiguación variable AMVAR+'
+      de: 'Störung des variablen Dämpfungssystems AMVAR+'
+      it: 'Guasto del sistema di ammortizzazione variabile AMVAR+'
+      pl: 'Usterka systemu zmiennego tłumienia AMVAR+'
+      ru: 'Неисправность системы изменяемого демпфирования AMVAR+'
+      zh: 'AMVAR+ 可变阻尼系统故障'
+      hu: 'Az AMVAR+ változtatható csillapítású rendszer hibája'
+      pt: 'Falha do sistema de amortecimento variável AMVAR+'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'AMVAR faulty'
+        fr: 'AMVAR en défaut'
+        es: 'AMVAR con fallo'
+        de: 'AMVAR fehlerhaft'
+        it: 'AMVAR guasto'
+        pl: 'Usterka AMVAR'
+        ru: 'Неисправность AMVAR'
+        zh: 'AMVAR故障'
+        hu: 'AMVAR hibás'
+        pt: 'AMVAR com falha'

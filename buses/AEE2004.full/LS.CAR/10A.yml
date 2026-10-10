@@ -1,0 +1,272 @@
+id: 0x10A
+name: 'SHIFT_BY_WIRE_VERSION'
+type: 'can'
+length: 2
+comment:
+  en: 'Command frame from the BSI: AAF, automatic and manual mode requests, climate control and washer commands, and AF position status.'
+  fr: 'Trame de commande de la BSI : demandes AAF, mode automatique et manuel, climatisation, lave-glace, et état de la position AF.'
+  es: 'Trama de comando de la BSI: solicitudes AAF, modo automático y manual, climatización, lavaparabrisas y estado de posición AF.'
+  de: 'Befehlstelegramm des BSI: AAF-, Automatik- und Handbetriebsanforderungen, Klimaanlagen- und Waschanlagenbefehle sowie AF-Positionsstatus.'
+  it: 'Trama di comando della BSI: richieste AAF, modalità automatica e manuale, climatizzazione, lavavetro e stato posizione AF.'
+  pl: 'Ramka poleceń BSI: żądania AAF, tryb automatyczny i ręczny, sterowanie klimatyzacją i spryskiwaczem oraz stan pozycji AF.'
+  ru: 'Кадр команд от BSI: запросы AAF, автоматический и ручной режим, управление климатом и омывателем, состояние позиции AF.'
+  zh: 'BSI发出的命令帧:AAF、自动/手动模式请求、空调和洗涤器命令,以及AF位置状态。'
+  hu: 'BSI parancskeret: AAF-, automata és manuális mód kérések, klíma- és mosóvezérlés, valamint AF pozíció állapota.'
+  pt: 'Trama de comando da BSI: AAF, pedidos de modo automático e manual, comandos de climatização e de lava-para-brisas, e estado de posição do AF.'
+observations:
+  en: 'On state change of: AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+  fr: 'Sur changement d''état de : AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+  es: 'Al cambiar el estado de: AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+  de: 'Bei Statusänderung von: AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+  it: 'Al cambiamento di stato di: AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+  pl: 'Wysyłane przy zmianie stanu: AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+  ru: 'При изменении состояния: AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+  zh: '当CDE_AAF, AUTO_WIPE_MODE, POS_AF状态变化时'
+  hu: 'A(z) AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED állapotváltozásakor'
+  pt: 'Na mudança de estado de: AUTO_LAMPS_FUNCTION, AUTO_WIPE_MODE, WIPER_PARKED'
+periodicity: ['100ms', 'trigger']
+senders: ['BSI']
+receivers: ['CDPL']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.4'
+    unused: true
+
+  MANUAL_WIPE_REQUEST:
+    bits: '1.3'
+    comment:
+      en: 'Manual wiping request'
+      fr: 'Demande d''essuyage manuel'
+      es: 'Solicitud de limpiado manual'
+      de: 'Manuelle Wischanforderung'
+      it: 'Richiesta di tergitura manuale'
+      pl: 'Żądanie ręcznego wycierania'
+      ru: 'Запрос ручного протирания'
+      zh: '手动刮水请求'
+      hu: 'Kézi törlési kérés'
+      pt: 'Pedido de limpeza manual'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  WASH_CYCLE_INDICATOR:
+    bits: '1.2'
+    comment:
+      en: 'Washing cycle indicator'
+      fr: 'Indication de cycle de lavage'
+      es: 'Indicación de ciclo de lavado'
+      de: 'Anzeige des Waschzyklus'
+      it: 'Indicazione del ciclo di lavaggio'
+      pl: 'Wskazanie cyklu mycia'
+      ru: 'Индикация цикла омывания'
+      zh: '洗涤循环指示'
+      hu: 'Mosási ciklus jelzése'
+      pt: 'Indicação de ciclo de lavagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No washing'
+        fr: 'Pas de lavage'
+        es: 'Sin lavado'
+        de: 'Kein Waschen'
+        it: 'Nessun lavaggio'
+        pl: 'Brak mycia'
+        ru: 'Мойка отсутствует'
+        zh: '无清洗'
+        hu: 'Nincs mosás'
+        pt: 'Sem lavagem'
+      0x01:
+        en: 'Washing'
+        fr: 'Lavage'
+        es: 'Lavado'
+        de: 'Waschen'
+        it: 'Lavaggio'
+        pl: 'Mycie'
+        ru: 'Мойка'
+        zh: '清洗'
+        hu: 'Mosás'
+        pt: 'Lavagem'
+
+  WIPER_PARKED:
+    bits: '1.1'
+    comment:
+      en: 'Wiper in compulsory stop (park) position'
+      fr: 'Essuie-vitre en position d''arrêt fixe'
+      es: 'Limpiaparabrisas en posición de aparcamiento'
+      de: 'Wischer in Parkstellung'
+      it: 'Tergicristallo in posizione di parcheggio'
+      pl: 'Wycieraczka w pozycji spoczynkowej'
+      ru: 'Дворник в положении парковки'
+      zh: '雨刷处于强制停止(驻停)位置'
+      hu: 'Az ablaktörlő nyugalmi (parkoló) helyzetben van'
+      pt: 'Limpa-para-brisas em posição de paragem fixa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not parked'
+        fr: 'Pas à l''arrêt fixe'
+        es: 'Sin estacionamiento fijo'
+        de: 'Nicht geparkt'
+        it: 'Non in sosta fissa'
+        pl: 'Nie zaparkowany'
+        ru: 'Не на стоянке'
+        zh: '非固定停车'
+        hu: 'Nincs leparkolva'
+        pt: 'Não em paragem fixa'
+      0x01:
+        en: 'Parked'
+        fr: 'Arrêt fixe'
+        es: 'Estacionado'
+        de: 'Fest geparkt'
+        it: 'Parcheggiato'
+        pl: 'Postój na stałe'
+        ru: 'Стоянка'
+        zh: '固定停车'
+        hu: 'Rögzített állás'
+        pt: 'Estacionado'
+
+  AUTO_WIPE_MODE:
+    bits: '1.0'
+    comment:
+      en: 'Automatic wiping mode active'
+      fr: 'Mode automatique de l''essuyage actif'
+      es: 'Modo automático de limpiado activo'
+      de: 'Automatischer Wischmodus aktiv'
+      it: 'Modalità di tergitura automatica attiva'
+      pl: 'Aktywny tryb automatycznego wycierania'
+      ru: 'Активен режим автоматического стеклоочистителя'
+      zh: '自动刮水模式激活'
+      hu: 'Az automatikus törlési mód aktív'
+      pt: 'Modo automático de limpeza ativo'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  UNUSED_2:
+    bits: '2.7-2.2'
+    unused: true
+
+  AC_ACTIVE:
+    bits: '2.1'
+    comment:
+      en: 'Air conditioning active'
+      fr: 'Climatisation active'
+      es: 'Aire acondicionado activo'
+      de: 'Klimaanlage aktiv'
+      it: 'Climatizzatore attivo'
+      pl: 'Aktywna klimatyzacja'
+      ru: 'Кондиционер активен'
+      zh: '空调激活'
+      hu: 'A klíma aktív'
+      pt: 'Ar condicionado ativo'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  AUTO_LAMPS_FUNCTION:
+    bits: '2.0'
+    comment:
+      en: 'Automatic headlamp switching (AAF) function active'
+      fr: 'Fonction d''allumage automatique des feux (AAF) active'
+      es: 'Función de encendido automático de las luces (AAF) activa'
+      de: 'Funktion der automatischen Lichteinschaltung (AAF) aktiv'
+      it: 'Funzione di accensione automatica dei fari (AAF) attiva'
+      pl: 'Aktywna funkcja automatycznego włączania świateł (AAF)'
+      ru: 'Функция автоматического включения фар (AAF) активна'
+      zh: '大灯自动开启(AAF)功能激活'
+      hu: 'Az automatikus fényszóró-bekapcsolás (AAF) funkció aktív'
+      pt: 'Função de acendimento automático das luzes (AAF) ativa'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'

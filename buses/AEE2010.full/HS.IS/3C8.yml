@@ -1,0 +1,192 @@
+id: 0x3C8
+name: 'STOP_START_ENGINE_DATA'
+type: 'can'
+length: 2
+comment:
+  en: 'Stop & start data from the engine ECU: engine-stop-in-progress state, neutral state and restart type.'
+  fr: 'Données stop & start du calculateur moteur : état d''arrêt moteur en cours, état point mort et type de redémarrage.'
+  es: 'Datos stop & start de la centralita del motor: estado de parada del motor en curso, estado de punto muerto y tipo de reinicio.'
+  de: 'Stopp-Start-Daten des Motorsteuergeräts: Status des laufenden Motorstopps, Leerlaufstellung und Neustartart.'
+  it: 'Dati stop & start della centralina motore: stato di arresto motore in corso, stato folle e tipo di riavvio.'
+  pl: 'Dane funkcji stop & start ze sterownika silnika: stan trwającego zatrzymania silnika, stan luzu (biegu jałowego) i typ ponownego uruchomienia.'
+  ru: 'Данные функции старт-стоп от блока управления двигателем: статус текущей остановки двигателя, состояние нейтрали и тип перезапуска.'
+  zh: '发动机控制单元的启停数据:发动机停止进行中状态、空挡状态及重启类型。'
+  hu: 'A motorvezérlő start-stop adatai: a folyamatban lévő motorleállítás állapota, az üresjárat állapota és az újraindítás típusa.'
+  pt: 'Dados de stop & start da unidade de controlo do motor: estado de paragem do motor em curso, estado de ponto morto e tipo de reinício.'
+periodicity: ['20ms']
+senders: ['CMM']
+receivers: ['BVA', 'ABS', 'FSE', 'BSI']
+
+signals:
+  CDT_OPEN_REQUEST:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Request to open the CDT (clutch/torque converter device)'
+      fr: 'Demande d''ouverture du CDT (dispositif d''embrayage/convertisseur de couple)'
+      es: 'Solicitud de apertura del CDT (dispositivo de embrague/convertidor de par)'
+      de: 'Anforderung zum Öffnen des CDT (Kupplungs-/Drehmomentwandlereinheit)'
+      it: 'Richiesta di apertura del CDT (dispositivo frizione/convertitore di coppia)'
+      pl: 'Żądanie otwarcia CDT (urządzenia sprzęgła/przetwornika momentu)'
+      ru: 'Запрос открытия CDT (устройства сцепления/гидротрансформатора)'
+      zh: '请求打开CDT(离合器/变矩器装置)'
+      hu: 'A CDT (tengelykapcsoló/nyomatékváltó egység) nyitási kérése'
+      pt: 'Pedido de abertura do CDT (dispositivo de embraiagem/conversor de binário)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'CDT open request for stop (start & stop)'
+        fr: 'Demande d''ouverture du CDT pour l''arrêt (stop & start)'
+        es: 'Solicitud de apertura del CDT para la parada (stop & start)'
+        de: 'Anforderung zum Öffnen des CDT für den Stopp (Start-Stopp)'
+        it: 'Richiesta di apertura del CDT per l''arresto (stop & start)'
+        pl: 'Żądanie otwarcia CDT dla zatrzymania (Stop & Start)'
+        ru: 'Запрос открытия CDT для остановки (Стоп-старт)'
+        zh: '停止(启停)CDT 打开请求'
+        hu: 'CDT nyitási kérés leálláshoz (Stop & Start)'
+        pt: 'Pedido de abertura do CDT para a paragem (stop & start)'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+
+  RESTART_TYPE:
+    bits: '1.5'
+    comment:
+      en: 'Type of engine restart (classic or smooth)'
+      fr: 'Type de redémarrage moteur (classique ou doux)'
+      es: 'Tipo de reinicio del motor (clásico o suave)'
+      de: 'Art des Motorneustarts (klassisch oder sanft)'
+      it: 'Tipo di riavvio motore (classico o dolce)'
+      pl: 'Rodzaj ponownego uruchomienia silnika (klasyczny lub łagodny)'
+      ru: 'Тип повторного запуска двигателя (обычный или плавный)'
+      zh: '发动机重启类型(常规或平稳)'
+      hu: 'A motor újraindításának típusa (klasszikus vagy lágy)'
+      pt: 'Tipo de reinício do motor (clássico ou suave)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Standard restart'
+        fr: 'Redémarrage standard'
+        es: 'Reinicio estándar'
+        de: 'Standardneustart'
+        it: 'Riavvio standard'
+        pl: 'Standardowy restart'
+        ru: 'Стандартный перезапуск'
+        zh: '标准重启'
+        hu: 'Standard újraindítás'
+        pt: 'Reinício padrão'
+      0x01:
+        en: 'Soft restart'
+        fr: 'Redémarrage doux'
+        es: 'Reinicio suave'
+        de: 'Sanfter Neustart'
+        it: 'Riavvio dolce'
+        pl: 'Łagodny restart'
+        ru: 'Плавный перезапуск'
+        zh: '柔性重启'
+        hu: 'Lágy újraindítás'
+        pt: 'Reinício suave'
+
+  ENGINE_STOP_IN_PROGRESS:
+    bits: '1.4'
+    comment:
+      en: 'Engine stop in progress'
+      fr: 'Arrêt moteur en cours'
+      es: 'Parada de motor en curso'
+      de: 'Motorstopp läuft'
+      it: 'Spegnimento motore in corso'
+      pl: 'Trwa zatrzymywanie silnika'
+      ru: 'Выполняется остановка двигателя'
+      zh: '发动机停机进行中'
+      hu: 'Motorleállítás folyamatban'
+      pt: 'Paragem do motor em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No engine stop in progress'
+        fr: 'Pas d''arrêt moteur en cours'
+        es: 'Sin parada del motor en curso'
+        de: 'Kein Motorstopp im Gange'
+        it: 'Nessun arresto motore in corso'
+        pl: 'Brak trwającego zatrzymania silnika'
+        ru: 'Остановка двигателя не выполняется'
+        zh: '无发动机停止进行中'
+        hu: 'Nincs folyamatban motorleállítás'
+        pt: 'Sem paragem do motor em curso'
+      0x01:
+        en: 'Engine stop in progress'
+        fr: 'Arrêt moteur en cours'
+        es: 'Parada del motor en curso'
+        de: 'Motorabschaltung läuft'
+        it: 'Arresto motore in corso'
+        pl: 'Zatrzymywanie silnika w toku'
+        ru: 'Останов двигателя выполняется'
+        zh: '发动机正在停止'
+        hu: 'Motorleállítás folyamatban'
+        pt: 'Paragem do motor em curso'
+
+  NEUTRAL_POSITION_STATE:
+    bits: '1.3-1.2'
+    comment:
+      en: 'Neutral position state'
+      fr: 'État de la position point mort'
+      es: 'Estado de la posición de punto muerto'
+      de: 'Zustand der Neutralstellung'
+      it: 'Stato della posizione folle'
+      pl: 'Stan pozycji neutralnej'
+      ru: 'Состояние нейтрального положения'
+      zh: '空挡位置状态'
+      hu: 'Az üresjárati helyzet állapota'
+      pt: 'Estado da posição de ponto morto'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Not in neutral'
+        fr: 'Hors point mort'
+        es: 'Fuera de punto muerto'
+        de: 'Nicht in Neutralstellung'
+        it: 'Fuori dal folle'
+        pl: 'Poza pozycją neutralną'
+        ru: 'Не в нейтральном положении'
+        zh: '非空挡状态'
+        hu: 'Nincs üresben'
+        pt: 'Fora do ponto morto'
+      0x02:
+        en: 'Neutral'
+        fr: 'Point mort'
+        es: 'Punto muerto'
+        de: 'Neutral'
+        it: 'Folle'
+        pl: 'Luz'
+        ru: 'Нейтраль'
+        zh: '空挡'
+        hu: 'Üres'
+        pt: 'Ponto morto'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'

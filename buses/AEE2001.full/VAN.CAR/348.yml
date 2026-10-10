@@ -1,0 +1,170 @@
+id: 0x348
+name: 'ROLLOVER_HANDSHAKE'
+type: 'van'
+length: 3
+comment:
+  en: 'Rollover link-securing frame from the body computer: acknowledge / initialisation request for the process-counter handshake, and rollover information/confirmation codes.'
+  fr: 'Trame de sécurisation du lien retournement issue de la BSI : acquittement/demande d''initialisation du compteur de processus, et codes d''information/confirmation de retournement.'
+  es: 'Trama de aseguramiento del enlace de vuelco de la BSI: confirmación/solicitud de inicialización del contador de proceso, y códigos de información/confirmación de vuelco.'
+  de: 'Überschlag-Sicherungsrahmen der BSI: Bestätigung/Initialisierungsanforderung für den Prozesszähler-Handshake sowie Überschlag-Informations-/Bestätigungscodes.'
+  it: 'Trama di protezione del collegamento di ribaltamento della BSI: conferma/richiesta di inizializzazione del contatore di processo, e codici di informazione/conferma di ribaltamento.'
+  pl: 'Ramka zabezpieczenia łącza przewrócenia z BSI: potwierdzenie/żądanie inicjalizacji licznika procesu oraz kody informacji/potwierdzenia przewrócenia.'
+  ru: 'Кадр защиты канала опрокидывания от BSI: подтверждение/запрос инициализации счётчика процесса, а также коды информации/подтверждения опрокидывания.'
+  zh: '来自车身控制器的翻车链路安全帧:过程计数器握手的确认/初始化请求,以及翻车信息/确认代码。'
+  hu: 'A BSI borulásbiztosító kerete: a folyamatszámláló kézfogás nyugtázása/inicializálási kérése, valamint borulási információs/megerősítési kódok.'
+  pt: 'Trama de segurança da ligação de capotamento do computador de servidão: confirmação / pedido de inicialização para o acordo do contador de processo, e códigos de informação/confirmação de capotamento.'
+periodicity: ['50ms', 'trigger']
+senders: ['BSI']
+receivers: ['RBG']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.2'
+    unused: true
+
+  ACKNOWLEDGE:
+    bits: '1.1'
+    comment:
+      en: 'Acknowledge of the last received process counter'
+      fr: 'Acquittement du dernier compteur de processus reçu'
+      es: 'Confirmación del último contador de proceso recibido'
+      de: 'Bestätigung des zuletzt empfangenen Prozesszählers'
+      it: 'Conferma dell''ultimo contatore di processo ricevuto'
+      pl: 'Potwierdzenie ostatniego odebranego licznika procesu'
+      ru: 'Подтверждение последнего полученного счётчика процесса'
+      zh: '最近收到的处理计数器确认'
+      hu: 'Az utoljára fogadott folyamatszámláló nyugtázása'
+      pt: 'Confirmação do último contador de processo recebido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not acknowledged'
+        fr: 'Non acquitté'
+        es: 'No confirmado'
+        de: 'Nicht quittiert'
+        it: 'Non confermato'
+        pl: 'Niepotwierdzone'
+        ru: 'Не подтверждено'
+        zh: '未确认'
+        hu: 'Nincs nyugtázva'
+        pt: 'Não confirmado'
+      0x01:
+        en: 'Acknowledged'
+        fr: 'Acquitté'
+        es: 'Confirmado'
+        de: 'Quittiert'
+        it: 'Confermato'
+        pl: 'Potwierdzone'
+        ru: 'Подтверждено'
+        zh: '已确认'
+        hu: 'Nyugtázva'
+        pt: 'Confirmado'
+
+  INIT_REQUEST:
+    bits: '1.0'
+    comment:
+      en: 'Request to re-initialise the handshake counters'
+      fr: 'Commande d''initialisation'
+      es: 'Solicitud de reinicialización de los contadores de enlace'
+      de: 'Anforderung zur Neuinitialisierung der Handshake-Zähler'
+      it: 'Richiesta di reinizializzazione dei contatori di handshake'
+      pl: 'Żądanie ponownej inicjalizacji liczników uzgadniania'
+      ru: 'Запрос повторной инициализации счётчиков квитирования'
+      zh: '请求重新初始化握手计数器'
+      hu: 'A kézfogás-számlálók újrainicializálásának kérése'
+      pt: 'Pedido de reinicialização dos contadores de handshake'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nie żądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitado'
+      0x01:
+        en: 'Initialisation requested'
+        fr: 'demande initialisation'
+        es: 'Solicitud de inicialización'
+        de: 'Anforderung Initialisierung'
+        it: 'Richiesta di inizializzazione'
+        pl: 'Żądanie inicjalizacji'
+        ru: 'Запрос инициализации'
+        zh: '请求初始化'
+        hu: 'Inicializálási kérés'
+        pt: 'Pedido de inicialização'
+
+  UNUSED_2:
+    bits: '2.7-2.6'
+    unused: true
+
+  ROLLOVER_INFO:
+    bits: '2.5-2.0'
+    comment:
+      en: 'Rollover information code (0b101010 = rollover; any other value invalid)'
+      fr: 'Information retournement : 0b101010 = retournement ; autres codages invalides'
+      es: 'Código de información de vuelco (0b101010 = vuelco; cualquier otro valor no es válido)'
+      de: 'Informationscode für Überschlag (0b101010 = Überschlag; jeder andere Wert ungültig)'
+      it: 'Codice informativo di ribaltamento (0b101010 = ribaltamento; qualsiasi altro valore non valido)'
+      pl: 'Kod informacji o dachowaniu (0b101010 = dachowanie; każda inna wartość nieprawidłowa)'
+      ru: 'Информационный код опрокидывания (0b101010 = опрокидывание; любое другое значение недействительно)'
+      zh: '侧翻信息代码（0b101010 = 侧翻；其他值均无效）'
+      hu: 'Borulási információs kód (0b101010 = borulás; minden más érték érvénytelen)'
+      pt: 'Código de informação de capotamento (0b101010 = capotamento; qualquer outro valor é inválido)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x2A:
+        en: 'Rollover'
+        fr: 'Retournement'
+        es: 'Vuelco'
+        de: 'Überschlag'
+        it: 'Ribaltamento'
+        pl: 'Dachowanie'
+        ru: 'Опрокидывание'
+        zh: '翻车'
+        hu: 'Borulás'
+        pt: 'Capotamento'
+
+  UNUSED_3:
+    bits: '3.7-3.6'
+    unused: true
+
+  ROLLOVER_CONFIRM:
+    bits: '3.5-3.0'
+    comment:
+      en: 'Rollover confirmation code (0b110011 = rollover confirmed; any other value invalid)'
+      fr: 'Confirmation retournement : 0b110011 = retournement confirmé ; autres codages invalides'
+      es: 'Código de confirmación de vuelco (0b110011 = vuelco confirmado; cualquier otro valor no es válido)'
+      de: 'Bestätigungscode für Überschlag (0b110011 = Überschlag bestätigt; jeder andere Wert ungültig)'
+      it: 'Codice di conferma del ribaltamento (0b110011 = ribaltamento confermato; qualsiasi altro valore non valido)'
+      pl: 'Kod potwierdzenia dachowania (0b110011 = dachowanie potwierdzone; każda inna wartość nieprawidłowa)'
+      ru: 'Код подтверждения опрокидывания (0b110011 = опрокидывание подтверждено; любое другое значение недействительно)'
+      zh: '侧翻确认代码（0b110011 = 侧翻确认；其他值均无效）'
+      hu: 'Borulás megerősítési kód (0b110011 = borulás megerősítve; minden más érték érvénytelen)'
+      pt: 'Código de confirmação de capotamento (0b110011 = capotamento confirmado; qualquer outra codificação é inválida)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x33:
+        en: 'Rollover confirmed'
+        fr: 'Retournement confirmé'
+        es: 'Vuelco confirmado'
+        de: 'Überschlag bestätigt'
+        it: 'Ribaltamento confermato'
+        pl: 'Potwierdzone dachowanie'
+        ru: 'Опрокидывание подтверждено'
+        zh: '已确认侧翻'
+        hu: 'A borulás megerősítve'
+        pt: 'Capotamento confirmado'

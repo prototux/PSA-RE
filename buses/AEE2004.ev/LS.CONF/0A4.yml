@@ -1,0 +1,442 @@
+id: 0x0A4
+name: 'RADIO_TEXT_REPLY_PAYLOAD'
+type: 'can-tp'
+comment:
+  en: 'CD Text information (artist, track) sent to the display; TEXT_LENGTH sets the text length.'
+  fr: 'Informations CD Text (artiste, piste) envoyées à l''afficheur ; TEXT_LENGTH définit la longueur du texte.'
+  es: 'Información de texto de CD (artista, pista) enviada a la pantalla; TEXT_LENGTH define la longitud del texto'
+  de: 'CD-Textinformationen (Interpret, Titel) für die Anzeige; TEXT_LENGTH legt die Textlänge fest'
+  it: 'Informazioni testuali del CD (artista, brano) inviate al display; TEXT_LENGTH definisce la lunghezza del testo'
+  pl: 'Informacje tekstowe CD (wykonawca, utwór) wysyłane na wyświetlacz; TEXT_LENGTH określa długość tekstu'
+  ru: 'Текстовая информация CD (исполнитель, дорожка), отправляемая на дисплей; TEXT_LENGTH задаёт длину текста'
+  zh: '发送到显示屏的 CD 文本信息（艺术家、曲目）；TEXT_LENGTH 决定文本长度'
+  hu: 'A kijelzőnek küldött CD szöveges információ (előadó, szám); a TEXT_LENGTH határozza meg a szöveg hosszát'
+  pt: 'Informação CD Text (artista, faixa) enviada ao visor; TEXT_LENGTH define o comprimento do texto.'
+periodicity: ['trigger']
+senders: ['RAD', 'ICSV']
+receivers: ['EMF', 'CMB']
+isotp:
+  flow_control_id: 0x09F
+
+signals:
+  RADIO_TEXT_TYPE:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Type of text sent'
+      fr: 'Type de texte envoyé'
+      es: 'Tipo de texto enviado'
+      de: 'Art des gesendeten Texts'
+      it: 'Tipo di testo inviato'
+      pl: 'Rodzaj wysyłanego tekstu'
+      ru: 'Тип отправляемого текста'
+      zh: '发送的文本类型'
+      hu: 'A küldött szöveg típusa'
+      pt: 'Tipo de texto enviado'
+    type: 'enum'
+    default: 0x00
+    mux_selector: true
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'Radio text'
+        fr: 'Radio texte'
+        es: 'Texto de radio'
+        de: 'Radiotext'
+        it: 'Testo radio'
+        pl: 'Tekst radiowy'
+        ru: 'Радиотекст'
+        zh: '电台文本'
+        hu: 'Rádiószöveg'
+        pt: 'Texto de rádio'
+      0x02:
+        en: 'CD text'
+        fr: 'CD texte'
+        es: 'Texto de CD'
+        de: 'CD-Text'
+        it: 'Testo CD'
+        pl: 'Tekst CD'
+        ru: 'Текст CD'
+        zh: 'CD文本'
+        hu: 'CD szöveg'
+        pt: 'Texto de CD'
+
+  UNUSED_1:
+    bits: '1.3-1.0'
+    unused: true
+
+  TEXT_LENGTH:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Length of the text to be sent'
+      fr: 'Longueur du texte à envoyer'
+      es: 'Longitud del texto a enviar'
+      de: 'Länge des zu sendenden Texts'
+      it: 'Lunghezza del testo da inviare'
+      pl: 'Długość tekstu do wysłania'
+      ru: 'Длина отправляемого текста'
+      zh: '待发送文本长度'
+      hu: 'A küldendő szöveg hossza'
+      pt: 'Comprimento do texto a enviar'
+    type: 'uint'
+    default: 0x00
+
+  RADIO_TEXT_INFO_TYPE:
+    bits: '3.7-3.5'
+    comment:
+      en: 'Type of information sent (album name, artist name, track title, etc.)'
+      fr: 'Type d''information envoyée (nom de l''album, nom de l''artiste, titre d''une plage, etc.)'
+      es: 'Tipo de información enviada (nombre del álbum, nombre del artista, título de una pista, etc.)'
+      de: 'Art der gesendeten Information (Albumname, Künstlername, Titel eines Stücks usw.)'
+      it: 'Tipo di informazione inviata (nome dell''album, nome dell''artista, titolo di una traccia, ecc.)'
+      pl: 'Rodzaj wysyłanej informacji (nazwa albumu, nazwa wykonawcy, tytuł utworu itp.)'
+      ru: 'Тип отправляемой информации (название альбома, имя исполнителя, название трека и т. д.)'
+      zh: '发送的信息类型(专辑名称、艺术家姓名、曲目标题等)'
+      hu: 'A küldött információ típusa (album neve, előadó neve, szám címe stb.)'
+      pt: 'Tipo de informação enviada (nome do álbum, nome do artista, título de uma faixa, etc.)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None (no longitudinal control)'
+        fr: 'Aucune (pas de régulation longitudinale)'
+        es: 'Ninguna (sin regulación longitudinal)'
+        de: 'Keine (keine Längsregelung)'
+        it: 'Nessuna (nessuna regolazione longitudinale)'
+        pl: 'Brak (brak regulacji podłużnej)'
+        ru: 'Нет (нет продольного регулирования)'
+        zh: '无(无纵向调节)'
+        hu: 'Nincs (nincs hosszirányú szabályozás)'
+        pt: 'Nenhum (sem controlo longitudinal)'
+      0x01:
+        en: 'CD artist name / CD album name'
+        fr: 'Nom artiste CD / nom album CD'
+        es: 'Nombre del artista del CD / nombre del álbum del CD'
+        de: 'CD-Interpretenname / CD-Albumname'
+        it: 'Nome artista CD / nome album CD'
+        pl: 'Nazwa wykonawcy CD / nazwa albumu CD'
+        ru: 'Имя исполнителя CD / название альбома CD'
+        zh: 'CD艺术家名称/CD专辑名称'
+        hu: 'CD előadó neve / CD album neve'
+        pt: 'Nome do artista do CD / nome do álbum do CD'
+      0x02:
+        en: 'Track artist name / track title name'
+        fr: 'Nom artiste piste / nom titre piste'
+        es: 'Nombre del artista de la pista / nombre del título de la pista'
+        de: 'Titel-Interpretenname / Titelname'
+        it: 'Nome artista traccia / nome titolo traccia'
+        pl: 'Nazwa wykonawcy utworu / tytuł utworu'
+        ru: 'Имя исполнителя трека / название трека'
+        zh: '曲目艺术家名称/曲目标题名称'
+        hu: 'A szám előadójának neve / a szám címe'
+        pt: 'Nome do artista da faixa / nome do título da faixa'
+      0x04:
+        en: 'MP3 artist name / MP3 track name'
+        fr: 'Nom artiste MP3 / nom piste MP3'
+        es: 'Nombre del artista MP3 / nombre de la pista MP3'
+        de: 'MP3-Interpretenname / MP3-Titelname'
+        it: 'Nome artista MP3 / nome traccia MP3'
+        pl: 'Nazwa wykonawcy MP3 / nazwa utworu MP3'
+        ru: 'Имя исполнителя MP3 / название трека MP3'
+        zh: 'MP3艺术家名称/MP3曲目名称'
+        hu: 'MP3 előadó neve / MP3 szám neve'
+        pt: 'Nome do artista MP3 / nome da faixa MP3'
+
+  CD_ARTIST_NAME_AVAILABLE:
+    bits: '3.4'
+    comment:
+      en: 'Artist name of the available track'
+      fr: 'Nom de l''artiste de la plage disponible'
+      es: 'Nombre del artista de la pista disponible'
+      de: 'Künstlername des verfügbaren Titels'
+      it: 'Nome artista della traccia disponibile'
+      pl: 'Nazwa wykonawcy dostępnego utworu'
+      ru: 'Имя исполнителя доступной дорожки'
+      zh: '可用曲目的艺术家姓名'
+      hu: 'Az elérhető szám előadójának neve'
+      pt: 'Nome do artista da faixa disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x01:
+        en: 'Yes'
+        fr: 'oui'
+        es: 'sí'
+        de: 'ja'
+        it: 'sì'
+        pl: 'tak'
+        ru: 'да'
+        zh: '是'
+        hu: 'igen'
+        pt: 'Sim'
+
+  CD_TRACK_TITLE_AVAILABLE:
+    bits: '3.3'
+    comment:
+      en: 'Title of the available track'
+      fr: 'Titre de la plage disponible'
+      es: 'Título de la pista disponible'
+      de: 'Titel des verfügbaren Stücks'
+      it: 'Titolo della traccia disponibile'
+      pl: 'Tytuł dostępnego utworu'
+      ru: 'Название доступной дорожки'
+      zh: '可用曲目的标题'
+      hu: 'Az elérhető szám címe'
+      pt: 'Título da faixa disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x01:
+        en: 'Yes'
+        fr: 'oui'
+        es: 'sí'
+        de: 'ja'
+        it: 'sì'
+        pl: 'tak'
+        ru: 'да'
+        zh: '是'
+        hu: 'igen'
+        pt: 'Sim'
+
+  UNUSED_2:
+    bits: '3.2-3.0'
+    unused: true
+
+  TRACK_NUMBER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Current track number'
+      fr: 'Numéro de la plage en cours de lecture'
+      es: 'Número de la pista en reproducción'
+      de: 'Nummer des aktuellen Titels'
+      it: 'Numero della traccia in riproduzione'
+      pl: 'Numer odtwarzanej ścieżki'
+      ru: 'Номер текущей дорожки'
+      zh: '当前曲目编号'
+      hu: 'Az aktuális szám száma'
+      pt: 'Número da faixa em reprodução'
+    type: 'uint'
+    min: 1
+    max: 254
+    default: 0xFF
+
+  CD_TEXT_INFO_AVAILABLE_1:
+    bits: '5.7-24.0'
+    comment:
+      en: 'Available information 1 from CD TEXT'
+      fr: 'Information 1 disponible du CD TEXT'
+      es: 'Información 1 disponible del CD TEXT'
+      de: 'Verfügbare Information 1 des CD TEXT'
+      it: 'Informazione 1 disponibile dal CD TEXT'
+      pl: 'Dostępna informacja 1 z CD TEXT'
+      ru: 'Доступная информация 1 из CD TEXT'
+      zh: 'CD TEXT可用信息1'
+      hu: '1. elérhető CD TEXT információ'
+      pt: 'Informação disponível 1 do CD TEXT'
+    type: 'str'
+
+  CD_TEXT_INFO_AVAILABLE_2:
+    bits: '25.7-44.0'
+    comment:
+      en: 'Available information 2 from CD TEXT'
+      fr: 'Information 2 disponible du CD TEXT'
+      es: 'Información 2 disponible del CD TEXT'
+      de: 'Verfügbare Information 2 des CD TEXT'
+      it: 'Informazione 2 disponibile dal CD TEXT'
+      pl: 'Dostępna informacja 2 z CD TEXT'
+      ru: 'Доступная информация 2 из CD TEXT'
+      zh: 'CD TEXT可用信息2'
+      hu: '2. elérhető CD TEXT információ'
+      pt: 'Informação disponível 2 do CD TEXT'
+    type: 'str'
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['trigger']
+    senders: ['RAD', 'ICSV']
+    receivers: ['EMF', 'CMB']
+    signals:
+      RADIO_TEXT_TYPE:
+        bits: '1.7-1.4'
+        comment:
+          en: 'Type of text sent'
+          fr: 'Type de texte envoyé'
+          es: 'Tipo de texto enviado'
+          de: 'Art des gesendeten Texts'
+          it: 'Tipo di testo inviato'
+          pl: 'Rodzaj wysyłanego tekstu'
+          ru: 'Тип отправляемого текста'
+          zh: '发送的文本类型'
+          hu: 'A küldött szöveg típusa'
+          pt: 'Tipo de texto enviado'
+        type: 'enum'
+        default: 0x00
+        mux_selector: true
+        values:
+          0x00:
+            en: 'None'
+            fr: 'Aucun'
+            es: 'Ninguno'
+            de: 'Keine'
+            it: 'Nessuno'
+            pl: 'Brak'
+            ru: 'Нет'
+            zh: '无'
+            hu: 'Nincs'
+            pt: 'Nenhum'
+          0x01:
+            en: 'Radio text'
+            fr: 'Radio texte'
+            es: 'Texto de radio'
+            de: 'Radiotext'
+            it: 'Testo radio'
+            pl: 'Tekst radiowy'
+            ru: 'Радиотекст'
+            zh: '电台文本'
+            hu: 'Rádiószöveg'
+            pt: 'Texto de rádio'
+          0x02:
+            en: 'CD text'
+            fr: 'CD texte'
+            es: 'Texto de CD'
+            de: 'CD-Text'
+            it: 'Testo CD'
+            pl: 'Tekst CD'
+            ru: 'Текст CD'
+            zh: 'CD文本'
+            hu: 'CD szöveg'
+            pt: 'Texto de CD'
+      UNUSED_1:
+        bits: '1.3-1.0'
+        unused: true
+      UNUSED_2:
+        bits: '2.7-2.0'
+        unused: true
+      UNUSED_3:
+        bits: '3.7-4.0'
+        unused: true
+      RADIOTEXT_CONTENT:
+        bits: '5.7-68.0'
+        comment:
+          en: 'Text to send (RadioText)'
+          fr: 'Texte à envoyer (RadioText)'
+          es: 'Texto a enviar (RadioText)'
+          de: 'Zu sendender Text (RadioText)'
+          it: 'Testo da inviare (RadioText)'
+          pl: 'Tekst do wysłania (RadioText)'
+          ru: 'Отправляемый текст (RadioText)'
+          zh: '待发送文本(RadioText)'
+          hu: 'A küldendő szöveg (RadioText)'
+          pt: 'Texto a enviar (RadioText)'
+        type: 'str'
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    length: 8
+    periodicity: ['trigger']
+    signals:
+      NPCI_HEADER_BYTE_2:
+        bits: '7.7-7.4'
+        comment:
+          en: 'Second byte of the transport protocol header (N_PCI).'
+          fr: 'Deuxième octet de l''en-tête du protocole de transport (N_PCI).'
+          es: 'Segundo byte de la cabecera del protocolo de transporte (N_PCI)'
+          de: 'Zweites Byte des Transportprotokoll-Headers (N_PCI)'
+          it: 'Secondo byte dell''intestazione del protocollo di trasporto (N_PCI)'
+          pl: 'Drugi bajt nagłówka protokołu transportowego (N_PCI)'
+          ru: 'Второй байт заголовка транспортного протокола (N_PCI)'
+          zh: '传输协议报头（N_PCI）的第二个字节'
+          hu: 'A szállítási protokoll fejlécének (N_PCI) második bájtja'
+          pt: 'Segundo byte do cabeçalho do protocolo de transporte (N_PCI).'
+        type: 'uint'
+      SINGLE_FRAME_DATA_LENGTH:
+        bits: '7.3-7.0'
+        comment:
+          en: 'Data length of a single-frame transport message.'
+          fr: 'Longueur de données d''un message de transport en trame unique.'
+          es: 'Longitud de datos de un mensaje de transporte de trama única'
+          de: 'Datenlänge einer Einzelrahmen-Transportnachricht'
+          it: 'Lunghezza dati di un messaggio di trasporto a frame singolo'
+          pl: 'Długość danych komunikatu transportowego w pojedynczej ramce'
+          ru: 'Длина данных однокадрового транспортного сообщения'
+          zh: '单帧传输消息的数据长度'
+          hu: 'Egykeretes szállítási üzenet adathossza'
+          pt: 'Comprimento de dados de uma mensagem de transporte em trama única'
+        type: 'uint'
+      NPCI_HEADER_BYTE_1:
+        bits: '8.7-8.4'
+        comment:
+          en: 'First byte of the transport protocol header (N_PCI).'
+          fr: 'Premier octet de l''en-tête du protocole de transport (N_PCI).'
+          es: 'Primer byte de la cabecera del protocolo de transporte (N_PCI)'
+          de: 'Erstes Byte des Transportprotokoll-Headers (N_PCI)'
+          it: 'Primo byte dell''intestazione del protocollo di trasporto (N_PCI)'
+          pl: 'Pierwszy bajt nagłówka protokołu transportowego (N_PCI)'
+          ru: 'Первый байт заголовка транспортного протокола (N_PCI)'
+          zh: '传输协议报头（N_PCI）的第一个字节'
+          hu: 'A szállítási protokoll fejlécének (N_PCI) első bájtja'
+          pt: 'Primeiro byte do cabeçalho do protocolo de transporte (N_PCI).'
+        type: 'uint'
+      SEQUENCE_NUMBER:
+        bits: '8.3-8.0'
+        comment:
+          en: 'Sequence number of a multi-frame transport message.'
+          fr: 'Numéro de séquence d''un message de transport multi-trames.'
+          es: 'Número de secuencia de un mensaje de transporte multitrama'
+          de: 'Sequenznummer einer Mehrfachrahmen-Transportnachricht'
+          it: 'Numero di sequenza di un messaggio di trasporto multi-frame'
+          pl: 'Numer sekwencyjny komunikatu transportowego wieloramkowego'
+          ru: 'Порядковый номер многокадрового транспортного сообщения'
+          zh: '多帧传输消息的序列号'
+          hu: 'Többkeretes szállítási üzenet sorszáma'
+          pt: 'Número de sequência de uma mensagem de transporte multitrama'
+        type: 'uint'

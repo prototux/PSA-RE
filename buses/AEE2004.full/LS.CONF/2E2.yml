@@ -1,0 +1,529 @@
+id: 0x2E2
+name: 'CD_CHANGER_TEXT_DISPLAY_SEGMENT'
+type: 'can'
+length: 8
+comment:
+  en: 'ISO-TP segmented-transfer header for the CD changer text display (sequence number and frame length fields).'
+  fr: 'En-tête de transfert segmenté ISO-TP pour CD changer text display (numéro de séquence et champs de longueur de trame).'
+  es: 'Cabecera de transferencia segmentada ISO-TP para CD changer text display (número de secuencia y campos de longitud de trama).'
+  de: 'ISO-TP-Segmentierungs-Header für CD changer text display (Sequenznummer und Rahmenlängenfelder).'
+  it: 'Intestazione di trasferimento segmentato ISO-TP per CD changer text display (numero di sequenza e campi di lunghezza trama).'
+  pl: 'Nagłówek transferu segmentowanego ISO-TP dla CD changer text display (numer sekwencyjny i pola długości ramki).'
+  ru: 'Заголовок сегментированной передачи ISO-TP для CD changer text display (номер последовательности и поля длины кадра).'
+  zh: '用于CD changer text display的ISO-TP分段传输报头(序列号和帧长度字段)。'
+  hu: 'ISO-TP szegmentált átviteli fejléc a CD changer text display számára (sorszám és keret hosszmezők).'
+  pt: 'Cabeçalho de transferência segmentada ISO-TP para a apresentação de texto do leitor de CD (campos de número de sequência e comprimento de trama).'
+periodicity: ['trigger']
+senders: []  # TODO: find the sender(s)
+
+signals:
+  NPCI_HEADER:
+    bits: '1.7-1.4'
+    comment:
+      en: 'NPCI header (per the OSEK-COM segmentation standard)'
+      fr: 'En-tête NPCI (selon la norme de segmentation OSEK-COM)'
+      es: 'Cabecera NPCI (según la norma de segmentación OSEK-COM)'
+      de: 'NPCI-Header (gemäß dem OSEK-COM-Segmentierungsstandard)'
+      it: 'Intestazione NPCI (secondo lo standard di segmentazione OSEK-COM)'
+      pl: 'Nagłówek NPCI (zgodnie ze standardem segmentacji OSEK-COM)'
+      ru: 'Заголовок NPCI (согласно стандарту сегментации OSEK-COM)'
+      zh: 'NPCI 报头(依据 OSEK-COM 分段标准)'
+      hu: 'NPCI fejléc (az OSEK-COM szegmentálási szabvány szerint)'
+      pt: 'Cabeçalho NPCI (segundo a norma de segmentação OSEK-COM)'
+    type: 'enum'
+    mux_selector: true
+    values:
+      0x00:
+        en: 'Single frame (SF)'
+        fr: 'Single frame (SF)'
+        es: 'Single frame (SF)'
+        de: 'Single frame (SF)'
+        it: 'Single frame (SF)'
+        pl: 'Single frame (SF)'
+        ru: 'Single frame (SF)'
+        zh: 'Single frame (SF)'
+        hu: 'Single frame (SF)'
+        pt: 'Single frame (SF)'
+      0x01:
+        en: 'First frame (FF)'
+        fr: 'First frame (FF)'
+        es: 'First frame (FF)'
+        de: 'First frame (FF)'
+        it: 'First frame (FF)'
+        pl: 'First frame (FF)'
+        ru: 'First frame (FF)'
+        zh: 'First frame (FF)'
+        hu: 'First frame (FF)'
+        pt: 'First frame (FF)'
+      0x02:
+        en: 'Flow control (FC)'
+        fr: 'Flow control (FC)'
+        es: 'Flow control (FC)'
+        de: 'Flow control (FC)'
+        it: 'Flow control (FC)'
+        pl: 'Flow control (FC)'
+        ru: 'Flow control (FC)'
+        zh: 'Flow control (FC)'
+        hu: 'Flow control (FC)'
+        pt: 'Flow control (FC)'
+
+  NAV_ZOOM_SEGMENT_1:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Navigation map zoom scale bar segment 1 lit'
+      fr: 'Segment 1 de la barre d''échelle de zoom de la carte de navigation allumé'
+      es: 'Segmento 1 de la barra de escala de zoom del mapa de navegación encendido'
+      de: 'Segment 1 der Zoom-Maßstabsleiste der Navigationskarte beleuchtet'
+      it: 'Segmento 1 della barra di scala dello zoom della mappa di navigazione acceso'
+      pl: 'Segment 1 paska skali powiększenia mapy nawigacji podświetlony'
+      ru: 'Сегмент 1 шкалы масштабирования карты навигации подсвечен'
+      zh: '导航地图缩放比例条第1段点亮'
+      hu: 'A navigációs térkép nagyítási skálájának 1. szegmense világít'
+      pt: 'Segmento 1 da barra de escala de zoom do mapa de navegação aceso'
+    type: 'uint'
+    mux:
+      selector: 'NPCI_HEADER'
+      values: [0x02]
+
+  ISOTP_FIRST_FRAME_LENGTH_1:
+    bits: '1.3-2.0'
+    comment:
+      en: 'ISO-TP first frame declared data length, instance 1'
+      fr: 'Longueur de données déclarée de la première trame ISO-TP, instance 1'
+      es: 'Longitud de datos declarada de la primera trama ISO-TP, instancia 1'
+      de: 'Angegebene Datenlänge des ISO-TP-Erstrahmens, Instanz 1'
+      it: 'Lunghezza dati dichiarata del primo frame ISO-TP, istanza 1'
+      pl: 'Deklarowana długość danych pierwszej ramki ISO-TP, instancja 1'
+      ru: 'Заявленная длина данных первого кадра ISO-TP, экземпляр 1'
+      zh: 'ISO-TP首帧声明数据长度(实例1)'
+      hu: 'Az ISO-TP első keretének deklarált adathossza, 1. példány'
+      pt: 'Comprimento de dados declarado na primeira trama ISO-TP, instância 1'
+    type: 'uint'
+    mux:
+      selector: 'NPCI_HEADER'
+      values: [0x01]
+
+  ISOTP_CONSECUTIVE_FRAME_DATA_1:
+    bits: '2.7-8.0'
+    comment:
+      en: 'ISO-TP consecutive frame payload data, instance 1'
+      fr: 'Données utiles de la trame consécutive ISO-TP, instance 1'
+      es: 'Datos útiles de la trama consecutiva ISO-TP, instancia 1'
+      de: 'Nutzdaten des ISO-TP-Folgerahmens, Instanz 1'
+      it: 'Dati utili del frame consecutivo ISO-TP, istanza 1'
+      pl: 'Dane użytkowe ramki kolejnej ISO-TP, instancja 1'
+      ru: 'Полезные данные последующего кадра ISO-TP, экземпляр 1'
+      zh: 'ISO-TP连续帧有效数据(实例1)'
+      hu: 'Az ISO-TP folytatókeret hasznos adata, 1. példány'
+      pt: 'Dados úteis da trama consecutiva ISO-TP, instância 1'
+    type: 'uint'
+    mux:
+      selector: 'NPCI_HEADER'
+      values: [0x02]
+
+  ISOTP_FIRST_FRAME_DATA_1:
+    bits: '3.7-8.0'
+    comment:
+      en: 'ISO-TP first frame payload data, instance 1'
+      fr: 'Données utiles de la première trame ISO-TP, instance 1'
+      es: 'Datos útiles de la primera trama ISO-TP, instancia 1'
+      de: 'Nutzdaten des ISO-TP-Erstrahmens, Instanz 1'
+      it: 'Dati utili del primo frame ISO-TP, istanza 1'
+      pl: 'Dane użytkowe pierwszej ramki ISO-TP, instancja 1'
+      ru: 'Полезные данные первого кадра ISO-TP, экземпляр 1'
+      zh: 'ISO-TP首帧有效数据(实例1)'
+      hu: 'Az ISO-TP első keretének hasznos adata, 1. példány'
+      pt: 'Dados úteis da primeira trama ISO-TP, instância 1'
+    type: 'uint'
+    mux:
+      selector: 'NPCI_HEADER'
+      values: [0x01]
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      NPCI_HEADER:
+        bits: '1.7-1.4'
+        comment:
+          en: 'NPCI header (per the OSEK-COM segmentation standard)'
+          fr: 'En-tête NPCI (selon la norme de segmentation OSEK-COM)'
+          es: 'Cabecera NPCI (según la norma de segmentación OSEK-COM)'
+          de: 'NPCI-Header (gemäß dem OSEK-COM-Segmentierungsstandard)'
+          it: 'Intestazione NPCI (secondo lo standard di segmentazione OSEK-COM)'
+          pl: 'Nagłówek NPCI (zgodnie ze standardem segmentacji OSEK-COM)'
+          ru: 'Заголовок NPCI (согласно стандарту сегментации OSEK-COM)'
+          zh: 'NPCI 报头(依据 OSEK-COM 分段标准)'
+          hu: 'NPCI fejléc (az OSEK-COM szegmentálási szabvány szerint)'
+          pt: 'Cabeçalho NPCI (segundo a norma de segmentação OSEK-COM)'
+        type: 'enum'
+        mux_selector: true
+        values:
+          0x00:
+            en: 'Single frame (SF)'
+            fr: 'Single frame (SF)'
+            es: 'Single frame (SF)'
+            de: 'Single frame (SF)'
+            it: 'Single frame (SF)'
+            pl: 'Single frame (SF)'
+            ru: 'Single frame (SF)'
+            zh: 'Single frame (SF)'
+            hu: 'Single frame (SF)'
+            pt: 'Single frame (SF)'
+          0x01:
+            en: 'First frame (FF)'
+            fr: 'First frame (FF)'
+            es: 'First frame (FF)'
+            de: 'First frame (FF)'
+            it: 'First frame (FF)'
+            pl: 'First frame (FF)'
+            ru: 'First frame (FF)'
+            zh: 'First frame (FF)'
+            hu: 'First frame (FF)'
+            pt: 'First frame (FF)'
+          0x02:
+            en: 'Flow control (FC)'
+            fr: 'Flow control (FC)'
+            es: 'Flow control (FC)'
+            de: 'Flow control (FC)'
+            it: 'Flow control (FC)'
+            pl: 'Flow control (FC)'
+            ru: 'Flow control (FC)'
+            zh: 'Flow control (FC)'
+            hu: 'Flow control (FC)'
+            pt: 'Flow control (FC)'
+      SEQUENCE_NUMBER:
+        bits: '1.3-1.0'
+        comment:
+          en: 'Sequence number of a multi-frame transport message.'
+          fr: 'Numéro de séquence d''un message de transport multi-trames.'
+          es: 'Número de secuencia de un mensaje de transporte multitrama'
+          de: 'Sequenznummer einer Mehrfachrahmen-Transportnachricht'
+          it: 'Numero di sequenza di un messaggio di trasporto multi-frame'
+          pl: 'Numer sekwencyjny komunikatu transportowego wieloramkowego'
+          ru: 'Порядковый номер многокадрового транспортного сообщения'
+          zh: '多帧传输消息的序列号'
+          hu: 'Többkeretes szállítási üzenet sorszáma'
+          pt: 'Número de sequência de uma mensagem de transporte multitrama'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+      FAULT_LOG_FIRST_FRAME_LENGTH:
+        bits: '1.3-2.0'
+        comment:
+          en: 'First-frame data length of the fault-log record'
+          fr: 'Longueur de données de la première trame de l''enregistrement du journal de défauts'
+          es: 'Longitud de datos de la primera trama del registro del historial de fallos'
+          de: 'Datenlänge des ersten Frames des Fehlerprotokolleintrags'
+          it: 'Lunghezza dati del primo frame del record del registro guasti'
+          pl: 'Długość danych pierwszej ramki rekordu dziennika usterek'
+          ru: 'Длина данных первого кадра записи журнала неисправностей'
+          zh: '故障日志记录首帧的数据长度'
+          hu: 'A hibanapló-bejegyzés első keretének adathossza'
+          pt: 'Comprimento dos dados da primeira trama do registo de avarias'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x01]
+      ISOTP_CONSECUTIVE_FRAME_DATA:
+        bits: '2.7-8.0'
+        comment:
+          en: 'ISO-TP consecutive frame payload data'
+          fr: 'Données utiles de la trame consécutive ISO-TP'
+          es: 'Datos útiles de la trama consecutiva ISO-TP'
+          de: 'Nutzdaten des ISO-TP-Folgerahmens'
+          it: 'Dati utili del frame consecutivo ISO-TP'
+          pl: 'Dane użytkowe ramki kolejnej ISO-TP'
+          ru: 'Полезные данные последующего кадра ISO-TP'
+          zh: 'ISO-TP连续帧有效数据'
+          hu: 'Az ISO-TP folytatókeret hasznos adata'
+          pt: 'Dados úteis da trama consecutiva ISO-TP'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+      ISOTP_FIRST_FRAME_DATA:
+        bits: '3.7-8.0'
+        comment:
+          en: 'ISO-TP first frame payload data'
+          fr: 'Données utiles de la première trame ISO-TP'
+          es: 'Datos útiles de la primera trama ISO-TP'
+          de: 'Nutzdaten des ISO-TP-Erstrahmens'
+          it: 'Dati utili del primo frame ISO-TP'
+          pl: 'Dane użytkowe pierwszej ramki ISO-TP'
+          ru: 'Полезные данные первого кадра ISO-TP'
+          zh: 'ISO-TP首帧有效数据'
+          hu: 'Az ISO-TP első keretének hasznos adata'
+          pt: 'Dados úteis da primeira trama ISO-TP'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x01]
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      NPCI_HEADER:
+        bits: '1.7-1.4'
+        comment:
+          en: 'NPCI header (per the OSEK-COM segmentation standard)'
+          fr: 'En-tête NPCI (selon la norme de segmentation OSEK-COM)'
+          es: 'Cabecera NPCI (según la norma de segmentación OSEK-COM)'
+          de: 'NPCI-Header (gemäß dem OSEK-COM-Segmentierungsstandard)'
+          it: 'Intestazione NPCI (secondo lo standard di segmentazione OSEK-COM)'
+          pl: 'Nagłówek NPCI (zgodnie ze standardem segmentacji OSEK-COM)'
+          ru: 'Заголовок NPCI (согласно стандарту сегментации OSEK-COM)'
+          zh: 'NPCI 报头(依据 OSEK-COM 分段标准)'
+          hu: 'NPCI fejléc (az OSEK-COM szegmentálási szabvány szerint)'
+          pt: 'Cabeçalho NPCI (segundo a norma de segmentação OSEK-COM)'
+        type: 'enum'
+        mux_selector: true
+        values:
+          0x00:
+            en: 'Single frame (SF)'
+            fr: 'Single frame (SF)'
+            es: 'Single frame (SF)'
+            de: 'Single frame (SF)'
+            it: 'Single frame (SF)'
+            pl: 'Single frame (SF)'
+            ru: 'Single frame (SF)'
+            zh: 'Single frame (SF)'
+            hu: 'Single frame (SF)'
+            pt: 'Single frame (SF)'
+          0x01:
+            en: 'First frame (FF)'
+            fr: 'First frame (FF)'
+            es: 'First frame (FF)'
+            de: 'First frame (FF)'
+            it: 'First frame (FF)'
+            pl: 'First frame (FF)'
+            ru: 'First frame (FF)'
+            zh: 'First frame (FF)'
+            hu: 'First frame (FF)'
+            pt: 'First frame (FF)'
+          0x02:
+            en: 'Flow control (FC)'
+            fr: 'Flow control (FC)'
+            es: 'Flow control (FC)'
+            de: 'Flow control (FC)'
+            it: 'Flow control (FC)'
+            pl: 'Flow control (FC)'
+            ru: 'Flow control (FC)'
+            zh: 'Flow control (FC)'
+            hu: 'Flow control (FC)'
+            pt: 'Flow control (FC)'
+      NAV_ZOOM_SEGMENT_1:
+        bits: '1.3-1.0'
+        comment:
+          en: 'Navigation map zoom scale bar segment 1 lit'
+          fr: 'Segment 1 de la barre d''échelle de zoom de la carte de navigation allumé'
+          es: 'Segmento 1 de la barra de escala de zoom del mapa de navegación encendido'
+          de: 'Segment 1 der Zoom-Maßstabsleiste der Navigationskarte beleuchtet'
+          it: 'Segmento 1 della barra di scala dello zoom della mappa di navigazione acceso'
+          pl: 'Segment 1 paska skali powiększenia mapy nawigacji podświetlony'
+          ru: 'Сегмент 1 шкалы масштабирования карты навигации подсвечен'
+          zh: '导航地图缩放比例条第1段点亮'
+          hu: 'A navigációs térkép nagyítási skálájának 1. szegmense világít'
+          pt: 'Segmento 1 da barra de escala de zoom do mapa de navegação aceso'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+      ISOTP_FIRST_FRAME_LENGTH_1:
+        bits: '1.3-2.0'
+        comment:
+          en: 'ISO-TP first frame declared data length, instance 1'
+          fr: 'Longueur de données déclarée de la première trame ISO-TP, instance 1'
+          es: 'Longitud de datos declarada de la primera trama ISO-TP, instancia 1'
+          de: 'Angegebene Datenlänge des ISO-TP-Erstrahmens, Instanz 1'
+          it: 'Lunghezza dati dichiarata del primo frame ISO-TP, istanza 1'
+          pl: 'Deklarowana długość danych pierwszej ramki ISO-TP, instancja 1'
+          ru: 'Заявленная длина данных первого кадра ISO-TP, экземпляр 1'
+          zh: 'ISO-TP首帧声明数据长度(实例1)'
+          hu: 'Az ISO-TP első keretének deklarált adathossza, 1. példány'
+          pt: 'Comprimento de dados declarado na primeira trama ISO-TP, instância 1'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x01]
+      ISOTP_SINGLE_FRAME_LENGTH_1:
+        bits: '4.3-4.0'
+        comment:
+          en: 'ISO-TP single frame declared data length, instance 1'
+          fr: 'Longueur de données déclarée de la trame unique ISO-TP, instance 1'
+          es: 'Longitud de datos declarada de la trama única ISO-TP, instancia 1'
+          de: 'Angegebene Datenlänge des ISO-TP-Einzelrahmens, Instanz 1'
+          it: 'Lunghezza dati dichiarata del frame singolo ISO-TP, istanza 1'
+          pl: 'Deklarowana długość danych pojedynczej ramki ISO-TP, instancja 1'
+          ru: 'Заявленная длина данных одиночного кадра ISO-TP, экземпляр 1'
+          zh: 'ISO-TP单帧声明数据长度(实例1)'
+          hu: 'Az ISO-TP egyetlen keretének deklarált adathossza, 1. példány'
+          pt: 'Comprimento de dados declarado da trama única ISO-TP, instância 1'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+      ISOTP_SINGLE_FRAME_DATA_1:
+        bits: '5.7-8.0'
+        comment:
+          en: 'ISO-TP single frame payload data, instance 1'
+          fr: 'Données utiles de la trame unique ISO-TP, instance 1'
+          es: 'Datos útiles de la trama única ISO-TP, instancia 1'
+          de: 'Nutzdaten des ISO-TP-Einzelrahmens, Instanz 1'
+          it: 'Dati utili del frame singolo ISO-TP, istanza 1'
+          pl: 'Dane użytkowe pojedynczej ramki ISO-TP, instancja 1'
+          ru: 'Полезные данные одиночного кадра ISO-TP, экземпляр 1'
+          zh: 'ISO-TP单帧有效数据(实例1)'
+          hu: 'Az ISO-TP egyetlen keretének hasznos adata, 1. példány'
+          pt: 'Dados úteis da trama única ISO-TP, instância 1'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      NPCI_HEADER:
+        bits: '1.7-1.4'
+        comment:
+          en: 'NPCI header (per the OSEK-COM segmentation standard)'
+          fr: 'En-tête NPCI (selon la norme de segmentation OSEK-COM)'
+          es: 'Cabecera NPCI (según la norma de segmentación OSEK-COM)'
+          de: 'NPCI-Header (gemäß dem OSEK-COM-Segmentierungsstandard)'
+          it: 'Intestazione NPCI (secondo lo standard di segmentazione OSEK-COM)'
+          pl: 'Nagłówek NPCI (zgodnie ze standardem segmentacji OSEK-COM)'
+          ru: 'Заголовок NPCI (согласно стандарту сегментации OSEK-COM)'
+          zh: 'NPCI 报头(依据 OSEK-COM 分段标准)'
+          hu: 'NPCI fejléc (az OSEK-COM szegmentálási szabvány szerint)'
+          pt: 'Cabeçalho NPCI (segundo a norma de segmentação OSEK-COM)'
+        type: 'enum'
+        mux_selector: true
+        values:
+          0x00:
+            en: 'Single frame (SF)'
+            fr: 'Single frame (SF)'
+            es: 'Single frame (SF)'
+            de: 'Single frame (SF)'
+            it: 'Single frame (SF)'
+            pl: 'Single frame (SF)'
+            ru: 'Single frame (SF)'
+            zh: 'Single frame (SF)'
+            hu: 'Single frame (SF)'
+            pt: 'Single frame (SF)'
+          0x01:
+            en: 'First frame (FF)'
+            fr: 'First frame (FF)'
+            es: 'First frame (FF)'
+            de: 'First frame (FF)'
+            it: 'First frame (FF)'
+            pl: 'First frame (FF)'
+            ru: 'First frame (FF)'
+            zh: 'First frame (FF)'
+            hu: 'First frame (FF)'
+            pt: 'First frame (FF)'
+          0x02:
+            en: 'Flow control (FC)'
+            fr: 'Flow control (FC)'
+            es: 'Flow control (FC)'
+            de: 'Flow control (FC)'
+            it: 'Flow control (FC)'
+            pl: 'Flow control (FC)'
+            ru: 'Flow control (FC)'
+            zh: 'Flow control (FC)'
+            hu: 'Flow control (FC)'
+            pt: 'Flow control (FC)'
+      NAV_ZOOM_SEGMENT_1:
+        bits: '1.3-1.0'
+        comment:
+          en: 'Navigation map zoom scale bar segment 1 lit'
+          fr: 'Segment 1 de la barre d''échelle de zoom de la carte de navigation allumé'
+          es: 'Segmento 1 de la barra de escala de zoom del mapa de navegación encendido'
+          de: 'Segment 1 der Zoom-Maßstabsleiste der Navigationskarte beleuchtet'
+          it: 'Segmento 1 della barra di scala dello zoom della mappa di navigazione acceso'
+          pl: 'Segment 1 paska skali powiększenia mapy nawigacji podświetlony'
+          ru: 'Сегмент 1 шкалы масштабирования карты навигации подсвечен'
+          zh: '导航地图缩放比例条第1段点亮'
+          hu: 'A navigációs térkép nagyítási skálájának 1. szegmense világít'
+          pt: 'Segmento 1 da barra de escala de zoom do mapa de navegação aceso'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+      ISOTP_FIRST_FRAME_LENGTH_1:
+        bits: '1.3-2.0'
+        comment:
+          en: 'ISO-TP first frame declared data length, instance 1'
+          fr: 'Longueur de données déclarée de la première trame ISO-TP, instance 1'
+          es: 'Longitud de datos declarada de la primera trama ISO-TP, instancia 1'
+          de: 'Angegebene Datenlänge des ISO-TP-Erstrahmens, Instanz 1'
+          it: 'Lunghezza dati dichiarata del primo frame ISO-TP, istanza 1'
+          pl: 'Deklarowana długość danych pierwszej ramki ISO-TP, instancja 1'
+          ru: 'Заявленная длина данных первого кадра ISO-TP, экземпляр 1'
+          zh: 'ISO-TP首帧声明数据长度(实例1)'
+          hu: 'Az ISO-TP első keretének deklarált adathossza, 1. példány'
+          pt: 'Comprimento de dados declarado na primeira trama ISO-TP, instância 1'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x01]
+      SINGLE_FRAME_DATA_LENGTH:
+        bits: '4.3-4.0'
+        comment:
+          en: 'Data length of a single-frame transport message.'
+          fr: 'Longueur de données d''un message de transport en trame unique.'
+          es: 'Longitud de datos de un mensaje de transporte de trama única'
+          de: 'Datenlänge einer Einzelrahmen-Transportnachricht'
+          it: 'Lunghezza dati di un messaggio di trasporto a frame singolo'
+          pl: 'Długość danych komunikatu transportowego w pojedynczej ramce'
+          ru: 'Длина данных однокадрового транспортного сообщения'
+          zh: '单帧传输消息的数据长度'
+          hu: 'Egykeretes szállítási üzenet adathossza'
+          pt: 'Comprimento de dados de uma mensagem de transporte em trama única'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+      ISOTP_SINGLE_FRAME_DATA:
+        bits: '5.7-8.0'
+        comment:
+          en: 'ISO-TP single frame payload data'
+          fr: 'Données utiles de la trame unique ISO-TP'
+          es: 'Datos útiles de la trama única ISO-TP'
+          de: 'Nutzdaten des ISO-TP-Einzelrahmens'
+          it: 'Dati utili del frame singolo ISO-TP'
+          pl: 'Dane użytkowe pojedynczej ramki ISO-TP'
+          ru: 'Полезные данные одиночного кадра ISO-TP'
+          zh: 'ISO-TP单帧有效数据'
+          hu: 'Az ISO-TP egyetlen keretének hasznos adata'
+          pt: 'Dados úteis da trama única ISO-TP'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]

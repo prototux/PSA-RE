@@ -1,0 +1,184 @@
+id: 0x489
+name: 'TRANSMISSION_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Automatic gearbox data for display and engine: gear, lever position, status, program, oil temperature.'
+  fr: 'Données boîte de vitesses automatique pour l''affichage et le moteur : rapport, position levier, état, programme, température d''huile.'
+  es: 'Datos de la caja de cambios automática para la pantalla y el motor: marcha, posición de palanca, estado, programa, temperatura del aceite.'
+  de: 'Automatikgetriebedaten für Anzeige und Motor: Gang, Hebelposition, Status, Programm, Öltemperatur.'
+  it: 'Dati del cambio automatico per il display e il motore: marcia, posizione leva, stato, programma, temperatura olio.'
+  pl: 'Dane automatycznej skrzyni biegów dla wyświetlacza i silnika: bieg, pozycja dźwigni, stan, program, temperatura oleju.'
+  ru: 'Данные автоматической коробки передач для дисплея и двигателя: передача, положение рычага, статус, программа, температура масла.'
+  zh: '供显示屏和发动机使用的自动变速箱数据:挡位、换挡杆位置、状态、程序、机油温度。'
+  hu: 'Automata váltó adatai a kijelzőnek és a motornak: fokozat, váltókar pozíció, állapot, program, olajhőmérséklet.'
+  pt: 'Dados da caixa de velocidades automática para o visor e o motor: relação, posição da alavanca, estado, programa, temperatura do óleo.'
+periodicity: ['60ms']
+senders: ['BVA']
+receivers: ['BSI', 'CMM']
+
+signals:
+  ENGAGED_GEAR:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Engaged gear.'
+      fr: 'Rapport de boîte de vitesses engagé.'
+      es: 'Marcha engranada.'
+      de: 'Eingelegter Gang.'
+      it: 'Marcia innestata.'
+      pl: 'Włączony bieg.'
+      ru: 'Включённая передача.'
+      zh: '已挂挡位。'
+      hu: 'Bekapcsolt sebességfokozat.'
+      pt: 'Velocidade engrenada.'
+    type: 'uint'
+
+  SELECTOR_LEVER_POSITION_DISPLAY:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Gear selector lever position for display'
+      fr: 'Position du levier de sélection de la boîte de vitesses pour affichage'
+      es: 'Posición de la palanca selectora de la caja de cambios para visualización'
+      de: 'Wählhebelposition des Getriebes zur Anzeige'
+      it: 'Posizione della leva del cambio per la visualizzazione'
+      pl: 'Pozycja dźwigni wyboru biegów do wyświetlenia'
+      ru: 'Положение селектора коробки передач для отображения'
+      zh: '用于显示的换挡杆位置'
+      hu: 'Váltókar helyzete a kijelzéshez'
+      pt: 'Posição da alavanca seletora da caixa de velocidades para visualização'
+    type: 'uint'
+
+  GEARBOX_FAULTS_STATUS:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Gearbox faults / states'
+      fr: 'Défauts / états de la boîte de vitesses'
+      es: 'Fallos / estados de la caja de cambios'
+      de: 'Getriebefehler / -zustände'
+      it: 'Guasti / stati del cambio'
+      pl: 'Usterki / stany skrzyni biegów'
+      ru: 'Неисправности / состояния коробки передач'
+      zh: '变速箱故障/状态'
+      hu: 'Váltó hibái / állapotai'
+      pt: 'Falhas / estados da caixa de velocidades'
+    type: 'uint'
+
+  GEARBOX_PROGRAM:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Selected gearbox program'
+      fr: 'Programme de boîte de vitesses sélectionné'
+      es: 'Programa de la caja de cambios seleccionado'
+      de: 'Gewähltes Getriebeprogramm'
+      it: 'Programma del cambio selezionato'
+      pl: 'Wybrany program skrzyni biegów'
+      ru: 'Выбранная программа коробки передач'
+      zh: '已选择的变速箱程序'
+      hu: 'Kiválasztott váltóprogram'
+      pt: 'Programa selecionado da caixa de velocidades'
+    type: 'uint'
+
+  GEAR_CHANGE_REFUSED:
+    bits: '2.1'
+    comment:
+      en: 'Gear change refused'
+      fr: 'Changement de rapport refusé'
+      es: 'Cambio de marcha rechazado'
+      de: 'Gangwechsel abgelehnt'
+      it: 'Cambio di marcia rifiutato'
+      pl: 'Odmowa zmiany biegu'
+      ru: 'Отказано в переключении передачи'
+      zh: '换挡被拒绝'
+      hu: 'Fokozatváltás elutasítva'
+      pt: 'Mudança de marcha rejeitada'
+    type: 'bool'
+
+  GEAR_SHIFT_IN_PROGRESS:
+    bits: '2.0'
+    comment:
+      en: 'Gear shift in progress.'
+      fr: 'Changement de rapport en cours.'
+      es: 'Cambio de marcha en curso.'
+      de: 'Gangwechsel läuft.'
+      it: 'Cambio marcia in corso.'
+      pl: 'Trwa zmiana biegu.'
+      ru: 'Переключение передачи выполняется.'
+      zh: '正在换挡。'
+      hu: 'Folyamatban lévő fokozatváltás.'
+      pt: 'Mudança de velocidade em curso.'
+    type: 'bool'
+
+  GEARBOX_UNDERDRIVE:
+    bits: '3.7'
+    comment:
+      en: 'Gearbox in underdrive'
+      fr: 'Boîte de vitesses en sous-régime (underdrive)'
+      es: 'Caja de cambios en marcha larga (underdrive)'
+      de: 'Getriebe im Underdrive'
+      it: 'Cambio in underdrive'
+      pl: 'Skrzynia biegów w trybie underdrive'
+      ru: 'Коробка передач в режиме underdrive'
+      zh: '变速箱处于降速挡'
+      hu: 'A váltó underdrive (alacsonyabb áttétel) üzemmódban'
+      pt: 'Caixa de velocidades em marcha longa (underdrive)'
+    type: 'bool'
+
+  SHIFT_LOCK_ACTIVE:
+    bits: '3.6'
+    comment:
+      en: 'Shift-lock command active'
+      fr: 'Commande de verrouillage du levier (shift-lock) active'
+      es: 'Mando de bloqueo de la palanca (shift-lock) activo'
+      de: 'Schalthebelsperre (Shift-Lock) aktiv'
+      it: 'Comando di blocco leva (shift-lock) attivo'
+      pl: 'Aktywne blokowanie dźwigni (shift-lock)'
+      ru: 'Активна блокировка селектора (shift-lock)'
+      zh: '排挡锁定 (shift-lock) 指令激活'
+      hu: 'Váltókar-zár (shift-lock) parancs aktív'
+      pt: 'Comando de bloqueio da alavanca (shift-lock) ativo'
+    type: 'bool'
+
+  AC_COMPRESSOR_CHANGE_INHIBIT:
+    bits: '3.5-3.4'
+    comment:
+      en: 'A/C compressor state change inhibition.'
+      fr: 'Interdiction de changement d''état du compresseur de climatisation.'
+      es: 'Inhibición del cambio de estado del compresor de climatización.'
+      de: 'Sperre der Zustandsänderung des Klimakompressors.'
+      it: 'Inibizione del cambio di stato del compressore del climatizzatore.'
+      pl: 'Zablokowanie zmiany stanu sprężarki klimatyzacji.'
+      ru: 'Запрет изменения состояния компрессора кондиционера.'
+      zh: '空调压缩机状态变更禁止。'
+      hu: 'A klímakompresszor állapotváltásának tiltása.'
+      pt: 'Inibição da mudança de estado do compressor de A/C.'
+    type: 'uint'
+
+  TORQUE_CONVERSION_RATIO:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Torque conversion ratio'
+      fr: 'Taux de conversion de couple'
+      es: 'Relación de conversión de par'
+      de: 'Drehmomentwandlungsverhältnis'
+      it: 'Rapporto di conversione della coppia'
+      pl: 'Współczynnik przełożenia momentu obrotowego'
+      ru: 'Коэффициент трансформации крутящего момента'
+      zh: '扭矩变换比'
+      hu: 'Nyomatékváltási arány'
+      pt: 'Taxa de conversão de binário'
+    type: 'uint'
+
+  GEARBOX_OIL_TEMPERATURE:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Gearbox oil temperature'
+      fr: 'Température d''huile de la boîte de vitesses'
+      es: 'Temperatura del aceite de la caja de cambios'
+      de: 'Getriebeöltemperatur'
+      it: 'Temperatura dell''olio del cambio'
+      pl: 'Temperatura oleju w skrzyni biegów'
+      ru: 'Температура масла в коробке передач'
+      zh: '变速箱油温'
+      hu: 'Váltóolaj hőmérséklete'
+      pt: 'Temperatura do óleo da caixa de velocidades'
+    type: 'uint'

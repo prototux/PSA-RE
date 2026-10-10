@@ -1,0 +1,242 @@
+id: 0x5A2
+name: 'VCU_DRIVE_MODE_CAPABILITIES_5'
+type: 'can'
+length: 7
+comment:
+  en: 'Vehicle control unit data: available driving modes (normal, sport, eco, snow...), energy modes (hybrid, zero-emission, fuel) and drive-axle modes (auto, front, rear), plus cooling wake-up requests.'
+  fr: 'Données de l''unité de contrôle du véhicule : modes de conduite disponibles (normal, sport, éco, neige...), modes d''énergie (hybride, zéro émission, carburant) et modes d''essieu moteur (auto, avant, arrière), ainsi que les demandes de réveil pour le refroidissement.'
+  es: 'Datos de la unidad de control del vehículo: modos de conducción disponibles (normal, deportivo, eco, nieve...), modos de energía (híbrido, cero emisiones, combustible) y modos de eje motriz (automático, delantero, trasero), además de las solicitudes de activación para refrigeración.'
+  de: 'Daten der Fahrzeugsteuereinheit: verfügbare Fahrmodi (normal, sport, eco, schnee...), Energiemodi (hybrid, emissionsfrei, Kraftstoff) und Antriebsachsenmodi (auto, vorne, hinten), sowie Kühlungs-Weckanforderungen.'
+  it: 'Dati dell''unità di controllo veicolo: modalità di guida disponibili (normale, sport, eco, neve...), modalità energia (ibrida, zero emissioni, carburante) e modalità asse motore (auto, anteriore, posteriore), oltre alle richieste di risveglio per il raffreddamento.'
+  pl: 'Dane jednostki sterującej pojazdem: dostępne tryby jazdy (normalny, sportowy, eco, śnieg...), tryby energii (hybrydowy, zero emisji, paliwo) i tryby osi napędowej (auto, przednia, tylna), a także żądania wybudzenia do chłodzenia.'
+  ru: 'Данные блока управления автомобилем: доступные режимы движения (обычный, спорт, эко, снег...), энергетические режимы (гибрид, нулевые выбросы, топливо) и режимы ведущего моста (авто, передний, задний), а также запросы пробуждения для охлаждения.'
+  zh: '车辆控制单元数据:可用驾驶模式(普通、运动、经济、雪地……)、能量模式(混动、零排放、燃油)和驱动桥模式(自动、前、后),以及冷却唤醒请求。'
+  hu: 'A jármű vezérlőegység adatai: elérhető vezetési módok (normál, sport, eco, hó...), energiamódok (hibrid, nulla emissziós, üzemanyag) és hajtott tengely módok (automata, első, hátsó), valamint hűtési ébresztési kérések.'
+  pt: 'Dados da unidade de controlo do veículo: modos de condução disponíveis (normal, desportivo, eco, neve...), modos de energia (híbrido, emissões zero, combustível) e modos de eixo motor (automático, dianteiro, traseiro), além de pedidos de ativação do arrefecimento.'
+observations:
+  en: 'On state change of: CHARGE_PUSH_BUTTON_PRESSED'
+  fr: 'Sur changement d''état de : CHARGE_PUSH_BUTTON_PRESSED'
+  es: 'Al cambiar el estado de: CHARGE_PUSH_BUTTON_PRESSED'
+  de: 'Bei Statusänderung von: CHARGE_PUSH_BUTTON_PRESSED'
+  it: 'Al cambiamento di stato di: CHARGE_PUSH_BUTTON_PRESSED'
+  pl: 'Wysyłane przy zmianie stanu: CHARGE_PUSH_BUTTON_PRESSED'
+  ru: 'При изменении состояния: CHARGE_PUSH_BUTTON_PRESSED'
+  zh: '当OBC_PUSH_CHARGE_TYPE状态变化时'
+  hu: 'A(z) CHARGE_PUSH_BUTTON_PRESSED állapotváltozásakor'
+  pt: 'Na mudança de estado de: CHARGE_PUSH_BUTTON_PRESSED'
+periodicity: ['1000ms', 'trigger']
+senders: ['VCU', 'E_VCU']
+receivers: ['BSI', 'MDS']
+
+signals:
+  HV_BATTERY_COOLANT_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'HV battery coolant temperature'
+      fr: 'Température du liquide de refroidissement de la batterie haute tension'
+      es: 'Temperatura del refrigerante de la batería de alta tensión'
+      de: 'Kühlmitteltemperatur der Hochvoltbatterie'
+      it: 'Temperatura del liquido di raffreddamento della batteria ad alta tensione'
+      pl: 'Temperatura chłodziwa akumulatora wysokiego napięcia'
+      ru: 'Температура охлаждающей жидкости высоковольтной батареи'
+      zh: '高压电池冷却液温度'
+      hu: 'A nagyfeszültségű akkumulátor hűtőfolyadék-hőmérséklete'
+      pt: 'Temperatura do líquido de refrigeração da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x28
+
+  BATTERY_SHORT_LOOP_COOLANT_TEMP_SETPOINT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Requested coolant temperature on the short loop for battery cooling'
+      fr: 'Température d''eau demandée sur la boucle courte pour le refroidissement de la batterie'
+      es: 'Temperatura de refrigerante solicitada en el circuito corto para la refrigeración de la batería'
+      de: 'Angeforderte Kühlmitteltemperatur im Kurzkreislauf für die Batteriekühlung'
+      it: 'Temperatura del liquido di raffreddamento richiesta sul circuito corto per il raffreddamento della batteria'
+      pl: 'Żądana temperatura chłodziwa w krótkim obiegu do chłodzenia akumulatora'
+      ru: 'Запрошенная температура охлаждающей жидкости в коротком контуре для охлаждения батареи'
+      zh: '电池冷却短回路的请求冷却液温度'
+      hu: 'A rövid körben kért hűtőfolyadék-hőmérséklet az akkumulátor hűtéséhez'
+      pt: 'Temperatura de líquido de refrigeração solicitada no circuito curto para o arrefecimento da bateria'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 200
+    units: '°C'
+    invalid: 0xFF
+
+  CHILLER_ACTIVATION_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Chiller activation request'
+      fr: 'Demande d''activation du refroidisseur (chiller)'
+      es: 'Solicitud de activación del enfriador (chiller)'
+      de: 'Anforderung zur Aktivierung des Chillers'
+      it: 'Richiesta di attivazione del chiller'
+      pl: 'Żądanie aktywacji chłodnicy (chillera)'
+      ru: 'Запрос активации чиллера'
+      zh: '冷却器(chiller)激活请求'
+      hu: 'A hűtő (chiller) aktiválási kérése'
+      pt: 'Pedido de ativação do arrefecedor (chiller)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  CHARGE_PUSH_BUTTON_PRESSED:
+    bits: '3.6'
+    comment:
+      en: 'Charge port push-button pressed'
+      fr: 'Bouton poussoir de la prise de charge appuyé'
+      es: 'Botón pulsador de la toma de carga presionado'
+      de: 'Drucktaste des Ladeanschlusses betätigt'
+      it: 'Pulsante della presa di ricarica premuto'
+      pl: 'Naciśnięty przycisk gniazda ładowania'
+      ru: 'Нажата кнопка зарядного разъёма'
+      zh: '充电口按钮已按下'
+      hu: 'A töltőaljzat nyomógombja megnyomva'
+      pt: 'Botão pulsador da tomada de carregamento pressionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Switch off'
+        fr: 'Non appuyé'
+        es: 'No pulsado'
+        de: 'Nicht gedrückt'
+        it: 'Non premuto'
+        pl: 'Niewciśnięty'
+        ru: 'Не нажато'
+        zh: '未按下'
+        hu: 'Nincs megnyomva'
+        pt: 'Desligar'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Premido'
+
+  UNUSED_1:
+    bits: '3.5-3.0'
+    unused: true
+
+  HV_BATTERY_CHARGE_REMAINING_TIME:
+    bits: '4.7-4.1'
+    comment:
+      en: 'HV battery remaining charge time'
+      fr: 'Temps de charge restant de la batterie haute tension'
+      es: 'Tiempo de carga restante de la batería de alta tensión'
+      de: 'Verbleibende Ladezeit der Hochvoltbatterie'
+      it: 'Tempo di ricarica rimanente della batteria ad alta tensione'
+      pl: 'Pozostały czas ładowania akumulatora wysokiego napięcia'
+      ru: 'Оставшееся время зарядки высоковольтной батареи'
+      zh: '高压电池剩余充电时间'
+      hu: 'A nagyfeszültségű akkumulátor hátralévő töltési ideje'
+      pt: 'Tempo de carga restante da bateria de alta tensão'
+    type: 'uint'
+    factor: 300
+    min: 0
+    max: 37800
+    units: 's'
+    invalid: 0x7F
+    default: 0x00
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.7-4.0. Also observed with another scaling (factor 5)'
+          fr: 'Aussi observé aux bits 4.7-4.0. Aussi observé avec une autre mise à l''échelle (factor 5)'
+          es: 'También observado en los bits 4.7-4.0. También observado con otro escalado (factor 5)'
+          de: 'Auch an den Bits 4.7-4.0 beobachtet. Auch mit anderer Skalierung beobachtet (factor 5)'
+          it: 'Osservato anche ai bit 4.7-4.0. Osservato anche con un''altra scala (factor 5)'
+          pl: 'Obserwowany także na bitach 4.7-4.0. Obserwowany także z innym skalowaniem (factor 5)'
+          ru: 'Также наблюдался в битах 4.7-4.0. Также наблюдался с другим масштабом (factor 5)'
+          zh: '也观察到位于位4.7-4.0. 也观察到使用另一种缩放（factor 5）'
+          hu: 'Megfigyelve a(z) 4.7-4.0 biteken is. Megfigyelve más skálázással is (factor 5)'
+          pt: 'Também observado nos bits 4.7-4.0. Também observado com outra escala (factor 5)'
+        bits: '4.7-4.0'
+        factor: 5
+
+  PRECONDITIONING_STATE:
+    bits: '4.0'
+    comment:
+      en: 'Preconditioning state'
+      fr: 'État du préconditionnement'
+      es: 'Estado del preacondicionamiento'
+      de: 'Status der Vorkonditionierung'
+      it: 'Stato del precondizionamento'
+      pl: 'Stan wstępnej klimatyzacji'
+      ru: 'Статус предварительного кондиционирования'
+      zh: '预处理状态'
+      hu: 'Az előkondicionálás állapota'
+      pt: 'Estado do pré-condicionamento'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Preconditioning ON'
+        fr: 'Préconditionnement activé'
+        es: 'Preacondicionamiento activado'
+        de: 'Vorkonditionierung aktiv'
+        it: 'Precondizionamento attivo'
+        pl: 'Wstępne kondycjonowanie włączone'
+        ru: 'Предварительное кондиционирование включено'
+        zh: '预处理已开启'
+        hu: 'Előkondicionálás bekapcsolva'
+        pt: 'Pré-condicionamento ativado'
+      0x01:
+        en: 'Preconditioning OFF'
+        fr: 'Préconditionnement désactivé'
+        es: 'Preacondicionamiento desactivado'
+        de: 'Vorkonditionierung AUS'
+        it: 'Precondizionamento disattivato'
+        pl: 'Klimatyzacja wstępna wyłączona'
+        ru: 'Предварительное кондиционирование выключено'
+        zh: '预调节关闭'
+        hu: 'Előkondicionálás kikapcsolva'
+        pt: 'Pré-condicionamento DESLIGADO'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 3.5'
+          fr: 'Aussi observé aux bits 3.5'
+          es: 'También observado en los bits 3.5'
+          de: 'Auch an den Bits 3.5 beobachtet'
+          it: 'Osservato anche ai bit 3.5'
+          pl: 'Obserwowany także na bitach 3.5'
+          ru: 'Также наблюдался в битах 3.5'
+          zh: '也观察到位于位3.5'
+          hu: 'Megfigyelve a(z) 3.5 biteken is'
+          pt: 'Também observado nos bits 3.5'
+        bits: '3.5'

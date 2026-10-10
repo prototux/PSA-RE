@@ -1,0 +1,296 @@
+id: 0x09C
+name: 'RIGHT_LANE_LINE_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Right lane line detection data from the camera module (CVM): curvature, heading angle, distance to line and detection quality for lane-keeping and departure warning.'
+  fr: 'Données de détection de la ligne de voie droite issues du module caméra (CVM) : courbure, angle de cap, distance à la ligne et qualité de détection pour l''aide au maintien et l''alerte de franchissement.'
+  es: 'Datos de detección de la línea de carril derecha del módulo de cámara (CVM): curvatura, ángulo de rumbo, distancia a la línea y calidad de detección para el mantenimiento de carril y la alerta de salida.'
+  de: 'Erkennungsdaten der rechten Fahrspurlinie vom Kameramodul (CVM): Krümmung, Kurswinkel, Abstand zur Linie und Erkennungsqualität für Spurhalteassistent und Spurverlassenswarnung.'
+  it: 'Dati di rilevamento della linea di corsia destra dal modulo telecamera (CVM): curvatura, angolo di rotta, distanza dalla linea e qualità di rilevamento per il mantenimento di corsia e l''allerta di uscita.'
+  pl: 'Dane wykrywania prawej linii pasa ruchu z modułu kamery (CVM): krzywizna, kąt kursu, odległość do linii i jakość wykrywania dla wspomagania utrzymania pasa i ostrzegania o zjeździe.'
+  ru: 'Данные обнаружения правой линии полосы движения модулем камеры (CVM): кривизна, курсовой угол, расстояние до линии и качество обнаружения для удержания полосы и предупреждения о выезде.'
+  zh: '来自摄像头模块(CVM)的右车道线检测数据:曲率、航向角、与车道线的距离及用于车道保持和偏离预警的检测质量。'
+  hu: 'A jobb oldali sávvonal érzékelési adatai a kameramodultól (CVM): görbület, iránylat, vonaltávolság és érzékelési minőség a sávtartáshoz és a lesodródásjelzéshez.'
+  pt: 'Dados de deteção da linha de faixa direita do módulo de câmara (CVM): curvatura, ângulo de rumo, distância à linha e qualidade de deteção para a assistência de manutenção de faixa e o alerta de saída de faixa.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['5025ms']
+senders: ['CVM']
+receivers: ['BSI']
+
+signals:
+  RIGHT_LINE_ESTIMATED_CURVATURE:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Estimated curvature of the right lane line'
+      fr: 'Courbure estimée de la ligne droite'
+      es: 'Curvatura estimada de la línea derecha'
+      de: 'Geschätzte Krümmung der rechten Fahrbahnlinie'
+      it: 'Curvatura stimata della linea di corsia destra'
+      pl: 'Szacowana krzywizna prawej linii pasa'
+      ru: 'Оценочная кривизна правой линии полосы'
+      zh: '右侧车道线的估算曲率'
+      hu: 'A jobb oldali sávvonal becsült görbülete'
+      pt: 'Curvatura estimada da linha direita'
+    type: 'sint'
+    factor: 2.0e-06
+    min: -0.05
+    max: 0.05
+    units: 'm-1'
+    invalid: 0x7FFF
+    default: 0x7FFE
+
+  RIGHT_LINE_CURVATURE_DERIVATIVE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Derivative of the road curvature, estimated from the right lane line'
+      fr: 'Dérivée de la courbure de la route, estimée à partir de la ligne droite'
+      es: 'Derivada de la curvatura de la carretera, estimada a partir de la línea derecha'
+      de: 'Ableitung der Straßenkrümmung, geschätzt aus der rechten Fahrbahnlinie'
+      it: 'Derivata della curvatura della strada, stimata dalla linea di corsia destra'
+      pl: 'Pochodna krzywizny drogi, szacowana na podstawie prawej linii pasa'
+      ru: 'Производная кривизны дороги, оценённая по правой линии полосы'
+      zh: '根据右侧车道线估算的道路曲率导数'
+      hu: 'Az útgörbület deriváltja, a jobb oldali sávvonalból becsülve'
+      pt: 'Derivada da curvatura da estrada, estimada a partir da linha direita'
+    type: 'sint'
+    factor: 4.0e-09
+    min: -0.00012
+    max: 0.00012
+    invalid: 0x7FFF
+    default: 0x7FFE
+
+  RIGHT_LINE_HEADING_ANGLE:
+    bits: '5.7-6.4'
+    comment:
+      en: 'Vehicle heading angle relative to the right lane line'
+      fr: 'Angle de cap du véhicule par rapport à la ligne droite'
+      es: 'Ángulo de rumbo del vehículo respecto a la línea derecha'
+      de: 'Kurswinkel des Fahrzeugs relativ zur rechten Fahrbahnlinie'
+      it: 'Angolo di direzione del veicolo rispetto alla linea di corsia destra'
+      pl: 'Kąt kursu pojazdu względem prawej linii pasa'
+      ru: 'Курсовой угол автомобиля относительно правой линии полосы'
+      zh: '车辆相对右侧车道线的航向角'
+      hu: 'A jármű haladási szöge a jobb oldali sávvonalhoz képest'
+      pt: 'Ângulo de rumo do veículo em relação à linha de faixa direita'
+    type: 'sint'
+    factor: 0.015
+    min: -30
+    max: 30
+    units: '°'
+    invalid: 0x7FF
+    default: 0x7FE
+
+  RIGHT_LINE_TYPE:
+    bits: '6.3-6.1'
+    comment:
+      en: 'Type of right lane line seen by the camera'
+      fr: 'Type de ligne droite vue par la caméra'
+      es: 'Tipo de línea derecha vista por la cámara'
+      de: 'Art der von der Kamera erkannten rechten Fahrbahnlinie'
+      it: 'Tipo di linea di corsia destra rilevata dalla telecamera'
+      pl: 'Rodzaj prawej linii pasa widzianej przez kamerę'
+      ru: 'Тип правой линии полосы, распознанной камерой'
+      zh: '摄像头识别的右侧车道线类型'
+      hu: 'A kamera által érzékelt jobb oldali sávvonal típusa'
+      pt: 'Tipo de linha direita vista pela câmara'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Undetermined'
+        fr: 'Indéterminé'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未确定'
+        hu: 'Meghatározatlan'
+        pt: 'Indeterminado'
+      0x01:
+        en: 'Solid line detected'
+        fr: 'Ligne continue détectée'
+        es: 'Línea continua detectada'
+        de: 'Durchgezogene Linie erkannt'
+        it: 'Linea continua rilevata'
+        pl: 'Wykryto linię ciągłą'
+        ru: 'Обнаружена сплошная линия'
+        zh: '检测到实线'
+        hu: 'Folytonos vonal érzékelve'
+        pt: 'Linha contínua detetada'
+      0x02:
+        en: 'Dotted line detected'
+        fr: 'Ligne pointillée détectée'
+        es: 'Línea discontinua detectada'
+        de: 'Gestrichelte Linie erkannt'
+        it: 'Linea tratteggiata rilevata'
+        pl: 'Wykryto linię przerywaną'
+        ru: 'Обнаружена прерывистая линия'
+        zh: '检测到虚线'
+        hu: 'Szaggatott vonal észlelve'
+        pt: 'Linha descontínua detetada'
+      0x03:
+        en: 'Double solid line detected'
+        fr: 'Double ligne continue détectée'
+        es: 'Doble línea continua detectada'
+        de: 'Doppelte durchgezogene Linie erkannt'
+        it: 'Doppia linea continua rilevata'
+        pl: 'Wykryto podwójną linię ciągłą'
+        ru: 'Обнаружена двойная сплошная линия'
+        zh: '检测到双实线'
+        hu: 'Dupla folytonos vonal érzékelve'
+        pt: 'Linha dupla contínua detetada'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Road Edge detected'
+        fr: 'Road Edge detected'
+        es: 'Borde de carretera detectado'
+        de: 'Fahrbahnrand erkannt'
+        it: 'Bordo strada rilevato'
+        pl: 'Wykryto krawędź drogi'
+        ru: 'Обнаружена кромка дороги'
+        zh: '检测到路缘'
+        hu: 'Útszél érzékelve'
+        pt: 'Borda da estrada detetada'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+
+  RIGHT_LINE_VALIDITY_DAA:
+    bits: '6.0'
+    comment:
+      en: 'Validity of the right lane line as seen by the camera, for the DAA function'
+      fr: 'Validité de la ligne droite vue par la caméra, pour la fonction DAA'
+      es: 'Validez de la línea derecha vista por la cámara, para la función DAA'
+      de: 'Gültigkeit der von der Kamera erkannten rechten Fahrbahnlinie für die DAA-Funktion'
+      it: 'Validità della linea di corsia destra rilevata dalla telecamera, per la funzione DAA'
+      pl: 'Ważność prawej linii pasa widzianej przez kamerę, dla funkcji DAA'
+      ru: 'Достоверность правой линии полосы, распознанной камерой, для функции DAA'
+      zh: '用于DAA功能的摄像头右侧车道线有效性'
+      hu: 'A kamera által érzékelt jobb oldali sávvonal érvényessége a DAA funkcióhoz'
+      pt: 'Validade da linha direita vista pela câmara, para a função DAA'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not valid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Nicht gültig'
+        it: 'Non valido'
+        pl: 'Nieważne'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+      0x01:
+        en: 'Enter'
+        fr: 'Valider'
+        es: 'Validar'
+        de: 'Bestätigen'
+        it: 'Conferma'
+        pl: 'Zatwierdź'
+        ru: 'Подтвердить'
+        zh: '确认'
+        hu: 'Megerősít'
+        pt: 'Validar'
+
+  DISTANCE_TO_RIGHT_LINE:
+    bits: '7.7-8.6'
+    comment:
+      en: 'Distance from the vehicle centre to the right lane line'
+      fr: 'Distance du centre du véhicule à la ligne droite'
+      es: 'Distancia desde el centro del vehículo a la línea derecha'
+      de: 'Abstand von der Fahrzeugmitte zur rechten Fahrbahnlinie'
+      it: 'Distanza dal centro del veicolo alla linea di corsia destra'
+      pl: 'Odległość od środka pojazdu do prawej linii pasa'
+      ru: 'Расстояние от центра автомобиля до правой линии полосы'
+      zh: '车辆中心到右侧车道线的距离'
+      hu: 'A jármű középpontjának távolsága a jobb oldali sávvonaltól'
+      pt: 'Distância do centro do veículo à linha direita'
+    type: 'sint'
+    factor: 0.016
+    min: -5
+    max: 5
+    units: 'm'
+    invalid: 0x1FF
+    default: 0x1FE
+
+  RIGHT_LINE_VALIDITY_LKA:
+    bits: '8.5'
+    comment:
+      en: 'Validity of the right lane line as seen by the camera, for the LKA function'
+      fr: 'Validité de la ligne droite vue par la caméra, pour la fonction LKA'
+      es: 'Validez de la línea derecha vista por la cámara, para la función LKA'
+      de: 'Gültigkeit der von der Kamera erkannten rechten Fahrbahnlinie für die LKA-Funktion'
+      it: 'Validità della linea di corsia destra rilevata dalla telecamera, per la funzione LKA'
+      pl: 'Ważność prawej linii pasa widzianej przez kamerę, dla funkcji LKA'
+      ru: 'Достоверность правой линии полосы, распознанной камерой, для функции LKA'
+      zh: '用于LKA功能的摄像头右侧车道线有效性'
+      hu: 'A kamera által érzékelt jobb oldali sávvonal érvényessége az LKA funkcióhoz'
+      pt: 'Validade da linha direita vista pela câmara, para a função LKA'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not valid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Nicht gültig'
+        it: 'Non valido'
+        pl: 'Nieważne'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+      0x01:
+        en: 'Enter'
+        fr: 'Valider'
+        es: 'Validar'
+        de: 'Bestätigen'
+        it: 'Conferma'
+        pl: 'Zatwierdź'
+        ru: 'Подтвердить'
+        zh: '确认'
+        hu: 'Megerősít'
+        pt: 'Validar'
+
+  UNUSED_1:
+    bits: '8.4-8.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 50ms'
+      fr: 'Aussi observée avec une période de 50ms'
+      es: 'También observada con un periodo de 50ms'
+      de: 'Auch mit einer Periode von 50ms beobachtet'
+      it: 'Osservata anche con un periodo di 50ms'
+      pl: 'Obserwowana także z okresem 50ms'
+      ru: 'Также наблюдалась с периодом 50ms'
+      zh: '也观察到周期为50ms'
+      hu: 'Megfigyelve 50ms periódussal is'
+      pt: 'Também observada com um período de 50ms'
+    periodicity: ['50ms']

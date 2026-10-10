@@ -1,0 +1,224 @@
+id: 0x588
+name: 'PIU_DATA_2'
+type: 'can'
+length: 8
+comment:
+  en: 'Power interface unit data 2: low-voltage supply cut fault indicator.'
+  fr: 'Données 2 de l''unité d''interface de puissance : indicateur de défaut de coupure basse tension.'
+  es: 'Datos 2 de la unidad de interfaz de potencia: indicador de fallo de corte de baja tensión.'
+  de: 'Daten 2 der Leistungsschnittstelleneinheit: Fehleranzeige für Niederspannungsunterbrechung.'
+  it: 'Dati 2 dell''unità di interfaccia di potenza: indicatore di guasto di interruzione bassa tensione.'
+  pl: 'Dane 2 jednostki interfejsu mocy: wskaźnik usterki przerwania zasilania niskiego napięcia.'
+  ru: 'Данные 2 силового интерфейсного блока: индикатор неисправности обрыва низковольтного питания.'
+  zh: '功率接口单元数据2:低压供电中断故障指示。'
+  hu: 'A teljesítmény-interfész egység 2. adatai: kisfeszültségű tápellátás-megszakadás hibajelző.'
+  pt: 'Dados 2 da unidade de interface de potência: indicador de avaria de corte da alimentação de baixa tensão.'
+periodicity: ['100ms']
+senders: ['PIU']
+receivers: ['BSI']
+
+signals:
+  BATTERY_CURRENT:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Battery current'
+      fr: 'Courant de la batterie'
+      es: 'Corriente de la batería'
+      de: 'Batteriestrom'
+      it: 'Corrente della batteria'
+      pl: 'Prąd akumulatora'
+      ru: 'Ток батареи'
+      zh: '电池电流'
+      hu: 'Akkumulátor árama'
+      pt: 'Corrente da bateria'
+    type: 'uint'
+    factor: 0.01
+    offset: -327
+    min: -327
+    max: 327
+    units: 'A'
+    invalid: 0xFFFF
+    default: 0x00
+
+  BATTERY_VOLTAGE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Battery voltage'
+      fr: 'Tension de la batterie'
+      es: 'Tensión de la batería'
+      de: 'Batteriespannung'
+      it: 'Tensione della batteria'
+      pl: 'Napięcie akumulatora'
+      ru: 'Напряжение батареи'
+      zh: '电池电压'
+      hu: 'Akkumulátor feszültsége'
+      pt: 'Tensão da bateria'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 670
+    units: 'V'
+    invalid: 0xFFFF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '5.7-6.7'
+    unused: true
+
+  ATMOSPHERIC_PRESSURE:
+    bits: '6.6-6.2'
+    comment:
+      en: 'Atmospheric pressure (hPa)'
+      fr: 'Pression atmosphérique (hPa)'
+      es: 'Presión atmosférica (hPa)'
+      de: 'Atmosphärendruck (hPa)'
+      it: 'Pressione atmosferica (hPa)'
+      pl: 'Ciśnienie atmosferyczne (hPa)'
+      ru: 'Атмосферное давление (гПа)'
+      zh: '大气压力(hPa)'
+      hu: 'Légköri nyomás (hPa)'
+      pt: 'Pressão atmosférica (hPa)'
+    type: 'uint'
+    factor: 15
+    offset: 685
+    min: 685
+    max: 1120
+    units: 'hPa'
+    invalid: 0x1F
+    default: 0x1E
+
+  HV_CUTOFF_FAULT_DISPLAY_REQUEST:
+    bits: '6.1-6.0'
+    comment:
+      en: 'HMI display request for a fault in the high-voltage battery cutoff command in case of a crash'
+      fr: 'Demande d''affichage IHM en cas de défaut de la commande de coupure de la batterie HT en cas de choc'
+      es: 'Solicitud de visualización IHM en caso de fallo del comando de corte de la batería de alta tensión en caso de choque'
+      de: 'HMI-Anzeigeanforderung bei einem Fehler des Hochvolt-Batterieabschaltbefehls im Falle eines Crashs'
+      it: 'Richiesta di visualizzazione HMI in caso di guasto del comando di interruzione della batteria AT in caso di urto'
+      pl: 'Żądanie wyświetlenia HMI w przypadku usterki polecenia odcięcia akumulatora wysokiego napięcia w razie kolizji'
+      ru: 'Запрос индикации HMI при неисправности команды отключения высоковольтной батареи в случае столкновения'
+      zh: '碰撞时高压电池切断指令故障的人机界面显示请求'
+      hu: 'HMI megjelenítési kérés a nagyfeszültségű akkumulátor lekapcsolási parancsának hibája esetén ütközéskor'
+      pt: 'Pedido de visualização na IHM de uma avaria no comando de corte da bateria de alta tensão em caso de colisão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Minor warning'
+        fr: 'Alerte mineure'
+        es: 'Advertencia menor'
+        de: 'Geringfügige Warnung'
+        it: 'Allerta minore'
+        pl: 'Drobne ostrzeżenie'
+        ru: 'Незначительное предупреждение'
+        zh: '轻微警报'
+        hu: 'Kisebb figyelmeztetés'
+        pt: 'Aviso menor'
+      0x02:
+        en: 'Major warning'
+        fr: 'Alerte majeure'
+        es: 'Aviso mayor'
+        de: 'Schwerwiegende Warnung'
+        it: 'Avviso grave'
+        pl: 'Poważne ostrzeżenie'
+        ru: 'Серьёзное предупреждение'
+        zh: '重大警告'
+        hu: 'Súlyos figyelmeztetés'
+        pt: 'Aviso importante'
+      0x03:
+        unused: true
+
+  CRUISING_RANGE_WO_AC:
+    bits: '7.7-8.6'
+    comment:
+      en: 'Zero-emission range excluding auxiliaries'
+      fr: 'Autonomie zéro émission hors auxiliaires'
+      es: 'Autonomía de emisión cero sin auxiliares'
+      de: 'Nullemissions-Reichweite ohne Nebenverbraucher'
+      it: 'Autonomia a zero emissioni esclusi gli ausiliari'
+      pl: 'Zasięg bezemisyjny bez uwzględnienia odbiorników pomocniczych'
+      ru: 'Запас хода без выбросов без учёта вспомогательных потребителей'
+      zh: '不含辅助系统的零排放续航里程'
+      hu: 'Nulla kibocsátású hatótávolság a kiegészítő fogyasztók nélkül'
+      pt: 'Autonomia de emissão zero sem auxiliares'
+    type: 'uint'
+    min: 0
+    max: 1022
+    invalid: 0x3FF
+    default: 0x00
+
+  UNUSED_2:
+    bits: '8.5-8.2'
+    unused: true
+
+  AC_LOAD_SHEDDING_REQUEST_EPWT:
+    bits: '8.1-8.0'
+    comment:
+      en: 'Air conditioning load-shedding request for the electric powertrain'
+      fr: 'Demande de délestage de la climatisation pour le groupe motopropulseur électrique'
+      es: 'Solicitud de deslastre del aire acondicionado para el grupo motopropulsor eléctrico'
+      de: 'Anforderung zur Lastabschaltung der Klimaanlage für den elektrischen Antriebsstrang'
+      it: 'Richiesta di distacco del carico del climatizzatore per il gruppo propulsore elettrico'
+      pl: 'Żądanie zrzutu obciążenia klimatyzacji dla elektrycznego zespołu napędowego'
+      ru: 'Запрос сброса нагрузки кондиционера для электрического силового агрегата'
+      zh: '电动力总成空调甩负荷请求'
+      hu: 'A klíma terheléscsökkentésének kérése az elektromos erőátviteli rendszer számára'
+      pt: 'Pedido de deslastre do ar condicionado para o grupo motopropulsor elétrico'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Load shedding'
+        fr: 'Délestage'
+        es: 'Deslastre'
+        de: 'Lastabwurf'
+        it: 'Distacco del carico'
+        pl: 'Zrzut obciążenia'
+        ru: 'Сброс нагрузки'
+        zh: '负载削减'
+        hu: 'Terheléskorlátozás'
+        pt: 'Corte de carga'
+      0x02:
+        en: 'Cut-off'
+        fr: 'Coupure'
+        es: 'Corte'
+        de: 'Abschaltung'
+        it: 'Interruzione'
+        pl: 'Odcięcie'
+        ru: 'Отключение'
+        zh: '切断'
+        hu: 'Megszakítás'
+        pt: 'Corte'
+      0x03:
+        en: 'Invalid value'
+        fr: 'Valeur invalide'
+        es: 'Valor no válido'
+        de: 'Ungültiger Wert'
+        it: 'Valore non valido'
+        pl: 'Nieprawidłowa wartość'
+        ru: 'Недопустимое значение'
+        zh: '无效值'
+        hu: 'Érvénytelen érték'
+        pt: 'Valor inválido'

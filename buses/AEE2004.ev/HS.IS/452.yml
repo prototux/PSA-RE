@@ -1,0 +1,162 @@
+id: 0x452
+name: 'MDD_WIPER_COMMAND'
+type: 'can'
+length: 5
+comment:
+  en: 'Wiper command sent to the ESP/dynamics unit: front wiper and washer state, cabin activation flag.'
+  fr: 'Commande d''essuyage envoyée à l''unité ESP/dynamique : état essuie-glace et lave-glace avant, indicateur d''activation habitacle.'
+  es: 'Comando de limpiaparabrisas enviado a la unidad ESP/dinámica: estado del limpiaparabrisas y lavaparabrisas delantero, indicador de activación del habitáculo.'
+  de: 'Wischerbefehl an die ESP-/Fahrdynamikeinheit: Zustand von Frontwischer und -wäscher, Aktivierungskennzeichen Innenraum.'
+  it: 'Comando tergicristallo inviato all''unità ESP/dinamica: stato tergicristallo e lavavetro anteriore, indicatore di attivazione abitacolo.'
+  pl: 'Polecenie wycieraczek wysyłane do jednostki ESP/dynamiki: stan wycieraczki i spryskiwacza przedniego, flaga aktywacji kabiny.'
+  ru: 'Команда стеклоочистителя, отправляемая блоку ESP/динамики: состояние переднего стеклоочистителя и омывателя, флаг активации салона.'
+  zh: '发送给ESP/动态单元的雨刮命令:前雨刮和洗涤器状态、座舱激活标志。'
+  hu: 'Az ESP/dinamikai egységnek küldött törlőparancs: az első ablaktörlő és mosó állapota, utastér aktiválási jelző.'
+  pt: 'Comando do limpa-para-brisas enviado à unidade ESP/dinâmica: estado do limpa e lava-para-brisas dianteiro, indicador de ativação do habitáculo.'
+periodicity: ['50ms']
+senders: ['BSI']
+receivers: ['ARTIV']
+
+signals:
+  FRONT_WIPER_STATE:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Front wiper state (off, confirmed wipe, low speed, high speed), sent when a rain sensor is fitted'
+      fr: 'État des essuie-glaces avant (arrêt, essuyage confirmé, petite vitesse, grande vitesse), émis en présence d''un capteur de pluie'
+      es: 'Estado de los limpiaparabrisas delanteros (parado, barrido confirmado, velocidad baja, velocidad alta), emitido cuando hay sensor de lluvia'
+      de: 'Zustand der Frontscheibenwischer (aus, bestätigter Wischvorgang, niedrige Geschwindigkeit, hohe Geschwindigkeit), gesendet bei vorhandenem Regensensor'
+      it: 'Stato dei tergicristalli anteriori (spento, tergitura confermata, bassa velocità, alta velocità), inviato in presenza di un sensore pioggia'
+      pl: 'Stan wycieraczek przednich (wyłączone, potwierdzone wycieranie, mała prędkość, duża prędkość), wysyłany przy zamontowanym czujniku deszczu'
+      ru: 'Состояние передних стеклоочистителей (выключены, подтверждённая протирка, низкая скорость, высокая скорость), передаётся при наличии датчика дождя'
+      zh: '前雨刷状态(停止、确认刮水、低速、高速),在装有雨量传感器时发送'
+      hu: 'Az első ablaktörlők állapota (leállítva, megerősített törlés, alacsony sebesség, magas sebesség), esőérzékelő megléte esetén küldve'
+      pt: 'Estado dos limpa-para-brisas dianteiros (parado, limpeza confirmada, velocidade baixa, velocidade alta), emitido na presença de um sensor de chuva'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Front wiping confirmed'
+        fr: 'Essuyage avant confirmé'
+        es: 'Limpieza delantera confirmada'
+        de: 'Vorderer Scheibenwischer bestätigt'
+        it: 'Tergitura anteriore confermata'
+        pl: 'Potwierdzone wycieranie przednie'
+        ru: 'Подтверждена работа передних дворников'
+        zh: '前刮水已确认'
+        hu: 'Első ablaktörlés megerősítve'
+        pt: 'Limpeza dianteira confirmada'
+      0x02:
+        en: 'Low speed'
+        fr: 'Petite vitesse'
+        es: 'Velocidad baja'
+        de: 'Niedrige Geschwindigkeit'
+        it: 'Velocità bassa'
+        pl: 'Mała prędkość'
+        ru: 'Низкая скорость'
+        zh: '低速'
+        hu: 'Alacsony sebesség'
+        pt: 'Baixa velocidade'
+      0x03:
+        en: 'High speed'
+        fr: 'Grande vitesse'
+        es: 'Alta velocidad'
+        de: 'Hohe Geschwindigkeit'
+        it: 'Alta velocità'
+        pl: 'Duża prędkość'
+        ru: 'Высокая скорость'
+        zh: '高速'
+        hu: 'Nagy sebesség'
+        pt: 'Alta velocidade'
+
+  UNUSED_1:
+    bits: '1.5-5.2'
+    unused: true
+
+  FARC_AUTHORIZATION_FROM_CABIN:
+    bits: '5.1'
+    comment:
+      en: 'Authorization condition for the FARC function, issued by the cabin control module'
+      fr: 'Condition d''autorisation de la fonction FARC émise par le module habitacle'
+      es: 'Condición de autorización de la función FARC emitida por el módulo del habitáculo'
+      de: 'Freigabebedingung für die FARC-Funktion, ausgegeben vom Innenraum-Steuermodul'
+      it: 'Condizione di autorizzazione della funzione FARC emessa dal modulo abitacolo'
+      pl: 'Warunek zezwolenia dla funkcji FARC wydawany przez moduł kabiny'
+      ru: 'Условие разрешения функции FARC, выдаваемое модулем салона'
+      zh: '座舱模块发出的FARC功能授权条件'
+      hu: 'A FARC funkció engedélyezési feltétele, amelyet az utastér-vezérlő modul ad ki'
+      pt: 'Condição de autorização da função FARC, emitida pelo módulo de controlo do habitáculo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Deactivation'
+        fr: 'Désactivation'
+        es: 'Desactivación'
+        de: 'Deaktivierung'
+        it: 'Disattivazione'
+        pl: 'Dezaktywacja'
+        ru: 'Деактивация'
+        zh: '停用'
+        hu: 'Kikapcsolás'
+        pt: 'Desativação'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  FRONT_WASHER_STATE:
+    bits: '5.0'
+    comment:
+      en: 'Front windshield washer state'
+      fr: 'État du lave-glace avant'
+      es: 'Estado del lavaparabrisas delantero'
+      de: 'Zustand der Frontscheibenwaschanlage'
+      it: 'Stato del lavavetro anteriore'
+      pl: 'Stan spryskiwacza przedniej szyby'
+      ru: 'Состояние переднего стеклоомывателя'
+      zh: '前挡风玻璃洗涤器状态'
+      hu: 'Az első szélvédőmosó állapota'
+      pt: 'Estado do lava para-brisas dianteiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Washing'
+        fr: 'Lavage'
+        es: 'Lavado'
+        de: 'Waschen'
+        it: 'Lavaggio'
+        pl: 'Mycie'
+        ru: 'Мойка'
+        zh: '清洗'
+        hu: 'Mosás'
+        pt: 'Lavagem'

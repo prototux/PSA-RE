@@ -1,0 +1,584 @@
+id: 0x1E8
+name: 'ENGINE_MEAP_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Preconditioning and cruise-control/speed-limiter menu status: preconditioning activation and schedule time, five speed presets, recall request, availability.'
+  fr: 'État du menu préconditionnement et régulateur/limiteur de vitesse : activation et heure programmée du préconditionnement, cinq consignes de vitesse mémorisées, demande de rappel, disponibilité.'
+  es: 'Estado del menú de preacondicionamiento y regulador/limitador de velocidad: activación y hora programada del preacondicionamiento, cinco consignas de velocidad memorizadas, solicitud de recuperación, disponibilidad.'
+  de: 'Status des Menüs für Vorkonditionierung und Tempomat/Geschwindigkeitsbegrenzer: Aktivierung und geplante Uhrzeit der Vorkonditionierung, fünf gespeicherte Geschwindigkeitsvorgaben, Abrufanforderung, Verfügbarkeit.'
+  it: 'Stato del menu precondizionamento e regolatore/limitatore di velocità: attivazione e orario programmato del precondizionamento, cinque setpoint di velocità memorizzati, richiesta di richiamo, disponibilità.'
+  pl: 'Stan menu klimatyzacji wstępnej i tempomatu/ogranicznika prędkości: aktywacja i zaplanowana godzina klimatyzacji wstępnej, pięć zapamiętanych wartości prędkości, żądanie przywołania, dostępność.'
+  ru: 'Статус меню предварительного кондиционирования и круиз-контроля/ограничителя скорости: активация и запланированное время кондиционирования, пять сохранённых уставок скорости, запрос вызова, доступность.'
+  zh: '预调节与巡航/限速菜单状态:预调节激活及计划时间、五个预设速度值、调用请求、可用性。'
+  hu: 'Az előkondicionálás és tempomat/sebességhatároló menü állapota: előkondicionálás aktiválása és ütemezett ideje, öt tárolt sebességérték, visszahívási kérés, elérhetőség.'
+  pt: 'Estado do menu de pré-condicionamento e do regulador/limitador de velocidade: ativação do pré-condicionamento e hora programada, cinco predefinições de velocidade, pedido de recuperação, disponibilidade.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['1000ms', 'trigger']
+senders: ['ICSV', 'BSI']
+receivers: ['CMB', 'MATT', 'EMF', 'BTEL', 'OVIP', 'RAD']
+
+signals:
+  UNUSED_1:
+    bits: '1.7'
+    unused: true
+
+  CRUISE_LIMITER_PROGRAM_RECALL_UPDATE_BIT:
+    bits: '1.6'
+    comment:
+      en: 'Update bit for the cruise/limiter program recall data'
+      fr: 'Bit de mise à jour des données de rappel du régulateur/limiteur programmable'
+      es: 'Bit de actualización de los datos de recuperación del regulador/limitador programable'
+      de: 'Aktualisierungsbit der Abrufdaten des programmierbaren Tempomats/Begrenzers'
+      it: 'Bit di aggiornamento dei dati di richiamo del regolatore/limitatore programmabile'
+      pl: 'Bit aktualizacji danych przywołania programowalnego tempomatu/ogranicznika'
+      ru: 'Бит обновления данных вызова программируемого круиз-контроля/ограничителя'
+      zh: '可编程巡航/限速器召回数据更新位'
+      hu: 'A programozható tempomat/határoló felidézési adatainak frissítési bitje'
+      pt: 'Bit de atualização dos dados de recuperação do regulador/limitador programável'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Info not refreshed'
+        fr: 'Informations non rafraîchies'
+        es: 'Información no actualizada'
+        de: 'Informationen nicht aktualisiert'
+        it: 'Informazioni non aggiornate'
+        pl: 'Informacje nieodświeżone'
+        ru: 'Информация не обновлена'
+        zh: '信息未刷新'
+        hu: 'Az adatok nincsenek frissítve'
+        pt: 'Informação não atualizada'
+      0x01:
+        en: 'Information refreshed'
+        fr: 'Informations rafraîchies'
+        es: 'Información actualizada'
+        de: 'Informationen aktualisiert'
+        it: 'Informazioni aggiornate'
+        pl: 'Informacje odświeżone'
+        ru: 'Информация обновлена'
+        zh: '信息已刷新'
+        hu: 'Az információ frissítve'
+        pt: 'Informação atualizada'
+
+  THERMAL_PRECOND_TYPE:
+    bits: '1.5'
+    comment:
+      en: 'Type of thermal preconditioning: ventilation or preheating'
+      fr: 'Type de préconditionnement thermique'
+      es: 'Tipo de preacondicionamiento térmico: ventilación o precalentamiento'
+      de: 'Art der thermischen Vorkonditionierung: Lüftung oder Vorheizen'
+      it: 'Tipo di precondizionamento termico: ventilazione o preriscaldamento'
+      pl: 'Typ wstępnego klimatyzowania: wentylacja lub podgrzewanie'
+      ru: 'Тип термического предварительного кондиционирования: вентиляция или подогрев'
+      zh: '热预处理类型:通风或预热'
+      hu: 'A hőelőkondicionálás típusa: szellőztetés vagy előfűtés'
+      pt: 'Tipo de pré-condicionamento térmico: ventilação ou pré-aquecimento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Ventilation'
+        fr: 'Ventilation'
+        es: 'Ventilación'
+        de: 'Belüftung'
+        it: 'Ventilazione'
+        pl: 'Wentylacja'
+        ru: 'Вентиляция'
+        zh: '通风'
+        hu: 'Szellőzés'
+        pt: 'Ventilação'
+      0x01:
+        en: 'Preheating'
+        fr: 'Préchauffage'
+        es: 'Precalentamiento'
+        de: 'Vorglühen'
+        it: 'Preriscaldamento'
+        pl: 'Wstępne podgrzewanie'
+        ru: 'Предпусковой подогрев'
+        zh: '预热'
+        hu: 'Előfűtés'
+        pt: 'Pré-aquecimento'
+
+  THERMAL_PRECOND_ACTIVE:
+    bits: '1.4'
+    comment:
+      en: 'Thermal preconditioning activation status'
+      fr: 'État d''activation du préconditionnement thermique'
+      es: 'Estado de activación del preacondicionamiento térmico'
+      de: 'Aktivierungsstatus der thermischen Vorkonditionierung'
+      it: 'Stato di attivazione del precondizionamento termico'
+      pl: 'Stan aktywacji wstępnego klimatyzowania'
+      ru: 'Статус активации термического предварительного кондиционирования'
+      zh: '热预处理激活状态'
+      hu: 'A hőelőkondicionálás aktiválási állapota'
+      pt: 'Estado de ativação do pré-condicionamento térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  THERMAL_PRECOND_CLOCK:
+    bits: '1.3-2.0'
+    comment:
+      en: 'Thermal preconditioning clock/timer'
+      fr: 'Horloge de préconditionnement thermique'
+      es: 'Reloj de preacondicionamiento térmico'
+      de: 'Uhr der thermischen Vorkonditionierung'
+      it: 'Orologio di precondizionamento termico'
+      pl: 'Zegar wstępnego klimatyzowania'
+      ru: 'Таймер термического предварительного кондиционирования'
+      zh: '热预处理时钟'
+      hu: 'A hőelőkondicionálás órája'
+      pt: 'Relógio/temporizador do pré-condicionamento térmico'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 1439
+    units: 'min'
+    invalid: 0x7FF
+    default: 0x5A0
+
+  CRUISE_MENU_INFO_AVAILABILITY:
+    bits: '3.7'
+    comment:
+      en: 'Cruise control menu information availability'
+      fr: 'Disponibilité des informations du menu du régulateur/limiteur de vitesse'
+      es: 'Disponibilidad de la información del menú del regulador/limitador de velocidad'
+      de: 'Verfügbarkeit der Menüinformationen des Tempomaten/Geschwindigkeitsbegrenzers'
+      it: 'Disponibilità delle informazioni del menu del regolatore/limitatore di velocità'
+      pl: 'Dostępność informacji menu tempomatu/ogranicznika prędkości'
+      ru: 'Доступность информации меню круиз-контроля/ограничителя скорости'
+      zh: '巡航/限速菜单信息可用性'
+      hu: 'Tempomat/sebességkorlátozó menü információ elérhetősége'
+      pt: 'Disponibilidade da informação do menu do regulador/limitador de velocidade'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+
+  SPEED_LIMIT_MAIN_STATE:
+    bits: '3.6'
+    comment:
+      en: 'Speed limiter main function state'
+      fr: 'État de la fonction principale du limiteur de vitesse'
+      es: 'Estado de la función principal del limitador de velocidad'
+      de: 'Status der Hauptfunktion des Geschwindigkeitsbegrenzers'
+      it: 'Stato della funzione principale del limitatore di velocità'
+      pl: 'Stan głównej funkcji ogranicznika prędkości'
+      ru: 'Состояние основной функции ограничителя скорости'
+      zh: '限速器主功能状态'
+      hu: 'Sebességkorlátozó fő funkció állapota'
+      pt: 'Estado da função principal do limitador de velocidade'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  CRUISE_LIMITER_PROGRAM_RECALL_REQUEST:
+    bits: '3.5'
+    comment:
+      en: 'Programmable cruise/limiter recall request'
+      fr: 'Demande de rappel du régulateur/limiteur programmable'
+      es: 'Solicitud de recuperación del regulador/limitador programable'
+      de: 'Abrufanforderung des programmierbaren Tempomats/Begrenzers'
+      it: 'Richiesta di richiamo del regolatore/limitatore programmabile'
+      pl: 'Żądanie przywołania programowalnego tempomatu/ogranicznika'
+      ru: 'Запрос вызова программируемого круиз-контроля/ограничителя'
+      zh: '可编程巡航/限速器召回请求'
+      hu: 'A programozható tempomat/határoló felidézési kérése'
+      pt: 'Pedido de recuperação do regulador/limitador programável'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  SPEED_LIMIT_ZONE_1_STATE:
+    bits: '3.4'
+    comment:
+      en: 'Speed limiter zone 1 function state'
+      fr: 'État de la fonction de limitation de zone 1'
+      es: 'Estado de la función de limitación de zona 1'
+      de: 'Status der Geschwindigkeitsbegrenzungszone 1'
+      it: 'Stato della funzione di limitazione zona 1'
+      pl: 'Stan funkcji ograniczenia strefy 1'
+      ru: 'Состояние функции ограничения зоны 1'
+      zh: '限速区1功能状态'
+      hu: '1. sebességkorlátozási zóna funkció állapota'
+      pt: 'Estado da função de limitação de zona 1'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  SPEED_LIMIT_ZONE_2_STATE:
+    bits: '3.3'
+    comment:
+      en: 'Speed limiter zone 2 function state'
+      fr: 'État de la fonction de limitation de zone 2'
+      es: 'Estado de la función de limitación de zona 2'
+      de: 'Status der Geschwindigkeitsbegrenzungszone 2'
+      it: 'Stato della funzione di limitazione zona 2'
+      pl: 'Stan funkcji ograniczenia strefy 2'
+      ru: 'Состояние функции ограничения зоны 2'
+      zh: '限速区2功能状态'
+      hu: '2. sebességkorlátozási zóna funkció állapota'
+      pt: 'Estado da função de limitação de zona 2'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  SPEED_LIMIT_ZONE_3_STATE:
+    bits: '3.2'
+    comment:
+      en: 'Speed limiter zone 3 function state'
+      fr: 'État de la fonction de limitation de zone 3'
+      es: 'Estado de la función de limitación de zona 3'
+      de: 'Status der Geschwindigkeitsbegrenzungszone 3'
+      it: 'Stato della funzione di limitazione zona 3'
+      pl: 'Stan funkcji ograniczenia strefy 3'
+      ru: 'Состояние функции ограничения зоны 3'
+      zh: '限速区3功能状态'
+      hu: '3. sebességkorlátozási zóna funkció állapota'
+      pt: 'Estado da função de limitação de zona 3'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  SPEED_LIMIT_ZONE_4_STATE:
+    bits: '3.1'
+    comment:
+      en: 'Speed limiter zone 4 function state'
+      fr: 'État de la fonction de limitation de zone 4'
+      es: 'Estado de la función de limitación de zona 4'
+      de: 'Status der Geschwindigkeitsbegrenzungszone 4'
+      it: 'Stato della funzione di limitazione zona 4'
+      pl: 'Stan funkcji ograniczenia strefy 4'
+      ru: 'Состояние функции ограничения зоны 4'
+      zh: '限速区4功能状态'
+      hu: '4. sebességkorlátozási zóna funkció állapota'
+      pt: 'Estado da função de limitação de zona 4'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  SPEED_LIMIT_ZONE_5_STATE:
+    bits: '3.0'
+    comment:
+      en: 'Speed limiter zone 5 function state'
+      fr: 'État de la fonction de limitation de zone 5'
+      es: 'Estado de la función de limitación de zona 5'
+      de: 'Status der Geschwindigkeitsbegrenzungszone 5'
+      it: 'Stato della funzione di limitazione zona 5'
+      pl: 'Stan funkcji ograniczenia strefy 5'
+      ru: 'Состояние функции ограничения зоны 5'
+      zh: '限速区5功能状态'
+      hu: '5. sebességkorlátozási zóna funkció állapota'
+      pt: 'Estado da função de limitação de zona 5'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  SPEED_LIMIT_ZONE_1_SPEED:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Speed limiter zone 1 speed value'
+      fr: 'Valeur de vitesse de la zone de limitation 1'
+      es: 'Valor de velocidad de la zona de limitación 1'
+      de: 'Geschwindigkeitswert der Begrenzungszone 1'
+      it: 'Valore di velocità della zona di limitazione 1'
+      pl: 'Wartość prędkości strefy ograniczenia 1'
+      ru: 'Значение скорости зоны ограничения 1'
+      zh: '限速区1车速值'
+      hu: '1. korlátozási zóna sebesség érték'
+      pt: 'Valor de velocidade da zona de limitação 1'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km/h'
+    default: 0x00
+
+  SPEED_LIMIT_ZONE_2_SPEED:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Speed limiter zone 2 speed value'
+      fr: 'Valeur de vitesse de la zone de limitation 2'
+      es: 'Valor de velocidad de la zona de limitación 2'
+      de: 'Geschwindigkeitswert der Begrenzungszone 2'
+      it: 'Valore di velocità della zona di limitazione 2'
+      pl: 'Wartość prędkości strefy ograniczenia 2'
+      ru: 'Значение скорости зоны ограничения 2'
+      zh: '限速区2车速值'
+      hu: '2. korlátozási zóna sebesség érték'
+      pt: 'Valor de velocidade da zona de limitação 2'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km/h'
+    default: 0x00
+
+  SPEED_LIMIT_ZONE_3_SPEED:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Speed limiter zone 3 speed value'
+      fr: 'Valeur de vitesse de la zone de limitation 3'
+      es: 'Valor de velocidad de la zona de limitación 3'
+      de: 'Geschwindigkeitswert der Begrenzungszone 3'
+      it: 'Valore di velocità della zona di limitazione 3'
+      pl: 'Wartość prędkości strefy ograniczenia 3'
+      ru: 'Значение скорости зоны ограничения 3'
+      zh: '限速区3车速值'
+      hu: '3. korlátozási zóna sebesség érték'
+      pt: 'Valor de velocidade da zona de limitação 3'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km/h'
+    default: 0x00
+
+  SPEED_LIMIT_ZONE_4_SPEED:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Speed limiter zone 4 speed value'
+      fr: 'Valeur de vitesse de la zone de limitation 4'
+      es: 'Valor de velocidad de la zona de limitación 4'
+      de: 'Geschwindigkeitswert der Begrenzungszone 4'
+      it: 'Valore di velocità della zona di limitazione 4'
+      pl: 'Wartość prędkości strefy ograniczenia 4'
+      ru: 'Значение скорости зоны ограничения 4'
+      zh: '限速区4车速值'
+      hu: '4. korlátozási zóna sebesség érték'
+      pt: 'Valor de velocidade da zona de limitação 4'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km/h'
+    default: 0x00
+
+  SPEED_LIMIT_ZONE_5_SPEED:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Speed limiter zone 5 speed value'
+      fr: 'Valeur de vitesse de la zone de limitation 5'
+      es: 'Valor de velocidad de la zona de limitación 5'
+      de: 'Geschwindigkeitswert der Begrenzungszone 5'
+      it: 'Valore di velocità della zona di limitazione 5'
+      pl: 'Wartość prędkości strefy ograniczenia 5'
+      ru: 'Значение скорости зоны ограничения 5'
+      zh: '限速区5车速值'
+      hu: '5. korlátozási zóna sebesség érték'
+      pt: 'Valor de velocidade da zona de limitação 5'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km/h'
+    default: 0x00

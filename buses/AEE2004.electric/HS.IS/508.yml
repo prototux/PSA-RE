@@ -1,0 +1,208 @@
+id: 0x508
+name: 'BSC_SUPERVISION'
+type: 'can'
+length: 6
+comment:
+  en: 'Power interface unit data: DC-DC converter fault, cruise-control/speed-limiter fault, air-pump relay request, maintenance wake-up, power reserved for AC, blank maintenance-lamp request and engine coolant temperature.'
+  fr: 'Données de l''unité d''interface de puissance : défaut convertisseur DC-DC, défaut régulateur/limiteur de vitesse, demande relais pompe à air, réveil maintenance, puissance réservée à la climatisation, demande de voyant maintenance à vide et température eau moteur.'
+  es: 'Datos de la unidad de interfaz de potencia: fallo del convertidor DC-DC, fallo del regulador/limitador de velocidad, solicitud del relé de la bomba de aire, activación de mantenimiento, potencia reservada para el A/C, solicitud de testigo de mantenimiento en vacío y temperatura del agua del motor.'
+  de: 'Daten der Leistungsschnittstelleneinheit: DC-DC-Wandlerfehler, Tempomat-/Geschwindigkeitsbegrenzer-Fehler, Luftpumpenrelaisanforderung, Wartungsweckung, für Klimaanlage reservierte Leistung, Leerlauf-Wartungskontrollleuchtenanforderung und Motorkühlwassertemperatur.'
+  it: 'Dati dell''unità di interfaccia di potenza: guasto convertitore DC-DC, guasto regolatore/limitatore di velocità, richiesta relè pompa aria, risveglio manutenzione, potenza riservata al climatizzatore, richiesta spia manutenzione a vuoto e temperatura acqua motore.'
+  pl: 'Dane jednostki interfejsu mocy: usterka przetwornicy DC-DC, usterka tempomatu/ogranicznika prędkości, żądanie przekaźnika pompy powietrza, wybudzenie serwisowe, moc zarezerwowana dla klimatyzacji, żądanie kontrolki serwisowej na pusto i temperatura wody silnika.'
+  ru: 'Данные силового интерфейсного блока: неисправность преобразователя DC-DC, неисправность круиз-контроля/ограничителя скорости, запрос реле воздушного насоса, сервисное пробуждение, мощность, зарезервированная для кондиционера, запрос индикатора обслуживания вхолостую и температура охлаждающей жидкости двигателя.'
+  zh: '功率接口单元数据:DC-DC转换器故障、巡航控制/限速器故障、空气泵继电器请求、维修唤醒、为空调预留的功率、空载维修灯请求和发动机冷却水温度。'
+  hu: 'A teljesítmény-interfész egység adatai: DC-DC átalakító hiba, tempomat/sebességhatároló hiba, légszivattyú relé kérése, szervizébresztés, klímának fenntartott teljesítmény, üresjárati szervizlámpa-kérés és motor hűtővíz hőmérséklete.'
+  pt: 'Dados da unidade de interface de potência: avaria do conversor DC-DC, avaria do regulador/limitador de velocidade, pedido do relé da bomba de ar, ativação de manutenção, potência reservada para o ar condicionado, pedido em branco da luz de manutenção e temperatura do líquido de arrefecimento do motor.'
+periodicity: ['100ms']
+senders: ['PIU']
+receivers: ['BSI']
+
+signals:
+  CRUISING_RANGE_WITH_AUXILIARIES:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Zero-emission cruising range with auxiliary loads'
+      fr: 'Autonomie en mode zéro émission avec les auxiliaires'
+      es: 'Autonomía en modo cero emisiones con auxiliares'
+      de: 'Reichweite im Nullemissionsmodus mit Nebenverbrauchern'
+      it: 'Autonomia a zero emissioni con gli ausiliari'
+      pl: 'Zasięg w trybie zerowej emisji z odbiornikami pomocniczymi'
+      ru: 'Запас хода в режиме нулевых выбросов с учётом вспомогательных потребителей'
+      zh: '含辅助设备的零排放续航里程'
+      hu: 'Nulla kibocsátású hatótávolság a kiegészítő fogyasztókkal'
+      pt: 'Autonomia em modo zero emissões com auxiliares'
+    type: 'uint'
+    min: 0
+    max: 1022
+    invalid: 0x3FF
+    default: 0x00
+
+  CHARGING_DISPLAY:
+    bits: '2.5'
+    comment:
+      en: 'Display of the charging plug connection or charging-in-progress state'
+      fr: 'Affichage de l''état de connexion de la prise ou d''une charge en cours'
+      es: 'Visualización del estado de conexión de la toma o de una carga en curso'
+      de: 'Anzeige des Steckerverbindungsstatus oder eines laufenden Ladevorgangs'
+      it: 'Visualizzazione dello stato di connessione della presa o di una ricarica in corso'
+      pl: 'Wyświetlanie stanu podłączenia wtyczki lub trwającego ładowania'
+      ru: 'Отображение состояния подключения разъёма или процесса зарядки'
+      zh: '显示充电插头连接状态或正在充电的状态'
+      hu: 'A csatlakozó bedugott állapotának vagy a folyamatban lévő töltésnek a megjelenítése'
+      pt: 'Visualização do estado de ligação da tomada ou de um carregamento em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No ignition request'
+        fr: 'Pas de demande d''allumage'
+        es: 'Sin solicitud de encendido'
+        de: 'Keine Zündanforderung'
+        it: 'Nessuna richiesta di accensione'
+        pl: 'Brak żądania zapłonu'
+        ru: 'Нет запроса зажигания'
+        zh: '无点火请求'
+        hu: 'Nincs gyújtási kérés'
+        pt: 'Sem pedido de ignição'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  CHARGE_AUTHORIZED_DISPLAY:
+    bits: '2.4'
+    comment:
+      en: 'Display of normal or fast charge authorization'
+      fr: 'Affichage de l''autorisation de charge normale ou rapide'
+      es: 'Visualización de la autorización de carga normal o rápida'
+      de: 'Anzeige der Freigabe für normales oder Schnellladen'
+      it: 'Visualizzazione dell''autorizzazione alla ricarica normale o rapida'
+      pl: 'Wyświetlanie zezwolenia na ładowanie normalne lub szybkie'
+      ru: 'Отображение разрешения на обычную или быструю зарядку'
+      zh: '显示是否允许普通充电或快速充电'
+      hu: 'A normál vagy gyorstöltés engedélyezésének megjelenítése'
+      pt: 'Apresentação da autorização de carga normal ou rápida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal or fast charging not authorised'
+        fr: 'Charge normale ou rapide non autorisée'
+        es: 'Carga normal o rápida no autorizada'
+        de: 'Normal- oder Schnellladen nicht zugelassen'
+        it: 'Ricarica normale o rapida non autorizzata'
+        pl: 'Ładowanie normalne lub szybkie niedozwolone'
+        ru: 'Обычная или быстрая зарядка не разрешена'
+        zh: '不允许普通或快速充电'
+        hu: 'A normál vagy gyorstöltés nem engedélyezett'
+        pt: 'Carga normal ou rápida não autorizada'
+      0x01:
+        en: 'Normal or quick charge authorized'
+        fr: 'Charge normale ou rapide autorisée'
+        es: 'Carga normal o rápida autorizada'
+        de: 'Normal- oder Schnellladung zulässig'
+        it: 'Ricarica normale o rapida autorizzata'
+        pl: 'Dozwolone ładowanie normalne lub szybkie'
+        ru: 'Разрешена обычная или быстрая зарядка'
+        zh: '允许普通或快速充电'
+        hu: 'Normál vagy gyorstöltés engedélyezve'
+        pt: 'Carga normal ou rápida autorizada'
+
+  UNUSED_1:
+    bits: '2.3-2.0'
+    unused: true
+
+  DISPLAYED_STATE_OF_CHARGE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Battery state of charge for display'
+      fr: 'État de charge de la batterie pour l''affichage'
+      es: 'Estado de carga de la batería para la visualización'
+      de: 'Ladezustand der Batterie für die Anzeige'
+      it: 'Stato di carica della batteria per la visualizzazione'
+      pl: 'Stan naładowania akumulatora do wyświetlenia'
+      ru: 'Уровень заряда батареи для отображения'
+      zh: '用于显示的电池电量状态'
+      hu: 'Az akkumulátor töltöttségi állapota a kijelzéshez'
+      pt: 'Estado de carga da bateria para apresentação'
+    type: 'uint'
+    factor: 0.5
+    offset: -5
+    min: -5
+    max: 120
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  BATTERY_CELL_MAX_TEMPERATURE:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Maximum battery cell temperature'
+      fr: 'Température maximale des cellules de la batterie'
+      es: 'Temperatura máxima de las celdas de la batería'
+      de: 'Maximale Zelltemperatur der Batterie'
+      it: 'Temperatura massima delle celle della batteria'
+      pl: 'Maksymalna temperatura ogniw akumulatora'
+      ru: 'Максимальная температура элементов батареи'
+      zh: '电池单体最高温度'
+      hu: 'Az akkumulátorcellák maximális hőmérséklete'
+      pt: 'Temperatura máxima das células da bateria'
+    type: 'uint'
+    factor: 1
+    offset: -50
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0x00
+
+  BATTERY_CELL_MIN_TEMPERATURE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Minimum battery cell temperature'
+      fr: 'Température minimale des cellules de la batterie'
+      es: 'Temperatura mínima de las celdas de la batería'
+      de: 'Minimale Zelltemperatur der Batterie'
+      it: 'Temperatura minima delle celle della batteria'
+      pl: 'Minimalna temperatura ogniw akumulatora'
+      ru: 'Минимальная температура элементов батареи'
+      zh: '电池单体最低温度'
+      hu: 'Az akkumulátorcellák minimális hőmérséklete'
+      pt: 'Temperatura mínima das células da bateria'
+    type: 'uint'
+    factor: 1
+    offset: -50
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0x00
+
+  MOTOR_INVERTER_COOLANT_TEMPERATURE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Traction motor and inverter coolant temperature'
+      fr: 'Température du liquide de refroidissement du moteur et du variateur'
+      es: 'Temperatura del refrigerante del motor y del variador'
+      de: 'Kühlmitteltemperatur von Motor und Wechselrichter'
+      it: 'Temperatura del liquido di raffreddamento del motore e dell''inverter'
+      pl: 'Temperatura płynu chłodzącego silnika i przemiennika'
+      ru: 'Температура охлаждающей жидкости двигателя и инвертора'
+      zh: '电机和逆变器冷却液温度'
+      hu: 'A motor és az inverter hűtőfolyadék-hőmérséklete'
+      pt: 'Temperatura do líquido de arrefecimento do motor de tração e do inversor'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x00

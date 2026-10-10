@@ -1,0 +1,159 @@
+id: 0x4F6
+name: 'DRIVER_DOOR_MODULE_SLOW_STATUS'
+type: 'van'
+length: 5
+comment:
+  en: 'Driver mirror glass position and outside temperature measured by the door mirror sensor.'
+  fr: 'Position du verre du rétroviseur conducteur et température extérieure mesurée par le capteur du rétroviseur.'
+  es: 'Posición del cristal del retrovisor del conductor y temperatura exterior medida por el sensor del retrovisor.'
+  de: 'Position des Spiegelglases Fahrerseite und Außentemperatur, gemessen vom Außenspiegelsensor.'
+  it: 'Posizione del vetro dello specchietto conducente e temperatura esterna misurata dal sensore dello specchietto.'
+  pl: 'Pozycja szyby lusterka kierowcy i temperatura zewnętrzna mierzona przez czujnik lusterka.'
+  ru: 'Положение стекла зеркала водителя и наружная температура, измеряемая датчиком зеркала.'
+  zh: '驾驶员后视镜镜片位置及后视镜传感器测得的车外温度。'
+  hu: 'A vezetőoldali tükörlap helyzete és a tükörérzékelő által mért külső hőmérséklet.'
+  pt: 'Posição do vidro do espelho do condutor e temperatura exterior medida pelo sensor do espelho da porta.'
+periodicity: ['1000ms']
+senders: ['EDP_C']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  MIRROR_VERTICAL_POSITION:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Mirror glass vertical position (0x00 = bottom, 0xFF = top); default 0xFF'
+      fr: 'Position verticale du miroir du rétroviseur (0x00 = bas, 0xFF = haut) ; défaut 0xFF'
+      es: 'Posición vertical del cristal del retrovisor (0x00 = abajo, 0xFF = arriba); valor por defecto 0xFF'
+      de: 'Vertikale Position des Spiegelglases (0x00 = unten, 0xFF = oben); Standardwert 0xFF'
+      it: 'Posizione verticale del vetro dello specchietto (0x00 = basso, 0xFF = alto); valore predefinito 0xFF'
+      pl: 'Pozycja pionowa szkła lusterka (0x00 = dół, 0xFF = góra); wartość domyślna 0xFF'
+      ru: 'Вертикальное положение стекла зеркала (0x00 = внизу, 0xFF = вверху); значение по умолчанию 0xFF'
+      zh: '后视镜镜片垂直位置（0x00 = 下，0xFF = 上）；默认值 0xFF'
+      hu: 'A tükörüveg függőleges helyzete (0x00 = lent, 0xFF = fent); alapértelmezett 0xFF'
+      pt: 'Posição vertical do vidro do espelho retrovisor (0x00 = baixo, 0xFF = cima); predefinição 0xFF'
+    type: 'enum'
+    factor: 0.39215686274509803
+    units: '%'
+    default: 0xFF
+    values:
+      0x00:
+        en: '0% of travel = bottom'
+        fr: '0 % de la course = bas'
+        es: '0 % del recorrido = abajo'
+        de: '0 % des Wegs = unten'
+        it: '0% della corsa = basso'
+        pl: '0% skoku = dół'
+        ru: '0% хода = низ'
+        zh: '行程的0% = 底部'
+        hu: 'Az út 0%-a = alul'
+        pt: '0% do curso = baixo'
+      0xFF:
+        en: '100% of travel = top'
+        fr: '100 % de la course = position haute'
+        es: '100 % del recorrido = posición alta'
+        de: '100 % des Wegs = obere Position'
+        it: '100% della corsa = posizione alta'
+        pl: '100% skoku = pozycja górna'
+        ru: '100% хода = верхнее положение'
+        zh: '100%行程=顶部位置'
+        hu: 'A löket 100%-a = felső helyzet'
+        pt: '100% do curso = posição alta'
+
+  MIRROR_HORIZONTAL_POSITION:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Mirror glass horizontal position (0x00 = left, 0xFF = right); default 0xFF'
+      fr: 'Position horizontale du miroir du rétroviseur (0x00 = gauche, 0xFF = droite) ; défaut 0xFF'
+      es: 'Posición horizontal del cristal del retrovisor (0x00 = izquierda, 0xFF = derecha); valor por defecto 0xFF'
+      de: 'Horizontale Position des Spiegelglases (0x00 = links, 0xFF = rechts); Standardwert 0xFF'
+      it: 'Posizione orizzontale del vetro dello specchietto (0x00 = sinistra, 0xFF = destra); valore predefinito 0xFF'
+      pl: 'Pozycja pozioma szkła lusterka (0x00 = lewo, 0xFF = prawo); wartość domyślna 0xFF'
+      ru: 'Горизонтальное положение стекла зеркала (0x00 = слева, 0xFF = справа); значение по умолчанию 0xFF'
+      zh: '后视镜镜片水平位置（0x00 = 左，0xFF = 右）；默认值 0xFF'
+      hu: 'A tükörüveg vízszintes helyzete (0x00 = bal, 0xFF = jobb); alapértelmezett 0xFF'
+      pt: 'Posição horizontal do vidro do espelho retrovisor (0x00 = esquerda, 0xFF = direita); predefinição 0xFF'
+    type: 'enum'
+    factor: 0.39215686274509803
+    units: '%'
+    default: 0xFF
+    values:
+      0x00:
+        en: '0% of travel = left'
+        fr: '0 % de la course = gauche'
+        es: '0 % del recorrido = izquierda'
+        de: '0 % des Hubs = links'
+        it: '0% della corsa = sinistra'
+        pl: '0% skoku = lewo'
+        ru: '0% хода = слева'
+        zh: '行程0%=左'
+        hu: 'Az útszakasz 0%-a = balra'
+        pt: '0% do curso = esquerda'
+      0xFF:
+        en: '100% of travel = right'
+        fr: '100 % de la course = droite'
+        es: '100 % del recorrido = derecha'
+        de: '100 % des Wegs = rechts'
+        it: '100% della corsa = destra'
+        pl: '100% skoku = prawo'
+        ru: '100% хода = вправо'
+        zh: '行程100% = 右'
+        hu: 'A löket 100%-a = jobbra'
+        pt: '100% do curso = direita'
+
+  OUTSIDE_TEMPERATURE:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Outside temperature, 0.5 degC steps from -40 degC (0xFF = invalid/default)'
+      fr: 'Température extérieure, par pas de 0,5 °C depuis -40 °C (0xFF = invalide/défaut)'
+      es: 'Temperatura exterior, pasos de 0,5 °C desde -40 °C (0xFF = no válido/por defecto)'
+      de: 'Außentemperatur, Schritte von 0,5 °C ab -40 °C (0xFF = ungültig/Standard)'
+      it: 'Temperatura esterna, passi di 0,5 °C da -40 °C (0xFF = non valido/predefinito)'
+      pl: 'Temperatura zewnętrzna, kroki co 0,5°C od -40°C (0xFF = nieprawidłowa/domyślna)'
+      ru: 'Наружная температура, шаг 0,5 °C от -40 °C (0xFF = недействительно/по умолчанию)'
+      zh: '车外温度，自 -40°C 起以 0.5°C 为步长（0xFF = 无效／默认值）'
+      hu: 'Külső hőmérséklet, 0,5 °C-os lépésekben -40 °C-tól (0xFF = érvénytelen/alapértelmezett)'
+      pt: 'Temperatura exterior, em passos de 0,5 °C a partir de -40 °C (0xFF = inválido/por defeito)'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFF
+
+  FOOTER:
+    bits: '5.7-5.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

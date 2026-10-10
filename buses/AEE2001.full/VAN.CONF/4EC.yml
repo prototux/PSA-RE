@@ -1,0 +1,823 @@
+id: 0x4EC
+name: 'BCD_STATUS_2'
+type: 'van'
+length: 12
+comment:
+  en: 'Status of the particulate filter additive injection ECU: operational flag and fault flags, cumulated injected additive, fuel cap sensor, additive level and particulate filter downstream temperature.'
+  fr: 'État du système d''injection d''additif : indicateur de fonctionnement et défauts, quantité d''additif injecté cumulée, capteur de bouchon de réservoir, niveau d''additif et température en aval du filtre à particules.'
+  es: 'Estado de la centralita de inyección de aditivo del filtro de partículas: indicador de funcionamiento y de fallo, cantidad acumulada de aditivo inyectado, sensor del tapón de depósito, nivel de aditivo y temperatura aguas abajo del filtro de partículas.'
+  de: 'Status des Steuergeräts für die Additiv-Einspritzung des Partikelfilters: Betriebs- und Fehlerkennung, kumulierte eingespritzte Additivmenge, Tankdeckelsensor, Additivstand und Temperatur stromabwärts des Partikelfilters.'
+  it: 'Stato della centralina di iniezione additivo del filtro antiparticolato: indicatore di funzionamento e guasto, quantità cumulata di additivo iniettato, sensore tappo serbatoio, livello additivo e temperatura a valle del filtro antiparticolato.'
+  pl: 'Stan sterownika wtrysku dodatku do filtra cząstek stałych: flaga pracy i usterek, skumulowana ilość wtryśniętego dodatku, czujnik korka wlewu, poziom dodatku i temperatura za filtrem cząstek stałych.'
+  ru: 'Статус блока управления впрыском присадки сажевого фильтра: флаги работы и неисправности, накопленное количество впрыснутой присадки, датчик крышки бака, уровень присадки и температура за сажевым фильтром.'
+  zh: '颗粒物过滤器添加剂喷射控制单元状态:运行和故障标志、累计喷射添加剂量、油箱盖传感器、添加剂液位及颗粒物过滤器下游温度。'
+  hu: 'A részecskeszűrő adalékbefecskendező vezérlőegységének állapota: üzemi és hibajelző, összesített befecskendezett adalékmennyiség, tanksapka-érzékelő, adalékszint és a részecskeszűrő utáni hőmérséklet.'
+  pt: 'Estado da unidade de controlo de injeção de aditivo do filtro de partículas: indicador operacional e indicadores de avaria, aditivo injetado acumulado, sensor da tampa do depósito, nível de aditivo e temperatura a jusante do filtro de partículas.'
+periodicity: ['1000ms', 'trigger']
+senders: ['CDC']
+receivers: ['BTEL', 'EMF']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BTEL']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '2.7-2.4'
+    unused: true
+
+  CD_CHANGER_REPEAT_MODE:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Current CD changer track/disc repeat mode'
+      fr: 'Mode de répétition plage/disque courant du changeur CD'
+      es: 'Modo de repetición de pista/disco actual del cambiador de CD'
+      de: 'Aktueller Wiederholmodus (Titel/Disc) des CD-Wechslers'
+      it: 'Modalità di ripetizione traccia/disco corrente del cambia CD'
+      pl: 'Bieżący tryb powtarzania ścieżki/płyty zmieniarki CD'
+      ru: 'Текущий режим повтора дорожки/диска CD-чейнджера'
+      zh: 'CD换碟机当前曲目/光盘重复模式'
+      hu: 'A CD-váltó aktuális szám-/lemezismétlési módja'
+      pt: 'Modo de repetição de faixa/disco atual do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Нормальный режим'
+        zh: '正常模式'
+        hu: 'Normál mód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Repeat track'
+        fr: 'Répétition de la plage'
+        es: 'Repetición de pista'
+        de: 'Titelwiederholung'
+        it: 'Ripetizione traccia'
+        pl: 'Powtarzanie utworu'
+        ru: 'Повтор трека'
+        zh: '重复曲目'
+        hu: 'Szám ismétlése'
+        pt: 'Repetição da faixa'
+      0x02:
+        en: 'Repeat disc'
+        fr: 'Répétition du disque'
+        es: 'Repetición del disco'
+        de: 'Disc-Wiederholung'
+        it: 'Ripetizione del disco'
+        pl: 'Powtarzanie płyty'
+        ru: 'Повтор диска'
+        zh: '光盘重复播放'
+        hu: 'Lemez ismétlése'
+        pt: 'Repetir disco'
+
+  CD_CHANGER_RANDOM_MODE:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Current CD changer playback (shuffle) mode'
+      fr: 'Mode de lecture (aléatoire) courant du changeur CD'
+      es: 'Modo de reproducción (aleatorio) actual del cambiador de CD'
+      de: 'Aktueller Wiedergabemodus (Zufall) des CD-Wechslers'
+      it: 'Modalità di riproduzione (casuale) corrente del cambia CD'
+      pl: 'Bieżący tryb odtwarzania (losowy) zmieniarki CD'
+      ru: 'Текущий режим воспроизведения (случайный) CD-чейнджера'
+      zh: 'CD换碟机当前播放(随机)模式'
+      hu: 'A CD-váltó aktuális lejátszási (véletlenszerű) módja'
+      pt: 'Modo de reprodução (aleatória) atual do carregador de CD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Нормальный режим'
+        zh: '正常模式'
+        hu: 'Normál mód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Random track playback'
+        fr: 'Lecture aléatoire des pistes'
+        es: 'Reproducción aleatoria de pistas'
+        de: 'Zufällige Titelwiedergabe'
+        it: 'Riproduzione casuale delle tracce'
+        pl: 'Odtwarzanie losowe utworów'
+        ru: 'Воспроизведение треков в случайном порядке'
+        zh: '曲目随机播放'
+        hu: 'Számok véletlen lejátszása'
+        pt: 'Reprodução aleatória de faixas'
+      0x02:
+        en: 'Random discs'
+        fr: 'Lecture aléatoire des disques'
+        es: 'Reproducción aleatoria de discos'
+        de: 'Zufallswiedergabe der Discs'
+        it: 'Riproduzione casuale dei dischi'
+        pl: 'Losowe odtwarzanie płyt'
+        ru: 'Случайное воспроизведение дисков'
+        zh: '光盘随机播放'
+        hu: 'Lemezek véletlenszerű lejátszása'
+        pt: 'Reprodução aleatória de discos'
+      0x03:
+        en: 'Random track and disc playback'
+        fr: 'Lecture aléatoire des pistes et des disques'
+        es: 'Reproducción aleatoria de pistas y discos'
+        de: 'Zufällige Titel- und CD-Wiedergabe'
+        it: 'Riproduzione casuale di tracce e dischi'
+        pl: 'Odtwarzanie losowe utworów i płyt'
+        ru: 'Воспроизведение треков и дисков в случайном порядке'
+        zh: '曲目和光盘随机播放'
+        hu: 'Számok és lemezek véletlen lejátszása'
+        pt: 'Reprodução aleatória de faixas e discos'
+
+  CD_CHANGER_READY:
+    bits: '3.7'
+    comment:
+      en: 'CD changer ready / standby'
+      fr: 'Changeur CD prêt / en veille'
+      es: 'Cambiador de CD listo / en espera'
+      de: 'CD-Wechsler bereit / Standby'
+      it: 'Cambia CD pronto / standby'
+      pl: 'Zmieniarka CD gotowa / w trybie czuwania'
+      ru: 'CD-чейнджер готов / в режиме ожидания'
+      zh: 'CD换碟机就绪/待机'
+      hu: 'A CD-váltó kész / készenléti állapotban'
+      pt: 'Carregador de CD pronto / em espera'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Czuwanie'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x01:
+        en: 'Ready'
+        fr: 'Prêt'
+        es: 'Listo'
+        de: 'Bereit'
+        it: 'Pronto'
+        pl: 'Gotowy'
+        ru: 'Готово'
+        zh: '就绪'
+        hu: 'Kész'
+        pt: 'Pronto'
+
+  CD_CHANGER_COMM_READY:
+    bits: '3.6'
+    comment:
+      en: 'CD changer awake with VAN communication active; its transition to 1 after network wake-up generates an event frame and signals the changer''s presence'
+      fr: 'Changeur CD réveillé avec communication VAN active ; son passage à 1 après le réveil du réseau génère une trame événement et signale la présence du changeur'
+      es: 'Cambiador de CD despierto con comunicación VAN activa; su paso a 1 tras el despertar de la red genera una trama de evento y señala la presencia del cambiador'
+      de: 'CD-Wechsler ist aktiv mit laufender VAN-Kommunikation; der Übergang auf 1 nach dem Netz-Aufwachen erzeugt einen Ereignisrahmen und meldet die Anwesenheit des Wechslers'
+      it: 'Cambia CD attivo con comunicazione VAN in corso; il passaggio a 1 dopo il risveglio della rete genera un frame di evento e segnala la presenza del cambia CD'
+      pl: 'Zmieniarka CD aktywna z działającą komunikacją VAN; przejście na 1 po wybudzeniu sieci generuje ramkę zdarzenia i sygnalizuje obecność zmieniarki'
+      ru: 'CD-чейнджер активен, связь VAN установлена; переход в 1 после пробуждения сети формирует кадр события и сигнализирует о наличии чейнджера'
+      zh: 'CD换碟机唤醒且VAN通信有效;网络唤醒后跳变为1会产生事件帧并表明换碟机存在'
+      hu: 'A CD-váltó ébren van, aktív VAN kommunikációval; a hálózat felébredése utáni 1-re váltás eseménykeretet generál és jelzi a váltó jelenlétét'
+      pt: 'Carregador de CD ativo com comunicação VAN ativa; a sua transição para 1 após o despertar da rede gera uma trama de evento e sinaliza a presença do carregador'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'VAN communication impossible'
+        fr: 'Communication VAN impossible'
+        es: 'Comunicación VAN imposible'
+        de: 'VAN-Kommunikation nicht möglich'
+        it: 'Comunicazione VAN impossibile'
+        pl: 'Komunikacja VAN niemożliwa'
+        ru: 'Связь VAN невозможна'
+        zh: 'VAN通信不可行'
+        hu: 'A VAN kommunikáció nem lehetséges'
+        pt: 'Comunicação VAN impossível'
+      0x01:
+        en: 'VAN communication possible'
+        fr: 'Communication VAN possible'
+        es: 'Comunicación VAN posible'
+        de: 'VAN-Kommunikation möglich'
+        it: 'Comunicazione VAN possibile'
+        pl: 'Możliwa komunikacja VAN'
+        ru: 'Связь по шине VAN возможна'
+        zh: 'VAN 通信可用'
+        hu: 'VAN kommunikáció lehetséges'
+        pt: 'Comunicação VAN possível'
+
+  UNUSED_2:
+    bits: '3.5'
+    unused: true
+
+  CD_CHANGER_ACCESS_IN_PROGRESS:
+    bits: '3.4'
+    comment:
+      en: 'CD changer access in progress (track/disc change, reading table of contents); 0 while the magazine check bit is set'
+      fr: 'Accès en cours du changeur CD (changement de plage/disque, lecture de la table des matières) ; à 0 tant que le bit de vérification du magasin est actif'
+      es: 'Acceso en curso del cambiador de CD (cambio de pista/disco, lectura del índice); a 0 mientras el bit de verificación del cargador esté activo'
+      de: 'CD-Wechsler führt Zugriff aus (Titel-/Disc-Wechsel, Lesen des Inhaltsverzeichnisses); 0 solange das Magazin-Prüfbit gesetzt ist'
+      it: 'Accesso in corso del cambia CD (cambio traccia/disco, lettura del sommario); a 0 finché il bit di controllo del caricatore è attivo'
+      pl: 'Trwa dostęp zmieniarki CD (zmiana ścieżki/płyty, odczyt spisu treści); 0, gdy bit sprawdzania magazynka jest ustawiony'
+      ru: 'Идёт обращение чейнджера компакт-дисков (смена дорожки/диска, чтение оглавления); 0, пока бит проверки магазина установлен'
+      zh: 'CD换碟机正在访问(更换曲目/光盘,读取目录);检查仓位为1时该位为0'
+      hu: 'A CD-váltó hozzáférése folyamatban (szám-/lemezváltás, tartalomjegyzék olvasása); 0, amíg a tár ellenőrző bitje aktív'
+      pt: 'Acesso em curso ao carregador de CD (mudança de faixa/disco, leitura do índice); a 0 enquanto o bit de verificação do carregador estiver ativo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x01:
+        en: 'Access in progress'
+        fr: 'Accès en cours'
+        es: 'Acceso en curso'
+        de: 'Zugriff läuft'
+        it: 'Accesso in corso'
+        pl: 'Trwa dostęp'
+        ru: 'Выполняется доступ'
+        zh: '访问进行中'
+        hu: 'Hozzáférés folyamatban'
+        pt: 'Acesso em curso'
+
+  CD_CHANGER_MAGAZINE_CHECK:
+    bits: '3.3'
+    comment:
+      en: 'CD changer scanning disc presence and positions in the magazine'
+      fr: 'Le changeur CD analyse la présence et la position des disques dans le magasin'
+      es: 'El cambiador de CD explora la presencia y posición de los discos en el cargador'
+      de: 'CD-Wechsler prüft Vorhandensein und Position der Discs im Magazin'
+      it: 'Il cambia CD sta analizzando la presenza e la posizione dei dischi nel caricatore'
+      pl: 'Zmieniarka CD sprawdza obecność i położenie płyt w magazynku'
+      ru: 'CD-чейнджер проверяет наличие и положение дисков в магазине'
+      zh: 'CD换碟机正在扫描弹夹内光盘的存在和位置'
+      hu: 'A CD-váltó ellenőrzi a lemezek jelenlétét és helyzetét a tárban'
+      pt: 'O carregador de CD analisa a presença e a posição dos discos no carregador'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x01:
+        en: 'Magazine check'
+        fr: 'Vérification du magasin'
+        es: 'Verificación del cargador'
+        de: 'Magazinprüfung'
+        it: 'Verifica del caricatore'
+        pl: 'Sprawdzenie magazynka'
+        ru: 'Проверка магазина'
+        zh: '换碟盒检查'
+        hu: 'Tár ellenőrzése'
+        pt: 'Verificação do carregador'
+
+  CD_CHANGER_STATE:
+    bits: '3.2-3.0'
+    comment:
+      en: 'CD changer state; "no disc" means magazine empty, disc upside down, or magazine absent'
+      fr: 'État du changeur CD ; « pas de disque » signifie magasin vide, disque à l''envers, ou magasin absent'
+      es: 'Estado del cambiador de CD; «sin disco» significa cargador vacío, disco al revés o cargador ausente'
+      de: 'Zustand des CD-Wechslers; „kein Disc“ bedeutet Magazin leer, Disc verkehrt herum oder Magazin fehlt'
+      it: 'Stato del cambia CD; "nessun disco" significa caricatore vuoto, disco capovolto o caricatore assente'
+      pl: 'Stan zmieniarki CD; „brak płyty” oznacza pusty magazynek, odwróconą płytę lub brak magazynka'
+      ru: 'Состояние CD-чейнджера; «нет диска» означает пустой магазин, перевёрнутый диск или отсутствие магазина'
+      zh: 'CD换碟机状态;“无光盘”表示弹夹为空、光盘反面朝上或弹夹缺失'
+      hu: 'A CD-váltó állapota; a „nincs lemez” üres tárat, fordítva behelyezett lemezt vagy hiányzó tárat jelent'
+      pt: 'Estado do carregador de CD; "sem disco" significa magazine vazio, disco ao contrário ou magazine ausente'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No disc'
+        fr: 'Pas de disque'
+        es: 'Sin disco'
+        de: 'Keine CD'
+        it: 'Nessun disco'
+        pl: 'Brak płyty'
+        ru: 'Нет диска'
+        zh: '无光盘'
+        hu: 'Nincs lemez'
+        pt: 'Sem disco'
+      0x01:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Paused'
+        fr: 'Pause'
+        es: 'En pausa'
+        de: 'Pausiert'
+        it: 'In pausa'
+        pl: 'Wstrzymane'
+        ru: 'Пауза'
+        zh: '已暂停'
+        hu: 'Szüneteltetve'
+        pt: 'Em pausa'
+      0x03:
+        en: 'Playing'
+        fr: 'Lecture'
+        es: 'Reproduciendo'
+        de: 'Wiedergabe'
+        it: 'Riproduzione'
+        pl: 'Odtwarzanie'
+        ru: 'Воспроизведение'
+        zh: '播放中'
+        hu: 'Lejátszás'
+        pt: 'A reproduzir'
+      0x04:
+        en: 'Fast forward'
+        fr: 'Avance rapide'
+        es: 'Avance rápido'
+        de: 'Schneller Vorlauf'
+        it: 'Avanzamento rapido'
+        pl: 'Szybkie przewijanie do przodu'
+        ru: 'Быстрая перемотка вперёд'
+        zh: '快进'
+        hu: 'Gyors előretekerés'
+        pt: 'Avanço rápido'
+      0x05:
+        en: 'Fast rewind'
+        fr: 'Retour rapide'
+        es: 'Rebobinado rápido'
+        de: 'Schneller Rücklauf'
+        it: 'Riavvolgimento rapido'
+        pl: 'Szybkie przewijanie do tyłu'
+        ru: 'Быстрая перемотка назад'
+        zh: '快退'
+        hu: 'Gyors visszatekerés'
+        pt: 'Retrocesso rápido'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Intro scan'
+        fr: 'Balayage d''intro'
+        es: 'Escaneo de intro'
+        de: 'Anspielscan'
+        it: 'Scansione intro'
+        pl: 'Skanowanie wstępu'
+        ru: 'Сканирование вступлений'
+        zh: '片头扫描'
+        hu: 'Bevezető-pásztázás'
+        pt: 'Varrimento de intro'
+
+  CD_CHANGER_OVER_TEMPERATURE:
+    bits: '4.7'
+    comment:
+      en: 'CD changer over temperature (threshold depends on the product)'
+      fr: 'Surchauffe du changeur CD (seuil dépendant du produit)'
+      es: 'Sobretemperatura del cambiador de CD (umbral dependiente del producto)'
+      de: 'Übertemperatur des CD-Wechslers (Schwellenwert produktabhängig)'
+      it: 'Sovratemperatura del cambia CD (soglia dipendente dal prodotto)'
+      pl: 'Przegrzanie zmieniarki CD (próg zależny od produktu)'
+      ru: 'Перегрев CD-чейнджера (порог зависит от изделия)'
+      zh: 'CD换碟机温度过高(阈值取决于产品)'
+      hu: 'A CD-váltó túlmelegedése (a küszöbérték terméktől függ)'
+      pt: 'Sobreaquecimento do carregador de CD (limiar dependente do produto)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal temperature'
+        fr: 'Température normale'
+        es: 'Temperatura normal'
+        de: 'Normale Temperatur'
+        it: 'Temperatura normale'
+        pl: 'Normalna temperatura'
+        ru: 'Нормальная температура'
+        zh: '正常温度'
+        hu: 'Normál hőmérséklet'
+        pt: 'Temperatura normal'
+      0x01:
+        en: 'Over temperature'
+        fr: 'Dépassement de température'
+        es: 'Sobretemperatura'
+        de: 'Übertemperatur'
+        it: 'Superamento della temperatura'
+        pl: 'Przekroczenie temperatury'
+        ru: 'Превышение температуры'
+        zh: '温度超限'
+        hu: 'Hőmérséklet-túllépés'
+        pt: 'Excesso de temperatura'
+
+  CD_CHANGER_ERROR:
+    bits: '4.6'
+    comment:
+      en: 'CD changer error (jammed mechanism, disc load/unload impossible, disc upside down, magazine eject impossible, etc.)'
+      fr: 'Erreur du changeur CD (mécanisme bloqué, chargement/déchargement de disque impossible, disque à l''envers, éjection du magasin impossible, etc.)'
+      es: 'Error del cambiador de CD (mecanismo atascado, carga/descarga de disco imposible, disco al revés, expulsión del cargador imposible, etc.)'
+      de: 'Fehler des CD-Wechslers (Mechanismus blockiert, Disc-Laden/Entladen unmöglich, Disc verkehrt herum, Magazinauswurf unmöglich usw.)'
+      it: 'Errore del cambia CD (meccanismo bloccato, caricamento/scaricamento disco impossibile, disco capovolto, espulsione del caricatore impossibile, ecc.)'
+      pl: 'Błąd zmieniarki CD (zablokowany mechanizm, niemożliwe załadowanie/wyjęcie płyty, płyta odwrócona, niemożliwe wysunięcie magazynka itp.)'
+      ru: 'Ошибка CD-чейнджера (заклинило механизм, невозможна загрузка/выгрузка диска, диск перевёрнут, невозможно извлечь магазин и т.д.)'
+      zh: 'CD换碟机错误(机构卡住、无法装卸光盘、光盘反面朝上、无法弹出弹夹等)'
+      hu: 'CD-váltó hiba (elakadt mechanizmus, lemez be-/kirakása lehetetlen, fordítva behelyezett lemez, tár kiadása lehetetlen stb.)'
+      pt: 'Erro do trocador de CD (mecanismo bloqueado, carga/descarga de disco impossível, disco ao contrário, ejeção do carregador impossível, etc.)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Error'
+        fr: 'Erreur'
+        es: 'Error'
+        de: 'Fehler'
+        it: 'Errore'
+        pl: 'Błąd'
+        ru: 'Ошибка'
+        zh: '错误'
+        hu: 'Hiba'
+        pt: 'Erro'
+
+  CD_CHANGER_DOOR_OPEN:
+    bits: '4.5'
+    comment:
+      en: 'CD changer door state'
+      fr: 'État de la porte du changeur CD'
+      es: 'Estado de la puerta del cambiador de CD'
+      de: 'Zustand der CD-Wechsler-Klappe'
+      it: 'Stato dello sportello del cambia CD'
+      pl: 'Stan drzwiczek zmieniarki CD'
+      ru: 'Состояние дверцы CD-чейнджера'
+      zh: 'CD换碟机舱门状态'
+      hu: 'A CD-váltó ajtajának állapota'
+      pt: 'Estado da porta do leitor de CDs'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Door closed'
+        fr: 'Porte CDC fermée'
+        es: 'Puerta CDC cerrada'
+        de: 'Tür CDC geschlossen'
+        it: 'Portiera CDC chiusa'
+        pl: 'Drzwi CDC zamknięte'
+        ru: 'Дверь CDC закрыта'
+        zh: 'CDC门已关闭'
+        hu: 'CDC ajtó zárva'
+        pt: 'Porta CDC fechada'
+      0x01:
+        en: 'Boot/trunk lid open'
+        fr: 'Porte du coffre ouverte'
+        es: 'Puerta del maletero abierta'
+        de: 'Kofferraumklappe offen'
+        it: 'Portellone del bagagliaio aperto'
+        pl: 'Otwarta klapa bagażnika'
+        ru: 'Крышка багажника открыта'
+        zh: '行李厢盖打开'
+        hu: 'Csomagtartó fedele nyitva'
+        pt: 'Tampa da bagageira aberta'
+
+  CD_CHANGER_MAGAZINE_PRESENT:
+    bits: '4.4'
+    comment:
+      en: 'CD changer magazine present'
+      fr: 'Présence du magasin du changeur CD'
+      es: 'Presencia del cargador del cambiador de CD'
+      de: 'Magazin des CD-Wechslers vorhanden'
+      it: 'Presenza del caricatore del cambia CD'
+      pl: 'Obecność magazynka zmieniarki CD'
+      ru: 'Наличие магазина CD-чейнджера'
+      zh: 'CD换碟机弹夹存在'
+      hu: 'A CD-váltó tárának jelenléte'
+      pt: 'Carregador do leitor de CDs presente'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Magazine absent'
+        fr: 'Magasin absent'
+        es: 'Cargador ausente'
+        de: 'Magazin nicht vorhanden'
+        it: 'Caricatore assente'
+        pl: 'Brak magazynka'
+        ru: 'Магазин отсутствует'
+        zh: '换碟盒缺失'
+        hu: 'Tár hiányzik'
+        pt: 'Carregador ausente'
+      0x01:
+        en: 'Magazine present'
+        fr: 'Magasin présent'
+        es: 'Cargador presente'
+        de: 'Magazin vorhanden'
+        it: 'Caricatore presente'
+        pl: 'Magazynek obecny'
+        ru: 'Магазин присутствует'
+        zh: '弹匣/仓存在'
+        hu: 'Tár jelen van'
+        pt: 'Carregador presente'
+
+  CD_CHANGER_CAPACITY:
+    bits: '4.3-4.0'
+    comment:
+      en: 'Total disc capacity of the CD changer magazine (1 to 15)'
+      fr: 'Capacité totale du magasin du changeur CD (1 à 15)'
+      es: 'Capacidad total del cargador del cambiador de CD (1 a 15)'
+      de: 'Gesamtkapazität des CD-Wechsler-Magazins (1 bis 15)'
+      it: 'Capacità totale del caricatore del cambia CD (da 1 a 15)'
+      pl: 'Całkowita pojemność magazynka zmieniarki CD (1 do 15)'
+      ru: 'Общая вместимость магазина CD-чейнджера (от 1 до 15)'
+      zh: 'CD换碟机弹夹总容量(1至15张)'
+      hu: 'A CD-váltó tárának teljes kapacitása (1-15)'
+      pt: 'Capacidade total do carregador do trocador de CD (1 a 15)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x01:
+        en: 'Charger capacity = 1'
+        fr: 'Capacité du chargeur = 1'
+        es: 'Capacidad del cargador = 1'
+        de: 'Ladegerätkapazität = 1'
+        it: 'Capacità del caricatore = 1'
+        pl: 'Pojemność ładowarki = 1'
+        ru: 'Ёмкость зарядного устройства = 1'
+        zh: '充电器容量=1'
+        hu: 'A töltő kapacitása = 1'
+        pt: 'Capacidade do carregador = 1'
+      0x0F:
+        en: 'Capacity = 15'
+        fr: 'Capacité du chargeur = 15'
+        es: 'Capacidad = 15'
+        de: 'Kapazität = 15'
+        it: 'Capacità = 15'
+        pl: 'Pojemność = 15'
+        ru: 'Ёмкость = 15'
+        zh: '容量=15'
+        hu: 'Kapacitás = 15'
+        pt: 'Capacidade = 15'
+
+  TRACK_ELAPSED_MINUTES:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Minutes elapsed since the start of the track, BCD; 0xFF while searching or if playback impossible'
+      fr: 'Minutes écoulées depuis le début de la plage, BCD ; 0xFF pendant une recherche ou si la lecture est impossible'
+      es: 'Minutos transcurridos desde el inicio de la pista, BCD; 0xFF durante la búsqueda o si la reproducción es imposible'
+      de: 'Seit Titelbeginn verstrichene Minuten, BCD; 0xFF während der Suche oder wenn Wiedergabe unmöglich ist'
+      it: 'Minuti trascorsi dall''inizio della traccia, BCD; 0xFF durante la ricerca o se la riproduzione è impossibile'
+      pl: 'Minuty, które upłynęły od początku ścieżki, BCD; 0xFF podczas wyszukiwania lub gdy odtwarzanie jest niemożliwe'
+      ru: 'Минуты, прошедшие с начала дорожки, BCD; 0xFF во время поиска или если воспроизведение невозможно'
+      zh: '自曲目开始经过的分钟数,BCD码;搜索期间或无法播放时为0xFF'
+      hu: 'A szám kezdete óta eltelt percek, BCD; 0xFF keresés közben vagy ha a lejátszás nem lehetséges'
+      pt: 'Minutos decorridos desde o início da faixa, BCD; 0xFF durante a procura ou se a reprodução for impossível'
+    type: 'bcd'
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+
+  TRACK_ELAPSED_SECONDS:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Seconds elapsed since the start of the track (BCD assumed, like the minutes signal)'
+      fr: 'Secondes écoulées depuis le début de la plage (BCD supposé, comme le signal des minutes)'
+      es: 'Segundos transcurridos desde el inicio de la pista (se asume BCD, como la señal de minutos)'
+      de: 'Seit Titelbeginn verstrichene Sekunden (BCD angenommen, wie beim Minutensignal)'
+      it: 'Secondi trascorsi dall''inizio della traccia (si presume BCD, come il segnale dei minuti)'
+      pl: 'Sekundy, które upłynęły od początku ścieżki (przyjęto BCD, jak w sygnale minut)'
+      ru: 'Секунды, прошедшие с начала дорожки (предположительно BCD, как и сигнал минут)'
+      zh: '自曲目开始经过的秒数(假定为BCD码,与分钟信号相同)'
+      hu: 'A szám kezdete óta eltelt másodpercek (feltehetően BCD, mint a perc jel)'
+      pt: 'Segundos decorridos desde o início da faixa (assume-se BCD, como o sinal dos minutos)'
+    type: 'bcd'
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+
+  CURRENT_TRACK:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Current track number, BCD 1 to 99; during search, the track being searched; 0xFF = magazine absent or mechanism error'
+      fr: 'Numéro de la plage courante, BCD 1 à 99 ; pendant une recherche, plage recherchée ; 0xFF = magasin absent ou erreur mécanique'
+      es: 'Número de pista actual, BCD de 1 a 99; durante la búsqueda, pista buscada; 0xFF = cargador ausente o error de mecanismo'
+      de: 'Aktuelle Titelnummer, BCD 1 bis 99; während der Suche der gesuchte Titel; 0xFF = Magazin fehlt oder Mechanikfehler'
+      it: 'Numero di traccia corrente, BCD da 1 a 99; durante la ricerca, la traccia cercata; 0xFF = caricatore assente o errore meccanico'
+      pl: 'Numer bieżącej ścieżki, BCD 1 do 99; podczas wyszukiwania numer poszukiwanej ścieżki; 0xFF = brak magazynka lub błąd mechanizmu'
+      ru: 'Номер текущей дорожки, BCD от 1 до 99; во время поиска — искомая дорожка; 0xFF = магазин отсутствует или ошибка механизма'
+      zh: '当前曲目编号,BCD码1至99;搜索期间为正在搜索的曲目;0xFF表示弹夹缺失或机械故障'
+      hu: 'Az aktuális szám száma, BCD 1-99; keresés közben a keresett szám; 0xFF = hiányzó tár vagy mechanikai hiba'
+      pt: 'Número da faixa atual, BCD 1 a 99; durante a busca, faixa procurada; 0xFF = magazine ausente ou erro mecânico'
+    type: 'bcd'
+    min: 1
+    max: 99
+    invalid: 0xFF
+    default: 0xFF
+
+  CURRENT_DISC:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Current disc number, BCD 1 to 16; during search, the disc being searched; 0xFF = magazine absent or mechanism error'
+      fr: 'Numéro du disque courant, BCD 1 à 16 ; pendant une recherche, disque recherché ; 0xFF = magasin absent ou erreur mécanique'
+      es: 'Número de disco actual, BCD de 1 a 16; durante la búsqueda, disco buscado; 0xFF = cargador ausente o error de mecanismo'
+      de: 'Aktuelle Disc-Nummer, BCD 1 bis 16; während der Suche die gesuchte Disc; 0xFF = Magazin fehlt oder Mechanikfehler'
+      it: 'Numero del disco corrente, BCD da 1 a 16; durante la ricerca, il disco cercato; 0xFF = caricatore assente o errore meccanico'
+      pl: 'Numer bieżącej płyty, BCD 1 do 16; podczas wyszukiwania numer poszukiwanej płyty; 0xFF = brak magazynka lub błąd mechanizmu'
+      ru: 'Номер текущего диска, BCD от 1 до 16; во время поиска — искомый диск; 0xFF = магазин отсутствует или ошибка механизма'
+      zh: '当前光盘编号,BCD码1至16;搜索期间为正在搜索的光盘;0xFF表示弹夹缺失或机械故障'
+      hu: 'Az aktuális lemez száma, BCD 1-16; keresés közben a keresett lemez; 0xFF = hiányzó tár vagy mechanikai hiba'
+      pt: 'Número do disco atual, BCD de 1 a 16; durante uma pesquisa, disco a pesquisar; 0xFF = carregador ausente ou erro de mecanismo'
+    type: 'bcd'
+    min: 1
+    max: 16
+    invalid: 0xFF
+    default: 0xFF
+
+  DISC_TRACK_COUNT:
+    bits: '9.7-9.0'
+    comment:
+      en: 'Number of tracks on the current disc, BCD 01 to 99; 0xFF while searching or if playback impossible'
+      fr: 'Nombre de plages du disque courant, BCD 01 à 99 ; 0xFF pendant une recherche ou si la lecture est impossible'
+      es: 'Número de pistas del disco actual, BCD 01 a 99; 0xFF durante la búsqueda o si la reproducción es imposible'
+      de: 'Anzahl der Titel auf der aktuellen Disc, BCD 01 bis 99; 0xFF während der Suche oder wenn Wiedergabe unmöglich ist'
+      it: 'Numero di tracce del disco corrente, BCD da 01 a 99; 0xFF durante la ricerca o se la riproduzione è impossibile'
+      pl: 'Liczba ścieżek na bieżącej płycie, BCD 01 do 99; 0xFF podczas wyszukiwania lub gdy odtwarzanie jest niemożliwe'
+      ru: 'Число дорожек на текущем диске, BCD от 01 до 99; 0xFF во время поиска или если воспроизведение невозможно'
+      zh: '当前光盘的曲目数,BCD码01至99;搜索期间或无法播放时为0xFF'
+      hu: 'A jelenlegi lemez számainak száma, BCD 01-99; 0xFF keresés közben vagy ha a lejátszás nem lehetséges'
+      pt: 'Número de faixas do disco atual, BCD 01 a 99; 0xFF durante a procura ou se a reprodução for impossível'
+    type: 'bcd'
+    min: 1
+    max: 99
+    invalid: 0xFF
+    default: 0x01
+
+  UNUSED_3:
+    bits: '10.7-10.0'
+    unused: true
+
+  LOADED_DISCS_BITMAP:
+    bits: '11.7-11.0'
+    comment:
+      en: 'Bitmap of discs present in the magazine (bit n-1 = disc n), e.g. 0x25 = discs 6, 3 and 1 present; unused positions read 0; a scan runs automatically after magazine insertion'
+      fr: 'Table de bits des disques présents dans le magasin (bit n-1 = disque n), ex. 0x25 = disques 6, 3 et 1 présents ; les positions inutilisées valent 0 ; une analyse est lancée automatiquement après insertion du magasin'
+      es: 'Mapa de bits de los discos presentes en el cargador (bit n-1 = disco n), ej. 0x25 = discos 6, 3 y 1 presentes; las posiciones no usadas valen 0; se lanza un escaneo automático tras insertar el cargador'
+      de: 'Bitmap der im Magazin vorhandenen Discs (Bit n-1 = Disc n), z. B. 0x25 = Discs 6, 3 und 1 vorhanden; ungenutzte Positionen sind 0; nach dem Einsetzen des Magazins läuft automatisch ein Scan'
+      it: 'Mappa di bit dei dischi presenti nel caricatore (bit n-1 = disco n), es. 0x25 = dischi 6, 3 e 1 presenti; le posizioni non usate valgono 0; una scansione parte automaticamente dopo l''inserimento del caricatore'
+      pl: 'Mapa bitowa płyt obecnych w magazynku (bit n-1 = płyta n), np. 0x25 = obecne płyty 6, 3 i 1; nieużywane pozycje mają wartość 0; skanowanie uruchamia się automatycznie po włożeniu magazynka'
+      ru: 'Битовая карта дисков, находящихся в магазине (бит n-1 = диск n), напр. 0x25 = присутствуют диски 6, 3 и 1; неиспользуемые позиции равны 0; сканирование запускается автоматически после установки магазина'
+      zh: '弹夹中光盘存在情况的位图(第n-1位=第n张光盘),例如0x25表示第6、3、1张光盘存在;未使用位置为0;插入弹夹后自动开始扫描'
+      hu: 'A tárban lévő lemezek bittérképe (n-1. bit = n. lemez), pl. 0x25 = a 6., 3. és 1. lemez jelen van; a nem használt pozíciók értéke 0; a tár behelyezése után automatikus letapogatás indul'
+      pt: 'Mapa de bits dos discos presentes no carregador (bit n-1 = disco n), ex. 0x25 = discos 6, 3 e 1 presentes; as posições não utilizadas valem 0; é lançada uma análise automática após a inserção do carregador'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Disc 1 present'
+        fr: 'Présence du disque 1'
+        es: 'Presencia del disco 1'
+        de: 'CD 1 vorhanden'
+        it: 'Presenza del disco 1'
+        pl: 'Obecność płyty 1'
+        ru: 'Наличие диска 1'
+        zh: '检测到光盘1'
+        hu: '1. lemez jelen van'
+        pt: 'Presença do disco 1'
+      0x02:
+        en: 'Disc 2 present'
+        fr: 'Présence disque 2'
+        es: 'Presencia de disco 2'
+        de: 'Disc 2 vorhanden'
+        it: 'Presenza disco 2'
+        pl: 'Obecność płyty 2'
+        ru: 'Диск 2 присутствует'
+        zh: '存在光盘2'
+        hu: '2. lemez jelen van'
+        pt: 'Disco 2 presente'
+      0x04:
+        en: 'Disc 3 present'
+        fr: 'Présence du disque 3'
+        es: 'Presencia del disco 3'
+        de: 'Disc 3 vorhanden'
+        it: 'Presenza del disco 3'
+        pl: 'Obecność płyty 3'
+        ru: 'Диск 3 присутствует'
+        zh: '光盘3存在'
+        hu: '3. lemez jelen'
+        pt: 'Disco 3 presente'
+      0x08:
+        en: 'Disc 4 present'
+        fr: 'Présence du disque 4'
+        es: 'Presencia del disco 4'
+        de: 'Disc 4 vorhanden'
+        it: 'Presenza del disco 4'
+        pl: 'Obecność płyty 4'
+        ru: 'Диск 4 присутствует'
+        zh: '光盘 4 存在'
+        hu: '4. lemez jelen van'
+        pt: 'Presença do disco 4'
+      0x10:
+        en: 'Disc 5 present'
+        fr: 'Présence disque 5'
+        es: 'Disco 5 presente'
+        de: 'CD 5 vorhanden'
+        it: 'Disco 5 presente'
+        pl: 'Obecna płyta 5'
+        ru: 'Диск 5 присутствует'
+        zh: '光盘5存在'
+        hu: '5. lemez jelen van'
+        pt: 'Disco 5 presente'
+      0x20:
+        en: 'Disc 6 present'
+        fr: 'Présence du disque 6'
+        es: 'Presencia del disco 6'
+        de: 'CD 6 vorhanden'
+        it: 'Presenza del disco 6'
+        pl: 'Obecna płyta 6'
+        ru: 'Диск 6 присутствует'
+        zh: '存在光盘6'
+        hu: '6. lemez jelen van'
+        pt: 'Presença do disco 6'
+      0x40:
+        en: 'Disc 7 present'
+        fr: 'Présence disque 7'
+        es: 'Disco 7 presente'
+        de: 'CD 7 vorhanden'
+        it: 'Disco 7 presente'
+        pl: 'Obecna płyta 7'
+        ru: 'Диск 7 присутствует'
+        zh: '存在第7号光盘'
+        hu: 'A 7. lemez jelen van'
+        pt: 'Disco 7 presente'
+      0x80:
+        en: 'Disc 8 present'
+        fr: 'Présence disque 8'
+        es: 'Disco 8 presente'
+        de: 'Datenträger 8 vorhanden'
+        it: 'Disco 8 presente'
+        pl: 'Obecna płyta 8'
+        ru: 'Диск 8 присутствует'
+        zh: '8号光盘存在'
+        hu: '8. lemez jelen van'
+        pt: 'Disco 8 presente'
+
+  FOOTER:
+    bits: '12.7-12.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

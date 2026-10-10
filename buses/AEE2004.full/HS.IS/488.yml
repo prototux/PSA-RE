@@ -1,159 +1,2119 @@
-# TODO: check by someone whose french; this is mostly google translate 
 id: 0x488
-name: 'ENGINE_DATA'
-alt_names: [] 
+name: 'ENGINE_ECU_DATA'
+alt_names: ['ENGINE_DATA']
+type: 'can'
 length: 8
-comment: 
-  en: 'Engine Data '
-  fr: 'Données du moteur'
-  de: 'Motordaten'
-type: 'can' 
-periodicity: 100
-senders:  
- - 'CMM' # logically its the only thing that has direct access to the sensors
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['100ms']
+senders: ['CMM']
 receivers:
- - 'BSI' # needs to gateway it to other buses
+  - 'ABS'
+  - 'SCDT'
+  - 'CSS'
+  - 'BVA'
+  - 'AR2S'
+  - 'BSI'
+  - 'HCU1'
+  - 'GAS'
+  - 'BHI'
+  - 'AMVAR'
+  - 'ACC'
+  - 'CAAR'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'BCP'
+  - 'SBW'
+  - 'TBMU'
+  - 'DAE'
 
 signals:
   ENGINE_COOLANT_TEMPERATURE:
     bits: '1.7-1.0'
-    type: 'int'
     comment:
-      en: "Engine water temperature"
-      fr: "Temperature d'eau moteur"
-      de: "Motorkühlmittel Temperatur"
+      en: 'Engine coolant temperature (°C)'
+      fr: 'Température d''eau moteur (°C)'
+      es: 'Temperatura del líquido refrigerante del motor (°C)'
+      de: 'Motorkühlmitteltemperatur (°C)'
+      it: 'Temperatura del liquido di raffreddamento motore (°C)'
+      pl: 'Temperatura płynu chłodzącego silnika (°C)'
+      ru: 'Температура охлаждающей жидкости двигателя (°C)'
+      zh: '发动机冷却液温度(°C)'
+      hu: 'Motorhűtőfolyadék-hőmérséklet (°C)'
+      pt: 'Temperatura do líquido de refrigeração do motor (°C)'
+    type: 'uint'
     factor: 1
+    offset: -40
     min: -40
     max: 214
-    offset: -40
     units: '°C'
-  FUEL_CONSUMPTION_COUNTER: # Counter since in resets after max
-    bits: '2.7-2.0'
-    type: 'uint'
-    comment:
-      en: 'Fuel consumtion counter'
-      fr: 'Consommation carburant'
-      de: 'Kraftstoffverbrauch-Zähler'
-    factor: 0.08
-    min: 0 
-    max: 20.4 # 0xFF * 0.08    
-    units: 'mL'
+    invalid: 0xFF
+    default: 0x3C
 
-    # A little counter intutive since 8 bits with factor of 8 only goes up to around 2000 when redline is like tripple that
-    # In testing (from radston12) found that this value usually stays 840 (diesel cmm ; may be different in petrol) and the spikes when throttling are around 1/8 smaller than the acuall RPM peak so 
-    # when the engine is throttled to around 3000 rpms the target value only goes up about 280 units even though the rpms rise about 2200 from idle
-  ENGINE_RPM_IDLE_AND_TARGET:
-    bits: '3.7-3.0'
+  FUEL_CONSUMPTION:
+    bits: '2.7-2.0'
+    alt_names: ['FUEL_CONSUMPTION_COUNTER']
+    comment:
+      en: 'Fuel consumption, from the econometer (mm3)'
+      fr: 'Consommation de carburant, issue de l''écocompteur (mm3)'
+      es: 'Consumo de combustible, procedente del ecómetro (mm3)'
+      de: 'Kraftstoffverbrauch, vom Ökometer (mm3)'
+      it: 'Consumo di carburante, dall''ecometro (mm3)'
+      pl: 'Zużycie paliwa, z ekomiernika (mm3)'
+      ru: 'Расход топлива, от эко-счётчика (мм3)'
+      zh: '燃油消耗量,来自经济性计量表(mm3)'
+      hu: 'Üzemanyag-fogyasztás, az ökométerből (mm3)'
+      pt: 'Consumo de combustível, proveniente do ecómetro (mm3)'
     type: 'uint'
-    comment: 
-      en: 'Idle RPM ; When applying trottle -> (Difference - Idle) * 8 -> Targeted RPM'
-      fr: "Ralenti RPM ; lors de l'application de l'accélérateur -> (Différence - Ralenti) * 8 -> RPM ciblé"
-      de: 'Standgas ; Beim Geben von Gas -> (Differenz - Standgas) * 8 -> Ziel Drehzahl'
+    factor: 80
+    min: 0
+    max: 20400
+    units: 'mm3'
+    default: 0x00
+
+  IDLE_SPEED_SETPOINT:
+    bits: '3.7-3.0'
+    alt_names: ['ENGINE_RPM_IDLE_AND_TARGET']
+    comment:
+      en: 'Idle speed regulation setpoint (RPM)'
+      fr: 'Consigne de régulation du ralenti (tr/min)'
+      es: 'Consigna de regulación del ralentí (rpm)'
+      de: 'Sollwert der Leerlaufdrehzahlregelung (U/min)'
+      it: 'Valore di riferimento della regolazione del minimo (giri/min)'
+      pl: 'Nastawa regulacji obrotów biegu jałowego (obr/min)'
+      ru: 'Заданное значение регулирования оборотов холостого хода (об/мин)'
+      zh: '怠速调节设定值(RPM)'
+      hu: 'Az alapjárat-szabályozás alapjele (ford/perc)'
+      pt: 'Consigna de regulação do ralenti (rpm)'
+    type: 'uint'
     factor: 8
     min: 0
-    max: 2040 # 0xFF * 8
-    units: 'rpm' # well not quite
-  UNKNOWN_1: # constant 10 then 0/1 seems to be related with engine running but stays on after shutoff - 
-    bits: '4.7-4.5'
-  ADDITIV_ALERT:
+    max: 2024
+    units: 'rpm'
+    invalid: 0xFF
+    default: 0xFE
+
+  MISFIRE_CATALYST_RISK:
+    bits: '4.7'
+    comment:
+      en: 'Warning of a high risk of catalytic converter damage due to petrol engine misfires'
+      fr: 'Avertissement d''un fort risque de détérioration du catalyseur dû à des ratés de combustion essence'
+      es: 'Aviso de un alto riesgo de deterioro del catalizador debido a fallos de combustión en gasolina'
+      de: 'Warnung vor einem hohen Risiko der Katalysatorschädigung durch Verbrennungsaussetzer beim Benzinmotor'
+      it: 'Avviso di un elevato rischio di danneggiamento del catalizzatore dovuto a mancate accensioni sul motore a benzina'
+      pl: 'Ostrzeżenie o wysokim ryzyku uszkodzenia katalizatora z powodu przerw zapłonu w silniku benzynowym'
+      ru: 'Предупреждение о высоком риске повреждения катализатора из-за пропусков воспламенения в бензиновом двигателе'
+      zh: '警告因汽油机失火导致催化转化器严重损坏风险'
+      hu: 'Figyelmeztetés a katalizátor súlyos károsodásának kockázatáról benzinmotoros gyújtáskimaradás miatt'
+      pt: 'Aviso de um risco elevado de deterioração do catalisador devido a falhas de combustão a gasolina'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No severe misfiring'
+        fr: 'Pas de forts ratés'
+        es: 'Sin fallos de encendido graves'
+        de: 'Keine starken Zündaussetzer'
+        it: 'Nessun forte mancato accensione'
+        pl: 'Brak silnych przerw zapłonu'
+        ru: 'Нет сильных пропусков зажигания'
+        zh: '无严重失火'
+        hu: 'Nincs erős kihagyás'
+        pt: 'Sem falhas de ignição graves'
+      0x01:
+        en: 'misfiring'
+        fr: 'Forts ratés en cours'
+        es: 'Fallos de encendido graves en curso'
+        de: 'Starke Zündaussetzer im Gange'
+        it: 'Forti mancate accensioni in corso'
+        pl: 'Trwają silne wypadanie zapłonu'
+        ru: 'Сильные пропуски зажигания в процессе'
+        zh: '严重失火进行中'
+        hu: 'Súlyos gyújtáskimaradás folyamatban'
+        pt: 'Falhas de ignição graves em curso'
+
+  CRUISE_CONTROL_LIMITER_FAULT:
+    bits: '4.6'
+    comment:
+      en: 'Cruise control fault / speed limiter fault'
+      fr: 'Défaut du régulateur de vitesse / défaut du limiteur de vitesse'
+      es: 'Fallo del regulador de velocidad / fallo del limitador de velocidad'
+      de: 'Fehler des Tempomaten / Fehler des Geschwindigkeitsbegrenzers'
+      it: 'Guasto del regolatore di velocità / guasto del limitatore di velocità'
+      pl: 'Usterka tempomatu / usterka ogranicznika prędkości'
+      ru: 'Неисправность круиз-контроля / неисправность ограничителя скорости'
+      zh: '巡航控制故障/限速器故障'
+      hu: 'Sebességtartó automatika hibája / sebességhatároló hibája'
+      pt: 'Falha do regulador de velocidade / falha do limitador de velocidade'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No cruise control / no speed limiter fault'
+        fr: 'Pas de défaut cruise control / pas de défaut speed limiter'
+        es: 'Sin fallo cruise control / sin fallo speed limiter'
+        de: 'Kein cruise control-/speed limiter-Fehler'
+        it: 'Nessun guasto cruise control / nessun guasto speed limiter'
+        pl: 'Brak usterki cruise control / brak usterki speed limiter'
+        ru: 'Нет неисправности cruise control / нет неисправности speed limiter'
+        zh: '无RVV故障/无LVV故障'
+        hu: 'Nincs cruise control/speed limiter hiba'
+        pt: 'Sem falha cruise control / sem falha speed limiter'
+      0x01:
+        en: 'cruise control fault / speed limiter fault'
+        fr: 'Défaut cruise control / Défaut speed limiter'
+        es: 'Fallo cruise control / Fallo speed limiter'
+        de: 'cruise control-Fehler / speed limiter-Fehler'
+        it: 'Guasto cruise control / Guasto speed limiter'
+        pl: 'Usterka cruise control / Usterka speed limiter'
+        ru: 'Неисправность cruise control / Неисправность speed limiter'
+        zh: 'RVV故障/LVV故障'
+        hu: 'cruise control hiba / speed limiter hiba'
+        pt: 'Avaria cruise control / Avaria speed limiter'
+
+  PULSAIR_RELAY_CONTROL_REQUEST:
+    bits: '4.5'
+    comment:
+      en: 'Secondary air relay control request'
+      fr: 'Demande de pilotage du relais d''air pulsé (pulsair)'
+      es: 'Solicitud de accionamiento del relé de aire pulsado (pulsair)'
+      de: 'Ansteuerungsanforderung des Sekundärluft-Relais (pulsair)'
+      it: 'Richiesta di pilotaggio del relè aria pulsata (pulsair)'
+      pl: 'Żądanie sterowania przekaźnikiem powietrza wtórnego (pulsair)'
+      ru: 'Запрос управления реле вторичного воздуха (pulsair)'
+      zh: '二次空气继电器控制请求'
+      hu: 'A másodlagos levegő relé vezérlési kérése (pulsair)'
+      pt: 'Pedido de acionamento do relé de ar pulsado (pulsair)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No control request'
+        fr: 'Pas de demande de pilotage'
+        es: 'Sin solicitud de control'
+        de: 'Keine Steueranforderung'
+        it: 'Nessuna richiesta di pilotaggio'
+        pl: 'Brak żądania sterowania'
+        ru: 'Нет запроса управления'
+        zh: '无控制请求'
+        hu: 'Nincs vezérlési kérés'
+        pt: 'Sem pedido de controlo'
+      0x01:
+        en: 'Control request'
+        fr: 'Demande de pilotage'
+        es: 'Solicitud de control'
+        de: 'Steueranforderung'
+        it: 'Richiesta di controllo'
+        pl: 'Żądanie sterowania'
+        ru: 'Запрос управления'
+        zh: '控制请求'
+        hu: 'Vezérlési kérés'
+        pt: 'Pedido de controlo'
+
+  ADDITIVE_LEVEL_LOW_ALERT:
     bits: '4.4'
-    type: 'bool'
+    alt_names: ['ADDITIV_ALERT']
     comment:
-      en: 'Additiv alert'
-      fr: 'alerte additive'
-      de: 'Kraftstoffaditiv Warnung'
+      en: 'Prompt to refill the exhaust additive at an authorized workshop'
+      fr: 'Invitation faite au conducteur à faire le plein d''additif d''échappement chez un réparateur agréé'
+      es: 'Aviso al conductor para rellenar el aditivo de escape en un taller autorizado'
+      de: 'Aufforderung an den Fahrer, den Abgasadditiv bei einer autorisierten Werkstatt nachzufüllen'
+      it: 'Avviso al conducente di rabboccare l''additivo di scarico presso un''officina autorizzata'
+      pl: 'Przypomnienie dla kierowcy o uzupełnieniu dodatku spalinowego w autoryzowanym warsztacie'
+      ru: 'Напоминание водителю о необходимости долить присадку системы выпуска в авторизованном сервисе'
+      zh: '提示驾驶员前往授权维修点补充排气添加剂'
+      hu: 'Figyelmeztetés a vezetőnek, hogy töltesse fel a kipufogó-adalékot egy márkaszervizben'
+      pt: 'Aviso ao condutor para reabastecer o aditivo de escape num reparador autorizado'
+    type: 'bool'
+    default: 0x00
     values:
-      0x0:
-        en: 'No Warning'
-        fr: 'Aucun avertissement concernant les additifs'
-        de: 'Keine Warnung'
-      0x1:
-        en: 'Warning'
-        fr: 'Avertissement concernant les additifs'
-        de: 'Warnung'
-  COOLANT_OVERHEATING_ALERT:
+      0x00:
+        en: 'No mini-additive display requested'
+        fr: 'Aucune commande d''affichage du mini-additif'
+        es: 'Sin solicitud de visualización del mini indicador'
+        de: 'Keine Anzeigeanforderung des Mini-Zusatzdisplays'
+        it: 'Nessuna richiesta di visualizzazione del mini additivo'
+        pl: 'Brak żądania wyświetlenia mini dodatku'
+        ru: 'Нет запроса отображения мини-индикатора'
+        zh: '未请求迷你附加显示'
+        hu: 'Nincs mini kiegészítő kijelzési kérés'
+        pt: 'Sem pedido de visualização do mini indicador de aditivo'
+      0x01:
+        en: 'Minimum additive level display request'
+        fr: 'Commande d''affichage du niveau minimum d''additif'
+        es: 'Solicitud de visualización del nivel mínimo de aditivo'
+        de: 'Anforderung zur Anzeige des Mindestadditivstands'
+        it: 'Richiesta di visualizzazione del livello minimo di additivo'
+        pl: 'Żądanie wyświetlenia minimalnego poziomu dodatku'
+        ru: 'Запрос отображения минимального уровня присадки'
+        zh: '最低添加剂液位显示请求'
+        hu: 'Minimális adalékszint kijelzési kérés'
+        pt: 'Pedido de apresentação de nível mínimo de aditivo'
+
+  COOLANT_TEMPERATURE_ALERT:
     bits: '4.3'
-    type: 'bool'
+    alt_names: ['COOLANT_OVERHEATING_ALERT']
     comment:
-      en: 'Overheating alert'
-      fr: 'alerte de surchauffe du liquide de refroidissement'
-      de: 'Kühlmittel Überhitzung Warnung'
+      en: 'Engine coolant temperature warning'
+      fr: 'Alerte de température d''eau moteur'
+      es: 'Alerta de temperatura del líquido refrigerante del motor'
+      de: 'Warnung vor der Kühlmitteltemperatur des Motors'
+      it: 'Avviso di temperatura del liquido di raffreddamento del motore'
+      pl: 'Ostrzeżenie o temperaturze płynu chłodzącego silnika'
+      ru: 'Предупреждение о температуре охлаждающей жидкости двигателя'
+      zh: '发动机冷却液温度警告'
+      hu: 'Motorhűtőfolyadék-hőmérséklet riasztása'
+      pt: 'Aviso de temperatura do líquido de refrigeração do motor'
+    type: 'bool'
+    default: 0x00
     values:
-      0x0:
-        en: 'No Warning'
-        fr: 'Aucun avertissement'
-        de: 'Keine Warnung'
-      0x1:
-        en: 'Warning'
-        fr: 'Avertissement '
-        de: 'Warnung'
-  UNKNOWN_2:
+      0x00:
+        en: 'No engine coolant temperature warning'
+        fr: 'Pas d''alerte de température de liquide de refroidissement moteur'
+        es: 'Sin alerta de temperatura del líquido refrigerante del motor'
+        de: 'Keine Warnung bei Motorkühlmitteltemperatur'
+        it: 'Nessun allarme di temperatura del liquido di raffreddamento motore'
+        pl: 'Brak alertu temperatury płynu chłodzącego silnika'
+        ru: 'Предупреждение о температуре охлаждающей жидкости отсутствует'
+        zh: '无发动机冷却液温度警报'
+        hu: 'Nincs motor hűtőfolyadék-hőmérséklet riasztás'
+        pt: 'Sem aviso de temperatura do líquido de arrefecimento do motor'
+      0x01:
+        en: 'Engine coolant temperature warning or coolant temperature sensor fault'
+        fr: 'Alerte de température de liquide de refroidissement moteur ou défaut du capteur de température'
+        es: 'Alerta de temperatura del líquido refrigerante del motor o fallo del sensor de temperatura'
+        de: 'Warnung bei Motorkühlmitteltemperatur oder Fehler des Kühlmitteltemperatursensors'
+        it: 'Allarme temperatura del liquido di raffreddamento motore o guasto del sensore di temperatura'
+        pl: 'Alert temperatury płynu chłodzącego silnika lub usterka czujnika temperatury'
+        ru: 'Предупреждение о температуре охлаждающей жидкости двигателя или неисправность датчика температуры'
+        zh: '发动机冷却液温度警报或温度传感器故障'
+        hu: 'Motor hűtőfolyadék-hőmérséklet riasztás vagy hőmérséklet-érzékelő hiba'
+        pt: 'Aviso de temperatura do líquido de arrefecimento do motor ou avaria do sensor de temperatura do líquido de arrefecimento'
+
+  MIL_LAMP_REQUEST:
     bits: '4.2'
-  PREHEAT_ENGINE_LAMP_REQUEST:
+    comment:
+      en: 'Request to light the MIL (malfunction indicator lamp)'
+      fr: 'Demande d''allumage du témoin MIL (malfunction indicator lamp)'
+      es: 'Solicitud de encendido del testigo MIL (lámpara indicadora de mal funcionamiento)'
+      de: 'Anforderung zum Einschalten der MIL-Kontrollleuchte (Fehlfunktionsanzeige)'
+      it: 'Richiesta di accensione della spia MIL (malfunction indicator lamp)'
+      pl: 'Żądanie zapalenia kontrolki MIL (lampka usterki)'
+      ru: 'Запрос на включение лампы MIL (индикатор неисправности)'
+      zh: '请求点亮MIL(故障指示灯)'
+      hu: 'A MIL (hibajelző lámpa) bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho MIL (lâmpada indicadora de avaria)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No lighting requested'
+        fr: 'Pas d''allumage demandé'
+        es: 'Sin encendido solicitado'
+        de: 'Kein Einschalten angefordert'
+        it: 'Nessuna accensione richiesta'
+        pl: 'Brak żądania włączenia'
+        ru: 'Нет запроса на включение'
+        zh: '未请求点亮'
+        hu: 'Nincs bekapcsolási kérés'
+        pt: 'Sem acendimento pedido'
+      0x01:
+        en: 'Lighting requested'
+        fr: 'Allumage demandé'
+        es: 'Encendido solicitado'
+        de: 'Einschalten angefordert'
+        it: 'Accensione richiesta'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '请求点亮'
+        hu: 'Bekapcsolás kérve'
+        pt: 'Acendimento pedido'
+
+  PREHEAT_LAMP_REQUEST:
     bits: '4.1'
+    alt_names: ['PREHEAT_ENGINE_LAMP_REQUEST']
+    comment:
+      en: 'Request to light the diesel preheating warning lamp'
+      fr: 'Demande d''allumage du témoin de préchauffage diesel'
+      es: 'Solicitud de encendido del testigo de precalentamiento diésel'
+      de: 'Anforderung zum Einschalten der Diesel-Vorglühkontrollleuchte'
+      it: 'Richiesta di accensione della spia di preriscaldamento diesel'
+      pl: 'Żądanie zapalenia kontrolki podgrzewania wstępnego diesla'
+      ru: 'Запрос на включение лампы предпускового подогрева дизеля'
+      zh: '请求点亮柴油预热警告灯'
+      hu: 'A dízel előfűtés jelzőlámpájának bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho de pré-aquecimento diesel'
     type: 'bool'
-    comment: 
-      en: 'Preheating lamp request'
-      fr: 'lampe de préchauffage'
-      de: 'Vorglühen Anzeige Anfrage'
+    default: 0x00
     values:
-      0x0:
-        en: 'Turn off lamp'
-        fr: 'Éteindre la lampe de préchauffage'
-        de: 'Lampe deaktivieren '
-      0x1: 
-        en: 'Turn on lamp'
-        fr: 'Allumer la lampe de préchauffage'
-        de: 'Lampe aktivieren'
-  ENGINE_STARTING:
+      0x00:
+        en: 'No lighting requested'
+        fr: 'Pas d''allumage demandé'
+        es: 'Sin encendido solicitado'
+        de: 'Kein Einschalten angefordert'
+        it: 'Nessuna accensione richiesta'
+        pl: 'Brak żądania włączenia'
+        ru: 'Нет запроса на включение'
+        zh: '未请求点亮'
+        hu: 'Nincs bekapcsolási kérés'
+        pt: 'Sem acendimento pedido'
+      0x01:
+        en: 'Lighting requested'
+        fr: 'Allumage demandé'
+        es: 'Encendido solicitado'
+        de: 'Einschalten angefordert'
+        it: 'Accensione richiesta'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '请求点亮'
+        hu: 'Bekapcsolás kérve'
+        pt: 'Acendimento pedido'
+
+  ENGINE_START_IN_PROGRESS:
     bits: '4.0'
+    alt_names: ['ENGINE_STARTING']
+    comment:
+      en: 'Engine start in progress'
+      fr: 'Démarrage moteur en cours'
+      es: 'Arranque del motor en curso'
+      de: 'Motorstart läuft'
+      it: 'Avviamento motore in corso'
+      pl: 'Trwa rozruch silnika'
+      ru: 'Идёт запуск двигателя'
+      zh: '发动机起动进行中'
+      hu: 'Motorindítás folyamatban'
+      pt: 'Arranque do motor em curso'
     type: 'bool'
-    comment: 
-      en: 'Is engine currently starting?'
-      fr: 'Le moteur démarre-t-il actuellement?'
-      de: 'Startet der Motor gerade?'
+    default: 0x00
     values:
-      0x0:
-        en: 'No'
-        fr: 'Non'
-        de: 'Nein'
-      0x1:
-        en: 'Yes'
-        fr: 'Oui'
-        de: 'Ja'
-  UNKNOWN_3: 
-    bits: '5.7-5.0'
+      0x00:
+        en: 'No engine start in progress'
+        fr: 'Pas de démarrage moteur en cours'
+        es: 'Sin arranque del motor en curso'
+        de: 'Kein Motorstart im Gange'
+        it: 'Nessun avviamento motore in corso'
+        pl: 'Brak trwającego uruchamiania silnika'
+        ru: 'Запуск двигателя не выполняется'
+        zh: '无发动机启动进行中'
+        hu: 'Nincs folyamatban motorindítás'
+        pt: 'Sem arranque do motor em curso'
+      0x01:
+        en: 'Engine start in progress'
+        fr: 'Démarrage moteur en cours'
+        es: 'Arranque del motor en curso'
+        de: 'Motorstart läuft'
+        it: 'Avviamento del motore in corso'
+        pl: 'Trwa uruchamianie silnika'
+        ru: 'Выполняется пуск двигателя'
+        zh: '发动机启动中'
+        hu: 'Motorindítás folyamatban'
+        pt: 'Arranque do motor em curso'
+
+  AUTO_GEARBOX_HYDRAULIC_PRESSURE_FORCING:
+    bits: '5.7'
+    comment:
+      en: 'Automatic gearbox hydraulic pressure forcing'
+      fr: 'Forçage de la pression du circuit hydraulique de la boîte automatique'
+      es: 'Forzado de la presión del circuito hidráulico de la caja automática'
+      de: 'Erzwungener Hydraulikdruck des Automatikgetriebes'
+      it: 'Forzatura della pressione del circuito idraulico del cambio automatico'
+      pl: 'Wymuszenie ciśnienia w układzie hydraulicznym skrzyni automatycznej'
+      ru: 'Принудительное давление в гидравлическом контуре автоматической коробки передач'
+      zh: '自动变速箱液压系统强制加压'
+      hu: 'Automata váltó hidraulikanyomásának kényszerítése'
+      pt: 'Forçagem da pressão hidráulica da caixa automática'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No gearbox pressure increase requested'
+        fr: 'Pas de demande d''augmentation de pression de la boîte de vitesses'
+        es: 'Sin solicitud de aumento de presión de la caja de cambios'
+        de: 'Keine Anforderung zur Druckerhöhung des Getriebes'
+        it: 'Nessuna richiesta di aumento della pressione del cambio'
+        pl: 'Brak żądania zwiększenia ciśnienia skrzyni biegów'
+        ru: 'Нет запроса повышения давления коробки передач'
+        zh: '无变速箱增压请求'
+        hu: 'Nincs váltónyomás-növelési kérés'
+        pt: 'Sem pedido de aumento de pressão da caixa de velocidades'
+      0x01:
+        en: 'Gearbox pressure increase requested'
+        fr: 'Demande d''augmentation de pression de la boîte de vitesses'
+        es: 'Solicitud de aumento de presión de la caja de cambios'
+        de: 'Anforderung zur Druckerhöhung des Getriebes'
+        it: 'Richiesta di aumento della pressione del cambio'
+        pl: 'Żądanie zwiększenia ciśnienia skrzyni biegów'
+        ru: 'Запрос повышения давления коробки передач'
+        zh: '变速箱增压请求'
+        hu: 'Váltónyomás-növelési kérés'
+        pt: 'Pedido de aumento de pressão da caixa de velocidades'
+
+  DPF_CLOGGING_RISK:
+    bits: '5.6'
+    comment:
+      en: 'Indication that the driver should perform an adapted drive to trigger DPF regeneration'
+      fr: 'Indication au conducteur qu''il doit adopter une conduite adaptée pour provoquer une régénération du FAP'
+      es: 'Indicación al conductor de que debe adoptar una conducción adaptada para provocar una regeneración del FAP'
+      de: 'Hinweis an den Fahrer, durch angepasste Fahrweise eine Regeneration des Partikelfilters auszulösen'
+      it: 'Indicazione al conducente di adottare uno stile di guida adeguato per avviare la rigenerazione del FAP'
+      pl: 'Wskazanie dla kierowcy, że powinien dostosować styl jazdy, aby wywołać regenerację DPF'
+      ru: 'Указание водителю изменить стиль вождения для запуска регенерации сажевого фильтра'
+      zh: '提示驾驶员采用适应性驾驶方式以触发颗粒捕集器再生'
+      hu: 'Jelzés a vezetőnek, hogy a részecskeszűrő regenerálásához igazítsa a vezetési stílust'
+      pt: 'Indicação ao condutor de que deve adotar uma condução adaptada para provocar uma regeneração do FAP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No DPF clogging risk display requested'
+        fr: 'Aucune commande d''affichage du risque de colmatage du FAP'
+        es: 'Ninguna solicitud de visualización del riesgo de obstrucción del FAP'
+        de: 'Keine Anzeigeanforderung des DPF-Verstopfungsrisikos'
+        it: 'Nessuna richiesta di visualizzazione del rischio di intasamento del FAP'
+        pl: 'Brak żądania wyświetlenia ryzyka zapchania DPF'
+        ru: 'Не запрошено отображение риска засорения сажевого фильтра'
+        zh: '未请求显示 DPF 堵塞风险'
+        hu: 'Nincs kérve a DPF eltömődési kockázatának megjelenítése'
+        pt: 'Sem pedido de apresentação de risco de obstrução do DPF'
+      0x01:
+        en: 'Display command encouraging the driver to adopt a driving style that helps DPF regeneration'
+        fr: 'Commande d''affichage incitant le conducteur à adopter une conduite facilitant la régénération du filtre à particules'
+        es: 'Comando de visualización que anima al conductor a adoptar una conducción que facilite la regeneración del filtro de partículas'
+        de: 'Anzeigebefehl, der den Fahrer zu einer Fahrweise anregt, die die Partikelfilterregeneration begünstigt'
+        it: 'Comando di visualizzazione che invita il guidatore ad adottare una guida che favorisca la rigenerazione del filtro antiparticolato'
+        pl: 'Polecenie wyświetlenia zachęcające kierowcę do stylu jazdy ułatwiającego regenerację filtra cząstek stałych'
+        ru: 'Команда индикации, побуждающая водителя к стилю вождения, способствующему регенерации сажевого фильтра'
+        zh: '显示指令,鼓励驾驶员采用有助于颗粒过滤器再生的驾驶方式'
+        hu: 'Kijelzési parancs, amely a vezetőt a részecskeszűrő regenerálódását elősegítő vezetési stílusra ösztönzi'
+        pt: 'Comando de visualização que incentiva o condutor a adotar uma condução que facilite a regeneração do filtro de partículas'
+
+  GLOW_PLUG_PREHEAT_PREPARATION:
+    bits: '5.5'
+    comment:
+      en: 'Glow plug activation preparation request'
+      fr: 'Demande de préparation à l''activation des bougies de préchauffage'
+      es: 'Solicitud de preparación para la activación de las bujías de precalentamiento'
+      de: 'Vorbereitungsanforderung zur Aktivierung der Glühkerzen'
+      it: 'Richiesta di preparazione all''attivazione delle candelette'
+      pl: 'Żądanie przygotowania do aktywacji świec żarowych'
+      ru: 'Запрос подготовки к активации свечей накаливания'
+      zh: '预热塞激活准备请求'
+      hu: 'Az izzógyertyák aktiválására való felkészülés kérése'
+      pt: 'Pedido de preparação para a ativação das velas de pré-aquecimento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No preparation requested'
+        fr: 'Aucune préparation requise'
+        es: 'No se requiere preparación'
+        de: 'Keine Vorbereitung erforderlich'
+        it: 'Nessuna preparazione richiesta'
+        pl: 'Nie wymagane przygotowanie'
+        ru: 'Подготовка не требуется'
+        zh: '无需准备'
+        hu: 'Nincs szükség előkészítésre'
+        pt: 'Sem preparação pedida'
+      0x01:
+        en: 'Preparation required to activate the glow plugs'
+        fr: 'Préparation requise pour l''activation des bougies de préchauffage'
+        es: 'Preparación necesaria para la activación de las bujías de precalentamiento'
+        de: 'Vorbereitung zur Aktivierung der Glühkerzen erforderlich'
+        it: 'Preparazione richiesta per l''attivazione delle candelette'
+        pl: 'Wymagane przygotowanie do aktywacji świec żarowych'
+        ru: 'Требуется подготовка для активации свечей накаливания'
+        zh: '激活预热塞需要准备'
+        hu: 'Előkészítés szükséges az izzítógyertyák aktiválásához'
+        pt: 'Preparação necessária para a ativação das velas de pré-aquecimento'
+
+  OVERSPEED_CUTOFF_THRESHOLD:
+    bits: '5.4-5.3'
+    comment:
+      en: 'Overspeed fuel cutoff threshold'
+      fr: 'Seuil de coupure d''injection en surrégime'
+      es: 'Umbral de corte de inyección por sobrerrégimen'
+      de: 'Kraftstoffabschaltschwelle bei Drehzahlüberschreitung'
+      it: 'Soglia di interruzione dell''iniezione per sovraregime'
+      pl: 'Próg odcięcia wtrysku przy przekroczeniu obrotów'
+      ru: 'Порог отключения топливоподачи при превышении оборотов'
+      zh: '超速断油阈值'
+      hu: 'A túlfordulatszám miatti üzemanyag-lekapcsolási küszöb'
+      pt: 'Limiar de corte de injeção por sobrevelocidade'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Low threshold'
+        fr: 'Seuil bas'
+        es: 'Umbral bajo'
+        de: 'Unterer Schwellenwert'
+        it: 'Soglia bassa'
+        pl: 'Próg dolny'
+        ru: 'Нижний порог'
+        zh: '低阈值'
+        hu: 'Alsó küszöb'
+        pt: 'Limiar baixo'
+      0x01:
+        en: 'High threshold'
+        fr: 'Seuil haut'
+        es: 'Umbral alto'
+        de: 'Oberer Schwellenwert'
+        it: 'Soglia alta'
+        pl: 'Próg górny'
+        ru: 'Верхний порог'
+        zh: '高阈值'
+        hu: 'Felső küszöbérték'
+        pt: 'Limiar alto'
+
+  AC_MANAGEMENT_STATUS:
+    bits: '5.2-5.1'
+    comment:
+      en: 'A/C management state'
+      fr: 'État de la gestion de la climatisation'
+      es: 'Estado de la gestión del aire acondicionado'
+      de: 'Status der Klimasteuerung'
+      it: 'Stato della gestione del climatizzatore'
+      pl: 'Stan zarządzania klimatyzacją'
+      ru: 'Статус управления кондиционером'
+      zh: '空调管理状态'
+      hu: 'Klímavezérlés állapota'
+      pt: 'Estado da gestão do ar condicionado'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'Low-safety active: abnormally low pressure'
+        fr: 'Sécurité basse active : pression anormalement basse'
+        es: 'Seguridad baja activa: presión anormalmente baja'
+        de: 'Niedrigdruck-Sicherheit aktiv: anormal niedriger Druck'
+        it: 'Sicurezza bassa attiva: pressione anormalmente bassa'
+        pl: 'Aktywne zabezpieczenie niskiego ciśnienia: nieprawidłowo niskie ciśnienie'
+        ru: 'Активна защита низкого давления: аномально низкое давление'
+        zh: '低压安全保护激活:压力异常偏低'
+        hu: 'Alacsony nyomás biztonsági funkció aktív: rendellenesen alacsony nyomás'
+        pt: 'Segurança baixa ativa: pressão anormalmente baixa'
+      0x02:
+        en: 'High safety active: abnormally high pressure'
+        fr: 'Sécurité haute active : pression anormalement élevée'
+        es: 'Seguridad alta activa: presión anormalmente elevada'
+        de: 'Hochdrucksicherheit aktiv: anormal hoher Druck'
+        it: 'Sicurezza alta attiva: pressione anormalmente elevata'
+        pl: 'Aktywne zabezpieczenie wysokiego ciśnienia: nieprawidłowo wysokie ciśnienie'
+        ru: 'Активна защита высокого давления: аномально высокое давление'
+        zh: '高压安全激活：异常高压'
+        hu: 'Magas nyomású biztonsági funkció aktív: rendellenesen magas nyomás'
+        pt: 'Segurança alta ativa: pressão anormalmente elevada'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  AC_SAFETY_CUTOFF_STATUS:
+    bits: '5.0'
+    comment:
+      en: 'Air conditioning cut-off status for coolant temperature safety'
+      fr: 'État de coupure de la climatisation pour sécurité liée à la température d''eau'
+      es: 'Estado de corte del aire acondicionado por seguridad de temperatura del refrigerante'
+      de: 'Abschaltzustand der Klimaanlage aus Sicherheitsgründen wegen der Kühlmitteltemperatur'
+      it: 'Stato di interruzione del climatizzatore per sicurezza legata alla temperatura del liquido di raffreddamento'
+      pl: 'Stan wyłączenia klimatyzacji ze względów bezpieczeństwa temperatury płynu chłodzącego'
+      ru: 'Состояние отключения кондиционера по причине безопасности температуры охлаждающей жидкости'
+      zh: '因冷却液温度安全原因导致的空调切断状态'
+      hu: 'A klímaberendezés lekapcsolási állapota a hűtőfolyadék-hőmérséklet biztonsága miatt'
+      pt: 'Estado de corte do ar condicionado por segurança relacionada com a temperatura do líquido de refrigeração'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'OK, not cut off'
+        fr: 'OK, pas de coupure'
+        es: 'OK, sin corte'
+        de: 'OK, keine Abschaltung'
+        it: 'OK, nessun taglio'
+        pl: 'OK, brak odcięcia'
+        ru: 'ОК, отключения нет'
+        zh: '正常，无切断'
+        hu: 'OK, nincs lekapcsolás'
+        pt: 'OK, sem corte'
+      0x01:
+        en: 'Compressor off (overheating risk only)'
+        fr: 'Compresseur coupé (risque de surchauffe uniquement)'
+        es: 'Compresor desconectado (solo riesgo de sobrecalentamiento)'
+        de: 'Kompressor abgeschaltet (nur Überhitzungsrisiko)'
+        it: 'Compressore disinserito (solo rischio surriscaldamento)'
+        pl: 'Sprężarka wyłączona (tylko ryzyko przegrzania)'
+        ru: 'Компрессор отключён (только риск перегрева)'
+        zh: '压缩机关闭（仅过热风险）'
+        hu: 'A kompresszor lekapcsolva (csak túlmelegedési kockázat)'
+        pt: 'Compressor desligado (apenas risco de sobreaquecimento)'
+
   ENGINE_OIL_TEMPERATURE:
     bits: '6.7-6.0'
-    type: 'int'
     comment:
-      en: 'Engine oil temperature'
-      fr: "Temperature d'huile moteur"
-      de: 'Motoröltemperatur'
-    factor: 1
-    min: -40
-    max: 214 
-    offset: -40
-    units: '°C'
-  AIR_CONDITINING_REFRIGERATION_PRESSURE:
-    bits: '7.7-7.0'
+      en: 'Engine oil temperature (°C)'
+      fr: 'Température d''huile moteur (°C)'
+      es: 'Temperatura del aceite del motor (°C)'
+      de: 'Motoröltemperatur (°C)'
+      it: 'Temperatura dell''olio motore (°C)'
+      pl: 'Temperatura oleju silnikowego (°C)'
+      ru: 'Температура моторного масла (°C)'
+      zh: '发动机机油温度(°C)'
+      hu: 'Motorolaj-hőmérséklet (°C)'
+      pt: 'Temperatura do óleo do motor (°C)'
     type: 'uint'
-    comment:
-      en: 'AC refrigerant pressure'
-      fr: 'Pression du réfrigérant du climatiseur'
-      de: 'Klimaanlage Kältemitteldruck'
-    factor: 25
-    min: 0
-    max: 6375 # 0xFF * 25 
-  ENGINE_INTAKE_AIR_TEMPERATURE:
-    bits: '8.7-8.0'
-    type: 'int'
-    comment:
-      en: 'Engine intake air temperature'
-      fr: "Température de l'air d'admission du moteur"
-      de: 'Ansauglufttemperatur Motor'
     factor: 1
-    min: -40
-    max: 214 
     offset: -40
+    min: -40
+    max: 214
     units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  REFRIGERANT_PRESSURE:
+    bits: '7.7-7.0'
+    alt_names: ['AIR_CONDITINING_REFRIGERATION_PRESSURE']
+    comment:
+      en: 'Air conditioning refrigerant circuit pressure (kPa)'
+      fr: 'Pression du circuit de réfrigérant de climatisation (kPa)'
+      es: 'Presión del circuito de refrigerante del aire acondicionado (kPa)'
+      de: 'Druck im Kältemittelkreislauf der Klimaanlage (kPa)'
+      it: 'Pressione del circuito del refrigerante del climatizzatore (kPa)'
+      pl: 'Ciśnienie w obiegu czynnika chłodniczego klimatyzacji (kPa)'
+      ru: 'Давление в контуре хладагента кондиционера (кПа)'
+      zh: '空调制冷剂回路压力(kPa)'
+      hu: 'A klíma hűtőközeg-körének nyomása (kPa)'
+      pt: 'Pressão do circuito de refrigerante do ar condicionado (kPa)'
+    type: 'uint'
+    factor: 25
+    min: 100
+    max: 3100
+    units: 'kPa'
+    invalid: 0xFF
+    default: 0xFF
+
+  INTAKE_AIR_TEMPERATURE:
+    bits: '8.7-8.0'
+    alt_names: ['ENGINE_INTAKE_AIR_TEMPERATURE']
+    comment:
+      en: 'Intake air temperature sensor, on the throttle body or air flow meter (°C)'
+      fr: 'Température de l''air d''admission, mesurée sur le boîtier papillon ou le débitmètre (°C)'
+      es: 'Temperatura del aire de admisión, medida en el cuerpo de mariposa o el caudalímetro (°C)'
+      de: 'Ansauglufttemperatur, gemessen am Drosselklappengehäuse oder Luftmassenmesser (°C)'
+      it: 'Temperatura dell''aria di aspirazione, misurata sul corpo farfallato o sul debimetro (°C)'
+      pl: 'Temperatura powietrza dolotowego, mierzona na przepustnicy lub przepływomierzu (°C)'
+      ru: 'Температура впускного воздуха, измеренная на дроссельном узле или расходомере (°C)'
+      zh: '进气温度,测量自节气门体或空气流量计(°C)'
+      hu: 'A beszívott levegő hőmérséklete, a fojtószelepházon vagy a légtömegmérőn mérve (°C)'
+      pt: 'Sensor de temperatura do ar de admissão, na borboleta ou no medidor de caudal (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      ENGINE_COOLANT_TEMPERATURE:
+        bits: '1.7-1.0'
+        comment:
+          en: 'Engine coolant temperature (°C)'
+          fr: 'Température d''eau moteur (°C)'
+          es: 'Temperatura del líquido refrigerante del motor (°C)'
+          de: 'Motorkühlmitteltemperatur (°C)'
+          it: 'Temperatura del liquido di raffreddamento motore (°C)'
+          pl: 'Temperatura płynu chłodzącego silnika (°C)'
+          ru: 'Температура охлаждающей жидкости двигателя (°C)'
+          zh: '发动机冷却液温度(°C)'
+          hu: 'Motorhűtőfolyadék-hőmérséklet (°C)'
+          pt: 'Temperatura do líquido de refrigeração do motor (°C)'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 214
+        units: '°C'
+        invalid: 0xFF
+        default: 0x3C
+      FUEL_CONSUMPTION:
+        bits: '2.7-2.0'
+        comment:
+          en: 'Fuel consumption, from the econometer (mm3)'
+          fr: 'Consommation de carburant, issue de l''écocompteur (mm3)'
+          es: 'Consumo de combustible, procedente del ecómetro (mm3)'
+          de: 'Kraftstoffverbrauch, vom Ökometer (mm3)'
+          it: 'Consumo di carburante, dall''ecometro (mm3)'
+          pl: 'Zużycie paliwa, z ekomiernika (mm3)'
+          ru: 'Расход топлива, от эко-счётчика (мм3)'
+          zh: '燃油消耗量,来自经济性计量表(mm3)'
+          hu: 'Üzemanyag-fogyasztás, az ökométerből (mm3)'
+          pt: 'Consumo de combustível, proveniente do ecómetro (mm3)'
+        type: 'uint'
+        factor: 80
+        min: 0
+        max: 20400
+        units: 'mm3'
+        default: 0x00
+      IDLE_SPEED_SETPOINT:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Idle speed regulation setpoint (RPM)'
+          fr: 'Consigne de régulation du ralenti (tr/min)'
+          es: 'Consigna de regulación del ralentí (rpm)'
+          de: 'Sollwert der Leerlaufdrehzahlregelung (U/min)'
+          it: 'Valore di riferimento della regolazione del minimo (giri/min)'
+          pl: 'Nastawa regulacji obrotów biegu jałowego (obr/min)'
+          ru: 'Заданное значение регулирования оборотов холостого хода (об/мин)'
+          zh: '怠速调节设定值(RPM)'
+          hu: 'Az alapjárat-szabályozás alapjele (ford/perc)'
+          pt: 'Consigna de regulação do ralenti (rpm)'
+        type: 'uint'
+        factor: 8
+        min: 0
+        max: 2024
+        units: 'rpm'
+        invalid: 0xFF
+        default: 0xFE
+      MISFIRE_CATALYST_RISK:
+        bits: '4.7'
+        comment:
+          en: 'Warning of a high risk of catalytic converter damage due to petrol engine misfires'
+          fr: 'Avertissement d''un fort risque de détérioration du catalyseur dû à des ratés de combustion essence'
+          es: 'Aviso de un alto riesgo de deterioro del catalizador debido a fallos de combustión en gasolina'
+          de: 'Warnung vor einem hohen Risiko der Katalysatorschädigung durch Verbrennungsaussetzer beim Benzinmotor'
+          it: 'Avviso di un elevato rischio di danneggiamento del catalizzatore dovuto a mancate accensioni sul motore a benzina'
+          pl: 'Ostrzeżenie o wysokim ryzyku uszkodzenia katalizatora z powodu przerw zapłonu w silniku benzynowym'
+          ru: 'Предупреждение о высоком риске повреждения катализатора из-за пропусков воспламенения в бензиновом двигателе'
+          zh: '警告因汽油机失火导致催化转化器严重损坏风险'
+          hu: 'Figyelmeztetés a katalizátor súlyos károsodásának kockázatáról benzinmotoros gyújtáskimaradás miatt'
+          pt: 'Aviso de um risco elevado de deterioração do catalisador devido a falhas de combustão a gasolina'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No severe misfiring'
+            fr: 'Pas de forts ratés'
+            es: 'Sin fallos de encendido graves'
+            de: 'Keine starken Zündaussetzer'
+            it: 'Nessun forte mancato accensione'
+            pl: 'Brak silnych przerw zapłonu'
+            ru: 'Нет сильных пропусков зажигания'
+            zh: '无严重失火'
+            hu: 'Nincs erős kihagyás'
+            pt: 'Sem falhas de ignição graves'
+          0x01:
+            en: 'misfiring'
+            fr: 'Forts ratés en cours'
+            es: 'Fallos de encendido graves en curso'
+            de: 'Starke Zündaussetzer im Gange'
+            it: 'Forti mancate accensioni in corso'
+            pl: 'Trwają silne wypadanie zapłonu'
+            ru: 'Сильные пропуски зажигания в процессе'
+            zh: '严重失火进行中'
+            hu: 'Súlyos gyújtáskimaradás folyamatban'
+            pt: 'Falhas de ignição graves em curso'
+      CRUISE_CONTROL_LIMITER_FAULT:
+        bits: '4.6'
+        comment:
+          en: 'Cruise control fault / speed limiter fault'
+          fr: 'Défaut du régulateur de vitesse / défaut du limiteur de vitesse'
+          es: 'Fallo del regulador de velocidad / fallo del limitador de velocidad'
+          de: 'Fehler des Tempomaten / Fehler des Geschwindigkeitsbegrenzers'
+          it: 'Guasto del regolatore di velocità / guasto del limitatore di velocità'
+          pl: 'Usterka tempomatu / usterka ogranicznika prędkości'
+          ru: 'Неисправность круиз-контроля / неисправность ограничителя скорости'
+          zh: '巡航控制故障/限速器故障'
+          hu: 'Sebességtartó automatika hibája / sebességhatároló hibája'
+          pt: 'Falha do regulador de velocidade / falha do limitador de velocidade'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No cruise control / no speed limiter fault'
+            fr: 'Pas de défaut cruise control / pas de défaut speed limiter'
+            es: 'Sin fallo cruise control / sin fallo speed limiter'
+            de: 'Kein cruise control-/speed limiter-Fehler'
+            it: 'Nessun guasto cruise control / nessun guasto speed limiter'
+            pl: 'Brak usterki cruise control / brak usterki speed limiter'
+            ru: 'Нет неисправности cruise control / нет неисправности speed limiter'
+            zh: '无RVV故障/无LVV故障'
+            hu: 'Nincs cruise control/speed limiter hiba'
+            pt: 'Sem falha cruise control / sem falha speed limiter'
+          0x01:
+            en: 'cruise control fault / speed limiter fault'
+            fr: 'Défaut cruise control / Défaut speed limiter'
+            es: 'Fallo cruise control / Fallo speed limiter'
+            de: 'cruise control-Fehler / speed limiter-Fehler'
+            it: 'Guasto cruise control / Guasto speed limiter'
+            pl: 'Usterka cruise control / Usterka speed limiter'
+            ru: 'Неисправность cruise control / Неисправность speed limiter'
+            zh: 'RVV故障/LVV故障'
+            hu: 'cruise control hiba / speed limiter hiba'
+            pt: 'Avaria cruise control / Avaria speed limiter'
+      COOLANT_PUMP_RTE_SETPOINT:
+        bits: '4.5'
+        comment:
+          en: 'Electric coolant circulation pump (RTE) command'
+          fr: 'Consigne de la pompe à eau électrique du circuit RTE'
+          es: 'Consigna de la bomba de agua eléctrica del circuito RTE'
+          de: 'Sollwert der elektrischen Kühlmittelpumpe des RTE-Kreislaufs'
+          it: 'Comando della pompa dell''acqua elettrica del circuito RTE'
+          pl: 'Nastawa elektrycznej pompy wody obiegu RTE'
+          ru: 'Задание электрического насоса охлаждающей жидкости контура RTE'
+          zh: 'RTE回路电动水泵设定指令'
+          hu: 'Az RTE-kör elektromos vízszivattyújának vezérlési alapjele'
+          pt: 'Consigna da bomba de água elétrica do circuito RTE'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request: RTE water pump not active'
+            fr: 'Pas de demande : pompe à eau RTE non active'
+            es: 'Sin solicitud: bomba de agua RTE no activa'
+            de: 'Keine Anforderung: RTE-Wasserpumpe nicht aktiv'
+            it: 'Nessuna richiesta: pompa dell''acqua RTE non attiva'
+            pl: 'Brak żądania: pompa wody RTE nieaktywna'
+            ru: 'Нет запроса: водяной насос RTE не активен'
+            zh: '无请求:RTE水泵未激活'
+            hu: 'Nincs kérés: RTE vízszivattyú nem aktív'
+            pt: 'Sem pedido: bomba de água RTE não ativa'
+          0x01:
+            en: 'RTE water pump active'
+            fr: 'Pompe à eau RTE active'
+            es: 'Bomba de agua RTE activa'
+            de: 'RTE-Wasserpumpe aktiv'
+            it: 'Pompa dell''acqua RTE attiva'
+            pl: 'Pompa wody RTE aktywna'
+            ru: 'Водяной насос RTE активен'
+            zh: 'RTE水泵激活'
+            hu: 'RTE vízszivattyú aktív'
+            pt: 'Bomba de água RTE ativa'
+      LEAN_MIXTURE_LAMP_REQUEST:
+        bits: '4.4'
+        comment:
+          en: 'Request to light a warning lamp signalling that cold engine starting will be difficult (mixture too lean)'
+          fr: 'Demande d''allumage d''un témoin signalant qu''un démarrage à froid sera difficile (mélange trop pauvre)'
+          es: 'Solicitud de encendido de un testigo que indica que el arranque en frío será difícil (mezcla demasiado pobre)'
+          de: 'Anforderung zum Einschalten einer Kontrollleuchte, die anzeigt, dass ein Kaltstart schwierig sein wird (Gemisch zu mager)'
+          it: 'Richiesta di accensione di una spia che segnala che l''avviamento a freddo sarà difficile (miscela troppo povera)'
+          pl: 'Żądanie zapalenia lampki sygnalizującej, że zimny rozruch będzie utrudniony (zbyt uboga mieszanka)'
+          ru: 'Запрос на включение лампы, сигнализирующей о том, что холодный пуск будет затруднён (слишком бедная смесь)'
+          zh: '点亮警告灯请求,提示冷起动将会困难(混合气过稀)'
+          hu: 'Figyelmeztető lámpa bekapcsolási kérése, amely jelzi, hogy a hidegindítás nehéz lesz (túl szegény keverék)'
+          pt: 'Pedido de acendimento de uma luz avisadora que indica que o arranque a frio será difícil (mistura demasiado pobre)'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Correct mixture'
+            fr: 'Mélange correct'
+            es: 'Mezcla correcta'
+            de: 'Korrektes Gemisch'
+            it: 'Miscela corretta'
+            pl: 'Prawidłowa mieszanka'
+            ru: 'Правильная смесь'
+            zh: '混合比正确'
+            hu: 'Helyes keverék'
+            pt: 'Mistura correta'
+          0x01:
+            en: 'Mixture too lean'
+            fr: 'Mélange trop pauvre'
+            es: 'Mezcla demasiado pobre'
+            de: 'Gemisch zu mager'
+            it: 'Miscela troppo povera'
+            pl: 'Mieszanka zbyt uboga'
+            ru: 'Слишком бедная смесь'
+            zh: '混合气过稀'
+            hu: 'Túl szegény keverék'
+            pt: 'Mistura demasiado pobre'
+      COOLANT_TEMPERATURE_ALERT:
+        bits: '4.3'
+        comment:
+          en: 'Engine coolant temperature warning'
+          fr: 'Alerte de température d''eau moteur'
+          es: 'Alerta de temperatura del líquido refrigerante del motor'
+          de: 'Warnung vor der Kühlmitteltemperatur des Motors'
+          it: 'Avviso di temperatura del liquido di raffreddamento del motore'
+          pl: 'Ostrzeżenie o temperaturze płynu chłodzącego silnika'
+          ru: 'Предупреждение о температуре охлаждающей жидкости двигателя'
+          zh: '发动机冷却液温度警告'
+          hu: 'Motorhűtőfolyadék-hőmérséklet riasztása'
+          pt: 'Aviso de temperatura do líquido de refrigeração do motor'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No engine coolant temperature warning'
+            fr: 'Pas d''alerte de température de liquide de refroidissement moteur'
+            es: 'Sin alerta de temperatura del líquido refrigerante del motor'
+            de: 'Keine Warnung bei Motorkühlmitteltemperatur'
+            it: 'Nessun allarme di temperatura del liquido di raffreddamento motore'
+            pl: 'Brak alertu temperatury płynu chłodzącego silnika'
+            ru: 'Предупреждение о температуре охлаждающей жидкости отсутствует'
+            zh: '无发动机冷却液温度警报'
+            hu: 'Nincs motor hűtőfolyadék-hőmérséklet riasztás'
+            pt: 'Sem aviso de temperatura do líquido de arrefecimento do motor'
+          0x01:
+            en: 'Engine coolant temperature warning or coolant temperature sensor fault'
+            fr: 'Alerte de température de liquide de refroidissement moteur ou défaut du capteur de température'
+            es: 'Alerta de temperatura del líquido refrigerante del motor o fallo del sensor de temperatura'
+            de: 'Warnung bei Motorkühlmitteltemperatur oder Fehler des Kühlmitteltemperatursensors'
+            it: 'Allarme temperatura del liquido di raffreddamento motore o guasto del sensore di temperatura'
+            pl: 'Alert temperatury płynu chłodzącego silnika lub usterka czujnika temperatury'
+            ru: 'Предупреждение о температуре охлаждающей жидкости двигателя или неисправность датчика температуры'
+            zh: '发动机冷却液温度警报或温度传感器故障'
+            hu: 'Motor hűtőfolyadék-hőmérséklet riasztás vagy hőmérséklet-érzékelő hiba'
+            pt: 'Aviso de temperatura do líquido de arrefecimento do motor ou avaria do sensor de temperatura do líquido de arrefecimento'
+      MIL_LAMP_REQUEST:
+        bits: '4.2'
+        comment:
+          en: 'Request to light the MIL (malfunction indicator lamp)'
+          fr: 'Demande d''allumage du témoin MIL (malfunction indicator lamp)'
+          es: 'Solicitud de encendido del testigo MIL (lámpara indicadora de mal funcionamiento)'
+          de: 'Anforderung zum Einschalten der MIL-Kontrollleuchte (Fehlfunktionsanzeige)'
+          it: 'Richiesta di accensione della spia MIL (malfunction indicator lamp)'
+          pl: 'Żądanie zapalenia kontrolki MIL (lampka usterki)'
+          ru: 'Запрос на включение лампы MIL (индикатор неисправности)'
+          zh: '请求点亮MIL(故障指示灯)'
+          hu: 'A MIL (hibajelző lámpa) bekapcsolási kérése'
+          pt: 'Pedido de acendimento do testemunho MIL (lâmpada indicadora de avaria)'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No lighting requested'
+            fr: 'Pas d''allumage demandé'
+            es: 'Sin encendido solicitado'
+            de: 'Kein Einschalten angefordert'
+            it: 'Nessuna accensione richiesta'
+            pl: 'Brak żądania włączenia'
+            ru: 'Нет запроса на включение'
+            zh: '未请求点亮'
+            hu: 'Nincs bekapcsolási kérés'
+            pt: 'Sem acendimento pedido'
+          0x01:
+            en: 'Lighting requested'
+            fr: 'Allumage demandé'
+            es: 'Encendido solicitado'
+            de: 'Einschalten angefordert'
+            it: 'Accensione richiesta'
+            pl: 'Żądanie włączenia'
+            ru: 'Запрос включения'
+            zh: '请求点亮'
+            hu: 'Bekapcsolás kérve'
+            pt: 'Acendimento pedido'
+      PREHEAT_LAMP_REQUEST:
+        bits: '4.1'
+        comment:
+          en: 'Request to light the diesel preheating warning lamp'
+          fr: 'Demande d''allumage du témoin de préchauffage diesel'
+          es: 'Solicitud de encendido del testigo de precalentamiento diésel'
+          de: 'Anforderung zum Einschalten der Diesel-Vorglühkontrollleuchte'
+          it: 'Richiesta di accensione della spia di preriscaldamento diesel'
+          pl: 'Żądanie zapalenia kontrolki podgrzewania wstępnego diesla'
+          ru: 'Запрос на включение лампы предпускового подогрева дизеля'
+          zh: '请求点亮柴油预热警告灯'
+          hu: 'A dízel előfűtés jelzőlámpájának bekapcsolási kérése'
+          pt: 'Pedido de acendimento do testemunho de pré-aquecimento diesel'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No lighting requested'
+            fr: 'Pas d''allumage demandé'
+            es: 'Sin encendido solicitado'
+            de: 'Kein Einschalten angefordert'
+            it: 'Nessuna accensione richiesta'
+            pl: 'Brak żądania włączenia'
+            ru: 'Нет запроса на включение'
+            zh: '未请求点亮'
+            hu: 'Nincs bekapcsolási kérés'
+            pt: 'Sem acendimento pedido'
+          0x01:
+            en: 'Lighting requested'
+            fr: 'Allumage demandé'
+            es: 'Encendido solicitado'
+            de: 'Einschalten angefordert'
+            it: 'Accensione richiesta'
+            pl: 'Żądanie włączenia'
+            ru: 'Запрос включения'
+            zh: '请求点亮'
+            hu: 'Bekapcsolás kérve'
+            pt: 'Acendimento pedido'
+      ENGINE_START_IN_PROGRESS:
+        bits: '4.0'
+        comment:
+          en: 'Engine start in progress'
+          fr: 'Démarrage moteur en cours'
+          es: 'Arranque del motor en curso'
+          de: 'Motorstart läuft'
+          it: 'Avviamento motore in corso'
+          pl: 'Trwa rozruch silnika'
+          ru: 'Идёт запуск двигателя'
+          zh: '发动机起动进行中'
+          hu: 'Motorindítás folyamatban'
+          pt: 'Arranque do motor em curso'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No engine start in progress'
+            fr: 'Pas de démarrage moteur en cours'
+            es: 'Sin arranque del motor en curso'
+            de: 'Kein Motorstart im Gange'
+            it: 'Nessun avviamento motore in corso'
+            pl: 'Brak trwającego uruchamiania silnika'
+            ru: 'Запуск двигателя не выполняется'
+            zh: '无发动机启动进行中'
+            hu: 'Nincs folyamatban motorindítás'
+            pt: 'Sem arranque do motor em curso'
+          0x01:
+            en: 'Engine start in progress'
+            fr: 'Démarrage moteur en cours'
+            es: 'Arranque del motor en curso'
+            de: 'Motorstart läuft'
+            it: 'Avviamento del motore in corso'
+            pl: 'Trwa uruchamianie silnika'
+            ru: 'Выполняется пуск двигателя'
+            zh: '发动机启动中'
+            hu: 'Motorindítás folyamatban'
+            pt: 'Arranque do motor em curso'
+      AUTO_GEARBOX_HYDRAULIC_PRESSURE_FORCING:
+        bits: '5.7'
+        comment:
+          en: 'Automatic gearbox hydraulic pressure forcing'
+          fr: 'Forçage de la pression du circuit hydraulique de la boîte automatique'
+          es: 'Forzado de la presión del circuito hidráulico de la caja automática'
+          de: 'Erzwungener Hydraulikdruck des Automatikgetriebes'
+          it: 'Forzatura della pressione del circuito idraulico del cambio automatico'
+          pl: 'Wymuszenie ciśnienia w układzie hydraulicznym skrzyni automatycznej'
+          ru: 'Принудительное давление в гидравлическом контуре автоматической коробки передач'
+          zh: '自动变速箱液压系统强制加压'
+          hu: 'Automata váltó hidraulikanyomásának kényszerítése'
+          pt: 'Forçagem da pressão hidráulica da caixa automática'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No gearbox pressure increase requested'
+            fr: 'Pas de demande d''augmentation de pression de la boîte de vitesses'
+            es: 'Sin solicitud de aumento de presión de la caja de cambios'
+            de: 'Keine Anforderung zur Druckerhöhung des Getriebes'
+            it: 'Nessuna richiesta di aumento della pressione del cambio'
+            pl: 'Brak żądania zwiększenia ciśnienia skrzyni biegów'
+            ru: 'Нет запроса повышения давления коробки передач'
+            zh: '无变速箱增压请求'
+            hu: 'Nincs váltónyomás-növelési kérés'
+            pt: 'Sem pedido de aumento de pressão da caixa de velocidades'
+          0x01:
+            en: 'Gearbox pressure increase requested'
+            fr: 'Demande d''augmentation de pression de la boîte de vitesses'
+            es: 'Solicitud de aumento de presión de la caja de cambios'
+            de: 'Anforderung zur Druckerhöhung des Getriebes'
+            it: 'Richiesta di aumento della pressione del cambio'
+            pl: 'Żądanie zwiększenia ciśnienia skrzyni biegów'
+            ru: 'Запрос повышения давления коробки передач'
+            zh: '变速箱增压请求'
+            hu: 'Váltónyomás-növelési kérés'
+            pt: 'Pedido de aumento de pressão da caixa de velocidades'
+      DPF_CLOGGING_RISK:
+        bits: '5.6'
+        comment:
+          en: 'Indication that the driver should perform an adapted drive to trigger DPF regeneration'
+          fr: 'Indication au conducteur qu''il doit adopter une conduite adaptée pour provoquer une régénération du FAP'
+          es: 'Indicación al conductor de que debe adoptar una conducción adaptada para provocar una regeneración del FAP'
+          de: 'Hinweis an den Fahrer, durch angepasste Fahrweise eine Regeneration des Partikelfilters auszulösen'
+          it: 'Indicazione al conducente di adottare uno stile di guida adeguato per avviare la rigenerazione del FAP'
+          pl: 'Wskazanie dla kierowcy, że powinien dostosować styl jazdy, aby wywołać regenerację DPF'
+          ru: 'Указание водителю изменить стиль вождения для запуска регенерации сажевого фильтра'
+          zh: '提示驾驶员采用适应性驾驶方式以触发颗粒捕集器再生'
+          hu: 'Jelzés a vezetőnek, hogy a részecskeszűrő regenerálásához igazítsa a vezetési stílust'
+          pt: 'Indicação ao condutor de que deve adotar uma condução adaptada para provocar uma regeneração do FAP'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No DPF clogging risk display requested'
+            fr: 'Aucune commande d''affichage du risque de colmatage du FAP'
+            es: 'Ninguna solicitud de visualización del riesgo de obstrucción del FAP'
+            de: 'Keine Anzeigeanforderung des DPF-Verstopfungsrisikos'
+            it: 'Nessuna richiesta di visualizzazione del rischio di intasamento del FAP'
+            pl: 'Brak żądania wyświetlenia ryzyka zapchania DPF'
+            ru: 'Не запрошено отображение риска засорения сажевого фильтра'
+            zh: '未请求显示 DPF 堵塞风险'
+            hu: 'Nincs kérve a DPF eltömődési kockázatának megjelenítése'
+            pt: 'Sem pedido de apresentação de risco de obstrução do DPF'
+          0x01:
+            en: 'Display command encouraging the driver to adopt a driving style that helps DPF regeneration'
+            fr: 'Commande d''affichage incitant le conducteur à adopter une conduite facilitant la régénération du filtre à particules'
+            es: 'Comando de visualización que anima al conductor a adoptar una conducción que facilite la regeneración del filtro de partículas'
+            de: 'Anzeigebefehl, der den Fahrer zu einer Fahrweise anregt, die die Partikelfilterregeneration begünstigt'
+            it: 'Comando di visualizzazione che invita il guidatore ad adottare una guida che favorisca la rigenerazione del filtro antiparticolato'
+            pl: 'Polecenie wyświetlenia zachęcające kierowcę do stylu jazdy ułatwiającego regenerację filtra cząstek stałych'
+            ru: 'Команда индикации, побуждающая водителя к стилю вождения, способствующему регенерации сажевого фильтра'
+            zh: '显示指令,鼓励驾驶员采用有助于颗粒过滤器再生的驾驶方式'
+            hu: 'Kijelzési parancs, amely a vezetőt a részecskeszűrő regenerálódását elősegítő vezetési stílusra ösztönzi'
+            pt: 'Comando de visualização que incentiva o condutor a adotar uma condução que facilite a regeneração do filtro de partículas'
+      FUEL_CONSUMPTION_INFO_TYPE:
+        bits: '5.5'
+        comment:
+          en: 'Type of fuel consumption information (actual or pseudo-consumption, used with DPF regeneration active)'
+          fr: 'Type d''information de consommation de carburant (réelle ou pseudo-consommation, utilisé pendant une régénération FAP)'
+          es: 'Tipo de información de consumo de combustible (real o pseudoconsumo, usado durante una regeneración del FAP)'
+          de: 'Art der Kraftstoffverbrauchsinformation (real oder Pseudoverbrauch, während einer Partikelfilterregeneration)'
+          it: 'Tipo di informazione sul consumo di carburante (reale o pseudo-consumo, usato durante una rigenerazione FAP)'
+          pl: 'Typ informacji o zużyciu paliwa (rzeczywiste lub pseudo-zużycie, stosowane podczas regeneracji DPF)'
+          ru: 'Тип информации о расходе топлива (фактический или псевдо-расход, используемый при регенерации сажевого фильтра)'
+          zh: '燃油消耗信息类型(实际或伪消耗量,用于颗粒捕集器再生期间)'
+          hu: 'Az üzemanyag-fogyasztási információ típusa (valós vagy pszeudo-fogyasztás, részecskeszűrő-regeneráláskor)'
+          pt: 'Tipo de informação de consumo de combustível (real ou pseudoconsumo, usado durante uma regeneração do FAP)'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Actual consumption'
+            fr: 'Consommation réelle'
+            es: 'Consumo real'
+            de: 'Tatsächlicher Verbrauch'
+            it: 'Consumo reale'
+            pl: 'Rzeczywiste zużycie'
+            ru: 'Фактический расход'
+            zh: '实际消耗'
+            hu: 'Tényleges fogyasztás'
+            pt: 'Consumo real'
+          0x01:
+            en: 'Pseudo consumption'
+            fr: 'Pseudo-consommation'
+            es: 'Pseudoconsumo'
+            de: 'Pseudoverbrauch'
+            it: 'Pseudo consumo'
+            pl: 'Pseudo zużycie'
+            ru: 'Псевдорасход'
+            zh: '伪消耗量'
+            hu: 'Pszeudofogyasztás'
+            pt: 'Pseudoconsumo'
+      OVERSPEED_CUTOFF_THRESHOLD:
+        bits: '5.4-5.3'
+        comment:
+          en: 'Overspeed fuel cutoff threshold'
+          fr: 'Seuil de coupure d''injection en surrégime'
+          es: 'Umbral de corte de inyección por sobrerrégimen'
+          de: 'Kraftstoffabschaltschwelle bei Drehzahlüberschreitung'
+          it: 'Soglia di interruzione dell''iniezione per sovraregime'
+          pl: 'Próg odcięcia wtrysku przy przekroczeniu obrotów'
+          ru: 'Порог отключения топливоподачи при превышении оборотов'
+          zh: '超速断油阈值'
+          hu: 'A túlfordulatszám miatti üzemanyag-lekapcsolási küszöb'
+          pt: 'Limiar de corte de injeção por sobrevelocidade'
+        type: 'enum'
+        default: 0x03
+        values:
+          0x00:
+            en: 'Low threshold'
+            fr: 'Seuil bas'
+            es: 'Umbral bajo'
+            de: 'Unterer Schwellenwert'
+            it: 'Soglia bassa'
+            pl: 'Próg dolny'
+            ru: 'Нижний порог'
+            zh: '低阈值'
+            hu: 'Alsó küszöb'
+            pt: 'Limiar baixo'
+          0x01:
+            en: 'High threshold'
+            fr: 'Seuil haut'
+            es: 'Umbral alto'
+            de: 'Oberer Schwellenwert'
+            it: 'Soglia alta'
+            pl: 'Próg górny'
+            ru: 'Верхний порог'
+            zh: '高阈值'
+            hu: 'Felső küszöbérték'
+            pt: 'Limiar alto'
+      AC_MANAGEMENT_STATUS:
+        bits: '5.2-5.1'
+        comment:
+          en: 'A/C management state'
+          fr: 'État de la gestion de la climatisation'
+          es: 'Estado de la gestión del aire acondicionado'
+          de: 'Status der Klimasteuerung'
+          it: 'Stato della gestione del climatizzatore'
+          pl: 'Stan zarządzania klimatyzacją'
+          ru: 'Статус управления кондиционером'
+          zh: '空调管理状态'
+          hu: 'Klímavezérlés állapota'
+          pt: 'Estado da gestão do ar condicionado'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'OK'
+            fr: 'OK'
+            es: 'OK'
+            de: 'OK'
+            it: 'OK'
+            pl: 'OK'
+            ru: 'OK'
+            zh: 'OK'
+            hu: 'OK'
+            pt: 'OK'
+          0x01:
+            en: 'Low-safety active: abnormally low pressure'
+            fr: 'Sécurité basse active : pression anormalement basse'
+            es: 'Seguridad baja activa: presión anormalmente baja'
+            de: 'Niedrigdruck-Sicherheit aktiv: anormal niedriger Druck'
+            it: 'Sicurezza bassa attiva: pressione anormalmente bassa'
+            pl: 'Aktywne zabezpieczenie niskiego ciśnienia: nieprawidłowo niskie ciśnienie'
+            ru: 'Активна защита низкого давления: аномально низкое давление'
+            zh: '低压安全保护激活:压力异常偏低'
+            hu: 'Alacsony nyomás biztonsági funkció aktív: rendellenesen alacsony nyomás'
+            pt: 'Segurança baixa ativa: pressão anormalmente baixa'
+          0x02:
+            en: 'High safety active: abnormally high pressure'
+            fr: 'Sécurité haute active : pression anormalement élevée'
+            es: 'Seguridad alta activa: presión anormalmente elevada'
+            de: 'Hochdrucksicherheit aktiv: anormal hoher Druck'
+            it: 'Sicurezza alta attiva: pressione anormalmente elevata'
+            pl: 'Aktywne zabezpieczenie wysokiego ciśnienia: nieprawidłowo wysokie ciśnienie'
+            ru: 'Активна защита высокого давления: аномально высокое давление'
+            zh: '高压安全激活：异常高压'
+            hu: 'Magas nyomású biztonsági funkció aktív: rendellenesen magas nyomás'
+            pt: 'Segurança alta ativa: pressão anormalmente elevada'
+          0x03:
+            en: 'Invalid'
+            fr: 'Invalide'
+            es: 'Inválido'
+            de: 'Ungültig'
+            it: 'Non valido'
+            pl: 'Nieprawidłowe'
+            ru: 'Недействительно'
+            zh: '无效'
+            hu: 'Érvénytelen'
+            pt: 'Inválido'
+      AC_SAFETY_CUTOFF_STATUS:
+        bits: '5.0'
+        comment:
+          en: 'Air conditioning cut-off status for coolant temperature safety'
+          fr: 'État de coupure de la climatisation pour sécurité liée à la température d''eau'
+          es: 'Estado de corte del aire acondicionado por seguridad de temperatura del refrigerante'
+          de: 'Abschaltzustand der Klimaanlage aus Sicherheitsgründen wegen der Kühlmitteltemperatur'
+          it: 'Stato di interruzione del climatizzatore per sicurezza legata alla temperatura del liquido di raffreddamento'
+          pl: 'Stan wyłączenia klimatyzacji ze względów bezpieczeństwa temperatury płynu chłodzącego'
+          ru: 'Состояние отключения кондиционера по причине безопасности температуры охлаждающей жидкости'
+          zh: '因冷却液温度安全原因导致的空调切断状态'
+          hu: 'A klímaberendezés lekapcsolási állapota a hűtőfolyadék-hőmérséklet biztonsága miatt'
+          pt: 'Estado de corte do ar condicionado por segurança relacionada com a temperatura do líquido de refrigeração'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'OK, not cut off'
+            fr: 'OK, pas de coupure'
+            es: 'OK, sin corte'
+            de: 'OK, keine Abschaltung'
+            it: 'OK, nessun taglio'
+            pl: 'OK, brak odcięcia'
+            ru: 'ОК, отключения нет'
+            zh: '正常，无切断'
+            hu: 'OK, nincs lekapcsolás'
+            pt: 'OK, sem corte'
+          0x01:
+            en: 'Compressor off (overheating risk only)'
+            fr: 'Compresseur coupé (risque de surchauffe uniquement)'
+            es: 'Compresor desconectado (solo riesgo de sobrecalentamiento)'
+            de: 'Kompressor abgeschaltet (nur Überhitzungsrisiko)'
+            it: 'Compressore disinserito (solo rischio surriscaldamento)'
+            pl: 'Sprężarka wyłączona (tylko ryzyko przegrzania)'
+            ru: 'Компрессор отключён (только риск перегрева)'
+            zh: '压缩机关闭（仅过热风险）'
+            hu: 'A kompresszor lekapcsolva (csak túlmelegedési kockázat)'
+            pt: 'Compressor desligado (apenas risco de sobreaquecimento)'
+      ENGINE_OIL_TEMPERATURE:
+        bits: '6.7-6.0'
+        comment:
+          en: 'Engine oil temperature (°C)'
+          fr: 'Température d''huile moteur (°C)'
+          es: 'Temperatura del aceite del motor (°C)'
+          de: 'Motoröltemperatur (°C)'
+          it: 'Temperatura dell''olio motore (°C)'
+          pl: 'Temperatura oleju silnikowego (°C)'
+          ru: 'Температура моторного масла (°C)'
+          zh: '发动机机油温度(°C)'
+          hu: 'Motorolaj-hőmérséklet (°C)'
+          pt: 'Temperatura do óleo do motor (°C)'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 214
+        units: '°C'
+        invalid: 0xFF
+        default: 0x3C
+      REFRIGERANT_PRESSURE:
+        bits: '7.7-7.0'
+        comment:
+          en: 'Air conditioning refrigerant circuit pressure (kPa)'
+          fr: 'Pression du circuit de réfrigérant de climatisation (kPa)'
+          es: 'Presión del circuito de refrigerante del aire acondicionado (kPa)'
+          de: 'Druck im Kältemittelkreislauf der Klimaanlage (kPa)'
+          it: 'Pressione del circuito del refrigerante del climatizzatore (kPa)'
+          pl: 'Ciśnienie w obiegu czynnika chłodniczego klimatyzacji (kPa)'
+          ru: 'Давление в контуре хладагента кондиционера (кПа)'
+          zh: '空调制冷剂回路压力(kPa)'
+          hu: 'A klíma hűtőközeg-körének nyomása (kPa)'
+          pt: 'Pressão do circuito de refrigerante do ar condicionado (kPa)'
+        type: 'uint'
+        factor: 25
+        min: 100
+        max: 3100
+        units: 'kPa'
+        invalid: 0xFF
+        default: 0xFF
+      INTAKE_AIR_TEMPERATURE:
+        bits: '8.7-8.0'
+        comment:
+          en: 'Intake air temperature sensor, on the throttle body or air flow meter (°C)'
+          fr: 'Température de l''air d''admission, mesurée sur le boîtier papillon ou le débitmètre (°C)'
+          es: 'Temperatura del aire de admisión, medida en el cuerpo de mariposa o el caudalímetro (°C)'
+          de: 'Ansauglufttemperatur, gemessen am Drosselklappengehäuse oder Luftmassenmesser (°C)'
+          it: 'Temperatura dell''aria di aspirazione, misurata sul corpo farfallato o sul debimetro (°C)'
+          pl: 'Temperatura powietrza dolotowego, mierzona na przepustnicy lub przepływomierzu (°C)'
+          ru: 'Температура впускного воздуха, измеренная на дроссельном узле или расходомере (°C)'
+          zh: '进气温度,测量自节气门体或空气流量计(°C)'
+          hu: 'A beszívott levegő hőmérséklete, a fojtószelepházon vagy a légtömegmérőn mérve (°C)'
+          pt: 'Sensor de temperatura do ar de admissão, na borboleta ou no medidor de caudal (°C)'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 214
+        units: '°C'
+        invalid: 0xFF
+        default: 0x3C
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      ENGINE_COOLANT_TEMPERATURE:
+        bits: '1.7-1.0'
+        comment:
+          en: 'Engine coolant temperature (°C)'
+          fr: 'Température d''eau moteur (°C)'
+          es: 'Temperatura del líquido refrigerante del motor (°C)'
+          de: 'Motorkühlmitteltemperatur (°C)'
+          it: 'Temperatura del liquido di raffreddamento motore (°C)'
+          pl: 'Temperatura płynu chłodzącego silnika (°C)'
+          ru: 'Температура охлаждающей жидкости двигателя (°C)'
+          zh: '发动机冷却液温度(°C)'
+          hu: 'Motorhűtőfolyadék-hőmérséklet (°C)'
+          pt: 'Temperatura do líquido de refrigeração do motor (°C)'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 214
+        units: '°C'
+        invalid: 0xFF
+        default: 0x3C
+      FUEL_CONSUMPTION:
+        bits: '2.7-2.0'
+        comment:
+          en: 'Fuel consumption, from the econometer (mm3)'
+          fr: 'Consommation de carburant, issue de l''écocompteur (mm3)'
+          es: 'Consumo de combustible, procedente del ecómetro (mm3)'
+          de: 'Kraftstoffverbrauch, vom Ökometer (mm3)'
+          it: 'Consumo di carburante, dall''ecometro (mm3)'
+          pl: 'Zużycie paliwa, z ekomiernika (mm3)'
+          ru: 'Расход топлива, от эко-счётчика (мм3)'
+          zh: '燃油消耗量,来自经济性计量表(mm3)'
+          hu: 'Üzemanyag-fogyasztás, az ökométerből (mm3)'
+          pt: 'Consumo de combustível, proveniente do ecómetro (mm3)'
+        type: 'uint'
+        factor: 80
+        min: 0
+        max: 20400
+        units: 'mm3'
+        default: 0x00
+      IDLE_SPEED_SETPOINT:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Idle speed regulation setpoint (RPM)'
+          fr: 'Consigne de régulation du ralenti (tr/min)'
+          es: 'Consigna de regulación del ralentí (rpm)'
+          de: 'Sollwert der Leerlaufdrehzahlregelung (U/min)'
+          it: 'Valore di riferimento della regolazione del minimo (giri/min)'
+          pl: 'Nastawa regulacji obrotów biegu jałowego (obr/min)'
+          ru: 'Заданное значение регулирования оборотов холостого хода (об/мин)'
+          zh: '怠速调节设定值(RPM)'
+          hu: 'Az alapjárat-szabályozás alapjele (ford/perc)'
+          pt: 'Consigna de regulação do ralenti (rpm)'
+        type: 'uint'
+        factor: 8
+        min: 0
+        max: 2024
+        units: 'rpm'
+        invalid: 0xFF
+        default: 0xFE
+      MISFIRE_CATALYST_RISK:
+        bits: '4.7'
+        comment:
+          en: 'Warning of a high risk of catalytic converter damage due to petrol engine misfires'
+          fr: 'Avertissement d''un fort risque de détérioration du catalyseur dû à des ratés de combustion essence'
+          es: 'Aviso de un alto riesgo de deterioro del catalizador debido a fallos de combustión en gasolina'
+          de: 'Warnung vor einem hohen Risiko der Katalysatorschädigung durch Verbrennungsaussetzer beim Benzinmotor'
+          it: 'Avviso di un elevato rischio di danneggiamento del catalizzatore dovuto a mancate accensioni sul motore a benzina'
+          pl: 'Ostrzeżenie o wysokim ryzyku uszkodzenia katalizatora z powodu przerw zapłonu w silniku benzynowym'
+          ru: 'Предупреждение о высоком риске повреждения катализатора из-за пропусков воспламенения в бензиновом двигателе'
+          zh: '警告因汽油机失火导致催化转化器严重损坏风险'
+          hu: 'Figyelmeztetés a katalizátor súlyos károsodásának kockázatáról benzinmotoros gyújtáskimaradás miatt'
+          pt: 'Aviso de um risco elevado de deterioração do catalisador devido a falhas de combustão a gasolina'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No severe misfiring'
+            fr: 'Pas de forts ratés'
+            es: 'Sin fallos de encendido graves'
+            de: 'Keine starken Zündaussetzer'
+            it: 'Nessun forte mancato accensione'
+            pl: 'Brak silnych przerw zapłonu'
+            ru: 'Нет сильных пропусков зажигания'
+            zh: '无严重失火'
+            hu: 'Nincs erős kihagyás'
+            pt: 'Sem falhas de ignição graves'
+          0x01:
+            en: 'misfiring'
+            fr: 'Forts ratés en cours'
+            es: 'Fallos de encendido graves en curso'
+            de: 'Starke Zündaussetzer im Gange'
+            it: 'Forti mancate accensioni in corso'
+            pl: 'Trwają silne wypadanie zapłonu'
+            ru: 'Сильные пропуски зажигания в процессе'
+            zh: '严重失火进行中'
+            hu: 'Súlyos gyújtáskimaradás folyamatban'
+            pt: 'Falhas de ignição graves em curso'
+      CRUISE_CONTROL_LIMITER_FAULT:
+        bits: '4.6'
+        comment:
+          en: 'Cruise control fault / speed limiter fault'
+          fr: 'Défaut du régulateur de vitesse / défaut du limiteur de vitesse'
+          es: 'Fallo del regulador de velocidad / fallo del limitador de velocidad'
+          de: 'Fehler des Tempomaten / Fehler des Geschwindigkeitsbegrenzers'
+          it: 'Guasto del regolatore di velocità / guasto del limitatore di velocità'
+          pl: 'Usterka tempomatu / usterka ogranicznika prędkości'
+          ru: 'Неисправность круиз-контроля / неисправность ограничителя скорости'
+          zh: '巡航控制故障/限速器故障'
+          hu: 'Sebességtartó automatika hibája / sebességhatároló hibája'
+          pt: 'Falha do regulador de velocidade / falha do limitador de velocidade'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No cruise control / no speed limiter fault'
+            fr: 'Pas de défaut cruise control / pas de défaut speed limiter'
+            es: 'Sin fallo cruise control / sin fallo speed limiter'
+            de: 'Kein cruise control-/speed limiter-Fehler'
+            it: 'Nessun guasto cruise control / nessun guasto speed limiter'
+            pl: 'Brak usterki cruise control / brak usterki speed limiter'
+            ru: 'Нет неисправности cruise control / нет неисправности speed limiter'
+            zh: '无RVV故障/无LVV故障'
+            hu: 'Nincs cruise control/speed limiter hiba'
+            pt: 'Sem falha cruise control / sem falha speed limiter'
+          0x01:
+            en: 'cruise control fault / speed limiter fault'
+            fr: 'Défaut cruise control / Défaut speed limiter'
+            es: 'Fallo cruise control / Fallo speed limiter'
+            de: 'cruise control-Fehler / speed limiter-Fehler'
+            it: 'Guasto cruise control / Guasto speed limiter'
+            pl: 'Usterka cruise control / Usterka speed limiter'
+            ru: 'Неисправность cruise control / Неисправность speed limiter'
+            zh: 'RVV故障/LVV故障'
+            hu: 'cruise control hiba / speed limiter hiba'
+            pt: 'Avaria cruise control / Avaria speed limiter'
+      AIR_PUMP_SETPOINT:
+        bits: '4.5'
+        comment:
+          en: 'Secondary air pump command'
+          fr: 'Consigne de la pompe à air'
+          es: 'Consigna de la bomba de aire'
+          de: 'Sollwert der Luftpumpe'
+          it: 'Comando della pompa dell''aria'
+          pl: 'Nastawa pompy powietrza'
+          ru: 'Задание насоса вторичного воздуха'
+          zh: '空气泵设定指令'
+          hu: 'A légszivattyú vezérlési alapjele'
+          pt: 'Consigna da bomba de ar'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No request: air pump not active'
+            fr: 'Pas de demande : pompe à air non active'
+            es: 'Sin solicitud: bomba de aire no activa'
+            de: 'Keine Anforderung: Luftpumpe nicht aktiv'
+            it: 'Nessuna richiesta: pompa dell''aria non attiva'
+            pl: 'Brak żądania: pompa powietrza nieaktywna'
+            ru: 'Нет запроса: воздушный насос не активен'
+            zh: '无请求:空气泵未激活'
+            hu: 'Nincs kérés: légszivattyú nem aktív'
+            pt: 'Sem pedido: bomba de ar não ativa'
+          0x01:
+            en: 'Air pump active'
+            fr: 'Pompe à air active'
+            es: 'Bomba de aire activa'
+            de: 'Luftpumpe aktiv'
+            it: 'Pompa dell''aria attiva'
+            pl: 'Pompa powietrza aktywna'
+            ru: 'Воздушный насос активен'
+            zh: '空气泵已激活'
+            hu: 'Légszivattyú aktív'
+            pt: 'Bomba de ar ativa'
+      ADDITIVE_LEVEL_LOW_ALERT:
+        bits: '4.4'
+        comment:
+          en: 'Prompt to refill the exhaust additive at an authorized workshop'
+          fr: 'Invitation faite au conducteur à faire le plein d''additif d''échappement chez un réparateur agréé'
+          es: 'Aviso al conductor para rellenar el aditivo de escape en un taller autorizado'
+          de: 'Aufforderung an den Fahrer, den Abgasadditiv bei einer autorisierten Werkstatt nachzufüllen'
+          it: 'Avviso al conducente di rabboccare l''additivo di scarico presso un''officina autorizzata'
+          pl: 'Przypomnienie dla kierowcy o uzupełnieniu dodatku spalinowego w autoryzowanym warsztacie'
+          ru: 'Напоминание водителю о необходимости долить присадку системы выпуска в авторизованном сервисе'
+          zh: '提示驾驶员前往授权维修点补充排气添加剂'
+          hu: 'Figyelmeztetés a vezetőnek, hogy töltesse fel a kipufogó-adalékot egy márkaszervizben'
+          pt: 'Aviso ao condutor para reabastecer o aditivo de escape num reparador autorizado'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No mini-additive display requested'
+            fr: 'Aucune commande d''affichage du mini-additif'
+            es: 'Sin solicitud de visualización del mini indicador'
+            de: 'Keine Anzeigeanforderung des Mini-Zusatzdisplays'
+            it: 'Nessuna richiesta di visualizzazione del mini additivo'
+            pl: 'Brak żądania wyświetlenia mini dodatku'
+            ru: 'Нет запроса отображения мини-индикатора'
+            zh: '未请求迷你附加显示'
+            hu: 'Nincs mini kiegészítő kijelzési kérés'
+            pt: 'Sem pedido de visualização do mini indicador de aditivo'
+          0x01:
+            en: 'Minimum additive level display request'
+            fr: 'Commande d''affichage du niveau minimum d''additif'
+            es: 'Solicitud de visualización del nivel mínimo de aditivo'
+            de: 'Anforderung zur Anzeige des Mindestadditivstands'
+            it: 'Richiesta di visualizzazione del livello minimo di additivo'
+            pl: 'Żądanie wyświetlenia minimalnego poziomu dodatku'
+            ru: 'Запрос отображения минимального уровня присадки'
+            zh: '最低添加剂液位显示请求'
+            hu: 'Minimális adalékszint kijelzési kérés'
+            pt: 'Pedido de apresentação de nível mínimo de aditivo'
+      COOLANT_TEMPERATURE_ALERT:
+        bits: '4.3'
+        comment:
+          en: 'Engine coolant temperature warning'
+          fr: 'Alerte de température d''eau moteur'
+          es: 'Alerta de temperatura del líquido refrigerante del motor'
+          de: 'Warnung vor der Kühlmitteltemperatur des Motors'
+          it: 'Avviso di temperatura del liquido di raffreddamento del motore'
+          pl: 'Ostrzeżenie o temperaturze płynu chłodzącego silnika'
+          ru: 'Предупреждение о температуре охлаждающей жидкости двигателя'
+          zh: '发动机冷却液温度警告'
+          hu: 'Motorhűtőfolyadék-hőmérséklet riasztása'
+          pt: 'Aviso de temperatura do líquido de refrigeração do motor'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No engine coolant temperature warning'
+            fr: 'Pas d''alerte de température de liquide de refroidissement moteur'
+            es: 'Sin alerta de temperatura del líquido refrigerante del motor'
+            de: 'Keine Warnung bei Motorkühlmitteltemperatur'
+            it: 'Nessun allarme di temperatura del liquido di raffreddamento motore'
+            pl: 'Brak alertu temperatury płynu chłodzącego silnika'
+            ru: 'Предупреждение о температуре охлаждающей жидкости отсутствует'
+            zh: '无发动机冷却液温度警报'
+            hu: 'Nincs motor hűtőfolyadék-hőmérséklet riasztás'
+            pt: 'Sem aviso de temperatura do líquido de arrefecimento do motor'
+          0x01:
+            en: 'Engine coolant temperature warning or coolant temperature sensor fault'
+            fr: 'Alerte de température de liquide de refroidissement moteur ou défaut du capteur de température'
+            es: 'Alerta de temperatura del líquido refrigerante del motor o fallo del sensor de temperatura'
+            de: 'Warnung bei Motorkühlmitteltemperatur oder Fehler des Kühlmitteltemperatursensors'
+            it: 'Allarme temperatura del liquido di raffreddamento motore o guasto del sensore di temperatura'
+            pl: 'Alert temperatury płynu chłodzącego silnika lub usterka czujnika temperatury'
+            ru: 'Предупреждение о температуре охлаждающей жидкости двигателя или неисправность датчика температуры'
+            zh: '发动机冷却液温度警报或温度传感器故障'
+            hu: 'Motor hűtőfolyadék-hőmérséklet riasztás vagy hőmérséklet-érzékelő hiba'
+            pt: 'Aviso de temperatura do líquido de arrefecimento do motor ou avaria do sensor de temperatura do líquido de arrefecimento'
+      MIL_LAMP_REQUEST:
+        bits: '4.2'
+        comment:
+          en: 'Request to light the MIL (malfunction indicator lamp)'
+          fr: 'Demande d''allumage du témoin MIL (malfunction indicator lamp)'
+          es: 'Solicitud de encendido del testigo MIL (lámpara indicadora de mal funcionamiento)'
+          de: 'Anforderung zum Einschalten der MIL-Kontrollleuchte (Fehlfunktionsanzeige)'
+          it: 'Richiesta di accensione della spia MIL (malfunction indicator lamp)'
+          pl: 'Żądanie zapalenia kontrolki MIL (lampka usterki)'
+          ru: 'Запрос на включение лампы MIL (индикатор неисправности)'
+          zh: '请求点亮MIL(故障指示灯)'
+          hu: 'A MIL (hibajelző lámpa) bekapcsolási kérése'
+          pt: 'Pedido de acendimento do testemunho MIL (lâmpada indicadora de avaria)'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No lighting requested'
+            fr: 'Pas d''allumage demandé'
+            es: 'Sin encendido solicitado'
+            de: 'Kein Einschalten angefordert'
+            it: 'Nessuna accensione richiesta'
+            pl: 'Brak żądania włączenia'
+            ru: 'Нет запроса на включение'
+            zh: '未请求点亮'
+            hu: 'Nincs bekapcsolási kérés'
+            pt: 'Sem acendimento pedido'
+          0x01:
+            en: 'Lighting requested'
+            fr: 'Allumage demandé'
+            es: 'Encendido solicitado'
+            de: 'Einschalten angefordert'
+            it: 'Accensione richiesta'
+            pl: 'Żądanie włączenia'
+            ru: 'Запрос включения'
+            zh: '请求点亮'
+            hu: 'Bekapcsolás kérve'
+            pt: 'Acendimento pedido'
+      PREHEAT_LAMP_REQUEST:
+        bits: '4.1'
+        comment:
+          en: 'Request to light the diesel preheating warning lamp'
+          fr: 'Demande d''allumage du témoin de préchauffage diesel'
+          es: 'Solicitud de encendido del testigo de precalentamiento diésel'
+          de: 'Anforderung zum Einschalten der Diesel-Vorglühkontrollleuchte'
+          it: 'Richiesta di accensione della spia di preriscaldamento diesel'
+          pl: 'Żądanie zapalenia kontrolki podgrzewania wstępnego diesla'
+          ru: 'Запрос на включение лампы предпускового подогрева дизеля'
+          zh: '请求点亮柴油预热警告灯'
+          hu: 'A dízel előfűtés jelzőlámpájának bekapcsolási kérése'
+          pt: 'Pedido de acendimento do testemunho de pré-aquecimento diesel'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No lighting requested'
+            fr: 'Pas d''allumage demandé'
+            es: 'Sin encendido solicitado'
+            de: 'Kein Einschalten angefordert'
+            it: 'Nessuna accensione richiesta'
+            pl: 'Brak żądania włączenia'
+            ru: 'Нет запроса на включение'
+            zh: '未请求点亮'
+            hu: 'Nincs bekapcsolási kérés'
+            pt: 'Sem acendimento pedido'
+          0x01:
+            en: 'Lighting requested'
+            fr: 'Allumage demandé'
+            es: 'Encendido solicitado'
+            de: 'Einschalten angefordert'
+            it: 'Accensione richiesta'
+            pl: 'Żądanie włączenia'
+            ru: 'Запрос включения'
+            zh: '请求点亮'
+            hu: 'Bekapcsolás kérve'
+            pt: 'Acendimento pedido'
+      ENGINE_START_IN_PROGRESS:
+        bits: '4.0'
+        comment:
+          en: 'Engine start in progress'
+          fr: 'Démarrage moteur en cours'
+          es: 'Arranque del motor en curso'
+          de: 'Motorstart läuft'
+          it: 'Avviamento motore in corso'
+          pl: 'Trwa rozruch silnika'
+          ru: 'Идёт запуск двигателя'
+          zh: '发动机起动进行中'
+          hu: 'Motorindítás folyamatban'
+          pt: 'Arranque do motor em curso'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No engine start in progress'
+            fr: 'Pas de démarrage moteur en cours'
+            es: 'Sin arranque del motor en curso'
+            de: 'Kein Motorstart im Gange'
+            it: 'Nessun avviamento motore in corso'
+            pl: 'Brak trwającego uruchamiania silnika'
+            ru: 'Запуск двигателя не выполняется'
+            zh: '无发动机启动进行中'
+            hu: 'Nincs folyamatban motorindítás'
+            pt: 'Sem arranque do motor em curso'
+          0x01:
+            en: 'Engine start in progress'
+            fr: 'Démarrage moteur en cours'
+            es: 'Arranque del motor en curso'
+            de: 'Motorstart läuft'
+            it: 'Avviamento del motore in corso'
+            pl: 'Trwa uruchamianie silnika'
+            ru: 'Выполняется пуск двигателя'
+            zh: '发动机启动中'
+            hu: 'Motorindítás folyamatban'
+            pt: 'Arranque do motor em curso'
+      AUTO_GEARBOX_HYDRAULIC_PRESSURE_FORCING:
+        bits: '5.7'
+        comment:
+          en: 'Automatic gearbox hydraulic pressure forcing'
+          fr: 'Forçage de la pression du circuit hydraulique de la boîte automatique'
+          es: 'Forzado de la presión del circuito hidráulico de la caja automática'
+          de: 'Erzwungener Hydraulikdruck des Automatikgetriebes'
+          it: 'Forzatura della pressione del circuito idraulico del cambio automatico'
+          pl: 'Wymuszenie ciśnienia w układzie hydraulicznym skrzyni automatycznej'
+          ru: 'Принудительное давление в гидравлическом контуре автоматической коробки передач'
+          zh: '自动变速箱液压系统强制加压'
+          hu: 'Automata váltó hidraulikanyomásának kényszerítése'
+          pt: 'Forçagem da pressão hidráulica da caixa automática'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No gearbox pressure increase requested'
+            fr: 'Pas de demande d''augmentation de pression de la boîte de vitesses'
+            es: 'Sin solicitud de aumento de presión de la caja de cambios'
+            de: 'Keine Anforderung zur Druckerhöhung des Getriebes'
+            it: 'Nessuna richiesta di aumento della pressione del cambio'
+            pl: 'Brak żądania zwiększenia ciśnienia skrzyni biegów'
+            ru: 'Нет запроса повышения давления коробки передач'
+            zh: '无变速箱增压请求'
+            hu: 'Nincs váltónyomás-növelési kérés'
+            pt: 'Sem pedido de aumento de pressão da caixa de velocidades'
+          0x01:
+            en: 'Gearbox pressure increase requested'
+            fr: 'Demande d''augmentation de pression de la boîte de vitesses'
+            es: 'Solicitud de aumento de presión de la caja de cambios'
+            de: 'Anforderung zur Druckerhöhung des Getriebes'
+            it: 'Richiesta di aumento della pressione del cambio'
+            pl: 'Żądanie zwiększenia ciśnienia skrzyni biegów'
+            ru: 'Запрос повышения давления коробки передач'
+            zh: '变速箱增压请求'
+            hu: 'Váltónyomás-növelési kérés'
+            pt: 'Pedido de aumento de pressão da caixa de velocidades'
+      DPF_CLOGGING_RISK:
+        bits: '5.6'
+        comment:
+          en: 'Indication that the driver should perform an adapted drive to trigger DPF regeneration'
+          fr: 'Indication au conducteur qu''il doit adopter une conduite adaptée pour provoquer une régénération du FAP'
+          es: 'Indicación al conductor de que debe adoptar una conducción adaptada para provocar una regeneración del FAP'
+          de: 'Hinweis an den Fahrer, durch angepasste Fahrweise eine Regeneration des Partikelfilters auszulösen'
+          it: 'Indicazione al conducente di adottare uno stile di guida adeguato per avviare la rigenerazione del FAP'
+          pl: 'Wskazanie dla kierowcy, że powinien dostosować styl jazdy, aby wywołać regenerację DPF'
+          ru: 'Указание водителю изменить стиль вождения для запуска регенерации сажевого фильтра'
+          zh: '提示驾驶员采用适应性驾驶方式以触发颗粒捕集器再生'
+          hu: 'Jelzés a vezetőnek, hogy a részecskeszűrő regenerálásához igazítsa a vezetési stílust'
+          pt: 'Indicação ao condutor de que deve adotar uma condução adaptada para provocar uma regeneração do FAP'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No DPF clogging risk display requested'
+            fr: 'Aucune commande d''affichage du risque de colmatage du FAP'
+            es: 'Ninguna solicitud de visualización del riesgo de obstrucción del FAP'
+            de: 'Keine Anzeigeanforderung des DPF-Verstopfungsrisikos'
+            it: 'Nessuna richiesta di visualizzazione del rischio di intasamento del FAP'
+            pl: 'Brak żądania wyświetlenia ryzyka zapchania DPF'
+            ru: 'Не запрошено отображение риска засорения сажевого фильтра'
+            zh: '未请求显示 DPF 堵塞风险'
+            hu: 'Nincs kérve a DPF eltömődési kockázatának megjelenítése'
+            pt: 'Sem pedido de apresentação de risco de obstrução do DPF'
+          0x01:
+            en: 'Display command encouraging the driver to adopt a driving style that helps DPF regeneration'
+            fr: 'Commande d''affichage incitant le conducteur à adopter une conduite facilitant la régénération du filtre à particules'
+            es: 'Comando de visualización que anima al conductor a adoptar una conducción que facilite la regeneración del filtro de partículas'
+            de: 'Anzeigebefehl, der den Fahrer zu einer Fahrweise anregt, die die Partikelfilterregeneration begünstigt'
+            it: 'Comando di visualizzazione che invita il guidatore ad adottare una guida che favorisca la rigenerazione del filtro antiparticolato'
+            pl: 'Polecenie wyświetlenia zachęcające kierowcę do stylu jazdy ułatwiającego regenerację filtra cząstek stałych'
+            ru: 'Команда индикации, побуждающая водителя к стилю вождения, способствующему регенерации сажевого фильтра'
+            zh: '显示指令,鼓励驾驶员采用有助于颗粒过滤器再生的驾驶方式'
+            hu: 'Kijelzési parancs, amely a vezetőt a részecskeszűrő regenerálódását elősegítő vezetési stílusra ösztönzi'
+            pt: 'Comando de visualização que incentiva o condutor a adotar uma condução que facilite a regeneração do filtro de partículas'
+      GLOW_PLUG_PREHEAT_PREPARATION:
+        bits: '5.5'
+        comment:
+          en: 'Glow plug activation preparation request'
+          fr: 'Demande de préparation à l''activation des bougies de préchauffage'
+          es: 'Solicitud de preparación para la activación de las bujías de precalentamiento'
+          de: 'Vorbereitungsanforderung zur Aktivierung der Glühkerzen'
+          it: 'Richiesta di preparazione all''attivazione delle candelette'
+          pl: 'Żądanie przygotowania do aktywacji świec żarowych'
+          ru: 'Запрос подготовки к активации свечей накаливания'
+          zh: '预热塞激活准备请求'
+          hu: 'Az izzógyertyák aktiválására való felkészülés kérése'
+          pt: 'Pedido de preparação para a ativação das velas de pré-aquecimento'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No preparation requested'
+            fr: 'Aucune préparation requise'
+            es: 'No se requiere preparación'
+            de: 'Keine Vorbereitung erforderlich'
+            it: 'Nessuna preparazione richiesta'
+            pl: 'Nie wymagane przygotowanie'
+            ru: 'Подготовка не требуется'
+            zh: '无需准备'
+            hu: 'Nincs szükség előkészítésre'
+            pt: 'Sem preparação pedida'
+          0x01:
+            en: 'Preparation required to activate the glow plugs'
+            fr: 'Préparation requise pour l''activation des bougies de préchauffage'
+            es: 'Preparación necesaria para la activación de las bujías de precalentamiento'
+            de: 'Vorbereitung zur Aktivierung der Glühkerzen erforderlich'
+            it: 'Preparazione richiesta per l''attivazione delle candelette'
+            pl: 'Wymagane przygotowanie do aktywacji świec żarowych'
+            ru: 'Требуется подготовка для активации свечей накаливания'
+            zh: '激活预热塞需要准备'
+            hu: 'Előkészítés szükséges az izzítógyertyák aktiválásához'
+            pt: 'Preparação necessária para a ativação das velas de pré-aquecimento'
+      OVERSPEED_CUTOFF_THRESHOLD:
+        bits: '5.4-5.3'
+        comment:
+          en: 'Overspeed fuel cutoff threshold'
+          fr: 'Seuil de coupure d''injection en surrégime'
+          es: 'Umbral de corte de inyección por sobrerrégimen'
+          de: 'Kraftstoffabschaltschwelle bei Drehzahlüberschreitung'
+          it: 'Soglia di interruzione dell''iniezione per sovraregime'
+          pl: 'Próg odcięcia wtrysku przy przekroczeniu obrotów'
+          ru: 'Порог отключения топливоподачи при превышении оборотов'
+          zh: '超速断油阈值'
+          hu: 'A túlfordulatszám miatti üzemanyag-lekapcsolási küszöb'
+          pt: 'Limiar de corte de injeção por sobrevelocidade'
+        type: 'enum'
+        default: 0x03
+        values:
+          0x00:
+            en: 'Low threshold'
+            fr: 'Seuil bas'
+            es: 'Umbral bajo'
+            de: 'Unterer Schwellenwert'
+            it: 'Soglia bassa'
+            pl: 'Próg dolny'
+            ru: 'Нижний порог'
+            zh: '低阈值'
+            hu: 'Alsó küszöb'
+            pt: 'Limiar baixo'
+          0x01:
+            en: 'High threshold'
+            fr: 'Seuil haut'
+            es: 'Umbral alto'
+            de: 'Oberer Schwellenwert'
+            it: 'Soglia alta'
+            pl: 'Próg górny'
+            ru: 'Верхний порог'
+            zh: '高阈值'
+            hu: 'Felső küszöbérték'
+            pt: 'Limiar alto'
+      AC_MANAGEMENT_STATUS:
+        bits: '5.2-5.1'
+        comment:
+          en: 'A/C management state'
+          fr: 'État de la gestion de la climatisation'
+          es: 'Estado de la gestión del aire acondicionado'
+          de: 'Status der Klimasteuerung'
+          it: 'Stato della gestione del climatizzatore'
+          pl: 'Stan zarządzania klimatyzacją'
+          ru: 'Статус управления кондиционером'
+          zh: '空调管理状态'
+          hu: 'Klímavezérlés állapota'
+          pt: 'Estado da gestão do ar condicionado'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'OK'
+            fr: 'OK'
+            es: 'OK'
+            de: 'OK'
+            it: 'OK'
+            pl: 'OK'
+            ru: 'OK'
+            zh: 'OK'
+            hu: 'OK'
+            pt: 'OK'
+          0x01:
+            en: 'Low-safety active: abnormally low pressure'
+            fr: 'Sécurité basse active : pression anormalement basse'
+            es: 'Seguridad baja activa: presión anormalmente baja'
+            de: 'Niedrigdruck-Sicherheit aktiv: anormal niedriger Druck'
+            it: 'Sicurezza bassa attiva: pressione anormalmente bassa'
+            pl: 'Aktywne zabezpieczenie niskiego ciśnienia: nieprawidłowo niskie ciśnienie'
+            ru: 'Активна защита низкого давления: аномально низкое давление'
+            zh: '低压安全保护激活:压力异常偏低'
+            hu: 'Alacsony nyomás biztonsági funkció aktív: rendellenesen alacsony nyomás'
+            pt: 'Segurança baixa ativa: pressão anormalmente baixa'
+          0x02:
+            en: 'High safety active: abnormally high pressure'
+            fr: 'Sécurité haute active : pression anormalement élevée'
+            es: 'Seguridad alta activa: presión anormalmente elevada'
+            de: 'Hochdrucksicherheit aktiv: anormal hoher Druck'
+            it: 'Sicurezza alta attiva: pressione anormalmente elevata'
+            pl: 'Aktywne zabezpieczenie wysokiego ciśnienia: nieprawidłowo wysokie ciśnienie'
+            ru: 'Активна защита высокого давления: аномально высокое давление'
+            zh: '高压安全激活：异常高压'
+            hu: 'Magas nyomású biztonsági funkció aktív: rendellenesen magas nyomás'
+            pt: 'Segurança alta ativa: pressão anormalmente elevada'
+          0x03:
+            en: 'Invalid'
+            fr: 'Invalide'
+            es: 'Inválido'
+            de: 'Ungültig'
+            it: 'Non valido'
+            pl: 'Nieprawidłowe'
+            ru: 'Недействительно'
+            zh: '无效'
+            hu: 'Érvénytelen'
+            pt: 'Inválido'
+      AC_SAFETY_CUTOFF_STATUS:
+        bits: '5.0'
+        comment:
+          en: 'Air conditioning cut-off status for coolant temperature safety'
+          fr: 'État de coupure de la climatisation pour sécurité liée à la température d''eau'
+          es: 'Estado de corte del aire acondicionado por seguridad de temperatura del refrigerante'
+          de: 'Abschaltzustand der Klimaanlage aus Sicherheitsgründen wegen der Kühlmitteltemperatur'
+          it: 'Stato di interruzione del climatizzatore per sicurezza legata alla temperatura del liquido di raffreddamento'
+          pl: 'Stan wyłączenia klimatyzacji ze względów bezpieczeństwa temperatury płynu chłodzącego'
+          ru: 'Состояние отключения кондиционера по причине безопасности температуры охлаждающей жидкости'
+          zh: '因冷却液温度安全原因导致的空调切断状态'
+          hu: 'A klímaberendezés lekapcsolási állapota a hűtőfolyadék-hőmérséklet biztonsága miatt'
+          pt: 'Estado de corte do ar condicionado por segurança relacionada com a temperatura do líquido de refrigeração'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'OK, not cut off'
+            fr: 'OK, pas de coupure'
+            es: 'OK, sin corte'
+            de: 'OK, keine Abschaltung'
+            it: 'OK, nessun taglio'
+            pl: 'OK, brak odcięcia'
+            ru: 'ОК, отключения нет'
+            zh: '正常，无切断'
+            hu: 'OK, nincs lekapcsolás'
+            pt: 'OK, sem corte'
+          0x01:
+            en: 'Compressor off (overheating risk only)'
+            fr: 'Compresseur coupé (risque de surchauffe uniquement)'
+            es: 'Compresor desconectado (solo riesgo de sobrecalentamiento)'
+            de: 'Kompressor abgeschaltet (nur Überhitzungsrisiko)'
+            it: 'Compressore disinserito (solo rischio surriscaldamento)'
+            pl: 'Sprężarka wyłączona (tylko ryzyko przegrzania)'
+            ru: 'Компрессор отключён (только риск перегрева)'
+            zh: '压缩机关闭（仅过热风险）'
+            hu: 'A kompresszor lekapcsolva (csak túlmelegedési kockázat)'
+            pt: 'Compressor desligado (apenas risco de sobreaquecimento)'
+      ENGINE_OIL_TEMPERATURE:
+        bits: '6.7-6.0'
+        comment:
+          en: 'Engine oil temperature (°C)'
+          fr: 'Température d''huile moteur (°C)'
+          es: 'Temperatura del aceite del motor (°C)'
+          de: 'Motoröltemperatur (°C)'
+          it: 'Temperatura dell''olio motore (°C)'
+          pl: 'Temperatura oleju silnikowego (°C)'
+          ru: 'Температура моторного масла (°C)'
+          zh: '发动机机油温度(°C)'
+          hu: 'Motorolaj-hőmérséklet (°C)'
+          pt: 'Temperatura do óleo do motor (°C)'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 214
+        units: '°C'
+        invalid: 0xFF
+        default: 0x3C
+      REFRIGERANT_PRESSURE:
+        bits: '7.7-7.0'
+        comment:
+          en: 'Air conditioning refrigerant circuit pressure (kPa)'
+          fr: 'Pression du circuit de réfrigérant de climatisation (kPa)'
+          es: 'Presión del circuito de refrigerante del aire acondicionado (kPa)'
+          de: 'Druck im Kältemittelkreislauf der Klimaanlage (kPa)'
+          it: 'Pressione del circuito del refrigerante del climatizzatore (kPa)'
+          pl: 'Ciśnienie w obiegu czynnika chłodniczego klimatyzacji (kPa)'
+          ru: 'Давление в контуре хладагента кондиционера (кПа)'
+          zh: '空调制冷剂回路压力(kPa)'
+          hu: 'A klíma hűtőközeg-körének nyomása (kPa)'
+          pt: 'Pressão do circuito de refrigerante do ar condicionado (kPa)'
+        type: 'uint'
+        factor: 25
+        min: 100
+        max: 3100
+        units: 'kPa'
+        invalid: 0xFF
+        default: 0xFF
+      INTAKE_AIR_TEMPERATURE:
+        bits: '8.7-8.0'
+        comment:
+          en: 'Intake air temperature sensor, on the throttle body or air flow meter (°C)'
+          fr: 'Température de l''air d''admission, mesurée sur le boîtier papillon ou le débitmètre (°C)'
+          es: 'Temperatura del aire de admisión, medida en el cuerpo de mariposa o el caudalímetro (°C)'
+          de: 'Ansauglufttemperatur, gemessen am Drosselklappengehäuse oder Luftmassenmesser (°C)'
+          it: 'Temperatura dell''aria di aspirazione, misurata sul corpo farfallato o sul debimetro (°C)'
+          pl: 'Temperatura powietrza dolotowego, mierzona na przepustnicy lub przepływomierzu (°C)'
+          ru: 'Температура впускного воздуха, измеренная на дроссельном узле или расходомере (°C)'
+          zh: '进气温度,测量自节气门体或空气流量计(°C)'
+          hu: 'A beszívott levegő hőmérséklete, a fojtószelepházon vagy a légtömegmérőn mérve (°C)'
+          pt: 'Sensor de temperatura do ar de admissão, na borboleta ou no medidor de caudal (°C)'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 214
+        units: '°C'
+        invalid: 0xFF
+        default: 0x3C

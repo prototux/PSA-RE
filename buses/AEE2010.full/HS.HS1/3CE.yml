@@ -1,0 +1,294 @@
+id: 0x3CE
+name: 'BSI_CABIN_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['E_VCU']
+
+signals:
+  VISIBILITY_REQUEST:
+    bits: '1.7'
+    comment:
+      en: 'Visibility (demisting/defrosting) request'
+      fr: 'Demande de visibilité (désembuage/dégivrage)'
+      es: 'Solicitud de visibilidad (desempañado/descongelación)'
+      de: 'Anforderung der Sichtverbesserung (Entfeuchtung/Enteisung)'
+      it: 'Richiesta di visibilità (disappannamento/sbrinamento)'
+      pl: 'Żądanie poprawy widoczności (odparowanie/odladzanie)'
+      ru: 'Запрос улучшения видимости (устранение запотевания/обледенения)'
+      zh: '能见度(除雾/除霜)请求'
+      hu: 'Láthatósági (páramentesítési/jégmentesítési) kérés'
+      pt: 'Pedido de visibilidade (desembaciamento/descongelação)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No visibility request'
+        fr: 'Pas de demande de visibilité'
+        es: 'Sin solicitud de visibilidad'
+        de: 'Keine Sichtbarkeitsanforderung'
+        it: 'Nessuna richiesta di visibilità'
+        pl: 'Brak żądania widoczności'
+        ru: 'Нет запроса видимости'
+        zh: '无能见度请求'
+        hu: 'Nincs láthatósági kérés'
+        pt: 'Sem pedido de visibilidade'
+      0x01:
+        en: 'Visibility request'
+        fr: 'Demande de visibilité'
+        es: 'Solicitud de visibilidad'
+        de: 'Sichtbarkeitsanforderung'
+        it: 'Richiesta di visibilità'
+        pl: 'Żądanie widoczności'
+        ru: 'Запрос видимости'
+        zh: '可见性请求'
+        hu: 'Láthatósági kérés'
+        pt: 'Pedido de visibilidade'
+
+  DEICING_AUTHORIZATION:
+    bits: '1.6'
+    comment:
+      en: 'De-icing authorization'
+      fr: 'Autorisation de dégivrage'
+      es: 'Autorización de descongelación'
+      de: 'Enteisungsfreigabe'
+      it: 'Autorizzazione allo sbrinamento'
+      pl: 'Zezwolenie na odladzanie'
+      ru: 'Разрешение на размораживание'
+      zh: '除冰授权'
+      hu: 'Jégmentesítési engedély'
+      pt: 'Autorização de descongelação'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'not authorization'
+        fr: 'pas d''autorisation'
+        es: 'sin autorización'
+        de: 'keine Genehmigung'
+        it: 'nessuna autorizzazione'
+        pl: 'brak autoryzacji'
+        ru: 'нет разрешения'
+        zh: '无授权'
+        hu: 'nincs engedélyezve'
+        pt: 'sem autorização'
+      0x01:
+        en: 'Authorization'
+        fr: 'Autorisation'
+        es: 'Autorización'
+        de: 'Freigabe'
+        it: 'Autorizzazione'
+        pl: 'Zezwolenie'
+        ru: 'Разрешение'
+        zh: '授权'
+        hu: 'Engedély'
+        pt: 'Autorização'
+
+  FAN_LOAD_SHEDDING:
+    bits: '1.5'
+    comment:
+      en: 'Cooling fan (GMV) load shedding'
+      fr: 'Délestage du groupe motoventilateur (GMV)'
+      es: 'Reducción de carga del electroventilador (GMV)'
+      de: 'Lastabwurf des Kühlerlüfters (GMV)'
+      it: 'Riduzione del carico dell''elettroventola (GMV)'
+      pl: 'Ograniczenie obciążenia wentylatora chłodnicy (GMV)'
+      ru: 'Снижение нагрузки вентилятора охлаждения (GMV)'
+      zh: '冷却风扇(GMV)减载'
+      hu: 'A hűtőventilátor (GMV) terheléscsökkentése'
+      pt: 'Redução de carga do grupo motoventilador (GMV)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No power-shedding request'
+        fr: 'Pas de demande de délestage'
+        es: 'Sin solicitud de deslastre'
+        de: 'Keine Lastabwurfanforderung'
+        it: 'Nessuna richiesta di distacco carico'
+        pl: 'Brak żądania zrzutu obciążenia'
+        ru: 'Нет запроса сброса нагрузки'
+        zh: '无负载脱扣请求'
+        hu: 'Nincs tehermentesítési kérés'
+        pt: 'Sem pedido de redução de carga'
+      0x01:
+        en: 'Power-shedding level request'
+        fr: 'Demande de niveau de délestage'
+        es: 'Solicitud de nivel de deslastre'
+        de: 'Lastabwurfstufenanforderung'
+        it: 'Richiesta di livello di distacco carico'
+        pl: 'Żądanie poziomu zrzutu obciążenia'
+        ru: 'Запрос уровня сброса нагрузки'
+        zh: '负载脱扣等级请求'
+        hu: 'Tehermentesítési szint kérése'
+        pt: 'Pedido de nível de deslastre'
+
+  AC_ECO_MODE_PRIORITY_REQUEST:
+    bits: '1.4'
+    comment:
+      en: 'Air conditioning priority request over eco mode'
+      fr: 'Demande de priorisation de la climatisation sur le mode éco'
+      es: 'Solicitud de priorización del aire acondicionado sobre el modo eco'
+      de: 'Anforderung der Klimaanlagenpriorisierung gegenüber dem Eco-Modus'
+      it: 'Richiesta di priorità del climatizzatore rispetto alla modalità eco'
+      pl: 'Żądanie priorytetu klimatyzacji nad trybem eco'
+      ru: 'Запрос приоритета кондиционера над эко-режимом'
+      zh: '空调优先于经济模式的请求'
+      hu: 'A klíma elsőbbségének kérése az eco móddal szemben'
+      pt: 'Pedido de priorização do ar condicionado sobre o modo eco'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No prioritization request'
+        fr: 'Pas de demande de priorisation'
+        es: 'Sin solicitud de priorización'
+        de: 'Keine Priorisierungsanforderung'
+        it: 'Nessuna richiesta di prioritizzazione'
+        pl: 'Brak żądania priorytetyzacji'
+        ru: 'Нет запроса приоритизации'
+        zh: '无优先级请求'
+        hu: 'Nincs priorizálási kérés'
+        pt: 'Sem pedido de priorização'
+      0x01:
+        en: 'Prioritization request'
+        fr: 'Demande de priorisation'
+        es: 'Solicitud de priorización'
+        de: 'Priorisierungsanforderung'
+        it: 'Richiesta di prioritizzazione'
+        pl: 'Żądanie ustalenia priorytetu'
+        ru: 'Запрос приоритизации'
+        zh: '优先级请求'
+        hu: 'Priorizálási kérés'
+        pt: 'Pedido de priorização'
+
+  EVAPORATOR_UPSTREAM_AIR_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Air temperature upstream of the HVAC evaporator'
+      fr: 'Température de l''air en amont de l''évaporateur de climatisation'
+      es: 'Temperatura del aire aguas arriba del evaporador de climatización'
+      de: 'Lufttemperatur vor dem Klimaverdampfer'
+      it: 'Temperatura dell''aria a monte dell''evaporatore del climatizzatore'
+      pl: 'Temperatura powietrza przed parownikiem klimatyzacji'
+      ru: 'Температура воздуха перед испарителем климатической системы'
+      zh: '空调蒸发器上游的空气温度'
+      hu: 'A klíma párologtatója előtti levegőhőmérséklet'
+      pt: 'Temperatura do ar a montante do evaporador da climatização'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 80
+    units: '°C'
+    invalid: 0xFF
+
+  HEATER_CORE_OUTLET_WATER_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Water temperature at the HVAC heater core outlet'
+      fr: 'Température de l''eau à la sortie du cœur du réchauffeur de climatisation'
+      es: 'Temperatura del agua a la salida del núcleo del calentador de climatización'
+      de: 'Wassertemperatur am Austritt des Klimaheizkörpers'
+      it: 'Temperatura dell''acqua in uscita dal nucleo del riscaldatore del climatizzatore'
+      pl: 'Temperatura wody na wyjściu rdzenia nagrzewnicy klimatyzacji'
+      ru: 'Температура воды на выходе сердечника радиатора отопителя климатической системы'
+      zh: '空调暖风芯体出水口水温'
+      hu: 'A klíma fűtőradiátorának kimeneti vízhőmérséklete'
+      pt: 'Temperatura da água à saída do núcleo do aquecedor da climatização'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 80
+    units: '°C'
+    invalid: 0xFF
+
+  HEATER_CORE_TEMPERATURE_SETPOINT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Heater core temperature threshold setpoint'
+      fr: 'Consigne de seuil de température du cœur du réchauffeur'
+      es: 'Consigna del umbral de temperatura del núcleo del calentador'
+      de: 'Schwellenwert-Sollwert der Heizkörpertemperatur'
+      it: 'Valore di riferimento della soglia di temperatura del nucleo del riscaldatore'
+      pl: 'Wartość progowa temperatury rdzenia nagrzewnicy'
+      ru: 'Заданный порог температуры сердечника радиатора отопителя'
+      zh: '暖风芯体温度阈值设定值'
+      hu: 'A fűtőradiátor hőmérsékleti küszöbértéke'
+      pt: 'Consigna do limiar de temperatura do núcleo do aquecedor'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 70
+    units: '°C'
+    invalid: 0xFF
+
+  EVAPORATOR_TEMPERATURE_SETPOINT:
+    bits: '5.7-5.3'
+    comment:
+      en: 'Evaporator temperature threshold setpoint'
+      fr: 'Consigne de seuil de température de l''évaporateur'
+      es: 'Consigna del umbral de temperatura del evaporador'
+      de: 'Schwellenwert-Sollwert der Verdampfertemperatur'
+      it: 'Valore di riferimento della soglia di temperatura dell''evaporatore'
+      pl: 'Wartość progowa temperatury parownika'
+      ru: 'Заданный порог температуры испарителя'
+      zh: '蒸发器温度阈值设定值'
+      hu: 'A párologtató hőmérsékleti küszöbértéke'
+      pt: 'Consigna do limiar de temperatura do evaporador'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 15
+    units: '°C'
+    invalid: 0x1F
+
+  EVAPORATOR_PROBE_TEMPERATURE:
+    bits: '5.2-6.0'
+    comment:
+      en: 'Evaporator probe temperature'
+      fr: 'Température de la sonde évaporateur'
+      es: 'Temperatura de la sonda del evaporador'
+      de: 'Verdampfersondentemperatur'
+      it: 'Temperatura della sonda evaporatore'
+      pl: 'Temperatura czujnika parownika'
+      ru: 'Температура датчика испарителя'
+      zh: '蒸发器探头温度'
+      hu: 'Az elpárologtató érzékelő hőmérséklete'
+      pt: 'Temperatura da sonda do evaporador'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0x7FF
+
+  HVAC_BLOWER_AIRFLOW:
+    bits: '7.7-8.7'
+    comment:
+      en: 'Blower airflow rate'
+      fr: 'Débit d''air du pulseur'
+      es: 'Caudal de aire del ventilador'
+      de: 'Luftdurchsatz des Gebläses'
+      it: 'Portata d''aria del ventilatore'
+      pl: 'Wydatek powietrza dmuchawy'
+      ru: 'Расход воздуха вентилятора отопителя'
+      zh: '鼓风机风量'
+      hu: 'A fűtésventilátor légáramlása'
+      pt: 'Caudal de ar do ventilador'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 170
+    units: 'g/s'
+    invalid: 0x1FF

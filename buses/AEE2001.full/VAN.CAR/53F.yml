@@ -1,0 +1,284 @@
+id: 0x53F
+name: 'ENGINE_BAY_BOX_STATUS'
+type: 'van'
+length: 1
+comment:
+  en: 'Engine-bay box inputs: fuel pump/injection power relay feedback, air pump relay feedback, water-in-diesel and oil pressure warnings.'
+  fr: 'État des paramètres moteur : pression d''huile, présence d''eau dans le gazole, relais de pompe à air et relais de puissance.'
+  es: 'Entradas de la caja del compartimento motor: retorno del relé de potencia de la bomba de combustible/inyección, retorno del relé de la bomba de aire, avisos de agua en el gasóleo y de presión de aceite.'
+  de: 'Eingänge der Motorraumbox: Rückmeldung des Kraftstoffpumpen-/Einspritz-Leistungsrelais, Rückmeldung des Luftpumpenrelais, Warnungen für Wasser im Diesel und Öldruck.'
+  it: 'Ingressi della centralina vano motore: riscontro relè di potenza pompa carburante/iniezione, riscontro relè pompa aria, avvisi acqua nel gasolio e pressione olio.'
+  pl: 'Wejścia modułu komory silnika: sprzężenie zwrotne przekaźnika mocy pompy paliwa/wtrysku, sprzężenie zwrotne przekaźnika pompy powietrza, ostrzeżenia o wodzie w oleju napędowym i ciśnieniu oleju.'
+  ru: 'Входы блока моторного отсека: обратная связь силового реле топливного насоса/впрыска, обратная связь реле воздушного насоса, предупреждения о воде в дизельном топливе и давлении масла.'
+  zh: '发动机舱盒输入:燃油泵/喷油功率继电器反馈、气泵继电器反馈、柴油含水及机油压力警告。'
+  hu: 'A motortéri doboz bemenetei: üzemanyagszivattyú/befecskendezés teljesítményrelé visszajelzése, légszivattyú relé visszajelzése, gázolajban lévő víz és olajnyomás figyelmeztetések.'
+  pt: 'Entradas da caixa do compartimento do motor: retorno do relé de potência da bomba de combustível/injeção, retorno do relé da bomba de ar, avisos de água no gasóleo e de pressão de óleo.'
+periodicity: ['50ms']
+senders: ['BSM']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  INJECTION_RELAY_FEEDBACK:
+    bits: '1.7'
+    comment:
+      en: 'Read-back of the fuel pump / injection power relay output'
+      fr: 'Retour d''état de la sortie du relais de puissance de la pompe à carburant / injection'
+      es: 'Retorno de estado de la salida del relé de potencia de la bomba de combustible / inyección'
+      de: 'Rückmeldung des Ausgangs des Kraftstoffpumpen-/Einspritzleistungsrelais'
+      it: 'Riscontro dell''uscita del relè di potenza della pompa carburante / iniezione'
+      pl: 'Sprzężenie zwrotne wyjścia przekaźnika mocy pompy paliwa / wtrysku'
+      ru: 'Обратная связь выхода силового реле топливного насоса / впрыска'
+      zh: '燃油泵/喷射功率继电器输出反馈'
+      hu: 'Az üzemanyagszivattyú/befecskendezés teljesítményrelé kimenetének visszajelzése'
+      pt: 'Retorno de estado da saída do relé de potência da bomba de combustível / injeção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Injection relay not activated'
+        fr: 'Relais d''injection non activé'
+        es: 'Relé de inyección no activado'
+        de: 'Einspritzrelais nicht aktiviert'
+        it: 'Relè di iniezione non attivato'
+        pl: 'Przekaźnik wtrysku niewłączony'
+        ru: 'Реле впрыска не активировано'
+        zh: '喷射继电器未激活'
+        hu: 'A befecskendezési relé nincs aktiválva'
+        pt: 'Relé de injeção não ativado'
+      0x01:
+        en: 'Injection relay on'
+        fr: 'Relais d''injection activé'
+        es: 'Relé de inyección activado'
+        de: 'Einspritzrelais ein'
+        it: 'Relè di iniezione attivo'
+        pl: 'Przekaźnik wtrysku włączony'
+        ru: 'Реле впрыска включено'
+        zh: '喷油继电器开启'
+        hu: 'Befecskendezési relé bekapcsolva'
+        pt: 'Relé de injeção ligado'
+
+  UNUSED_1:
+    bits: '1.6-1.5'
+    unused: true
+
+  AIR_PUMP_RELAY_FEEDBACK:
+    bits: '1.4'
+    comment:
+      en: 'Read-back of the secondary air pump relay (petrol engines; shares the bit with water-in-diesel on diesel engines)'
+      fr: 'Retour d''état du relais de pompe à air secondaire (moteurs essence ; partage le bit avec l''eau dans le gazole sur diesel)'
+      es: 'Retorno de estado del relé de la bomba de aire secundaria (motores de gasolina; comparte el bit con el agua en el gasóleo en diésel)'
+      de: 'Rückmeldung des Sekundärluftpumpenrelais (Benzinmotoren; teilt sich das Bit mit Wasser im Diesel bei Dieselmotoren)'
+      it: 'Riscontro del relè della pompa dell''aria secondaria (motori a benzina; condivide il bit con l''acqua nel gasolio sui diesel)'
+      pl: 'Sprzężenie zwrotne przekaźnika wtórnej pompy powietrza (silniki benzynowe; dzieli bit z wodą w oleju napędowym w silnikach wysokoprężnych)'
+      ru: 'Обратная связь реле вторичного воздушного насоса (бензиновые двигатели; использует тот же бит, что и вода в дизтопливе на дизельных)'
+      zh: '二次空气泵继电器反馈(汽油发动机;与柴油发动机的柴油进水共用同一位)'
+      hu: 'A másodlagos légszivattyú relé visszajelzése (benzinmotorok; a bitet a dízelmotorok víz-a-gázolajban jelzésével osztja meg)'
+      pt: 'Retorno de estado do relé da bomba de ar secundário (motores a gasolina; partilha o bit com a água no gasóleo nos motores diesel)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Air pump relay off'
+        fr: 'Relais de pompe à air non activé'
+        es: 'Relé de la bomba de aire no activado'
+        de: 'Luftpumpenrelais nicht aktiviert'
+        it: 'Relè della pompa dell''aria non attivato'
+        pl: 'Przekaźnik pompy powietrza nieaktywny'
+        ru: 'Реле воздушного насоса не активировано'
+        zh: '空气泵继电器未激活'
+        hu: 'A légszivattyú relé nincs aktiválva'
+        pt: 'Relé da bomba de ar não ativado'
+      0x01:
+        en: 'Air pump relay on'
+        fr: 'Relais de pompe à air activé'
+        es: 'Relé de bomba de aire activado'
+        de: 'Luftpumpenrelais aktiviert'
+        it: 'Relè pompa dell''aria attivato'
+        pl: 'Przekaźnik pompy powietrza włączony'
+        ru: 'Реле воздушного насоса включено'
+        zh: '气泵继电器已启动'
+        hu: 'Légszivattyú relé bekapcsolva'
+        pt: 'Relé da bomba de ar ativado'
+
+  OIL_PRESSURE_OK:
+    bits: '1.3'
+    comment:
+      en: 'Low oil pressure warning, active low'
+      fr: 'Alerte pression d''huile basse, active à l''état bas'
+      es: 'Alerta de baja presión de aceite, activa a nivel bajo'
+      de: 'Warnung vor niedrigem Öldruck, aktiv bei Low'
+      it: 'Avviso di bassa pressione dell''olio, attivo basso'
+      pl: 'Ostrzeżenie o niskim ciśnieniu oleju, aktywne przy stanie niskim'
+      ru: 'Предупреждение о низком давлении масла, активен по низкому уровню'
+      zh: '机油低压警告,低电平有效'
+      hu: 'Alacsony olajnyomás figyelmeztetés, alacsony szinten aktív'
+      pt: 'Aviso de pressão de óleo baixa, ativo a nível baixo'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Warning activated'
+        fr: 'Alerte activée'
+        es: 'Alerta activada'
+        de: 'Warnung aktiviert'
+        it: 'Allarme attivato'
+        pl: 'Alert aktywowany'
+        ru: 'Оповещение активировано'
+        zh: '警报已激活'
+        hu: 'Figyelmeztetés aktiválva'
+        pt: 'Aviso ativado'
+      0x01:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+
+  UNUSED_2:
+    bits: '1.2-1.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      INJECTION_RELAY_FEEDBACK:
+        bits: '1.7'
+        comment:
+          en: 'Read-back of the fuel pump / injection power relay output'
+          fr: 'Retour d''état de la sortie du relais de puissance de la pompe à carburant / injection'
+          es: 'Retorno de estado de la salida del relé de potencia de la bomba de combustible / inyección'
+          de: 'Rückmeldung des Ausgangs des Kraftstoffpumpen-/Einspritzleistungsrelais'
+          it: 'Riscontro dell''uscita del relè di potenza della pompa carburante / iniezione'
+          pl: 'Sprzężenie zwrotne wyjścia przekaźnika mocy pompy paliwa / wtrysku'
+          ru: 'Обратная связь выхода силового реле топливного насоса / впрыска'
+          zh: '燃油泵/喷射功率继电器输出反馈'
+          hu: 'Az üzemanyagszivattyú/befecskendezés teljesítményrelé kimenetének visszajelzése'
+          pt: 'Retorno de estado da saída do relé de potência da bomba de combustível / injeção'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Injection relay not activated'
+            fr: 'Relais d''injection non activé'
+            es: 'Relé de inyección no activado'
+            de: 'Einspritzrelais nicht aktiviert'
+            it: 'Relè di iniezione non attivato'
+            pl: 'Przekaźnik wtrysku niewłączony'
+            ru: 'Реле впрыска не активировано'
+            zh: '喷射继电器未激活'
+            hu: 'A befecskendezési relé nincs aktiválva'
+            pt: 'Relé de injeção não ativado'
+          0x01:
+            en: 'Injection relay on'
+            fr: 'Relais d''injection activé'
+            es: 'Relé de inyección activado'
+            de: 'Einspritzrelais ein'
+            it: 'Relè di iniezione attivo'
+            pl: 'Przekaźnik wtrysku włączony'
+            ru: 'Реле впрыска включено'
+            zh: '喷油继电器开启'
+            hu: 'Befecskendezési relé bekapcsolva'
+            pt: 'Relé de injeção ligado'
+      UNUSED_1:
+        bits: '1.6-1.5'
+        unused: true
+      WATER_IN_DIESEL_OK:
+        bits: '1.4'
+        comment:
+          en: 'Water-in-diesel-fuel warning (diesel engines; shares the bit with the air pump feedback on petrol engines), active low'
+          fr: 'Alerte eau dans le gazole (moteurs diesel ; partage le bit avec le retour de la pompe à air sur essence), actif à l''état bas'
+          es: 'Alerta de agua en el gasóleo (motores diésel; comparte el bit con la señal de la bomba de aire en gasolina), activa a nivel bajo'
+          de: 'Warnung Wasser im Diesel (Dieselmotoren; teilt sich das Bit mit der Luftpumpenrückmeldung bei Benzinmotoren), aktiv bei Low'
+          it: 'Avviso acqua nel gasolio (motori diesel; condivide il bit con il riscontro della pompa dell''aria sui motori a benzina), attivo basso'
+          pl: 'Ostrzeżenie o wodzie w oleju napędowym (silniki wysokoprężne; dzieli bit ze sprzężeniem zwrotnym pompy powietrza w silnikach benzynowych), aktywne przy stanie niskim'
+          ru: 'Предупреждение о воде в дизельном топливе (дизельные двигатели; использует тот же бит, что и обратная связь воздушного насоса на бензиновых), активен по низкому уровню'
+          zh: '柴油进水警告(柴油发动机;与汽油发动机的辅助空气泵反馈共用同一位),低电平有效'
+          hu: 'Víz a gázolajban figyelmeztetés (dízelmotorok; a bitet a benzinmotorok légszivattyú-visszajelzésével osztja meg), alacsony szinten aktív'
+          pt: 'Aviso de água no gasóleo (motores diesel; partilha o bit com o retorno da bomba de ar nos motores a gasolina), ativo a nível baixo'
+        type: 'bool'
+        default: 0x01
+        values:
+          0x00:
+            en: 'Alert'
+            fr: 'Alerte'
+            es: 'Alerta'
+            de: 'Warnung'
+            it: 'Allarme'
+            pl: 'Alarm'
+            ru: 'Предупреждение'
+            zh: '警报'
+            hu: 'Riasztás'
+            pt: 'Alerta'
+          0x01:
+            en: 'Normal'
+            fr: 'Normal'
+            es: 'Normal'
+            de: 'Normal'
+            it: 'Normale'
+            pl: 'Normalny'
+            ru: 'Нормальный'
+            zh: '正常'
+            hu: 'Normál'
+            pt: 'Normal'
+      OIL_PRESSURE_OK:
+        bits: '1.3'
+        comment:
+          en: 'Low oil pressure warning, active low'
+          fr: 'Alerte pression d''huile basse, active à l''état bas'
+          es: 'Alerta de baja presión de aceite, activa a nivel bajo'
+          de: 'Warnung vor niedrigem Öldruck, aktiv bei Low'
+          it: 'Avviso di bassa pressione dell''olio, attivo basso'
+          pl: 'Ostrzeżenie o niskim ciśnieniu oleju, aktywne przy stanie niskim'
+          ru: 'Предупреждение о низком давлении масла, активен по низкому уровню'
+          zh: '机油低压警告,低电平有效'
+          hu: 'Alacsony olajnyomás figyelmeztetés, alacsony szinten aktív'
+          pt: 'Aviso de pressão de óleo baixa, ativo a nível baixo'
+        type: 'bool'
+        default: 0x01
+        values:
+          0x00:
+            en: 'Warning activated'
+            fr: 'Alerte activée'
+            es: 'Alerta activada'
+            de: 'Warnung aktiviert'
+            it: 'Allarme attivato'
+            pl: 'Alert aktywowany'
+            ru: 'Оповещение активировано'
+            zh: '警报已激活'
+            hu: 'Figyelmeztetés aktiválva'
+            pt: 'Aviso ativado'
+          0x01:
+            en: 'Normal'
+            fr: 'Normal'
+            es: 'Normal'
+            de: 'Normal'
+            it: 'Normale'
+            pl: 'Normalny'
+            ru: 'Нормальный'
+            zh: '正常'
+            hu: 'Normál'
+            pt: 'Normal'
+      UNUSED_2:
+        bits: '1.2-1.0'
+        unused: true

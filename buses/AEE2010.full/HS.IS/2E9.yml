@@ -1,0 +1,61 @@
+id: 0x2E9
+name: 'GEARBOX_TORQUE_CALIBRATION'
+type: 'can'
+length: 3
+comment:
+  en: 'Gearbox torque-sensor calibration gain and offset, sent by the automatic gearbox ECU.'
+  fr: 'Gain et offset de calibration du capteur de couple de boîte de vitesses, envoyés par le calculateur de boîte automatique.'
+  es: 'Ganancia y offset de calibración del sensor de par de la caja de cambios, enviados por la ECU de la caja automática.'
+  de: 'Kalibrierverstärkung und -offset des Getriebe-Drehmomentsensors, vom Automatikgetriebe-Steuergerät gesendet.'
+  it: 'Guadagno e offset di calibrazione del sensore di coppia del cambio, inviati dalla centralina del cambio automatico.'
+  pl: 'Wzmocnienie i przesunięcie kalibracji czujnika momentu obrotowego skrzyni biegów, wysyłane przez sterownik automatycznej skrzyni biegów.'
+  ru: 'Коэффициент усиления и смещение калибровки датчика крутящего момента коробки передач, отправляемые блоком управления АКПП.'
+  zh: '自动变速箱控制单元发送的变速箱扭矩传感器校准增益及偏移量。'
+  hu: 'A váltó nyomatékérzékelőjének kalibrációs erősítése és eltolása, amelyet az automata váltó vezérlőegysége küld.'
+  pt: 'Ganho e offset de calibração do sensor de binário da caixa de velocidades, enviados pela ECU da caixa automática.'
+periodicity: ['20ms']
+senders: ['BVA']
+receivers: ['CMM']
+
+signals:
+  GEARBOX_TORQUE_GAIN_ESTIMATE:
+    bits: '1.7-2.4'
+    comment:
+      en: 'Automatic gearbox gain used for estimated torque converter clutch (TCC) torque; wheel torque = (engine torque − gearbox offset) × gearbox gain'
+      fr: 'Gain de la boîte automatique utilisé pour l''estimation du couple TCC ; couple à la roue = (couple moteur − offset BVA) × gain BVA'
+      es: 'Ganancia de la caja automática usada para estimar el par del TCC; par en la rueda = (par motor − offset de la caja) × ganancia de la caja'
+      de: 'Automatikgetriebe-Verstärkung zur TCC-Momentschätzung; Radmoment = (Motormoment − Getriebe-Offset) × Getriebeverstärkung'
+      it: 'Guadagno del cambio automatico usato per stimare la coppia del TCC; coppia alla ruota = (coppia motore − offset cambio) × guadagno cambio'
+      pl: 'Wzmocnienie automatycznej skrzyni biegów do oszacowania momentu TCC; moment na kole = (moment silnika − offset skrzyni) × wzmocnienie skrzyni'
+      ru: 'Коэффициент усиления АКПП для оценки момента блокировки гидротрансформатора (TCC); момент на колесе = (момент двигателя − смещение АКПП) × коэффициент усиления АКПП'
+      zh: '用于估算变矩器锁止(TCC)扭矩的自动变速箱增益;车轮扭矩=(发动机扭矩−变速箱偏移量)×变速箱增益'
+      hu: 'Az automata váltó erősítése a becsült TCC nyomatékhoz; keréknyomaték = (motornyomaték − váltó eltolás) × váltóerősítés'
+      pt: 'Ganho da caixa automática utilizado para a estimativa do binário do conversor de binário (TCC); binário na roda = (binário do motor − offset da caixa) × ganho da caixa'
+    type: 'uint'
+    factor: 0.01
+    offset: 1
+    min: 1
+    max: 40
+    invalid: 0xFFF
+    default: 0x00
+
+  GEARBOX_TORQUE_OFFSET_ESTIMATE:
+    bits: '3.7-3.2'
+    comment:
+      en: 'Automatic gearbox loss torque offset (referred to the engine axis, before the converter), used for estimated TCC torque'
+      fr: 'Offset de couple de pertes de la boîte automatique (ramené à l''axe moteur, avant le convertisseur), utilisé pour l''estimation du couple TCC'
+      es: 'Offset del par de pérdidas de la caja automática (referido al eje del motor, antes del convertidor), usado para estimar el par del TCC'
+      de: 'Verlustmoment-Offset des Automatikgetriebes (bezogen auf die Motorachse, vor dem Wandler), zur TCC-Momentschätzung'
+      it: 'Offset di coppia delle perdite del cambio automatico (riferito all''asse motore, prima del convertitore), usato per stimare la coppia del TCC'
+      pl: 'Offset momentu strat automatycznej skrzyni biegów (odniesiony do osi silnika, przed przetwornikiem), używany do oszacowania momentu TCC'
+      ru: 'Смещение момента потерь АКПП (приведённое к оси двигателя, до гидротрансформатора), используемое для оценки момента TCC'
+      zh: '自动变速箱损耗扭矩偏移量(折算到发动机轴,变矩器之前),用于估算TCC扭矩'
+      hu: 'Az automata váltó veszteségi nyomaték-eltolása (a motortengelyre vonatkoztatva, a nyomatékváltó előtt), a becsült TCC nyomatékhoz'
+      pt: 'Offset de binário de perdas da caixa automática (referido ao eixo do motor, antes do conversor), utilizado para a estimativa do binário do TCC'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 50
+    units: 'Nm'
+    invalid: 0x3F
+    default: 0x00

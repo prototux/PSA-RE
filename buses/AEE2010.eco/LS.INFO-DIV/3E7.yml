@@ -1,0 +1,311 @@
+id: 0x3E7
+name: 'MAINTENANCE_STATUS_EV'
+type: 'can'
+length: 5
+comment:
+  en: 'Service reminder status for electric/hybrid vehicles: remaining days, mileage sign and maintenance type pictograms.'
+  fr: 'État du rappel d''entretien pour véhicule électrique/hybride : jours restants, signe de kilométrage et pictogrammes de type d''entretien.'
+  es: 'Estado del recordatorio de mantenimiento para vehículos eléctricos/híbridos: días restantes, signo del kilometraje y pictogramas del tipo de mantenimiento.'
+  de: 'Status der Wartungserinnerung für Elektro-/Hybridfahrzeuge: verbleibende Tage, Kilometerstandsvorzeichen und Wartungsart-Piktogramme.'
+  it: 'Stato del promemoria di manutenzione per veicoli elettrici/ibridi: giorni residui, segno del chilometraggio e pittogrammi del tipo di manutenzione.'
+  pl: 'Stan przypomnienia o przeglądzie dla pojazdów elektrycznych/hybrydowych: pozostałe dni, znak przebiegu i piktogramy typu przeglądu.'
+  ru: 'Статус напоминания о техобслуживании для электро-/гибридных автомобилей: оставшиеся дни, знак пробега и пиктограммы типа обслуживания.'
+  zh: '电动/混合动力车辆的保养提醒状态:剩余天数、里程符号及保养类型图标。'
+  hu: 'Az elektromos/hibrid járművek szervizemlékeztetőjének állapota: hátralévő napok, kilométerjel és a szervíztípus piktogramjai.'
+  pt: 'Estado do aviso de manutenção para veículos elétricos/híbridos: dias restantes, sinal da quilometragem e pictogramas do tipo de manutenção.'
+periodicity: ['500480ms']
+senders: ['ICSV', 'BSI']
+receivers: ['CMB', 'MATT', 'BGP', 'MDS', 'BTEL', 'OVIP', 'RAD']
+
+signals:
+  MAINTENANCE_TYPE:
+    bits: '1.7'
+    comment:
+      en: 'Maintenance type'
+      fr: 'Type de maintenance'
+      es: 'Tipo de mantenimiento'
+      de: 'Wartungsart'
+      it: 'Tipo di manutenzione'
+      pl: 'Typ przeglądu'
+      ru: 'Тип обслуживания'
+      zh: '保养类型'
+      hu: 'Szerviztípus'
+      pt: 'Tipo de manutenção'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Distance-based (km)'
+        fr: 'Kilométrique'
+        es: 'Por kilómetros'
+        de: 'Kilometerbasiert'
+        it: 'Chilometrico'
+        pl: 'Kilometrowy'
+        ru: 'По километражу'
+        zh: '按里程'
+        hu: 'Kilométer alapú'
+        pt: 'Baseado em distância (km)'
+      0x01:
+        en: 'Time-based'
+        fr: 'Temporelle'
+        es: 'Temporal'
+        de: 'Zeitbasiert'
+        it: 'Temporale'
+        pl: 'Czasowa'
+        ru: 'По времени'
+        zh: '基于时间'
+        hu: 'Időalapú'
+        pt: 'Temporal'
+
+  MAINTENANCE_TYPE_2:
+    bits: '1.6'
+    comment:
+      en: 'Maintenance schedule type (mileage-based or mileage + time-based)'
+      fr: 'Type d''échéance d''entretien (kilométrique ou kilométrique + temporelle)'
+      es: 'Tipo de intervalo de mantenimiento (por kilometraje o kilometraje + tiempo)'
+      de: 'Art des Wartungsintervalls (kilometerbasiert oder kilometer- und zeitbasiert)'
+      it: 'Tipo di scadenza di manutenzione (chilometrica o chilometrica + temporale)'
+      pl: 'Rodzaj interwału przeglądu (przebiegowy lub przebiegowo-czasowy)'
+      ru: 'Тип интервала обслуживания (по пробегу или по пробегу и времени)'
+      zh: '保养周期类型(按里程或里程+时间)'
+      hu: 'A karbantartási ütemezés típusa (km alapú vagy km + idő alapú)'
+      pt: 'Tipo de prazo de manutenção (quilométrico ou quilométrico + temporal)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Distance-based (km)'
+        fr: 'Kilométrique'
+        es: 'Por kilómetros'
+        de: 'Kilometerbasiert'
+        it: 'Chilometrico'
+        pl: 'Kilometrowy'
+        ru: 'По километражу'
+        zh: '按里程'
+        hu: 'Kilométer alapú'
+        pt: 'Baseado em distância (km)'
+      0x01:
+        en: 'Distance + time'
+        fr: 'Kilométrique + temporelle'
+        es: 'Distancia + tiempo'
+        de: 'Strecke + Zeit'
+        it: 'Distanza + tempo'
+        pl: 'Dystans + czas'
+        ru: 'Пробег + время'
+        zh: '里程+时间'
+        hu: 'Táv + idő'
+        pt: 'Distância + tempo'
+
+  MAINTENANCE_WRENCH_ICON_DISPLAY:
+    bits: '1.5'
+    comment:
+      en: 'Maintenance wrench icon display mode (fixed/blinking)'
+      fr: 'Mode d''affichage du pictogramme clé de maintenance (fixe/clignotant)'
+      es: 'Modo de visualización del pictograma de llave de mantenimiento (fijo/parpadeante)'
+      de: 'Anzeigemodus des Wartungsschlüssel-Symbols (dauerhaft/blinkend)'
+      it: 'Modalità di visualizzazione dell''icona della chiave di manutenzione (fissa/lampeggiante)'
+      pl: 'Tryb wyświetlania ikony klucza serwisowego (stały/migający)'
+      ru: 'Режим отображения значка гаечного ключа обслуживания (постоянный/мигающий)'
+      zh: '保养扳手图标的显示模式(常亮/闪烁)'
+      hu: 'A karbantartási kulcs ikon megjelenítési módja (folyamatos/villogó)'
+      pt: 'Modo de visualização do pictograma da chave de manutenção (fixo/intermitente)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off/steady'
+        fr: 'Éteint/fixe'
+        es: 'Apagado/fijo'
+        de: 'Aus/dauerhaft'
+        it: 'Spento/fisso'
+        pl: 'Wyłączone/ciągłe'
+        ru: 'Выключено/постоянно'
+        zh: '关闭/常亮'
+        hu: 'Kikapcsolva/folyamatos'
+        pt: 'Desligado/fixo'
+      0x01:
+        en: 'Steady/blinking'
+        fr: 'Fixe/clignotant'
+        es: 'Fijo/intermitente'
+        de: 'Dauerlicht/Blinken'
+        it: 'Fisso/lampeggiante'
+        pl: 'Ciągły/migający'
+        ru: 'Постоянный/мигающий'
+        zh: '常亮/闪烁'
+        hu: 'Folyamatos/villogó'
+        pt: 'Fixo/intermitente'
+
+  DISTANCE_BLINKING:
+    bits: '1.4'
+    comment:
+      en: 'Display of the mileage and its sign'
+      fr: 'Affichage du kilométrage et de son signe'
+      es: 'Visualización del kilometraje y su signo'
+      de: 'Anzeige des Kilometerstands und seines Vorzeichens'
+      it: 'Visualizzazione del chilometraggio e del suo segno'
+      pl: 'Wyświetlanie przebiegu i jego znaku'
+      ru: 'Отображение пробега и его знака'
+      zh: '里程及其符号的显示'
+      hu: 'A kilométeróra-érték és előjelének megjelenítése'
+      pt: 'Visualização da quilometragem e do seu sinal'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Fixed display'
+        fr: 'Affichage fixe'
+        es: 'Visualización fija'
+        de: 'Feste Anzeige'
+        it: 'Visualizzazione fissa'
+        pl: 'Wyświetlanie stałe'
+        ru: 'Фиксированное отображение'
+        zh: '固定显示'
+        hu: 'Rögzített kijelzés'
+        pt: 'Visualização fixa'
+      0x01:
+        en: 'Blinking display'
+        fr: 'Affichage clignotant'
+        es: 'Visualización parpadeante'
+        de: 'Blinkende Anzeige'
+        it: 'Visualizzazione lampeggiante'
+        pl: 'Migające wyświetlanie'
+        ru: 'Мигающее отображение'
+        zh: '闪烁显示'
+        hu: 'Villogó kijelzés'
+        pt: 'Visualização intermitente'
+
+  DISTANCE_SYMBOL:
+    bits: '1.3'
+    comment:
+      en: 'Sign of the mileage before maintenance'
+      fr: 'Signe du kilométrage avant maintenance'
+      es: 'Signo del kilometraje antes del mantenimiento'
+      de: 'Vorzeichen des Kilometerstands bis zur Wartung'
+      it: 'Segno del chilometraggio prima della manutenzione'
+      pl: 'Znak przebiegu do przeglądu'
+      ru: 'Знак пробега до обслуживания'
+      zh: '距保养里程符号'
+      hu: 'A szervizig hátralévő kilométer előjele'
+      pt: 'Sinal da quilometragem antes da manutenção'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Normal (+)'
+        fr: 'Normal (+)'
+        es: 'Normal (+)'
+        de: 'Normal (+)'
+        it: 'Normale (+)'
+        pl: 'Normalny (+)'
+        ru: 'Нормальный (+)'
+        zh: '正常 (+)'
+        hu: 'Normál (+)'
+        pt: 'Normal (+)'
+      0x01:
+        en: 'Maintenance overdue (-)'
+        fr: 'Entretien dépassé (-)'
+        es: 'Mantenimiento superado (-)'
+        de: 'Wartung überschritten (-)'
+        it: 'Manutenzione superata (-)'
+        pl: 'Przekroczono termin serwisu (-)'
+        ru: 'Просрочено обслуживание (-)'
+        zh: '保养已超期(-)'
+        hu: 'Karbantartás túllépve (-)'
+        pt: 'Manutenção em atraso (-)'
+
+  TIME_SYMBOL:
+    bits: '1.2'
+    comment:
+      en: 'Sign of the time-based deadline'
+      fr: 'Signe de l''échéance temporelle'
+      es: 'Signo del plazo temporal'
+      de: 'Vorzeichen der zeitlichen Frist'
+      it: 'Segno della scadenza temporale'
+      pl: 'Znak terminu czasowego'
+      ru: 'Знак временного срока'
+      zh: '时间期限符号'
+      hu: 'Az időalapú határidő előjele'
+      pt: 'Sinal do prazo temporal'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Normal (+)'
+        fr: 'Normal (+)'
+        es: 'Normal (+)'
+        de: 'Normal (+)'
+        it: 'Normale (+)'
+        pl: 'Normalny (+)'
+        ru: 'Нормальный (+)'
+        zh: '正常 (+)'
+        hu: 'Normál (+)'
+        pt: 'Normal (+)'
+      0x01:
+        en: 'Maintenance overdue (-)'
+        fr: 'Entretien dépassé (-)'
+        es: 'Mantenimiento superado (-)'
+        de: 'Wartung überschritten (-)'
+        it: 'Manutenzione superata (-)'
+        pl: 'Przekroczono termin serwisu (-)'
+        ru: 'Просрочено обслуживание (-)'
+        zh: '保养已超期(-)'
+        hu: 'Karbantartás túllépve (-)'
+        pt: 'Manutenção em atraso (-)'
+
+  UNUSED_1:
+    bits: '1.1-1.0'
+    unused: true
+
+  UNUSED_2:
+    bits: '2.7-2.4'
+    unused: true
+
+  TIME:
+    bits: '2.3-3.0'
+    comment:
+      en: 'Number of days before/after the maintenance due date'
+      fr: 'Nombre de jours avant/après l''échéance de maintenance'
+      es: 'Número de días antes/después del vencimiento del mantenimiento'
+      de: 'Anzahl der Tage vor/nach dem Wartungstermin'
+      it: 'Numero di giorni prima/dopo la scadenza della manutenzione'
+      pl: 'Liczba dni przed/po terminie przeglądu'
+      ru: 'Количество дней до/после срока обслуживания'
+      zh: '距保养到期前/后的天数'
+      hu: 'A szerviz esedékessége előtti/utáni napok száma'
+      pt: 'Número de dias antes/depois do vencimento da manutenção'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 730
+    units: 'day'
+    invalid: 0xFFF
+
+  DISTANCE:
+    bits: '4.7-5.0'
+    comment:
+      en: 'Mileage before maintenance'
+      fr: 'Kilométrage avant maintenance'
+      es: 'Kilometraje antes del mantenimiento'
+      de: 'Kilometerstand bis zur Wartung'
+      it: 'Chilometraggio prima della manutenzione'
+      pl: 'Przebieg do przeglądu'
+      ru: 'Пробег до обслуживания'
+      zh: '距保养的里程'
+      hu: 'A szervizig hátralévő kilométer'
+      pt: 'Quilometragem até à manutenção'
+    type: 'uint'
+    factor: 20
+    min: 0
+    max: 140000
+    units: 'km'
+    invalid: 0xFFFF
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 500ms'
+      fr: 'Aussi observée avec une période de 500ms'
+      es: 'También observada con un periodo de 500ms'
+      de: 'Auch mit einer Periode von 500ms beobachtet'
+      it: 'Osservata anche con un periodo di 500ms'
+      pl: 'Obserwowana także z okresem 500ms'
+      ru: 'Также наблюдалась с периодом 500ms'
+      zh: '也观察到周期为500ms'
+      hu: 'Megfigyelve 500ms periódussal is'
+      pt: 'Também observada com um período de 500ms'
+    periodicity: ['500ms']

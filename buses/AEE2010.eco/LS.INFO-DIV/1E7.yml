@@ -1,0 +1,888 @@
+id: 0x1E7
+name: 'ARTIV_AND_HYBRID_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Adaptive cruise control (target detection and gap) and hybrid system status: alert, detected target, display mode, gap setpoint.'
+  fr: 'État du régulateur de distance adaptatif (détection de cible, écart) et du système hybride : alerte, cible détectée, mode d''affichage, consigne d''écart.'
+  es: 'Estado del regulador de distancia adaptativo (detección de objetivo, separación) y del sistema híbrido: alerta, objetivo detectado, modo de visualización, consigna de separación.'
+  de: 'Status des adaptiven Abstandsreglers (Zielobjekterkennung, Abstand) und des Hybridsystems: Warnung, erkanntes Ziel, Anzeigemodus, Abstandssollwert.'
+  it: 'Stato del regolatore di distanza adattivo (rilevamento target, distanza) e del sistema ibrido: allarme, target rilevato, modalità di visualizzazione, setpoint di distanza.'
+  pl: 'Stan adaptacyjnego regulatora odległości (wykrywanie celu, odstęp) i układu hybrydowego: alarm, wykryty cel, tryb wyświetlania, zadany odstęp.'
+  ru: 'Статус адаптивного круиз-контроля (обнаружение цели, дистанция) и гибридной системы: сигнал тревоги, обнаруженная цель, режим отображения, заданная дистанция.'
+  zh: '自适应巡航(目标探测、车距)及混合动力系统状态:告警、探测到的目标、显示模式、车距设定值。'
+  hu: 'Az adaptív követési távolságszabályzó (célfelismerés, távolság) és a hibrid rendszer állapota: riasztás, felismert cél, kijelzési mód, távolság-alapérték.'
+  pt: 'Estado do regulador de velocidade adaptativo (deteção de alvo e intervalo) e do sistema híbrido: alerta, alvo detetado, modo de apresentação, ponto de ajuste de intervalo.'
+observations:
+  en: 'On state change of: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+  fr: 'Sur changement d''état de : ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+  es: 'Al cambiar el estado de: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+  de: 'Bei Statusänderung von: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+  it: 'Al cambiamento di stato di: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+  ru: 'При изменении состояния: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+  zh: '当ETAT_SELEC_ARTIV, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, P_TEM_RTAB_PLUGGED状态变化时'
+  hu: 'A(z) ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: ARTIV_SELECTION_STATUS, IHM_ARTIV_STATUS, ARTIV_ALERT, ARTIV_ALERT_ADJUSTMENT, ARTIV_TARGET_DETECTED, TIV_SETPOINT, TIV_TARGET, PLUG_INDICATOR_LAMP_REQUEST, PLUG_INDICATOR_LAMP_REQUEST'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['ICSV', 'BTEL', 'CMB', 'VTH', 'MATT', 'OVIP', 'MDS', 'RAD']
+
+signals:
+  ARTIV_SELECTION_STATUS:
+    bits: '1.7-1.6'
+    comment:
+      en: 'ARTIV selection status'
+      fr: 'Statut de sélection ARTIV'
+      es: 'Estado de selección ARTIV'
+      de: 'Auswahlstatus ARTIV'
+      it: 'Stato di selezione ARTIV'
+      pl: 'Stan wyboru ARTIV'
+      ru: 'Статус выбора ARTIV'
+      zh: 'ARTIV选择状态'
+      hu: 'Az ARTIV kiválasztási állapota'
+      pt: 'Estado de seleção do ARTIV'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Not selected'
+        fr: 'Non sélectionné'
+        es: 'No seleccionado'
+        de: 'Nicht ausgewählt'
+        it: 'Non selezionato'
+        pl: 'Niewybrane'
+        ru: 'Не выбрано'
+        zh: '未选择'
+        hu: 'Nincs kiválasztva'
+        pt: 'Não selecionado'
+      0x01:
+        en: 'Selected'
+        fr: 'Sélectionné'
+        es: 'Seleccionado'
+        de: 'Ausgewählt'
+        it: 'Selezionato'
+        pl: 'Wybrany'
+        ru: 'Выбрано'
+        zh: '已选择'
+        hu: 'Kiválasztva'
+        pt: 'Selecionado'
+      0x02:
+        en: 'Selected but unavailable'
+        fr: 'Sélectionné mais indisponible'
+        es: 'Seleccionado pero no disponible'
+        de: 'Ausgewählt, aber nicht verfügbar'
+        it: 'Selezionato ma non disponibile'
+        pl: 'Wybrane, ale niedostępne'
+        ru: 'Выбрано, но недоступно'
+        zh: '已选择但不可用'
+        hu: 'Kiválasztva, de nem elérhető'
+        pt: 'Selecionado mas indisponível'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  IHM_ARTIV_STATUS:
+    bits: '1.5-1.4'
+    comment:
+      en: 'ARTIV display status'
+      fr: 'Statut de l''affichage ARTIV'
+      es: 'Estado de la pantalla ARTIV'
+      de: 'Anzeigestatus ARTIV'
+      it: 'Stato del display ARTIV'
+      pl: 'Stan wyświetlacza ARTIV'
+      ru: 'Статус дисплея ARTIV'
+      zh: 'ARTIV显示状态'
+      hu: 'Az ARTIV kijelző állapota'
+      pt: 'Estado do visor ARTIV'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inappropriate speed'
+        fr: 'Vitesse inadaptée'
+        es: 'Velocidad inadecuada'
+        de: 'Unangemessene Geschwindigkeit'
+        it: 'Velocità inadeguata'
+        pl: 'Nieodpowiednia prędkość'
+        ru: 'Неподходящая скорость'
+        zh: '车速不当'
+        hu: 'Nem megfelelő sebesség'
+        pt: 'Velocidade inadequada'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        en: 'Low visibility'
+        fr: 'Visibilite reduite'
+        es: 'Visibilidad reducida'
+        de: 'Reduzierte Sicht'
+        it: 'Visibilità ridotta'
+        pl: 'Ograniczona widoczność'
+        ru: 'Пониженная видимость'
+        zh: '能见度降低'
+        hu: 'Csökkent látótávolság'
+        pt: 'Visibilidade reduzida'
+      0x03:
+        en: 'Learning'
+        fr: 'Apprentissage'
+        es: 'Aprendizaje'
+        de: 'Anlernen'
+        it: 'Apprendimento'
+        pl: 'Uczenie'
+        ru: 'Обучение'
+        zh: '学习'
+        hu: 'Tanulás'
+        pt: 'Aprendizagem'
+
+  ARTIV_ALERT:
+    bits: '1.3'
+    comment:
+      en: 'ARTIV alert'
+      fr: 'Alerte ARTIV'
+      es: 'Alerta ARTIV'
+      de: 'ARTIV-Warnung'
+      it: 'Allarme ARTIV'
+      pl: 'Alarm ARTIV'
+      ru: 'Оповещение ARTIV'
+      zh: 'ARTIV警报'
+      hu: 'ARTIV riasztás'
+      pt: 'Alerta ARTIV'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  ARTIV_ALERT_ADJUSTMENT:
+    bits: '1.2'
+    comment:
+      en: 'ARTIV alert adjustment'
+      fr: 'Réglage de l''alerte ARTIV'
+      es: 'Ajuste de la alerta ARTIV'
+      de: 'Einstellung der ARTIV-Warnung'
+      it: 'Regolazione dell''allarme ARTIV'
+      pl: 'Regulacja alarmu ARTIV'
+      ru: 'Настройка оповещения ARTIV'
+      zh: 'ARTIV警报调整'
+      hu: 'Az ARTIV riasztás beállítása'
+      pt: 'Ajuste do alerta ARTIV'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No adjustment'
+        fr: 'Pas de réglage'
+        es: 'Sin ajuste'
+        de: 'Keine Einstellung'
+        it: 'Nessuna regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Нет регулировки'
+        zh: '无调节'
+        hu: 'Nincs beállítás'
+        pt: 'Sem ajuste'
+      0x01:
+        en: 'Adjustment'
+        fr: 'Réglage'
+        es: 'Ajuste'
+        de: 'Einstellung'
+        it: 'Regolazione'
+        pl: 'Regulacja'
+        ru: 'Настройка'
+        zh: '调节'
+        hu: 'Beállítás'
+        pt: 'Ajuste'
+
+  ARTIV_TARGET_DETECTED:
+    bits: '1.1'
+    comment:
+      en: 'ARTIV target detected'
+      fr: 'Cible ARTIV détectée'
+      es: 'Objetivo ARTIV detectado'
+      de: 'ARTIV-Ziel erkannt'
+      it: 'Bersaglio ARTIV rilevato'
+      pl: 'Wykryto cel ARTIV'
+      ru: 'Обнаружена цель ARTIV'
+      zh: '检测到ARTIV目标'
+      hu: 'ARTIV célpont észlelve'
+      pt: 'Alvo ARTIV detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Target not detected'
+        fr: 'Cible non détectée'
+        es: 'Objetivo no detectado'
+        de: 'Ziel nicht erkannt'
+        it: 'Bersaglio non rilevato'
+        pl: 'Nie wykryto celu'
+        ru: 'Цель не обнаружена'
+        zh: '未检测到目标'
+        hu: 'Célobjektum nincs észlelve'
+        pt: 'Alvo não detetado'
+      0x01:
+        en: 'Target detected'
+        fr: 'Cible détectée'
+        es: 'Objetivo detectado'
+        de: 'Ziel erkannt'
+        it: 'Bersaglio rilevato'
+        pl: 'Wykryto cel'
+        ru: 'Цель обнаружена'
+        zh: '已检测到目标'
+        hu: 'Célpont észlelve'
+        pt: 'Alvo detetado'
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  TIV_SETPOINT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Setpoint time interval to the vehicle ahead (TIV)'
+      fr: 'Consigne d''intervalle de temps avec le véhicule précédent (TIV)'
+      es: 'Consigna de intervalo de tiempo con el vehículo precedente (TIV)'
+      de: 'Sollwert des Zeitabstands zum vorausfahrenden Fahrzeug (TIV)'
+      it: 'Valore di riferimento dell''intervallo di tempo dal veicolo che precede (TIV)'
+      pl: 'Wartość zadana odstępu czasowego od poprzedzającego pojazdu (TIV)'
+      ru: 'Заданный временной интервал до впереди идущего автомобиля (TIV)'
+      zh: '与前车时间间隔的设定值(TIV)'
+      hu: 'Az előttünk haladó járműtől való időintervallum alapjele (TIV)'
+      pt: 'Consigna de intervalo de tempo com o veículo precedente (TIV)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.3
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+
+  TIV_TARGET:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Target time interval to the vehicle ahead (TIV)'
+      fr: 'Intervalle de temps cible avec le véhicule précédent (TIV)'
+      es: 'Intervalo de tiempo objetivo con el vehículo precedente (TIV)'
+      de: 'Ziel-Zeitabstand zum vorausfahrenden Fahrzeug (TIV)'
+      it: 'Intervallo di tempo obiettivo dal veicolo che precede (TIV)'
+      pl: 'Docelowy odstęp czasowy od poprzedzającego pojazdu (TIV)'
+      ru: 'Целевой временной интервал до впереди идущего автомобиля (TIV)'
+      zh: '与前车的目标时间间隔(TIV)'
+      hu: 'Az előttünk haladó járműtől való célzott időintervallum (TIV)'
+      pt: 'Intervalo de tempo alvo com o veículo precedente (TIV)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.3
+    units: 's'
+    invalid: 0xFF
+    default: 0xFF
+
+  POWER_BATTERY_HT:
+    bits: '4.7-4.1'
+    comment:
+      en: 'High-voltage battery power balance'
+      fr: 'Bilan de puissance de la batterie haute tension'
+      es: 'Balance de potencia de la batería de alta tensión'
+      de: 'Leistungsbilanz der Hochvoltbatterie'
+      it: 'Bilancio di potenza della batteria ad alta tensione'
+      pl: 'Bilans mocy akumulatora wysokiego napięcia'
+      ru: 'Баланс мощности высоковольтной батареи'
+      zh: '高压电池功率平衡'
+      hu: 'A nagyfeszültségű akkumulátor teljesítménymérlege'
+      pt: 'Balanço de potência da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    offset: -50
+    min: -50
+    max: 50
+    units: 'kW'
+    invalid: 0x7F
+    default: 0x32
+
+  HYBRID_POWER_TRACTION:
+    bits: '4.0-5.0'
+    comment:
+      en: 'Power delivered by the hybrid powertrain'
+      fr: 'Puissance délivrée par la chaîne de traction hybride'
+      es: 'Potencia entregada por la cadena de tracción híbrida'
+      de: 'Vom Hybridantrieb abgegebene Leistung'
+      it: 'Potenza erogata dal sistema di trazione ibrido'
+      pl: 'Moc dostarczana przez hybrydowy układ napędowy'
+      ru: 'Мощность, выдаваемая гибридной трансмиссией'
+      zh: '混合动力传动系统输出功率'
+      hu: 'A hibrid hajtáslánc által leadott teljesítmény'
+      pt: 'Potência fornecida pela cadeia de tração híbrida'
+    type: 'uint'
+    factor: 0.5
+    offset: -50
+    min: -50
+    max: 200
+    units: '%'
+    invalid: 0x1FF
+    default: 0x1FE
+
+  DAA_LATERAL_CONTROL_LEVEL:
+    bits: '6.7-6.4'
+    comment:
+      en: 'Driver alertness level information for lateral control'
+      fr: 'Information sur le niveau de vigilance du conducteur pour le contrôle latéral'
+      es: 'Información del nivel de alerta del conductor para el control lateral'
+      de: 'Information über den Aufmerksamkeitsgrad des Fahrers für die Querführung'
+      it: 'Informazione sul livello di attenzione del conducente per il controllo laterale'
+      pl: 'Informacja o poziomie czujności kierowcy dla sterowania bocznego'
+      ru: 'Информация об уровне бдительности водителя для бокового управления'
+      zh: '横向控制的驾驶员警觉水平信息'
+      hu: 'A vezető éberségi szintjének információja az oldalirányú vezérléshez'
+      pt: 'Informação do nível de vigilância do condutor para o controlo lateral'
+    type: 'enum'
+    default: 0x08
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Level 1'
+        fr: 'Niveau 1'
+        es: 'Nivel 1'
+        de: 'Stufe 1'
+        it: 'Livello 1'
+        pl: 'Poziom 1'
+        ru: 'Уровень 1'
+        zh: '等级1'
+        hu: '1. szint'
+        pt: 'Nível 1'
+      0x02:
+        en: 'Level 2'
+        fr: 'Niveau 2'
+        es: 'Nivel 2'
+        de: 'Stufe 2'
+        it: 'Livello 2'
+        pl: 'Poziom 2'
+        ru: 'Уровень 2'
+        zh: '2级'
+        hu: '2. szint'
+        pt: 'Nível 2'
+      0x03:
+        en: 'Level 3'
+        fr: 'Niveau 3'
+        es: 'Nivel 3'
+        de: 'Stufe 3'
+        it: 'Livello 3'
+        pl: 'Poziom 3'
+        ru: 'Уровень 3'
+        zh: '级别3'
+        hu: '3. szint'
+        pt: 'Nível 3'
+      0x04:
+        en: 'Level 4'
+        fr: 'Niveau 4'
+        es: 'Nivel 4'
+        de: 'Stufe 4'
+        it: 'Livello 4'
+        pl: 'Poziom 4'
+        ru: 'Уровень 4'
+        zh: '4 级'
+        hu: '4. szint'
+        pt: 'Nível 4'
+      0x05:
+        en: 'Level 5'
+        fr: 'Level 5'
+        es: 'Nivel 5'
+        de: 'Stufe 5'
+        it: 'Livello 5'
+        pl: 'Poziom 5'
+        ru: 'Уровень 5'
+        zh: '5级'
+        hu: '5. szint'
+        pt: 'Nível 5'
+      0x06:
+        en: 'Level 6'
+        fr: 'Niveau 6'
+        es: 'Nivel 6'
+        de: 'Stufe 6'
+        it: 'Livello 6'
+        pl: 'Poziom 6'
+        ru: 'Уровень 6'
+        zh: '6级'
+        hu: '6. szint'
+        pt: 'Nível 6'
+      0x07:
+        en: 'Level 7'
+        fr: 'Niveau 7'
+        es: 'Nivel 7'
+        de: 'Stufe 7'
+        it: 'Livello 7'
+        pl: 'Poziom 7'
+        ru: 'Уровень 7'
+        zh: '7级'
+        hu: '7. szint'
+        pt: 'Nível 7'
+      0x08:
+        en: 'Level 8'
+        fr: 'Niveau 8'
+        es: 'Nivel 8'
+        de: 'Stufe 8'
+        it: 'Livello 8'
+        pl: 'Poziom 8'
+        ru: 'Уровень 8'
+        zh: '8级'
+        hu: '8. szint'
+        pt: 'Nível 8'
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  LKA_RIGHT_LINE_STATUS:
+    bits: '6.3-6.2'
+    comment:
+      en: 'Continuous status information for the driver about the lane keeping function on the right line'
+      fr: 'Information continue au conducteur sur l''état de la fonction de maintien de voie pour la ligne droite'
+      es: 'Información continua al conductor sobre el estado de la función de mantenimiento de carril para la línea derecha'
+      de: 'Fortlaufende Information an den Fahrer über den Status der Spurhaltefunktion für die rechte Linie'
+      it: 'Informazione continua al conducente sullo stato della funzione di mantenimento corsia per la linea destra'
+      pl: 'Ciągła informacja dla kierowcy o stanie funkcji utrzymania pasa dla linii prawej'
+      ru: 'Непрерывная информация водителю о состоянии функции удержания полосы для правой линии'
+      zh: '向驾驶员持续提供右侧车道保持功能状态信息'
+      hu: 'Folyamatos tájékoztatás a vezetőnek a sávtartó funkció állapotáról a jobb oldali vonalon'
+      pt: 'Informação contínua de estado para o condutor sobre a função de manutenção de faixa na linha direita'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not selected'
+        fr: 'Non sélectionné'
+        es: 'No seleccionado'
+        de: 'Nicht ausgewählt'
+        it: 'Non selezionato'
+        pl: 'Niewybrane'
+        ru: 'Не выбрано'
+        zh: '未选择'
+        hu: 'Nincs kiválasztva'
+        pt: 'Não selecionado'
+      0x01:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x02:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+      0x03:
+        en: 'Correction in progress'
+        fr: 'Correction en cours'
+        es: 'Corrección en curso'
+        de: 'Korrektur läuft'
+        it: 'Correzione in corso'
+        pl: 'Trwa korekta'
+        ru: 'Идёт коррекция'
+        zh: '正在校正'
+        hu: 'Korrekció folyamatban'
+        pt: 'Correção em curso'
+
+  LKA_LEFT_LINE_STATUS:
+    bits: '6.1-6.0'
+    comment:
+      en: 'Continuous status information for the driver about the lane keeping function on the left line'
+      fr: 'Information continue au conducteur sur l''état de la fonction de maintien de voie pour la ligne gauche'
+      es: 'Información continua al conductor sobre el estado de la función de mantenimiento de carril para la línea izquierda'
+      de: 'Fortlaufende Information an den Fahrer über den Status der Spurhaltefunktion für die linke Linie'
+      it: 'Informazione continua al conducente sullo stato della funzione di mantenimento corsia per la linea sinistra'
+      pl: 'Ciągła informacja dla kierowcy o stanie funkcji utrzymania pasa dla linii lewej'
+      ru: 'Непрерывная информация водителю о состоянии функции удержания полосы для левой линии'
+      zh: '向驾驶员持续提供左侧车道保持功能状态信息'
+      hu: 'Folyamatos tájékoztatás a vezetőnek a sávtartó funkció állapotáról a bal oldali vonalon'
+      pt: 'Informação contínua de estado para o condutor sobre a função de manutenção de faixa na linha esquerda'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not selected'
+        fr: 'Non sélectionné'
+        es: 'No seleccionado'
+        de: 'Nicht ausgewählt'
+        it: 'Non selezionato'
+        pl: 'Niewybrane'
+        ru: 'Не выбрано'
+        zh: '未选择'
+        hu: 'Nincs kiválasztva'
+        pt: 'Não selecionado'
+      0x01:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x02:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+      0x03:
+        en: 'Correction in progress'
+        fr: 'Correction en cours'
+        es: 'Corrección en curso'
+        de: 'Korrektur läuft'
+        it: 'Correzione in corso'
+        pl: 'Trwa korekta'
+        ru: 'Идёт коррекция'
+        zh: '正在校正'
+        hu: 'Korrekció folyamatban'
+        pt: 'Correção em curso'
+
+  LKA_STATE_STATUS:
+    bits: '7.7-7.6'
+    comment:
+      en: 'Status information for the driver indicating the state of the lane keeping assist function'
+      fr: 'Information indiquant au conducteur l''état de la fonction d''aide au maintien de voie'
+      es: 'Información que indica al conductor el estado de la función de asistencia de mantenimiento de carril'
+      de: 'Information an den Fahrer über den Status der Spurhalteassistenzfunktion'
+      it: 'Informazione che indica al conducente lo stato della funzione di assistenza al mantenimento della corsia'
+      pl: 'Informacja wskazująca kierowcy stan funkcji asystenta utrzymania pasa ruchu'
+      ru: 'Информация, показывающая водителю состояние функции удержания полосы движения'
+      zh: '向驾驶员显示车道保持辅助功能状态的信息'
+      hu: 'A vezetőt a sávtartó asszisztens funkció állapotáról tájékoztató információ'
+      pt: 'Informação de estado para o condutor que indica o estado da função de assistência de manutenção de faixa'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Lit steady, not ready'
+        fr: 'Allumé fixe, non prêt'
+        es: 'Encendido fijo, no listo'
+        de: 'Dauerleuchtend, nicht bereit'
+        it: 'Acceso fisso, non pronto'
+        pl: 'Świeci światłem ciągłym, niegotowe'
+        ru: 'Горит постоянно, не готово'
+        zh: '常亮,未就绪'
+        hu: 'Folyamatosan világít, nem áll készen'
+        pt: 'Aceso fixo, não pronto'
+      0x02:
+        en: 'On, blinking'
+        fr: 'Allumé clignotant'
+        es: 'Encendido intermitente'
+        de: 'Ein, blinkend'
+        it: 'Acceso lampeggiante'
+        pl: 'Włączone, migające'
+        ru: 'Включено, мигает'
+        zh: '点亮并闪烁'
+        hu: 'Bekapcsolva, villogó'
+        pt: 'Aceso intermitente'
+      0x03:
+        en: 'On steady, ready'
+        fr: 'Allumé fixe, prêt'
+        es: 'Encendido fijo, listo'
+        de: 'Dauerleuchten, bereit'
+        it: 'Acceso fisso, pronto'
+        pl: 'Świeci ciągle, gotowe'
+        ru: 'Горит постоянно, готово'
+        zh: '常亮,就绪'
+        hu: 'Folyamatosan világít, kész'
+        pt: 'Aceso fixo, pronto'
+
+  PLUG_INDICATOR_LAMP_REQUEST:
+    bits: '7.5-7.4'
+    comment:
+      en: 'Request to light the charging plug indicator lamp'
+      fr: 'Demande d''allumage du témoin de prise de charge'
+      es: 'Solicitud de encendido del testigo de la toma de carga'
+      de: 'Anforderung zum Einschalten der Ladesteckerkontrollleuchte'
+      it: 'Richiesta di accensione della spia della presa di ricarica'
+      pl: 'Żądanie zapalenia kontrolki wtyczki ładowania'
+      ru: 'Запрос включения индикатора зарядного разъёма'
+      zh: '请求点亮充电插头指示灯'
+      hu: 'A töltőcsatlakozó jelzőlámpájának bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho da tomada de carregamento'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'No request'
+        es: 'No request'
+        de: 'No request'
+        it: 'No request'
+        pl: 'No request'
+        ru: 'No request'
+        zh: 'No request'
+        hu: 'No request'
+        pt: 'No request'
+      0x01:
+        en: 'Fixed request'
+        fr: 'Demande fixe'
+        es: 'Solicitud fija'
+        de: 'Feste Anforderung'
+        it: 'Richiesta fissa'
+        pl: 'Żądanie stałe'
+        ru: 'Фиксированный запрос'
+        zh: '固定请求'
+        hu: 'Rögzített kérés'
+        pt: 'Pedido fixo'
+      0x02:
+        en: 'Flashing request'
+        fr: 'Demande de clignotement'
+        es: 'Solicitud de parpadeo'
+        de: 'Blinkanforderung'
+        it: 'Richiesta di lampeggio'
+        pl: 'Żądanie migania'
+        ru: 'Запрос мигания'
+        zh: '闪烁请求'
+        hu: 'Villogási kérés'
+        pt: 'Pedido de piscar'
+      0x03:
+        unused: true
+
+  LPA_STATE_STATUS:
+    bits: '7.3-7.2'
+    comment:
+      en: 'Continuous status information for the driver: function not selected, selected (chosen but unable to operate), or active (in progress, suspended or faulty)'
+      fr: 'Information continue au conducteur : fonction non sélectionnée, sélectionnée (choisie mais incapable de fonctionner), ou active (en cours, suspendue ou en défaut)'
+      es: 'Información continua al conductor: función no seleccionada, seleccionada (elegida pero incapaz de funcionar), o activa (en curso, suspendida o defectuosa)'
+      de: 'Fortlaufende Information an den Fahrer: Funktion nicht ausgewählt, ausgewählt (gewählt, aber nicht betriebsbereit) oder aktiv (in Betrieb, unterbrochen oder gestört)'
+      it: 'Informazione continua al conducente: funzione non selezionata, selezionata (scelta ma incapace di funzionare), o attiva (in corso, sospesa o guasta)'
+      pl: 'Ciągła informacja dla kierowcy: funkcja niewybrana, wybrana (wybrana, ale niezdolna do działania) lub aktywna (w toku, wstrzymana lub uszkodzona)'
+      ru: 'Непрерывная информация водителю: функция не выбрана, выбрана (выбрана, но не может работать) или активна (выполняется, приостановлена или неисправна)'
+      zh: '向驾驶员持续提供的信息:功能未选择、已选择(已选但无法运行)或激活(进行中、暂停或故障)'
+      hu: 'Folyamatos tájékoztatás a vezetőnek: a funkció nincs kiválasztva, ki van választva (kiválasztva, de nem működőképes), vagy aktív (folyamatban, felfüggesztve vagy hibás)'
+      pt: 'Informação contínua de estado para o condutor: função não selecionada, selecionada (escolhida mas incapaz de operar) ou ativa (em curso, suspensa ou avariada)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On fixed selected'
+        fr: 'Sélection fixe activée'
+        es: 'Selección fija activada'
+        de: 'Feste Auswahl aktiviert'
+        it: 'Selezione fissa attivata'
+        pl: 'Wybrano ustawienie stałe'
+        ru: 'Выбрано фиксированное значение'
+        zh: '已选择固定项'
+        hu: 'Rögzített kiválasztás aktív'
+        pt: 'Ligado fixo selecionado'
+      0x02:
+        en: 'On fixed active'
+        fr: 'On fixed active'
+        es: 'Salida fija activa'
+        de: 'Feste Ausgabe aktiv'
+        it: 'Uscita fissa attiva'
+        pl: 'Wyjście stałe aktywne'
+        ru: 'Фиксированный выход активен'
+        zh: '固定输出激活'
+        hu: 'Fix kimenet aktív'
+        pt: 'Saída fixa ativa'
+      0x03:
+        en: 'On, fixed fault'
+        fr: 'Allumé, défaut fixe'
+        es: 'Encendido, fallo fijo'
+        de: 'Ein, dauerhafter Fehler'
+        it: 'Acceso, guasto fisso'
+        pl: 'Włączone, usterka stała'
+        ru: 'Включено, постоянная неисправность'
+        zh: '点亮,固定故障'
+        hu: 'Bekapcsolva, állandó hiba'
+        pt: 'Ligado, avaria fixa'
+
+  LPA_READY_WHEN_SELECTED:
+    bits: '7.1'
+    comment:
+      en: 'Indicates, once the function is selected, whether it will become active when ACC is active'
+      fr: 'Indique, une fois la fonction sélectionnée, si elle deviendra active quand l''ACC est actif'
+      es: 'Indica, una vez seleccionada la función, si se activará cuando el ACC esté activo'
+      de: 'Zeigt an, ob die Funktion nach Auswahl aktiv wird, sobald der ACC aktiv ist'
+      it: 'Indica, una volta selezionata la funzione, se diventerà attiva quando l''ACC è attivo'
+      pl: 'Wskazuje, po wybraniu funkcji, czy stanie się aktywna, gdy ACC jest aktywny'
+      ru: 'Показывает, после выбора функции, станет ли она активной при включённом ACC'
+      zh: '指示功能选择后,在ACC激活时是否会变为激活状态'
+      hu: 'Jelzi, hogy a funkció kiválasztása után aktívvá válik-e, amikor az ACC aktív'
+      pt: 'Indica, uma vez selecionada a função, se esta ficará ativa quando o ACC estiver ativo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not ready'
+        fr: 'Non prêt'
+        es: 'No listo'
+        de: 'Nicht bereit'
+        it: 'Non pronto'
+        pl: 'Niegotowy'
+        ru: 'Не готово'
+        zh: '未就绪'
+        hu: 'Nem kész'
+        pt: 'Não pronto'
+      0x01:
+        en: 'Ready'
+        fr: 'Prêt'
+        es: 'Listo'
+        de: 'Bereit'
+        it: 'Pronto'
+        pl: 'Gotowy'
+        ru: 'Готово'
+        zh: '就绪'
+        hu: 'Kész'
+        pt: 'Pronto'
+
+  DAA_LATERAL_CONTROL_STATE:
+    bits: '7.0'
+    comment:
+      en: 'Operational state of the DAA lateral control indicator'
+      fr: 'État opérationnel de l''indicateur de contrôle latéral DAA'
+      es: 'Estado operativo del indicador de control lateral DAA'
+      de: 'Betriebszustand der DAA-Querführungsanzeige'
+      it: 'Stato operativo dell''indicatore di controllo laterale DAA'
+      pl: 'Stan działania wskaźnika sterowania bocznego DAA'
+      ru: 'Рабочее состояние индикатора бокового управления DAA'
+      zh: 'DAA横向控制指示器的运行状态'
+      hu: 'A DAA oldalirányú vezérlés jelzőjének üzemi állapota'
+      pt: 'Estado operacional do indicador de controlo lateral DAA'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not operational'
+        fr: 'Non opérationnel'
+        es: 'No operativo'
+        de: 'Nicht betriebsbereit'
+        it: 'Non operativo'
+        pl: 'Niesprawny'
+        ru: 'Неработоспособно'
+        zh: '不可用'
+        hu: 'Nem üzemképes'
+        pt: 'Não operacional'
+      0x01:
+        en: 'Operational'
+        fr: 'Opérationnel'
+        es: 'Operativo'
+        de: 'Betriebsbereit'
+        it: 'Operativo'
+        pl: 'Sprawny'
+        ru: 'Работоспособно'
+        zh: '运行正常'
+        hu: 'Üzemképes'
+        pt: 'Operacional'
+
+  ZTEP_POWER_RATIO:
+    bits: '8.7-8.1'
+    comment:
+      en: 'Percentage of vehicle power relative to ZTEP available power'
+      fr: 'Pourcentage de la puissance du véhicule par rapport à la puissance disponible ZTEP'
+      es: 'Porcentaje de la potencia del vehículo respecto a la potencia disponible ZTEP'
+      de: 'Prozentsatz der Fahrzeugleistung im Verhältnis zur verfügbaren ZTEP-Leistung'
+      it: 'Percentuale della potenza del veicolo rispetto alla potenza disponibile ZTEP'
+      pl: 'Procent mocy pojazdu w stosunku do dostępnej mocy ZTEP'
+      ru: 'Процент мощности автомобиля относительно доступной мощности ZTEP'
+      zh: '车辆功率占ZTEP可用功率的百分比'
+      hu: 'A jármű teljesítményének százalékos aránya a rendelkezésre álló ZTEP teljesítményhez képest'
+      pt: 'Percentagem da potência do veículo em relação à potência disponível ZTEP'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x3F
+    default: 0x00
+
+  UNUSED_2:
+    bits: '8.0'
+    unused: true

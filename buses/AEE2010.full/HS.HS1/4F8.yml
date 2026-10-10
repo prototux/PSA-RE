@@ -1,0 +1,722 @@
+id: 0x4F8
+name: 'ENGINE_ECU_DATA_8'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+observations:
+  en: 'On state change of: LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+  fr: 'Sur changement d''état de : LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+  es: 'Al cambiar el estado de: LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+  de: 'Bei Statusänderung von: LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+  it: 'Al cambiamento di stato di: LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+  ru: 'При изменении состояния: LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+  zh: '当MODE_LVNSD_REQ, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_POWER_CUT_REQ状态变化时'
+  hu: 'A(z) LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: LV_BATTERY_MODE_REQUEST, LV_BATTERY_DIAG_REQUEST, ENGINE_RUN_NEED_IGNORING_GBX, ENGINE_START_WITH_SSC, STEERING_LOAD_SHED_REQUEST, EBD_LOAD_SHED_REQUEST'
+periodicity: ['100ms', 'trigger']
+senders: ['CMM']
+receivers: ['LVNSD', 'BVA', 'BSI', 'DAE', 'ABS', 'VCU']
+
+signals:
+  LV_BATTERY_MODE_REQUEST:
+    bits: '1.7'
+    comment:
+      en: 'Low-voltage battery module open/close request'
+      fr: 'Demande d''ouverture/fermeture du module de batterie basse tension'
+      es: 'Solicitud de apertura/cierre del módulo de la batería de baja tensión'
+      de: 'Öffnungs-/Schließanforderung des Niedervoltbatterie-Moduls'
+      it: 'Richiesta di apertura/chiusura del modulo batteria a bassa tensione'
+      pl: 'Żądanie otwarcia/zamknięcia modułu akumulatora niskiego napięcia'
+      ru: 'Запрос открытия/закрытия модуля низковольтной батареи'
+      zh: '低压蓄电池模块开/关请求'
+      hu: 'Az alacsony feszültségű akkumulátor-modul nyitási/zárási kérése'
+      pt: 'Pedido de abertura/fecho do módulo da bateria de baixa tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Close request'
+        fr: 'Demande de fermeture'
+        es: 'Solicitud de cierre'
+        de: 'Schließanforderung'
+        it: 'Richiesta di chiusura'
+        pl: 'Żądanie zamknięcia'
+        ru: 'Запрос закрытия'
+        zh: '关闭请求'
+        hu: 'Zárási kérés'
+        pt: 'Pedido de fecho'
+      0x01:
+        en: 'Opening requested'
+        fr: 'Demande d''ouverture'
+        es: 'Solicitud de apertura'
+        de: 'Öffnungsanforderung'
+        it: 'Richiesta di apertura'
+        pl: 'Żądanie otwarcia'
+        ru: 'Запрос открытия'
+        zh: '开启请求'
+        hu: 'Nyitási kérés'
+        pt: 'Pedido de abertura'
+
+  LV_BATTERY_DIAG_REQUEST:
+    bits: '1.6'
+    comment:
+      en: 'Activation request for the low-voltage battery module diagnostic'
+      fr: 'Demande d''activation du diagnostic de la batterie basse tension'
+      es: 'Solicitud de activación del diagnóstico de la batería de baja tensión'
+      de: 'Aktivierungsanforderung für die Diagnose der Niedervoltbatterie'
+      it: 'Richiesta di attivazione della diagnosi della batteria a bassa tensione'
+      pl: 'Żądanie aktywacji diagnostyki akumulatora niskiego napięcia'
+      ru: 'Запрос на активацию диагностики низковольтной батареи'
+      zh: '低压蓄电池诊断激活请求'
+      hu: 'Az alacsony feszültségű akkumulátor diagnosztikájának aktiválási kérése'
+      pt: 'Pedido de ativação do diagnóstico da bateria de baixa tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  EBD_LOAD_SHED_REQUEST:
+    bits: '1.5'
+    comment:
+      en: 'Load-shedding request from the electronic brake force distribution (EBD)'
+      fr: 'Demande de délestage de la répartition électronique de freinage (EBD)'
+      es: 'Solicitud de reducción de carga del reparto electrónico de frenado (EBD)'
+      de: 'Lastabwurfanforderung der elektronischen Bremskraftverteilung (EBD)'
+      it: 'Richiesta di distacco carico dalla ripartizione elettronica della frenata (EBD)'
+      pl: 'Żądanie zrzutu obciążenia z elektronicznego rozdziału siły hamowania (EBD)'
+      ru: 'Запрос на снижение нагрузки от электронного распределителя тормозных усилий (EBD)'
+      zh: '电子制动力分配(EBD)卸载请求'
+      hu: 'Az elektronikus fékerő-elosztás (EBD) terheléskorlátozási kérése'
+      pt: 'Pedido de redução de carga do repartidor eletrónico de travagem (EBD)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No ESP reconfiguration request'
+        fr: 'Pas de demande de reconfiguration ESP'
+        es: 'Sin solicitud de reconfiguración ESP'
+        de: 'Keine ESP-Neukonfigurationsanforderung'
+        it: 'Nessuna richiesta di riconfigurazione ESP'
+        pl: 'Brak żądania rekonfiguracji ESP'
+        ru: 'Нет запроса реконфигурации ESP'
+        zh: '无ESP重新配置请求'
+        hu: 'Nincs ESP átkonfigurálási kérés'
+        pt: 'Sem pedido de reconfiguração do ESP'
+      0x01:
+        en: 'ESP reconfiguration request'
+        fr: 'Demande de reconfiguration ESP'
+        es: 'Solicitud de reconfiguración del ESP'
+        de: 'ESP-Neukonfigurationsanforderung'
+        it: 'Richiesta di riconfigurazione ESP'
+        pl: 'Żądanie rekonfiguracji ESP'
+        ru: 'Запрос переконфигурации ESP'
+        zh: 'ESP 重新配置请求'
+        hu: 'ESP újrakonfigurálási kérés'
+        pt: 'Pedido de reconfiguração do ESP'
+
+  ICE_ECU_DTC_CLEAR_REQUEST:
+    bits: '1.4'
+    comment:
+      en: 'Request to clear the combustion engine ECU''s OBD fault codes'
+      fr: 'Demande d''effacement des défauts OBD du calculateur moteur thermique'
+      es: 'Solicitud de borrado de los códigos de fallo OBD del calculador del motor térmico'
+      de: 'Anforderung zum Löschen der OBD-Fehlercodes des Verbrennungsmotor-Steuergeräts'
+      it: 'Richiesta di cancellazione dei codici guasto OBD della centralina motore termico'
+      pl: 'Żądanie kasowania kodów usterek OBD sterownika silnika spalinowego'
+      ru: 'Запрос на удаление кодов неисправностей OBD блока управления двигателем внутреннего сгорания'
+      zh: '清除内燃机ECU OBD故障码的请求'
+      hu: 'A belső égésű motor vezérlőegysége OBD hibakódjainak törlési kérése'
+      pt: 'Pedido de eliminação das falhas OBD da ECU do motor térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault reset not requested'
+        fr: 'Pas de demande d''effacement des défauts'
+        es: 'Sin solicitud de borrado de fallos'
+        de: 'Keine Anforderung zum Löschen der Fehler'
+        it: 'Nessuna richiesta di cancellazione dei guasti'
+        pl: 'Brak żądania kasowania usterek'
+        ru: 'Сброс неисправностей не запрошен'
+        zh: '未请求故障清除'
+        hu: 'Hibatörlés nincs kérve'
+        pt: 'Sem pedido de apagamento de falhas'
+      0x01:
+        en: 'Fault reset requested'
+        fr: 'Demande d''effacement des défauts'
+        es: 'Solicitud de borrado de fallos'
+        de: 'Fehlerlöschung angefordert'
+        it: 'Richiesta di cancellazione guasti'
+        pl: 'Żądanie kasowania usterek'
+        ru: 'Запрошен сброс неисправностей'
+        zh: '已请求清除故障'
+        hu: 'Hibatörlés kérve'
+        pt: 'Pedido de apagamento das falhas'
+
+  ENGINE_RUN_NEED_IGNORING_GBX:
+    bits: '1.3'
+    comment:
+      en: 'Need for the engine to run, not taking gearbox needs into account'
+      fr: 'Besoin de moteur tournant, sans prise en compte des besoins de la boîte de vitesses'
+      es: 'Necesidad de motor en marcha, sin tener en cuenta las necesidades de la caja de cambios'
+      de: 'Bedarf an laufendem Motor, ohne Berücksichtigung der Getriebebedarfe'
+      it: 'Necessità di motore in funzione, senza considerare le esigenze del cambio'
+      pl: 'Zapotrzebowanie na pracę silnika, bez uwzględnienia potrzeb skrzyni biegów'
+      ru: 'Потребность в работающем двигателе без учёта потребностей коробки передач'
+      zh: '需要发动机运转(不考虑变速箱需求)'
+      hu: 'Motorjárási igény a sebességváltó igényeinek figyelembevétele nélkül'
+      pt: 'Necessidade de motor em funcionamento, sem considerar as necessidades da caixa de velocidades'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No need'
+        fr: 'Pas de besoin'
+        es: 'Sin necesidad'
+        de: 'Kein Bedarf'
+        it: 'Nessuna necessità'
+        pl: 'Brak potrzeby'
+        ru: 'Нет потребности'
+        zh: '无需求'
+        hu: 'Nincs igény'
+        pt: 'Sem necessidade'
+      0x01:
+        en: 'Need'
+        fr: 'Besoin'
+        es: 'Necesidad'
+        de: 'Bedarf'
+        it: 'Necessità'
+        pl: 'Zapotrzebowanie'
+        ru: 'Потребность'
+        zh: '需求'
+        hu: 'Igény'
+        pt: 'Necessidade'
+
+  ENGINE_START_WITH_SSC:
+    bits: '1.2'
+    comment:
+      en: 'Engine start performed with the SSC (starter-alternator)'
+      fr: 'Démarrage moteur effectué avec le SSC (alterno-démarreur)'
+      es: 'Arranque del motor realizado con el SSC (alterno-arrancador)'
+      de: 'Motorstart mit dem SSC (Riemen-Starter-Generator)'
+      it: 'Avviamento motore effettuato con lo SSC (alternatore-motorino di avviamento)'
+      pl: 'Rozruch silnika wykonany z użyciem SSC (alternator-rozrusznik)'
+      ru: 'Пуск двигателя выполнен с помощью SSC (стартер-генератора)'
+      zh: '使用SSC(起动-发电一体机)进行发动机起动'
+      hu: 'Motorindítás az SSC (indítómotor-generátor) segítségével'
+      pt: 'Arranque do motor efetuado com o SSC (alterno-motor de arranque)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Without SSC'
+        fr: 'Sans SSC'
+        es: 'Sin SSC'
+        de: 'Ohne SSC'
+        it: 'Senza SSC'
+        pl: 'Bez SSC'
+        ru: 'Без SSC'
+        zh: '无SSC'
+        hu: 'SSC nélkül'
+        pt: 'Sem SSC'
+      0x01:
+        en: 'With SSC'
+        fr: 'Avec SSC'
+        es: 'Con SSC'
+        de: 'Mit SSC'
+        it: 'Con SSC'
+        pl: 'Z SSC'
+        ru: 'С SSC'
+        zh: '带SSC'
+        hu: 'SSC-vel'
+        pt: 'Com SSC'
+
+  QUICK_COOLING_REQUEST:
+    bits: '1.1'
+    comment:
+      en: 'Quick cooling request'
+      fr: 'Demande de refroidissement rapide'
+      es: 'Solicitud de enfriamiento rápido'
+      de: 'Anforderung der Schnellkühlung'
+      it: 'Richiesta di raffreddamento rapido'
+      pl: 'Żądanie szybkiego chłodzenia'
+      ru: 'Запрос быстрого охлаждения'
+      zh: '快速冷却请求'
+      hu: 'Gyors hűtés kérése'
+      pt: 'Pedido de arrefecimento rápido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Deactivated'
+        fr: 'Désactivé'
+        es: 'Desactivado'
+        de: 'Deaktiviert'
+        it: 'Disattivato'
+        pl: 'Wyłączony'
+        ru: 'Отключено'
+        zh: '已停用'
+        hu: 'Letiltva'
+        pt: 'Desativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  SEMI_AUTOMATIC_MODE:
+    bits: '1.0'
+    comment:
+      en: 'Semi-automatic manual mode (ASM) status'
+      fr: 'État du mode automatique semi-manuel (ASM)'
+      es: 'Estado del modo automático semi-manual (ASM)'
+      de: 'Status des teilautomatischen manuellen Modus (ASM)'
+      it: 'Stato della modalità automatica semi-manuale (ASM)'
+      pl: 'Stan trybu automatyczno-półmanualnego (ASM)'
+      ru: 'Статус полуавтоматического режима (ASM)'
+      zh: '半自动手动模式(ASM)状态'
+      hu: 'A félautomata (ASM) mód állapota'
+      pt: 'Estado do modo automático semimanual (ASM)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'ASM deactivated'
+        fr: 'ASM désactivé'
+        es: 'ASM desactivado'
+        de: 'ASM deaktiviert'
+        it: 'ASM disattivato'
+        pl: 'ASM dezaktywowany'
+        ru: 'ASM отключён'
+        zh: 'ASM已停用'
+        hu: 'ASM kikapcsolva'
+        pt: 'ASM desativado'
+      0x01:
+        en: 'ASM activated'
+        fr: 'ASM activé'
+        es: 'ASM activado'
+        de: 'ASM aktiviert'
+        it: 'ASM attivato'
+        pl: 'ASM aktywny'
+        ru: 'ASM активирован'
+        zh: 'ASM已激活'
+        hu: 'ASM aktiválva'
+        pt: 'ASM ativado'
+
+  AC_ELECTRICAL_POWER_LIMIT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Power consumable by the air conditioning components (electric AC compressor and high-voltage water heater) (W)'
+      fr: 'Puissance consommable par les organes de climatisation (compresseur de climatisation électrique et chauffage électrique haute tension) (W)'
+      es: 'Potencia consumible por los componentes de climatización (compresor eléctrico de A/C y calefactor de agua de alta tensión) (W)'
+      de: 'Von den Klimakomponenten (elektrischer Klimakompressor und Hochvolt-Wasserheizer) aufnehmbare Leistung (W)'
+      it: 'Potenza assorbibile dai componenti del climatizzatore (compressore elettrico A/C e riscaldatore acqua ad alta tensione) (W)'
+      pl: 'Moc możliwa do pobrania przez elementy klimatyzacji (elektryczna sprężarka klimatyzacji i elektryczna nagrzewnica wysokiego napięcia) (W)'
+      ru: 'Мощность, потребляемая узлами кондиционирования (электрический компрессор кондиционера и высоковольтный водонагреватель) (Вт)'
+      zh: '空调部件(电动空调压缩机和高压水加热器)可消耗功率(W)'
+      hu: 'A klímaberendezés elemei (elektromos klímakompresszor és nagyfeszültségű vízmelegítő) által felvehető teljesítmény (W)'
+      pt: 'Potência consumível pelos componentes de climatização (compressor de ar condicionado elétrico e aquecedor de água de alta tensão) (W)'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 12000
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00
+
+  CHECKSUM_FRAME_4F8:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_4F8:
+    bits: '3.3-3.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  STEERING_LOAD_SHED_REQUEST:
+    bits: '4.7-4.5'
+    comment:
+      en: 'Load-shedding request sent to the electric power steering ECU'
+      fr: 'Demande de délestage envoyée à l''assistance de direction électrique (DAE)'
+      es: 'Solicitud de reducción de carga enviada a la dirección asistida eléctrica (DAE)'
+      de: 'An die elektrische Servolenkung (DAE) gesendete Lastabwurfanforderung'
+      it: 'Richiesta di distacco carico inviata allo sterzo assistito elettrico (DAE)'
+      pl: 'Żądanie zrzutu obciążenia wysyłane do elektrycznego wspomagania kierownicy (DAE)'
+      ru: 'Запрос на снижение нагрузки, отправляемый электроусилителю рулевого управления (DAE)'
+      zh: '发送给电动助力转向(DAE)的卸载请求'
+      hu: 'Az elektromos szervokormány (DAE) számára küldött terheléskorlátozási kérés'
+      pt: 'Pedido de redução de carga enviado à direção assistida elétrica (DAE)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Nominal'
+        fr: 'Nominal'
+        es: 'Nominal'
+        de: 'Nominal'
+        it: 'Nominale'
+        pl: 'Nominalny'
+        ru: 'Номинальный'
+        zh: '标称'
+        hu: 'Névleges'
+        pt: 'Nominal'
+      0x01:
+        en: 'Performance adapted'
+        fr: 'Performances adaptées'
+        es: 'Prestaciones adaptadas'
+        de: 'Leistung angepasst'
+        it: 'Prestazioni adattate'
+        pl: 'Osiągi dostosowane'
+        ru: 'Характеристики адаптированы'
+        zh: '性能已调整'
+        hu: 'Teljesítmény hozzáigazítva'
+        pt: 'Desempenho adaptado'
+      0x02:
+        en: 'Undervoltage on restart'
+        fr: 'Sous-tension au redémarrage'
+        es: 'Baja tensión al reiniciar'
+        de: 'Unterspannung beim Neustart'
+        it: 'Sottotensione al riavvio'
+        pl: 'Zbyt niskie napięcie przy ponownym uruchomieniu'
+        ru: 'Пониженное напряжение при перезапуске'
+        zh: '重启时欠压'
+        hu: 'Alacsony feszültség újraindításkor'
+        pt: 'Subtensão ao reiniciar'
+      0x03:
+        en: 'EE fault'
+        fr: 'Défaut EE'
+        es: 'Fallo EE'
+        de: 'EE-Fehler'
+        it: 'Guasto EE'
+        pl: 'Usterka EE'
+        ru: 'Неисправность EE'
+        zh: 'EE故障'
+        hu: 'EE hiba'
+        pt: 'Avaria EE'
+      0x04:
+        en: 'TJC or HAD nominal mode'
+        fr: 'Mode nominal TJC ou HAD'
+        es: 'Modo nominal TJC o HAD'
+        de: 'Nominalmodus TJC oder HAD'
+        it: 'Modalità nominale TJC o HAD'
+        pl: 'Tryb nominalny TJC lub HAD'
+        ru: 'Номинальный режим TJC или HAD'
+        zh: 'TJC或HAD标称模式'
+        hu: 'TJC vagy HAD névleges üzemmód'
+        pt: 'Modo nominal TJC ou HAD'
+      0x05:
+        en: 'TJC or HAD fault mode'
+        fr: 'Mode défaut TJC ou HAD'
+        es: 'Modo de fallo TJC o HAD'
+        de: 'Fehlermodus TJC oder HAD'
+        it: 'Modalità guasto TJC o HAD'
+        pl: 'Tryb usterki TJC lub HAD'
+        ru: 'Режим неисправности TJC или HAD'
+        zh: 'TJC或HAD故障模式'
+        hu: 'TJC vagy HAD hibamód'
+        pt: 'Modo de avaria TJC ou HAD'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  PRIMARY_MACHINE_POWER_STATE:
+    bits: '4.4-4.2'
+    comment:
+      en: 'Primary electric machine operating state'
+      fr: 'État de fonctionnement de la machine électrique primaire'
+      es: 'Estado de funcionamiento de la máquina eléctrica primaria'
+      de: 'Betriebszustand der primären elektrischen Maschine'
+      it: 'Stato di funzionamento della macchina elettrica primaria'
+      pl: 'Stan pracy głównej maszyny elektrycznej'
+      ru: 'Рабочее состояние основной электрической машины'
+      zh: '主电机运行状态'
+      hu: 'Az elsődleges elektromos gép üzemi állapota'
+      pt: 'Estado de funcionamento da máquina elétrica primária'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Traction under acceleration'
+        fr: 'Traction en accélération'
+        es: 'Tracción en aceleración'
+        de: 'Antrieb bei Beschleunigung'
+        it: 'Trazione in accelerazione'
+        pl: 'Napęd podczas przyspieszania'
+        ru: 'Тяга при разгоне'
+        zh: '加速牵引'
+        hu: 'Vonóerő gyorsításkor'
+        pt: 'Tração em aceleração'
+      0x02:
+        en: 'Traction, deceleration on'
+        fr: 'Traction en décélération'
+        es: 'Tracción en deceleración'
+        de: 'Traktion bei Verzögerung'
+        it: 'Trazione in decelerazione'
+        pl: 'Napęd przy opóźnieniu'
+        ru: 'Тяга при замедлении'
+        zh: '减速时的牵引力'
+        hu: 'Hajtás lassítás közben'
+        pt: 'Tração em desaceleração'
+      0x03:
+        en: 'Charging'
+        fr: 'En charge'
+        es: 'Cargando'
+        de: 'Wird geladen'
+        it: 'In carica'
+        pl: 'W trakcie ładowania'
+        ru: 'Заряжается'
+        zh: '充电中'
+        hu: 'Töltés alatt'
+        pt: 'A carregar'
+      0x04:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  ICE_POWER_STATE:
+    bits: '4.1-4.0'
+    comment:
+      en: 'Combustion engine operating state'
+      fr: 'État de fonctionnement du moteur thermique'
+      es: 'Estado de funcionamiento del motor térmico'
+      de: 'Betriebszustand des Verbrennungsmotors'
+      it: 'Stato di funzionamento del motore termico'
+      pl: 'Stan pracy silnika spalinowego'
+      ru: 'Рабочее состояние двигателя внутреннего сгорания'
+      zh: '内燃机运行状态'
+      hu: 'A belső égésű motor üzemi állapota'
+      pt: 'Estado de funcionamento do motor térmico'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'In traction'
+        fr: 'En traction'
+        es: 'En tracción'
+        de: 'Im Zugbetrieb'
+        it: 'In trazione'
+        pl: 'W trybie napędu'
+        ru: 'В режиме тяги'
+        zh: '牵引状态'
+        hu: 'Vontatásban'
+        pt: 'Em tração'
+      0x02:
+        en: 'Charging'
+        fr: 'En charge'
+        es: 'Cargando'
+        de: 'Wird geladen'
+        it: 'In carica'
+        pl: 'W trakcie ładowania'
+        ru: 'Заряжается'
+        zh: '充电中'
+        hu: 'Töltés alatt'
+        pt: 'A carregar'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  RELATIVE_STATE_OF_ENERGY_2:
+    bits: '5.7-6.3'
+    comment:
+      en: 'Relative state of energy of the battery (Wh)'
+      fr: 'État d''énergie relatif de la batterie (Wh)'
+      es: 'Estado de energía relativo de la batería (Wh)'
+      de: 'Relativer Energiezustand der Batterie (Wh)'
+      it: 'Stato di energia relativo della batteria (Wh)'
+      pl: 'Względny stan energii akumulatora (Wh)'
+      ru: 'Относительное состояние энергии батареи (Вт·ч)'
+      zh: '电池相对能量状态(Wh)'
+      hu: 'Az akkumulátor relatív energiaállapota (Wh)'
+      pt: 'Estado de energia relativo da bateria (Wh)'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 40955
+    units: 'Wh'
+    default: 0x00
+
+  REAR_EMOTOR_STATE_FEEDBACK:
+    bits: '6.2'
+    comment:
+      en: 'Rear electric axle (eTAR) status feedback'
+      fr: 'Retour d''état du train arrière électrique (eTAR)'
+      es: 'Retorno de estado del eje trasero eléctrico (eTAR)'
+      de: 'Zustandsrückmeldung der elektrischen Hinterachse (eTAR)'
+      it: 'Riscontro di stato dell''asse posteriore elettrico (eTAR)'
+      pl: 'Informacja zwrotna o stanie tylnej osi elektrycznej (eTAR)'
+      ru: 'Обратная связь о состоянии заднего электрического моста (eTAR)'
+      zh: '后电桥(eTAR)状态反馈'
+      hu: 'A hátsó elektromos tengely (eTAR) állapotvisszajelzése'
+      pt: 'Retorno de estado do eixo traseiro elétrico (eTAR)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 5.7-5.6'
+          fr: 'Aussi observé aux bits 5.7-5.6'
+          es: 'También observado en los bits 5.7-5.6'
+          de: 'Auch an den Bits 5.7-5.6 beobachtet'
+          it: 'Osservato anche ai bit 5.7-5.6'
+          pl: 'Obserwowany także na bitach 5.7-5.6'
+          ru: 'Также наблюдался в битах 5.7-5.6'
+          zh: '也观察到位于位5.7-5.6'
+          hu: 'Megfigyelve a(z) 5.7-5.6 biteken is'
+          pt: 'Também observado nos bits 5.7-5.6'
+        bits: '5.7-5.6'
+
+  UNUSED_1:
+    bits: '6.1-6.0'
+    unused: true
+
+  RELATIVE_TOTAL_USEFUL_ENERGY:
+    bits: '7.7-8.3'
+    comment:
+      en: 'Relative total usable energy of the battery (Wh)'
+      fr: 'Énergie totale relative utilisable de la batterie (Wh)'
+      es: 'Energía total relativa utilizable de la batería (Wh)'
+      de: 'Relative nutzbare Gesamtenergie der Batterie (Wh)'
+      it: 'Energia totale relativa utilizzabile della batteria (Wh)'
+      pl: 'Względna całkowita użyteczna energia akumulatora (Wh)'
+      ru: 'Относительная полная полезная энергия батареи (Вт·ч)'
+      zh: '电池相对总可用能量(Wh)'
+      hu: 'Az akkumulátor relatív teljes felhasználható energiája (Wh)'
+      pt: 'Energia total relativa utilizável da bateria (Wh)'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 40955
+    units: 'Wh'
+    default: 0x00
+
+  UNUSED_2:
+    bits: '8.2-8.0'
+    unused: true

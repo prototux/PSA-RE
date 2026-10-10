@@ -1,0 +1,668 @@
+id: 0x568
+name: 'PARKING_AID_STATUS'
+type: 'van'
+length: 12
+comment:
+  en: 'Parking assistance status read by the display with in-frame reply: beep request/pattern, obstacle side, inhibition, and direct distance to obstacle for each of the 8 sensors (4 rear, 4 front).'
+  fr: 'État de l''aide au stationnement, lu par l''afficheur avec réponse dans la trame : demande/motif de bip, côté de l''obstacle, inhibition, et distance directe à l''obstacle pour chacun des 8 capteurs (4 arrière, 4 avant).'
+  es: 'Estado de la ayuda al aparcamiento, leído por la pantalla con respuesta en la trama: solicitud/patrón de pitido, lado del obstáculo, inhibición, y distancia directa al obstáculo para cada uno de los 8 sensores (4 traseros, 4 delanteros).'
+  de: 'Status der Einparkhilfe, vom Display mit Antwort im Rahmen (In-Frame-Response) gelesen: Signaltonanforderung/-muster, Hindernisseite, Deaktivierung und direkter Abstand zum Hindernis für jeden der 8 Sensoren (4 hinten, 4 vorne).'
+  it: 'Stato dell''assistenza al parcheggio, letto dal display con risposta nella trama: richiesta/schema del segnale acustico, lato dell''ostacolo, inibizione e distanza diretta dall''ostacolo per ciascuno degli 8 sensori (4 posteriori, 4 anteriori).'
+  pl: 'Stan czujników parkowania, odczytywany przez wyświetlacz z odpowiedzią w ramce: żądanie/wzór sygnału dźwiękowego, strona przeszkody, wyłączenie oraz bezpośrednia odległość do przeszkody dla każdego z 8 czujników (4 tylne, 4 przednie).'
+  ru: 'Статус парковочного ассистента, считываемый дисплеем с ответом в кадре: запрос/шаблон звукового сигнала, сторона препятствия, отключение и прямое расстояние до препятствия для каждого из 8 датчиков (4 задних, 4 передних).'
+  zh: '由显示屏读取的泊车辅助状态(帧内应答):蜂鸣请求/模式、障碍物方向、抑制功能,以及8个传感器(4个后置、4个前置)各自到障碍物的直线距离。'
+  hu: 'A kijelző által keretválasszal olvasott parkolássegítő állapota: hangjelzés kérés/mintázat, az akadály oldala, letiltás, és a 8 érzékelő (4 hátsó, 4 első) mindegyikének közvetlen távolsága az akadálytól.'
+  pt: 'Estado da ajuda ao estacionamento lido pelo visor com resposta na trama: pedido/padrão de sinal sonoro, lado do obstáculo, inibição, e distância direta ao obstáculo para cada um dos 8 sensores (4 traseiros, 4 dianteiros).'
+periodicity: ['trigger', 'request']
+senders: ['AAS']
+receivers: ['EMF']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['EMF']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  ACTIVATION_BEEP:
+    bits: '2.7'
+    comment:
+      en: 'Switch-on beep request: set when the ACTIVE bit goes from 0 to 1, cleared once the display acknowledges this frame, and stays 0 while active remains 1'
+      fr: 'Demande de bip de mise en service : activée quand le bit ACTIF passe de 0 à 1, désactivée dès l''acquittement de cette trame par l''écran, et reste à 0 tant que le bit actif vaut 1'
+      es: 'Solicitud de pitido de puesta en marcha: se activa cuando el bit ACTIVO pasa de 0 a 1, se desactiva en cuanto la pantalla confirma esta trama, y permanece a 0 mientras el bit activo valga 1'
+      de: 'Anforderung des Einschaltpiepstons: wird gesetzt, wenn das AKTIV-Bit von 0 auf 1 wechselt, gelöscht sobald das Display diesen Rahmen bestätigt, und bleibt 0, solange das Aktiv-Bit 1 ist'
+      it: 'Richiesta di beep di accensione: impostata quando il bit ATTIVO passa da 0 a 1, azzerata non appena il display conferma questo frame, e resta a 0 finché il bit attivo vale 1'
+      pl: 'Żądanie sygnału dźwiękowego włączenia: ustawiane, gdy bit AKTYWNY zmienia się z 0 na 1, kasowane po potwierdzeniu tej ramki przez wyświetlacz, pozostaje 0, dopóki bit aktywności wynosi 1'
+      ru: 'Запрос звукового сигнала включения: устанавливается при переходе бита АКТИВНО из 0 в 1, сбрасывается после подтверждения этого кадра дисплеем и остаётся 0, пока бит активности равен 1'
+      zh: '开机提示音请求:当ACTIVE位由0变为1时置位,显示屏确认该帧后清零,ACTIVE位保持为1期间保持为0'
+      hu: 'Bekapcsolási hangjelzés kérése: az AKTÍV bit 0-ról 1-re váltásakor áll be, a kijelző e keret nyugtázásakor törlődik, és 0 marad, amíg az aktív bit 1'
+      pt: 'Pedido de sinal sonoro de entrada em serviço: ativado quando o bit ATIVO passa de 0 para 1, desativado assim que o ecrã confirma esta trama, e permanece a 0 enquanto o bit ativo valer 1'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No beep'
+        fr: 'Pas de bip'
+        es: 'Sin pitido'
+        de: 'Kein Piepton'
+        it: 'Nessun bip'
+        pl: 'Brak sygnału dźwiękowego'
+        ru: 'Нет звукового сигнала'
+        zh: '无提示音'
+        hu: 'Nincs hangjelzés'
+        pt: 'Sem sinal sonoro'
+      0x01:
+        en: 'Beep requested'
+        fr: 'Bip demandé'
+        es: 'Pitido solicitado'
+        de: 'Piepton angefordert'
+        it: 'Bip richiesto'
+        pl: 'Żądany sygnał dźwiękowy'
+        ru: 'Запрошен звуковой сигнал'
+        zh: '请求提示音'
+        hu: 'Hangjelzés kérve'
+        pt: 'Sinal sonoro solicitado'
+
+  OBSTACLE_DETECTED:
+    bits: '2.6'
+    comment:
+      en: 'Obstacle detected'
+      fr: 'Obstacle détecté'
+      es: 'Obstáculo detectado'
+      de: 'Hindernis erkannt'
+      it: 'Ostacolo rilevato'
+      pl: 'Wykryto przeszkodę'
+      ru: 'Обнаружено препятствие'
+      zh: '检测到障碍物'
+      hu: 'Akadály észlelve'
+      pt: 'Obstáculo detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+      0x01:
+        en: 'Obstacle detected'
+        fr: 'Obstacle détecté'
+        es: 'Obstáculo detectado'
+        de: 'Hindernis erkannt'
+        it: 'Ostacolo rilevato'
+        pl: 'Wykryto przeszkodę'
+        ru: 'Обнаружено препятствие'
+        zh: '检测到障碍物'
+        hu: 'Akadály észlelve'
+        pt: 'Obstáculo detetado'
+
+  BEEP_LEFT_RIGHT_BALANCE:
+    bits: '2.5-2.3'
+    comment:
+      en: 'Left/right distribution of the beep sound'
+      fr: 'Répartition gauche/droite du bip'
+      es: 'Distribución izquierda/derecha del pitido'
+      de: 'Links-/Rechts-Verteilung des Signaltons'
+      it: 'Distribuzione sinistra/destra del beep'
+      pl: 'Rozkład lewo/prawo sygnału dźwiękowego'
+      ru: 'Распределение звукового сигнала слева/справа'
+      zh: '提示音的左右分布'
+      hu: 'A hangjelzés bal/jobb megoszlása'
+      pt: 'Distribuição esquerda/direita do sinal sonoro'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No beep'
+        fr: 'Pas de bip'
+        es: 'Sin pitido'
+        de: 'Kein Piepton'
+        it: 'Nessun bip'
+        pl: 'Brak sygnału dźwiękowego'
+        ru: 'Нет звукового сигнала'
+        zh: '无提示音'
+        hu: 'Nincs hangjelzés'
+        pt: 'Sem sinal sonoro'
+      0x01:
+        en: '4/4 left - 0/4 right'
+        fr: '4/4 gauche - 0/4 droite'
+        es: '4/4 izquierda - 0/4 derecha'
+        de: '4/4 links - 0/4 rechts'
+        it: '4/4 sinistra - 0/4 destra'
+        pl: '4/4 lewo - 0/4 prawo'
+        ru: '4/4 слева - 0/4 справа'
+        zh: '左4/4-右0/4'
+        hu: '4/4 bal - 0/4 jobb'
+        pt: '4/4 esquerda - 0/4 direita'
+      0x02:
+        en: '3/4 left - 1/4 right'
+        fr: '3/4 gauche - 1/4 droite'
+        es: '3/4 izquierda - 1/4 derecha'
+        de: '3/4 links - 1/4 rechts'
+        it: '3/4 sinistra - 1/4 destra'
+        pl: '3/4 lewo - 1/4 prawo'
+        ru: '3/4 слева - 1/4 справа'
+        zh: '3/4左-1/4右'
+        hu: '3/4 balra - 1/4 jobbra'
+        pt: '3/4 esquerda - 1/4 direita'
+      0x03:
+        en: '2/4 left - 2/4 right'
+        fr: '2/4 gauche - 2/4 droite'
+        es: '2/4 izquierda - 2/4 derecha'
+        de: '2/4 links - 2/4 rechts'
+        it: '2/4 sinistra - 2/4 destra'
+        pl: '2/4 lewo - 2/4 prawo'
+        ru: '2/4 слева - 2/4 справа'
+        zh: '左2/4-右2/4'
+        hu: '2/4 bal - 2/4 jobb'
+        pt: '2/4 esquerda - 2/4 direita'
+      0x04:
+        en: '1/4 left - 3/4 right'
+        fr: '1/4 gauche - 3/4 droite'
+        es: '1/4 izquierda - 3/4 derecha'
+        de: '1/4 links - 3/4 rechts'
+        it: '1/4 sinistra - 3/4 destra'
+        pl: '1/4 lewa - 3/4 prawa'
+        ru: '1/4 слева - 3/4 справа'
+        zh: '1/4左 - 3/4右'
+        hu: '1/4 bal - 3/4 jobb'
+        pt: '1/4 esquerda - 3/4 direita'
+      0x05:
+        en: '0/4 left - 4/4 right'
+        fr: '0/4 gauche - 4/4 droite'
+        es: '0/4 izquierda - 4/4 derecha'
+        de: '0/4 links - 4/4 rechts'
+        it: '0/4 sinistra - 4/4 destra'
+        pl: '0/4 lewo - 4/4 prawo'
+        ru: '0/4 слева - 4/4 справа'
+        zh: '0/4左-4/4右'
+        hu: '0/4 bal - 4/4 jobb'
+        pt: '0/4 esquerda - 4/4 direita'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  BEEP_FRONT_REAR:
+    bits: '2.2'
+    comment:
+      en: 'Front/rear location of the beep sound (obstacle side)'
+      fr: 'Localisation avant/arrière du bip (côté de l''obstacle)'
+      es: 'Ubicación delantera/trasera del pitido (lado del obstáculo)'
+      de: 'Vorne-/Hinten-Lage des Signaltons (Hindernisseite)'
+      it: 'Posizione anteriore/posteriore del beep (lato dell''ostacolo)'
+      pl: 'Umiejscowienie sygnału dźwiękowego z przodu/z tyłu (strona przeszkody)'
+      ru: 'Расположение звукового сигнала спереди/сзади (сторона препятствия)'
+      zh: '提示音的前/后位置(障碍物一侧)'
+      hu: 'A hangjelzés elülső/hátsó elhelyezkedése (az akadály oldala)'
+      pt: 'Localização dianteira/traseira do sinal sonoro (lado do obstáculo)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rear (maximum)'
+        fr: 'Arrière (maximum)'
+        es: 'Trasero (máximo)'
+        de: 'Hinten (maximal)'
+        it: 'Posteriore (massimo)'
+        pl: 'Tył (maksimum)'
+        ru: 'Сзади (максимум)'
+        zh: '后部(最大)'
+        hu: 'Hátul (maximum)'
+        pt: 'Traseira (máximo)'
+      0x01:
+        en: 'Front (maximum)'
+        fr: 'Avant (maximum)'
+        es: 'Delante (máximo)'
+        de: 'Vorne (Maximum)'
+        it: 'Avanti (massimo)'
+        pl: 'Przód (maksimum)'
+        ru: 'Вперёд (максимум)'
+        zh: '前(最大)'
+        hu: 'Elöl (maximum)'
+        pt: 'Dianteira (máximo)'
+
+  PARKING_AID_INHIBITED:
+    bits: '2.1'
+    comment:
+      en: 'Parking aid inhibited by the driver'
+      fr: 'Aide au stationnement inhibée par le conducteur'
+      es: 'Ayuda de aparcamiento inhibida por el conductor'
+      de: 'Einparkhilfe vom Fahrer deaktiviert'
+      it: 'Assistenza al parcheggio disattivata dal conducente'
+      pl: 'Wspomaganie parkowania wyłączone przez kierowcę'
+      ru: 'Парковочная помощь отключена водителем'
+      zh: '驾驶员已禁用泊车辅助'
+      hu: 'A vezető letiltotta a parkolássegítőt'
+      pt: 'Ajuda ao estacionamento inibida pelo condutor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'System not inhibited'
+        fr: 'Système non inhibé'
+        es: 'Sistema no inhibido'
+        de: 'System nicht gesperrt'
+        it: 'Sistema non inibito'
+        pl: 'System nie zablokowany'
+        ru: 'Система не заблокирована'
+        zh: '系统未禁用'
+        hu: 'Rendszer nincs letiltva'
+        pt: 'Sistema não inibido'
+      0x01:
+        en: 'System inhibited'
+        fr: 'Système inhibé'
+        es: 'Sistema inhibido'
+        de: 'System gesperrt'
+        it: 'Sistema inibito'
+        pl: 'System zablokowany'
+        ru: 'Система заблокирована'
+        zh: '系统已禁用'
+        hu: 'Rendszer letiltva'
+        pt: 'Sistema inibido'
+
+  PARKING_AID_ACTIVE:
+    bits: '2.0'
+    comment:
+      en: 'Parking aid system active (physically operating); the display may use it to switch on or mute the radio, though the radio itself does not use this bit'
+      fr: 'Système d''aide au stationnement actif (en fonctionnement physique) ; l''écran peut l''utiliser pour allumer ou couper le son de la radio, mais la radio elle-même n''utilise pas ce bit'
+      es: 'Sistema de ayuda al aparcamiento activo (funcionando físicamente); la pantalla puede usarlo para encender o silenciar la radio, aunque la propia radio no usa este bit'
+      de: 'Einparkhilfe aktiv (physisch in Betrieb); das Display kann dies nutzen, um das Radio einzuschalten oder stummzuschalten, das Radio selbst verwendet dieses Bit jedoch nicht'
+      it: 'Sistema di assistenza al parcheggio attivo (fisicamente in funzione); il display può usarlo per accendere o silenziare la radio, anche se la radio stessa non usa questo bit'
+      pl: 'System wspomagania parkowania aktywny (fizycznie działający); wyświetlacz może go użyć do włączenia lub wyciszenia radia, choć samo radio nie korzysta z tego bitu'
+      ru: 'Система парковочной помощи активна (физически работает); дисплей может использовать это для включения или отключения звука радио, хотя само радио этот бит не использует'
+      zh: '泊车辅助系统激活(物理运行中);显示屏可利用该位打开或静音收音机,但收音机本身不使用该位'
+      hu: 'A parkolássegítő rendszer aktív (fizikailag működik); a kijelző ezzel kapcsolhatja be vagy némíthatja el a rádiót, de maga a rádió nem használja ezt a bitet'
+      pt: 'Sistema de ajuda ao estacionamento ativo (a funcionar fisicamente); o ecrã pode usá-lo para ligar ou silenciar o rádio, embora o próprio rádio não use este bit'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'System inactive'
+        fr: 'Système inactif'
+        es: 'Sistema inactivo'
+        de: 'System inaktiv'
+        it: 'Sistema inattivo'
+        pl: 'System nieaktywny'
+        ru: 'Система неактивна'
+        zh: '系统未激活'
+        hu: 'Rendszer inaktív'
+        pt: 'Sistema inativo'
+      0x01:
+        en: 'System active'
+        fr: 'Système actif'
+        es: 'Sistema activo'
+        de: 'System aktiv'
+        it: 'Sistema attivo'
+        pl: 'System aktywny'
+        ru: 'Система активна'
+        zh: '系统已激活'
+        hu: 'Rendszer aktív'
+        pt: 'Sistema ativo'
+
+  BEEP_DURATION:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Beep duration class'
+      fr: 'Classe de durée du bip'
+      es: 'Clase de duración del pitido'
+      de: 'Klasse der Signaltondauer'
+      it: 'Classe di durata del beep'
+      pl: 'Klasa czasu trwania sygnału dźwiękowego'
+      ru: 'Класс длительности звукового сигнала'
+      zh: '提示音持续时间等级'
+      hu: 'A hangjelzés időtartamának osztálya'
+      pt: 'Classe de duração do sinal sonoro'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Duration 1'
+        fr: 'Durée 1'
+        es: 'Duración 1'
+        de: 'Dauer 1'
+        it: 'Durata 1'
+        pl: 'Czas trwania 1'
+        ru: 'Длительность 1'
+        zh: '时长1'
+        hu: '1. időtartam'
+        pt: 'Duração 1'
+      0x01:
+        en: 'Duration 2'
+        fr: 'Durée 2'
+        es: 'Duración 2'
+        de: 'Dauer 2'
+        it: 'Durata 2'
+        pl: 'Czas trwania 2'
+        ru: 'Длительность 2'
+        zh: '时长2'
+        hu: '2. időtartam'
+        pt: 'Duração 2'
+      0x02:
+        en: 'Duration 3'
+        fr: 'Durée 3'
+        es: 'Duración 3'
+        de: 'Dauer 3'
+        it: 'Durata 3'
+        pl: 'Czas trwania 3'
+        ru: 'Длительность 3'
+        zh: '时长3'
+        hu: '3. időtartam'
+        pt: 'Duração 3'
+      0x03:
+        en: 'Duration 4'
+        fr: 'Durée 4'
+        es: 'Duración 4'
+        de: 'Dauer 4'
+        it: 'Durata 4'
+        pl: 'Czas trwania 4'
+        ru: 'Длительность 4'
+        zh: '持续时间4'
+        hu: '4. időtartam'
+        pt: 'Duração 4'
+
+  BEEP_INTERVAL:
+    bits: '3.5-3.0'
+    comment:
+      en: 'Time between two beeps, 8 ms per bit; 0x3F = no beep'
+      fr: 'Durée entre deux bips, 8 ms par bit ; 0x3F = pas de bip'
+      es: 'Tiempo entre dos pitidos, 8 ms por bit; 0x3F = sin pitido'
+      de: 'Zeit zwischen zwei Signaltönen, 8 ms pro Bit; 0x3F = kein Signalton'
+      it: 'Tempo tra due beep, 8 ms per bit; 0x3F = nessun beep'
+      pl: 'Czas między dwoma sygnałami dźwiękowymi, 8 ms na bit; 0x3F = brak sygnału'
+      ru: 'Время между двумя звуковыми сигналами, 8 мс на бит; 0x3F = без сигнала'
+      zh: '两次提示音间的时间,每位8毫秒;0x3F=无提示音'
+      hu: 'Két hangjelzés közötti idő, bitenként 8 ms; 0x3F = nincs hangjelzés'
+      pt: 'Tempo entre dois sinais sonoros, 8 ms por bit; 0x3F = sem sinal sonoro'
+    type: 'enum'
+    factor: 8
+    units: 'ms'
+    default: 0x3F
+    values:
+      0x3F:
+        en: 'No beep'
+        fr: 'Pas de bip'
+        es: 'Sin pitido'
+        de: 'Kein Piepton'
+        it: 'Nessun bip'
+        pl: 'Brak sygnału dźwiękowego'
+        ru: 'Нет звукового сигнала'
+        zh: '无提示音'
+        hu: 'Nincs hangjelzés'
+        pt: 'Sem sinal sonoro'
+
+  OBSTACLE_DISTANCE_REAR_LEFT_OUTER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Distance between the rear left outer sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur arrière gauche extérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor trasero izquierdo exterior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem hinten links außen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore posteriore sinistro esterno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem tylnym lewym zewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между задним левым наружным датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '后左外侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'a hátsó bal külső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor traseiro esquerdo exterior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  OBSTACLE_DISTANCE_REAR_RIGHT_OUTER:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Distance between the rear right outer sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur arrière droit extérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor trasero derecho exterior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem hinten rechts außen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore posteriore destro esterno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem tylnym prawym zewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между задним правым наружным датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '后右外侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'a hátsó jobb külső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor traseiro direito exterior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  OBSTACLE_DISTANCE_REAR_LEFT_INNER:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Distance between the rear left inner sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur arrière gauche intérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor trasero izquierdo interior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem hinten links innen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore posteriore sinistro interno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem tylnym lewym wewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между задним левым внутренним датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '后左内侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'a hátsó bal belső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor traseiro esquerdo interior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  OBSTACLE_DISTANCE_REAR_RIGHT_INNER:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Distance between the rear right inner sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur arrière droit intérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor trasero derecho interior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem hinten rechts innen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore posteriore destro interno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem tylnym prawym wewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между задним правым внутренним датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '后右内侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'a hátsó jobb belső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor traseiro direito interior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  OBSTACLE_DISTANCE_FRONT_LEFT_OUTER:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Distance between the front left outer sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur avant gauche extérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor delantero izquierdo exterior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem vorne links außen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore anteriore sinistro esterno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem przednim lewym zewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между передним левым наружным датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '前左外侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'az elülső bal külső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor dianteiro esquerdo exterior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  OBSTACLE_DISTANCE_FRONT_RIGHT_OUTER:
+    bits: '9.7-9.0'
+    comment:
+      en: 'Distance between the front right outer sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur avant droit extérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor delantero derecho exterior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem vorne rechts außen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore anteriore destro esterno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem przednim prawym zewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между передним правым наружным датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '前右外侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'az elülső jobb külső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor dianteiro direito exterior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  OBSTACLE_DISTANCE_FRONT_LEFT_INNER:
+    bits: '10.7-10.0'
+    comment:
+      en: 'Distance between the front left inner sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur avant gauche intérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor delantero izquierdo interior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem vorne links innen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore anteriore sinistro interno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem przednim lewym wewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между передним левым внутренним датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '前左内侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'az elülső bal belső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor dianteiro esquerdo interior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  OBSTACLE_DISTANCE_FRONT_RIGHT_INNER:
+    bits: '11.7-11.0'
+    comment:
+      en: 'Distance between the front right inner sensor and the obstacle, 1 cm per bit; 0xFF = no obstacle'
+      fr: 'Distance entre le capteur avant droit intérieur et l''obstacle, 1 cm par bit ; 0xFF = pas d''obstacle'
+      es: 'Distancia entre el sensor delantero derecho interior y el obstáculo, 1 cm por bit; 0xFF = sin obstáculo'
+      de: 'Abstand zwischen dem vorne rechts innen Sensor und dem Hindernis, 1 cm pro Bit; 0xFF = kein Hindernis'
+      it: 'Distanza tra il sensore anteriore destro interno e l''ostacolo, 1 cm per bit; 0xFF = nessun ostacolo'
+      pl: 'Odległość między czujnikiem przednim prawym wewnętrznym a przeszkodą, 1 cm na bit; 0xFF = brak przeszkody'
+      ru: 'Расстояние между передним правым внутренним датчиком и препятствием, 1 см на бит; 0xFF = препятствия нет'
+      zh: '前右内侧传感器与障碍物的距离,每位1厘米;0xFF=无障碍物'
+      hu: 'az elülső jobb belső érzékelő és az akadály közötti távolság, bitenként 1 cm; 0xFF = nincs akadály'
+      pt: 'Distância entre o sensor dianteiro direito interior e o obstáculo, 1 cm por bit; 0xFF = sem obstáculo'
+    type: 'enum'
+    factor: 1
+    units: 'cm'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'No obstacle'
+        fr: 'Pas d''obstacle'
+        es: 'Sin obstáculo'
+        de: 'Kein Hindernis'
+        it: 'Nessun ostacolo'
+        pl: 'Brak przeszkody'
+        ru: 'Препятствие отсутствует'
+        zh: '无障碍物'
+        hu: 'Nincs akadály'
+        pt: 'Sem obstáculo'
+
+  FOOTER:
+    bits: '12.7-12.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

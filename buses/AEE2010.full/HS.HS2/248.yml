@@ -1,0 +1,213 @@
+id: 0x248
+name: 'ENGINE_DYNAMIC_DATA_V2'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine and resistive torque, gearbox torque limits and gear-shift state, second version of the engine ECU dynamic frame.'
+  fr: 'Couple moteur thermique et résistant, limites de couple boîte de vitesses et état de passage de rapport, seconde version de la trame dynamique du calculateur moteur.'
+  es: 'Par del motor térmico y resistente, límites de par de la caja de cambios y estado de cambio de marcha, segunda versión de la trama dinámica de la centralita del motor.'
+  de: 'Verbrennungsmotor- und Widerstandsdrehmoment, Getriebedrehmomentgrenzen und Schaltzustand, zweite Version des dynamischen Rahmens des Motorsteuergeräts.'
+  it: 'Coppia motore termico e resistente, limiti di coppia del cambio e stato di cambiata, seconda versione della trama dinamica della centralina motore.'
+  pl: 'Moment obrotowy silnika spalinowego i moment oporowy, limity momentu skrzyni biegów i stan zmiany biegu, druga wersja ramki dynamicznej sterownika silnika.'
+  ru: 'Крутящий момент теплового двигателя и момент сопротивления, пределы момента коробки передач и состояние переключения передачи, вторая версия динамического кадра блока управления двигателем.'
+  zh: '热机扭矩与阻力扭矩、变速箱扭矩限值及换挡状态,发动机控制单元动态帧的第二版本。'
+  hu: 'Belső égésű motor nyomatéka és ellenállási nyomaték, a váltó nyomatékhatárai és a fokozatváltás állapota, a motorvezérlő dinamikus keretének második változata.'
+  pt: 'Binário do motor e resistente, limites de binário da caixa de velocidades e estado de mudança de velocidade, segunda versão da trama dinâmica da unidade de controlo do motor.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers: ['ABS']
+
+signals:
+  EMACHINE_TORQUE_REQUEST_RAW:
+    bits: '1.7-2.5'
+    comment:
+      en: 'Electric machine torque request, before processing'
+      fr: 'Couple demandé à la machine électrique, avant traitement'
+      es: 'Par solicitado a la máquina eléctrica, antes del procesamiento'
+      de: 'Angefordertes Drehmoment der E-Maschine, vor der Verarbeitung'
+      it: 'Coppia richiesta alla macchina elettrica, prima dell''elaborazione'
+      pl: 'Moment żądany od maszyny elektrycznej, przed przetworzeniem'
+      ru: 'Момент, запрошенный от электромашины, до обработки'
+      zh: '对电机的扭矩请求(处理前)'
+      hu: 'A villanymotortól kért nyomaték, feldolgozás előtt'
+      pt: 'Binário solicitado à máquina elétrica, antes do processamento'
+    type: 'uint'
+    factor: 0.5
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  ENGINE_TORQUE:
+    bits: '2.4-3.2'
+    comment:
+      en: 'Engine torque'
+      fr: 'Couple moteur'
+      es: 'Par de motor'
+      de: 'Motordrehmoment'
+      it: 'Coppia motore'
+      pl: 'Moment obrotowy silnika'
+      ru: 'Крутящий момент двигателя'
+      zh: '发动机扭矩'
+      hu: 'Motornyomaték'
+      pt: 'Binário do motor'
+    type: 'uint'
+    factor: 0.5
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  ENGINE_LOSS_TORQUE:
+    bits: '3.1-4.1'
+    comment:
+      en: 'Engine loss torque'
+      fr: 'Couple de perte moteur'
+      es: 'Par de pérdida del motor'
+      de: 'Motorverlustmoment'
+      it: 'Coppia di perdita motore'
+      pl: 'Moment strat silnika'
+      ru: 'Момент потерь двигателя'
+      zh: '发动机损耗扭矩'
+      hu: 'Motor veszteségi nyomatéka'
+      pt: 'Binário de perda do motor'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 255
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0x00
+
+  IDLE_SPEED_REGULATION_TORQUE:
+    bits: '4.0-6.6'
+    comment:
+      en: 'Idle speed regulation torque'
+      fr: 'Couple de régulation du régime de ralenti'
+      es: 'Par de regulación del ralentí'
+      de: 'Leerlaufregelungsdrehmoment'
+      it: 'Coppia di regolazione del regime minimo'
+      pl: 'Moment regulacji obrotów biegu jałowego'
+      ru: 'Момент регулирования холостого хода'
+      zh: '怠速调节扭矩'
+      hu: 'Alapjárati fordulatszám-szabályozó nyomaték'
+      pt: 'Binário de regulação do regime de ralenti'
+    type: 'uint'
+    factor: 0.5
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  MAX_ENGINE_TORQUE:
+    bits: '6.5-7.3'
+    comment:
+      en: 'Maximum engine torque'
+      fr: 'Couple moteur maximal'
+      es: 'Par de motor máximo'
+      de: 'Maximales Motordrehmoment'
+      it: 'Coppia motore massima'
+      pl: 'Maksymalny moment obrotowy silnika'
+      ru: 'Максимальный крутящий момент двигателя'
+      zh: '最大发动机扭矩'
+      hu: 'Maximális motornyomaték'
+      pt: 'Binário máximo do motor'
+    type: 'uint'
+    factor: 0.5
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  ENGINE_TORQUE_PRECISION_INDEX:
+    bits: '7.2-8.7'
+    comment:
+      en: 'Engine torque precision index'
+      fr: 'Indice de précision du couple moteur'
+      es: 'Índice de precisión del par de motor'
+      de: 'Genauigkeitsindex des Motordrehmoments'
+      it: 'Indice di precisione della coppia motore'
+      pl: 'Wskaźnik dokładności momentu obrotowego silnika'
+      ru: 'Индекс точности крутящего момента двигателя'
+      zh: '发动机扭矩精度指数'
+      hu: 'A motornyomaték pontossági indexe'
+      pt: 'Índice de precisão do binário do motor'
+    type: 'uint'
+    factor: 1
+    min: 1
+    max: 10
+    invalid: 0x0F
+    default: 0x00
+
+  COMFORT_BACKLASH_DETECTION_STATUS:
+    bits: '8.6-8.5'
+    comment:
+      en: 'Driveline comfort backlash detection status'
+      fr: 'État de détection du jeu de confort (jeu d''agrément) de la transmission'
+      es: 'Estado de detección de la holgura de confort de la transmisión'
+      de: 'Status der Erkennung des Komfort-Spiels im Antriebsstrang'
+      it: 'Stato di rilevamento del gioco di comfort della trasmissione'
+      pl: 'Stan wykrywania luzu komfortowego układu napędowego'
+      ru: 'Статус обнаружения комфортного люфта трансмиссии'
+      zh: '传动系舒适间隙检测状态'
+      hu: 'A hajtáslánc kényelmi holtjátékának felismerési állapota'
+      pt: 'Estado de deteção da folga de conforto da transmissão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Detection inactive'
+        fr: 'Détection inactive'
+        es: 'Detección inactiva'
+        de: 'Erkennung inaktiv'
+        it: 'Rilevamento inattivo'
+        pl: 'Wykrywanie nieaktywne'
+        ru: 'Обнаружение неактивно'
+        zh: '检测未激活'
+        hu: 'Érzékelés inaktív'
+        pt: 'Deteção inativa'
+      0x01:
+        en: 'Detection in progress'
+        fr: 'Détection en cours'
+        es: 'Detección en curso'
+        de: 'Erkennung läuft'
+        it: 'Rilevamento in corso'
+        pl: 'Wykrywanie w toku'
+        ru: 'Обнаружение выполняется'
+        zh: '检测进行中'
+        hu: 'Észlelés folyamatban'
+        pt: 'Deteção em curso'
+      0x02:
+        en: 'Detection completed'
+        fr: 'Détection effective'
+        es: 'Detección efectiva'
+        de: 'Erkennung abgeschlossen'
+        it: 'Rilevamento effettuato'
+        pl: 'Wykrywanie zakończone'
+        ru: 'Обнаружение завершено'
+        zh: '检测完成'
+        hu: 'Érzékelés befejezve'
+        pt: 'Deteção concluída'
+      0x03:
+        en: 'Detection ended'
+        fr: 'Fin de détection'
+        es: 'Fin de la detección'
+        de: 'Erkennung beendet'
+        it: 'Fine del rilevamento'
+        pl: 'Koniec wykrywania'
+        ru: 'Обнаружение завершено'
+        zh: '检测结束'
+        hu: 'Az érzékelés vége'
+        pt: 'Fim da deteção'
+
+  UNUSED_1:
+    bits: '8.4-8.0'
+    unused: true

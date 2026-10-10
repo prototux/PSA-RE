@@ -1,0 +1,129 @@
+id: 0x1ED
+name: 'ESC_EXTERNAL_TARGET_REQUEST'
+type: 'can'
+length: 4
+comment:
+  en: 'External stability control target request (e.g. from a driving assistance system), with frame counter and checksum.'
+  fr: 'Requête externe de consigne pour le contrôle de stabilité (ex. aide à la conduite), avec compteur de trame et somme de contrôle.'
+  es: 'Solicitud externa de consigna para el control de estabilidad (p. ej. desde un sistema de asistencia a la conducción), con contador de trama y suma de comprobación.'
+  de: 'Externe Sollwertanforderung für die Stabilitätskontrolle (z. B. von einem Fahrassistenzsystem), mit Rahmenzähler und Prüfsumme.'
+  it: 'Richiesta esterna di setpoint per il controllo di stabilità (ad es. da un sistema di assistenza alla guida), con contatore di trama e checksum.'
+  pl: 'Zewnętrzne żądanie wartości zadanej dla kontroli stabilności (np. z systemu wspomagania jazdy), z licznikiem ramek i sumą kontrolną.'
+  ru: 'Внешний запрос уставки для системы контроля устойчивости (например, от системы помощи водителю), со счётчиком кадров и контрольной суммой.'
+  zh: '来自(例如驾驶辅助系统的)车身稳定控制外部目标请求,含帧计数器和校验和。'
+  hu: 'Külső célérték-kérés a menetstabilizáló rendszer számára (pl. vezetéstámogató rendszertől), keretszámlálóval és ellenőrző összeggel.'
+  pt: 'Pedido de alvo do controlo de estabilidade externo (por exemplo, de um sistema de assistência à condução), com contador de trama e soma de verificação.'
+periodicity: ['10ms']
+senders: ['ABS']
+receivers: ['EBB']
+
+signals:
+  PROCESS_COUNTER:
+    bits: '1.7-1.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process sur 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit frame checksum (init value 0xD)'
+      fr: 'Somme de contrôle de trame sur 4 bits (valeur initiale 0xD)'
+      es: 'Suma de comprobación de trama de 4 bits (valor inicial 0xD)'
+      de: '4-Bit-Frame-Prüfsumme (Anfangswert 0xD)'
+      it: 'Checksum del frame a 4 bit (valore iniziale 0xD)'
+      pl: '4-bitowa suma kontrolna ramki (wartość początkowa 0xD)'
+      ru: '4-битная контрольная сумма кадра (начальное значение 0xD)'
+      zh: '4位帧校验和(初始值0xD)'
+      hu: '4 bites keret-ellenőrzőösszeg (kezdőérték 0xD)'
+      pt: 'Soma de verificação de trama de 4 bits (valor inicial 0xD)'
+    type: 'uint'
+
+  EBR_HYDRAULIC_FLOW_TARGET:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Hydraulic flow requested for the EBR (electric brake regeneration) function'
+      fr: 'Débit hydraulique demandé pour la fonction EBR (récupération électrique au freinage)'
+      es: 'Caudal hidráulico solicitado para la función EBR (regeneración eléctrica de frenado)'
+      de: 'Für die EBR-Funktion (elektrische Bremsrekuperation) angeforderter Hydraulikdurchfluss'
+      it: 'Portata idraulica richiesta per la funzione EBR (recupero elettrico in frenata)'
+      pl: 'Żądany przepływ hydrauliczny dla funkcji EBR (elektryczna rekuperacja hamowania)'
+      ru: 'Запрошенный гидравлический расход для функции EBR (электрическая рекуперация при торможении)'
+      zh: 'EBR(电动制动能量回收)功能所需的液压流量'
+      hu: 'Az EBR (elektromos fékrekuperációs) funkcióhoz kért hidraulikaáramlás'
+      pt: 'Caudal hidráulico solicitado para a função EBR (recuperação elétrica de travagem)'
+    type: 'sint'
+    factor: 0.007813
+    min: -252.000502
+    max: 252.000502
+    units: 'mL/s'
+    invalid: 0x7FFF
+    default: 0x00
+
+  EBR_ACTIVATION_REQUEST:
+    bits: '4.7-4.6'
+    comment:
+      en: 'EBR (electric brake regeneration) function activation request'
+      fr: 'Demande d''activation de la fonction EBR (récupération électrique au freinage)'
+      es: 'Solicitud de activación de la función EBR (regeneración eléctrica de frenado)'
+      de: 'Aktivierungsanforderung der EBR-Funktion (elektrische Bremsrekuperation)'
+      it: 'Richiesta di attivazione della funzione EBR (recupero elettrico in frenata)'
+      pl: 'Żądanie aktywacji funkcji EBR (elektryczna rekuperacja hamowania)'
+      ru: 'Запрос активации функции EBR (электрическая рекуперация при торможении)'
+      zh: 'EBR(电动制动能量回收)功能激活请求'
+      hu: 'Az EBR (elektromos fékrekuperációs) funkció aktiválási kérése'
+      pt: 'Pedido de ativação da função EBR (recuperação elétrica de travagem)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'qTarget off'
+        fr: 'qTarget désactivé'
+        es: 'qTarget desactivado'
+        de: 'qTarget aus'
+        it: 'qTarget disattivato'
+        pl: 'qTarget wyłączone'
+        ru: 'qTarget выключено'
+        zh: 'qTarget 关闭'
+        hu: 'qTarget kikapcsolva'
+        pt: 'qTarget desativado'
+      0x01:
+        en: 'qTarget EBR'
+        fr: 'qTarget EBR'
+        es: 'qTarget EBR'
+        de: 'qTarget EBR'
+        it: 'qTarget EBR'
+        pl: 'qTarget EBR'
+        ru: 'qTarget EBR'
+        zh: 'qTarget EBR'
+        hu: 'qTarget EBR'
+        pt: 'qTarget EBR'
+      0x02:
+        en: 'Target EBR max performance'
+        fr: 'EBR cible performance maximale'
+        es: 'EBR objetivo de rendimiento máximo'
+        de: 'EBR-Ziel maximale Leistung'
+        it: 'EBR target massime prestazioni'
+        pl: 'Docelowy EBR maksymalnej wydajności'
+        ru: 'Целевая максимальная эффективность EBR'
+        zh: '目标EBR最大性能'
+        hu: 'Cél EBR maximális teljesítmény'
+        pt: 'EBR alvo de desempenho máximo'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '4.5-4.0'
+    unused: true

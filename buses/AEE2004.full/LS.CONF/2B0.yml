@@ -1,0 +1,282 @@
+id: 0x2B0
+name: 'CD_CHANGER_TEXT_DISPLAY_FLOW_CONTROL'
+type: 'can'
+length: 3
+comment:
+  en: 'ISO-TP flow control frame for the CD changer text display multi-frame reply (block size, flow status, separation time).'
+  fr: 'Trame de contrôle de flux ISO-TP pour la réponse multi-trame CD changer text display (taille de bloc, état de flux, temps de séparation).'
+  es: 'Trama de control de flujo ISO-TP para la respuesta multitrama CD changer text display (tamaño de bloque, estado de flujo, tiempo de separación).'
+  de: 'ISO-TP-Flusssteuerungsrahmen für die Mehrfachrahmen-Antwort CD changer text display (Blockgröße, Flussstatus, Trennzeit).'
+  it: 'Trama di controllo di flusso ISO-TP per la risposta multi-trama CD changer text display (dimensione blocco, stato di flusso, tempo di separazione).'
+  pl: 'Ramka kontroli przepływu ISO-TP dla wieloramkowej odpowiedzi CD changer text display (rozmiar bloku, stan przepływu, czas separacji).'
+  ru: 'Кадр управления потоком ISO-TP для многокадрового ответа CD changer text display (размер блока, статус потока, время разделения).'
+  zh: '用于CD changer text display多帧应答的ISO-TP流控制帧(块大小、流状态、间隔时间)。'
+  hu: 'ISO-TP folyamvezérlő keret a CD changer text display többkeretes válaszhoz (blokkméret, folyamallapot, elválasztási idő).'
+  pt: 'Trama de controlo de fluxo ISO-TP para a resposta multi-trama de texto do leitor de CDs (tamanho de bloco, estado de fluxo, tempo de separação).'
+periodicity: ['trigger']
+senders: []  # TODO: find the sender(s)
+
+signals:
+  NPCI_HEADER:
+    bits: '1.7-1.4'
+    comment:
+      en: 'NPCI header (per the OSEK-COM segmentation standard)'
+      fr: 'En-tête NPCI (selon la norme de segmentation OSEK-COM)'
+      es: 'Cabecera NPCI (según la norma de segmentación OSEK-COM)'
+      de: 'NPCI-Header (gemäß dem OSEK-COM-Segmentierungsstandard)'
+      it: 'Intestazione NPCI (secondo lo standard di segmentazione OSEK-COM)'
+      pl: 'Nagłówek NPCI (zgodnie ze standardem segmentacji OSEK-COM)'
+      ru: 'Заголовок NPCI (согласно стандарту сегментации OSEK-COM)'
+      zh: 'NPCI 报头(依据 OSEK-COM 分段标准)'
+      hu: 'NPCI fejléc (az OSEK-COM szegmentálási szabvány szerint)'
+      pt: 'Cabeçalho NPCI (segundo a norma de segmentação OSEK-COM)'
+    type: 'enum'
+    mux_selector: true
+    values:
+      0x00:
+        en: 'Single frame (SF)'
+        fr: 'Single frame (SF)'
+        es: 'Single frame (SF)'
+        de: 'Single frame (SF)'
+        it: 'Single frame (SF)'
+        pl: 'Single frame (SF)'
+        ru: 'Single frame (SF)'
+        zh: 'Single frame (SF)'
+        hu: 'Single frame (SF)'
+        pt: 'Single frame (SF)'
+      0x01:
+        en: 'First frame (FF)'
+        fr: 'First frame (FF)'
+        es: 'First frame (FF)'
+        de: 'First frame (FF)'
+        it: 'First frame (FF)'
+        pl: 'First frame (FF)'
+        ru: 'First frame (FF)'
+        zh: 'First frame (FF)'
+        hu: 'First frame (FF)'
+        pt: 'First frame (FF)'
+      0x02:
+        en: 'Flow control (FC)'
+        fr: 'Flow control (FC)'
+        es: 'Flow control (FC)'
+        de: 'Flow control (FC)'
+        it: 'Flow control (FC)'
+        pl: 'Flow control (FC)'
+        ru: 'Flow control (FC)'
+        zh: 'Flow control (FC)'
+        hu: 'Flow control (FC)'
+        pt: 'Flow control (FC)'
+
+  ISOTP_FLOW_STATUS:
+    bits: '1.3-1.0'
+    comment:
+      en: 'ISO-TP flow control status (clear to send / wait)'
+      fr: 'État de contrôle de flux ISO-TP (prêt à envoyer / attente)'
+      es: 'Estado de control de flujo ISO-TP (listo para enviar / espera)'
+      de: 'ISO-TP-Flusssteuerungsstatus (sendebereit / warten)'
+      it: 'Stato di controllo del flusso ISO-TP (pronto a inviare / attesa)'
+      pl: 'Stan sterowania przepływem ISO-TP (gotowość do wysyłki / oczekiwanie)'
+      ru: 'Состояние управления потоком ISO-TP (готов к передаче / ожидание)'
+      zh: 'ISO-TP流控状态(可以发送/等待)'
+      hu: 'ISO-TP folyamvezérlési állapot (küldésre kész / várakozás)'
+      pt: 'Estado de controlo de fluxo ISO-TP (livre para enviar/esperar)'
+    type: 'enum'
+    mux:
+      selector: 'NPCI_HEADER'
+      values: [0x02]
+    values:
+      0x00:
+        en: 'Clear to send'
+        fr: 'Prêt à envoyer'
+        es: 'Listo para enviar'
+        de: 'Sendebereit'
+        it: 'Pronto per l''invio'
+        pl: 'Gotowe do wysłania'
+        ru: 'Готов к отправке'
+        zh: '准备发送'
+        hu: 'Küldésre kész'
+        pt: 'Pronto para enviar'
+      0x01:
+        en: 'Wait'
+        fr: 'Attendre'
+        es: 'Esperar'
+        de: 'Warten'
+        it: 'Attendere'
+        pl: 'Czekaj'
+        ru: 'Подождите'
+        zh: '等待'
+        hu: 'Várakozás'
+        pt: 'Aguardar'
+
+  ISOTP_BLOCK_SIZE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'ISO-TP block size parameter'
+      fr: 'Paramètre de taille de bloc ISO-TP'
+      es: 'Parámetro de tamaño de bloque ISO-TP'
+      de: 'ISO-TP-Blockgrößenparameter'
+      it: 'Parametro di dimensione blocco ISO-TP'
+      pl: 'Parametr rozmiaru bloku ISO-TP'
+      ru: 'Параметр размера блока ISO-TP'
+      zh: 'ISO-TP块大小参数'
+      hu: 'ISO-TP blokkméret paraméter'
+      pt: 'Parâmetro de tamanho de bloco ISO-TP'
+    type: 'uint'
+    mux:
+      selector: 'NPCI_HEADER'
+      values: [0x02]
+
+  ISOTP_SEPARATION_TIME:
+    bits: '3.7-3.0'
+    comment:
+      en: 'ISO-TP minimum separation time between consecutive frames'
+      fr: 'Temps de séparation minimum ISO-TP entre trames consécutives'
+      es: 'Tiempo mínimo de separación ISO-TP entre tramas consecutivas'
+      de: 'Minimaler ISO-TP-Abstand zwischen aufeinanderfolgenden Rahmen'
+      it: 'Tempo minimo di separazione ISO-TP tra frame consecutivi'
+      pl: 'Minimalny czas separacji ISO-TP między kolejnymi ramkami'
+      ru: 'Минимальный интервал ISO-TP между последовательными кадрами'
+      zh: '连续帧之间的ISO-TP最小间隔时间'
+      hu: 'ISO-TP minimális elválasztási idő az egymást követő keretek között'
+      pt: 'Tempo mínimo de separação ISO-TP entre tramas consecutivas'
+    type: 'uint'
+    mux:
+      selector: 'NPCI_HEADER'
+      values: [0x02]
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      NPCI_HEADER:
+        bits: '1.7-1.4'
+        comment:
+          en: 'NPCI header (per the OSEK-COM segmentation standard)'
+          fr: 'En-tête NPCI (selon la norme de segmentation OSEK-COM)'
+          es: 'Cabecera NPCI (según la norma de segmentación OSEK-COM)'
+          de: 'NPCI-Header (gemäß dem OSEK-COM-Segmentierungsstandard)'
+          it: 'Intestazione NPCI (secondo lo standard di segmentazione OSEK-COM)'
+          pl: 'Nagłówek NPCI (zgodnie ze standardem segmentacji OSEK-COM)'
+          ru: 'Заголовок NPCI (согласно стандарту сегментации OSEK-COM)'
+          zh: 'NPCI 报头(依据 OSEK-COM 分段标准)'
+          hu: 'NPCI fejléc (az OSEK-COM szegmentálási szabvány szerint)'
+          pt: 'Cabeçalho NPCI (segundo a norma de segmentação OSEK-COM)'
+        type: 'enum'
+        mux_selector: true
+        values:
+          0x00:
+            en: 'Single frame (SF)'
+            fr: 'Single frame (SF)'
+            es: 'Single frame (SF)'
+            de: 'Single frame (SF)'
+            it: 'Single frame (SF)'
+            pl: 'Single frame (SF)'
+            ru: 'Single frame (SF)'
+            zh: 'Single frame (SF)'
+            hu: 'Single frame (SF)'
+            pt: 'Single frame (SF)'
+          0x01:
+            en: 'First frame (FF)'
+            fr: 'First frame (FF)'
+            es: 'First frame (FF)'
+            de: 'First frame (FF)'
+            it: 'First frame (FF)'
+            pl: 'First frame (FF)'
+            ru: 'First frame (FF)'
+            zh: 'First frame (FF)'
+            hu: 'First frame (FF)'
+            pt: 'First frame (FF)'
+          0x02:
+            en: 'Flow control (FC)'
+            fr: 'Flow control (FC)'
+            es: 'Flow control (FC)'
+            de: 'Flow control (FC)'
+            it: 'Flow control (FC)'
+            pl: 'Flow control (FC)'
+            ru: 'Flow control (FC)'
+            zh: 'Flow control (FC)'
+            hu: 'Flow control (FC)'
+            pt: 'Flow control (FC)'
+      FLOW_STATUS:
+        bits: '1.3-1.0'
+        comment:
+          en: 'Flow status (per the OSEK-COM segmentation standard)'
+          fr: 'Flow Status (cf. norme de segmentation OSEK-COM)'
+          es: 'Estado de flujo (según el estándar de segmentación OSEK-COM)'
+          de: 'Flusssteuerungsstatus (gemäß dem OSEK-COM-Segmentierungsstandard)'
+          it: 'Stato di flusso (secondo lo standard di segmentazione OSEK-COM)'
+          pl: 'Stan przepływu (zgodnie ze standardem segmentacji OSEK-COM)'
+          ru: 'Статус потока (согласно стандарту сегментации OSEK-COM)'
+          zh: '流控制状态（依据 OSEK-COM 分段标准）'
+          hu: 'Folyamvezérlési állapot (az OSEK-COM szegmentálási szabvány szerint)'
+          pt: 'Estado de fluxo (segundo a norma de segmentação OSEK-COM)'
+        type: 'enum'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+        values:
+          0x00:
+            en: 'Clear to send'
+            fr: 'Prêt à envoyer'
+            es: 'Listo para enviar'
+            de: 'Sendebereit'
+            it: 'Pronto per l''invio'
+            pl: 'Gotowe do wysłania'
+            ru: 'Готов к отправке'
+            zh: '准备发送'
+            hu: 'Küldésre kész'
+            pt: 'Pronto para enviar'
+          0x01:
+            en: 'Wait'
+            fr: 'Attendre'
+            es: 'Esperar'
+            de: 'Warten'
+            it: 'Attendere'
+            pl: 'Czekaj'
+            ru: 'Подождите'
+            zh: '等待'
+            hu: 'Várakozás'
+            pt: 'Aguardar'
+      BLOCK_SIZE:
+        bits: '2.7-2.0'
+        comment:
+          en: 'Block size (per the OSEK-COM segmentation standard)'
+          fr: 'Bloc Size (cf. norme de segmentation OSEK-COM)'
+          es: 'Tamaño de bloque (según el estándar de segmentación OSEK-COM)'
+          de: 'Blockgröße (gemäß dem OSEK-COM-Segmentierungsstandard)'
+          it: 'Dimensione del blocco (secondo lo standard di segmentazione OSEK-COM)'
+          pl: 'Rozmiar bloku (zgodnie ze standardem segmentacji OSEK-COM)'
+          ru: 'Размер блока (согласно стандарту сегментации OSEK-COM)'
+          zh: '块大小（依据 OSEK-COM 分段标准）'
+          hu: 'Blokkméret (az OSEK-COM szegmentálási szabvány szerint)'
+          pt: 'Tamanho de bloco (conforme a norma de segmentação OSEK-COM)'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]
+      MIN_SEPARATION_TIME:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Minimum separation time (per the OSEK-COM segmentation standard)'
+          fr: 'Minimum Separation Time (cf. norme de segmentation OSEK-COM)'
+          es: 'Tiempo mínimo de separación (según el estándar de segmentación OSEK-COM)'
+          de: 'Mindesttrennzeit (gemäß dem OSEK-COM-Segmentierungsstandard)'
+          it: 'Tempo minimo di separazione (secondo lo standard di segmentazione OSEK-COM)'
+          pl: 'Minimalny czas separacji (zgodnie ze standardem segmentacji OSEK-COM)'
+          ru: 'Минимальный интервал разделения (согласно стандарту сегментации OSEK-COM)'
+          zh: '最小帧间隔时间（依据 OSEK-COM 分段标准）'
+          hu: 'Minimális elválasztási idő (az OSEK-COM szegmentálási szabvány szerint)'
+          pt: 'Tempo mínimo de separação (segundo a norma de segmentação OSEK-COM)'
+        type: 'uint'
+        mux:
+          selector: 'NPCI_HEADER'
+          values: [0x02]

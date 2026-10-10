@@ -1,0 +1,466 @@
+id: 0x56C
+name: 'GAS_SYSTEM_DATA'
+type: 'can'
+length: 5
+comment:
+  en: 'LPG system data from the gas ECU: fuel consumption, tank capacity, remaining level and forced-petrol mode.'
+  fr: 'Données du système GPL issues du calculateur gaz : consommation, capacité du réservoir, niveau restant et mode essence forcé.'
+  es: 'Datos del sistema GLP de la ECU de gas: consumo, capacidad del depósito, nivel restante y modo gasolina forzado.'
+  de: 'Flüssiggas-Systemdaten vom Gassteuergerät: Verbrauch, Tankkapazität, Restfüllstand und erzwungener Benzinbetrieb.'
+  it: 'Dati del sistema GPL dalla centralina gas: consumo, capacità del serbatoio, livello residuo e modalità benzina forzata.'
+  pl: 'Dane instalacji LPG ze sterownika gazowego: zużycie, pojemność zbiornika, pozostały poziom i wymuszony tryb benzynowy.'
+  ru: 'Данные системы ГБО от блока управления газом: расход, объём бака, оставшийся уровень и принудительный бензиновый режим.'
+  zh: '来自燃气控制单元的LPG系统数据:油耗、油箱容量、剩余液位及强制汽油模式。'
+  hu: 'Az LPG-rendszer adatai a gázvezérlőtől: fogyasztás, tartálykapacitás, maradék szint és kényszerített benzin üzemmód.'
+  pt: 'Dados do sistema GPL da unidade de controlo a gás: consumo de combustível, capacidade do depósito, nível restante e modo gasolina forçado.'
+periodicity: ['100ms']
+senders: ['GAS']
+receivers: ['CMM']
+
+signals:
+  CNG_MODE_LAMBDA_MINIMUM:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Minimum lambda value in CNG (natural gas) mode'
+      fr: 'Valeur lambda minimale en mode gaz naturel (GNV)'
+      es: 'Valor lambda mínimo en modo de gas natural (GNV)'
+      de: 'Minimaler Lambdawert im Erdgasmodus (CNG)'
+      it: 'Valore lambda minimo in modalità gas naturale (CNG)'
+      pl: 'Minimalna wartość lambda w trybie gazu ziemnego (CNG)'
+      ru: 'Минимальное значение лямбда в режиме природного газа (КПГ)'
+      zh: '天然气(CNG)模式下的最小λ值'
+      hu: 'A minimális lambdaérték földgáz (CNG) üzemmódban'
+      pt: 'Valor mínimo de lambda em modo GNC (gás natural)'
+    type: 'uint'
+    factor: 0.006
+    offset: 0.5
+    min: 0.5
+    max: 2
+    default: 0x53
+
+  PETROL_MODE_FORCED_BY_GAS_FAULT:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Petrol mode forced due to a CNG (natural gas) system fault'
+      fr: 'Mode essence forcé en raison d''un défaut du système gaz naturel (GNV)'
+      es: 'Modo gasolina forzado debido a un fallo del sistema de gas natural (GNV)'
+      de: 'Erzwungener Benzinmodus aufgrund eines Fehlers im Erdgassystem (CNG)'
+      it: 'Modalità benzina forzata a causa di un guasto del sistema a gas naturale (CNG)'
+      pl: 'Wymuszony tryb benzynowy z powodu usterki układu gazu ziemnego (CNG)'
+      ru: 'Принудительный бензиновый режим из-за неисправности системы природного газа (КПГ)'
+      zh: '因天然气(CNG)系统故障强制切换至汽油模式'
+      hu: 'Kényszerített benzin üzemmód a földgáz (CNG) rendszer hibája miatt'
+      pt: 'Modo gasolina forçado devido a uma falha do sistema de gás natural (GNV)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Minor fault of the stop-and-start function'
+        fr: 'Défaut mineur de la fonction Stop & Start'
+        es: 'Fallo menor de la función Stop & Start'
+        de: 'Kleinerer Fehler der Stop & Start-Funktion'
+        it: 'Guasto minore della funzione Stop & Start'
+        pl: 'Drobna usterka funkcji Stop & Start'
+        ru: 'Незначительная неисправность функции Stop & Start'
+        zh: '启停功能轻微故障'
+        hu: 'Stop & Start funkció kisebb hibája'
+        pt: 'Avaria menor da função stop-and-start'
+      0x02:
+        en: 'Critical failure for the stop-and-start function'
+        fr: 'Défaut majeur de la fonction Stop & Start'
+        es: 'Fallo mayor de la función Stop & Start'
+        de: 'Schwerwiegender Fehler der Stop & Start-Funktion'
+        it: 'Guasto grave della funzione Stop & Start'
+        pl: 'Poważna usterka funkcji Stop & Start'
+        ru: 'Критическая неисправность функции Stop & Start'
+        zh: '启停功能严重故障'
+        hu: 'Stop & Start funkció kritikus hibája'
+        pt: 'Falha crítica da função stop-and-start'
+      0x03:
+        en: 'Severe fault'
+        fr: 'Défaut grave'
+        es: 'Fallo grave'
+        de: 'Schwerwiegender Fehler'
+        it: 'Guasto grave'
+        pl: 'Poważna usterka'
+        ru: 'Серьёзная неисправность'
+        zh: '严重故障'
+        hu: 'Súlyos hiba'
+        pt: 'Avaria grave'
+
+  CNG_MODE_REQUEST_STATE:
+    bits: '2.5'
+    comment:
+      en: 'Status of the request to switch to CNG (natural gas) mode'
+      fr: 'État de la demande de passage en mode gaz naturel (GNV)'
+      es: 'Estado de la solicitud de cambio a modo de gas natural (GNV)'
+      de: 'Status der Anforderung zum Umschalten in den Erdgasmodus (CNG)'
+      it: 'Stato della richiesta di passaggio alla modalità gas naturale (CNG)'
+      pl: 'Stan żądania przełączenia na tryb gazu ziemnego (CNG)'
+      ru: 'Статус запроса на переключение в режим природного газа (КПГ)'
+      zh: '切换至天然气(CNG)模式请求状态'
+      hu: 'A földgáz (CNG) üzemmódra váltás kérésének állapota'
+      pt: 'Estado do pedido de mudança para modo de gás natural (GNV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request to switch to gas mode'
+        fr: 'Pas de demande de passage en mode gaz'
+        es: 'Sin solicitud de paso a modo gas'
+        de: 'Keine Anforderung zum Wechsel in den Gasmodus'
+        it: 'Nessuna richiesta di passaggio in modalità gas'
+        pl: 'Brak żądania przejścia w tryb gazowy'
+        ru: 'Нет запроса перехода в газовый режим'
+        zh: '无切换至燃气模式的请求'
+        hu: 'Nincs kérés a gázüzemmódba váltásra'
+        pt: 'Sem pedido de passagem a modo gás'
+      0x01:
+        en: 'Request to switch to CNG (gas) mode'
+        fr: 'Demande de passage en mode gaz'
+        es: 'Solicitud de cambio a modo gas'
+        de: 'Anforderung zum Umschalten in den Gasmodus'
+        it: 'Richiesta di passaggio alla modalità gas'
+        pl: 'Żądanie przełączenia na tryb gazowy'
+        ru: 'Запрос переключения в газовый режим'
+        zh: '请求切换至燃气模式'
+        hu: 'Gáz üzemmódra váltási kérés'
+        pt: 'Pedido de mudança para modo gás'
+
+  FUEL_SYSTEM_ADAPTATION_RESET_REQUEST:
+    bits: '2.4'
+    comment:
+      en: 'Request to reset the fuel system adaptation values'
+      fr: 'Demande de réinitialisation des valeurs adaptatives du système carburant'
+      es: 'Solicitud de reinicio de los valores adaptativos del sistema de combustible'
+      de: 'Anforderung zum Zurücksetzen der Adaptionswerte des Kraftstoffsystems'
+      it: 'Richiesta di azzeramento dei valori adattivi del sistema carburante'
+      pl: 'Żądanie zresetowania wartości adaptacyjnych układu paliwowego'
+      ru: 'Запрос на сброс адаптивных значений топливной системы'
+      zh: '燃油系统自适应值重置请求'
+      hu: 'Az üzemanyagrendszer adaptív értékeinek visszaállítási kérése'
+      pt: 'Pedido de reinício dos valores adaptativos do sistema de combustível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reset request'
+        fr: 'Demande de reset'
+        es: 'Solicitud de reinicio'
+        de: 'Rücksetzanforderung'
+        it: 'Richiesta di reset'
+        pl: 'Żądanie resetu'
+        ru: 'Запрос сброса'
+        zh: '复位请求'
+        hu: 'Visszaállítási kérés'
+        pt: 'Pedido de reposição'
+      0x01:
+        en: 'Reset request'
+        fr: 'Demande de réinitialisation'
+        es: 'Solicitud de reinicio'
+        de: 'Rücksetzanforderung'
+        it: 'Richiesta di azzeramento'
+        pl: 'Żądanie zerowania'
+        ru: 'Запрос сброса'
+        zh: '复位请求'
+        hu: 'Visszaállítási kérés'
+        pt: 'Pedido de reinicialização'
+
+  CNG_TYPE_ADAPTATION_CONVERGED:
+    bits: '2.3'
+    comment:
+      en: 'Flag indicating that the CNG (natural gas) type adaptation has converged'
+      fr: 'Indicateur de convergence de l''adaptation du type de gaz naturel (GNV)'
+      es: 'Indicador de convergencia de la adaptación del tipo de gas natural (GNV)'
+      de: 'Kennzeichen für die abgeschlossene Anpassung des Erdgastyps (CNG)'
+      it: 'Indicatore di convergenza dell''adattamento del tipo di gas naturale (CNG)'
+      pl: 'Flaga zbieżności adaptacji rodzaju gazu ziemnego (CNG)'
+      ru: 'Флаг завершения адаптации типа природного газа (КПГ)'
+      zh: '天然气(CNG)类型自适应收敛标志'
+      hu: 'A földgáz (CNG) típus adaptációjának konvergencia-jelzője'
+      pt: 'Indicador de convergência da adaptação do tipo de gás natural (GNV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'CNG type not recognized'
+        fr: 'Type GNV non reconnu'
+        es: 'Tipo de GNC no reconocido'
+        de: 'CNG-Typ nicht erkannt'
+        it: 'Tipo di GNC non riconosciuto'
+        pl: 'Nierozpoznany typ CNG'
+        ru: 'Тип CNG не распознан'
+        zh: '未识别的CNG类型'
+        hu: 'Ismeretlen CNG típus'
+        pt: 'Tipo de GNV não reconhecido'
+      0x01:
+        en: 'CNG type recognized'
+        fr: 'Type GNV reconnu'
+        es: 'Tipo de GNC reconocido'
+        de: 'CNG-Typ erkannt'
+        it: 'Tipo GNC riconosciuto'
+        pl: 'Rozpoznano typ CNG'
+        ru: 'Распознан тип КПГ (CNG)'
+        zh: '已识别CNG类型'
+        hu: 'CNG típus felismerve'
+        pt: 'Tipo GNC reconhecido'
+
+  MIL_STEADY_REQUEST_LPG:
+    bits: '2.2'
+    comment:
+      en: 'Request to light the MIL steady for an HCU fault'
+      fr: 'Demande d''allumage fixe du voyant MIL pour un défaut HCU'
+      es: 'Solicitud de encendido fijo del testigo MIL por un fallo del HCU'
+      de: 'Anforderung zum dauerhaften Aufleuchten der MIL-Leuchte bei einem HCU-Fehler'
+      it: 'Richiesta di accensione fissa della spia MIL per un guasto HCU'
+      pl: 'Żądanie stałego zapalenia kontrolki MIL z powodu usterki HCU'
+      ru: 'Запрос на постоянное включение индикатора MIL из-за неисправности HCU'
+      zh: '因HCU故障请求常亮MIL灯'
+      hu: 'A MIL lámpa folyamatos felgyújtásának kérése HCU-hiba miatt'
+      pt: 'Pedido de acendimento fixo do testemunho MIL por uma falha do HCU'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'No request'
+        es: 'No request'
+        de: 'No request'
+        it: 'No request'
+        pl: 'No request'
+        ru: 'No request'
+        zh: 'No request'
+        hu: 'No request'
+        pt: 'No request'
+      0x01:
+        en: 'Request'
+        fr: 'Requête'
+        es: 'Solicitud'
+        de: 'Anforderung'
+        it: 'Richiesta'
+        pl: 'Żądanie'
+        ru: 'Запрос'
+        zh: '请求'
+        hu: 'Kérés'
+        pt: 'Pedido'
+
+  MIL_RESET_INFO_LPG:
+    bits: '2.1'
+    comment:
+      en: 'Information about clearing an OBD fault that lights the MIL for the LPG system'
+      fr: 'Information sur l''effacement d''un défaut OBD allumant le voyant MIL pour le système GPL'
+      es: 'Información sobre el borrado de un fallo OBD que enciende el testigo MIL para el sistema de GLP'
+      de: 'Information über das Löschen eines OBD-Fehlers, der die MIL-Leuchte für das LPG-System aktiviert'
+      it: 'Informazione sulla cancellazione di un guasto OBD che accende la spia MIL per il sistema GPL'
+      pl: 'Informacja o kasowaniu usterki OBD zapalającej kontrolkę MIL dla systemu LPG'
+      ru: 'Информация об очистке неисправности OBD, зажигающей индикатор MIL для системы ГБО'
+      zh: '关于清除引发LPG系统MIL灯亮起的OBD故障的信息'
+      hu: 'Az LPG-rendszer MIL lámpáját felgyújtó OBD-hiba törlésére vonatkozó információ'
+      pt: 'Informação sobre a eliminação de uma falha OBD que acende a luz avisadora MIL para o sistema de GPL'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reset'
+        fr: 'Pas de réinitialisation'
+        es: 'Sin reinicio'
+        de: 'Kein Reset'
+        it: 'Nessun reset'
+        pl: 'Brak resetu'
+        ru: 'Сброс отсутствует'
+        zh: '无复位'
+        hu: 'Nincs visszaállítás'
+        pt: 'Sem reposição'
+      0x01:
+        en: 'Counter reset'
+        fr: 'Réinitialisation du compteur'
+        es: 'Reinicio del contador'
+        de: 'Zählerrücksetzung'
+        it: 'Reset del contatore'
+        pl: 'Resetowanie licznika'
+        ru: 'Сброс счётчика'
+        zh: '计数器复位'
+        hu: 'Számláló nullázása'
+        pt: 'Reposição do contador'
+
+  UNUSED_1:
+    bits: '2.0'
+    unused: true
+
+  LPG_CURRENT_MODE:
+    bits: '3.7-3.5'
+    comment:
+      en: 'Current LPG operating mode'
+      fr: 'Mode de fonctionnement actuel du GPL'
+      es: 'Modo de funcionamiento actual del GLP'
+      de: 'Aktueller LPG-Betriebsmodus'
+      it: 'Modalità di funzionamento attuale del GPL'
+      pl: 'Aktualny tryb pracy LPG'
+      ru: 'Текущий режим работы ГБО'
+      zh: '当前LPG运行模式'
+      hu: 'Az LPG jelenlegi üzemmódja'
+      pt: 'Modo de funcionamento atual do GPL'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'Gas'
+        fr: 'Gaz'
+        es: 'Gas'
+        de: 'Gas'
+        it: 'Gas'
+        pl: 'Gaz'
+        ru: 'Газ'
+        zh: '燃气'
+        hu: 'Gáz'
+        pt: 'Gás'
+      0x01:
+        en: 'Forced petrol: gas system faulty'
+        fr: 'Essence forcée : système gaz hors service'
+        es: 'Gasolina forzada: sistema de gas averiado'
+        de: 'Zwangsbenzinbetrieb: Gasanlage defekt'
+        it: 'Benzina forzata: impianto a gas guasto'
+        pl: 'Wymuszona benzyna: instalacja gazowa uszkodzona'
+        ru: 'Принудительный бензин: газовая система неисправна'
+        zh: '强制汽油模式:燃气系统故障'
+        hu: 'Kényszerített benzin: gázrendszer hibás'
+        pt: 'Gasolina forçada: sistema a gás avariado'
+      0x02:
+        en: 'LPG-petrol switching'
+        fr: 'Commutation GPL-essence'
+        es: 'Conmutación GLP-gasolina'
+        de: 'Umschaltung LPG-Benzin'
+        it: 'Commutazione GPL-benzina'
+        pl: 'Przełączanie LPG-benzyna'
+        ru: 'Переключение ГБО-бензин'
+        zh: 'LPG-汽油切换'
+        hu: 'LPG-benzin váltás'
+        pt: 'Comutação GPL-gasolina'
+      0x03:
+        en: 'Petrol forced: waiting for GAS conditions'
+        fr: 'Essence forcée : attente des conditions GAZ'
+        es: 'Gasolina forzada: esperando condiciones de GAS'
+        de: 'Benzin erzwungen: Warten auf GAS-Bedingungen'
+        it: 'Benzina forzata: in attesa delle condizioni GAS'
+        pl: 'Wymuszona benzyna: oczekiwanie na warunki GAZ'
+        ru: 'Принудительный бензин: ожидание условий ГАЗ'
+        zh: '强制汽油：等待燃气条件'
+        hu: 'Kényszerített benzin: GÁZ feltételekre várva'
+        pt: 'Gasolina forçada: à espera das condições de GÁS'
+      0x04:
+        en: 'LPG forced: petrol tank empty'
+        fr: 'GPL forcé : réservoir essence vide'
+        es: 'GLP forzado: depósito de gasolina vacío'
+        de: 'LPG erzwungen: Benzintank leer'
+        it: 'GPL forzato: serbatoio benzina vuoto'
+        pl: 'Wymuszone LPG: pusty zbiornik benzyny'
+        ru: 'Принудительный ГБО: бак с бензином пуст'
+        zh: '强制液化石油气:汽油箱为空'
+        hu: 'Kényszerített LPG: a benzintank üres'
+        pt: 'GPL forçado: depósito de gasolina vazio'
+      0x05:
+        en: 'Petrol-LPG switchover'
+        fr: 'Basculement essence - GPL'
+        es: 'Conmutación gasolina - GLP'
+        de: 'Umschaltung Benzin - Autogas'
+        it: 'Commutazione benzina - GPL'
+        pl: 'Przełączenie benzyna - LPG'
+        ru: 'Переключение бензин - газ'
+        zh: '汽油-燃气切换'
+        hu: 'Benzin-LPG átkapcsolás'
+        pt: 'Comutação gasolina - GPL'
+      0x06:
+        en: 'Petrol forced: gas tank empty'
+        fr: 'Essence forcée : réservoir de gaz vide'
+        es: 'Gasolina forzada: depósito de gas vacío'
+        de: 'Erzwungener Benzinbetrieb: Gastank leer'
+        it: 'Benzina forzata: serbatoio del gas vuoto'
+        pl: 'Wymuszona benzyna: pusty zbiornik gazu'
+        ru: 'Принудительный бензин: газовый бак пуст'
+        zh: '强制使用汽油:燃气箱为空'
+        hu: 'Kényszerített benzinüzem: a gáztartály üres'
+        pt: 'Gasolina forçada: depósito de gás vazio'
+      0x07:
+        en: 'Petrol'
+        fr: 'Essence'
+        es: 'Gasolina'
+        de: 'Benzin'
+        it: 'Benzina'
+        pl: 'Benzyna'
+        ru: 'Бензин'
+        zh: '汽油'
+        hu: 'Benzin'
+        pt: 'Gasolina'
+
+  LPG_TANK_CAPACITY_2:
+    bits: '3.4-4.7'
+    comment:
+      en: 'Maximum capacity of the LPG tank'
+      fr: 'Capacité maximale du réservoir de GPL'
+      es: 'Capacidad máxima del depósito de GLP'
+      de: 'Maximales Fassungsvermögen des LPG-Tanks'
+      it: 'Capacità massima del serbatoio GPL'
+      pl: 'Maksymalna pojemność zbiornika LPG'
+      ru: 'Максимальная ёмкость бака ГБО'
+      zh: 'LPG油箱最大容量'
+      hu: 'Az LPG-tartály maximális kapacitása'
+      pt: 'Capacidade máxima do depósito de GPL'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 62
+    units: 'L'
+    invalid: 0x3F
+    default: 0x00
+
+  LPG_INSTANT_CONSUMPTION:
+    bits: '4.6-5.7'
+    comment:
+      en: 'Instantaneous LPG consumption (rolling counter)'
+      fr: 'Consommation instantanée de GPL (compteur tournant)'
+      es: 'Consumo instantáneo de GLP (contador cíclico)'
+      de: 'Momentaner LPG-Verbrauch (umlaufender Zähler)'
+      it: 'Consumo istantaneo di GPL (contatore ciclico)'
+      pl: 'Chwilowe zużycie LPG (licznik cykliczny)'
+      ru: 'Мгновенный расход ГБО (циклический счётчик)'
+      zh: 'LPG瞬时消耗量(循环计数器)'
+      hu: 'Pillanatnyi LPG-fogyasztás (körbefutó számláló)'
+      pt: 'Consumo instantâneo de GPL (contador cíclico)'
+    type: 'uint'
+    factor: 80
+    min: 0
+    max: 20400
+    units: 'mm3'
+    default: 0x00
+
+  LPG_LEVEL_REMAINING:
+    bits: '5.6-5.0'
+    comment:
+      en: 'Amount of LPG remaining in the tank'
+      fr: 'Quantité de GPL restant dans le réservoir'
+      es: 'Cantidad de GLP restante en el depósito'
+      de: 'Verbleibende LPG-Menge im Tank'
+      it: 'Quantità di GPL residua nel serbatoio'
+      pl: 'Ilość pozostałego LPG w zbiorniku'
+      ru: 'Оставшееся количество ГБО в баке'
+      zh: '油箱内剩余LPG量'
+      hu: 'A tartályban maradt LPG mennyisége'
+      pt: 'Quantidade de GPL restante no depósito'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00

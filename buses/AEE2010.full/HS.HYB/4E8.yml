@@ -1,0 +1,117 @@
+id: 0x4E8
+name: 'ENGINE_ECU_DATA_7'
+type: 'can'
+length: 4
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+observations:
+  en: 'On state change of: ENGINE_ECU_TAMPER_DETECTED'
+  fr: 'Sur changement d''état de : ENGINE_ECU_TAMPER_DETECTED'
+  es: 'Al cambiar el estado de: ENGINE_ECU_TAMPER_DETECTED'
+  de: 'Bei Statusänderung von: ENGINE_ECU_TAMPER_DETECTED'
+  it: 'Al cambiamento di stato di: ENGINE_ECU_TAMPER_DETECTED'
+  pl: 'Wysyłane przy zmianie stanu: ENGINE_ECU_TAMPER_DETECTED'
+  ru: 'При изменении состояния: ENGINE_ECU_TAMPER_DETECTED'
+  zh: '当ECU_BLOCKED状态变化时'
+  hu: 'A(z) ENGINE_ECU_TAMPER_DETECTED állapotváltozásakor'
+  pt: 'Na mudança de estado de: ENGINE_ECU_TAMPER_DETECTED'
+periodicity: ['1000ms', 'trigger']
+senders: ['CMM']
+receivers: ['OBC', 'VCU']
+
+signals:
+  ENGINE_COOLANT_REGULATED_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Engine coolant regulation temperature (°C)'
+      fr: 'Température d''eau moteur de régulation (°C)'
+      es: 'Temperatura de regulación del líquido refrigerante del motor (°C)'
+      de: 'Regelungstemperatur des Motorkühlmittels (°C)'
+      it: 'Temperatura di regolazione del liquido di raffreddamento motore (°C)'
+      pl: 'Temperatura regulacyjna płynu chłodzącego silnika (°C)'
+      ru: 'Регулируемая температура охлаждающей жидкости двигателя (°C)'
+      zh: '发动机冷却液调节温度(°C)'
+      hu: 'A motorhűtőfolyadék szabályozási hőmérséklete (°C)'
+      pt: 'Temperatura de regulação do líquido de refrigeração do motor (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x28
+
+  ENGINE_ECU_TAMPER_DETECTED:
+    bits: '2.7'
+    comment:
+      en: 'Combustion engine ECU tampering (unauthorized modification) detected'
+      fr: 'Détection de modification (blocage) du calculateur moteur thermique'
+      es: 'Detección de modificación (bloqueo) del calculador del motor térmico'
+      de: 'Erkennung einer Manipulation (Sperrung) des Verbrennungsmotor-Steuergeräts'
+      it: 'Rilevamento di modifica (blocco) della centralina motore termico'
+      pl: 'Wykrycie modyfikacji (blokady) sterownika silnika spalinowego'
+      ru: 'Обнаружение несанкционированного изменения (блокировка) блока управления двигателем внутреннего сгорания'
+      zh: '检测到内燃机ECU被篡改(锁定)'
+      hu: 'A belső égésű motor vezérlőegységén észlelt jogosulatlan módosítás (zárolás)'
+      pt: 'Deteção de modificação (bloqueio) da unidade de controlo do motor térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No change detected'
+        fr: 'Pas de détection de modification'
+        es: 'Sin detección de modificación'
+        de: 'Keine Änderung erkannt'
+        it: 'Nessun rilevamento di modifica'
+        pl: 'Brak wykrycia zmiany'
+        ru: 'Изменение не обнаружено'
+        zh: '未检测到变更'
+        hu: 'Nincs változás észlelve'
+        pt: 'Nenhuma mudança detetada'
+      0x01:
+        en: 'Tun detection'
+        fr: 'Détection de modification'
+        es: 'Detección de modificación'
+        de: 'Erkennung von Manipulation'
+        it: 'Rilevamento di modifica'
+        pl: 'Wykrywanie modyfikacji'
+        ru: 'Обнаружение модификации'
+        zh: '改装检测'
+        hu: 'Módosítás érzékelése'
+        pt: 'Deteção de modificação'
+
+  ATMOSPHERIC_PRESSURE:
+    bits: '2.6-2.2'
+    comment:
+      en: 'Atmospheric pressure (hPa)'
+      fr: 'Pression atmosphérique (hPa)'
+      es: 'Presión atmosférica (hPa)'
+      de: 'Atmosphärendruck (hPa)'
+      it: 'Pressione atmosferica (hPa)'
+      pl: 'Ciśnienie atmosferyczne (hPa)'
+      ru: 'Атмосферное давление (гПа)'
+      zh: '大气压力(hPa)'
+      hu: 'Légköri nyomás (hPa)'
+      pt: 'Pressão atmosférica (hPa)'
+    type: 'uint'
+    factor: 15
+    offset: 685
+    min: 685
+    max: 1120
+    units: 'hPa'
+    invalid: 0x1F
+    default: 0x1E
+
+  UNUSED_1:
+    bits: '2.1-4.0'
+    unused: true

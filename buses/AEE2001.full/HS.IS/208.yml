@@ -1,0 +1,188 @@
+id: 0x208
+name: 'ENGINE_DYNAMICS'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine dynamics: engine speed, torques, driver demand, cruise control and A/C compressor request.'
+  fr: 'Dynamique moteur : régime moteur, couples, demande conducteur, régulateur de vitesse et demande compresseur clim.'
+  es: 'Dinámica del motor: régimen motor, pares, demanda del conductor, control de crucero y solicitud del compresor de A/C.'
+  de: 'Motordynamik: Motordrehzahl, Drehmomente, Fahreranforderung, Tempomat und Klimakompressoranforderung.'
+  it: 'Dinamica motore: regime motore, coppie, richiesta guidatore, cruise control e richiesta compressore A/C.'
+  pl: 'Dynamika silnika: obroty silnika, momenty, żądanie kierowcy, tempomat i żądanie sprężarki A/C.'
+  ru: 'Динамика двигателя: обороты двигателя, моменты, запрос водителя, круиз-контроль и запрос компрессора кондиционера.'
+  zh: '发动机动态:发动机转速、扭矩、驾驶员需求、巡航控制和空调压缩机请求。'
+  hu: 'Motordinamika: motorfordulatszám, nyomatékok, vezetői igény, tempomat és klímakompresszor kérése.'
+  pt: 'Dinâmica do motor: velocidade do motor, binários, pedido do condutor, regulador de velocidade e pedido do compressor de ar condicionado.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers: ['BSI', 'BVA', 'BHI']
+
+signals:
+  ENGINE_SPEED:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Engine speed (16-bit)'
+      fr: 'Régime moteur (16 bits)'
+      es: 'Régimen del motor (16 bits)'
+      de: 'Motordrehzahl (16 Bit)'
+      it: 'Regime motore (16 bit)'
+      pl: 'Obroty silnika (16 bitów)'
+      ru: 'Обороты двигателя (16 бит)'
+      zh: '发动机转速(16位)'
+      hu: 'Motorfordulatszám (16 bites)'
+      pt: 'Regime do motor (16 bits)'
+    type: 'uint'
+
+  ACTUAL_TORQUE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Actual engine torque'
+      fr: 'Couple moteur réel'
+      es: 'Par de motor real'
+      de: 'Tatsächliches Motordrehmoment'
+      it: 'Coppia motore reale'
+      pl: 'Rzeczywisty moment obrotowy silnika'
+      ru: 'Фактический крутящий момент двигателя'
+      zh: '实际发动机扭矩'
+      hu: 'Tényleges motornyomaték'
+      pt: 'Binário real do motor'
+    type: 'uint'
+
+  DRIVER_DEMAND:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Driver demand (accelerator)'
+      fr: 'Volonté du conducteur (accélérateur)'
+      es: 'Demanda del conductor (acelerador)'
+      de: 'Fahrerwunsch (Gaspedal)'
+      it: 'Richiesta del conducente (acceleratore)'
+      pl: 'Żądanie kierowcy (przyspieszenie)'
+      ru: 'Запрос водителя (акселератор)'
+      zh: '驾驶员需求(油门)'
+      hu: 'Vezetői igény (gázpedál)'
+      pt: 'Pedido do condutor (acelerador)'
+    type: 'uint'
+
+  DPF_REGENERATION_ASSIST_REQUEST:
+    bits: '5.7'
+    comment:
+      en: 'Request to help particulate filter regeneration'
+      fr: 'Requête d''aide à la régénération du filtre à particules'
+      es: 'Solicitud de ayuda a la regeneración del filtro de partículas'
+      de: 'Anforderung zur Unterstützung der Partikelfilterregeneration'
+      it: 'Richiesta di supporto alla rigenerazione del filtro antiparticolato'
+      pl: 'Żądanie wsparcia regeneracji filtra cząstek stałych'
+      ru: 'Запрос содействия регенерации сажевого фильтра'
+      zh: '请求辅助颗粒过滤器再生'
+      hu: 'A részecskeszűrő regenerálásának segítségkérése'
+      pt: 'Pedido de ajuda à regeneração do filtro de partículas'
+    type: 'bool'
+
+  DIAG_MUX_ON:
+    bits: '5.6'
+    comment:
+      en: 'Multiplexed diagnosis active'
+      fr: 'Diagnostic multiplexé actif'
+      es: 'Diagnóstico multiplexado activo'
+      de: 'Multiplex-Diagnose aktiv'
+      it: 'Diagnosi multiplata attiva'
+      pl: 'Diagnostyka multipleksowa aktywna'
+      ru: 'Мультиплексная диагностика активна'
+      zh: '多路复用诊断激活'
+      hu: 'Multiplexelt diagnosztika aktív'
+      pt: 'Diagnóstico multiplexado ativo'
+    type: 'bool'
+
+  ESTIMATED_TORQUES_UNCERTAIN:
+    bits: '5.4'
+    comment:
+      en: 'Estimated torque values uncertain'
+      fr: 'Valeurs de couple estimées incertaines'
+      es: 'Valores de par estimados inciertos'
+      de: 'Geschätzte Drehmomentwerte unsicher'
+      it: 'Valori di coppia stimati incerti'
+      pl: 'Niepewne szacowane wartości momentu obrotowego'
+      ru: 'Ненадёжные расчётные значения крутящего момента'
+      zh: '估算扭矩值不确定'
+      hu: 'Bizonytalan becsült nyomatékértékek'
+      pt: 'Valores de binário estimados incertos'
+    type: 'bool'
+
+  CRUISE_CONTROL_STATUS:
+    bits: '5.3-5.2'
+    comment:
+      en: 'Cruise control status (active...)'
+      fr: 'État du régulateur de vitesse (actif...)'
+      es: 'Estado del control de crucero (activo...)'
+      de: 'Status der Geschwindigkeitsregelung (aktiv...)'
+      it: 'Stato del cruise control (attivo...)'
+      pl: 'Stan tempomatu (aktywny...)'
+      ru: 'Статус круиз-контроля (активен...)'
+      zh: '巡航控制状态(激活...)'
+      hu: 'Sebességtartó automatika állapota (aktív...)'
+      pt: 'Estado do regulador de velocidade (ativo...)'
+    type: 'uint'
+
+  BRAKE_PEDAL_SECONDARY_SWITCH:
+    bits: '5.1'
+    comment:
+      en: 'Brake pedal secondary (redundant) switch'
+      fr: 'Contact secondaire (redondant) de la pédale de frein'
+      es: 'Contacto secundario (redundante) del pedal de freno'
+      de: 'Sekundärer (redundanter) Bremspedalschalter'
+      it: 'Interruttore secondario (ridondante) del pedale freno'
+      pl: 'Wtórny (redundantny) wyłącznik pedału hamulca'
+      ru: 'Вторичный (резервный) выключатель педали тормоза'
+      zh: '制动踏板辅助(冗余)开关'
+      hu: 'Fékpedál másodlagos (redundáns) kapcsolója'
+      pt: 'Contacto secundário (redundante) do pedal de travão'
+    type: 'bool'
+
+  AC_COMPRESSOR_ENGAGE_COMMAND:
+    bits: '5.0'
+    comment:
+      en: 'A/C compressor engage command'
+      fr: 'Commande d''enclenchement du compresseur de climatisation'
+      es: 'Orden de acople del compresor de aire acondicionado'
+      de: 'Einschaltbefehl für den Klimakompressor'
+      it: 'Comando di innesto del compressore del climatizzatore'
+      pl: 'Polecenie załączenia sprężarki klimatyzacji'
+      ru: 'Команда включения компрессора кондиционера'
+      zh: '空调压缩机接合指令'
+      hu: 'Klímakompresszor bekapcsolási parancsa'
+      pt: 'Comando de engate do compressor de ar condicionado'
+    type: 'bool'
+
+  ACTUAL_TORQUE_WITHOUT_GEARBOX_REDUCTION:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Actual torque, excluding gearbox-requested reduction'
+      fr: 'Couple réel, hors réduction demandée par la boîte de vitesses'
+      es: 'Par real, excluyendo la reducción solicitada por la caja de cambios'
+      de: 'Tatsächliches Drehmoment, ohne die vom Getriebe angeforderte Reduzierung'
+      it: 'Coppia reale, esclusa la riduzione richiesta dal cambio'
+      pl: 'Rzeczywisty moment obrotowy, bez redukcji żądanej przez skrzynię biegów'
+      ru: 'Фактический момент без учёта снижения, запрошенного коробкой передач'
+      zh: '实际扭矩(不含变速箱请求的降扭)'
+      hu: 'Tényleges nyomaték, a váltó által kért csökkentés nélkül'
+      pt: 'Binário real, excluindo a redução solicitada pela caixa de velocidades'
+    type: 'uint'
+
+  ANTICIPATED_TORQUE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Anticipated torque, or processed driver-requested torque'
+      fr: 'Couple anticipé, ou couple demandé par le conducteur après traitement'
+      es: 'Par anticipado, o par solicitado por el conductor tras el procesamiento'
+      de: 'Antizipiertes Drehmoment oder verarbeitetes fahrerangefordertes Drehmoment'
+      it: 'Coppia anticipata, o coppia richiesta dal conducente dopo l''elaborazione'
+      pl: 'Przewidywany moment obrotowy lub przetworzony moment żądany przez kierowcę'
+      ru: 'Ожидаемый крутящий момент или обработанный момент, запрошенный водителем'
+      zh: '预期扭矩,或经处理的驾驶员请求扭矩'
+      hu: 'Előrejelzett nyomaték, vagy a feldolgozott vezetői nyomatékigény'
+      pt: 'Binário antecipado, ou binário solicitado pelo condutor após processamento'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '8.7-8.0'
+    unused: true

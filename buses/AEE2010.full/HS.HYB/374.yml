@@ -1,0 +1,100 @@
+id: 0x374
+name: 'HV_BATTERY_VOLTAGE_LIMITS'
+type: 'can'
+length: 4
+comment:
+  en: 'High-voltage battery maximum charge/discharge voltage limits from the battery management unit (TBMU).'
+  fr: 'Limites de tension maximale de charge/décharge de la batterie haute tension issues du calculateur de gestion batterie (TBMU).'
+  es: 'Límites de tensión máxima de carga/descarga de la batería de alta tensión de la unidad de gestión de batería (TBMU).'
+  de: 'Maximale Lade-/Entladespannungsgrenzen der Hochvoltbatterie vom Batteriemanagement-Steuergerät (TBMU).'
+  it: 'Limiti di tensione massima di carica/scarica della batteria ad alta tensione dalla centralina di gestione batteria (TBMU).'
+  pl: 'Maksymalne limity napięcia ładowania/rozładowania akumulatora wysokiego napięcia ze sterownika zarządzania baterią (TBMU).'
+  ru: 'Максимальные пределы напряжения заряда/разряда высоковольтной батареи от блока управления батареей (TBMU).'
+  zh: '来自电池管理单元(TBMU)的高压电池最大充/放电电压限值。'
+  hu: 'A nagyfeszültségű akkumulátor maximális töltési/kisütési feszültséghatárai az akkumulátor-vezérlő egységtől (TBMU).'
+  pt: 'Limites de tensão máxima de carga/descarga da bateria de alta tensão, da unidade de gestão da bateria (TBMU).'
+periodicity: ['40ms']
+senders: ['TBMU']
+receivers: ['HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: '4-bit frame checksum'
+      fr: 'Somme de contrôle de trame sur 4 bits'
+      es: 'Suma de comprobación de trama de 4 bits'
+      de: '4-Bit-Rahmenprüfsumme'
+      it: 'Checksum della trama a 4 bit'
+      pl: '4-bitowa suma kontrolna ramki'
+      ru: '4-битная контрольная сумма кадра'
+      zh: '4位帧校验和'
+      hu: '4 bites keret-ellenőrzőösszeg'
+      pt: 'Soma de verificação de trama de 4 bits'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process sur 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  HV_BATTERY_MAX_DISCHARGE_VOLTAGE:
+    bits: '2.7-3.6'
+    comment:
+      en: 'Maximum discharge voltage of the high-voltage battery'
+      fr: 'Tension de décharge maximale de la batterie haute tension'
+      es: 'Tensión de descarga máxima de la batería de alta tensión'
+      de: 'Maximale Entladespannung der Hochvoltbatterie'
+      it: 'Tensione di scarica massima della batteria ad alta tensione'
+      pl: 'Maksymalne napięcie rozładowania akumulatora wysokiego napięcia'
+      ru: 'Максимальное напряжение разряда высоковольтной батареи'
+      zh: '高压电池最大放电电压'
+      hu: 'A nagyfeszültségű akkumulátor maximális kisütési feszültsége'
+      pt: 'Tensão de descarga máxima da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.2
+    offset: 140
+    min: 140
+    max: 344
+    units: 'V'
+    invalid: 0x3FF
+    default: 0x3FE
+
+  HV_BATTERY_MAX_CHARGE_VOLTAGE:
+    bits: '3.5-4.4'
+    comment:
+      en: 'Maximum charging voltage of the high-voltage battery'
+      fr: 'Tension maximale de charge de la batterie haute tension'
+      es: 'Tensión máxima de carga de la batería de alta tensión'
+      de: 'Maximale Ladespannung der Hochvoltbatterie'
+      it: 'Tensione massima di carica della batteria ad alta tensione'
+      pl: 'Maksymalne napięcie ładowania akumulatora wysokiego napięcia'
+      ru: 'Максимальное напряжение зарядки высоковольтной батареи'
+      zh: '高压电池最大充电电压'
+      hu: 'A nagyfeszültségű akkumulátor maximális töltőfeszültsége'
+      pt: 'Tensão máxima de carga da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.2
+    offset: 140
+    min: 140
+    max: 344
+    units: 'V'
+    invalid: 0x3FF
+    default: 0x3FE
+
+  UNUSED_1:
+    bits: '4.3-4.0'
+    unused: true

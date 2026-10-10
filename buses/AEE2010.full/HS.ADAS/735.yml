@@ -1,0 +1,504 @@
+id: 0x735
+name: 'ADAS_OBJECT_14_DATA_2'
+type: 'can'
+length: 8
+comment:
+  en: 'ADAS tracked object 14: brake light, lane, motion status, turn signal and detection confidence, sent by the front camera/radar module.'
+  fr: 'Objet suivi par l''ADAS n°14 : feu stop, voie, état de mouvement, clignotant et niveau de confiance de détection, envoyés par le module caméra/radar avant.'
+  es: 'Objeto seguido por el ADAS n.º 14: luz de freno, carril, estado de movimiento, intermitente y nivel de confianza de detección, enviados por el módulo cámara/radar delantero.'
+  de: 'Vom ADAS verfolgtes Objekt Nr. 14: Bremslicht, Fahrspur, Bewegungsstatus, Blinker und Erkennungssicherheit, gesendet vom Front-Kamera-/Radarmodul.'
+  it: 'Oggetto tracciato dall''ADAS n. 14: luce di stop, corsia, stato di movimento, indicatore di direzione e livello di confidenza del rilevamento, inviati dal modulo telecamera/radar anteriore.'
+  pl: 'Obiekt śledzony przez ADAS nr 14: światło stop, pas ruchu, stan ruchu, kierunkowskaz i poziom pewności detekcji, wysyłane przez przedni moduł kamery/radaru.'
+  ru: 'Объект №14, отслеживаемый системой ADAS: стоп-сигнал, полоса движения, статус движения, поворотник и достоверность обнаружения, отправляемые передним модулем камеры/радара.'
+  zh: 'ADAS跟踪的14号目标：刹车灯、车道、运动状态、转向灯及检测置信度，由前置摄像头/雷达模块发送。'
+  hu: 'Az ADAS által követett 14. objektum: féklámpa, sáv, mozgásállapot, index és az észlelés megbízhatósága, az első kamera/radar modul küldi.'
+  pt: 'Objeto rastreado ADAS 14: luz de travagem, faixa, estado de movimento, sinal de mudança de direção e confiança de deteção, enviado pelo módulo de câmara/radar dianteiro.'
+observations:
+  en: 'Event-triggered frame with a 40 ms exclusion time, sent on each computation cycle, i.e. every 40/50 ms; set as mixed'
+  fr: 'Trame événementielle avec un temps d''exclusion de 40 ms, émise à chaque cycle de calcul, soit toutes les 40/50 ms ; définie en mixte'
+  es: 'Trama basada en eventos con un tiempo de exclusión de 40 ms, enviada en cada ciclo de cálculo, es decir cada 40/50 ms; definida como mixta'
+  de: 'Ereignisgesteuerter Frame mit 40 ms Sperrzeit, gesendet bei jedem Berechnungszyklus, also alle 40/50 ms; als mixte definiert'
+  it: 'Frame basato su eventi con tempo di esclusione di 40 ms, inviato a ogni ciclo di calcolo, ossia ogni 40/50 ms; definito misto'
+  pl: 'Ramka zdarzeniowa z 40 ms czasem wykluczenia, wysyłana przy każdym cyklu obliczeniowym, czyli co 40/50 ms; ustawiona jako mieszana'
+  ru: 'Событийный кадр с временем исключения 40 мс, отправляется на каждом цикле вычисления, то есть каждые 40/50 мс; задан как смешанный'
+  zh: '事件触发帧,排除时间为40毫秒,每个计算周期(即每40/50毫秒)发送;设为混合类型'
+  hu: 'Eseményvezérelt keret 40 ms kizárási idővel, minden számítási ciklusban, azaz 40/50 ms-onként küldve; mixte típusúként megadva'
+  pt: 'Trama baseada em eventos com um tempo de exclusão de 40 ms, enviada em cada ciclo de cálculo, ou seja, a cada 40/50 ms; definida como mista'
+periodicity: ['55ms', 'trigger']
+senders: ['CVM']
+receivers: ['ARTIV']
+
+signals:
+  OBJECT14_INVERSE_TTC:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Inverse of time-to-collision for object 14'
+      fr: 'Inverse du temps avant collision de l''objet 14'
+      es: 'Inverso del tiempo hasta la colisión del objeto 14'
+      de: 'Kehrwert der Zeit bis zur Kollision von Objekt 14'
+      it: 'Inverso del tempo alla collisione dell''oggetto 14'
+      pl: 'Odwrotność czasu do kolizji obiektu 14'
+      ru: 'Обратная величина времени до столкновения с объектом 14'
+      zh: '对象14碰撞时间的倒数'
+      hu: 'A(z) 14. objektummal való ütközésig hátralévő idő reciproka'
+      pt: 'Inverso do tempo até à colisão do objeto 14'
+    type: 'sint'
+    factor: 0.015625
+    min: -8
+    max: 7.9844
+    units: 's-1'
+    invalid: 0x200
+
+  OBJECT14_TURN_SIGNAL:
+    bits: '2.5-2.3'
+    comment:
+      en: 'Turn signal of object 14'
+      fr: 'Clignotant de l''objet 14'
+      es: 'Intermitente del objeto 14'
+      de: 'Blinker von Objekt 14'
+      it: 'Indicatore di direzione dell''oggetto 14'
+      pl: 'Kierunkowskaz obiektu 14'
+      ru: 'Указатель поворота объекта 14'
+      zh: '对象14的转向灯'
+      hu: 'A(z) 14. objektum irányjelzője'
+      pt: 'Pisca-pisca do objeto 14'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Not available'
+        fr: 'Non disponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Não disponível'
+      0x01:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Left'
+        fr: 'Gauche'
+        es: 'Izquierda'
+        de: 'Links'
+        it: 'Sinistra'
+        pl: 'Lewo'
+        ru: 'Слева'
+        zh: '左'
+        hu: 'Bal'
+        pt: 'Esquerda'
+      0x03:
+        en: 'Right'
+        fr: 'Droite'
+        es: 'Derecha'
+        de: 'Rechts'
+        it: 'Destra'
+        pl: 'Prawo'
+        ru: 'Справа'
+        zh: '右侧'
+        hu: 'Jobb'
+        pt: 'Direita'
+      0x04:
+        en: 'Both'
+        fr: 'Les deux'
+        es: 'Ambos'
+        de: 'Beide'
+        it: 'Entrambi'
+        pl: 'Oba'
+        ru: 'Оба'
+        zh: '两者'
+        hu: 'Mindkettő'
+        pt: 'Ambos'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  OBJECT14_LANE:
+    bits: '2.2-2.0'
+    comment:
+      en: 'Lane of object 14'
+      fr: 'Voie de l''objet 14'
+      es: 'Carril del objeto 14'
+      de: 'Fahrspur von Objekt 14'
+      it: 'Corsia dell''oggetto 14'
+      pl: 'Pas ruchu obiektu 14'
+      ru: 'Полоса движения объекта 14'
+      zh: '对象14所在车道'
+      hu: 'A(z) 14. objektum sávja'
+      pt: 'Faixa do objeto 14'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Not assigned'
+        fr: 'Non attribué'
+        es: 'No asignado'
+        de: 'Nicht zugewiesen'
+        it: 'Non assegnato'
+        pl: 'Nieprzypisany'
+        ru: 'Не назначено'
+        zh: '未分配'
+        hu: 'Nincs hozzárendelve'
+        pt: 'Não atribuído'
+      0x01:
+        en: 'ego lane'
+        fr: 'ego lane'
+        es: 'carril propio'
+        de: 'eigene Fahrspur'
+        it: 'corsia propria'
+        pl: 'własny pas ruchu'
+        ru: 'собственная полоса'
+        zh: '本车道'
+        hu: 'saját sáv'
+        pt: 'faixa própria'
+      0x02:
+        en: 'Next lane left'
+        fr: 'Voie suivante à gauche'
+        es: 'Siguiente carril a la izquierda'
+        de: 'Nächste Spur links'
+        it: 'Corsia successiva a sinistra'
+        pl: 'Następny pas w lewo'
+        ru: 'Следующая полоса слева'
+        zh: '左侧下一车道'
+        hu: 'Következő sáv balra'
+        pt: 'Faixa seguinte à esquerda'
+      0x03:
+        en: 'Next lane right'
+        fr: 'Voie suivante à droite'
+        es: 'Siguiente carril a la derecha'
+        de: 'Nächste Spur rechts'
+        it: 'Corsia successiva a destra'
+        pl: 'Następny pas w prawo'
+        ru: 'Следующая полоса справа'
+        zh: '右侧下一车道'
+        hu: 'Következő jobb sáv'
+        pt: 'Faixa seguinte à direita'
+      0x04:
+        en: 'Next-next lane, left'
+        fr: 'Voie suivante à gauche (2ème voie)'
+        es: 'Segundo carril siguiente, izquierda'
+        de: 'Übernächste Fahrspur links'
+        it: 'Corsia successiva successiva a sinistra'
+        pl: 'Kolejny następny pas w lewo'
+        ru: 'Полоса через одну слева'
+        zh: '左侧下下车道'
+        hu: 'A következő utáni bal oldali sáv'
+        pt: 'Segunda faixa seguinte, à esquerda'
+      0x05:
+        en: 'Next next lane right'
+        fr: 'Voie de droite après la suivante'
+        es: 'Carril derecho tras el siguiente'
+        de: 'Übernächste Fahrspur rechts'
+        it: 'Corsia a destra dopo la successiva'
+        pl: 'Kolejny prawy pas po następnym'
+        ru: 'Следующая за следующей полоса справа'
+        zh: '右侧下下条车道'
+        hu: 'A jobb oldali, következő utáni sáv'
+        pt: 'Segunda faixa seguinte à direita'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  OBJECT14_MEAN_ANGULAR_SPEED:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Average of the left and right angular speed of object 14'
+      fr: 'Moyenne de la vitesse angulaire gauche et droite de l''objet 14'
+      es: 'Media de la velocidad angular izquierda y derecha del objeto 14'
+      de: 'Mittelwert der linken und rechten Winkelgeschwindigkeit von Objekt 14'
+      it: 'Media della velocità angolare sinistra e destra dell''oggetto 14'
+      pl: 'Średnia prędkości kątowej lewej i prawej obiektu 14'
+      ru: 'Среднее значение левой и правой угловой скорости объекта 14'
+      zh: '对象14左右角速度的平均值'
+      hu: 'A(z) 14. objektum bal és jobb szögsebességének átlaga'
+      pt: 'Média da velocidade angular esquerda e direita do objeto 14'
+    type: 'sint'
+    factor: 0.002
+    min: -0.256
+    max: 0.254
+    units: 'rad/s'
+
+  OBJECT14_WIDTH:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Width of object 14'
+      fr: 'Largeur de l''objet 14'
+      es: 'Anchura del objeto 14'
+      de: 'Breite von Objekt 14'
+      it: 'Larghezza dell''oggetto 14'
+      pl: 'Szerokość obiektu 14'
+      ru: 'Ширина объекта 14'
+      zh: '对象14的宽度'
+      hu: 'A(z) 14. objektum szélessége'
+      pt: 'Largura do objeto 14'
+    type: 'uint'
+    factor: 0.05
+    min: 0
+    max: 6.35
+    units: 'm'
+
+  OBJECT14_DETECTION_SCORE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Detection confidence score of object 14'
+      fr: 'Score de confiance de détection de l''objet 14'
+      es: 'Puntuación de confianza de detección del objeto 14'
+      de: 'Erkennungs-Konfidenzwert von Objekt 14'
+      it: 'Punteggio di confidenza di rilevamento dell''oggetto 14'
+      pl: 'Wskaźnik pewności detekcji obiektu 14'
+      ru: 'Показатель достоверности обнаружения объекта 14'
+      zh: '对象14的检测置信度分数'
+      hu: 'A(z) 14. objektum észlelési megbízhatósági pontszáma'
+      pt: 'Pontuação de confiança de deteção do objeto 14'
+    type: 'sint'
+    factor: 0.05
+    min: -6.4
+    max: 6.35
+
+  OBJECT14_RELATIVE_VELOCITY_STDDEV:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Standard deviation of the relative velocity of object 14'
+      fr: 'Écart type de la vitesse relative de l''objet 14'
+      es: 'Desviación estándar de la velocidad relativa del objeto 14'
+      de: 'Standardabweichung der Relativgeschwindigkeit von Objekt 14'
+      it: 'Deviazione standard della velocità relativa dell''oggetto 14'
+      pl: 'Odchylenie standardowe prędkości względnej obiektu 14'
+      ru: 'Среднеквадратичное отклонение относительной скорости объекта 14'
+      zh: '对象14相对速度的标准差'
+      hu: 'A(z) 14. objektum relatív sebességének szórása'
+      pt: 'Desvio padrão da velocidade relativa do objeto 14'
+    type: 'uint'
+    factor: 0.05
+    min: 0
+    max: 12.75
+    units: 'm/s'
+
+  OBJECT14_LONGITUDINAL_DISTANCE_STDDEV:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Standard deviation of the longitudinal distance to object 14'
+      fr: 'Écart type de la distance longitudinale à l''objet 14'
+      es: 'Desviación estándar de la distancia longitudinal al objeto 14'
+      de: 'Standardabweichung des Längsabstands zu Objekt 14'
+      it: 'Deviazione standard della distanza longitudinale dall''oggetto 14'
+      pl: 'Odchylenie standardowe odległości podłużnej do obiektu 14'
+      ru: 'Среднеквадратичное отклонение продольного расстояния до объекта 14'
+      zh: '对象14纵向距离的标准差'
+      hu: 'A(z) 14. objektumtól mért hosszirányú távolság szórása'
+      pt: 'Desvio padrão da distância longitudinal ao objeto 14'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.5
+    units: 'm'
+
+  OBJECT14_MOTION_STATUS:
+    bits: '8.7-8.4'
+    comment:
+      en: 'Motion status of object 14'
+      fr: 'État de déplacement de l''objet 14'
+      es: 'Estado de movimiento del objeto 14'
+      de: 'Bewegungsstatus von Objekt 14'
+      it: 'Stato di movimento dell''oggetto 14'
+      pl: 'Stan ruchu obiektu 14'
+      ru: 'Статус движения объекта 14'
+      zh: '对象14的运动状态'
+      hu: 'A(z) 14. objektum mozgásállapota'
+      pt: 'Estado de movimento do objeto 14'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Not defined'
+        fr: 'Non défini'
+        es: 'No definido'
+        de: 'Nicht definiert'
+        it: 'Non definito'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Nincs meghatározva'
+        pt: 'Não definido'
+      0x01:
+        en: 'Standing (lights never switched on)'
+        fr: 'À l''arrêt (feux jamais allumés)'
+        es: 'Detenido (luces nunca encendidas)'
+        de: 'Stillstand (Licht nie eingeschaltet)'
+        it: 'Fermo (luci mai accese)'
+        pl: 'Postój (światła nigdy nie włączone)'
+        ru: 'Стоянка (фары никогда не включались)'
+        zh: '静止(车灯从未开启)'
+        hu: 'Álló helyzet (a lámpák sosem voltak bekapcsolva)'
+        pt: 'Parado (luzes nunca acesas)'
+      0x02:
+        en: 'Parked (lights never switched off)'
+        fr: 'Stationné (feux jamais éteints)'
+        es: 'Estacionado (luces nunca apagadas)'
+        de: 'Geparkt (Licht nie ausgeschaltet)'
+        it: 'Parcheggiato (luci mai spente)'
+        pl: 'Zaparkowany (światła nigdy niewyłączone)'
+        ru: 'На стоянке (фары никогда не выключались)'
+        zh: '已停车(车灯从未关闭)'
+        hu: 'Parkolva (a lámpák sosem voltak kikapcsolva)'
+        pt: 'Estacionado (luzes nunca apagadas)'
+      0x03:
+        en: 'Stopped (movable)'
+        fr: 'Arrêté (mobile)'
+        es: 'Detenido (móvil)'
+        de: 'Angehalten (beweglich)'
+        it: 'Fermo (mobile)'
+        pl: 'Zatrzymane (ruchome)'
+        ru: 'Остановлено (подвижно)'
+        zh: '停止（可移动）'
+        hu: 'Megállt (mozgatható)'
+        pt: 'Parado (móvel)'
+      0x04:
+        en: 'Unknown (movable)'
+        fr: 'Inconnu (mobile)'
+        es: 'Desconocido (móvil)'
+        de: 'Unbekannt (beweglich)'
+        it: 'Sconosciuto (mobile)'
+        pl: 'Nieznany (ruchomy)'
+        ru: 'Неизвестно (подвижный)'
+        zh: '未知(可移动)'
+        hu: 'Ismeretlen (mozgó)'
+        pt: 'Desconhecido (móvel)'
+      0x05:
+        en: 'Moving (movable)'
+        fr: 'En mouvement (mobile)'
+        es: 'En movimiento (móvil)'
+        de: 'In Bewegung (beweglich)'
+        it: 'In movimento (mobile)'
+        pl: 'W ruchu (ruchomy)'
+        ru: 'В движении (подвижный)'
+        zh: '移动中(可移动)'
+        hu: 'Mozgásban (mozgatható)'
+        pt: 'Em movimento (móvel)'
+      0x06:
+        en: 'Stopped (oncoming)'
+        fr: 'À l''arrêt (venant en sens inverse)'
+        es: 'Detenido (en sentido contrario)'
+        de: 'Angehalten (entgegenkommend)'
+        it: 'Fermo (in senso opposto)'
+        pl: 'Zatrzymany (nadjeżdżający z naprzeciwka)'
+        ru: 'Остановлен (встречное движение)'
+        zh: '停止（迎面而来）'
+        hu: 'Álló (szemből érkező)'
+        pt: 'Parado (em sentido contrário)'
+      0x07:
+        en: 'Unknown (oncoming)'
+        fr: 'Inconnu (venant en sens inverse)'
+        es: 'Desconocido (en sentido contrario)'
+        de: 'Unbekannt (entgegenkommend)'
+        it: 'Sconosciuto (in senso opposto)'
+        pl: 'Nieznany (nadjeżdżający z naprzeciwka)'
+        ru: 'Неизвестно (встречное движение)'
+        zh: '未知（迎面而来）'
+        hu: 'Ismeretlen (szemből érkező)'
+        pt: 'Desconhecido (em sentido contrário)'
+      0x08:
+        en: 'Moving (oncoming)'
+        fr: 'En mouvement (venant en sens inverse)'
+        es: 'En movimiento (en sentido contrario)'
+        de: 'In Bewegung (entgegenkommend)'
+        it: 'In movimento (in senso opposto)'
+        pl: 'W ruchu (nadjeżdżający z naprzeciwka)'
+        ru: 'Движется (навстречу)'
+        zh: '移动中(迎面而来)'
+        hu: 'Mozog (szemből érkező)'
+        pt: 'Em movimento (em sentido contrário)'
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  OBJECT14_BRAKE_LIGHT:
+    bits: '8.3-8.2'
+    comment:
+      en: 'Brake light status of object 14'
+      fr: 'Feu de stop de l''objet 14'
+      es: 'Estado de la luz de freno del objeto 14'
+      de: 'Bremslichtstatus von Objekt 14'
+      it: 'Stato della luce di stop dell''oggetto 14'
+      pl: 'Stan światła stop obiektu 14'
+      ru: 'Состояние стоп-сигнала объекта 14'
+      zh: '对象14的刹车灯状态'
+      hu: 'A(z) 14. objektum féklámpájának állapota'
+      pt: 'Luz de travão do objeto 14'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Not available'
+        fr: 'Non disponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Não disponível'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+      0x02:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x03:
+        unused: true
+
+  OBJECT14_MSG_COUNTER_2:
+    bits: '8.1-8.0'
+    comment:
+      en: 'Message counter for object 14 (data set 2)'
+      fr: 'Compteur de message pour l''objet 14 (jeu de données 2)'
+      es: 'Contador de mensajes del objeto 14 (conjunto de datos 2)'
+      de: 'Nachrichtenzähler für Objekt 14 (Datensatz 2)'
+      it: 'Contatore messaggi per l''oggetto 14 (set di dati 2)'
+      pl: 'Licznik komunikatów dla obiektu 14 (zestaw danych 2)'
+      ru: 'Счётчик сообщений для объекта 14 (набор данных 2)'
+      zh: '对象14的消息计数器(数据组2)'
+      hu: 'A(z) 14. objektum üzenetszámlálója (2. adatkészlet)'
+      pt: 'Contador de mensagens do objeto 14 (conjunto de dados 2)'
+    type: 'uint'
+    min: 0
+    max: 3

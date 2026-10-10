@@ -1,0 +1,158 @@
+id: 0x506
+name: 'RHF_SUPERVISION'
+type: 'can'
+length: 2
+comment:
+  en: 'Front electric-motor current and fault states (short circuit, mode, performance), from the hybrid control unit.'
+  fr: 'Courant et états de défaut (court-circuit, mode, performance) du moteur électrique avant, issus du calculateur hybride.'
+  es: 'Corriente y estados de fallo (cortocircuito, modo, rendimiento) del motor eléctrico delantero, procedentes de la centralita híbrida.'
+  de: 'Strom und Fehlerzustände (Kurzschluss, Modus, Leistung) des vorderen Elektromotors vom Hybridsteuergerät.'
+  it: 'Corrente e stati di guasto (cortocircuito, modalità, prestazioni) del motore elettrico anteriore, dalla centralina ibrida.'
+  pl: 'Prąd i stany usterek (zwarcie, tryb, wydajność) przedniego silnika elektrycznego z hybrydowego sterownika.'
+  ru: 'Ток и статусы неисправностей (короткое замыкание, режим, производительность) переднего электродвигателя от гибридного блока управления.'
+  zh: '前置电动机的电流及故障状态(短路、模式、性能),来自混合动力控制单元。'
+  hu: 'Az első elektromos motor árama és hibaállapotai (rövidzárlat, üzemmód, teljesítmény) a hibrid vezérlőegységtől.'
+  pt: 'Corrente e estados de avaria (curto-circuito, modo, desempenho) do motor elétrico dianteiro, da unidade de controlo híbrida.'
+periodicity: ['100ms']
+senders: ['HCU2']
+receivers: ['CMM', 'HCU1']
+
+signals:
+  HCU2_READINESS_SYNTHESIS:
+    bits: '1.3'
+    comment:
+      en: 'HCU2 readiness code synthesis'
+      fr: 'Synthèse des codes readiness du HCU2'
+      es: 'Síntesis de los códigos readiness del HCU2'
+      de: 'Zusammenfassung der Readiness-Codes des HCU2'
+      it: 'Sintesi dei codici readiness dell''HCU2'
+      pl: 'Podsumowanie kodów gotowości (readiness) HCU2'
+      ru: 'Сводный код готовности HCU2 (readiness)'
+      zh: 'HCU2就绪代码汇总'
+      hu: 'A HCU2 readiness kódjainak összesítése'
+      pt: 'Síntese dos códigos readiness do HCU2'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Done'
+        fr: 'Fait'
+        es: 'Hecho'
+        de: 'Erledigt'
+        it: 'Fatto'
+        pl: 'Wykonano'
+        ru: 'Выполнено'
+        zh: '已完成'
+        hu: 'Kész'
+        pt: 'Concluído'
+      0x01:
+        en: 'Not done'
+        fr: 'Non réalisé'
+        es: 'No realizado'
+        de: 'Nicht durchgeführt'
+        it: 'Non eseguito'
+        pl: 'Niewykonane'
+        ru: 'Не выполнено'
+        zh: '未完成'
+        hu: 'Nem végezték el'
+        pt: 'Não realizado'
+
+  MIL_ON_COUNTER_RESET_REQUEST:
+    bits: '1.2'
+    comment:
+      en: 'HCU2 request to reset the MIL ON counters'
+      fr: 'Demande de réinitialisation des compteurs MIL ON par le HCU2'
+      es: 'Solicitud del HCU2 de reinicio de los contadores MIL ON'
+      de: 'Anforderung des HCU2 zum Zurücksetzen der MIL-ON-Zähler'
+      it: 'Richiesta dell''HCU2 di azzeramento dei contatori MIL ON'
+      pl: 'Żądanie HCU2 zresetowania liczników MIL ON'
+      ru: 'Запрос HCU2 на сброс счётчиков MIL ON'
+      zh: 'HCU2请求重置MIL ON计数器'
+      hu: 'A HCU2 kérése a MIL ON számlálók visszaállítására'
+      pt: 'Pedido do HCU2 de reinicialização dos contadores MIL ON'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reset'
+        fr: 'Pas de remise à zéro'
+        es: 'Sin reinicio'
+        de: 'Kein Reset'
+        it: 'Nessun azzeramento'
+        pl: 'Brak resetu'
+        ru: 'Нет сброса'
+        zh: '无复位'
+        hu: 'Nincs visszaállítás'
+        pt: 'Sem reinicialização'
+      0x01:
+        en: 'Counter reset'
+        fr: 'Réinitialisation du compteur'
+        es: 'Reinicio del contador'
+        de: 'Zählerrücksetzung'
+        it: 'Reset del contatore'
+        pl: 'Resetowanie licznika'
+        ru: 'Сброс счётчика'
+        zh: '计数器复位'
+        hu: 'Számláló nullázása'
+        pt: 'Reposição do contador'
+
+  MIL_LAMP_REQUEST_HCU2:
+    bits: '1.1'
+    comment:
+      en: 'MIL warning lamp lighting request via HCU2'
+      fr: 'Demande d''allumage du témoin MIL via le HCU2'
+      es: 'Solicitud de encendido del testigo MIL a través del HCU2'
+      de: 'Anforderung zum Einschalten der MIL-Warnleuchte über das HCU2'
+      it: 'Richiesta di accensione della spia MIL tramite l''HCU2'
+      pl: 'Żądanie zapalenia kontrolki MIL przez HCU2'
+      ru: 'Запрос включения лампы MIL через HCU2'
+      zh: '通过HCU2请求点亮MIL故障灯'
+      hu: 'A MIL jelzőlámpa bekapcsolási kérése a HCU2-n keresztül'
+      pt: 'Pedido de acendimento do testemunho MIL via HCU2'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No lighting requested'
+        fr: 'Pas d''allumage demandé'
+        es: 'Sin encendido solicitado'
+        de: 'Kein Einschalten angefordert'
+        it: 'Nessuna accensione richiesta'
+        pl: 'Brak żądania włączenia'
+        ru: 'Нет запроса на включение'
+        zh: '未请求点亮'
+        hu: 'Nincs bekapcsolási kérés'
+        pt: 'Sem acendimento pedido'
+      0x01:
+        en: 'Lighting requested'
+        fr: 'Allumage demandé'
+        es: 'Encendido solicitado'
+        de: 'Einschalten angefordert'
+        it: 'Accensione richiesta'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '请求点亮'
+        hu: 'Bekapcsolás kérve'
+        pt: 'Acendimento pedido'
+
+  DCDC_TEMPERATURE:
+    bits: '1.0-2.0'
+    comment:
+      en: 'DC/DC converter temperature'
+      fr: 'Température du convertisseur DC/DC'
+      es: 'Temperatura del convertidor DC/DC'
+      de: 'Temperatur des DC/DC-Wandlers'
+      it: 'Temperatura del convertitore DC/DC'
+      pl: 'Temperatura przetwornicy DC/DC'
+      ru: 'Температура DC/DC-преобразователя'
+      zh: 'DC/DC转换器温度'
+      hu: 'A DC/DC átalakító hőmérséklete'
+      pt: 'Temperatura do conversor DC/DC'
+    type: 'uint'
+    factor: 1
+    offset: -30
+    min: -30
+    max: 300
+    units: '°C'
+    invalid: 0x1FF
+    default: 0x32

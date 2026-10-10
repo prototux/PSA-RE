@@ -1,0 +1,709 @@
+id: 0x1E8
+name: 'ENGINE_MEAP_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine ECU data 3: MEAP command, redemption counter, MEAP actuator software position and rear preparation in progress.'
+  fr: 'Données calculateur moteur 3 : commande MEAP, compteur de rachats, position logicielle de l''actionneur MEAP et préparation arrière en cours.'
+  es: 'Datos de la centralita del motor 3: comando MEAP, contador de canjes, posición software del actuador MEAP y preparación trasera en curso.'
+  de: 'Motorsteuergerät-Daten 3: MEAP-Befehl, Einlösezähler, Software-Position des MEAP-Aktuators und laufende Heckvorbereitung.'
+  it: 'Dati della centralina motore 3: comando MEAP, contatore riscatti, posizione software dell''attuatore MEAP e preparazione posteriore in corso.'
+  pl: 'Dane sterownika silnika 3: polecenie MEAP, licznik wykupów, pozycja programowa siłownika MEAP i trwające przygotowanie tylne.'
+  ru: 'Данные ЭБУ двигателя 3: команда MEAP, счётчик погашений, программная позиция привода MEAP и выполняемая задняя подготовка.'
+  zh: '发动机ECU数据3:MEAP命令、兑换计数器、MEAP执行器软件位置和后部准备进行中。'
+  hu: 'Motorvezérlő adatok 3: MEAP parancs, beváltásszámláló, a MEAP aktuátor szoftveres pozíciója és folyamatban lévő hátsó előkészítés.'
+  pt: 'Dados 3 da unidade de controlo do motor: comando MEAP, contador de resgate, posição de software do atuador MEAP e preparação traseira em curso.'
+observations:
+  en: 'On state change of: STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+  fr: 'Sur changement d''état de : STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+  es: 'Al cambiar el estado de: STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+  de: 'Bei Statusänderung von: STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+  it: 'Al cambiamento di stato di: STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+  pl: 'Wysyłane przy zmianie stanu: STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+  ru: 'При изменении состояния: STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+  zh: '当PREPA_AR_EN_COURS, POS_MEAP_SOFT状态变化时'
+  hu: 'A(z) STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION állapotváltozásakor'
+  pt: 'Na mudança de estado de: STOP_START_PREPARATION_STATUS, MEAP_SOFTWARE_POSITION'
+periodicity: ['1000ms', 'trigger']
+senders: ['CMM']
+receivers: ['ABS', 'BSI', 'BVA', 'HCU1', 'FSE', 'SBW']
+
+signals:
+  STOP_START_PREPARATION_STATUS:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Stop-start restart preparation status'
+      fr: 'État de préparation du redémarrage (stop & start)'
+      es: 'Estado de preparación del reinicio (stop & start)'
+      de: 'Status der Neustartvorbereitung (Stop & Start)'
+      it: 'Stato di preparazione al riavvio (stop & start)'
+      pl: 'Stan przygotowania do ponownego rozruchu (stop & start)'
+      ru: 'Статус подготовки к перезапуску (стоп-старт)'
+      zh: '停止启动(Stop-Start)重启准备状态'
+      hu: 'Az újraindítás előkészítésének állapota (stop-start)'
+      pt: 'Estado de preparação do reinício (stop & start)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'No restart preparation in progress'
+        fr: 'Pas de préparation de redémarrage en cours'
+        es: 'Sin preparación de reinicio en curso'
+        de: 'Keine Neustartvorbereitung im Gange'
+        it: 'Nessuna preparazione al riavvio in corso'
+        pl: 'Brak trwającego przygotowania do ponownego uruchomienia'
+        ru: 'Подготовка к перезапуску не выполняется'
+        zh: '未进行重启准备'
+        hu: 'Nincs folyamatban újraindítási előkészület'
+        pt: 'Sem preparação de reinício em curso'
+      0x02:
+        en: 'Restart preparation in progress'
+        fr: 'Préparation au redémarrage en cours'
+        es: 'Preparación para el reinicio en curso'
+        de: 'Neustartvorbereitung läuft'
+        it: 'Preparazione al riavvio in corso'
+        pl: 'Trwa przygotowanie do ponownego uruchomienia'
+        ru: 'Идёт подготовка к перезапуску'
+        zh: '重启准备中'
+        hu: 'Újraindítás előkészítése folyamatban'
+        pt: 'Preparação para reinício em curso'
+      0x03:
+        unused: true
+
+  MEAP_COMMAND:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Active grille shutter (MEAP) control command'
+      fr: 'Commande de pilotage du volet d''air actif (MEAP)'
+      es: 'Comando de control de la persiana de aire activa (MEAP)'
+      de: 'Steuerbefehl der aktiven Kühlerjalousie (MEAP)'
+      it: 'Comando di pilotaggio della serranda attiva del radiatore (MEAP)'
+      pl: 'Polecenie sterowania aktywną żaluzją chłodnicy (MEAP)'
+      ru: 'Команда управления активными жалюзи радиатора (MEAP)'
+      zh: '主动进气格栅(MEAP)控制指令'
+      hu: 'Az aktív hűtőrács-zsalu (MEAP) vezérlőparancsa'
+      pt: 'Comando de controlo da persiana de ar ativa (MEAP)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No movement'
+        fr: 'Aucun mouvement'
+        es: 'Sin movimiento'
+        de: 'Keine Bewegung'
+        it: 'Nessun movimento'
+        pl: 'Brak ruchu'
+        ru: 'Нет движения'
+        zh: '无运动'
+        hu: 'Nincs mozgás'
+        pt: 'Sem movimento'
+      0x01:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+      0x02:
+        en: 'Closing'
+        fr: 'Fermeture'
+        es: 'Cierre'
+        de: 'Schließen'
+        it: 'Chiusura'
+        pl: 'Zamykanie'
+        ru: 'Закрытие'
+        zh: '关闭中'
+        hu: 'Zárás'
+        pt: 'A fechar'
+      0x03:
+        en: 'Referencing (calibration)'
+        fr: 'Référencement'
+        es: 'Referenciado'
+        de: 'Referenzierung'
+        it: 'Riferimento (calibrazione)'
+        pl: 'Referencjonowanie'
+        ru: 'Калибровка (референсирование)'
+        zh: '基准定位'
+        hu: 'Referenciázás'
+        pt: 'Referenciação'
+
+  MEAP_SOFTWARE_POSITION:
+    bits: '1.3'
+    comment:
+      en: 'Active grille shutter (MEAP) software-computed position'
+      fr: 'Position logicielle calculée du volet d''air actif (MEAP)'
+      es: 'Posición calculada por software de la persiana de aire activa (MEAP)'
+      de: 'Softwareseitig berechnete Position der aktiven Kühlerjalousie (MEAP)'
+      it: 'Posizione calcolata via software della serranda attiva del radiatore (MEAP)'
+      pl: 'Obliczona programowo pozycja aktywnej żaluzji chłodnicy (MEAP)'
+      ru: 'Программно рассчитанное положение активных жалюзи радиатора (MEAP)'
+      zh: '软件计算的主动进气格栅(MEAP)位置'
+      hu: 'Az aktív hűtőrács-zsalu (MEAP) szoftver által számított helyzete'
+      pt: 'Posição calculada por software da grelha de ar ativa (MEAP)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+      0x01:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+
+  SEEM_VOLTAGE_TYPE:
+    bits: '1.2-1.1'
+    comment:
+      en: 'SEEM voltage classification according to the powertrain (GMP) state'
+      fr: 'Classification de la tension SEEM en fonction de l''état du groupe motopropulseur (GMP)'
+      es: 'Clasificación de la tensión SEEM según el estado del grupo motopropulsor (GMP)'
+      de: 'SEEM-Spannungsklassifizierung je nach Zustand des Antriebsstrangs (GMP)'
+      it: 'Classificazione della tensione SEEM in funzione dello stato del gruppo motopropulsore (GMP)'
+      pl: 'Klasyfikacja napięcia SEEM zależnie od stanu układu napędowego (GMP)'
+      ru: 'Классификация напряжения SEEM в зависимости от состояния силового агрегата (GMP)'
+      zh: '根据动力总成(GMP)状态划分的SEEM电压类型'
+      hu: 'A SEEM feszültség besorolása a hajtáslánc (GMP) állapota szerint'
+      pt: 'Classificação da tensão SEEM em função do estado do grupo motopropulsor (GMP)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Type 1'
+        fr: 'Type 1'
+        es: 'Tipo 1'
+        de: 'Typ 1'
+        it: 'Tipo 1'
+        pl: 'Typ 1'
+        ru: 'Тип 1'
+        zh: '类型1'
+        hu: '1. típus'
+        pt: 'Tipo 1'
+      0x01:
+        en: 'Type 2'
+        fr: 'Type 2'
+        es: 'Tipo 2'
+        de: 'Typ 2'
+        it: 'Tipo 2'
+        pl: 'Typ 2'
+        ru: 'Тип 2'
+        zh: '2型'
+        hu: '2. típus'
+        pt: 'Tipo 2'
+      0x02:
+        en: '3 type'
+        fr: 'type 3'
+        es: 'tipo 3'
+        de: 'Typ 3'
+        it: 'tipo 3'
+        pl: 'typ 3'
+        ru: 'тип 3'
+        zh: '类型3'
+        hu: '3. típus'
+        pt: 'tipo 3'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  RESTART_COUNTER:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Engine restart counter'
+      fr: 'Compteur du nombre de redémarrages moteur'
+      es: 'Contador de reinicios del motor'
+      de: 'Zähler der Motorneustarts'
+      it: 'Contatore dei riavvii motore'
+      pl: 'Licznik liczby ponownych rozruchów silnika'
+      ru: 'Счётчик перезапусков двигателя'
+      zh: '发动机重启计数器'
+      hu: 'A motor újraindításainak számlálója'
+      pt: 'Contador do número de reinícios do motor'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 3276750
+
+  CMM_FAULT:
+    bits: '4.7-4.6'
+    comment:
+      en: 'CMM fault status'
+      fr: 'État de défaut du CMM'
+      es: 'Estado de fallo del CMM'
+      de: 'Fehlerstatus des CMM'
+      it: 'Stato di guasto del CMM'
+      pl: 'Stan usterki modułu CMM'
+      ru: 'Статус неисправности CMM'
+      zh: 'CMM故障状态'
+      hu: 'A CMM hibaállapota'
+      pt: 'Estado de falha do CMM'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'G3 fault'
+        fr: 'Défaut G3'
+        es: 'Fallo G3'
+        de: 'G3-Fehler'
+        it: 'Guasto G3'
+        pl: 'Usterka G3'
+        ru: 'Неисправность G3'
+        zh: 'G3故障'
+        hu: 'G3 hiba'
+        pt: 'Falha G3'
+      0x02:
+        en: 'G4 fault'
+        fr: 'Défaut G4'
+        es: 'Fallo G4'
+        de: 'Fehler G4'
+        it: 'Guasto G4'
+        pl: 'Usterka G4'
+        ru: 'Неисправность G4'
+        zh: 'G4故障'
+        hu: 'G4 hiba'
+        pt: 'Avaria G4'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  ENGINE_LOAD_REQUEST:
+    bits: '4.5'
+    comment:
+      en: 'Engine load request to assist filter regeneration (processed by the BSI)'
+      fr: 'Demande de charge moteur pour faciliter la régénération du filtre (traitée par la BSI)'
+      es: 'Solicitud de carga del motor para facilitar la regeneración del filtro (procesada por la BSI)'
+      de: 'Anforderung der Motorlast zur Unterstützung der Filterregeneration (von der BSI verarbeitet)'
+      it: 'Richiesta di carico motore per facilitare la rigenerazione del filtro (elaborata dalla BSI)'
+      pl: 'Żądanie obciążenia silnika wspomagające regenerację filtra (przetwarzane przez BSI)'
+      ru: 'Запрос нагрузки двигателя для содействия регенерации фильтра (обрабатывается BSI)'
+      zh: '为辅助滤芯再生而提出的发动机负载请求(由BSI处理)'
+      hu: 'Motorterhelési kérés a szűrőregenerálás elősegítésére (a BSI dolgozza fel)'
+      pt: 'Pedido de carga do motor para facilitar a regeneração do filtro (processado pela BSI)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No active request'
+        fr: 'Aucune requête active'
+        es: 'Sin solicitud activa'
+        de: 'Keine aktive Anforderung'
+        it: 'Nessuna richiesta attiva'
+        pl: 'Brak aktywnego żądania'
+        ru: 'Нет активного запроса'
+        zh: '无活动请求'
+        hu: 'Nincs aktív kérés'
+        pt: 'Sem pedido ativo'
+      0x01:
+        en: 'Request active'
+        fr: 'Requête active'
+        es: 'Solicitud activa'
+        de: 'Anforderung aktiv'
+        it: 'Richiesta attiva'
+        pl: 'Żądanie aktywne'
+        ru: 'Запрос активен'
+        zh: '请求已激活'
+        hu: 'Kérés aktív'
+        pt: 'Pedido ativo'
+
+  ENGINE_COOLANT_FLOW_STATUS:
+    bits: '4.4-4.3'
+    comment:
+      en: 'Engine coolant flow status (radiator/bypass circuit)'
+      fr: 'État de la circulation du liquide de refroidissement moteur (circuit radiateur/bypass)'
+      es: 'Estado de la circulación del líquido refrigerante del motor (circuito radiador/bypass)'
+      de: 'Status des Motorkühlmittelkreislaufs (Kühler-/Bypasskreislauf)'
+      it: 'Stato della circolazione del liquido di raffreddamento motore (circuito radiatore/bypass)'
+      pl: 'Stan przepływu płynu chłodzącego silnika (obieg chłodnicy/obejścia)'
+      ru: 'Статус циркуляции охлаждающей жидкости двигателя (контур радиатора/байпаса)'
+      zh: '发动机冷却液流动状态(散热器/旁通回路)'
+      hu: 'A motor hűtőfolyadék-keringésének állapota (hűtő/bypass kör)'
+      pt: 'Estado da circulação do líquido de refrigeração do motor (circuito radiador/bypass)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Aero shutter closed'
+        fr: 'Volet aéro fermé'
+        es: 'Persiana aerodinámica cerrada'
+        de: 'Aero-Klappe geschlossen'
+        it: 'Deflettore aerodinamico chiuso'
+        pl: 'Żaluzja aerodynamiczna zamknięta'
+        ru: 'Аэрозаслонка закрыта'
+        zh: '主动格栅关闭'
+        hu: 'Aero zsalu zárva'
+        pt: 'Persiana aerodinâmica fechada'
+      0x01:
+        en: 'Air deflector open'
+        fr: 'Déflecteur aérodynamique ouvert'
+        es: 'Deflector aerodinámico abierto'
+        de: 'Aero-Deflektor offen'
+        it: 'Deflettore aerodinamico aperto'
+        pl: 'Otwarty deflektor aerodynamiczny'
+        ru: 'Аэродинамический дефлектор открыт'
+        zh: '扰流板打开'
+        hu: 'Az aero terelőlap nyitva'
+        pt: 'Defletor aerodinâmico aberto'
+      0x02:
+        en: 'Aero shutter and bypass, or radiator, open'
+        fr: 'Volet aéro et bypass, ou radiateur, ouvert'
+        es: 'Persiana aerodinámica y derivación, o radiador, abierto'
+        de: 'Aero-Klappe und Bypass, oder Kühler, offen'
+        it: 'Deflettore aerodinamico e bypass, o radiatore, aperto'
+        pl: 'Żaluzja aerodynamiczna i obejście lub chłodnica otwarte'
+        ru: 'Аэрозаслонка и байпас, или радиатор, открыты'
+        zh: '主动格栅和旁通或散热器打开'
+        hu: 'Aero zsalu és bypass, vagy hűtő, nyitva'
+        pt: 'Persiana aerodinâmica e derivação, ou radiador, aberto'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  SCR_HEATER_VOLTAGE_BOOST_REQUEST:
+    bits: '4.2'
+    comment:
+      en: 'Minimum voltage boost request at the SCR heater terminals to thaw the urea'
+      fr: 'Demande de tension minimale renforcée aux bornes du réchauffeur SCR pour dégeler l''urée'
+      es: 'Solicitud de refuerzo de tensión mínima en los bornes del calentador SCR para descongelar la urea'
+      de: 'Anforderung einer verstärkten Mindestspannung an den Klemmen der SCR-Heizung zum Auftauen des Harnstoffs'
+      it: 'Richiesta di tensione minima rinforzata ai terminali del riscaldatore SCR per scongelare l''urea'
+      pl: 'Żądanie zwiększonego minimalnego napięcia na zaciskach grzałki SCR w celu rozmrożenia mocznika'
+      ru: 'Запрос повышенного минимального напряжения на клеммах нагревателя SCR для оттаивания мочевины'
+      zh: 'SCR加热器端子处提高最低电压以解冻尿素的请求'
+      hu: 'Az SCR-fűtés kapcsain megnövelt minimális feszültség kérése a karbamid felolvasztásához'
+      pt: 'Pedido de reforço de tensão mínima nos terminais do aquecedor SCR para descongelar a ureia'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Boost'
+        fr: 'Boost'
+        es: 'Boost'
+        de: 'Boost'
+        it: 'Boost'
+        pl: 'Boost'
+        ru: 'Boost (форсаж)'
+        zh: '增压'
+        hu: 'Boost'
+        pt: 'Boost'
+      0x01:
+        en: 'No boost'
+        fr: 'Pas de boost'
+        es: 'Sin boost'
+        de: 'Kein Boost'
+        it: 'Nessun boost'
+        pl: 'Brak doładowania (boost)'
+        ru: 'Без наддува (boost)'
+        zh: '无增压'
+        hu: 'Nincs boost'
+        pt: 'Sem boost'
+
+  SCR_INJECTOR_VOLTAGE_BOOST_REQUEST:
+    bits: '4.1'
+    comment:
+      en: 'Minimum voltage boost request at the SCR injector terminals for correct urea injection'
+      fr: 'Demande de tension minimale renforcée aux bornes de l''injecteur SCR pour assurer une bonne injection d''urée'
+      es: 'Solicitud de refuerzo de tensión mínima en los bornes del inyector SCR para una correcta inyección de urea'
+      de: 'Anforderung einer verstärkten Mindestspannung an den Klemmen des SCR-Injektors für eine korrekte Harnstoffeinspritzung'
+      it: 'Richiesta di tensione minima rinforzata ai terminali dell''iniettore SCR per una corretta iniezione di urea'
+      pl: 'Żądanie zwiększonego minimalnego napięcia na zaciskach wtryskiwacza SCR dla prawidłowego wtrysku mocznika'
+      ru: 'Запрос повышенного минимального напряжения на клеммах форсунки SCR для корректного впрыска мочевины'
+      zh: 'SCR喷射器端子处提高最低电压以确保正确尿素喷射的请求'
+      hu: 'Az SCR-injektor kapcsain megnövelt minimális feszültség kérése a megfelelő karbamid-befecskendezéshez'
+      pt: 'Pedido de reforço de tensão mínima nos terminais do injetor SCR para garantir uma boa injeção de ureia'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No boost'
+        fr: 'Pas de boost'
+        es: 'Sin boost'
+        de: 'Kein Boost'
+        it: 'Nessun boost'
+        pl: 'Brak doładowania (boost)'
+        ru: 'Без наддува (boost)'
+        zh: '无增压'
+        hu: 'Nincs boost'
+        pt: 'Sem boost'
+      0x01:
+        en: 'Boost'
+        fr: 'Boost'
+        es: 'Boost'
+        de: 'Boost'
+        it: 'Boost'
+        pl: 'Boost'
+        ru: 'Boost (форсаж)'
+        zh: '增压'
+        hu: 'Boost'
+        pt: 'Boost'
+
+  FAN_MIN_VOLTAGE_REQUEST:
+    bits: '4.0'
+    comment:
+      en: 'Minimum voltage request to be guaranteed for the cooling fan (GMV)'
+      fr: 'Demande de tension minimale à garantir pour le groupe motoventilateur (GMV)'
+      es: 'Solicitud de tensión mínima a garantizar para el electroventilador (GMV)'
+      de: 'Anforderung einer Mindestspannung für den Kühlerlüfter (GMV)'
+      it: 'Richiesta di tensione minima da garantire per l''elettroventola (GMV)'
+      pl: 'Żądanie minimalnego napięcia gwarantowanego dla wentylatora chłodnicy (GMV)'
+      ru: 'Запрос минимального гарантированного напряжения для вентилятора охлаждения (GMV)'
+      zh: '冷却风扇(GMV)所需保证的最低电压请求'
+      hu: 'A hűtőventilátor (GMV) számára garantálandó minimális feszültség kérése'
+      pt: 'Pedido de tensão mínima a garantir para o grupo moto-ventilador (GMV)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  FUEL_TEMPERATURE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Fuel temperature'
+      fr: 'Température du carburant'
+      es: 'Temperatura del combustible'
+      de: 'Kraftstofftemperatur'
+      it: 'Temperatura del carburante'
+      pl: 'Temperatura paliwa'
+      ru: 'Температура топлива'
+      zh: '燃油温度'
+      hu: 'Üzemanyag-hőmérséklet'
+      pt: 'Temperatura do combustível'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  SEEM_VOLTAGE:
+    bits: '6.7-6.1'
+    comment:
+      en: 'Voltage measured at the SEEM terminals'
+      fr: 'Tension mesurée aux bornes du SEEM'
+      es: 'Tensión medida en los bornes del SEEM'
+      de: 'An den SEEM-Klemmen gemessene Spannung'
+      it: 'Tensione misurata ai terminali del SEEM'
+      pl: 'Napięcie mierzone na zaciskach SEEM'
+      ru: 'Напряжение, измеренное на клеммах SEEM'
+      zh: 'SEEM端子处测得的电压'
+      hu: 'A SEEM kapcsain mért feszültség'
+      pt: 'Tensão medida nos terminais do SEEM'
+    type: 'uint'
+    factor: 0.1
+    offset: 5
+    min: 5
+    max: 16
+    units: 'V'
+    invalid: 0x7F
+    default: 0x46
+
+  CLUTCH_OVERTEMPERATURE_WARNING_REQUEST:
+    bits: '6.0'
+    comment:
+      en: 'HMI warning request for excessive clutch temperature'
+      fr: 'Demande d''alerte IHM pour température d''embrayage trop élevée'
+      es: 'Solicitud de alerta en el IHM por temperatura de embrague demasiado elevada'
+      de: 'HMI-Warnanforderung wegen zu hoher Kupplungstemperatur'
+      it: 'Richiesta di avviso HMI per temperatura frizione troppo elevata'
+      pl: 'Żądanie ostrzeżenia HMI o zbyt wysokiej temperaturze sprzęgła'
+      ru: 'Запрос предупреждения на HMI о чрезмерной температуре сцепления'
+      zh: '离合器温度过高的人机界面警告请求'
+      hu: 'HMI figyelmeztetési kérés túl magas kuplunghőmérséklet miatt'
+      pt: 'Pedido de alerta na interface (IHM) por temperatura de embraiagem demasiado elevada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  RESTART_VOLTAGE_PREDICTION_SENSITIVITY:
+    bits: '7.7-7.2'
+    comment:
+      en: 'Sensitivity of the predicted restart voltage to the vehicle electrical network current (SEEM)'
+      fr: 'Sensibilité de la tension prédite de redémarrage vis-à-vis du courant du réseau de bord (SEEM)'
+      es: 'Sensibilidad de la tensión prevista de reinicio respecto a la corriente de la red de a bordo (SEEM)'
+      de: 'Empfindlichkeit der vorhergesagten Wiederstartspannung gegenüber dem Bordnetzstrom (SEEM)'
+      it: 'Sensibilità della tensione di riavvio prevista rispetto alla corrente della rete di bordo (SEEM)'
+      pl: 'Czułość przewidywanego napięcia ponownego rozruchu względem prądu sieci pokładowej (SEEM)'
+      ru: 'Чувствительность прогнозируемого напряжения перезапуска к току бортовой сети (SEEM)'
+      zh: '预测重启电压相对于车载电网电流的灵敏度(SEEM)'
+      hu: 'Az újraindításkor becsült feszültség érzékenysége a fedélzeti hálózat áramára nézve (SEEM)'
+      pt: 'Sensibilidade da tensão de rearranque prevista à corrente da rede elétrica do veículo (SEEM)'
+    type: 'uint'
+    factor: 0.15
+    min: 0
+    max: 9
+    units: 'mV/A'
+
+  AC_THERMAL_CUTOFF_REQUEST:
+    bits: '7.1-7.0'
+    comment:
+      en: 'Air conditioning load-shedding request from under-hood thermal management'
+      fr: 'Demande de délestage de la climatisation émise par la gestion thermique sous capot'
+      es: 'Solicitud de reducción de carga del aire acondicionado desde la gestión térmica bajo el capó'
+      de: 'Anforderung zur Lastabwurf der Klimaanlage durch das Thermomanagement im Motorraum'
+      it: 'Richiesta di riduzione del carico del climatizzatore dalla gestione termica sotto cofano'
+      pl: 'Żądanie ograniczenia obciążenia klimatyzacji z zarządzania temperaturą pod maską'
+      ru: 'Запрос на снижение нагрузки кондиционера от управления температурой под капотом'
+      zh: '来自发动机舱热管理的空调减载请求'
+      hu: 'A klíma terhelésének csökkentési kérése a motortér hőgazdálkodása felől'
+      pt: 'Pedido de corte de carga do ar condicionado emitido pela gestão térmica sob o capot'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Intermediate load shedding requested'
+        fr: 'Demande de délestage intermédiaire'
+        es: 'Solicitud de deslastre intermedio'
+        de: 'Zwischenlastabwurf angefordert'
+        it: 'Richiesto distacco intermedio del carico'
+        pl: 'Zażądano pośredniego zrzutu obciążenia'
+        ru: 'Запрошен промежуточный сброс нагрузки'
+        zh: '请求中间负载削减'
+        hu: 'Köztes terheléskorlátozás kérve'
+        pt: 'Corte de carga intermédio pedido'
+      0x02:
+        en: 'Maximum load shedding requested'
+        fr: 'Demande de délestage maximum'
+        es: 'Solicitud de deslastre máximo'
+        de: 'Maximaler Lastabwurf angefordert'
+        it: 'Richiesto distacco massimo del carico'
+        pl: 'Zażądano maksymalnego zrzutu obciążenia'
+        ru: 'Запрошен максимальный сброс нагрузки'
+        zh: '请求最大负载削减'
+        hu: 'Maximális terheléskorlátozás kérve'
+        pt: 'Corte de carga máximo pedido'
+      0x03:
+        unused: true
+
+  ENGINE_COOLANT_TEMPERATURE_SETPOINT:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Engine coolant temperature regulation setpoint'
+      fr: 'Consigne de régulation de la température d''eau moteur'
+      es: 'Consigna de regulación de la temperatura del líquido refrigerante del motor'
+      de: 'Regelsollwert der Motorkühlmitteltemperatur'
+      it: 'Valore di riferimento per la regolazione della temperatura del liquido di raffreddamento motore'
+      pl: 'Wartość zadana regulacji temperatury płynu chłodzącego silnika'
+      ru: 'Заданное значение регулирования температуры охлаждающей жидкости двигателя'
+      zh: '发动机冷却液温度调节设定值'
+      hu: 'A motor hűtőfolyadék-hőmérsékletének szabályozási alapjele'
+      pt: 'Consigna de regulação da temperatura do líquido de refrigeração do motor'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x91

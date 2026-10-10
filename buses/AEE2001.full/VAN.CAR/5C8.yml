@@ -1,0 +1,690 @@
+id: 0x5C8
+name: 'AIRBAG_VEHICLE_STATE_COMMAND'
+type: 'van'
+length: 8
+comment:
+  en: 'Body computer to airbag ECU: airbag warning lamp states, passenger airbag inhibition command, supply/ignition state, front seat belt buckle states and vehicle speed.'
+  fr: 'BSI vers le calculateur airbag : états des voyants airbag, commande d''inhibition du sac passager, état d''alimentation/allumage, états de bouclage des ceintures avant et vitesse véhicule.'
+  es: 'BSI a la centralita del airbag: estados de los testigos del airbag, orden de inhibición del airbag del pasajero, estado de alimentación/encendido, estados de cierre de los cinturones delanteros y velocidad del vehículo.'
+  de: 'BSI an das Airbag-Steuergerät: Airbag-Kontrollleuchtenzustände, Beifahrerairbag-Deaktivierungsbefehl, Versorgungs-/Zündzustand, Zustände der vorderen Gurtschlösser und Fahrzeuggeschwindigkeit.'
+  it: 'BSI alla centralina airbag: stati delle spie airbag, comando di inibizione dell''airbag passeggero, stato di alimentazione/accensione, stati di chiusura delle cinture anteriori e velocità del veicolo.'
+  pl: 'BSI do sterownika poduszek powietrznych: stany kontrolek poduszek, polecenie wyłączenia poduszki pasażera, stan zasilania/zapłonu, stany zapięcia przednich pasów i prędkość pojazdu.'
+  ru: 'BSI в ЭБУ подушек безопасности: состояния ламп подушек безопасности, команда отключения подушки пассажира, состояние питания/зажигания, состояния передних пряжек ремней и скорость автомобиля.'
+  zh: 'BSI发送给安全气囊ECU的信息：气囊警告灯状态、乘客气囊禁用命令、供电/点火状态、前排安全带锁扣状态及车速。'
+  hu: 'A BSI a légzsák-vezérlőegység felé: légzsák-jelzőlámpák állapota, utaslégzsák-tiltási parancs, tápellátás-/gyújtásállapot, első biztonságiöv-csatok állapota és jármű sebessége.'
+  pt: 'Do computador de servidão para a unidade de controlo do airbag: estados da luz avisadora do airbag, comando de inibição do airbag do passageiro, estado de alimentação/ignição, estados do fecho do cinto de segurança dianteiro e velocidade do veículo.'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['RBG']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.6'
+    unused: true
+
+  ROLLOVER_LAMP_FAULT:
+    bits: '1.5'
+    comment:
+      en: 'Rollover warning lamp fault status'
+      fr: 'État de défaut du témoin de retournement'
+      es: 'Estado de fallo del testigo de vuelco'
+      de: 'Fehlerstatus der Überschlagwarnleuchte'
+      it: 'Stato di guasto della spia di ribaltamento'
+      pl: 'Stan usterki kontrolki dachowania'
+      ru: 'Статус неисправности индикатора опрокидывания'
+      zh: '翻车警示灯故障状态'
+      hu: 'A borulásjelző lámpa hibaállapota'
+      pt: 'Estado de falha da luz avisadora de capotamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Permanent fault'
+        fr: 'Défaut permanent'
+        es: 'Fallo permanente'
+        de: 'Dauerhafter Fehler'
+        it: 'Guasto permanente'
+        pl: 'Usterka trwała'
+        ru: 'Постоянная неисправность'
+        zh: '永久性故障'
+        hu: 'Tartós hiba'
+        pt: 'Avaria permanente'
+
+  ROLLOVER_LAMP_STATE:
+    bits: '1.4'
+    comment:
+      en: 'Rollover warning lamp lit'
+      fr: 'Allumage du témoin de retournement'
+      es: 'Encendido del testigo de vuelco'
+      de: 'Einschalten der Überschlagwarnleuchte'
+      it: 'Accensione della spia di ribaltamento'
+      pl: 'Zapalenie kontrolki dachowania'
+      ru: 'Включение индикатора опрокидывания'
+      zh: '翻车警示灯点亮'
+      hu: 'A borulásjelző lámpa bekapcsolása'
+      pt: 'Indicador luminoso de capotamento aceso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  PASSENGER_AIRBAG_OFF_LAMP_FAULT:
+    bits: '1.3'
+    comment:
+      en: 'Passenger airbag deactivated lamp fault status'
+      fr: 'État de défaut du témoin de désactivation de l''airbag passager'
+      es: 'Estado de fallo del testigo de airbag de pasajero desactivado'
+      de: 'Fehlerstatus der Kontrollleuchte für deaktivierten Beifahrerairbag'
+      it: 'Stato di guasto della spia di airbag passeggero disattivato'
+      pl: 'Stan usterki kontrolki wyłączenia poduszki pasażera'
+      ru: 'Статус неисправности индикатора отключения подушки безопасности пассажира'
+      zh: '副驾驶安全气囊关闭指示灯故障状态'
+      hu: 'Az utasoldali légzsák kikapcsolva jelzőlámpa hibaállapota'
+      pt: 'Estado de falha da luz avisadora de airbag do passageiro desativado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Permanent fault'
+        fr: 'Défaut permanent'
+        es: 'Fallo permanente'
+        de: 'Dauerhafter Fehler'
+        it: 'Guasto permanente'
+        pl: 'Usterka trwała'
+        ru: 'Постоянная неисправность'
+        zh: '永久性故障'
+        hu: 'Tartós hiba'
+        pt: 'Avaria permanente'
+
+  PASSENGER_AIRBAG_OFF_LAMP_STATE:
+    bits: '1.2'
+    comment:
+      en: 'Passenger airbag deactivated lamp lit'
+      fr: 'Allumage du témoin de désactivation de l''airbag passager'
+      es: 'Encendido del testigo de airbag de pasajero desactivado'
+      de: 'Einschalten der Kontrollleuchte für deaktivierten Beifahrerairbag'
+      it: 'Accensione della spia di airbag passeggero disattivato'
+      pl: 'Zapalenie kontrolki wyłączenia poduszki pasażera'
+      ru: 'Включение индикатора отключения подушки безопасности пассажира'
+      zh: '副驾驶安全气囊关闭指示灯点亮'
+      hu: 'Az utasoldali légzsák kikapcsolva jelzőlámpa bekapcsolása'
+      pt: 'Indicador luminoso de airbag do passageiro desativado aceso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  AIRBAG_LAMP_FAULT:
+    bits: '1.1'
+    comment:
+      en: 'General airbag warning lamp fault status'
+      fr: 'État de défaut du témoin général airbag'
+      es: 'Estado de fallo del testigo general del airbag'
+      de: 'Fehlerstatus der allgemeinen Airbag-Kontrollleuchte'
+      it: 'Stato di guasto della spia generale airbag'
+      pl: 'Stan usterki ogólnej kontrolki airbag'
+      ru: 'Статус неисправности общего индикатора подушек безопасности'
+      zh: '安全气囊总警示灯故障状态'
+      hu: 'Az általános légzsák-jelzőlámpa hibaállapota'
+      pt: 'Estado de falha da luz avisadora geral do airbag'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Permanent fault'
+        fr: 'Défaut permanent'
+        es: 'Fallo permanente'
+        de: 'Dauerhafter Fehler'
+        it: 'Guasto permanente'
+        pl: 'Usterka trwała'
+        ru: 'Постоянная неисправность'
+        zh: '永久性故障'
+        hu: 'Tartós hiba'
+        pt: 'Avaria permanente'
+
+  AIRBAG_LAMP_STATE:
+    bits: '1.0'
+    comment:
+      en: 'General airbag warning lamp lit'
+      fr: 'Allumage du témoin général airbag'
+      es: 'Encendido del testigo general del airbag'
+      de: 'Einschalten der allgemeinen Airbag-Kontrollleuchte'
+      it: 'Accensione della spia generale airbag'
+      pl: 'Zapalenie ogólnej kontrolki airbag'
+      ru: 'Включение общего индикатора подушек безопасности'
+      zh: '安全气囊总警示灯点亮'
+      hu: 'Az általános légzsák-jelzőlámpa bekapcsolása'
+      pt: 'Indicador luminoso geral do airbag aceso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  UNUSED_2:
+    bits: '2.7-2.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '3.7-3.2'
+    unused: true
+
+  PASSENGER_AIRBAG_INHIBIT_COMMAND_INV:
+    bits: '3.1'
+    comment:
+      en: 'Complement (inverted copy) of the passenger airbag inhibition command'
+      fr: 'Complément (copie inversée) de la commande d''inhibition de l''airbag passager'
+      es: 'Complemento (copia invertida) del comando de inhibición del airbag del pasajero'
+      de: 'Komplement (invertierte Kopie) des Deaktivierungsbefehls für den Beifahrerairbag'
+      it: 'Complemento (copia invertita) del comando di inibizione dell''airbag del passeggero'
+      pl: 'Dopełnienie (odwrócona kopia) polecenia wyłączenia poduszki pasażera'
+      ru: 'Дополнение (инвертированная копия) команды отключения подушки безопасности пассажира'
+      zh: '副驾驶安全气囊禁用命令的补码(反转副本)'
+      hu: 'Az utasoldali légzsák letiltási parancsának kiegészítője (invertált másolata)'
+      pt: 'Complemento (cópia invertida) do comando de inibição do airbag do passageiro'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inhibit passenger airbag'
+        fr: 'Inhiber le sac passager'
+        es: 'Inhibir el airbag del pasajero'
+        de: 'Beifahrerairbag deaktivieren'
+        it: 'Inibire l''airbag passeggero'
+        pl: 'Wyłączyć poduszkę pasażera'
+        ru: 'Отключить подушку безопасности пассажира'
+        zh: '禁用乘客气囊'
+        hu: 'Az utaslégzsák tiltása'
+        pt: 'Inibir o airbag do passageiro'
+      0x01:
+        en: 'Off'
+        fr: 'Pas de commande'
+        es: 'Sin orden'
+        de: 'Kein Befehl'
+        it: 'Nessun comando'
+        pl: 'Brak polecenia'
+        ru: 'Нет команды'
+        zh: '无指令'
+        hu: 'Nincs parancs'
+        pt: 'Sem comando'
+
+  PASSENGER_AIRBAG_INHIBIT_COMMAND:
+    bits: '3.0'
+    comment:
+      en: 'Passenger airbag inhibition command'
+      fr: 'Commande d''inhibition de l''airbag passager'
+      es: 'Comando de inhibición del airbag del pasajero'
+      de: 'Befehl zur Deaktivierung des Beifahrerairbags'
+      it: 'Comando di inibizione dell''airbag del passeggero'
+      pl: 'Polecenie wyłączenia poduszki powietrznej pasażera'
+      ru: 'Команда отключения подушки безопасности пассажира'
+      zh: '副驾驶安全气囊禁用命令'
+      hu: 'Az utasoldali légzsák letiltási parancsa'
+      pt: 'Comando de inibição do airbag do passageiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Pas de commande'
+        es: 'Sin orden'
+        de: 'Kein Befehl'
+        it: 'Nessun comando'
+        pl: 'Brak polecenia'
+        ru: 'Нет команды'
+        zh: '无指令'
+        hu: 'Nincs parancs'
+        pt: 'Sem comando'
+      0x01:
+        en: 'Inhibit passenger airbag'
+        fr: 'Inhiber le sac passager'
+        es: 'Inhibir el airbag del pasajero'
+        de: 'Beifahrerairbag deaktivieren'
+        it: 'Inibire l''airbag passeggero'
+        pl: 'Wyłączyć poduszkę pasażera'
+        ru: 'Отключить подушку безопасности пассажира'
+        zh: '禁用乘客气囊'
+        hu: 'Az utaslégzsák tiltása'
+        pt: 'Inibir o airbag do passageiro'
+
+  UNUSED_4:
+    bits: '4.7-4.4'
+    unused: true
+
+  SLEEP_ANNOUNCE:
+    bits: '4.3'
+    comment:
+      en: 'Announces upcoming sleep mode and loss of the VAN supply'
+      fr: 'Annonce de la mise en veille imminente et de la disparition du +VAN'
+      es: 'Anuncio de la próxima puesta en reposo y pérdida de la alimentación +VAN'
+      de: 'Ankündigung des bevorstehenden Ruhezustands und Wegfalls der VAN-Versorgung'
+      it: 'Annuncio dell''imminente stand-by e della perdita dell''alimentazione +VAN'
+      pl: 'Zapowiedź nadchodzącego trybu uśpienia i zaniku zasilania +VAN'
+      ru: 'Оповещение о переходе в спящий режим и отключении питания +VAN'
+      zh: '提前通知即将进入休眠模式和+VAN供电中断'
+      hu: 'A közelgő alvó üzemmód és a +VAN tápellátás megszűnésének előjelzése'
+      pt: 'Anúncio da colocação em repouso iminente e da perda da alimentação +VAN'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No sleep'
+        fr: 'Pas de veille'
+        es: 'Sin reposo'
+        de: 'Kein Ruhezustand'
+        it: 'Nessuno standby'
+        pl: 'Brak uśpienia'
+        ru: 'Нет сна'
+        zh: '无休眠'
+        hu: 'Nincs alvó állapot'
+        pt: 'Sem repouso'
+      0x01:
+        en: 'Sleep announced'
+        fr: 'Veille annoncée'
+        es: 'Reposo anunciado'
+        de: 'Ruhezustand angekündigt'
+        it: 'Stand-by annunciato'
+        pl: 'Zapowiedziane uśpienie'
+        ru: 'Объявлен спящий режим'
+        zh: '已宣布休眠'
+        hu: 'Alvás bejelentve'
+        pt: 'Repouso anunciado'
+
+  ENGINE_RUNNING:
+    bits: '4.2'
+    comment:
+      en: 'Engine running state'
+      fr: 'État moteur tournant'
+      es: 'Estado de motor en marcha'
+      de: 'Motorlaufstatus'
+      it: 'Stato di motore in moto'
+      pl: 'Stan pracy silnika'
+      ru: 'Состояние работы двигателя'
+      zh: '发动机运转状态'
+      hu: 'A motor járási állapota'
+      pt: 'Estado de motor em funcionamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Engine not running'
+        fr: 'Moteur non tournant'
+        es: 'Motor no en marcha'
+        de: 'Motor läuft nicht'
+        it: 'Motore non in funzione'
+        pl: 'Silnik niepracujący'
+        ru: 'Двигатель не работает'
+        zh: '发动机未运转'
+        hu: 'Motor nem jár'
+        pt: 'Motor sem rotação'
+      0x01:
+        en: 'Engine running'
+        fr: 'Moteur tournant'
+        es: 'Motor en marcha'
+        de: 'Motor läuft'
+        it: 'Motore in funzione'
+        pl: 'Silnik pracujący'
+        ru: 'Двигатель работает'
+        zh: '发动机运转中'
+        hu: 'A motor jár'
+        pt: 'Motor em funcionamento'
+
+  IGNITION_KEY_POSITION:
+    bits: '4.1-4.0'
+    comment:
+      en: 'Ignition key position (off, accessories, starter, on)'
+      fr: 'Position de la clé de contact (arrêt, accessoires, démarreur, contact)'
+      es: 'Posición de la llave de contacto (parada, accesorios, arranque, contacto)'
+      de: 'Position des Zündschlüssels (Aus, Zubehör, Starter, Zündung)'
+      it: 'Posizione della chiave di accensione (spento, accessori, avviamento, marcia)'
+      pl: 'Pozycja kluczyka zapłonu (wyłączony, akcesoria, rozrusznik, zapłon)'
+      ru: 'Положение ключа зажигания (выключено, аксессуары, стартер, зажигание)'
+      zh: '点火钥匙位置(关闭、附件、起动、点火)'
+      hu: 'A gyújtáskulcs helyzete (kikapcsolva, tartozékok, indítómotor, gyújtás)'
+      pt: 'Posição da chave de ignição (parado, acessórios, arranque, contacto)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Accessories'
+        fr: 'Accessoires'
+        es: 'Accesorios'
+        de: 'Zubehör'
+        it: 'Accessori'
+        pl: 'Akcesoria'
+        ru: 'Аксессуары'
+        zh: '附件'
+        hu: 'Tartozékok'
+        pt: 'Acessórios'
+      0x02:
+        en: 'Cranking'
+        fr: 'Démarreur en action'
+        es: 'Motor de arranque en marcha'
+        de: 'Anlasser dreht'
+        it: 'Motorino di avviamento in azione'
+        pl: 'Rozrusznik pracuje'
+        ru: 'Стартер вращает двигатель'
+        zh: '起动机运转中'
+        hu: 'Indítómotor forog'
+        pt: 'A rodar (arranque)'
+      0x03:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+
+  UNUSED_5:
+    bits: '5.7-5.4'
+    unused: true
+
+  PASSENGER_BELT_SENSOR_FAULT:
+    bits: '5.3'
+    comment:
+      en: 'Front passenger seatbelt buckle sensor fault'
+      fr: 'Défaut du capteur de boucle de ceinture passager avant'
+      es: 'Fallo del sensor del broche del cinturón del pasajero delantero'
+      de: 'Fehler des Schnallensensors des vorderen Beifahrersicherheitsgurts'
+      it: 'Guasto del sensore della fibbia della cintura del passeggero anteriore'
+      pl: 'Usterka czujnika klamry pasa przedniego pasażera'
+      ru: 'Неисправность датчика замка переднего пассажирского ремня'
+      zh: '前排乘客安全带扣传感器故障'
+      hu: 'Az első utasoldali biztonságiöv-csat érzékelőjének hibája'
+      pt: 'Falha do sensor do fecho do cinto do passageiro dianteiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Sensor OK'
+        fr: 'Capteur OK'
+        es: 'Sensor OK'
+        de: 'Sensor OK'
+        it: 'Sensore OK'
+        pl: 'Czujnik OK'
+        ru: 'Датчик исправен'
+        zh: '传感器正常'
+        hu: 'Érzékelő rendben'
+        pt: 'Sensor OK'
+      0x01:
+        en: 'Sensor fault'
+        fr: 'Défaut capteur'
+        es: 'Fallo del sensor'
+        de: 'Sensorfehler'
+        it: 'Guasto del sensore'
+        pl: 'Usterka czujnika'
+        ru: 'Неисправность датчика'
+        zh: '传感器故障'
+        hu: 'Érzékelőhiba'
+        pt: 'Falha do sensor'
+
+  PASSENGER_BELT_UNBUCKLED:
+    bits: '5.2'
+    comment:
+      en: 'Front passenger seatbelt buckle state (buckled/unbuckled)'
+      fr: 'État de la boucle de ceinture passager avant (bouclée/ouverte)'
+      es: 'Estado del broche del cinturón del pasajero delantero (abrochado/desabrochado)'
+      de: 'Schnallenzustand des vorderen Beifahrersicherheitsgurts (geschlossen/offen)'
+      it: 'Stato della fibbia della cintura del passeggero anteriore (allacciata/slacciata)'
+      pl: 'Stan zapięcia klamry pasa przedniego pasażera (zapięty/rozpięty)'
+      ru: 'Состояние замка переднего пассажирского ремня (застёгнут/расстёгнут)'
+      zh: '前排乘客安全带扣状态(已扣/未扣)'
+      hu: 'Az első utasoldali biztonsági öv csatjának állapota (becsatolva/kicsatolva)'
+      pt: 'Estado do fecho do cinto do passageiro dianteiro (apertado/desapertado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Seatbelt buckled'
+        fr: 'Ceinture bouclée'
+        es: 'Cinturón abrochado'
+        de: 'Gurt angelegt'
+        it: 'Cintura allacciata'
+        pl: 'Pas zapięty'
+        ru: 'Ремень пристёгнут'
+        zh: '安全带已系'
+        hu: 'Öv becsatolva'
+        pt: 'Cinto de segurança apertado'
+      0x01:
+        en: 'Unbuckled'
+        fr: 'Ceinture ouverte'
+        es: 'Cinturón desabrochado'
+        de: 'Gurt geöffnet'
+        it: 'Cintura slacciata'
+        pl: 'Pas odpięty'
+        ru: 'Ремень расстёгнут'
+        zh: '安全带未系'
+        hu: 'Öv kicsatolva'
+        pt: 'Cinto desapertado'
+
+  DRIVER_BELT_SENSOR_FAULT:
+    bits: '5.1'
+    comment:
+      en: 'Driver seatbelt buckle sensor fault'
+      fr: 'Défaut du capteur de boucle de ceinture conducteur'
+      es: 'Fallo del sensor del broche del cinturón del conductor'
+      de: 'Fehler des Schnallensensors des Fahrersicherheitsgurts'
+      it: 'Guasto del sensore della fibbia della cintura del conducente'
+      pl: 'Usterka czujnika klamry pasa kierowcy'
+      ru: 'Неисправность датчика замка ремня водителя'
+      zh: '驾驶员安全带扣传感器故障'
+      hu: 'A vezetőoldali biztonságiöv-csat érzékelőjének hibája'
+      pt: 'Falha do sensor do fecho do cinto do condutor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Sensor OK'
+        fr: 'Capteur OK'
+        es: 'Sensor OK'
+        de: 'Sensor OK'
+        it: 'Sensore OK'
+        pl: 'Czujnik OK'
+        ru: 'Датчик исправен'
+        zh: '传感器正常'
+        hu: 'Érzékelő rendben'
+        pt: 'Sensor OK'
+      0x01:
+        en: 'Sensor fault'
+        fr: 'Défaut capteur'
+        es: 'Fallo del sensor'
+        de: 'Sensorfehler'
+        it: 'Guasto del sensore'
+        pl: 'Usterka czujnika'
+        ru: 'Неисправность датчика'
+        zh: '传感器故障'
+        hu: 'Érzékelőhiba'
+        pt: 'Falha do sensor'
+
+  DRIVER_BELT_UNBUCKLED:
+    bits: '5.0'
+    comment:
+      en: 'Driver seatbelt buckle state (buckled/unbuckled)'
+      fr: 'État de la boucle de ceinture conducteur (bouclée/ouverte)'
+      es: 'Estado del broche del cinturón del conductor (abrochado/desabrochado)'
+      de: 'Schnallenzustand des Fahrersicherheitsgurts (geschlossen/offen)'
+      it: 'Stato della fibbia della cintura del conducente (allacciata/slacciata)'
+      pl: 'Stan zapięcia klamry pasa kierowcy (zapięty/rozpięty)'
+      ru: 'Состояние замка ремня водителя (застёгнут/расстёгнут)'
+      zh: '驾驶员安全带扣状态(已扣/未扣)'
+      hu: 'A vezetőoldali biztonsági öv csatjának állapota (becsatolva/kicsatolva)'
+      pt: 'Estado do fecho do cinto do condutor (apertado/desapertado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Seatbelt buckled'
+        fr: 'Ceinture bouclée'
+        es: 'Cinturón abrochado'
+        de: 'Gurt angelegt'
+        it: 'Cintura allacciata'
+        pl: 'Pas zapięty'
+        ru: 'Ремень пристёгнут'
+        zh: '安全带已系'
+        hu: 'Öv becsatolva'
+        pt: 'Cinto de segurança apertado'
+      0x01:
+        en: 'Unbuckled'
+        fr: 'Ceinture ouverte'
+        es: 'Cinturón desabrochado'
+        de: 'Gurt geöffnet'
+        it: 'Cintura slacciata'
+        pl: 'Pas odpięty'
+        ru: 'Ремень расстёгнут'
+        zh: '安全带未系'
+        hu: 'Öv kicsatolva'
+        pt: 'Cinto desapertado'
+
+  UNUSED_6:
+    bits: '6.7-6.0'
+    unused: true
+
+  VEHICLE_SPEED:
+    bits: '7.7-8.0'
+    comment:
+      en: 'Vehicle speed (average of the driven wheels); reads 0 below 2.75 km/h'
+      fr: 'Vitesse du véhicule (moyenne des roues motrices); nulle en dessous de 2,75 km/h'
+      es: 'Velocidad del vehículo (media de las ruedas motrices); nula por debajo de 2,75 km/h'
+      de: 'Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder); unter 2,75 km/h gleich null'
+      it: 'Velocità del veicolo (media delle ruote motrici); nulla al di sotto di 2,75 km/h'
+      pl: 'Prędkość pojazdu (średnia kół napędowych); zerowa poniżej 2,75 km/h'
+      ru: 'Скорость автомобиля (среднее по ведущим колёсам); равна нулю ниже 2,75 км/ч'
+      zh: '车速(驱动轮平均值);低于2.75 km/h时读数为0'
+      hu: 'Járműsebesség (a hajtott kerekek átlaga); 2,75 km/h alatt nulla'
+      pt: 'Velocidade do veículo (média das rodas motrizes); nula abaixo de 2,75 km/h'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 50ms'
+      fr: 'Aussi observée avec une période de 50ms'
+      es: 'También observada con un periodo de 50ms'
+      de: 'Auch mit einer Periode von 50ms beobachtet'
+      it: 'Osservata anche con un periodo di 50ms'
+      pl: 'Obserwowana także z okresem 50ms'
+      ru: 'Также наблюдалась с периодом 50ms'
+      zh: '也观察到周期为50ms'
+      hu: 'Megfigyelve 50ms periódussal is'
+      pt: 'Também observada com um período de 50ms'
+    periodicity: ['50ms']

@@ -1,0 +1,503 @@
+id: 0x227
+name: 'PUSH_BUTTON_LED_CONTROL'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU2']
+receivers: ['BSI', 'ABS']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  GEAR_LEVER_POSITION_VALIDATED:
+    bits: '2.7-2.5'
+    comment:
+      en: 'Gear lever position validated by the powertrain'
+      fr: 'Position du levier de vitesses validée par le groupe motopropulseur'
+      es: 'Posición de la palanca de cambios validada por el grupo motopropulsor'
+      de: 'Vom Antriebsstrang bestätigte Wählhebelposition'
+      it: 'Posizione della leva del cambio convalidata dal gruppo propulsore'
+      pl: 'Pozycja dźwigni zmiany biegów potwierdzona przez układ napędowy'
+      ru: 'Положение рычага переключения передач, подтверждённое силовым агрегатом'
+      zh: '动力总成验证的换挡杆位置'
+      hu: 'A hajtáslánc által hitelesített váltókar-pozíció'
+      pt: 'Posição da alavanca de velocidades validada pelo grupo motopropulsor'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Reverse gear'
+        fr: 'Marche arrière'
+        es: 'Marcha atrás'
+        de: 'Rückwärtsgang'
+        it: 'Retromarcia'
+        pl: 'Bieg wsteczny'
+        ru: 'Задний ход'
+        zh: '倒挡'
+        hu: 'Hátrameneti fokozat'
+        pt: 'Marcha-atrás'
+      0x02:
+        en: 'Centre (neutral)'
+        fr: 'Neutre'
+        es: 'Centro (neutro)'
+        de: 'Mitte (neutral)'
+        it: 'Centro (neutro)'
+        pl: 'Środek (neutralny)'
+        ru: 'Центр (нейтраль)'
+        zh: '居中（中立）'
+        hu: 'Középső (semleges)'
+        pt: 'Centro (neutro)'
+      0x03:
+        en: 'Automatic'
+        fr: 'Automatique'
+        es: 'Automático'
+        de: 'Automatisch'
+        it: 'Automatico'
+        pl: 'Automatyczny'
+        ru: 'Автоматически'
+        zh: '自动'
+        hu: 'Automatikus'
+        pt: 'Automático'
+      0x04:
+        en: 'Manual'
+        fr: 'Manuel'
+        es: 'Manual'
+        de: 'Manuell'
+        it: 'Manuale'
+        pl: 'Ręczny'
+        ru: 'Ручной'
+        zh: '手动'
+        hu: 'Kézi'
+        pt: 'Manual'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  ENERGY_TRANSFER_DEGRADED_MODE:
+    bits: '2.4'
+    comment:
+      en: 'Degraded mode of energy transfer through the road'
+      fr: 'Mode dégradé de transfert d''énergie par la route'
+      es: 'Modo degradado de transferencia de energía por la carretera'
+      de: 'Eingeschränkter Modus der Energieübertragung über die Straße'
+      it: 'Modalità degradata di trasferimento di energia tramite la strada'
+      pl: 'Tryb awaryjny przekazywania energii przez drogę'
+      ru: 'Ухудшенный режим передачи энергии через дорогу'
+      zh: '通过路面传递能量的降级模式'
+      hu: 'Energiaátvitel korlátozott üzemmódja az úton keresztül'
+      pt: 'Modo degradado de transferência de energia pela estrada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in degraded mode'
+        fr: 'Pas de mode dégradé'
+        es: 'Sin modo degradado'
+        de: 'Kein degradierter Modus'
+        it: 'Nessuna modalità degradata'
+        pl: 'Brak trybu awaryjnego'
+        ru: 'Не в деградированном режиме'
+        zh: '非降级模式'
+        hu: 'Nincs korlátozott üzemmódban'
+        pt: 'Não em modo degradado'
+      0x01:
+        en: 'Failure mode in progress'
+        fr: 'Mode dégradé en cours'
+        es: 'Modo degradado en curso'
+        de: 'Fehlermodus aktiv'
+        it: 'Modalità degradata in corso'
+        pl: 'Trwa tryb awaryjny'
+        ru: 'Аварийный режим активен'
+        zh: '故障模式进行中'
+        hu: 'Hibaüzemmód folyamatban'
+        pt: 'Modo de falha em curso'
+
+  REAR_EMOTOR_ACTUAL_TORQUE:
+    bits: '2.3-3.3'
+    comment:
+      en: 'Rear electric machine actual torque'
+      fr: 'Couple réel de la machine électrique arrière'
+      es: 'Par real de la máquina eléctrica trasera'
+      de: 'Tatsächliches Drehmoment der hinteren E-Maschine'
+      it: 'Coppia reale della macchina elettrica posteriore'
+      pl: 'Rzeczywisty moment obrotowy tylnej maszyny elektrycznej'
+      ru: 'Фактический момент задней электромашины'
+      zh: '后电机实际扭矩'
+      hu: 'A hátsó elektromos gép tényleges nyomatéka'
+      pt: 'Binário real da máquina elétrica traseira'
+    type: 'sint'
+    factor: 2
+    min: -250
+    max: 250
+    units: 'Nm'
+    invalid: 0x7F
+    default: 0x00
+
+  ASR_MSR_ACKNOWLEDGE:
+    bits: '3.2'
+    comment:
+      en: 'ASR / MSR (traction/engine drag control) communication acknowledge'
+      fr: 'Acquittement de la communication ASR / MSR (antipatinage / anti-calage)'
+      es: 'Acuse de recibo de la comunicación ASR / MSR (control de tracción/retención de motor)'
+      de: 'Kommunikationsquittung ASR / MSR (Antriebsschlupf-/Schubabschaltungsregelung)'
+      it: 'Conferma di comunicazione ASR / MSR (controllo trazione/freno motore)'
+      pl: 'Potwierdzenie komunikacji ASR / MSR (kontrola trakcji/hamowania silnikiem)'
+      ru: 'Подтверждение связи ASR / MSR (антипробуксовочная система / система снижения крутящего момента)'
+      zh: 'ASR/MSR(牵引力/发动机拖曳控制)通信确认'
+      hu: 'ASR / MSR (kipörgésgátló / motorfékezés-szabályozó) kommunikáció nyugtázása'
+      pt: 'Confirmação da comunicação ASR / MSR (antipatinagem / retenção do motor)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Communication problem'
+        fr: 'Problème de communication'
+        es: 'Problema de comunicación'
+        de: 'Kommunikationsproblem'
+        it: 'Problema di comunicazione'
+        pl: 'Problem z komunikacją'
+        ru: 'Проблема связи'
+        zh: '通信问题'
+        hu: 'Kommunikációs probléma'
+        pt: 'Problema de comunicação'
+      0x01:
+        en: 'Communication OK'
+        fr: 'Dialogue correct'
+        es: 'Diálogo correcto'
+        de: 'Dialog korrekt'
+        it: 'Dialogo corretto'
+        pl: 'Dialog poprawny'
+        ru: 'Диалог в норме'
+        zh: '通讯正常'
+        hu: 'A kommunikáció rendben'
+        pt: 'Comunicação OK'
+
+  ACCELERATION_REQUEST_STATUS:
+    bits: '3.1'
+    comment:
+      en: 'Acceleration request status'
+      fr: 'Etat de la demande d''accélération'
+      es: 'Estado de la solicitud de aceleración'
+      de: 'Status der Beschleunigungsanforderung'
+      it: 'Stato della richiesta di accelerazione'
+      pl: 'Stan żądania przyspieszenia'
+      ru: 'Состояние запроса ускорения'
+      zh: '加速请求状态'
+      hu: 'A gyorsítási kérés állapota'
+      pt: 'Estado do pedido de aceleração'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Negative IVC'
+        fr: 'IVC négatif'
+        es: 'IVC negativo'
+        de: 'Negativer IVC'
+        it: 'IVC negativo'
+        pl: 'Ujemne IVC'
+        ru: 'Отрицательный IVC'
+        zh: 'IVC为负'
+        hu: 'Negatív IVC'
+        pt: 'IVC negativo'
+      0x01:
+        en: 'IVC positive'
+        fr: 'IVC positif'
+        es: 'IVC positivo'
+        de: 'IVC positiv'
+        it: 'IVC positivo'
+        pl: 'IVC dodatni'
+        ru: 'IVC положительный'
+        zh: 'IVC正'
+        hu: 'IVC pozitív'
+        pt: 'IVC positivo'
+
+  REAR_EMOTOR_DRIVER_TORQUE_REQUEST_RAW:
+    bits: '3.0-4.0'
+    comment:
+      en: 'Rear electric machine torque requested by the driver, before processing'
+      fr: 'Couple de la machine arrière demandé par le conducteur, avant traitement'
+      es: 'Par de la máquina trasera solicitado por el conductor, antes del procesamiento'
+      de: 'Vom Fahrer angefordertes Drehmoment der hinteren E-Maschine, vor Verarbeitung'
+      it: 'Coppia della macchina posteriore richiesta dal conducente, prima dell''elaborazione'
+      pl: 'Moment obrotowy tylnej maszyny elektrycznej żądany przez kierowcę, przed przetworzeniem'
+      ru: 'Момент задней электромашины, запрошенный водителем, до обработки'
+      zh: '驾驶员请求的后电机扭矩(处理前)'
+      hu: 'A hátsó elektromos gép vezető által kért nyomatéka, feldolgozás előtt'
+      pt: 'Binário da máquina traseira solicitado pelo condutor, antes do processamento'
+    type: 'uint'
+    factor: 2
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0xFA
+
+  REAR_EMOTOR_COUPLING_STATUS:
+    bits: '5.7'
+    comment:
+      en: 'Rear electric machine coupling state'
+      fr: 'Etat de couplage de la machine électrique arrière'
+      es: 'Estado de acoplamiento de la máquina eléctrica trasera'
+      de: 'Kupplungszustand der hinteren E-Maschine'
+      it: 'Stato di accoppiamento della macchina elettrica posteriore'
+      pl: 'Stan sprzęgnięcia tylnej maszyny elektrycznej'
+      ru: 'Состояние соединения задней электромашины'
+      zh: '后电机联接状态'
+      hu: 'A hátsó elektromos gép kapcsolási állapota'
+      pt: 'Estado de acoplamento da máquina elétrica traseira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Disengaged'
+        fr: 'Désengagé'
+        es: 'Desengranado'
+        de: 'Ausgekuppelt'
+        it: 'Disinnestato'
+        pl: 'Rozłączone'
+        ru: 'Расцеплено'
+        zh: '已脱开'
+        hu: 'Kikapcsolva'
+        pt: 'Desengatado'
+      0x01:
+        en: 'Engaged'
+        fr: 'Engagé'
+        es: 'Engranado'
+        de: 'Eingekuppelt'
+        it: 'Innestato'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '已接合'
+        hu: 'Bekapcsolva'
+        pt: 'Engatado'
+
+  REAR_SHIFT_IN_PROGRESS:
+    bits: '5.6'
+    comment:
+      en: 'Rear gear shift in progress'
+      fr: 'Changement de rapport arrière en cours'
+      es: 'Cambio de marcha trasero en curso'
+      de: 'Hinterer Gangwechsel läuft'
+      it: 'Cambio marcia posteriore in corso'
+      pl: 'Trwa zmiana biegu tylnego'
+      ru: 'Выполняется переключение задней передачи'
+      zh: '后部换挡进行中'
+      hu: 'Hátsó fokozatváltás folyamatban'
+      pt: 'Mudança de marcha traseira em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No change in progress'
+        fr: 'Pas de changement en cours'
+        es: 'Sin cambio en curso'
+        de: 'Kein Wechsel im Gange'
+        it: 'Nessun cambiamento in corso'
+        pl: 'Brak zmiany w toku'
+        ru: 'Изменение не выполняется'
+        zh: '无正在进行的更改'
+        hu: 'Nincs folyamatban lévő váltás'
+        pt: 'Sem mudança em curso'
+      0x01:
+        en: 'Changeover in progress'
+        fr: 'Changement en cours'
+        es: 'Cambio en curso'
+        de: 'Umschaltung läuft'
+        it: 'Cambio in corso'
+        pl: 'Trwa zmiana'
+        ru: 'Переключение выполняется'
+        zh: '切换进行中'
+        hu: 'Váltás folyamatban'
+        pt: 'Mudança em curso'
+
+  REAR_ASR_MSR_ACKNOWLEDGE:
+    bits: '5.5'
+    comment:
+      en: 'Rear ASR / MSR communication acknowledge'
+      fr: 'Acquittement de la communication ASR/MSR arrière'
+      es: 'Acuse de recibo de la comunicación ASR/MSR trasera'
+      de: 'Kommunikationsquittung des hinteren ASR/MSR'
+      it: 'Conferma di comunicazione ASR/MSR posteriore'
+      pl: 'Potwierdzenie komunikacji tylnego ASR/MSR'
+      ru: 'Подтверждение связи заднего ASR/MSR'
+      zh: '后ASR/MSR通信确认'
+      hu: 'A hátsó ASR/MSR kommunikáció nyugtázása'
+      pt: 'Confirmação da comunicação ASR/MSR traseira'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Communication problem'
+        fr: 'Problème de communication'
+        es: 'Problema de comunicación'
+        de: 'Kommunikationsproblem'
+        it: 'Problema di comunicazione'
+        pl: 'Problem z komunikacją'
+        ru: 'Проблема связи'
+        zh: '通信问题'
+        hu: 'Kommunikációs probléma'
+        pt: 'Problema de comunicação'
+      0x01:
+        en: 'Communication OK'
+        fr: 'Dialogue correct'
+        es: 'Diálogo correcto'
+        de: 'Dialog korrekt'
+        it: 'Dialogo corretto'
+        pl: 'Dialog poprawny'
+        ru: 'Диалог в норме'
+        zh: '通讯正常'
+        hu: 'A kommunikáció rendben'
+        pt: 'Comunicação OK'
+
+  REAR_EMOTOR_ROTATION_DIRECTION:
+    bits: '5.4-5.3'
+    comment:
+      en: 'Rear electric machine rotation direction'
+      fr: 'Sens de rotation de la machine électrique arrière'
+      es: 'Sentido de rotación de la máquina eléctrica trasera'
+      de: 'Drehrichtung der hinteren E-Maschine'
+      it: 'Senso di rotazione della macchina elettrica posteriore'
+      pl: 'Kierunek obrotu tylnej maszyny elektrycznej'
+      ru: 'Направление вращения задней электромашины'
+      zh: '后电机旋转方向'
+      hu: 'A hátsó elektromos gép forgásiránya'
+      pt: 'Sentido de rotação da máquina elétrica traseira'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x01:
+        en: 'Front (maximum)'
+        fr: 'Avant (maximum)'
+        es: 'Delante (máximo)'
+        de: 'Vorne (Maximum)'
+        it: 'Avanti (massimo)'
+        pl: 'Przód (maksimum)'
+        ru: 'Вперёд (максимум)'
+        zh: '前(最大)'
+        hu: 'Elöl (maximum)'
+        pt: 'Dianteira (máximo)'
+      0x02:
+        en: 'Rear (maximum)'
+        fr: 'Arrière (maximum)'
+        es: 'Trasero (máximo)'
+        de: 'Hinten (maximal)'
+        it: 'Posteriore (massimo)'
+        pl: 'Tył (maksimum)'
+        ru: 'Сзади (максимум)'
+        zh: '后部(最大)'
+        hu: 'Hátul (maximum)'
+        pt: 'Traseira (máximo)'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  REAR_EMOTOR_DRIVER_TORQUE_REQUEST_PROCESSED:
+    bits: '5.0-6.0'
+    comment:
+      en: 'Rear electric machine torque requested by the driver, after processing'
+      fr: 'Couple de la machine arrière demandé par le conducteur, après traitement'
+      es: 'Par de la máquina trasera solicitado por el conductor, tras el procesamiento'
+      de: 'Vom Fahrer angefordertes Drehmoment der hinteren E-Maschine, nach Verarbeitung'
+      it: 'Coppia della macchina posteriore richiesta dal conducente, dopo l''elaborazione'
+      pl: 'Moment obrotowy tylnej maszyny elektrycznej żądany przez kierowcę, po przetworzeniu'
+      ru: 'Момент задней электромашины, запрошенный водителем, после обработки'
+      zh: '驾驶员请求的后电机扭矩(处理后)'
+      hu: 'A hátsó elektromos gép vezető által kért nyomatéka, feldolgozás után'
+      pt: 'Binário da máquina traseira solicitado pelo condutor, após processamento'
+    type: 'uint'
+    factor: 2
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x1FF
+    default: 0xFA
+
+  REAR_EMOTOR_SPEED:
+    bits: '7.6-8.0'
+    comment:
+      en: 'Rear electric machine speed'
+      fr: 'Régime de la machine électrique arrière'
+      es: 'Régimen de la máquina eléctrica trasera'
+      de: 'Drehzahl der hinteren E-Maschine'
+      it: 'Regime della macchina elettrica posteriore'
+      pl: 'Prędkość obrotowa tylnej maszyny elektrycznej'
+      ru: 'Частота вращения задней электромашины'
+      zh: '后电机转速'
+      hu: 'A hátsó elektromos gép fordulatszáma'
+      pt: 'Regime da máquina elétrica traseira'
+    type: 'uint'
+    factor: 1
+    offset: -16000
+    min: -16000
+    max: 16000
+    units: 'rpm'
+    invalid: 0x7FFF
+    default: 0x3E80

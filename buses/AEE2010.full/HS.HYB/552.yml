@@ -1,0 +1,91 @@
+id: 0x552
+name: 'BSI_ODOMETER_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Odometer reading from the BSI, plus a time counter and a global-time-reset counter.'
+  fr: 'Kilométrage envoyé par la BSI, ainsi qu''un compteur temporel et un compteur de remise à zéro du temps global.'
+  es: 'Kilometraje enviado por la BSI, además de un contador temporal y un contador de reinicio del tiempo global.'
+  de: 'Kilometerstand vom BSI, sowie ein Zeitzähler und ein Zähler für den Reset der Gesamtzeit.'
+  it: 'Chilometraggio inviato dalla BSI, oltre a un contatore temporale e un contatore di reset del tempo globale.'
+  pl: 'Przebieg wysyłany przez BSI, a także licznik czasu i licznik kasowania czasu globalnego.'
+  ru: 'Пробег, отправляемый BSI, а также счётчик времени и счётчик сброса глобального времени.'
+  zh: 'BSI发送的里程数,以及一个时间计数器和一个全局时间复位计数器。'
+  hu: 'A BSI által küldött km-óraállás, valamint egy időszámláló és egy globális idő-nullázási számláló.'
+  pt: 'Leitura do conta-quilómetros da BSI, além de um contador de tempo e de um contador de reposição de tempo global.'
+observations:
+  en: 'Sent periodically by the BSI on the CAN buses once it wakes up; after a partial wake-up (engine-start preparation) or a main wake-up, sent every 100 ms for 1 s'
+  fr: 'Émise périodiquement par la BSI sur les bus CAN dès son réveil ; après un réveil partiel (préparation démarrage moteur) ou un réveil principal, émise toutes les 100 ms pendant 1 s'
+  es: 'Enviada periódicamente por la BSI en los buses CAN al despertar; tras una activación parcial (preparación de arranque del motor) o una activación principal, enviada cada 100 ms durante 1 s'
+  de: 'Periodisch von der BSI auf den CAN-Bussen gesendet, sobald sie aufwacht; nach einem Teilaufwachen (Motorstartvorbereitung) oder einem Hauptaufwachen alle 100 ms für 1 s gesendet'
+  it: 'Inviata periodicamente dalla BSI sui bus CAN non appena si risveglia; dopo un risveglio parziale (preparazione avvio motore) o un risveglio principale, inviata ogni 100 ms per 1 s'
+  pl: 'Wysyłane okresowo przez BSI na magistralach CAN po wybudzeniu; po częściowym wybudzeniu (przygotowanie do rozruchu silnika) lub głównym wybudzeniu, wysyłane co 100 ms przez 1 s'
+  ru: 'Отправляется периодически BSI по шинам CAN сразу после пробуждения; после частичного пробуждения (подготовка запуска двигателя) или основного пробуждения отправляется каждые 100 мс в течение 1 с'
+  zh: 'BSI唤醒后在CAN总线上周期性发送;在部分唤醒(发动机启动准备)或主唤醒后,以100毫秒周期发送1秒'
+  hu: 'A BSI periodikusan küldi a CAN buszokon az ébredése után; részleges ébredés (motorindítás előkészítése) vagy fő ébredés után 1 másodpercig 100 ms-onként küldve'
+  pt: 'Enviada periodicamente pela BSI nos barramentos CAN assim que esta ativa; após uma ativação parcial (preparação de arranque do motor) ou uma ativação principal, enviada a cada 100 ms durante 1 s'
+periodicity: ['1000ms', 'trigger']
+senders: ['VCU', 'CMM', 'HCU1']
+receivers: ['HCU2', 'TBMU', 'AVAS', 'ERAD', 'OBC', 'CMEL']
+
+signals:
+  VEHICLE_TIME_COUNTER:
+    bits: '1.7-4.0'
+    comment:
+      en: 'Vehicle time counter; value 0xFFFFFFFE means unavailable'
+      fr: 'Compteur temporel véhicule ; valeur 0xFFFFFFFE = indisponible'
+      es: 'Contador temporal del vehículo; valor 0xFFFFFFFE = no disponible'
+      de: 'Fahrzeugzeitzähler; Wert 0xFFFFFFFE = nicht verfügbar'
+      it: 'Contatore temporale veicolo; valore 0xFFFFFFFE = non disponibile'
+      pl: 'Licznik czasu pojazdu; wartość 0xFFFFFFFE = niedostępne'
+      ru: 'Временной счётчик автомобиля; значение 0xFFFFFFFE означает «недоступно»'
+      zh: '车辆时间计数器;值0xFFFFFFFE表示不可用'
+      hu: 'Jármű időszámláló; a 0xFFFFFFFE érték „nem elérhető”-t jelent'
+      pt: 'Contador temporal do veículo; valor 0xFFFFFFFE = indisponível'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 429496729.3
+    units: 's'
+    invalid: 0xFFFFFFFF
+    default: 0xFFFFFFFE
+
+  ODOMETER:
+    bits: '5.7-7.0'
+    comment:
+      en: 'Absolute distance travelled by the vehicle (matching the value shown to the driver) (km)'
+      fr: 'Kilométrage absolu parcouru par le véhicule (cohérent avec la valeur affichée au conducteur) (km)'
+      es: 'Kilometraje absoluto recorrido por el vehículo (coherente con el valor mostrado al conductor) (km)'
+      de: 'Absolute vom Fahrzeug zurückgelegte Strecke (übereinstimmend mit der dem Fahrer angezeigten Angabe) (km)'
+      it: 'Chilometraggio assoluto percorso dal veicolo (coerente con il valore mostrato al conducente) (km)'
+      pl: 'Bezwzględny przebieg pojazdu (zgodny z wartością wyświetlaną kierowcy) (km)'
+      ru: 'Абсолютный пробег автомобиля (соответствующий значению, показываемому водителю) (км)'
+      zh: '车辆行驶的绝对里程(与显示给驾驶员的数值一致)(km)'
+      hu: 'A jármű által megtett abszolút távolság (megegyezik a vezetőnek kijelzett értékkel) (km)'
+      pt: 'Distância absoluta percorrida pelo veículo (correspondente ao valor apresentado ao condutor) (km)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 16777214
+    units: 'km'
+    invalid: 0xFFFFFF
+    default: 0x00
+
+  TIME_COUNTER_RESET_COUNTER:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Reset counter of the vehicle time counter (GCT); value 0xFE means unavailable'
+      fr: 'Compteur de réinitialisation du compteur temporel véhicule (GCT) ; valeur 0xFE = indisponible'
+      es: 'Contador de reinicios del contador temporal del vehículo (GCT); valor 0xFE = no disponible'
+      de: 'Rücksetzzähler des Fahrzeugzeitzählers (GCT); Wert 0xFE = nicht verfügbar'
+      it: 'Contatore dei reset del contatore temporale veicolo (GCT); valore 0xFE = non disponibile'
+      pl: 'Licznik resetów licznika czasu pojazdu (GCT); wartość 0xFE = niedostępne'
+      ru: 'Счётчик сбросов временного счётчика автомобиля (GCT); значение 0xFE означает «недоступно»'
+      zh: '车辆时间计数器(GCT)的复位计数器;值0xFE表示不可用'
+      hu: 'A jármű időszámlálójának (GCT) visszaállítási számlálója; a 0xFE érték „nem elérhető”-t jelent'
+      pt: 'Contador de reinícios do contador temporal do veículo (GCT); valor 0xFE = indisponível'
+    type: 'uint'
+    min: 0
+    max: 253
+    invalid: 0xFF
+    default: 0xFE

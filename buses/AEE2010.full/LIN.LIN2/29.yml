@@ -1,0 +1,78 @@
+id: 0x29
+name: 'ADDITIVE_PUMP_STATUS_2'
+type: 'lin'
+length: 2
+comment:
+  en: 'Second additive injection pump status: command fault, low/high pressure internal volume.'
+  fr: 'État de la deuxième pompe d''injection d''additif : défaut de commande, volume interne basse/haute pression.'
+  es: 'Estado de la segunda bomba de inyección de aditivo: fallo de mando, volumen interno de baja/alta presión.'
+  de: 'Status der zweiten Additiv-Einspritzpumpe: Ansteuerungsfehler, Innenvolumen Nieder-/Hochdruck.'
+  it: 'Stato della seconda pompa di iniezione additivo: guasto di comando, volume interno bassa/alta pressione.'
+  pl: 'Stan drugiej pompy wtrysku dodatku: usterka sterowania, wewnętrzna objętość niskiego/wysokiego ciśnienia.'
+  ru: 'Статус второго насоса впрыска присадки: неисправность команды, внутренний объём низкого/высокого давления.'
+  zh: '第二个添加剂喷射泵状态:指令故障、低/高压内部容积。'
+  hu: 'A második adalék-befecskendező szivattyú állapota: vezérlési hiba, alacsony/magas nyomású belső térfogat.'
+  pt: 'Estado da segunda bomba de injeção de aditivo: avaria de comando, volume interno de baixa/alta pressão.'
+periodicity: ['trigger']
+senders: ['ADDGO']
+receivers: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  ADDITIVE_PUMP_FAULT:
+    bits: '1.7'
+    comment:
+      en: 'Diesel additive dosing pump command fault'
+      fr: 'Défaut de la commande de la pompe d''additivation gazole'
+      es: 'Fallo del mando de la bomba de dosificación de aditivo diésel'
+      de: 'Fehler der Steuerung der Diesel-Additiv-Dosierpumpe'
+      it: 'Guasto del comando della pompa di dosaggio additivo diesel'
+      pl: 'Usterka sterowania pompą dozującą dodatku do oleju napędowego'
+      ru: 'Неисправность управления дозирующим насосом дизельной присадки'
+      zh: '柴油添加剂加注泵控制故障'
+      hu: 'A dízeladalék-adagoló szivattyú vezérlési hibája'
+      pt: 'Falha do comando da bomba de dosagem de aditivo do gasóleo'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  ADDITIVE_VOLUME_HIGH_BYTE:
+    bits: '1.0-2.6'
+    comment:
+      en: 'Elementary additive volume interpreted by the pump, high byte of the 11-bit value'
+      fr: 'Volume élémentaire additif interprété par la pompe, poids fort des 11 bits'
+      es: 'Volumen elemental de aditivo interpretado por la bomba, byte alto del valor de 11 bits'
+      de: 'Von der Pumpe interpretiertes Additiv-Elementarvolumen, höherwertiges Byte des 11-Bit-Werts'
+      it: 'Volume elementare additivo interpretato dalla pompa, byte alto del valore a 11 bit'
+      pl: 'Elementarna objętość dodatku odczytana przez pompę, starszy bajt wartości 11-bitowej'
+      ru: 'Элементарный объём присадки, интерпретируемый насосом, старший байт 11-битного значения'
+      zh: '泵解读的基本添加剂量,11位数值的高字节'
+      hu: 'A szivattyú által értelmezett elemi adaléktérfogat, a 11 bites érték felső bájtja'
+      pt: 'Volume elementar de aditivo interpretado pela bomba, byte alto do valor de 11 bits'
+    type: 'uint'
+    factor: 12750
+    min: 0
+    max: 76500
+    invalid: 0x07

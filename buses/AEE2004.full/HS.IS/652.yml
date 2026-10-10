@@ -1,0 +1,93 @@
+id: 0x652
+name: 'ADAPTIVE_CRUISE_SETPOINT'
+type: 'can'
+length: 3
+comment:
+  en: 'Adaptive cruise control setpoint data from the body computer: following distance/time setpoint and tracking type.'
+  fr: 'Données de consigne du régulateur de vitesse adaptatif issues du BSI : consigne de distance/temps inter-véhicule et type de poursuite.'
+  es: 'Datos de consigna del regulador de velocidad adaptativo de la BSI: consigna de distancia/tiempo entre vehículos y tipo de seguimiento.'
+  de: 'Sollwertdaten des adaptiven Tempomats vom BSI: Sollabstand/-zeit und Verfolgungstyp.'
+  it: 'Dati di setpoint del cruise control adattivo dal BSI: setpoint di distanza/tempo tra veicoli e tipo di inseguimento.'
+  pl: 'Dane wartości zadanej adaptacyjnego tempomatu z BSI: zadana odległość/czas między pojazdami i typ śledzenia.'
+  ru: 'Данные уставки адаптивного круиз-контроля от BSI: заданная дистанция/время между автомобилями и тип слежения.'
+  zh: '来自车身控制器的自适应巡航设定值数据:车间距离/时间设定值及跟踪类型。'
+  hu: 'Az adaptív tempomat alapjel-adatai a BSI-től: jármű közötti távolság/idő alapjel és követési típus.'
+  pt: 'Dados de consigna do regulador de velocidade adaptativo da BSI: consigna de distância/tempo entre veículos e tipo de seguimento.'
+observations:
+  en: 'Mixed frame: periodic, and sent on a TIV setpoint change or a speed setpoint change'
+  fr: 'Trame mixte : périodique, et émise sur changement de consigne TIV ou changement de consigne de vitesse'
+  es: 'Trama mixta: periódica, y enviada al cambiar la consigna TIV o la consigna de velocidad'
+  de: 'Mixte-Frame: periodisch, und gesendet bei Änderung des TIV-Sollwerts oder des Geschwindigkeits-Sollwerts'
+  it: 'Frame misto: periodico, e inviato al cambiamento del setpoint TIV o del setpoint di velocità'
+  pl: 'Ramka mieszana: okresowa, wysyłana przy zmianie zadanej wartości TIV lub zadanej prędkości'
+  ru: 'Смешанный кадр: периодический, отправляется при изменении уставки TIV или уставки скорости'
+  zh: '混合帧:周期性发送,并在TIV设定值或车速设定值变化时发送'
+  hu: 'Vegyes keret: periodikus, és a TIV alapérték vagy a sebesség-alapérték változásakor küldve'
+  pt: 'Trama mista: periódica, e enviada numa mudança do ponto de ajuste TIV ou do ponto de ajuste de velocidade'
+periodicity: ['100ms', 'trigger']
+senders: ['BSI']
+
+signals:
+  ACC_TRACKING_TYPE:
+    bits: '1.7'
+    comment:
+      en: 'Driver request to the ACC to follow the speed setpoint with fast or normal dynamics'
+      fr: 'Demande du conducteur à l''ACC de suivre la consigne de vitesse avec une dynamique rapide ou normale'
+      es: 'Solicitud del conductor al ACC de seguir la consigna de velocidad con dinámica rápida o normal'
+      de: 'Fahreranforderung an den ACC, dem Geschwindigkeits-Sollwert mit schneller oder normaler Dynamik zu folgen'
+      it: 'Richiesta del conducente all''ACC di seguire il setpoint di velocità con dinamica rapida o normale'
+      pl: 'Żądanie kierowcy do ACC podążania za wartością zadaną prędkości z dynamiką szybką lub normalną'
+      ru: 'Запрос водителя к ACC следовать уставке скорости с быстрой или обычной динамикой'
+      zh: '驾驶员向ACC请求以快速或正常动态跟随车速设定值'
+      hu: 'A vezető kérése az ACC felé, hogy gyors vagy normál dinamikával kövesse a sebesség-alapértéket'
+      pt: 'Pedido do condutor ao ACC para seguir a consigna de velocidade com dinâmica rápida ou normal'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normale'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Fast'
+        fr: 'Rapide'
+        es: 'Rápido'
+        de: 'Schnell'
+        it: 'Veloce'
+        pl: 'Szybki'
+        ru: 'Быстро'
+        zh: '快速'
+        hu: 'Gyors'
+        pt: 'Rápido'
+
+  TIME_GAP_REQUEST:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Inter-vehicle time setpoint used to compute the safety distance'
+      fr: 'Consigne de temps inter-véhicule utilisée pour calculer la distance de sécurité'
+      es: 'Consigna de tiempo entre vehículos usada para calcular la distancia de seguridad'
+      de: 'Sollwert der Zeitlücke zum vorausfahrenden Fahrzeug zur Berechnung des Sicherheitsabstands'
+      it: 'Setpoint del tempo tra veicoli usato per calcolare la distanza di sicurezza'
+      pl: 'Wartość zadana odstępu czasowego do obliczenia odległości bezpieczeństwa'
+      ru: 'Уставка временного интервала между автомобилями для расчёта безопасной дистанции'
+      zh: '用于计算安全距离的车间时距设定值'
+      hu: 'A biztonsági távolság számításához használt gépjárművek közötti időköz alapértéke'
+      pt: 'Consigna de tempo entre veículos utilizada para calcular a distância de segurança'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 5
+    units: 's'
+    invalid: 0xFF
+    default: 0x14
+
+  UNUSED_1:
+    bits: '3.7-3.0'
+    unused: true

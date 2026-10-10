@@ -1,0 +1,278 @@
+id: 0x4E8
+name: 'PIU_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Power interface unit data: DC-DC converter fault, cruise-control/speed-limiter fault, air-pump relay request, maintenance wake-up, power reserved for AC, blank maintenance-lamp request and engine coolant temperature.'
+  fr: 'Données de l''unité d''interface de puissance : défaut convertisseur DC-DC, défaut régulateur/limiteur de vitesse, demande relais pompe à air, réveil maintenance, puissance réservée à la climatisation, demande de voyant maintenance à vide et température eau moteur.'
+  es: 'Datos de la unidad de interfaz de potencia: fallo del convertidor DC-DC, fallo del regulador/limitador de velocidad, solicitud del relé de la bomba de aire, activación de mantenimiento, potencia reservada para el A/C, solicitud de testigo de mantenimiento en vacío y temperatura del agua del motor.'
+  de: 'Daten der Leistungsschnittstelleneinheit: DC-DC-Wandlerfehler, Tempomat-/Geschwindigkeitsbegrenzer-Fehler, Luftpumpenrelaisanforderung, Wartungsweckung, für Klimaanlage reservierte Leistung, Leerlauf-Wartungskontrollleuchtenanforderung und Motorkühlwassertemperatur.'
+  it: 'Dati dell''unità di interfaccia di potenza: guasto convertitore DC-DC, guasto regolatore/limitatore di velocità, richiesta relè pompa aria, risveglio manutenzione, potenza riservata al climatizzatore, richiesta spia manutenzione a vuoto e temperatura acqua motore.'
+  pl: 'Dane jednostki interfejsu mocy: usterka przetwornicy DC-DC, usterka tempomatu/ogranicznika prędkości, żądanie przekaźnika pompy powietrza, wybudzenie serwisowe, moc zarezerwowana dla klimatyzacji, żądanie kontrolki serwisowej na pusto i temperatura wody silnika.'
+  ru: 'Данные силового интерфейсного блока: неисправность преобразователя DC-DC, неисправность круиз-контроля/ограничителя скорости, запрос реле воздушного насоса, сервисное пробуждение, мощность, зарезервированная для кондиционера, запрос индикатора обслуживания вхолостую и температура охлаждающей жидкости двигателя.'
+  zh: '功率接口单元数据:DC-DC转换器故障、巡航控制/限速器故障、空气泵继电器请求、维修唤醒、为空调预留的功率、空载维修灯请求和发动机冷却水温度。'
+  hu: 'A teljesítmény-interfész egység adatai: DC-DC átalakító hiba, tempomat/sebességhatároló hiba, légszivattyú relé kérése, szervizébresztés, klímának fenntartott teljesítmény, üresjárati szervizlámpa-kérés és motor hűtővíz hőmérséklete.'
+  pt: 'Dados da unidade de interface de potência: avaria do conversor DC-DC, avaria do regulador/limitador de velocidade, pedido do relé da bomba de ar, ativação de manutenção, potência reservada para o ar condicionado, pedido em branco da luz de manutenção e temperatura do líquido de arrefecimento do motor.'
+periodicity: ['100ms']
+senders: ['PIU']
+receivers: ['BSI']
+
+signals:
+  ELECTRIC_COMPRESSOR_CURRENT:
+    bits: '1.7-2.7'
+    comment:
+      en: 'Electric compressor current consumption'
+      fr: 'Courant consommé par le compresseur électrique'
+      es: 'Corriente consumida por el compresor eléctrico'
+      de: 'Vom elektrischen Kompressor aufgenommener Strom'
+      it: 'Corrente assorbita dal compressore elettrico'
+      pl: 'Prąd pobierany przez sprężarkę elektryczną'
+      ru: 'Ток, потребляемый электрическим компрессором'
+      zh: '电动压缩机消耗电流'
+      hu: 'Az elektromos kompresszor áramfelvétele'
+      pt: 'Consumo de corrente do compressor elétrico'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 50
+    units: 'A'
+    invalid: 0x1FF
+    default: 0x00
+
+  PTC_HEATER_AIR_TEMPERATURE:
+    bits: '2.6-3.6'
+    comment:
+      en: 'Air temperature around the PTC heater'
+      fr: 'Température de l''air autour du réchauffeur électrique CTP'
+      es: 'Temperatura del aire alrededor del calefactor eléctrico CTP'
+      de: 'Lufttemperatur um den elektrischen PTC-Zuheizer'
+      it: 'Temperatura dell''aria intorno al riscaldatore elettrico CTP'
+      pl: 'Temperatura powietrza wokół nagrzewnicy elektrycznej CTP'
+      ru: 'Температура воздуха вокруг электрического PTC-нагревателя'
+      zh: 'PTC电加热器周围的空气温度'
+      hu: 'A CTP elektromos fűtés körüli levegő hőmérséklete'
+      pt: 'Temperatura do ar em torno do aquecedor elétrico CTP'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 200
+    units: '°C'
+    invalid: 0x1FF
+    default: 0x1FF
+
+  PTC_HEATER_CURRENT:
+    bits: '3.5-4.5'
+    comment:
+      en: 'PTC air heater current consumption'
+      fr: 'Courant consommé par le réchauffeur électrique CTP'
+      es: 'Corriente consumida por el calefactor eléctrico CTP'
+      de: 'Vom elektrischen PTC-Zuheizer aufgenommener Strom'
+      it: 'Corrente assorbita dal riscaldatore elettrico CTP'
+      pl: 'Prąd pobierany przez nagrzewnicę elektryczną CTP'
+      ru: 'Ток, потребляемый электрическим PTC-нагревателем'
+      zh: 'PTC电加热器消耗电流'
+      hu: 'A CTP elektromos fűtés áramfelvétele'
+      pt: 'Consumo de corrente do aquecedor de ar PTC'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 50
+    units: 'A'
+    invalid: 0x1FF
+    default: 0x00
+
+  ELECTRIC_COMPRESSOR_POWER_LIMIT_REACHED:
+    bits: '4.4'
+    comment:
+      en: 'Electric compressor power limitation reached'
+      fr: 'Indication que la puissance du compresseur électrique est limitée'
+      es: 'Indicación de que se ha alcanzado la limitación de potencia del compresor eléctrico'
+      de: 'Anzeige, dass die Leistungsbegrenzung des elektrischen Kompressors erreicht ist'
+      it: 'Indicazione che è stata raggiunta la limitazione di potenza del compressore elettrico'
+      pl: 'Wskazanie osiągnięcia ograniczenia mocy sprężarki elektrycznej'
+      ru: 'Индикация достижения ограничения мощности электрического компрессора'
+      zh: '表示电动压缩机功率限制已达到'
+      hu: 'Jelzés, hogy az elektromos kompresszor teljesítménykorlátozása elérte a határt'
+      pt: 'Limitação de potência do compressor elétrico atingida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No limitation'
+        fr: 'Pas de limitation'
+        es: 'Sin limitación'
+        de: 'Keine Einschränkung'
+        it: 'Nessuna limitazione'
+        pl: 'Brak ograniczenia'
+        ru: 'Ограничение отсутствует'
+        zh: '无限制'
+        hu: 'Nincs korlátozás'
+        pt: 'Sem limitação'
+      0x01:
+        en: 'Power limitation reached'
+        fr: 'Limitation de puissance atteinte'
+        es: 'Limitación de potencia alcanzada'
+        de: 'Leistungsbegrenzung erreicht'
+        it: 'Limitazione di potenza raggiunta'
+        pl: 'Osiągnięto ograniczenie mocy'
+        ru: 'Достигнуто ограничение мощности'
+        zh: '已达到功率限制'
+        hu: 'A teljesítménykorlátozás elérve'
+        pt: 'Limitação de potência atingida'
+
+  ELECTRIC_COMPRESSOR_NON_SAFETY_FAULT:
+    bits: '4.3'
+    comment:
+      en: 'Non-safety-related electric compressor fault'
+      fr: 'Défaut non sécuritaire du compresseur électrique'
+      es: 'Fallo no relacionado con la seguridad del compresor eléctrico'
+      de: 'Nicht sicherheitsrelevanter Fehler des elektrischen Kompressors'
+      it: 'Guasto non di sicurezza del compressore elettrico'
+      pl: 'Usterka sprężarki elektrycznej niezwiązana z bezpieczeństwem'
+      ru: 'Неисправность электрического компрессора, не связанная с безопасностью'
+      zh: '电动压缩机的非安全性故障'
+      hu: 'Az elektromos kompresszor nem biztonsági jellegű hibája'
+      pt: 'Falha não relacionada com a segurança do compressor elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ELECTRIC_COMPRESSOR_SAFETY_FAULT:
+    bits: '4.2'
+    comment:
+      en: 'Safety-related electric compressor fault'
+      fr: 'Défaut sécuritaire du compresseur électrique'
+      es: 'Fallo relacionado con la seguridad del compresor eléctrico'
+      de: 'Sicherheitsrelevanter Fehler des elektrischen Kompressors'
+      it: 'Guasto di sicurezza del compressore elettrico'
+      pl: 'Usterka sprężarki elektrycznej związana z bezpieczeństwem'
+      ru: 'Неисправность электрического компрессора, связанная с безопасностью'
+      zh: '电动压缩机的安全性故障'
+      hu: 'Az elektromos kompresszor biztonsági jellegű hibája'
+      pt: 'Falha relacionada com a segurança do compressor elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  PTC_HEATER_NON_SAFETY_FAULT:
+    bits: '4.1'
+    comment:
+      en: 'Non-safety-related PTC air heater fault'
+      fr: 'Défaut non sécuritaire du réchauffeur électrique CTP'
+      es: 'Fallo no relacionado con la seguridad del calefactor eléctrico CTP'
+      de: 'Nicht sicherheitsrelevanter Fehler der elektrischen PTC-Zuheizung'
+      it: 'Guasto non di sicurezza del riscaldatore elettrico CTP'
+      pl: 'Usterka nagrzewnicy elektrycznej CTP niezwiązana z bezpieczeństwem'
+      ru: 'Неисправность электрического PTC-нагревателя, не связанная с безопасностью'
+      zh: 'PTC电加热器的非安全性故障'
+      hu: 'A CTP elektromos fűtés nem biztonsági jellegű hibája'
+      pt: 'Falha não relacionada com a segurança do aquecedor elétrico CTP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  PTC_HEATER_SAFETY_FAULT:
+    bits: '4.0'
+    comment:
+      en: 'Safety-related PTC air heater fault'
+      fr: 'Défaut sécuritaire du réchauffeur électrique CTP'
+      es: 'Fallo relacionado con la seguridad del calefactor eléctrico CTP'
+      de: 'Sicherheitsrelevanter Fehler der elektrischen PTC-Zuheizung'
+      it: 'Guasto di sicurezza del riscaldatore elettrico CTP'
+      pl: 'Usterka nagrzewnicy elektrycznej CTP związana z bezpieczeństwem'
+      ru: 'Неисправность электрического PTC-нагревателя, связанная с безопасностью'
+      zh: 'PTC电加热器的安全性故障'
+      hu: 'A CTP elektromos fűtés biztonsági jellegű hibája'
+      pt: 'Falha relacionada com a segurança do aquecedor elétrico CTP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'

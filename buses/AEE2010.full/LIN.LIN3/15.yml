@@ -1,0 +1,129 @@
+id: 0x15
+name: 'BSI_SLOW_DATA'
+type: 'lin'
+length: 2
+comment:
+  en: 'Miscellaneous slow data sent by the BSI (electrical system status, outside temperature).'
+  fr: 'Données diverses à faible fréquence envoyées par le BSI (état du système électrique, température extérieure).'
+  es: 'Datos diversos de baja frecuencia enviados por el BSI (estado del sistema eléctrico, temperatura exterior)'
+  de: 'Verschiedene niederfrequente Daten des BSI (Status des elektrischen Systems, Außentemperatur)'
+  it: 'Dati diversi a bassa frequenza inviati dal BSI (stato del sistema elettrico, temperatura esterna)'
+  pl: 'Różne dane o niskiej częstotliwości wysyłane przez BSI (stan układu elektrycznego, temperatura zewnętrzna)'
+  ru: 'Различные низкочастотные данные, отправляемые BSI (состояние электрической системы, наружная температура)'
+  zh: 'BSI 发送的各类低频数据（电气系统状态、车外温度）'
+  hu: 'A BSI által küldött vegyes, alacsony frekvenciájú adatok (elektromos rendszer állapota, külső hőmérséklet)'
+  pt: 'Dados lentos diversos enviados pela BSI (estado do sistema elétrico, temperatura exterior).'
+periodicity: ['trigger']
+senders: ['BSI']
+receivers: ['CLIM_AV']
+lin:
+  master: 'BSI'
+
+signals:
+  EXTERNAL_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Outside temperature, T = N/2 - 40 °C; specific codes indicate sensor absent or unmanaged'
+      fr: 'Température extérieure, T = N/2 - 40 °C ; codes spécifiques pour capteur absent ou code non géré'
+      es: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente o código no gestionado'
+      de: 'Außentemperatur, T = N/2 - 40 °C; spezielle Codes für fehlenden Sensor oder nicht verwalteten Code'
+      it: 'Temperatura esterna, T = N/2 - 40 °C; codici specifici per sensore assente o codice non gestito'
+      pl: 'Temperatura zewnętrzna, T = N/2 - 40 °C; specjalne kody dla braku czujnika lub nieobsługiwanego kodu'
+      ru: 'Наружная температура, T = N/2 - 40 °C; специальные коды для отсутствующего датчика или необработанного кода'
+      zh: '车外温度,T = N/2 - 40°C;特定代码表示传感器缺失或代码未处理'
+      hu: 'Külső hőmérséklet, T = N/2 - 40 °C; külön kódok jelzik a hiányzó érzékelőt vagy a nem kezelt kódot'
+      pt: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente ou código não gerido'
+    type: 'sint'
+    factor: 0.5
+    min: -60
+    max: 2.5
+    invalid: 0xFF
+
+  MAIN_STATUS:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Vehicle electrical system main state'
+      fr: 'État principal du système électrique véhicule (SEV)'
+      es: 'Estado principal del sistema eléctrico del vehículo (SEV)'
+      de: 'Hauptzustand des Fahrzeugbordnetzes (SEV)'
+      it: 'Stato principale del sistema elettrico veicolo (SEV)'
+      pl: 'Główny stan systemu elektrycznego pojazdu (SEV)'
+      ru: 'Основное состояние электрической системы автомобиля (SEV)'
+      zh: '车辆电气系统主状态 (SEV)'
+      hu: 'A jármű elektromos rendszerének fő állapota (SEV)'
+      pt: 'Estado principal do sistema elétrico do veículo'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+      0x02:
+        en: 'DEM (starter)'
+        fr: 'DEM (démarreur)'
+        es: 'DEM (motor de arranque)'
+        de: 'DEM (Anlasser)'
+        it: 'DEM (motorino di avviamento)'
+        pl: 'DEM (rozrusznik)'
+        ru: 'DEM (стартер)'
+        zh: 'DEM(起动机)'
+        hu: 'DEM (önindító)'
+        pt: 'DEM (motor de arranque)'
+      0x03:
+        unused: true
+
+  COM_OFF_STATE:
+    bits: '2.0'
+    comment:
+      en: 'Communication off (COM OFF) state'
+      fr: 'État de communication désactivée (COM OFF)'
+      es: 'Estado de comunicación desactivada (COM OFF)'
+      de: 'Status der deaktivierten Kommunikation (COM OFF)'
+      it: 'Stato di comunicazione disattivata (COM OFF)'
+      pl: 'Stan wyłączonej komunikacji (COM OFF)'
+      ru: 'Состояние отключённой связи (COM OFF)'
+      zh: '通信关闭(COM OFF)状态'
+      hu: 'Kommunikáció kikapcsolva (COM OFF) állapot'
+      pt: 'Estado de comunicação desligada (COM OFF)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Nominal torque interface'
+        fr: 'Interface couple nominal'
+        es: 'Interfaz de par nominal'
+        de: 'Nominal-Drehmoment-Schnittstelle'
+        it: 'Interfaccia coppia nominale'
+        pl: 'Interfejs momentu nominalnego'
+        ru: 'Интерфейс номинального крутящего момента'
+        zh: '标称转矩接口'
+        hu: 'Névleges nyomatékfelület'
+        pt: 'Interface de binário nominal'
+      0x01:
+        en: 'Degraded TI'
+        fr: 'TI dégradé'
+        es: 'TI degradado'
+        de: 'TI beeinträchtigt'
+        it: 'TI degradato'
+        pl: 'TI zdegradowane'
+        ru: 'TI в деградированном состоянии'
+        zh: 'TI 降级'
+        hu: 'TI vészüzem'
+        pt: 'TI degradado'

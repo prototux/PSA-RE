@@ -1,0 +1,331 @@
+id: 0x1A6
+name: 'PARKING_VIEW_SYSTEM_COMMAND'
+type: 'can'
+length: 3
+comment:
+  en: 'Commands sent by the BSI to the parking view system: activation state, overlay and view type selection, brightness and contrast.'
+  fr: 'Commandes envoyées par la BSI au système de vue de stationnement : état d''activation, sélection du calque et du type de vue, luminosité et contraste.'
+  es: 'Órdenes enviadas por la BSI al sistema de vista de aparcamiento: estado de activación, selección de superposición y tipo de vista, brillo y contraste.'
+  de: 'Von der BSI an das Park-View-System gesendete Befehle: Aktivierungszustand, Overlay- und Ansichtstypauswahl, Helligkeit und Kontrast.'
+  it: 'Comandi inviati dalla BSI al sistema di visione parcheggio: stato di attivazione, selezione overlay e tipo di vista, luminosità e contrasto.'
+  pl: 'Polecenia wysyłane przez BSI do systemu widoku parkowania: stan aktywacji, wybór nakładki i typu widoku, jasność i kontrast.'
+  ru: 'Команды, отправляемые BSI в систему обзора парковки: состояние активации, выбор наложения и типа обзора, яркость и контраст.'
+  zh: '由BSI发送给泊车影像系统的命令：激活状态、叠加层及视图类型选择、亮度和对比度。'
+  hu: 'A BSI parancsai a parkolóképrendszer felé: aktiválási állapot, réteg- és nézettípus-választás, fényerő és kontraszt.'
+  pt: 'Comandos enviados pela BSI ao sistema de visão de estacionamento: estado de ativação, seleção de sobreposição e tipo de vista, luminosidade e contraste.'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['AVP']
+
+signals:
+  PARKING_VIEW_CONTRAST:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Parking camera view contrast setting'
+      fr: 'Réglage du contraste de la vue de la caméra de stationnement'
+      es: 'Ajuste de contraste de la vista de la cámara de estacionamiento'
+      de: 'Kontrasteinstellung der Parkkamera-Ansicht'
+      it: 'Regolazione del contrasto della vista della telecamera di parcheggio'
+      pl: 'Regulacja kontrastu widoku kamery parkowania'
+      ru: 'Настройка контрастности вида камеры парковки'
+      zh: '泊车摄像头视图对比度设置'
+      hu: 'Parkolókamera nézet kontraszt beállítás'
+      pt: 'Ajuste do contraste da vista da câmara de estacionamento'
+    type: 'uint'
+    factor: 1
+    offset: -5
+    min: -5
+    max: 5
+
+  PARKING_VIEW_SELECTION:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Parking camera view selection (front/rear, standard/panoramic)'
+      fr: 'Sélection de la vue de la caméra de stationnement (avant/arrière, standard/panoramique)'
+      es: 'Selección de la vista de la cámara de estacionamiento (delantera/trasera, estándar/panorámica)'
+      de: 'Auswahl der Parkkamera-Ansicht (vorne/hinten, Standard/Panorama)'
+      it: 'Selezione della vista della telecamera di parcheggio (anteriore/posteriore, standard/panoramica)'
+      pl: 'Wybór widoku kamery parkowania (przód/tył, standardowy/panoramiczny)'
+      ru: 'Выбор вида камеры парковки (перед/зад, стандартный/панорамный)'
+      zh: '泊车摄像头视图选择(前/后,标准/全景)'
+      hu: 'Parkolókamera nézet kiválasztása (elöl/hátul, normál/panoráma)'
+      pt: 'Seleção da vista da câmara de estacionamento (dianteira/traseira, normal/panorâmica)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Standard front view'
+        fr: 'Vue standard avant'
+        es: 'Vista estándar delantera'
+        de: 'Standardansicht vorne'
+        it: 'Vista standard anteriore'
+        pl: 'Standardowy widok z przodu'
+        ru: 'Стандартный вид спереди'
+        zh: '标准前视图'
+        hu: 'Standard elülső nézet'
+        pt: 'Vista dianteira normal'
+      0x02:
+        en: 'Standard rear view'
+        fr: 'Vue arrière standard'
+        es: 'Vista trasera estándar'
+        de: 'Standard-Rückansicht'
+        it: 'Vista posteriore standard'
+        pl: 'Standardowy widok tylny'
+        ru: 'Стандартный вид сзади'
+        zh: '标准后视图'
+        hu: 'Normál hátsó nézet'
+        pt: 'Vista traseira padrão'
+      0x03:
+        en: 'Panoramic front view'
+        fr: 'Vue panoramique avant'
+        es: 'Vista panorámica delantera'
+        de: 'Panorama-Frontansicht'
+        it: 'Vista panoramica anteriore'
+        pl: 'Panoramiczny widok z przodu'
+        ru: 'Панорамный вид спереди'
+        zh: '前方全景视图'
+        hu: 'Elülső panorámanézet'
+        pt: 'Vista panorâmica dianteira'
+      0x04:
+        en: 'Panoramic rear view'
+        fr: 'Vue panoramique arrière'
+        es: 'Vista panorámica trasera'
+        de: 'Panorama-Heckansicht'
+        it: 'Vista panoramica posteriore'
+        pl: 'Panoramiczny widok z tyłu'
+        ru: 'Панорамный вид сзади'
+        zh: '后方全景视图'
+        hu: 'Hátsó panorámanézet'
+        pt: 'Vista panorâmica traseira'
+      0x05:
+        en: 'Left lateral view'
+        fr: 'Vue latérale gauche'
+        es: 'Vista lateral izquierda'
+        de: 'Seitenansicht links'
+        it: 'Vista laterale sinistra'
+        pl: 'Widok boczny lewy'
+        ru: 'Левый боковой обзор'
+        zh: '左侧视图'
+        hu: 'Bal oldalnézet'
+        pt: 'Vista lateral esquerda'
+      0x06:
+        en: 'Right side view'
+        fr: 'Vue latérale droite'
+        es: 'Vista lateral derecha'
+        de: 'Seitenansicht rechts'
+        it: 'Vista laterale destra'
+        pl: 'Widok boczny prawy'
+        ru: 'Вид сбоку справа'
+        zh: '右侧视图'
+        hu: 'Jobb oldalnézet'
+        pt: 'Vista lateral direita'
+      0x07:
+        en: '360 view Left'
+        fr: '360 view Left'
+        es: 'Vista 360° izquierda'
+        de: '360°-Ansicht links'
+        it: 'Vista 360° sinistra'
+        pl: 'Widok 360° lewy'
+        ru: 'Вид 360° слева'
+        zh: '360度视图-左'
+        hu: '360 fokos nézet bal'
+        pt: 'Vista 360° esquerda'
+      0x08:
+        en: '360° view, right'
+        fr: 'Vue à 360°, droite'
+        es: 'Vista de 360°, derecha'
+        de: '360°-Ansicht, rechts'
+        it: 'Vista a 360°, destra'
+        pl: 'Widok 360°, prawy'
+        ru: 'Круговой обзор 360°, справа'
+        zh: '360度视图，右侧'
+        hu: '360°-os nézet, jobb'
+        pt: 'Vista a 360°, direita'
+      0x09:
+        en: '360 view suspended'
+        fr: 'Vue à 360° suspendue'
+        es: 'Vista de 360° suspendida'
+        de: '360°-Ansicht ausgesetzt'
+        it: 'Vista a 360° sospesa'
+        pl: 'Widok 360° zawieszony'
+        ru: 'Обзор 360° приостановлен'
+        zh: '360度视图暂停'
+        hu: '360°-os nézet felfüggesztve'
+        pt: 'Vista 360 suspensa'
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  PARKING_VIEW_BRIGHTNESS:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Parking camera view brightness setting'
+      fr: 'Réglage de la luminosité de la vue de la caméra de stationnement'
+      es: 'Ajuste de brillo de la vista de la cámara de estacionamiento'
+      de: 'Helligkeitseinstellung der Parkkamera-Ansicht'
+      it: 'Regolazione della luminosità della vista della telecamera di parcheggio'
+      pl: 'Regulacja jasności widoku kamery parkowania'
+      ru: 'Настройка яркости вида камеры парковки'
+      zh: '泊车摄像头视图亮度设置'
+      hu: 'Parkolókamera nézet fényerő beállítás'
+      pt: 'Ajuste do brilho da vista da câmara de estacionamento'
+    type: 'uint'
+    factor: 1
+    offset: -5
+    min: -5
+    max: 5
+
+  PARKING_VIEW_TYPE:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Parking camera view type (windowed/panoramic/360°)'
+      fr: 'Type de vue de la caméra de stationnement (fenêtrée/panoramique/360°)'
+      es: 'Tipo de vista de la cámara de estacionamiento (en ventana/panorámica/360°)'
+      de: 'Ansichtstyp der Parkkamera (Fenster/Panorama/360°)'
+      it: 'Tipo di vista della telecamera di parcheggio (finestrata/panoramica/360°)'
+      pl: 'Typ widoku kamery parkowania (w oknie/panoramiczny/360°)'
+      ru: 'Тип вида камеры парковки (оконный/панорамный/360°)'
+      zh: '泊车摄像头视图类型(窗口/全景/360°)'
+      hu: 'Parkolókamera nézet típusa (ablakos/panoráma/360°)'
+      pt: 'Tipo de vista da câmara de estacionamento (em janela/panorâmica/360°)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Windowed view'
+        fr: 'Vue en fenêtre'
+        es: 'Vista en ventana'
+        de: 'Fensteransicht'
+        it: 'Vista in finestra'
+        pl: 'Widok w oknie'
+        ru: 'Оконный вид'
+        zh: '窗口视图'
+        hu: 'Ablakos nézet'
+        pt: 'Vista em janela'
+      0x02:
+        en: 'Panoramic view'
+        fr: 'Vue panoramique'
+        es: 'Vista panorámica'
+        de: 'Panoramaansicht'
+        it: 'Vista panoramica'
+        pl: 'Widok panoramiczny'
+        ru: 'Панорамный вид'
+        zh: '全景视图'
+        hu: 'Panorámanézet'
+        pt: 'Vista panorâmica'
+      0x03:
+        en: '360° view'
+        fr: 'Vue à 360°'
+        es: 'Vista de 360°'
+        de: '360°-Ansicht'
+        it: 'Vista a 360°'
+        pl: 'Widok 360°'
+        ru: 'Вид 360°'
+        zh: '360°视图'
+        hu: '360°-os nézet'
+        pt: 'Vista a 360°'
+
+  PARKING_VIEW_REFRESH_REQUEST:
+    bits: '2.1'
+    comment:
+      en: 'Parking camera view refresh or change request'
+      fr: 'Demande de rafraîchissement ou de changement de vue de la caméra de stationnement'
+      es: 'Solicitud de actualización o cambio de vista de la cámara de estacionamiento'
+      de: 'Anforderung zur Aktualisierung oder zum Wechsel der Parkkamera-Ansicht'
+      it: 'Richiesta di aggiornamento o cambio della vista della telecamera di parcheggio'
+      pl: 'Żądanie odświeżenia lub zmiany widoku kamery parkowania'
+      ru: 'Запрос обновления или смены вида камеры парковки'
+      zh: '泊车摄像头视图刷新或切换请求'
+      hu: 'Parkolókamera nézet frissítési vagy váltási kérés'
+      pt: 'Pedido de atualização ou mudança da vista da câmara de estacionamento'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  PARKING_VIEW_ACTIVATION_REQUEST_STATE:
+    bits: '2.0'
+    comment:
+      en: 'Parking view activation request state'
+      fr: 'État de la demande d''activation de la vue de stationnement'
+      es: 'Estado de la solicitud de activación de la vista de estacionamiento'
+      de: 'Status der Aktivierungsanforderung der Parkansicht'
+      it: 'Stato della richiesta di attivazione della vista di parcheggio'
+      pl: 'Stan żądania aktywacji widoku parkowania'
+      ru: 'Состояние запроса активации вида парковки'
+      zh: '泊车视图激活请求状态'
+      hu: 'Parkolási nézet aktiválási kérés állapota'
+      pt: 'Estado do pedido de ativação da vista de estacionamento'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Request'
+        fr: 'Requête'
+        es: 'Solicitud'
+        de: 'Anforderung'
+        it: 'Richiesta'
+        pl: 'Żądanie'
+        ru: 'Запрос'
+        zh: '请求'
+        hu: 'Kérés'
+        pt: 'Pedido'

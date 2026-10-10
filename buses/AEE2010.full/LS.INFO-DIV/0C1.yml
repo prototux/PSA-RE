@@ -1,0 +1,68 @@
+id: 0x0C1
+name: 'SDCM_APDU_TRANSMIT'
+type: 'can-tp'
+comment:
+  en: 'Navigation data export payload transmitted by the SDCM'
+  fr: 'Charge utile de données de navigation exportées, transmise par le SDCM'
+  es: 'Carga útil de datos de navegación exportados, transmitida por el SDCM'
+  de: 'Von der SDCM übertragene Nutzdaten des exportierten Navigationsdatensatzes'
+  it: 'Payload dei dati di navigazione esportati, trasmesso dal SDCM'
+  pl: 'Ładunek danych eksportu nawigacji przesyłany przez SDCM'
+  ru: 'Полезная нагрузка экспортируемых навигационных данных, передаваемая SDCM'
+  zh: '由SDCM发送的导航数据导出负载'
+  hu: 'Az SDCM által küldött navigációs adatexport hasznos adattartalma'
+  pt: 'Carga útil de exportação de dados de navegação transmitida pelo SDCM.'
+periodicity: ['trigger']
+senders: ['SDCM']
+receivers: ['WLC']
+isotp:
+  flow_control_id: 0x381
+
+signals:
+  PAYLOAD:
+    bits: '1.7-n'
+    comment:
+      en: 'Application data (reassembled)'
+      fr: 'Données applicatives (réassemblées)'
+      es: 'Datos de aplicación (reensamblados)'
+      de: 'Anwendungsdaten (wieder zusammengesetzt)'
+      it: 'Dati applicativi (riassemblati)'
+      pl: 'Dane aplikacyjne (ponownie złożone)'
+      ru: 'Прикладные данные (пересобранные)'
+      zh: '应用数据（重组后）'
+      hu: 'Alkalmazásadatok (újraösszeállítva)'
+      pt: 'Dados de aplicação (reagrupados)'
+    type: 'bytes'
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['trigger']
+    senders: ['SDCM']
+    receivers: ['WLC']
+    signals:
+      NFC_TAG_COMMAND_RAW_DATA:
+        bits: '1.7-44.0'
+        comment:
+          en: 'Raw data of the APDU command sent to the NFC tag (up to 44 bytes)'
+          fr: 'Données brutes de la commande APDU envoyée au tag NFC (44 octets maximum)'
+          es: 'Datos en bruto del comando APDU enviado a la etiqueta NFC (máximo 44 bytes)'
+          de: 'Rohdaten des an das NFC-Tag gesendeten APDU-Befehls (max. 44 Byte)'
+          it: 'Dati grezzi del comando APDU inviato al tag NFC (massimo 44 byte)'
+          pl: 'Surowe dane polecenia APDU wysłanego do znacznika NFC (maksymalnie 44 bajty)'
+          ru: 'Необработанные данные команды APDU, отправляемой NFC-метке (максимум 44 байта)'
+          zh: '发送给NFC标签的APDU命令原始数据(最多44字节)'
+          hu: 'Az NFC-címkének küldött APDU-parancs nyers adata (legfeljebb 44 bájt)'
+          pt: 'Dados brutos do comando APDU enviado à etiqueta NFC (máximo 44 bytes)'
+        type: 'uint'
+        min: 0
+        max: 255

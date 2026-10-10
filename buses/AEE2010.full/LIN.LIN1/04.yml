@@ -1,0 +1,141 @@
+id: 0x04
+name: 'WIPER_SENSOR_STATUS'
+type: 'lin'
+length: 2
+comment:
+  en: 'Wiper stalk sensor status: fault, switch position and angular position, gatewayed from the LIN bus.'
+  fr: 'État du capteur de la commande d''essuie-glace : défaut, position du contacteur et position angulaire, relayé depuis le bus LIN.'
+  es: 'Estado del sensor de la palanca del limpiaparabrisas: fallo, posición del interruptor y posición angular, retransmitido desde el bus LIN.'
+  de: 'Status des Wischerhebelsensors: Fehler, Schalterstellung und Winkelposition, vom LIN-Bus weitergeleitet.'
+  it: 'Stato del sensore della leva tergicristallo: guasto, posizione dell''interruttore e posizione angolare, inoltrato dal bus LIN.'
+  pl: 'Stan czujnika dźwigni wycieraczek: usterka, pozycja przełącznika i pozycja kątowa, przekazywane z magistrali LIN.'
+  ru: 'Статус датчика подрулевого переключателя дворников: неисправность, положение переключателя и угловое положение, ретранслируется с шины LIN.'
+  zh: '雨刷拨杆传感器状态:故障、开关位置和角度位置,由LIN总线网关转发。'
+  hu: 'Az ablaktörlő kar érzékelőjének állapota: hiba, kapcsolóállás és szöghelyzet, a LIN buszról átjárón keresztül.'
+  pt: 'Estado do sensor do comutador do limpa-para-brisas: avaria, posição do comutador e posição angular, encaminhado a partir do barramento LIN.'
+periodicity: ['trigger']
+senders: ['ESV']
+receivers: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.4'
+    unused: true
+
+  DRIVER_WIPING_FAULT:
+    bits: '1.3'
+    comment:
+      en: 'Driver-side wiping fault'
+      fr: 'Défaut d''essuyage côté conducteur'
+      es: 'Fallo de limpiaparabrisas del lado del conductor'
+      de: 'Wischfehler auf der Fahrerseite'
+      it: 'Guasto di tergitura lato conducente'
+      pl: 'Usterka wycierania po stronie kierowcy'
+      ru: 'Неисправность стеклоочистки со стороны водителя'
+      zh: '驾驶员侧刮水故障'
+      hu: 'Vezetői oldali ablaktörlési hiba'
+      pt: 'Falha de limpeza do lado do condutor'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Faulty'
+        fr: 'Défaillant'
+        es: 'Defectuoso'
+        de: 'Fehlerhaft'
+        it: 'Guasto'
+        pl: 'Uszkodzone'
+        ru: 'Неисправно'
+        zh: '故障'
+        hu: 'Hibás'
+        pt: 'Avariado'
+
+  WIPER_STATUS:
+    bits: '1.2-1.1'
+    comment:
+      en: 'Windscreen wiper status'
+      fr: 'État de l''essuie-vitre'
+      es: 'Estado del limpiaparabrisas'
+      de: 'Status des Scheibenwischers'
+      it: 'Stato del tergicristallo'
+      pl: 'Stan wycieraczki szyby'
+      ru: 'Состояние стеклоочистителя'
+      zh: '风窗刮水器状态'
+      hu: 'Az ablaktörlő állapota'
+      pt: 'Estado do limpa-para-brisas'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Solenoid valve in fault mode'
+        fr: 'Électrovanne en mode défaut'
+        es: 'Electroválvula en modo fallo'
+        de: 'Magnetventil im Fehlermodus'
+        it: 'Elettrovalvola in modalità guasto'
+        pl: 'Elektrozawór w trybie usterki'
+        ru: 'Электроклапан в режиме неисправности'
+        zh: '电磁阀处于故障模式'
+        hu: 'A mágnesszelep hibaüzemmódban van'
+        pt: 'Eletroválvula em modo de falha'
+      0x01:
+        en: 'Other status'
+        fr: 'Autre état'
+        es: 'Otro estado'
+        de: 'Anderer Status'
+        it: 'Altro stato'
+        pl: 'Inny stan'
+        ru: 'Другое состояние'
+        zh: '其他状态'
+        hu: 'Egyéb állapot'
+        pt: 'Outro estado'
+      0x02:
+        en: 'EV stopped in maintenance position'
+        fr: 'EV arrêté en position maintenance'
+        es: 'EV detenido en posición de mantenimiento'
+        de: 'EV in Wartungsposition angehalten'
+        it: 'EV fermo in posizione manutenzione'
+        pl: 'EV zatrzymany w pozycji serwisowej'
+        ru: 'EV остановлен в сервисном положении'
+        zh: 'EV停在维护位置'
+        hu: 'EV karbantartási helyzetben megállítva'
+        pt: 'EV parado em posição de manutenção'
+      0x03:
+        en: 'Other state'
+        fr: 'Autre état'
+        es: 'Otro estado'
+        de: 'Anderer Zustand'
+        it: 'Altro stato'
+        pl: 'Inny stan'
+        ru: 'Другое состояние'
+        zh: '其他状态'
+        hu: 'Egyéb állapot'
+        pt: 'Outro estado'
+
+  WIPER_ANGULAR_POSITION:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Wiper angular position'
+      fr: 'Position angulaire de l''essuie-vitre'
+      es: 'Posición angular del limpiaparabrisas'
+      de: 'Winkelposition des Wischers'
+      it: 'Posizione angolare del tergicristallo'
+      pl: 'Pozycja kątowa wycieraczki'
+      ru: 'Угловое положение стеклоочистителя'
+      zh: '刮水器角度位置'
+      hu: 'A törlőlapát szöghelyzete'
+      pt: 'Posição angular do limpa-para-brisas'
+    type: 'sint'
+    min: -127
+    max: 127
+    invalid: 0xFF

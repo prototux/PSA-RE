@@ -1,0 +1,537 @@
+id: 0x20B
+name: 'FRONT_CAMERA_COMMAND'
+type: 'can'
+length: 4
+comment:
+  en: 'Commands sent by the BSI to the front camera module: lane detection authorisation, auto/manual washer and wiper commands, units/language and occultation state.'
+  fr: 'Commandes envoyées par la BSI au module caméra avant : autorisation de détection de voie, commandes de lavage/essuyage auto/manuel, unités/langue et état d''occultation.'
+  es: 'Órdenes enviadas por la BSI al módulo de cámara delantera: autorización de detección de carril, órdenes de lavado/limpiaparabrisas automático/manual, unidades/idioma y estado de ocultación.'
+  de: 'Von der BSI an das Frontkameramodul gesendete Befehle: Spurerkennungsfreigabe, automatische/manuelle Wasch-/Wischbefehle, Einheiten/Sprache und Verdunkelungszustand.'
+  it: 'Comandi inviati dalla BSI al modulo telecamera anteriore: autorizzazione di rilevamento corsia, comandi di lavaggio/tergicristallo automatico/manuale, unità/lingua e stato di oscuramento.'
+  pl: 'Polecenia wysyłane przez BSI do przedniego modułu kamery: zezwolenie na wykrywanie pasa, polecenia automatycznego/ręcznego spryskiwacza i wycieraczek, jednostki/język i stan zaciemnienia.'
+  ru: 'Команды, отправляемые BSI в передний модуль камеры: разрешение обнаружения полосы, автоматические/ручные команды омывателя и стеклоочистителя, единицы измерения/язык и состояние затемнения.'
+  zh: '由BSI发送给前置摄像头模块的指令：车道检测授权、自动/手动洗涤及雨刷命令、单位/语言及遮蔽状态。'
+  hu: 'A BSI parancsai az első kameramodul felé: sávérzékelés engedélyezése, automatikus/kézi mosó- és törlőparancsok, mértékegység/nyelv és elsötétítési állapot.'
+  pt: 'Comandos enviados pela BSI ao módulo da câmara dianteira: autorização de deteção de faixa, comandos automáticos/manuais de lava e limpa-para-brisas, unidades/idioma e estado de ocultação.'
+observations:
+  en: 'On state change of: AUTO_WIPE_MODE'
+  fr: 'Sur changement d''état de : AUTO_WIPE_MODE'
+  es: 'Al cambiar el estado de: AUTO_WIPE_MODE'
+  de: 'Bei Statusänderung von: AUTO_WIPE_MODE'
+  it: 'Al cambiamento di stato di: AUTO_WIPE_MODE'
+  pl: 'Wysyłane przy zmianie stanu: AUTO_WIPE_MODE'
+  ru: 'При изменении состояния: AUTO_WIPE_MODE'
+  zh: '当ETAT_AFIL, AUTO_WIPE_MODE, ETAT_ESSUAYGE状态变化时'
+  hu: 'A(z), AUTO_WIPE_MODE állapotváltozásakor'
+  pt: 'Na mudança de estado de: AUTO_WIPE_MODE'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['IVC_D', 'CVM']
+
+signals:
+  STL_SYSTEM_STATUS:
+    bits: '1.7-1.5'
+    comment:
+      en: 'Lane departure warning system (STL) status.'
+      fr: 'État du système d''avertissement de franchissement de ligne (STL).'
+      es: 'Estado del sistema de aviso de cambio de carril (STL).'
+      de: 'Status des Spurverlassenswarnsystems (STL).'
+      it: 'Stato del sistema di avviso di superamento linea (STL).'
+      pl: 'Stan systemu ostrzegania o zjeździe z pasa (STL).'
+      ru: 'Состояние системы предупреждения о пересечении полосы (STL).'
+      zh: '车道偏离预警系统(STL)状态。'
+      hu: 'A sávelhagyás-jelző rendszer (STL) állapota.'
+      pt: 'Estado do sistema de alerta de saída de faixa (STL).'
+    type: 'enum'
+    default: 0x04
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+      0x03:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x04:
+        en: 'Out of service'
+        fr: 'Hors service'
+        es: 'Fuera de servicio'
+        de: 'Außer Betrieb'
+        it: 'Fuori servizio'
+        pl: 'Poza serwisem'
+        ru: 'Не работает'
+        zh: '停用'
+        hu: 'Üzemen kívül'
+        pt: 'Fora de serviço'
+      0x05:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  AUTO_WIPE_MODE:
+    bits: '1.4'
+    comment:
+      en: 'Automatic wiping mode active'
+      fr: 'Mode automatique de l''essuyage actif'
+      es: 'Modo automático de limpiado activo'
+      de: 'Automatischer Wischmodus aktiv'
+      it: 'Modalità di tergitura automatica attiva'
+      pl: 'Aktywny tryb automatycznego wycierania'
+      ru: 'Активен режим автоматического стеклоочистителя'
+      zh: '自动刮水模式激活'
+      hu: 'Az automatikus törlési mód aktív'
+      pt: 'Modo automático de limpeza ativo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  MANUAL_WIPE_REQUEST:
+    bits: '1.3'
+    comment:
+      en: 'Manual wiping request'
+      fr: 'Demande d''essuyage manuel'
+      es: 'Solicitud de limpiado manual'
+      de: 'Manuelle Wischanforderung'
+      it: 'Richiesta di tergitura manuale'
+      pl: 'Żądanie ręcznego wycierania'
+      ru: 'Запрос ручного протирания'
+      zh: '手动刮水请求'
+      hu: 'Kézi törlési kérés'
+      pt: 'Pedido de limpeza manual'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  RAIN_SENSOR_SENSITIVITY_REQUESTED:
+    bits: '1.2-1.0'
+    comment:
+      en: 'Requested rain sensor sensitivity'
+      fr: 'Sensibilité demandée du capteur de pluie'
+      es: 'Sensibilidad solicitada del sensor de lluvia'
+      de: 'Angeforderte Empfindlichkeit des Regensensors'
+      it: 'Sensibilità richiesta del sensore pioggia'
+      pl: 'Żądana czułość czujnika deszczu'
+      ru: 'Запрошенная чувствительность датчика дождя'
+      zh: '请求的雨量传感器灵敏度'
+      hu: 'Az esőérzékelő kért érzékenysége'
+      pt: 'Sensibilidade pedida do sensor de chuva'
+    type: 'uint'
+    min: 0
+    max: 7
+    default: 0x00
+
+  WASH_CYCLE_INDICATOR:
+    bits: '2.7'
+    comment:
+      en: 'Washing cycle indicator'
+      fr: 'Indication de cycle de lavage'
+      es: 'Indicación de ciclo de lavado'
+      de: 'Anzeige des Waschzyklus'
+      it: 'Indicazione del ciclo di lavaggio'
+      pl: 'Wskazanie cyklu mycia'
+      ru: 'Индикация цикла омывания'
+      zh: '洗涤循环指示'
+      hu: 'Mosási ciklus jelzése'
+      pt: 'Indicação de ciclo de lavagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nie żądano'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitado'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  FRONT_WIPER_STATE:
+    bits: '2.6-2.5'
+    comment:
+      en: 'Front wiper state'
+      fr: 'État de l''essuie-vitre avant'
+      es: 'Estado del limpiaparabrisas delantero'
+      de: 'Status des Frontscheibenwischers'
+      it: 'Stato del tergicristallo anteriore'
+      pl: 'Stan przedniej wycieraczki'
+      ru: 'Состояние переднего стеклоочистителя'
+      zh: '前雨刮状态'
+      hu: 'Az elülső ablaktörlő állapota'
+      pt: 'Estado do limpa-para-brisas dianteiro'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Stopped'
+        fr: 'Arrêt'
+        es: 'Detenido'
+        de: 'Gestoppt'
+        it: 'Fermo'
+        pl: 'Zatrzymany'
+        ru: 'Остановлено'
+        zh: '已停止'
+        hu: 'Leállítva'
+        pt: 'Parado'
+      0x01:
+        en: 'Low speed'
+        fr: 'Vitesse basse'
+        es: 'Velocidad baja'
+        de: 'Niedrige Geschwindigkeit'
+        it: 'Bassa velocità'
+        pl: 'Niska prędkość'
+        ru: 'Низкая скорость'
+        zh: '低速'
+        hu: 'Alacsony sebesség'
+        pt: 'Baixa velocidade'
+      0x02:
+        en: 'High speed'
+        fr: 'Vitesse élevée'
+        es: 'Velocidad alta'
+        de: 'Hohe Geschwindigkeit'
+        it: 'Velocità elevata'
+        pl: 'Wysoka prędkość'
+        ru: 'Высокая скорость'
+        zh: '高速'
+        hu: 'Nagy sebesség'
+        pt: 'Velocidade elevada'
+      0x03:
+        unused: true
+
+  DRIVER_CHANGE_DETECTION_REQUEST:
+    bits: '2.4'
+    comment:
+      en: 'Request to evaluate whether the driver has changed'
+      fr: 'Demande d''évaluation pour savoir si le conducteur a changé'
+      es: 'Solicitud de evaluación para saber si el conductor ha cambiado'
+      de: 'Anforderung zur Auswertung, ob der Fahrer gewechselt hat'
+      it: 'Richiesta di valutazione per sapere se il conducente è cambiato'
+      pl: 'Żądanie oceny, czy kierowca się zmienił'
+      ru: 'Запрос оценки того, сменился ли водитель'
+      zh: '评估驾驶员是否更换的请求'
+      hu: 'Annak kiértékelési kérése, hogy megváltozott-e a vezető'
+      pt: 'Pedido de avaliação para saber se o condutor mudou'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  ILV_AUTHORIZATION:
+    bits: '2.3'
+    comment:
+      en: 'ILV function authorization'
+      fr: 'Autorisation de la fonction ILV'
+      es: 'Autorización de la función ILV'
+      de: 'Freigabe der ILV-Funktion'
+      it: 'Autorizzazione della funzione ILV'
+      pl: 'Autoryzacja funkcji ILV'
+      ru: 'Разрешение функции ILV'
+      zh: 'ILV功能授权'
+      hu: 'Az ILV funkció engedélyezése'
+      pt: 'Autorização da função ILV'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  UNUSED_1:
+    bits: '2.2-2.0'
+    unused: true
+
+  ILV_ADVISED_SPEED:
+    bits: '3.7-3.0'
+    comment:
+      en: 'ILV advised speed'
+      fr: 'Vitesse conseillée par l''ILV'
+      es: 'Velocidad aconsejada por el ILV'
+      de: 'Von der ILV empfohlene Geschwindigkeit'
+      it: 'Velocità consigliata dall''ILV'
+      pl: 'Prędkość zalecana przez ILV'
+      ru: 'Рекомендуемая скорость по ILV'
+      zh: 'ILV建议车速'
+      hu: 'Az ILV által javasolt sebesség'
+      pt: 'Velocidade aconselhada pelo ILV'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 199
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0xFF
+
+  FACE_ANALYSIS_MODE_SELECTED:
+    bits: '4.7'
+    comment:
+      en: 'Face analysis mode selection status'
+      fr: 'État de sélection du mode d''analyse du visage'
+      es: 'Estado de selección del modo de análisis facial'
+      de: 'Auswahlstatus des Gesichtsanalysemodus'
+      it: 'Stato di selezione della modalità di analisi del volto'
+      pl: 'Stan wyboru trybu analizy twarzy'
+      ru: 'Состояние выбора режима анализа лица'
+      zh: '面部分析模式选择状态'
+      hu: 'Az arcelemzési mód kiválasztásának állapota'
+      pt: 'Estado de seleção do modo de análise facial'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unselected'
+        fr: 'Non sélectionné'
+        es: 'No seleccionado'
+        de: 'Nicht ausgewählt'
+        it: 'Non selezionato'
+        pl: 'Niewybrany'
+        ru: 'Не выбрано'
+        zh: '未选择'
+        hu: 'Nincs kiválasztva'
+        pt: 'Não selecionado'
+      0x01:
+        en: 'Selected'
+        fr: 'Sélectionné'
+        es: 'Seleccionado'
+        de: 'Ausgewählt'
+        it: 'Selezionato'
+        pl: 'Wybrany'
+        ru: 'Выбрано'
+        zh: '已选中'
+        hu: 'Kiválasztva'
+        pt: 'Selecionado'
+
+  DAA_DRIVING_CONTROL_MODE:
+    bits: '4.6'
+    comment:
+      en: 'DAA driving control mode (urban or motorway)'
+      fr: 'Mode de conduite de la fonction DAA (urbain ou autoroute)'
+      es: 'Modo de conducción de la función DAA (urbano o autopista)'
+      de: 'Fahrmodus der DAA-Funktion (Stadt oder Autobahn)'
+      it: 'Modalità di guida della funzione DAA (urbana o autostradale)'
+      pl: 'Tryb jazdy funkcji DAA (miejski lub autostradowy)'
+      ru: 'Режим движения функции DAA (город или автомагистраль)'
+      zh: 'DAA驾驶控制模式（城市或高速）'
+      hu: 'A DAA vezetési vezérlési módja (városi vagy autópálya)'
+      pt: 'Modo de condução da função DAA (urbano ou autoestrada)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Type urban'
+        fr: 'Type urban'
+        es: 'Type urban'
+        de: 'Type urban'
+        it: 'Type urban'
+        pl: 'Type urban'
+        ru: 'Type urban'
+        zh: 'Type urban'
+        hu: 'Type urban'
+        pt: 'Type urban'
+      0x01:
+        en: 'Motorway type'
+        fr: 'Type autoroute'
+        es: 'Tipo autopista'
+        de: 'Autobahntyp'
+        it: 'Tipo autostrada'
+        pl: 'Typ autostrady'
+        ru: 'Тип «автомагистраль»'
+        zh: '高速公路类型'
+        hu: 'Autópálya típus'
+        pt: 'Tipo autoestrada'
+
+  DAA_LEVEL4_RESET_REQUEST:
+    bits: '4.5'
+    comment:
+      en: 'Reset request for the DAA level 4 function'
+      fr: 'Demande de réinitialisation de la fonction DAA niveau 4'
+      es: 'Solicitud de reinicio de la función DAA nivel 4'
+      de: 'Rücksetzanforderung der DAA-Funktion Stufe 4'
+      it: 'Richiesta di reset della funzione DAA livello 4'
+      pl: 'Żądanie zresetowania funkcji DAA poziomu 4'
+      ru: 'Запрос сброса функции DAA уровня 4'
+      zh: 'DAA 4级功能复位请求'
+      hu: 'A DAA 4. szintű funkció visszaállítási kérése'
+      pt: 'Pedido de reinicialização da função DAA nível 4'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Request'
+        fr: 'Requête'
+        es: 'Solicitud'
+        de: 'Anforderung'
+        it: 'Richiesta'
+        pl: 'Żądanie'
+        ru: 'Запрос'
+        zh: '请求'
+        hu: 'Kérés'
+        pt: 'Pedido'
+      0x01:
+        en: 'No request'
+        fr: 'No request'
+        es: 'No request'
+        de: 'No request'
+        it: 'No request'
+        pl: 'No request'
+        ru: 'No request'
+        zh: 'No request'
+        hu: 'No request'
+        pt: 'No request'
+
+  UNUSED_2:
+    bits: '4.4-4.0'
+    unused: true

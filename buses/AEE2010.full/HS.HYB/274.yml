@@ -1,0 +1,832 @@
+id: 0x274
+name: 'TRACTION_BATTERY_DYNAMIC_DATA_3'
+type: 'can'
+length: 8
+comment:
+  en: 'Traction battery management data: measured HV current/voltage, disconnect state, unexpected contactor opening and hydrogen detection.'
+  fr: 'Données du gestionnaire de batterie de traction : courant/tension HT mesurés, état de déconnexion, ouverture de contacteur non commandée et détection d''hydrogène.'
+  es: 'Datos del gestor de la batería de tracción: corriente/tensión de alta tensión medidas, estado de desconexión, apertura de contactor no ordenada y detección de hidrógeno.'
+  de: 'Daten des Traktionsbatteriemanagements: gemessener HV-Strom/-Spannung, Trennzustand, unbefohlenes Öffnen des Schützes und Wasserstofferkennung.'
+  it: 'Dati del gestore della batteria di trazione: corrente/tensione ad alta tensione misurate, stato di disconnessione, apertura non comandata del contattore e rilevamento di idrogeno.'
+  pl: 'Dane zarządzania baterią trakcyjną: zmierzony prąd/napięcie wysokiego napięcia, stan odłączenia, niezamierzone otwarcie stycznika oraz wykrycie wodoru.'
+  ru: 'Данные управления тяговой батареей: измеренные ток/напряжение высокого напряжения, состояние отключения, непреднамеренное размыкание контактора и обнаружение водорода.'
+  zh: '牵引电池管理数据:实测高压电流/电压、断开状态、非指令性接触器断开及氢气检测。'
+  hu: 'A vonóakkumulátor-kezelés adatai: a mért nagyfeszültségű áram/feszültség, leválasztási állapot, nem parancsra történő mágneskapcsoló-nyitás és hidrogénérzékelés.'
+  pt: 'Dados de gestão da bateria de tração: corrente/tensão de alta tensão medidas, estado de desconexão, abertura inesperada do contactor e deteção de hidrogénio.'
+periodicity: ['10ms']
+senders: ['TBMU']
+receivers: ['HCU1']
+
+signals:
+  HV_VOLTAGE_MEASUREMENT_ERROR:
+    bits: '1.7'
+    comment:
+      en: 'High-voltage measurement error'
+      fr: 'Erreur de mesure de la tension haute tension'
+      es: 'Error de medición de la tensión de alta tensión'
+      de: 'Messfehler der Hochvoltspannung'
+      it: 'Errore di misura della tensione ad alta tensione'
+      pl: 'Błąd pomiaru napięcia wysokiego napięcia'
+      ru: 'Ошибка измерения высокого напряжения'
+      zh: '高压测量误差'
+      hu: 'A nagyfeszültség mérési hibája'
+      pt: 'Erro de medição da tensão de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  HV_PACK_VOLTAGE_ERROR:
+    bits: '1.6-1.5'
+    comment:
+      en: 'High-voltage pack voltage error (over/under voltage)'
+      fr: 'Erreur de tension du pack haute tension (sur/sous-tension)'
+      es: 'Error de tensión del paquete de alta tensión (sobre/subtensión)'
+      de: 'Spannungsfehler des Hochvoltpacks (Über-/Unterspannung)'
+      it: 'Errore di tensione del pacco ad alta tensione (sovra/sottotensione)'
+      pl: 'Błąd napięcia pakietu wysokiego napięcia (przepięcie/niedopięcie)'
+      ru: 'Ошибка напряжения высоковольтного блока (пере-/понижение напряжения)'
+      zh: '高压电池组电压错误(过压/欠压)'
+      hu: 'A nagyfeszültségű csomag feszültséghibája (túl-/alulfeszültség)'
+      pt: 'Erro de tensão do pacote de alta tensão (sobretensão/subtensão)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Over-voltage'
+        fr: 'Surtension'
+        es: 'Sobretensión'
+        de: 'Überspannung'
+        it: 'Sovratensione'
+        pl: 'Przepięcie'
+        ru: 'Перенапряжение'
+        zh: '过压'
+        hu: 'Túlfeszültség'
+        pt: 'Sobretensão'
+      0x02:
+        en: 'Undervoltage'
+        fr: 'Sous-tension'
+        es: 'Subtensión'
+        de: 'Unterspannung'
+        it: 'Sottotensione'
+        pl: 'Niedomiar napięcia'
+        ru: 'Пониженное напряжение'
+        zh: '欠压'
+        hu: 'Alacsony feszültség'
+        pt: 'Subtensão'
+      0x03:
+        unused: true
+
+  HV_BATTERY_CHARGE_LIMIT_STATUS:
+    bits: '1.4-1.3'
+    comment:
+      en: 'High-voltage battery charge/discharge limit status (overcharge / deep discharge)'
+      fr: 'Etat de limite de charge/décharge de la batterie haute tension (surcharge / décharge profonde)'
+      es: 'Estado del límite de carga/descarga de la batería de alta tensión (sobrecarga / descarga profunda)'
+      de: 'Status der Lade-/Entladegrenze der Hochvoltbatterie (Überladung / Tiefentladung)'
+      it: 'Stato del limite di carica/scarica della batteria ad alta tensione (sovraccarica / scarica profonda)'
+      pl: 'Stan limitu ładowania/rozładowania akumulatora wysokiego napięcia (przeładowanie / głębokie rozładowanie)'
+      ru: 'Состояние предела заряда/разряда высоковольтной батареи (перезаряд / глубокий разряд)'
+      zh: '高压电池充放电限制状态(过充/深度放电)'
+      hu: 'A nagyfeszültségű akkumulátor töltési/kisütési határának állapota (túltöltés / mély kisütés)'
+      pt: 'Estado do limite de carga/descarga da bateria de alta tensão (sobrecarga/descarga profunda)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault if SOC >= 100%'
+        fr: 'Défaut si SOC ≥ 100 %'
+        es: 'Fallo si SOC ≥ 100 %'
+        de: 'Fehler bei SOC ≥ 100 %'
+        it: 'Guasto se SOC ≥ 100%'
+        pl: 'Usterka jeśli SOC ≥ 100%'
+        ru: 'Неисправность при SOC ≥ 100 %'
+        zh: 'SOC≥100%时故障'
+        hu: 'Hiba, ha SOC ≥ 100%'
+        pt: 'Avaria se SOC >= 100%'
+      0x02:
+        en: 'Fault if SOC <= 0%'
+        fr: 'Défaut si SOC <= 0 %'
+        es: 'Fallo si SOC <= 0 %'
+        de: 'Fehler bei SOC <= 0 %'
+        it: 'Guasto se SOC <= 0%'
+        pl: 'Usterka, jeśli SOC <= 0%'
+        ru: 'Неисправность при SOC <= 0%'
+        zh: '若荷电状态≤0%则为故障'
+        hu: 'Hiba, ha SOC <= 0%'
+        pt: 'Falha se SOC <= 0%'
+      0x03:
+        unused: true
+
+  HV_START_DISCHARGE_FAULT:
+    bits: '1.2'
+    comment:
+      en: 'Fault in the high-voltage discharge at startup'
+      fr: 'Défaut de décharge de la haute tension au démarrage'
+      es: 'Fallo de descarga de la alta tensión en el arranque'
+      de: 'Fehler bei der Hochvolt-Entladung beim Start'
+      it: 'Guasto nella scarica dell''alta tensione all''avviamento'
+      pl: 'Usterka rozładowania wysokiego napięcia przy uruchomieniu'
+      ru: 'Неисправность разряда высокого напряжения при запуске'
+      zh: '起动时高压放电故障'
+      hu: 'A nagyfeszültség kisütésének hibája induláskor'
+      pt: 'Falha de descarga da alta tensão no arranque'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Fault detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Avaria detetada'
+
+  HV_BATTERY_CURRENT_LIMIT_STATUS:
+    bits: '1.1-1.0'
+    comment:
+      en: 'High-voltage battery current limit status'
+      fr: 'Etat de limitation de courant de la batterie haute tension'
+      es: 'Estado de limitación de corriente de la batería de alta tensión'
+      de: 'Status der Strombegrenzung der Hochvoltbatterie'
+      it: 'Stato di limitazione della corrente della batteria ad alta tensione'
+      pl: 'Stan ograniczenia prądu akumulatora wysokiego napięcia'
+      ru: 'Состояние ограничения тока высоковольтной батареи'
+      zh: '高压电池电流限制状态'
+      hu: 'A nagyfeszültségű akkumulátor áramkorlátozási állapota'
+      pt: 'Estado do limite de corrente da bateria de alta tensão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Critical charge'
+        fr: 'Charge critique'
+        es: 'Carga crítica'
+        de: 'Kritischer Ladezustand'
+        it: 'Carica critica'
+        pl: 'Krytyczny poziom naładowania'
+        ru: 'Критический уровень заряда'
+        zh: '临界电量'
+        hu: 'Kritikus töltöttség'
+        pt: 'Carga crítica'
+      0x02:
+        en: 'Critical discharge'
+        fr: 'Décharge critique'
+        es: 'Descarga crítica'
+        de: 'Kritische Entladung'
+        it: 'Scarica critica'
+        pl: 'Krytyczne rozładowanie'
+        ru: 'Критический разряд'
+        zh: '临界放电'
+        hu: 'Kritikus lemerülés'
+        pt: 'Descarga crítica'
+      0x03:
+        unused: true
+
+  HV_BATTERY_HIGH_TEMPERATURE_FAULT:
+    bits: '2.7'
+    comment:
+      en: 'High-voltage battery high temperature fault'
+      fr: 'Défaut de température élevée de la batterie haute tension'
+      es: 'Fallo de temperatura elevada de la batería de alta tensión'
+      de: 'Fehler wegen hoher Temperatur der Hochvoltbatterie'
+      it: 'Guasto per temperatura elevata della batteria ad alta tensione'
+      pl: 'Usterka wysokiej temperatury akumulatora wysokiego napięcia'
+      ru: 'Неисправность из-за высокой температуры высоковольтной батареи'
+      zh: '高压电池高温故障'
+      hu: 'A nagyfeszültségű akkumulátor magas hőmérsékletének hibája'
+      pt: 'Falha de temperatura elevada da bateria de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  HV_BATTERY_INSULATION_STATUS:
+    bits: '2.6'
+    comment:
+      en: 'High-voltage battery insulation status'
+      fr: 'Etat d''isolement de la batterie haute tension'
+      es: 'Estado de aislamiento de la batería de alta tensión'
+      de: 'Isolationsstatus der Hochvoltbatterie'
+      it: 'Stato di isolamento della batteria ad alta tensione'
+      pl: 'Stan izolacji akumulatora wysokiego napięcia'
+      ru: 'Состояние изоляции высоковольтной батареи'
+      zh: '高压电池绝缘状态'
+      hu: 'A nagyfeszültségű akkumulátor szigetelési állapota'
+      pt: 'Estado de isolamento da bateria de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault detected (leakage resistance ≤ 161 kΩ)'
+        fr: 'Défaut détecté (résistance de fuite ≤ 161 kΩ)'
+        es: 'Fallo detectado (resistencia de fuga ≤ 161 kΩ)'
+        de: 'Fehler erkannt (Isolationswiderstand ≤ 161 kΩ)'
+        it: 'Guasto rilevato (resistenza di dispersione ≤ 161 kΩ)'
+        pl: 'Wykryto usterkę (rezystancja upływu ≤ 161 kΩ)'
+        ru: 'Обнаружена неисправность (сопротивление утечки ≤ 161 кОм)'
+        zh: '检测到故障(漏电阻≤161千欧)'
+        hu: 'Hiba észlelve (szivárgási ellenállás ≤ 161 kΩ)'
+        pt: 'Falha detetada (resistência de fuga ≤ 161 kΩ)'
+
+  PILOT_LINE_ERROR:
+    bits: '2.5'
+    comment:
+      en: 'Charging pilot line error'
+      fr: 'Erreur sur la ligne pilote de charge'
+      es: 'Error en la línea piloto de carga'
+      de: 'Fehler auf der Pilotleitung der Ladung'
+      it: 'Errore sulla linea pilota di ricarica'
+      pl: 'Błąd linii pilotującej ładowania'
+      ru: 'Ошибка пилотной линии зарядки'
+      zh: '充电导引线错误'
+      hu: 'A töltési vezérlővonal hibája'
+      pt: 'Erro na linha piloto de carregamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'pilot line closed'
+        fr: 'ligne pilote fermée'
+        es: 'Línea piloto cerrada'
+        de: 'Pilotleitung geschlossen'
+        it: 'Linea pilota chiusa'
+        pl: 'Linia pilotująca zamknięta'
+        ru: 'Пилотная линия замкнута'
+        zh: '先导线路闭合'
+        hu: 'Vezérlővonal zárva'
+        pt: 'Linha piloto fechada'
+      0x01:
+        en: 'Pilot line open'
+        fr: 'Ligne pilote ouverte'
+        es: 'Línea piloto abierta'
+        de: 'Pilotleitung offen'
+        it: 'Linea pilota aperta'
+        pl: 'Linia pilotowa otwarta'
+        ru: 'Пилотная линия разомкнута'
+        zh: '先导线断开'
+        hu: 'Pilótavonal nyitva'
+        pt: 'Linha piloto aberta'
+
+  CRASH_EVENT_DETECTED:
+    bits: '2.4'
+    comment:
+      en: 'Crash event detected'
+      fr: 'Evénement de crash détecté'
+      es: 'Evento de colisión detectado'
+      de: 'Unfallereignis erkannt'
+      it: 'Evento di collisione rilevato'
+      pl: 'Wykryto zdarzenie kolizji'
+      ru: 'Обнаружено событие столкновения'
+      zh: '检测到碰撞事件'
+      hu: 'Ütközési esemény észlelve'
+      pt: 'Evento de colisão detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No crash'
+        fr: 'Pas de choc'
+        es: 'Sin choque'
+        de: 'Kein Crash'
+        it: 'Nessun urto'
+        pl: 'Brak zderzenia'
+        ru: 'Нет столкновения'
+        zh: '无碰撞'
+        hu: 'Nincs ütközés'
+        pt: 'Sem impacto'
+      0x01:
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
+
+  HV_FUSE_STATUS:
+    bits: '2.3'
+    comment:
+      en: 'High-voltage fuse status'
+      fr: 'Etat du fusible haute tension'
+      es: 'Estado del fusible de alta tensión'
+      de: 'Status der Hochvoltsicherung'
+      it: 'Stato del fusibile ad alta tensione'
+      pl: 'Stan bezpiecznika wysokiego napięcia'
+      ru: 'Состояние высоковольтного предохранителя'
+      zh: '高压保险丝状态'
+      hu: 'A nagyfeszültségű biztosíték állapota'
+      pt: 'Estado do fusível de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  SERVICE_PLUG_OPEN_STATUS:
+    bits: '2.2'
+    comment:
+      en: 'Service plug open status'
+      fr: 'Etat d''ouverture de la prise de service'
+      es: 'Estado de apertura del conector de servicio'
+      de: 'Öffnungsstatus des Service-Steckers'
+      it: 'Stato di apertura della spina di servizio'
+      pl: 'Stan otwarcia wtyczki serwisowej'
+      ru: 'Состояние открытия сервисной вилки'
+      zh: '维修插头打开状态'
+      hu: 'A szervizdugó nyitott állapota'
+      pt: 'Estado de abertura da ficha de serviço'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Service plug closed'
+        fr: 'Prise de service fermée'
+        es: 'Enchufe de servicio cerrado'
+        de: 'Servicestecker geschlossen'
+        it: 'Spina di servizio chiusa'
+        pl: 'Wtyczka serwisowa zamknięta'
+        ru: 'Сервисная заглушка закрыта'
+        zh: '维修插头已闭合'
+        hu: 'Szervizdugó zárva'
+        pt: 'Ficha de serviço fechada'
+      0x01:
+        en: 'Service plug open'
+        fr: 'Prise de service ouverte'
+        es: 'Enchufe de servicio abierto'
+        de: 'Wartungsstecker geöffnet'
+        it: 'Spina di servizio aperta'
+        pl: 'Wtyczka serwisowa otwarta'
+        ru: 'Сервисная заглушка открыта'
+        zh: '维修插头断开'
+        hu: 'A szervizcsatlakozó nyitva'
+        pt: 'Ficha de serviço aberta'
+
+  HV_CONTACTOR_OPENING_IMMINENT_WARNING:
+    bits: '2.1'
+    comment:
+      en: 'Warning of imminent high-voltage contactor opening'
+      fr: 'Alerte d''ouverture imminente des contacteurs haute tension'
+      es: 'Alerta de apertura inminente de los contactores de alta tensión'
+      de: 'Warnung vor bevorstehender Öffnung der Hochvoltschütze'
+      it: 'Allerta di apertura imminente dei contattori ad alta tensione'
+      pl: 'Ostrzeżenie o zbliżającym się rozłączeniu styczników wysokiego napięcia'
+      ru: 'Предупреждение о скором размыкании высоковольтных контакторов'
+      zh: '高压接触器即将断开的警告'
+      hu: 'Figyelmeztetés a nagyfeszültségű kontaktorok közelgő nyitásáról'
+      pt: 'Aviso de abertura iminente dos contactores de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  HV_CONTACTORS_WELDED:
+    bits: '2.0'
+    comment:
+      en: 'High-voltage contactors welded shut'
+      fr: 'Contacteurs haute tension soudés'
+      es: 'Contactores de alta tensión soldados'
+      de: 'Hochvoltschütze verschweißt'
+      it: 'Contattori ad alta tensione saldati'
+      pl: 'Zespawane styczniki wysokiego napięcia'
+      ru: 'Высоковольтные контакторы приварены (заклинили)'
+      zh: '高压接触器熔接'
+      hu: 'A nagyfeszültségű kontaktorok összehegedtek'
+      pt: 'Contactores de alta tensão soldados'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not welded'
+        fr: 'Non soudés'
+        es: 'No soldados'
+        de: 'Nicht verschweißt'
+        it: 'Non saldati'
+        pl: 'Niespawane'
+        ru: 'Не приварено'
+        zh: '未焊接'
+        hu: 'Nem hegesztett'
+        pt: 'Não soldado'
+      0x01:
+        en: 'Welded (stuck contacts)'
+        fr: 'Soudés (contacts collés)'
+        es: 'Soldados (contactos pegados)'
+        de: 'Verschweißt (Kontakte verklebt)'
+        it: 'Saldati (contatti incollati)'
+        pl: 'Zespawane (zablokowane styki)'
+        ru: 'Приварены (залипшие контакты)'
+        zh: '触点熔粘'
+        hu: 'Összehegedt (beragadt érintkezők)'
+        pt: 'Soldado (contactos presos)'
+
+  HV_SHORT_CIRCUIT:
+    bits: '3.7'
+    comment:
+      en: 'High-voltage short circuit'
+      fr: 'Court-circuit sur la haute tension'
+      es: 'Cortocircuito en la alta tensión'
+      de: 'Kurzschluss im Hochvoltsystem'
+      it: 'Corto circuito sull''alta tensione'
+      pl: 'Zwarcie w obwodzie wysokiego napięcia'
+      ru: 'Короткое замыкание в высоковольтной цепи'
+      zh: '高压短路'
+      hu: 'Nagyfeszültségű rövidzárlat'
+      pt: 'Curto-circuito na alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No short circuit'
+        fr: 'Pas de court-circuit'
+        es: 'Sin cortocircuito'
+        de: 'Kein Kurzschluss'
+        it: 'Nessun cortocircuito'
+        pl: 'Brak zwarcia'
+        ru: 'Нет короткого замыкания'
+        zh: '无短路'
+        hu: 'Nincs rövidzárlat'
+        pt: 'Sem curto-circuito'
+      0x01:
+        en: 'Short circuit detected'
+        fr: 'Court-circuit détecté'
+        es: 'Cortocircuito detectado'
+        de: 'Kurzschluss erkannt'
+        it: 'Cortocircuito rilevato'
+        pl: 'Wykryto zwarcie'
+        ru: 'Обнаружено короткое замыкание'
+        zh: '检测到短路'
+        hu: 'Rövidzárlat észlelve'
+        pt: 'Curto-circuito detetado'
+
+  HV_BATTERY_COOLING_UNAVAILABLE:
+    bits: '3.6'
+    comment:
+      en: 'High-voltage battery cooling unavailable'
+      fr: 'Refroidissement de la batterie haute tension indisponible'
+      es: 'Refrigeración de la batería de alta tensión no disponible'
+      de: 'Kühlung der Hochvoltbatterie nicht verfügbar'
+      it: 'Raffreddamento della batteria ad alta tensione non disponibile'
+      pl: 'Chłodzenie akumulatora wysokiego napięcia niedostępne'
+      ru: 'Охлаждение высоковольтной батареи недоступно'
+      zh: '高压电池冷却不可用'
+      hu: 'A nagyfeszültségű akkumulátor hűtése nem elérhető'
+      pt: 'Refrigeração da bateria de alta tensão indisponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Cooling'
+        fr: 'Refroidissement'
+        es: 'Enfriamiento'
+        de: 'Kühlung'
+        it: 'Raffreddamento'
+        pl: 'Chłodzenie'
+        ru: 'Охлаждение'
+        zh: '冷却'
+        hu: 'Hűtés'
+        pt: 'Arrefecimento'
+      0x01:
+        en: 'Not cooling'
+        fr: 'Pas de refroidissement'
+        es: 'Sin refrigeración'
+        de: 'Keine Kühlung'
+        it: 'Nessun raffreddamento'
+        pl: 'Brak chłodzenia'
+        ru: 'Без охлаждения'
+        zh: '未冷却'
+        hu: 'Nincs hűtés'
+        pt: 'Sem arrefecimento'
+
+  HV_INSULATION_LEAKAGE_DETECTED:
+    bits: '3.5'
+    comment:
+      en: 'High-voltage insulation leakage detected'
+      fr: 'Fuite de courant (isolement) détectée sur la haute tension'
+      es: 'Fuga de corriente (aislamiento) detectada en la alta tensión'
+      de: 'Isolationsleckstrom der Hochvoltanlage erkannt'
+      it: 'Rilevata dispersione di corrente (isolamento) sull''alta tensione'
+      pl: 'Wykryto upływ prądu (izolacji) w obwodzie wysokiego napięcia'
+      ru: 'Обнаружена утечка тока (изоляции) в высоковольтной цепи'
+      zh: '检测到高压绝缘漏电'
+      hu: 'Nagyfeszültségű szigetelési áramszivárgás észlelve'
+      pt: 'Fuga de corrente do isolamento de alta tensão detetada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No detection'
+        fr: 'Pas de détection'
+        es: 'Sin detección'
+        de: 'Keine Erkennung'
+        it: 'Nessun rilevamento'
+        pl: 'Brak detekcji'
+        ru: 'Обнаружение отсутствует'
+        zh: '未检测到'
+        hu: 'Nincs érzékelés'
+        pt: 'Sem deteção'
+      0x01:
+        en: 'Detection'
+        fr: 'Détection'
+        es: 'Detección'
+        de: 'Erkennung'
+        it: 'Rilevamento'
+        pl: 'Wykrycie'
+        ru: 'Обнаружение'
+        zh: '检测'
+        hu: 'Érzékelés'
+        pt: 'Deteção'
+
+  HV_BATTERY_STATUS:
+    bits: '3.4-3.2'
+    comment:
+      en: 'High-voltage battery status'
+      fr: 'Etat de la batterie haute tension'
+      es: 'Estado de la batería de alta tensión'
+      de: 'Status der Hochvoltbatterie'
+      it: 'Stato della batteria ad alta tensione'
+      pl: 'Stan akumulatora wysokiego napięcia'
+      ru: 'Состояние высоковольтной батареи'
+      zh: '高压电池状态'
+      hu: 'A nagyfeszültségű akkumulátor állapota'
+      pt: 'Estado da bateria de alta tensão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Continuous degraded mode'
+        fr: 'Mode dégradé continu'
+        es: 'Modo degradado continuo'
+        de: 'Dauerhafter Notlaufmodus'
+        it: 'Modalità degradata continua'
+        pl: 'Ciągły tryb awaryjny'
+        ru: 'Постоянный аварийный режим'
+        zh: '持续降级模式'
+        hu: 'Folyamatos korlátozott üzemmód'
+        pt: 'Modo degradado contínuo'
+      0x02:
+        en: 'Peak degraded mode'
+        fr: 'Mode dégradé pic (peak)'
+        es: 'Modo degradado pico (peak)'
+        de: 'Eingeschränkter Spitzenmodus (Peak)'
+        it: 'Modalità degradata di picco (peak)'
+        pl: 'Zdegradowany tryb szczytowy (peak)'
+        ru: 'Пиковый ухудшенный режим'
+        zh: '峰值降级模式'
+        hu: 'Csúcs leromlott üzemmód'
+        pt: 'Modo degradado de pico (peak)'
+      0x03:
+        en: 'Protection mode imminent'
+        fr: 'Mise en protection imminente'
+        es: 'Modo de protección inminente'
+        de: 'Schutzmodus unmittelbar bevorstehend'
+        it: 'Modalità di protezione imminente'
+        pl: 'Zbliżający się tryb ochrony'
+        ru: 'Скорый переход в режим защиты'
+        zh: '即将进入保护模式'
+        hu: 'Küszöbön álló védelmi üzemmód'
+        pt: 'Modo de proteção iminente'
+      0x04:
+        en: 'Protection mode'
+        fr: 'Mise en protection'
+        es: 'Modo de protección'
+        de: 'Schutzmodus'
+        it: 'Modalità di protezione'
+        pl: 'Tryb ochrony'
+        ru: 'Режим защиты'
+        zh: '保护模式'
+        hu: 'Védelmi üzemmód'
+        pt: 'Modo de proteção'
+      0x05:
+        en: 'Power latch'
+        fr: 'Maintien d''alimentation'
+        es: 'Retención de alimentación'
+        de: 'Selbsthaltung der Versorgung'
+        it: 'Autoalimentazione (power latch)'
+        pl: 'Podtrzymanie zasilania'
+        ru: 'Самоблокировка питания'
+        zh: '电源自锁'
+        hu: 'Tápellátás önfenntartás'
+        pt: 'Retenção de potência'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  HV_BATTERY_MAX_CHARGE_VOLTAGE:
+    bits: '3.1-5.5'
+    comment:
+      en: 'Maximum charge voltage of the high-voltage battery'
+      fr: 'Tension de charge maximale de la batterie haute tension'
+      es: 'Tensión de carga máxima de la batería de alta tensión'
+      de: 'Maximale Ladespannung der Hochvoltbatterie'
+      it: 'Tensione di carica massima della batteria ad alta tensione'
+      pl: 'Maksymalne napięcie ładowania akumulatora wysokiego napięcia'
+      ru: 'Максимальное напряжение заряда высоковольтной батареи'
+      zh: '高压电池最大充电电压'
+      hu: 'A nagyfeszültségű akkumulátor maximális töltőfeszültsége'
+      pt: 'Tensão de carga máxima da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FFF
+    default: 0x00
+
+  HV_BATTERY_NOMINAL_DISCHARGE_VOLTAGE:
+    bits: '5.4-6.0'
+    comment:
+      en: 'Nominal discharge voltage of the high-voltage battery'
+      fr: 'Tension de décharge nominale de la batterie haute tension'
+      es: 'Tensión de descarga nominal de la batería de alta tensión'
+      de: 'Nennentladespannung der Hochvoltbatterie'
+      it: 'Tensione di scarica nominale della batteria ad alta tensione'
+      pl: 'Nominalne napięcie rozładowania akumulatora wysokiego napięcia'
+      ru: 'Номинальное напряжение разряда высоковольтной батареи'
+      zh: '高压电池额定放电电压'
+      hu: 'A nagyfeszültségű akkumulátor névleges kisütőfeszültsége'
+      pt: 'Tensão de descarga nominal da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FFF
+    default: 0x00
+
+  HV_BATTERY_NOMINAL_CHARGE_VOLTAGE:
+    bits: '7.7-8.3'
+    comment:
+      en: 'Nominal charge voltage of the high-voltage battery'
+      fr: 'Tension de charge nominale de la batterie haute tension'
+      es: 'Tensión de carga nominal de la batería de alta tensión'
+      de: 'Nennladespannung der Hochvoltbatterie'
+      it: 'Tensione di carica nominale della batteria ad alta tensione'
+      pl: 'Nominalne napięcie ładowania akumulatora wysokiego napięcia'
+      ru: 'Номинальное напряжение заряда высоковольтной батареи'
+      zh: '高压电池额定充电电压'
+      hu: 'A nagyfeszültségű akkumulátor névleges töltőfeszültsége'
+      pt: 'Tensão de carga nominal da bateria de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x1FFF
+    default: 0x00

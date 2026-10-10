@@ -1,0 +1,352 @@
+id: 0x488
+name: 'ENGINE_ECU_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Power interface unit data: DC-DC converter fault, cruise-control/speed-limiter fault, air-pump relay request, maintenance wake-up, power reserved for AC, blank maintenance-lamp request and engine coolant temperature.'
+  fr: 'Données de l''unité d''interface de puissance : défaut convertisseur DC-DC, défaut régulateur/limiteur de vitesse, demande relais pompe à air, réveil maintenance, puissance réservée à la climatisation, demande de voyant maintenance à vide et température eau moteur.'
+  es: 'Datos de la unidad de interfaz de potencia: fallo del convertidor DC-DC, fallo del regulador/limitador de velocidad, solicitud del relé de la bomba de aire, activación de mantenimiento, potencia reservada para el A/C, solicitud de testigo de mantenimiento en vacío y temperatura del agua del motor.'
+  de: 'Daten der Leistungsschnittstelleneinheit: DC-DC-Wandlerfehler, Tempomat-/Geschwindigkeitsbegrenzer-Fehler, Luftpumpenrelaisanforderung, Wartungsweckung, für Klimaanlage reservierte Leistung, Leerlauf-Wartungskontrollleuchtenanforderung und Motorkühlwassertemperatur.'
+  it: 'Dati dell''unità di interfaccia di potenza: guasto convertitore DC-DC, guasto regolatore/limitatore di velocità, richiesta relè pompa aria, risveglio manutenzione, potenza riservata al climatizzatore, richiesta spia manutenzione a vuoto e temperatura acqua motore.'
+  pl: 'Dane jednostki interfejsu mocy: usterka przetwornicy DC-DC, usterka tempomatu/ogranicznika prędkości, żądanie przekaźnika pompy powietrza, wybudzenie serwisowe, moc zarezerwowana dla klimatyzacji, żądanie kontrolki serwisowej na pusto i temperatura wody silnika.'
+  ru: 'Данные силового интерфейсного блока: неисправность преобразователя DC-DC, неисправность круиз-контроля/ограничителя скорости, запрос реле воздушного насоса, сервисное пробуждение, мощность, зарезервированная для кондиционера, запрос индикатора обслуживания вхолостую и температура охлаждающей жидкости двигателя.'
+  zh: '功率接口单元数据:DC-DC转换器故障、巡航控制/限速器故障、空气泵继电器请求、维修唤醒、为空调预留的功率、空载维修灯请求和发动机冷却水温度。'
+  hu: 'A teljesítmény-interfész egység adatai: DC-DC átalakító hiba, tempomat/sebességhatároló hiba, légszivattyú relé kérése, szervizébresztés, klímának fenntartott teljesítmény, üresjárati szervizlámpa-kérés és motor hűtővíz hőmérséklete.'
+  pt: 'Dados da unidade de interface de potência: avaria do conversor DC-DC, avaria do regulador/limitador de velocidade, pedido do relé da bomba de ar, ativação de manutenção, potência reservada para o ar condicionado, pedido em branco da luz de manutenção e temperatura do líquido de arrefecimento do motor.'
+periodicity: ['100ms']
+senders: ['PIU']
+receivers: ['ABS', 'BSI', 'AMVAR', 'AR2S', 'BVA', 'CSS', 'HCU1', 'SCDT', 'GAS']
+
+signals:
+  ENGINE_COOLANT_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Engine coolant temperature (°C)'
+      fr: 'Température d''eau moteur (°C)'
+      es: 'Temperatura del líquido refrigerante del motor (°C)'
+      de: 'Motorkühlmitteltemperatur (°C)'
+      it: 'Temperatura del liquido di raffreddamento motore (°C)'
+      pl: 'Temperatura płynu chłodzącego silnika (°C)'
+      ru: 'Температура охлаждающей жидкости двигателя (°C)'
+      zh: '发动机冷却液温度(°C)'
+      hu: 'Motorhűtőfolyadék-hőmérséklet (°C)'
+      pt: 'Temperatura do líquido de refrigeração do motor (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  UNUSED_1:
+    bits: '2.7-2.0'
+    unused: true
+
+  AC_AVAILABLE_POWER:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Power available for the air conditioning system'
+      fr: 'Puissance disponible pour la climatisation'
+      es: 'Potencia disponible para el aire acondicionado'
+      de: 'Für die Klimaanlage verfügbare Leistung'
+      it: 'Potenza disponibile per il climatizzatore'
+      pl: 'Moc dostępna dla klimatyzacji'
+      ru: 'Мощность, доступная для кондиционера'
+      zh: '空调可用功率'
+      hu: 'A klímaberendezés számára rendelkezésre álló teljesítmény'
+      pt: 'Potência disponível para o sistema de ar condicionado'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 10160
+    units: 'W'
+    invalid: 0xFF
+    default: 0xFF
+
+  PARTIAL_WAKEUP_1_HOLD_REQUEST:
+    bits: '4.7'
+    comment:
+      en: 'Request to hold partial wake-up 1 after the main wake-up'
+      fr: 'Demande de maintien du réveil partiel 1 après le réveil principal'
+      es: 'Solicitud de mantenimiento del despertar parcial 1 tras el despertar principal'
+      de: 'Anforderung zum Halten des Teil-Wakeups 1 nach dem Haupt-Wakeup'
+      it: 'Richiesta di mantenimento del risveglio parziale 1 dopo il risveglio principale'
+      pl: 'Żądanie utrzymania częściowego wybudzenia 1 po głównym wybudzeniu'
+      ru: 'Запрос на удержание частичного пробуждения 1 после основного пробуждения'
+      zh: '主唤醒后保持部分唤醒1的请求'
+      hu: 'Az 1. részleges ébresztés fenntartásának kérése a fő ébresztés után'
+      pt: 'Pedido de manutenção do despertar parcial 1 após o despertar principal'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  CRUISE_CONTROL_LIMITER_FAULT:
+    bits: '4.6'
+    comment:
+      en: 'Cruise control fault / speed limiter fault'
+      fr: 'Défaut du régulateur de vitesse / défaut du limiteur de vitesse'
+      es: 'Fallo del regulador de velocidad / fallo del limitador de velocidad'
+      de: 'Fehler des Tempomaten / Fehler des Geschwindigkeitsbegrenzers'
+      it: 'Guasto del regolatore di velocità / guasto del limitatore di velocità'
+      pl: 'Usterka tempomatu / usterka ogranicznika prędkości'
+      ru: 'Неисправность круиз-контроля / неисправность ограничителя скорости'
+      zh: '巡航控制故障/限速器故障'
+      hu: 'Sebességtartó automatika hibája / sebességhatároló hibája'
+      pt: 'Falha do regulador de velocidade / falha do limitador de velocidade'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No cruise control / no speed limiter fault'
+        fr: 'Pas de défaut cruise control / pas de défaut speed limiter'
+        es: 'Sin fallo cruise control / sin fallo speed limiter'
+        de: 'Kein cruise control-/speed limiter-Fehler'
+        it: 'Nessun guasto cruise control / nessun guasto speed limiter'
+        pl: 'Brak usterki cruise control / brak usterki speed limiter'
+        ru: 'Нет неисправности cruise control / нет неисправности speed limiter'
+        zh: '无RVV故障/无LVV故障'
+        hu: 'Nincs cruise control/speed limiter hiba'
+        pt: 'Sem falha cruise control / sem falha speed limiter'
+      0x01:
+        en: 'cruise control fault / speed limiter fault'
+        fr: 'Défaut cruise control / Défaut speed limiter'
+        es: 'Fallo cruise control / Fallo speed limiter'
+        de: 'cruise control-Fehler / speed limiter-Fehler'
+        it: 'Guasto cruise control / Guasto speed limiter'
+        pl: 'Usterka cruise control / Usterka speed limiter'
+        ru: 'Неисправность cruise control / Неисправность speed limiter'
+        zh: 'RVV故障/LVV故障'
+        hu: 'cruise control hiba / speed limiter hiba'
+        pt: 'Avaria cruise control / Avaria speed limiter'
+
+  PULSAIR_RELAY_CONTROL_REQUEST:
+    bits: '4.5'
+    comment:
+      en: 'Secondary air relay control request'
+      fr: 'Demande de pilotage du relais d''air pulsé (pulsair)'
+      es: 'Solicitud de accionamiento del relé de aire pulsado (pulsair)'
+      de: 'Ansteuerungsanforderung des Sekundärluft-Relais (pulsair)'
+      it: 'Richiesta di pilotaggio del relè aria pulsata (pulsair)'
+      pl: 'Żądanie sterowania przekaźnikiem powietrza wtórnego (pulsair)'
+      ru: 'Запрос управления реле вторичного воздуха (pulsair)'
+      zh: '二次空气继电器控制请求'
+      hu: 'A másodlagos levegő relé vezérlési kérése (pulsair)'
+      pt: 'Pedido de acionamento do relé de ar pulsado (pulsair)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No control request'
+        fr: 'Pas de demande de pilotage'
+        es: 'Sin solicitud de control'
+        de: 'Keine Steueranforderung'
+        it: 'Nessuna richiesta di pilotaggio'
+        pl: 'Brak żądania sterowania'
+        ru: 'Нет запроса управления'
+        zh: '无控制请求'
+        hu: 'Nincs vezérlési kérés'
+        pt: 'Sem pedido de controlo'
+      0x01:
+        en: 'Control request'
+        fr: 'Demande de pilotage'
+        es: 'Solicitud de control'
+        de: 'Steueranforderung'
+        it: 'Richiesta di controllo'
+        pl: 'Żądanie sterowania'
+        ru: 'Запрос управления'
+        zh: '控制请求'
+        hu: 'Vezérlési kérés'
+        pt: 'Pedido de controlo'
+
+  VACUUM_MAINTENANCE_LAMP_REQUEST:
+    bits: '4.4'
+    comment:
+      en: 'Request to light the vacuum supply maintenance warning lamp'
+      fr: 'Demande d''allumage du témoin de maintenance de la fourniture de vide'
+      es: 'Solicitud de encendido del testigo de mantenimiento del suministro de vacío'
+      de: 'Anforderung zum Einschalten der Warnleuchte für die Vakuumversorgungswartung'
+      it: 'Richiesta di accensione della spia di manutenzione dell''alimentazione del vuoto'
+      pl: 'Żądanie zapalenia lampki konserwacji zasilania podciśnieniem'
+      ru: 'Запрос на включение лампы обслуживания системы вакуума'
+      zh: '请求点亮真空供给维护警示灯'
+      hu: 'A vákuumellátás karbantartási jelzőlámpájának bekapcsolási kérése'
+      pt: 'Pedido de acendimento do testemunho de manutenção do fornecimento de vácuo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No ignition request'
+        fr: 'Pas de demande d''allumage'
+        es: 'Sin solicitud de encendido'
+        de: 'Keine Zündanforderung'
+        it: 'Nessuna richiesta di accensione'
+        pl: 'Brak żądania zapłonu'
+        ru: 'Нет запроса зажигания'
+        zh: '无点火请求'
+        hu: 'Nincs gyújtási kérés'
+        pt: 'Sem pedido de ignição'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  ENGINE_COOLANT_TEMP_WARNING:
+    bits: '4.3-4.2'
+    comment:
+      en: 'Engine coolant temperature warning'
+      fr: 'Alerte de température d''eau moteur'
+      es: 'Aviso de temperatura del líquido refrigerante del motor'
+      de: 'Warnung Kühlmitteltemperatur des Motors'
+      it: 'Avviso di temperatura del liquido di raffreddamento del motore'
+      pl: 'Ostrzeżenie o temperaturze płynu chłodzącego silnika'
+      ru: 'Предупреждение о температуре охлаждающей жидкости двигателя'
+      zh: '发动机冷却液温度警告'
+      hu: 'Motorhűtőfolyadék-hőmérséklet figyelmeztetés'
+      pt: 'Aviso de temperatura do líquido de refrigeração do motor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No engine coolant temperature warning'
+        fr: 'Pas d''alerte de température de liquide de refroidissement moteur'
+        es: 'Sin alerta de temperatura del líquido refrigerante del motor'
+        de: 'Keine Warnung bei Motorkühlmitteltemperatur'
+        it: 'Nessun allarme di temperatura del liquido di raffreddamento motore'
+        pl: 'Brak alertu temperatury płynu chłodzącego silnika'
+        ru: 'Предупреждение о температуре охлаждающей жидкости отсутствует'
+        zh: '无发动机冷却液温度警报'
+        hu: 'Nincs motor hűtőfolyadék-hőmérséklet riasztás'
+        pt: 'Sem aviso de temperatura do líquido de arrefecimento do motor'
+      0x01:
+        en: 'Minor engine coolant temperature warning or sensor fault'
+        fr: 'Alerte mineure de température du liquide de refroidissement moteur ou défaut de sonde'
+        es: 'Alerta menor de temperatura del líquido refrigerante del motor o fallo de sonda'
+        de: 'Geringfügige Warnung der Kühlmitteltemperatur oder Fehler des Temperaturfühlers'
+        it: 'Allarme minore della temperatura del liquido di raffreddamento motore o guasto sonda'
+        pl: 'Drobne ostrzeżenie o temperaturze płynu chłodzącego silnika lub usterka czujnika'
+        ru: 'Незначительное предупреждение о температуре охлаждающей жидкости двигателя или неисправность датчика'
+        zh: '发动机冷却液温度轻微警告或传感器故障'
+        hu: 'Kisebb motorhűtőfolyadék-hőmérséklet figyelmeztetés vagy érzékelőhiba'
+        pt: 'Alerta menor de temperatura do líquido de refrigeração do motor ou falha de sonda'
+      0x02:
+        en: 'Major engine coolant temperature warning or sensor fault'
+        fr: 'Alerte majeure de température du liquide de refroidissement moteur ou défaut de sonde'
+        es: 'Alerta grave de temperatura del líquido refrigerante del motor o fallo de sonda'
+        de: 'Schwerwiegende Warnung der Kühlmitteltemperatur oder Sensorfehler'
+        it: 'Allarme grave della temperatura del liquido di raffreddamento motore o guasto sonda'
+        pl: 'Poważne ostrzeżenie o temperaturze płynu chłodzącego silnika lub usterka czujnika'
+        ru: 'Серьёзное предупреждение о температуре охлаждающей жидкости или неисправность датчика'
+        zh: '发动机冷却液温度重大警告或传感器故障'
+        hu: 'Súlyos motorhűtőfolyadék-hőmérséklet figyelmeztetés vagy érzékelőhiba'
+        pt: 'Aviso grave de temperatura do líquido de arrefecimento do motor ou avaria do sensor'
+      0x03:
+        unused: true
+
+  DC_DC_CONVERTER_FAULT:
+    bits: '4.1'
+    comment:
+      en: 'DC/DC converter fault'
+      fr: 'Défaut du convertisseur DC/DC'
+      es: 'Fallo del convertidor DC/DC'
+      de: 'Fehler des DC/DC-Wandlers'
+      it: 'Guasto del convertitore DC/DC'
+      pl: 'Usterka przetwornicy DC/DC'
+      ru: 'Неисправность преобразователя DC/DC'
+      zh: 'DC/DC转换器故障'
+      hu: 'DC/DC átalakító hiba'
+      pt: 'Falha do conversor DC/DC'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'DC-DC converter operational'
+        fr: 'Convertisseur DC-DC opérationnel'
+        es: 'Convertidor DC-DC operativo'
+        de: 'DC-DC-Wandler betriebsbereit'
+        it: 'Convertitore DC-DC operativo'
+        pl: 'Przetwornica DC-DC sprawna'
+        ru: 'Преобразователь DC-DC работоспособен'
+        zh: 'DC-DC转换器正常运行'
+        hu: 'A DC-DC konverter üzemkész'
+        pt: 'Conversor DC-DC operacional'
+      0x01:
+        en: 'DC/DC converter not operational'
+        fr: 'Convertisseur DC/DC non opérationnel'
+        es: 'Convertidor DC/DC no operativo'
+        de: 'DC/DC-Wandler nicht betriebsbereit'
+        it: 'Convertitore DC/DC non operativo'
+        pl: 'Przetwornica DC/DC niesprawna'
+        ru: 'Преобразователь DC/DC не работоспособен'
+        zh: 'DC/DC转换器不可用'
+        hu: 'A DC/DC átalakító nem üzemképes'
+        pt: 'Conversor DC/DC não operacional'
+
+  ENGINE_START_IN_PROGRESS:
+    bits: '4.0'
+    comment:
+      en: 'Engine start in progress'
+      fr: 'Démarrage moteur en cours'
+      es: 'Arranque del motor en curso'
+      de: 'Motorstart läuft'
+      it: 'Avviamento motore in corso'
+      pl: 'Trwa rozruch silnika'
+      ru: 'Идёт запуск двигателя'
+      zh: '发动机起动进行中'
+      hu: 'Motorindítás folyamatban'
+      pt: 'Arranque do motor em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No engine start in progress'
+        fr: 'Pas de démarrage moteur en cours'
+        es: 'Sin arranque del motor en curso'
+        de: 'Kein Motorstart im Gange'
+        it: 'Nessun avviamento motore in corso'
+        pl: 'Brak trwającego uruchamiania silnika'
+        ru: 'Запуск двигателя не выполняется'
+        zh: '无发动机启动进行中'
+        hu: 'Nincs folyamatban motorindítás'
+        pt: 'Sem arranque do motor em curso'
+      0x01:
+        en: 'Engine start in progress'
+        fr: 'Démarrage moteur en cours'
+        es: 'Arranque del motor en curso'
+        de: 'Motorstart läuft'
+        it: 'Avviamento del motore in corso'
+        pl: 'Trwa uruchamianie silnika'
+        ru: 'Выполняется пуск двигателя'
+        zh: '发动机启动中'
+        hu: 'Motorindítás folyamatban'
+        pt: 'Arranque do motor em curso'

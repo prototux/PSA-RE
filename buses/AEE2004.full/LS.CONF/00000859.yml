@@ -1,0 +1,129 @@
+id: 0x00000859
+name: 'AC_INTERNAL_SENSOR_INFO_MCC'
+type: 'can'
+extended: true
+length: 8
+comment:
+  en: 'Air conditioning control module data from passenger-compartment sensors: cabin humidity, sunshine sensors, cabin and evaporator temperature.'
+  fr: 'Données du module de contrôle climatisation issues de capteurs habitacle : humidité habitacle, capteurs d''ensoleillement, température habitacle et évaporateur.'
+  es: 'Datos del módulo de control del climatizador de sensores del habitáculo: humedad del habitáculo, sensores de sol, temperatura del habitáculo y del evaporador.'
+  de: 'Daten des Klimasteuermoduls von Innenraumsensoren: Innenraumfeuchtigkeit, Sonnensensoren, Innenraum- und Verdampfertemperatur.'
+  it: 'Dati del modulo di controllo del climatizzatore dai sensori dell''abitacolo: umidità dell''abitacolo, sensori di soleggiamento, temperatura dell''abitacolo e dell''evaporatore.'
+  pl: 'Dane modułu sterowania klimatyzacją z czujników wnętrza: wilgotność wnętrza, czujniki nasłonecznienia, temperatura wnętrza i parownika.'
+  ru: 'Данные модуля управления кондиционером от датчиков салона: влажность салона, датчики солнца, температура салона и испарителя.'
+  zh: '空调控制模块车内传感器数据:车内湿度、日照传感器、车内及蒸发器温度。'
+  hu: 'A klíma vezérlőmodul utastér-érzékelőktől származó adatai: utastér páratartalma, napsugárzás-érzékelők, utastér és párologtató hőmérséklete.'
+  pt: 'Dados do módulo de controlo da climatização provenientes de sensores do habitáculo: humidade do habitáculo, sensores de luminosidade, temperatura do habitáculo e do evaporador.'
+periodicity: ['trigger']
+senders: []  # TODO: find the sender(s)
+receivers: ['BSI']
+
+signals:
+  EVAPORATOR_PROBE_TEMPERATURE:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Evaporator probe temperature'
+      fr: 'Température de la sonde évaporateur'
+      es: 'Temperatura de la sonda del evaporador'
+      de: 'Verdampfersondentemperatur'
+      it: 'Temperatura della sonda evaporatore'
+      pl: 'Temperatura czujnika parownika'
+      ru: 'Температура датчика испарителя'
+      zh: '蒸发器探头温度'
+      hu: 'Az elpárologtató érzékelő hőmérséklete'
+      pt: 'Temperatura da sonda do evaporador'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 120
+    units: '°C'
+    default: 0xFFFF
+
+  CABIN_AIR_TEMPERATURE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Cabin air temperature'
+      fr: 'Température de l''air de l''habitacle'
+      es: 'Temperatura del aire del habitáculo'
+      de: 'Innenraum-Lufttemperatur'
+      it: 'Temperatura dell''aria dell''abitacolo'
+      pl: 'Temperatura powietrza w kabinie'
+      ru: 'Температура воздуха в салоне'
+      zh: '车内空气温度'
+      hu: 'Az utastér levegőhőmérséklete'
+      pt: 'Temperatura do ar do habitáculo'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 120
+    units: '°C'
+    default: 0xFFFF
+
+  CABIN_HUMIDITY:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Cabin humidity'
+      fr: 'Humidité de l''habitacle'
+      es: 'Humedad del habitáculo'
+      de: 'Innenraumfeuchtigkeit'
+      it: 'Umidità dell''abitacolo'
+      pl: 'Wilgotność kabiny'
+      ru: 'Влажность салона'
+      zh: '车内湿度'
+      hu: 'Utastér páratartalma'
+      pt: 'Humidade do habitáculo'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  DRIVER_SUNLIGHT_MEASUREMENT:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Driver-side sunlight measurement'
+      fr: 'Mesure d''ensoleillement côté conducteur'
+      es: 'Medición de luz solar lado conductor'
+      de: 'Sonnenlichtmessung Fahrerseite'
+      it: 'Misurazione dell''irraggiamento solare lato conducente'
+      pl: 'Pomiar nasłonecznienia po stronie kierowcy'
+      ru: 'Измерение солнечного освещения со стороны водителя'
+      zh: '驾驶侧日照测量'
+      hu: 'Vezetőoldali napfénymérés'
+      pt: 'Medição de luz solar do lado do condutor'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  PASSENGER_SUNLIGHT_MEASUREMENT:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Passenger-side sunlight measurement'
+      fr: 'Mesure d''ensoleillement côté passager'
+      es: 'Medición de luz solar lado pasajero'
+      de: 'Sonnenlichtmessung Beifahrerseite'
+      it: 'Misurazione dell''irraggiamento solare lato passeggero'
+      pl: 'Pomiar nasłonecznienia po stronie pasażera'
+      ru: 'Измерение солнечного освещения со стороны пассажира'
+      zh: '乘客侧日照测量'
+      hu: 'Utasoldali napfénymérés'
+      pt: 'Medição de luz solar do lado do passageiro'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  UNUSED_1:
+    bits: '8.7-8.0'
+    unused: true

@@ -1,0 +1,587 @@
+id: 0xAD8
+name: 'RAIN_LIGHT_SENSOR_FAULTS'
+type: 'van'
+length: 6
+comment:
+  en: 'Rain/light sensor fault report (formatted as a KWP2000 ''read data by local identifier'' positive response): sensor fault flags and their validity, used by the body computer to enter degraded mode.'
+  fr: 'Rapport de défaut du capteur pluie/luminosité (format réponse positive KWP2000 « lecture de donnée par identifiant local ») : indicateurs de défaut capteur et leur validité, utilisés par la BSI pour passer en mode dégradé.'
+  es: 'Informe de fallo del sensor de lluvia/luz (formato de respuesta positiva KWP2000 «lectura de dato por identificador local»): indicadores de fallo del sensor y su validez, utilizados por la BSI para pasar a modo degradado.'
+  de: 'Fehlerbericht des Regen-/Lichtsensors (formatiert als positive KWP2000-Antwort „Datenlesen nach lokaler Kennung“): Sensorfehlerkennzeichen und deren Gültigkeit, vom BSI zum Wechsel in den degradierten Modus verwendet.'
+  it: 'Rapporto di guasto del sensore pioggia/luce (formattato come risposta positiva KWP2000 ''lettura dati per identificatore locale''): indicatori di guasto del sensore e relativa validità, utilizzati dalla BSI per passare alla modalità degradata.'
+  pl: 'Raport usterki czujnika deszczu/światła (w formacie pozytywnej odpowiedzi KWP2000 „odczyt danych według identyfikatora lokalnego”): flagi usterki czujnika i ich ważność, wykorzystywane przez BSI do przejścia w tryb awaryjny.'
+  ru: 'Отчёт о неисправности датчика дождя/света (в формате положительного ответа KWP2000 «чтение данных по локальному идентификатору»): флаги неисправности датчика и их достоверность, используемые BSI для перехода в аварийный режим.'
+  zh: '雨量/光线传感器故障报告(格式为KWP2000“按本地标识符读取数据”的肯定响应):传感器故障标志及其有效性,供车身电脑用于进入降级模式。'
+  hu: 'Eső-/fényérzékelő hibajelentés (KWP2000 „adat olvasása helyi azonosító szerint” pozitív válasz formátumában): érzékelőhiba-jelzők és azok érvényessége, a BSI a csökkentett üzemmódba lépéshez használja.'
+  pt: 'Relatório de avarias do sensor de chuva/luz (formatado como resposta positiva KWP2000 ''read data by local identifier''): indicadores de avaria do sensor e a sua validade, utilizados pelo computador de servidão para entrar em modo degradado.'
+periodicity: ['500ms']
+senders: ['CDPL']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  RESPONSE_SERVICE_ID:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Diagnostic response service identifier (0x61 = positive response to read data by local identifier)'
+      fr: 'Identifiant de service de réponse diagnostic (0x61 = réponse positive à la lecture par identifiant local)'
+      es: 'Identificador del servicio de respuesta de diagnóstico (0x61 = respuesta positiva a la lectura por identificador local)'
+      de: 'Kennung des Diagnose-Antwortdienstes (0x61 = positive Antwort auf Lesen per lokaler Kennung)'
+      it: 'Identificativo del servizio di risposta diagnostica (0x61 = risposta positiva alla lettura per identificativo locale)'
+      pl: 'Identyfikator usługi odpowiedzi diagnostycznej (0x61 = pozytywna odpowiedź na odczyt po identyfikatorze lokalnym)'
+      ru: 'Идентификатор службы диагностического ответа (0x61 = положительный ответ на чтение по локальному идентификатору)'
+      zh: '诊断响应服务标识符 (0x61 = 按本地标识符读取数据的肯定响应)'
+      hu: 'Diagnosztikai válaszszolgáltatás azonosítója (0x61 = pozitív válasz a helyi azonosító szerinti olvasásra)'
+      pt: 'Identificador do serviço de resposta de diagnóstico (0x61 = resposta positiva à leitura por identificador local)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x61:
+        en: 'Sensor local identifier response'
+        fr: 'Identifiant local du capteur (réponse CDP)'
+        es: 'Identificador local del sensor (respuesta CDP)'
+        de: 'Lokale Sensorkennung (CDP-Antwort)'
+        it: 'Identificativo locale del sensore (risposta CDP)'
+        pl: 'Lokalny identyfikator czujnika (odpowiedź CDP)'
+        ru: 'Локальный идентификатор датчика (ответ CDP)'
+        zh: '传感器本地标识符(CDP响应)'
+        hu: 'Érzékelő helyi azonosítója (CDP válasz)'
+        pt: 'Resposta do identificador local do sensor'
+
+  LOCAL_ID:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Local identifier for the CDP diagnostic (0x83)'
+      fr: 'Identifiant local pour le diagnostic CDP (0x83)'
+      es: 'Identificador local para el diagnóstico CDP (0x83)'
+      de: 'Lokale Kennung für die CDP-Diagnose (0x83)'
+      it: 'Identificativo locale per la diagnosi CDP (0x83)'
+      pl: 'Lokalny identyfikator diagnostyki CDP (0x83)'
+      ru: 'Локальный идентификатор диагностики CDP (0x83)'
+      zh: 'CDP 诊断本地标识符 (0x83)'
+      hu: 'CDP diagnosztika helyi azonosítója (0x83)'
+      pt: 'Identificador local para o diagnóstico CDP (0x83)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x83:
+        en: 'Sensor local identifier response'
+        fr: 'Identifiant local du capteur (réponse CDP)'
+        es: 'Identificador local del sensor (respuesta CDP)'
+        de: 'Lokale Sensorkennung (CDP-Antwort)'
+        it: 'Identificativo locale del sensore (risposta CDP)'
+        pl: 'Lokalny identyfikator czujnika (odpowiedź CDP)'
+        ru: 'Локальный идентификатор датчика (ответ CDP)'
+        zh: '传感器本地标识符(CDP响应)'
+        hu: 'Érzékelő helyi azonosítója (CDP válasz)'
+        pt: 'Resposta do identificador local do sensor'
+
+  UNUSED_1:
+    bits: '4.7-4.6'
+    unused: true
+
+  WINDSCREEN_ADAPTATION_FAULT:
+    bits: '4.5'
+    comment:
+      en: 'Rain/light sensor cannot adapt to the windscreen'
+      fr: 'Le capteur ne peut pas s''adapter au pare-brise'
+      es: 'El sensor no puede adaptarse al parabrisas'
+      de: 'Sensor kann sich nicht an die Windschutzscheibe anpassen'
+      it: 'Il sensore non riesce ad adattarsi al parabrezza'
+      pl: 'Czujnik nie może dostosować się do szyby przedniej'
+      ru: 'Датчик не может адаптироваться к лобовому стеклу'
+      zh: '传感器无法适配前挡风玻璃'
+      hu: 'Az érzékelő nem tud alkalmazkodni a szélvédőhöz'
+      pt: 'O sensor não consegue adaptar-se ao para-brisas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  OPTICAL_INTERFACE_FAULT:
+    bits: '4.4'
+    comment:
+      en: 'Optical interface failure (impact, sensor detached...)'
+      fr: 'Défaillance de l''interface optique (impact, capteur décollé...)'
+      es: 'Fallo de la interfaz óptica (impacto, sensor despegado...)'
+      de: 'Ausfall der optischen Schnittstelle (Stoß, Sensor gelöst...)'
+      it: 'Guasto dell''interfaccia ottica (urto, sensore staccato...)'
+      pl: 'Awaria interfejsu optycznego (uderzenie, odklejony czujnik...)'
+      ru: 'Неисправность оптического интерфейса (удар, отклеился датчик...)'
+      zh: '光学接口故障(撞击、传感器脱落等)'
+      hu: 'Optikai interfész hiba (ütés, leváló érzékelő...)'
+      pt: 'Avaria da interface ótica (impacto, sensor solto...)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  RAIN_DETECTOR_FAULT:
+    bits: '4.3'
+    comment:
+      en: 'Rain sensor failure'
+      fr: 'Défaillance du détecteur de pluie'
+      es: 'Fallo del sensor de lluvia'
+      de: 'Ausfall des Regensensors'
+      it: 'Guasto del sensore pioggia'
+      pl: 'Awaria czujnika deszczu'
+      ru: 'Неисправность датчика дождя'
+      zh: '雨量传感器故障'
+      hu: 'Esőérzékelő meghibásodása'
+      pt: 'Falha do sensor de chuva'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  IR_LIGHT_DETECTOR_FAULT:
+    bits: '4.2'
+    comment:
+      en: 'Infrared (sunload) light sensor failure'
+      fr: 'Défaillance du détecteur de luminosité infrarouge (ensoleillement)'
+      es: 'Fallo del sensor de luz infrarroja (radiación solar)'
+      de: 'Ausfall des Infrarot-Lichtsensors (Sonneneinstrahlung)'
+      it: 'Guasto del sensore di luce infrarossa (irraggiamento solare)'
+      pl: 'Awaria czujnika światła podczerwonego (nasłonecznienia)'
+      ru: 'Неисправность инфракрасного датчика (солнечного излучения)'
+      zh: '红外线(日照)光传感器故障'
+      hu: 'Infravörös (napsugárzás) fényérzékelő meghibásodása'
+      pt: 'Avaria do sensor de infravermelhos (carga solar)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  TUNNEL_DETECTOR_FAULT:
+    bits: '4.1'
+    comment:
+      en: 'Tunnel (forward light) sensor failure'
+      fr: 'Défaillance du détecteur de tunnel'
+      es: 'Fallo del sensor de túnel'
+      de: 'Ausfall des Tunnelsensors'
+      it: 'Guasto del sensore tunnel'
+      pl: 'Awaria czujnika tunelu'
+      ru: 'Неисправность датчика тоннеля'
+      zh: '隧道传感器故障'
+      hu: 'Alagútérzékelő meghibásodása'
+      pt: 'Avaria do sensor de túnel (luz frontal)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  AMBIENT_LIGHT_DETECTOR_FAULT:
+    bits: '4.0'
+    comment:
+      en: 'Ambient light sensor failure'
+      fr: 'Défaillance du détecteur de lumière ambiante'
+      es: 'Fallo del sensor de luz ambiental'
+      de: 'Ausfall des Umgebungslichtsensors'
+      it: 'Guasto del sensore di luce ambientale'
+      pl: 'Awaria czujnika światła otoczenia'
+      ru: 'Неисправность датчика внешней освещённости'
+      zh: '环境光传感器故障'
+      hu: 'Környezeti fényérzékelő meghibásodása'
+      pt: 'Avaria do sensor de luz ambiente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  UNUSED_2:
+    bits: '5.7-5.6'
+    unused: true
+
+  WINDSCREEN_ADAPTATION_FAULT_VALID:
+    bits: '5.5'
+    comment:
+      en: 'Validity of the windscreen adaptation fault flag'
+      fr: 'Validité du défaut d''adaptation du capteur au pare-brise'
+      es: 'Validez del fallo de adaptación del sensor al parabrisas'
+      de: 'Gültigkeit des Fehlers der Sensoranpassung an die Windschutzscheibe'
+      it: 'Validità del guasto di adattamento del sensore al parabrezza'
+      pl: 'Ważność błędu dopasowania czujnika do szyby przedniej'
+      ru: 'Достоверность признака неисправности адаптации датчика к лобовому стеклу'
+      zh: '挡风玻璃适配故障标志有效性'
+      hu: 'A szélvédő-illesztési hiba érvényessége'
+      pt: 'Validade da falha de adaptação do sensor ao para-brisas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault not valid'
+        fr: 'Défaut non valide'
+        es: 'Fallo no válido'
+        de: 'Fehler ungültig'
+        it: 'Guasto non valido'
+        pl: 'Usterka nieważna'
+        ru: 'Неисправность недействительна'
+        zh: '故障无效'
+        hu: 'Hiba érvénytelen'
+        pt: 'Falha não válida'
+      0x01:
+        en: 'Fault confirmed'
+        fr: 'Défaut valide'
+        es: 'Fallo confirmado'
+        de: 'Fehler bestätigt'
+        it: 'Guasto confermato'
+        pl: 'Usterka potwierdzona'
+        ru: 'Неисправность подтверждена'
+        zh: '故障已确认'
+        hu: 'Hiba megerősítve'
+        pt: 'Falha confirmada'
+
+  OPTICAL_INTERFACE_FAULT_VALID:
+    bits: '5.4'
+    comment:
+      en: 'Validity of the optical interface fault flag'
+      fr: 'Validité du défaut d''interface optique'
+      es: 'Validez del fallo de la interfaz óptica'
+      de: 'Gültigkeit des Fehlers der optischen Schnittstelle'
+      it: 'Validità del guasto dell''interfaccia ottica'
+      pl: 'Ważność błędu interfejsu optycznego'
+      ru: 'Достоверность признака неисправности оптического интерфейса'
+      zh: '光学接口故障标志有效性'
+      hu: 'Az optikai interfész hiba érvényessége'
+      pt: 'Validade da falha da interface ótica'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault not valid'
+        fr: 'Défaut non valide'
+        es: 'Fallo no válido'
+        de: 'Fehler ungültig'
+        it: 'Guasto non valido'
+        pl: 'Usterka nieważna'
+        ru: 'Неисправность недействительна'
+        zh: '故障无效'
+        hu: 'Hiba érvénytelen'
+        pt: 'Falha não válida'
+      0x01:
+        en: 'Fault confirmed'
+        fr: 'Défaut valide'
+        es: 'Fallo confirmado'
+        de: 'Fehler bestätigt'
+        it: 'Guasto confermato'
+        pl: 'Usterka potwierdzona'
+        ru: 'Неисправность подтверждена'
+        zh: '故障已确认'
+        hu: 'Hiba megerősítve'
+        pt: 'Falha confirmada'
+
+  RAIN_DETECTOR_FAULT_VALID:
+    bits: '5.3'
+    comment:
+      en: 'Validity of the rain sensor fault flag'
+      fr: 'Validité du défaut de détecteur de pluie'
+      es: 'Validez del fallo del sensor de lluvia'
+      de: 'Gültigkeit des Regensensor-Fehlers'
+      it: 'Validità del guasto del sensore pioggia'
+      pl: 'Ważność błędu czujnika deszczu'
+      ru: 'Достоверность признака неисправности датчика дождя'
+      zh: '雨量传感器故障标志有效性'
+      hu: 'Az esőérzékelő hiba érvényessége'
+      pt: 'Validade da falha do sensor de chuva'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault not valid'
+        fr: 'Défaut non valide'
+        es: 'Fallo no válido'
+        de: 'Fehler ungültig'
+        it: 'Guasto non valido'
+        pl: 'Usterka nieważna'
+        ru: 'Неисправность недействительна'
+        zh: '故障无效'
+        hu: 'Hiba érvénytelen'
+        pt: 'Falha não válida'
+      0x01:
+        en: 'Fault confirmed'
+        fr: 'Défaut valide'
+        es: 'Fallo confirmado'
+        de: 'Fehler bestätigt'
+        it: 'Guasto confermato'
+        pl: 'Usterka potwierdzona'
+        ru: 'Неисправность подтверждена'
+        zh: '故障已确认'
+        hu: 'Hiba megerősítve'
+        pt: 'Falha confirmada'
+
+  IR_LIGHT_DETECTOR_FAULT_VALID:
+    bits: '5.2'
+    comment:
+      en: 'Validity of the infrared light sensor fault flag'
+      fr: 'Validité du défaut de détecteur de lumière infrarouge'
+      es: 'Validez del fallo del sensor de luz infrarroja'
+      de: 'Gültigkeit des Infrarot-Lichtsensor-Fehlers'
+      it: 'Validità del guasto del sensore di luce infrarossa'
+      pl: 'Ważność błędu czujnika światła podczerwonego'
+      ru: 'Достоверность признака неисправности инфракрасного датчика'
+      zh: '红外线光传感器故障标志有效性'
+      hu: 'Az infravörös fényérzékelő hiba érvényessége'
+      pt: 'Validade da falha do sensor de luz infravermelha'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault not valid'
+        fr: 'Défaut non valide'
+        es: 'Fallo no válido'
+        de: 'Fehler ungültig'
+        it: 'Guasto non valido'
+        pl: 'Usterka nieważna'
+        ru: 'Неисправность недействительна'
+        zh: '故障无效'
+        hu: 'Hiba érvénytelen'
+        pt: 'Falha não válida'
+      0x01:
+        en: 'Fault confirmed'
+        fr: 'Défaut valide'
+        es: 'Fallo confirmado'
+        de: 'Fehler bestätigt'
+        it: 'Guasto confermato'
+        pl: 'Usterka potwierdzona'
+        ru: 'Неисправность подтверждена'
+        zh: '故障已确认'
+        hu: 'Hiba megerősítve'
+        pt: 'Falha confirmada'
+
+  TUNNEL_DETECTOR_FAULT_VALID:
+    bits: '5.1'
+    comment:
+      en: 'Validity of the tunnel sensor fault flag'
+      fr: 'Validité du défaut de détecteur de tunnel'
+      es: 'Validez del fallo del sensor de túnel'
+      de: 'Gültigkeit des Tunnelsensor-Fehlers'
+      it: 'Validità del guasto del sensore tunnel'
+      pl: 'Ważność błędu czujnika tunelu'
+      ru: 'Достоверность признака неисправности датчика тоннеля'
+      zh: '隧道传感器故障标志有效性'
+      hu: 'Az alagútérzékelő hiba érvényessége'
+      pt: 'Validade da falha do sensor de túnel'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault not valid'
+        fr: 'Défaut non valide'
+        es: 'Fallo no válido'
+        de: 'Fehler ungültig'
+        it: 'Guasto non valido'
+        pl: 'Usterka nieważna'
+        ru: 'Неисправность недействительна'
+        zh: '故障无效'
+        hu: 'Hiba érvénytelen'
+        pt: 'Falha não válida'
+      0x01:
+        en: 'Fault confirmed'
+        fr: 'Défaut valide'
+        es: 'Fallo confirmado'
+        de: 'Fehler bestätigt'
+        it: 'Guasto confermato'
+        pl: 'Usterka potwierdzona'
+        ru: 'Неисправность подтверждена'
+        zh: '故障已确认'
+        hu: 'Hiba megerősítve'
+        pt: 'Falha confirmada'
+
+  AMBIENT_LIGHT_DETECTOR_FAULT_VALID:
+    bits: '5.0'
+    comment:
+      en: 'Validity of the ambient light sensor fault flag'
+      fr: 'Validité du défaut de détecteur de lumière ambiante'
+      es: 'Validez del fallo del sensor de luz ambiental'
+      de: 'Gültigkeit des Umgebungslichtsensor-Fehlers'
+      it: 'Validità del guasto del sensore di luce ambientale'
+      pl: 'Ważność błędu czujnika światła otoczenia'
+      ru: 'Достоверность признака неисправности датчика внешней освещённости'
+      zh: '环境光传感器故障标志有效性'
+      hu: 'A környezeti fényérzékelő hiba érvényessége'
+      pt: 'Validade da falha do sensor de luz ambiente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault not valid'
+        fr: 'Défaut non valide'
+        es: 'Fallo no válido'
+        de: 'Fehler ungültig'
+        it: 'Guasto non valido'
+        pl: 'Usterka nieważna'
+        ru: 'Неисправность недействительна'
+        zh: '故障无效'
+        hu: 'Hiba érvénytelen'
+        pt: 'Falha não válida'
+      0x01:
+        en: 'Fault confirmed'
+        fr: 'Défaut valide'
+        es: 'Fallo confirmado'
+        de: 'Fehler bestätigt'
+        it: 'Guasto confermato'
+        pl: 'Usterka potwierdzona'
+        ru: 'Неисправность подтверждена'
+        zh: '故障已确认'
+        hu: 'Hiba megerősítve'
+        pt: 'Falha confirmada'
+
+  FOOTER:
+    bits: '6.7-6.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

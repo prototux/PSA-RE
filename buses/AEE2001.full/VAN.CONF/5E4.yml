@@ -1,0 +1,284 @@
+id: 0x5E4
+name: 'EMF_BSI_REQUESTS'
+type: 'van'
+length: 2
+comment:
+  en: 'Requests from the display/telematic unit to the BSI: trip computer resets, keep network awake, overspeed alert, and electrical power budget.'
+  fr: 'Demandes de l''écran/boîtier télématique vers la BSI : remises à zéro de l''ordinateur de bord, maintien du réseau éveillé, alerte de survitesse, et bilan de puissance électrique.'
+  es: 'Solicitudes de la pantalla/unidad telemática a la BSI: reinicios del ordenador de a bordo, mantenimiento de la red despierta, alerta de exceso de velocidad, y balance de potencia eléctrica.'
+  de: 'Anforderungen von Display/Telematikgerät an den BSI: Rücksetzen des Bordcomputers, Netzwerk wachhalten, Übergeschwindigkeitswarnung, und elektrische Leistungsbilanz.'
+  it: 'Richieste dal display/unità telematica alla BSI: reset del computer di bordo, mantenimento della rete sveglia, allarme di sovravelocità, e bilancio di potenza elettrica.'
+  pl: 'Żądania z ekranu/jednostki telematycznej do BSI: resety komputera pokładowego, utrzymanie sieci w stanie czuwania, alarm przekroczenia prędkości, i bilans mocy elektrycznej.'
+  ru: 'Запросы от дисплея/телематического блока к BSI: сброс бортового компьютера, поддержание сети в активном состоянии, предупреждение о превышении скорости, и баланс электрической мощности.'
+  zh: '显示屏/车载通信单元发往BSI的请求:行车电脑复位、保持网络唤醒、超速警报,以及电功率预算。'
+  hu: 'A kijelző/telematikai egység kérései a BSI felé: fedélzeti számítógép visszaállítások, hálózat ébren tartása, túlsebesség-riasztás, és elektromos teljesítménymérleg.'
+  pt: 'Pedidos do visor/unidade telemática para a BSI: reposições do computador de bordo, manter a rede ativa, alerta de excesso de velocidade e orçamento de potência elétrica.'
+periodicity: ['500ms', 'trigger']
+senders: ['BTEL', 'EMF']
+receivers: ['BSI']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  RESET_TRIP_COMPUTER_TOTAL:
+    bits: '1.7'
+    comment:
+      en: 'Reset request for the trip computer total accumulators'
+      fr: 'Demande de réinitialisation des cumuls totaux de l''ordinateur de bord'
+      es: 'Solicitud de reinicio de los totales acumulados del ordenador de a bordo'
+      de: 'Anforderung zum Zurücksetzen der Gesamtsummen des Bordcomputers'
+      it: 'Richiesta di azzeramento dei totali cumulativi del computer di bordo'
+      pl: 'Żądanie zresetowania sum całkowitych komputera pokładowego'
+      ru: 'Запрос сброса общих накопленных итогов бортового компьютера'
+      zh: '请求重置行车电脑的总累计数据'
+      hu: 'A fedélzeti számítógép összesített adatainak visszaállítási kérése'
+      pt: 'Pedido de reinicialização dos totais acumulados do computador de bordo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  RESET_TRIP_COMPUTER_CUMULATIVE:
+    bits: '1.6'
+    comment:
+      en: 'Reset request for the trip computer''s cumulative totals'
+      fr: 'Demande de réinitialisation des cumuls du trajet'
+      es: 'Solicitud de reinicio de los totales acumulados del ordenador de a bordo'
+      de: 'Rücksetzanforderung für die kumulierten Werte des Bordcomputers'
+      it: 'Richiesta di azzeramento dei totali cumulativi del computer di bordo'
+      pl: 'Żądanie zerowania sum skumulowanych komputera pokładowego'
+      ru: 'Запрос сброса накопленных итогов бортового компьютера'
+      zh: '请求重置行车电脑累计数据'
+      hu: 'Az utazásszámító halmozott értékeinek visszaállítási kérése'
+      pt: 'Pedido de reinicialização dos totais acumulados do trajeto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  KEEP_ALIVE_OF_VAN_COMFORT:
+    bits: '1.5'
+    comment:
+      en: 'Request to keep the comfort VAN network power supply on'
+      fr: 'Demande de maintien de l''alimentation du réseau VAN confort'
+      es: 'Solicitud de mantenimiento de la alimentación de la red VAN confort'
+      de: 'Anforderung zur Aufrechterhaltung der Versorgung des Komfort-VAN-Netzwerks'
+      it: 'Richiesta di mantenimento dell''alimentazione della rete VAN comfort'
+      pl: 'Żądanie utrzymania zasilania sieci VAN komfortu'
+      ru: 'Запрос на поддержание питания комфортной сети VAN'
+      zh: '请求保持舒适性VAN网络供电'
+      hu: 'A komfort VAN hálózat tápellátásának fenntartási kérése'
+      pt: 'Pedido de manutenção da alimentação da rede VAN conforto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  OVERSPEED_ALERT:
+    bits: '1.4'
+    comment:
+      en: 'Overspeed alert function enabled'
+      fr: 'Fonction d''alerte de survitesse activée'
+      es: 'Función de aviso de exceso de velocidad activada'
+      de: 'Geschwindigkeitsüberschreitungswarnung aktiviert'
+      it: 'Funzione di avviso di eccesso di velocità attivata'
+      pl: 'Włączona funkcja ostrzegania o przekroczeniu prędkości'
+      ru: 'Функция предупреждения о превышении скорости включена'
+      zh: '超速警报功能已启用'
+      hu: 'A túllépési sebességfigyelmeztető funkció bekapcsolva'
+      pt: 'Função de aviso de excesso de velocidade ativada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function not requested'
+        fr: 'Fonction non demandée'
+        es: 'Función no solicitada'
+        de: 'Funktion nicht angefordert'
+        it: 'Funzione non richiesta'
+        pl: 'Funkcja nie żądana'
+        ru: 'Функция не запрошена'
+        zh: '功能未请求'
+        hu: 'Funkció nincs kérve'
+        pt: 'Função não solicitada'
+      0x01:
+        en: 'Function requested'
+        fr: 'Fonction demandée'
+        es: 'Función solicitada'
+        de: 'Funktion angefordert'
+        it: 'Funzione richiesta'
+        pl: 'Zażądano funkcji'
+        ru: 'Функция запрошена'
+        zh: '请求的功能'
+        hu: 'Funkció kérve'
+        pt: 'Função pedida'
+
+  OVERSPEED_MEMORIZATION_REQUEST:
+    bits: '1.3'
+    comment:
+      en: 'Request to memorize the current speed as the overspeed threshold'
+      fr: 'Demande de mémorisation de la vitesse actuelle comme seuil de survitesse'
+      es: 'Solicitud de memorización de la velocidad actual como umbral de exceso de velocidad'
+      de: 'Anforderung zum Speichern der aktuellen Geschwindigkeit als Geschwindigkeitsüberschreitungsschwelle'
+      it: 'Richiesta di memorizzazione della velocità attuale come soglia di eccesso di velocità'
+      pl: 'Żądanie zapamiętania bieżącej prędkości jako progu przekroczenia prędkości'
+      ru: 'Запрос на сохранение текущей скорости как порога превышения скорости'
+      zh: '请求将当前车速记忆为超速阈值'
+      hu: 'A jelenlegi sebesség túllépési küszöbként való eltárolásának kérése'
+      pt: 'Pedido de memorização da velocidade atual como limiar de excesso de velocidade'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Storing not requested'
+        fr: 'Mémorisation non demandée'
+        es: 'Memorización no solicitada'
+        de: 'Speicherung nicht angefordert'
+        it: 'Memorizzazione non richiesta'
+        pl: 'Nie zażądano zapamiętania'
+        ru: 'Сохранение не запрошено'
+        zh: '未请求存储'
+        hu: 'Tárolás nincs kérve'
+        pt: 'Memorização não pedida'
+      0x01:
+        en: 'Requested'
+        fr: 'Mémorisation demandée'
+        es: 'Memorización solicitada'
+        de: 'Speicherung angefordert'
+        it: 'Memorizzazione richiesta'
+        pl: 'Zażądano zapisania'
+        ru: 'Запрошено сохранение'
+        zh: '已请求存储'
+        hu: 'Tárolás kérve'
+        pt: 'Memorização pedida'
+
+  ALERT_REMINDER_REQUEST:
+    bits: '1.2'
+    comment:
+      en: 'Request to recall alerts'
+      fr: 'Demande de rappel des alertes'
+      es: 'Solicitud de repetición de las alertas'
+      de: 'Anforderung zum erneuten Anzeigen der Warnmeldungen'
+      it: 'Richiesta di richiamo degli avvisi'
+      pl: 'Żądanie ponownego wyświetlenia alertów'
+      ru: 'Запрос повторного отображения предупреждений'
+      zh: '请求重新提示警报'
+      hu: 'A figyelmeztetések ismételt megjelenítésének kérése'
+      pt: 'Pedido de repetição dos alertas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Rappel non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitado'
+      0x01:
+        en: 'Recall requested'
+        fr: 'Rappel demandé'
+        es: 'Recuperación solicitada'
+        de: 'Abruf angefordert'
+        it: 'Richiamo richiesto'
+        pl: 'Żądane przywołanie'
+        ru: 'Запрошен вызов'
+        zh: '请求调用'
+        hu: 'Visszahívás kérve'
+        pt: 'Recuperação solicitada'
+
+  UNUSED_1:
+    bits: '1.1-1.0'
+    unused: true
+
+  ELECTRICAL_POWER_BUDGET:
+    bits: '2.7-2.0'
+    alt_names: ['OVERSPEED_ALERT_VALUE', 'SEUIL_SURVIT']
+    comment:
+      en: 'Electric power consumed by comfort network devices (excluding instrument cluster and air conditioning)'
+      fr: 'Puissance électrique consommée par les équipements du réseau confort (hors combiné et climatisation)'
+      es: 'Potencia eléctrica consumida por los equipos de la red confort (excluyendo el cuadro de instrumentos y el aire acondicionado)'
+      de: 'Elektrische Leistungsaufnahme der Komfortnetz-Geräte (ohne Kombiinstrument und Klimaanlage)'
+      it: 'Potenza elettrica assorbita dai dispositivi della rete comfort (esclusi quadro strumenti e climatizzatore)'
+      pl: 'Moc elektryczna pobierana przez urządzenia sieci komfortu (z wyłączeniem zestawu wskaźników i klimatyzacji)'
+      ru: 'Электрическая мощность, потребляемая устройствами комфортной сети (без приборной панели и кондиционера)'
+      zh: '舒适性网络设备消耗的电功率(不含仪表组和空调)'
+      hu: 'A komfort hálózat eszközeinek elektromos teljesítményfelvétele (a műszerfal és a klíma kivételével)'
+      pt: 'Potência elétrica consumida pelos equipamentos da rede de conforto (exceto quadro de instrumentos e ar condicionado)'
+    type: 'uint'
+    factor: 20
+    min: 0
+    max: 2000
+    units: 'W'
+    invalid: 0xFF
+    default: 0xFF

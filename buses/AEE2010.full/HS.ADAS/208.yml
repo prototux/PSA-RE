@@ -1,0 +1,1043 @@
+id: 0x208
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_3'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['10ms']
+senders: ['BSM', 'CVM']
+receivers: ['ARTIV']
+
+signals:
+  ENGINE_SPEED:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Engine speed (16-bit)'
+      fr: 'Régime moteur (16 bits)'
+      es: 'Régimen del motor (16 bits)'
+      de: 'Motordrehzahl (16 Bit)'
+      it: 'Regime motore (16 bit)'
+      pl: 'Obroty silnika (16 bitów)'
+      ru: 'Обороты двигателя (16 бит)'
+      zh: '发动机转速(16位)'
+      hu: 'Motorfordulatszám (16 bites)'
+      pt: 'Regime do motor (16 bits)'
+    type: 'uint'
+    factor: 0.125
+    min: 0
+    max: 8191.75
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  ACTUAL_TORQUE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Actual engine torque'
+      fr: 'Couple moteur réel'
+      es: 'Par de motor real'
+      de: 'Tatsächliches Motordrehmoment'
+      it: 'Coppia motore reale'
+      pl: 'Rzeczywisty moment obrotowy silnika'
+      ru: 'Фактический крутящий момент двигателя'
+      zh: '实际发动机扭矩'
+      hu: 'Tényleges motornyomaték'
+      pt: 'Binário real do motor'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+  DRIVER_DEMAND_PERCENT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Driver demand'
+      fr: 'Volonté du conducteur'
+      es: 'Demanda del conductor'
+      de: 'Fahrerwunsch'
+      it: 'Richiesta del conducente'
+      pl: 'Żądanie kierowcy'
+      ru: 'Запрос водителя'
+      zh: '驾驶员需求'
+      hu: 'Vezetői igény'
+      pt: 'Pedido do condutor'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  ENGINE_LOAD_REQUEST:
+    bits: '5.7'
+    comment:
+      en: 'Engine load request to assist filter regeneration (processed by the BSI)'
+      fr: 'Demande de charge moteur pour faciliter la régénération du filtre (traitée par la BSI)'
+      es: 'Solicitud de carga del motor para facilitar la regeneración del filtro (procesada por la BSI)'
+      de: 'Anforderung der Motorlast zur Unterstützung der Filterregeneration (von der BSI verarbeitet)'
+      it: 'Richiesta di carico motore per facilitare la rigenerazione del filtro (elaborata dalla BSI)'
+      pl: 'Żądanie obciążenia silnika wspomagające regenerację filtra (przetwarzane przez BSI)'
+      ru: 'Запрос нагрузки двигателя для содействия регенерации фильтра (обрабатывается BSI)'
+      zh: '为辅助滤芯再生而提出的发动机负载请求(由BSI处理)'
+      hu: 'Motorterhelési kérés a szűrőregenerálás elősegítésére (a BSI dolgozza fel)'
+      pt: 'Pedido de carga do motor para facilitar a regeneração do filtro (processado pela BSI)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No active request'
+        fr: 'Aucune requête active'
+        es: 'Sin solicitud activa'
+        de: 'Keine aktive Anforderung'
+        it: 'Nessuna richiesta attiva'
+        pl: 'Brak aktywnego żądania'
+        ru: 'Нет активного запроса'
+        zh: '无活动请求'
+        hu: 'Nincs aktív kérés'
+        pt: 'Sem pedido ativo'
+      0x01:
+        en: 'Request active'
+        fr: 'Requête active'
+        es: 'Solicitud activa'
+        de: 'Anforderung aktiv'
+        it: 'Richiesta attiva'
+        pl: 'Żądanie aktywne'
+        ru: 'Запрос активен'
+        zh: '请求已激活'
+        hu: 'Kérés aktív'
+        pt: 'Pedido ativo'
+
+  DIAG_STATUS:
+    bits: '5.6'
+    comment:
+      en: 'Multiplexed communication diagnostic status'
+      fr: 'État du diagnostic de communication multiplexée'
+      es: 'Estado del diagnóstico de comunicación multiplexada'
+      de: 'Status der Diagnose der multiplexierten Kommunikation'
+      it: 'Stato della diagnosi di comunicazione multiplata'
+      pl: 'Stan diagnostyki komunikacji multipleksowanej'
+      ru: 'Статус диагностики мультиплексной связи'
+      zh: '多路复用通信诊断状态'
+      hu: 'A multiplex kommunikáció diagnosztikai állapota'
+      pt: 'Estado do diagnóstico de comunicação multiplexada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No communication diagnostic'
+        fr: 'Pas de diagnostic de communication'
+        es: 'Sin diagnóstico de comunicación'
+        de: 'Keine Kommunikationsdiagnose'
+        it: 'Nessuna diagnostica di comunicazione'
+        pl: 'Brak diagnostyki komunikacji'
+        ru: 'Нет диагностики связи'
+        zh: '无通信诊断'
+        hu: 'Nincs kommunikációs diagnosztika'
+        pt: 'Sem diagnóstico de comunicação'
+      0x01:
+        en: 'Communication diagnostic on'
+        fr: 'Diagnostic de communication actif'
+        es: 'Diagnóstico de comunicación activo'
+        de: 'Kommunikationsdiagnose aktiv'
+        it: 'Diagnosi di comunicazione attiva'
+        pl: 'Aktywna diagnostyka komunikacji'
+        ru: 'Активна диагностика связи'
+        zh: '通信诊断已开启'
+        hu: 'Kommunikációs diagnosztika aktív'
+        pt: 'Diagnóstico de comunicação ativo'
+
+  UNUSED_1:
+    bits: '5.5'
+    unused: true
+
+  ENGINE_TORQUE_ESTIMATE_UNCERTAIN:
+    bits: '5.4'
+    comment:
+      en: 'Estimated engine torque values uncertain'
+      fr: 'Valeurs de couple moteur estimées incertaines'
+      es: 'Valores de par de motor estimados inciertos'
+      de: 'Geschätzte Motordrehmomentwerte unsicher'
+      it: 'Valori di coppia motore stimati incerti'
+      pl: 'Niepewne szacowane wartości momentu obrotowego silnika'
+      ru: 'Ненадёжные расчётные значения крутящего момента двигателя'
+      zh: '估算发动机扭矩值不确定'
+      hu: 'Bizonytalan becsült motornyomaték-értékek'
+      pt: 'Valores de binário do motor estimados incertos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Engine torque information guaranteed to required accuracy'
+        fr: 'Informations de couple moteur garanties avec la précision requise'
+        es: 'Información de par de motor garantizada con la precisión requerida'
+        de: 'Motordrehmomentinformation mit erforderlicher Genauigkeit gewährleistet'
+        it: 'Informazioni di coppia motore garantite con la precisione richiesta'
+        pl: 'Informacje o momencie silnika gwarantowane z wymaganą dokładnością'
+        ru: 'Информация о моменте двигателя гарантирована с требуемой точностью'
+        zh: '发动机扭矩信息以所需精度保证'
+        hu: 'A motornyomaték-információ a megkövetelt pontossággal garantált'
+        pt: 'Informação de binário do motor garantida com a precisão exigida'
+      0x01:
+        en: 'Torque information without the guaranteed required accuracy'
+        fr: 'Informations de couple non garanties avec la précision requise'
+        es: 'Información de par sin la precisión requerida garantizada'
+        de: 'Drehmomentinformation ohne garantierte erforderliche Genauigkeit'
+        it: 'Informazioni di coppia senza la precisione richiesta garantita'
+        pl: 'Informacje o momencie obrotowym bez gwarantowanej wymaganej dokładności'
+        ru: 'Информация о крутящем моменте без гарантированной требуемой точности'
+        zh: '扭矩信息未保证所需精度'
+        hu: 'Nyomatékadat a szükséges garantált pontosság nélkül'
+        pt: 'Informação de binário sem a precisão garantida exigida'
+
+  CRUISE_SPEED_LIMITER_STATUS:
+    bits: '5.3-5.2'
+    comment:
+      en: 'Cruise control (cruise control) or speed limiter (speed limiter) function status'
+      fr: 'État de la fonction régulateur de vitesse (cruise control) ou limiteur de vitesse (speed limiter)'
+      es: 'Estado de la función de control de crucero (cruise control) o limitador de velocidad (speed limiter)'
+      de: 'Status der Tempomat-Funktion (cruise control) oder des Geschwindigkeitsbegrenzers (speed limiter)'
+      it: 'Stato della funzione cruise control (cruise control) o limitatore di velocità (speed limiter)'
+      pl: 'Stan funkcji tempomatu (cruise control) lub ogranicznika prędkości (speed limiter)'
+      ru: 'Статус функции круиз-контроля (cruise control) или ограничителя скорости (speed limiter)'
+      zh: '巡航控制(cruise control)或限速器(speed limiter)功能状态'
+      hu: 'A sebességtartó (cruise control) vagy sebességkorlátozó (speed limiter) funkció állapota'
+      pt: 'Estado da função de regulador (cruise control) ou limitador (speed limiter) de velocidade'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'cruise control waiting / speed limiter waiting - speed limiter not effective'
+        fr: 'cruise control en attente / speed limiter en attente - speed limiter non effective'
+        es: 'cruise control en espera / speed limiter en espera - speed limiter no efectiva'
+        de: 'cruise control wartend / speed limiter wartend - speed limiter nicht wirksam'
+        it: 'cruise control in attesa / speed limiter in attesa - speed limiter non effettiva'
+        pl: 'cruise control oczekuje / speed limiter oczekuje - speed limiter nieaktywne'
+        ru: 'cruise control ожидает / speed limiter ожидает - speed limiter не действует'
+        zh: 'RVV等待中/LVV等待中 - LVV未生效'
+        hu: 'cruise control várakozik / speed limiter várakozik - az speed limiter nem aktív'
+        pt: 'cruise control em espera / speed limiter em espera - speed limiter não efetivo'
+      0x01:
+        en: 'Cruise control/speed limiter resumed via accelerator pedal'
+        fr: 'Reprise du régulateur/limiteur de vitesse par la pédale d''accélérateur'
+        es: 'Reanudación del regulador/limitador de velocidad mediante el pedal del acelerador'
+        de: 'Fortsetzung von Tempomat/Geschwindigkeitsbegrenzer über das Gaspedal'
+        it: 'Ripresa del regolatore/limitatore di velocità tramite il pedale dell''acceleratore'
+        pl: 'Wznowienie tempomatu/ogranicznika pedałem przyspieszenia'
+        ru: 'Возобновление круиз-контроля/ограничителя педалью газа'
+        zh: '通过油门踏板恢复巡航/限速器'
+        hu: 'A tempomat/határoló folytatása a gázpedállal'
+        pt: 'Reativação do regulador/limitador de velocidade através do pedal do acelerador'
+      0x02:
+        en: 'cruise control active / speed limiter effective'
+        fr: 'cruise control active / speed limiter effective'
+        es: 'cruise control activo / speed limiter efectivo'
+        de: 'cruise control aktiv / speed limiter wirksam'
+        it: 'cruise control attivo / speed limiter effettivo'
+        pl: 'cruise control aktywny / speed limiter skuteczny'
+        ru: 'cruise control активен / speed limiter эффективен'
+        zh: 'RVV激活/LVV生效'
+        hu: 'cruise control aktív / speed limiter érvényes'
+        pt: 'cruise control ativo / speed limiter efetivo'
+      0x03:
+        en: 'Cruise control inhibited / speed limiter inhibited'
+        fr: 'Régulateur de vitesse inhibé / limiteur de vitesse inhibé'
+        es: 'Control de crucero inhibido / limitador de velocidad inhibido'
+        de: 'Tempomat deaktiviert / Geschwindigkeitsbegrenzer deaktiviert'
+        it: 'Regolatore di velocità inibito / limitatore di velocità inibito'
+        pl: 'Tempomat wyłączony / ogranicznik prędkości wyłączony'
+        ru: 'Круиз-контроль отключён / ограничитель скорости отключён'
+        zh: '巡航控制已禁用 / 限速器已禁用'
+        hu: 'Tempomat letiltva / sebességkorlátozó letiltva'
+        pt: 'Regulador de velocidade inibido / limitador de velocidade inibido'
+
+  BRAKE_PEDAL_SWITCH_2:
+    bits: '5.1'
+    comment:
+      en: 'Brake pedal secondary (redundant) switch'
+      fr: 'Contact secondaire (redondant) de la pédale de frein'
+      es: 'Contacto secundario (redundante) del pedal de freno'
+      de: 'Sekundärer (redundanter) Bremspedalschalter'
+      it: 'Interruttore secondario (ridondante) del pedale freno'
+      pl: 'Wtórny (redundantny) wyłącznik pedału hamulca'
+      ru: 'Вторичный (резервный) выключатель педали тормоза'
+      zh: '制动踏板辅助(冗余)开关'
+      hu: 'Fékpedál másodlagos (redundáns) kapcsolója'
+      pt: 'Contacto secundário (redundante) do pedal de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Brake pedal released'
+        fr: 'Pédale de frein relâchée'
+        es: 'Pedal de freno soltado'
+        de: 'Bremspedal losgelassen'
+        it: 'Pedale del freno rilasciato'
+        pl: 'Pedał hamulca zwolniony'
+        ru: 'Педаль тормоза отпущена'
+        zh: '制动踏板已松开'
+        hu: 'Fékpedál elengedve'
+        pt: 'Pedal de travão solto'
+      0x01:
+        en: 'Brake pedal pressed'
+        fr: 'Appui sur la pédale de frein'
+        es: 'Pedal de freno pulsado'
+        de: 'Bremspedal betätigt'
+        it: 'Pedale del freno premuto'
+        pl: 'Naciśnięty pedał hamulca'
+        ru: 'Нажата педаль тормоза'
+        zh: '制动踏板已按下'
+        hu: 'Fékpedál lenyomva'
+        pt: 'Pressão no pedal do travão'
+
+  UNUSED_2:
+    bits: '5.0'
+    unused: true
+
+  ACTUAL_TORQUE_WITHOUT_GEARBOX_REDUCTION:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Actual torque, excluding gearbox-requested reduction'
+      fr: 'Couple réel, hors réduction demandée par la boîte de vitesses'
+      es: 'Par real, excluyendo la reducción solicitada por la caja de cambios'
+      de: 'Tatsächliches Drehmoment, ohne die vom Getriebe angeforderte Reduzierung'
+      it: 'Coppia reale, esclusa la riduzione richiesta dal cambio'
+      pl: 'Rzeczywisty moment obrotowy, bez redukcji żądanej przez skrzynię biegów'
+      ru: 'Фактический момент без учёта снижения, запрошенного коробкой передач'
+      zh: '实际扭矩(不含变速箱请求的降扭)'
+      hu: 'Tényleges nyomaték, a váltó által kért csökkentés nélkül'
+      pt: 'Binário real, excluindo a redução solicitada pela caixa de velocidades'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+  ANTICIPATED_ENGINE_TORQUE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Anticipated engine torque'
+      fr: 'Couple moteur anticipé'
+      es: 'Par de motor anticipado'
+      de: 'Antizipiertes Motordrehmoment'
+      it: 'Coppia motore anticipata'
+      pl: 'Przewidywany moment obrotowy silnika'
+      ru: 'Ожидаемый крутящий момент двигателя'
+      zh: '预期发动机扭矩'
+      hu: 'Előrejelzett motornyomaték'
+      pt: 'Binário do motor antecipado'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+  DRIVER_TORQUE_REQUEST_PROCESSED:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Driver torque request, after processing'
+      fr: 'Couple demandé par le conducteur, après traitement'
+      es: 'Par solicitado por el conductor, tras el procesamiento'
+      de: 'Fahrerangefordertes Drehmoment, nach der Verarbeitung'
+      it: 'Coppia richiesta dal conducente, dopo l''elaborazione'
+      pl: 'Moment żądany przez kierowcę, po przetworzeniu'
+      ru: 'Момент, запрошенный водителем, после обработки'
+      zh: '驾驶员请求扭矩(已处理)'
+      hu: 'A vezető által kért nyomaték, feldolgozás után'
+      pt: 'Binário solicitado pelo condutor, após processamento'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      ENGINE_SPEED:
+        bits: '1.7-2.0'
+        comment:
+          en: 'Engine speed (16-bit)'
+          fr: 'Régime moteur (16 bits)'
+          es: 'Régimen del motor (16 bits)'
+          de: 'Motordrehzahl (16 Bit)'
+          it: 'Regime motore (16 bit)'
+          pl: 'Obroty silnika (16 bitów)'
+          ru: 'Обороты двигателя (16 бит)'
+          zh: '发动机转速(16位)'
+          hu: 'Motorfordulatszám (16 bites)'
+          pt: 'Regime do motor (16 bits)'
+        type: 'uint'
+        factor: 0.125
+        min: 0
+        max: 8191.75
+        units: 'rpm'
+        invalid: 0xFFFF
+        default: 0xFFFF
+      ACTUAL_TORQUE:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Actual engine torque'
+          fr: 'Couple moteur réel'
+          es: 'Par de motor real'
+          de: 'Tatsächliches Motordrehmoment'
+          it: 'Coppia motore reale'
+          pl: 'Rzeczywisty moment obrotowy silnika'
+          ru: 'Фактический крутящий момент двигателя'
+          zh: '实际发动机扭矩'
+          hu: 'Tényleges motornyomaték'
+          pt: 'Binário real do motor'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      DRIVER_DEMAND_PERCENT:
+        bits: '4.7-4.0'
+        comment:
+          en: 'Driver demand'
+          fr: 'Volonté du conducteur'
+          es: 'Demanda del conductor'
+          de: 'Fahrerwunsch'
+          it: 'Richiesta del conducente'
+          pl: 'Żądanie kierowcy'
+          ru: 'Запрос водителя'
+          zh: '驾驶员需求'
+          hu: 'Vezetői igény'
+          pt: 'Pedido do condutor'
+        type: 'uint'
+        factor: 0.5
+        min: 0
+        max: 100
+        units: '%'
+        invalid: 0xFF
+        default: 0x00
+      ENGINE_LOAD_REQUEST:
+        bits: '5.7'
+        comment:
+          en: 'Engine load request to assist filter regeneration (processed by the BSI)'
+          fr: 'Demande de charge moteur pour faciliter la régénération du filtre (traitée par la BSI)'
+          es: 'Solicitud de carga del motor para facilitar la regeneración del filtro (procesada por la BSI)'
+          de: 'Anforderung der Motorlast zur Unterstützung der Filterregeneration (von der BSI verarbeitet)'
+          it: 'Richiesta di carico motore per facilitare la rigenerazione del filtro (elaborata dalla BSI)'
+          pl: 'Żądanie obciążenia silnika wspomagające regenerację filtra (przetwarzane przez BSI)'
+          ru: 'Запрос нагрузки двигателя для содействия регенерации фильтра (обрабатывается BSI)'
+          zh: '为辅助滤芯再生而提出的发动机负载请求(由BSI处理)'
+          hu: 'Motorterhelési kérés a szűrőregenerálás elősegítésére (a BSI dolgozza fel)'
+          pt: 'Pedido de carga do motor para facilitar a regeneração do filtro (processado pela BSI)'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No active request'
+            fr: 'Aucune requête active'
+            es: 'Sin solicitud activa'
+            de: 'Keine aktive Anforderung'
+            it: 'Nessuna richiesta attiva'
+            pl: 'Brak aktywnego żądania'
+            ru: 'Нет активного запроса'
+            zh: '无活动请求'
+            hu: 'Nincs aktív kérés'
+            pt: 'Sem pedido ativo'
+          0x01:
+            en: 'Request active'
+            fr: 'Requête active'
+            es: 'Solicitud activa'
+            de: 'Anforderung aktiv'
+            it: 'Richiesta attiva'
+            pl: 'Żądanie aktywne'
+            ru: 'Запрос активен'
+            zh: '请求已激活'
+            hu: 'Kérés aktív'
+            pt: 'Pedido ativo'
+      DIAG_STATUS:
+        bits: '5.6'
+        comment:
+          en: 'Multiplexed communication diagnostic status'
+          fr: 'État du diagnostic de communication multiplexée'
+          es: 'Estado del diagnóstico de comunicación multiplexada'
+          de: 'Status der Diagnose der multiplexierten Kommunikation'
+          it: 'Stato della diagnosi di comunicazione multiplata'
+          pl: 'Stan diagnostyki komunikacji multipleksowanej'
+          ru: 'Статус диагностики мультиплексной связи'
+          zh: '多路复用通信诊断状态'
+          hu: 'A multiplex kommunikáció diagnosztikai állapota'
+          pt: 'Estado do diagnóstico de comunicação multiplexada'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No communication diagnostic'
+            fr: 'Pas de diagnostic de communication'
+            es: 'Sin diagnóstico de comunicación'
+            de: 'Keine Kommunikationsdiagnose'
+            it: 'Nessuna diagnostica di comunicazione'
+            pl: 'Brak diagnostyki komunikacji'
+            ru: 'Нет диагностики связи'
+            zh: '无通信诊断'
+            hu: 'Nincs kommunikációs diagnosztika'
+            pt: 'Sem diagnóstico de comunicação'
+          0x01:
+            en: 'Communication diagnostic on'
+            fr: 'Diagnostic de communication actif'
+            es: 'Diagnóstico de comunicación activo'
+            de: 'Kommunikationsdiagnose aktiv'
+            it: 'Diagnosi di comunicazione attiva'
+            pl: 'Aktywna diagnostyka komunikacji'
+            ru: 'Активна диагностика связи'
+            zh: '通信诊断已开启'
+            hu: 'Kommunikációs diagnosztika aktív'
+            pt: 'Diagnóstico de comunicação ativo'
+      UNUSED_1:
+        bits: '5.5'
+        unused: true
+      ENGINE_TORQUE_ESTIMATE_UNCERTAIN:
+        bits: '5.4'
+        comment:
+          en: 'Estimated engine torque values uncertain'
+          fr: 'Valeurs de couple moteur estimées incertaines'
+          es: 'Valores de par de motor estimados inciertos'
+          de: 'Geschätzte Motordrehmomentwerte unsicher'
+          it: 'Valori di coppia motore stimati incerti'
+          pl: 'Niepewne szacowane wartości momentu obrotowego silnika'
+          ru: 'Ненадёжные расчётные значения крутящего момента двигателя'
+          zh: '估算发动机扭矩值不确定'
+          hu: 'Bizonytalan becsült motornyomaték-értékek'
+          pt: 'Valores de binário do motor estimados incertos'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Engine torque information guaranteed to required accuracy'
+            fr: 'Informations de couple moteur garanties avec la précision requise'
+            es: 'Información de par de motor garantizada con la precisión requerida'
+            de: 'Motordrehmomentinformation mit erforderlicher Genauigkeit gewährleistet'
+            it: 'Informazioni di coppia motore garantite con la precisione richiesta'
+            pl: 'Informacje o momencie silnika gwarantowane z wymaganą dokładnością'
+            ru: 'Информация о моменте двигателя гарантирована с требуемой точностью'
+            zh: '发动机扭矩信息以所需精度保证'
+            hu: 'A motornyomaték-információ a megkövetelt pontossággal garantált'
+            pt: 'Informação de binário do motor garantida com a precisão exigida'
+          0x01:
+            en: 'Torque information without the guaranteed required accuracy'
+            fr: 'Informations de couple non garanties avec la précision requise'
+            es: 'Información de par sin la precisión requerida garantizada'
+            de: 'Drehmomentinformation ohne garantierte erforderliche Genauigkeit'
+            it: 'Informazioni di coppia senza la precisione richiesta garantita'
+            pl: 'Informacje o momencie obrotowym bez gwarantowanej wymaganej dokładności'
+            ru: 'Информация о крутящем моменте без гарантированной требуемой точности'
+            zh: '扭矩信息未保证所需精度'
+            hu: 'Nyomatékadat a szükséges garantált pontosság nélkül'
+            pt: 'Informação de binário sem a precisão garantida exigida'
+      CRUISE_SPEED_LIMITER_STATUS:
+        bits: '5.3-5.2'
+        comment:
+          en: 'Cruise control (cruise control) or speed limiter (speed limiter) function status'
+          fr: 'État de la fonction régulateur de vitesse (cruise control) ou limiteur de vitesse (speed limiter)'
+          es: 'Estado de la función de control de crucero (cruise control) o limitador de velocidad (speed limiter)'
+          de: 'Status der Tempomat-Funktion (cruise control) oder des Geschwindigkeitsbegrenzers (speed limiter)'
+          it: 'Stato della funzione cruise control (cruise control) o limitatore di velocità (speed limiter)'
+          pl: 'Stan funkcji tempomatu (cruise control) lub ogranicznika prędkości (speed limiter)'
+          ru: 'Статус функции круиз-контроля (cruise control) или ограничителя скорости (speed limiter)'
+          zh: '巡航控制(cruise control)或限速器(speed limiter)功能状态'
+          hu: 'A sebességtartó (cruise control) vagy sebességkorlátozó (speed limiter) funkció állapota'
+          pt: 'Estado da função de regulador (cruise control) ou limitador (speed limiter) de velocidade'
+        type: 'enum'
+        default: 0x03
+        values:
+          0x00:
+            en: 'cruise control waiting / speed limiter waiting - speed limiter not effective'
+            fr: 'cruise control en attente / speed limiter en attente - speed limiter non effective'
+            es: 'cruise control en espera / speed limiter en espera - speed limiter no efectiva'
+            de: 'cruise control wartend / speed limiter wartend - speed limiter nicht wirksam'
+            it: 'cruise control in attesa / speed limiter in attesa - speed limiter non effettiva'
+            pl: 'cruise control oczekuje / speed limiter oczekuje - speed limiter nieaktywne'
+            ru: 'cruise control ожидает / speed limiter ожидает - speed limiter не действует'
+            zh: 'RVV等待中/LVV等待中 - LVV未生效'
+            hu: 'cruise control várakozik / speed limiter várakozik - az speed limiter nem aktív'
+            pt: 'cruise control em espera / speed limiter em espera - speed limiter não efetivo'
+          0x01:
+            en: 'Cruise control/speed limiter resumed via accelerator pedal'
+            fr: 'Reprise du régulateur/limiteur de vitesse par la pédale d''accélérateur'
+            es: 'Reanudación del regulador/limitador de velocidad mediante el pedal del acelerador'
+            de: 'Fortsetzung von Tempomat/Geschwindigkeitsbegrenzer über das Gaspedal'
+            it: 'Ripresa del regolatore/limitatore di velocità tramite il pedale dell''acceleratore'
+            pl: 'Wznowienie tempomatu/ogranicznika pedałem przyspieszenia'
+            ru: 'Возобновление круиз-контроля/ограничителя педалью газа'
+            zh: '通过油门踏板恢复巡航/限速器'
+            hu: 'A tempomat/határoló folytatása a gázpedállal'
+            pt: 'Reativação do regulador/limitador de velocidade através do pedal do acelerador'
+          0x02:
+            en: 'cruise control active / speed limiter effective'
+            fr: 'cruise control active / speed limiter effective'
+            es: 'cruise control activo / speed limiter efectivo'
+            de: 'cruise control aktiv / speed limiter wirksam'
+            it: 'cruise control attivo / speed limiter effettivo'
+            pl: 'cruise control aktywny / speed limiter skuteczny'
+            ru: 'cruise control активен / speed limiter эффективен'
+            zh: 'RVV激活/LVV生效'
+            hu: 'cruise control aktív / speed limiter érvényes'
+            pt: 'cruise control ativo / speed limiter efetivo'
+          0x03:
+            en: 'Cruise control inhibited / speed limiter inhibited'
+            fr: 'Régulateur de vitesse inhibé / limiteur de vitesse inhibé'
+            es: 'Control de crucero inhibido / limitador de velocidad inhibido'
+            de: 'Tempomat deaktiviert / Geschwindigkeitsbegrenzer deaktiviert'
+            it: 'Regolatore di velocità inibito / limitatore di velocità inibito'
+            pl: 'Tempomat wyłączony / ogranicznik prędkości wyłączony'
+            ru: 'Круиз-контроль отключён / ограничитель скорости отключён'
+            zh: '巡航控制已禁用 / 限速器已禁用'
+            hu: 'Tempomat letiltva / sebességkorlátozó letiltva'
+            pt: 'Regulador de velocidade inibido / limitador de velocidade inibido'
+      BRAKE_PEDAL_SWITCH_2:
+        bits: '5.1'
+        comment:
+          en: 'Brake pedal secondary (redundant) switch'
+          fr: 'Contact secondaire (redondant) de la pédale de frein'
+          es: 'Contacto secundario (redundante) del pedal de freno'
+          de: 'Sekundärer (redundanter) Bremspedalschalter'
+          it: 'Interruttore secondario (ridondante) del pedale freno'
+          pl: 'Wtórny (redundantny) wyłącznik pedału hamulca'
+          ru: 'Вторичный (резервный) выключатель педали тормоза'
+          zh: '制动踏板辅助(冗余)开关'
+          hu: 'Fékpedál másodlagos (redundáns) kapcsolója'
+          pt: 'Contacto secundário (redundante) do pedal de travão'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Brake pedal released'
+            fr: 'Pédale de frein relâchée'
+            es: 'Pedal de freno soltado'
+            de: 'Bremspedal losgelassen'
+            it: 'Pedale del freno rilasciato'
+            pl: 'Pedał hamulca zwolniony'
+            ru: 'Педаль тормоза отпущена'
+            zh: '制动踏板已松开'
+            hu: 'Fékpedál elengedve'
+            pt: 'Pedal de travão solto'
+          0x01:
+            en: 'Brake pedal pressed'
+            fr: 'Appui sur la pédale de frein'
+            es: 'Pedal de freno pulsado'
+            de: 'Bremspedal betätigt'
+            it: 'Pedale del freno premuto'
+            pl: 'Naciśnięty pedał hamulca'
+            ru: 'Нажата педаль тормоза'
+            zh: '制动踏板已按下'
+            hu: 'Fékpedál lenyomva'
+            pt: 'Pressão no pedal do travão'
+      UNUSED_2:
+        bits: '5.0'
+        unused: true
+      DRIVER_POTENTIAL_TORQUE_REQUEST_PROCESSED:
+        bits: '6.7-6.0'
+        comment:
+          en: 'Driver potential torque request, after processing'
+          fr: 'Couple potentiel demandé par le conducteur, après traitement'
+          es: 'Par potencial solicitado por el conductor, tras el procesamiento'
+          de: 'Potenzielles fahrerangefordertes Drehmoment, nach der Verarbeitung'
+          it: 'Coppia potenziale richiesta dal conducente, dopo l''elaborazione'
+          pl: 'Potencjalny moment żądany przez kierowcę, po przetworzeniu'
+          ru: 'Потенциальный момент, запрошенный водителем, после обработки'
+          zh: '驾驶员潜在扭矩请求(已处理)'
+          hu: 'A vezető által kért potenciális nyomaték, feldolgozás után'
+          pt: 'Binário potencial solicitado pelo condutor, após processamento'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      ANTICIPATED_ENGINE_TORQUE:
+        bits: '7.7-7.0'
+        comment:
+          en: 'Anticipated engine torque'
+          fr: 'Couple moteur anticipé'
+          es: 'Par de motor anticipado'
+          de: 'Antizipiertes Motordrehmoment'
+          it: 'Coppia motore anticipata'
+          pl: 'Przewidywany moment obrotowy silnika'
+          ru: 'Ожидаемый крутящий момент двигателя'
+          zh: '预期发动机扭矩'
+          hu: 'Előrejelzett motornyomaték'
+          pt: 'Binário do motor antecipado'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      DRIVER_TORQUE_REQUEST_PROCESSED:
+        bits: '8.7-8.0'
+        comment:
+          en: 'Driver torque request, after processing'
+          fr: 'Couple demandé par le conducteur, après traitement'
+          es: 'Par solicitado por el conductor, tras el procesamiento'
+          de: 'Fahrerangefordertes Drehmoment, nach der Verarbeitung'
+          it: 'Coppia richiesta dal conducente, dopo l''elaborazione'
+          pl: 'Moment żądany przez kierowcę, po przetworzeniu'
+          ru: 'Момент, запрошенный водителем, после обработки'
+          zh: '驾驶员请求扭矩(已处理)'
+          hu: 'A vezető által kért nyomaték, feldolgozás után'
+          pt: 'Binário solicitado pelo condutor, após processamento'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['BSM', 'CVM']
+    receivers: ['ARTIV']
+    signals:
+      ENGINE_SPEED:
+        bits: '1.7-2.0'
+        comment:
+          en: 'Engine speed (16-bit)'
+          fr: 'Régime moteur (16 bits)'
+          es: 'Régimen del motor (16 bits)'
+          de: 'Motordrehzahl (16 Bit)'
+          it: 'Regime motore (16 bit)'
+          pl: 'Obroty silnika (16 bitów)'
+          ru: 'Обороты двигателя (16 бит)'
+          zh: '发动机转速(16位)'
+          hu: 'Motorfordulatszám (16 bites)'
+          pt: 'Regime do motor (16 bits)'
+        type: 'uint'
+        factor: 0.125
+        min: 0
+        max: 8191.75
+        units: 'rpm'
+        invalid: 0xFFFF
+        default: 0xFFFF
+      SHAFT_ACTUAL_TORQUE:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Actual torque available on the shaft, including the instantaneous engine and electric machine torque'
+          fr: 'Couple réel disponible sur l''arbre, incluant le couple moteur et le couple de la machine électrique instantanés'
+          es: 'Par real disponible en el árbol, incluyendo el par instantáneo del motor y de la máquina eléctrica'
+          de: 'Tatsächlich verfügbares Drehmoment an der Welle, einschließlich des momentanen Motor- und E-Maschinendrehmoments'
+          it: 'Coppia reale disponibile sull''albero, comprensiva della coppia istantanea del motore e della macchina elettrica'
+          pl: 'Rzeczywisty moment obrotowy dostępny na wale, obejmujący chwilowy moment silnika i maszyny elektrycznej'
+          ru: 'Фактический момент на валу, включая мгновенный момент двигателя и электромашины'
+          zh: '轴上实际可用扭矩,包含发动机和电机的瞬时扭矩'
+          hu: 'A tengelyen rendelkezésre álló tényleges nyomaték, beleértve a pillanatnyi motor- és elektromosgép-nyomatékot'
+          pt: 'Binário real disponível no veio, incluindo o binário instantâneo do motor e da máquina elétrica'
+        type: 'uint'
+        factor: 2.5
+        offset: -200
+        min: -200
+        max: 435
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x50
+      DRIVER_DEMAND_PERCENT:
+        bits: '4.7-4.0'
+        comment:
+          en: 'Driver demand'
+          fr: 'Volonté du conducteur'
+          es: 'Demanda del conductor'
+          de: 'Fahrerwunsch'
+          it: 'Richiesta del conducente'
+          pl: 'Żądanie kierowcy'
+          ru: 'Запрос водителя'
+          zh: '驾驶员需求'
+          hu: 'Vezetői igény'
+          pt: 'Pedido do condutor'
+        type: 'uint'
+        factor: 0.5
+        min: 0
+        max: 100
+        units: '%'
+        invalid: 0xFF
+        default: 0x00
+      DIAG_STATUS:
+        bits: '5.6'
+        comment:
+          en: 'Multiplexed communication diagnostic status'
+          fr: 'État du diagnostic de communication multiplexée'
+          es: 'Estado del diagnóstico de comunicación multiplexada'
+          de: 'Status der Diagnose der multiplexierten Kommunikation'
+          it: 'Stato della diagnosi di comunicazione multiplata'
+          pl: 'Stan diagnostyki komunikacji multipleksowanej'
+          ru: 'Статус диагностики мультиплексной связи'
+          zh: '多路复用通信诊断状态'
+          hu: 'A multiplex kommunikáció diagnosztikai állapota'
+          pt: 'Estado do diagnóstico de comunicação multiplexada'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No communication diagnostic'
+            fr: 'Pas de diagnostic de communication'
+            es: 'Sin diagnóstico de comunicación'
+            de: 'Keine Kommunikationsdiagnose'
+            it: 'Nessuna diagnostica di comunicazione'
+            pl: 'Brak diagnostyki komunikacji'
+            ru: 'Нет диагностики связи'
+            zh: '无通信诊断'
+            hu: 'Nincs kommunikációs diagnosztika'
+            pt: 'Sem diagnóstico de comunicação'
+          0x01:
+            en: 'Communication diagnostic on'
+            fr: 'Diagnostic de communication actif'
+            es: 'Diagnóstico de comunicación activo'
+            de: 'Kommunikationsdiagnose aktiv'
+            it: 'Diagnosi di comunicazione attiva'
+            pl: 'Aktywna diagnostyka komunikacji'
+            ru: 'Активна диагностика связи'
+            zh: '通信诊断已开启'
+            hu: 'Kommunikációs diagnosztika aktív'
+            pt: 'Diagnóstico de comunicação ativo'
+      ENGINE_TORQUE_ESTIMATE_UNCERTAIN:
+        bits: '5.4'
+        comment:
+          en: 'Estimated engine torque values uncertain'
+          fr: 'Valeurs de couple moteur estimées incertaines'
+          es: 'Valores de par de motor estimados inciertos'
+          de: 'Geschätzte Motordrehmomentwerte unsicher'
+          it: 'Valori di coppia motore stimati incerti'
+          pl: 'Niepewne szacowane wartości momentu obrotowego silnika'
+          ru: 'Ненадёжные расчётные значения крутящего момента двигателя'
+          zh: '估算发动机扭矩值不确定'
+          hu: 'Bizonytalan becsült motornyomaték-értékek'
+          pt: 'Valores de binário do motor estimados incertos'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Engine torque information guaranteed to required accuracy'
+            fr: 'Informations de couple moteur garanties avec la précision requise'
+            es: 'Información de par de motor garantizada con la precisión requerida'
+            de: 'Motordrehmomentinformation mit erforderlicher Genauigkeit gewährleistet'
+            it: 'Informazioni di coppia motore garantite con la precisione richiesta'
+            pl: 'Informacje o momencie silnika gwarantowane z wymaganą dokładnością'
+            ru: 'Информация о моменте двигателя гарантирована с требуемой точностью'
+            zh: '发动机扭矩信息以所需精度保证'
+            hu: 'A motornyomaték-információ a megkövetelt pontossággal garantált'
+            pt: 'Informação de binário do motor garantida com a precisão exigida'
+          0x01:
+            en: 'Torque information without the guaranteed required accuracy'
+            fr: 'Informations de couple non garanties avec la précision requise'
+            es: 'Información de par sin la precisión requerida garantizada'
+            de: 'Drehmomentinformation ohne garantierte erforderliche Genauigkeit'
+            it: 'Informazioni di coppia senza la precisione richiesta garantita'
+            pl: 'Informacje o momencie obrotowym bez gwarantowanej wymaganej dokładności'
+            ru: 'Информация о крутящем моменте без гарантированной требуемой точности'
+            zh: '扭矩信息未保证所需精度'
+            hu: 'Nyomatékadat a szükséges garantált pontosság nélkül'
+            pt: 'Informação de binário sem a precisão garantida exigida'
+      CRUISE_SPEED_LIMITER_STATUS:
+        bits: '5.3-5.2'
+        comment:
+          en: 'Cruise control (cruise control) or speed limiter (speed limiter) function status'
+          fr: 'État de la fonction régulateur de vitesse (cruise control) ou limiteur de vitesse (speed limiter)'
+          es: 'Estado de la función de control de crucero (cruise control) o limitador de velocidad (speed limiter)'
+          de: 'Status der Tempomat-Funktion (cruise control) oder des Geschwindigkeitsbegrenzers (speed limiter)'
+          it: 'Stato della funzione cruise control (cruise control) o limitatore di velocità (speed limiter)'
+          pl: 'Stan funkcji tempomatu (cruise control) lub ogranicznika prędkości (speed limiter)'
+          ru: 'Статус функции круиз-контроля (cruise control) или ограничителя скорости (speed limiter)'
+          zh: '巡航控制(cruise control)或限速器(speed limiter)功能状态'
+          hu: 'A sebességtartó (cruise control) vagy sebességkorlátozó (speed limiter) funkció állapota'
+          pt: 'Estado da função de regulador (cruise control) ou limitador (speed limiter) de velocidade'
+        type: 'enum'
+        default: 0x03
+        values:
+          0x00:
+            en: 'cruise control waiting / speed limiter waiting - speed limiter not effective'
+            fr: 'cruise control en attente / speed limiter en attente - speed limiter non effective'
+            es: 'cruise control en espera / speed limiter en espera - speed limiter no efectiva'
+            de: 'cruise control wartend / speed limiter wartend - speed limiter nicht wirksam'
+            it: 'cruise control in attesa / speed limiter in attesa - speed limiter non effettiva'
+            pl: 'cruise control oczekuje / speed limiter oczekuje - speed limiter nieaktywne'
+            ru: 'cruise control ожидает / speed limiter ожидает - speed limiter не действует'
+            zh: 'RVV等待中/LVV等待中 - LVV未生效'
+            hu: 'cruise control várakozik / speed limiter várakozik - az speed limiter nem aktív'
+            pt: 'cruise control em espera / speed limiter em espera - speed limiter não efetivo'
+          0x01:
+            en: 'Cruise control/speed limiter resumed via accelerator pedal'
+            fr: 'Reprise du régulateur/limiteur de vitesse par la pédale d''accélérateur'
+            es: 'Reanudación del regulador/limitador de velocidad mediante el pedal del acelerador'
+            de: 'Fortsetzung von Tempomat/Geschwindigkeitsbegrenzer über das Gaspedal'
+            it: 'Ripresa del regolatore/limitatore di velocità tramite il pedale dell''acceleratore'
+            pl: 'Wznowienie tempomatu/ogranicznika pedałem przyspieszenia'
+            ru: 'Возобновление круиз-контроля/ограничителя педалью газа'
+            zh: '通过油门踏板恢复巡航/限速器'
+            hu: 'A tempomat/határoló folytatása a gázpedállal'
+            pt: 'Reativação do regulador/limitador de velocidade através do pedal do acelerador'
+          0x02:
+            en: 'cruise control active / speed limiter effective'
+            fr: 'cruise control active / speed limiter effective'
+            es: 'cruise control activo / speed limiter efectivo'
+            de: 'cruise control aktiv / speed limiter wirksam'
+            it: 'cruise control attivo / speed limiter effettivo'
+            pl: 'cruise control aktywny / speed limiter skuteczny'
+            ru: 'cruise control активен / speed limiter эффективен'
+            zh: 'RVV激活/LVV生效'
+            hu: 'cruise control aktív / speed limiter érvényes'
+            pt: 'cruise control ativo / speed limiter efetivo'
+          0x03:
+            en: 'Cruise control inhibited / speed limiter inhibited'
+            fr: 'Régulateur de vitesse inhibé / limiteur de vitesse inhibé'
+            es: 'Control de crucero inhibido / limitador de velocidad inhibido'
+            de: 'Tempomat deaktiviert / Geschwindigkeitsbegrenzer deaktiviert'
+            it: 'Regolatore di velocità inibito / limitatore di velocità inibito'
+            pl: 'Tempomat wyłączony / ogranicznik prędkości wyłączony'
+            ru: 'Круиз-контроль отключён / ограничитель скорости отключён'
+            zh: '巡航控制已禁用 / 限速器已禁用'
+            hu: 'Tempomat letiltva / sebességkorlátozó letiltva'
+            pt: 'Regulador de velocidade inibido / limitador de velocidade inibido'
+      BRAKE_PEDAL_SWITCH_2:
+        bits: '5.1'
+        comment:
+          en: 'Brake pedal secondary (redundant) switch'
+          fr: 'Contact secondaire (redondant) de la pédale de frein'
+          es: 'Contacto secundario (redundante) del pedal de freno'
+          de: 'Sekundärer (redundanter) Bremspedalschalter'
+          it: 'Interruttore secondario (ridondante) del pedale freno'
+          pl: 'Wtórny (redundantny) wyłącznik pedału hamulca'
+          ru: 'Вторичный (резервный) выключатель педали тормоза'
+          zh: '制动踏板辅助(冗余)开关'
+          hu: 'Fékpedál másodlagos (redundáns) kapcsolója'
+          pt: 'Contacto secundário (redundante) do pedal de travão'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Brake pedal released'
+            fr: 'Pédale de frein relâchée'
+            es: 'Pedal de freno soltado'
+            de: 'Bremspedal losgelassen'
+            it: 'Pedale del freno rilasciato'
+            pl: 'Pedał hamulca zwolniony'
+            ru: 'Педаль тормоза отпущена'
+            zh: '制动踏板已松开'
+            hu: 'Fékpedál elengedve'
+            pt: 'Pedal de travão solto'
+          0x01:
+            en: 'Brake pedal pressed'
+            fr: 'Appui sur la pédale de frein'
+            es: 'Pedal de freno pulsado'
+            de: 'Bremspedal betätigt'
+            it: 'Pedale del freno premuto'
+            pl: 'Naciśnięty pedał hamulca'
+            ru: 'Нажата педаль тормоза'
+            zh: '制动踏板已按下'
+            hu: 'Fékpedál lenyomva'
+            pt: 'Pressão no pedal do travão'
+      DRIVER_POTENTIAL_TORQUE_REQUEST_PROCESSED:
+        bits: '6.7-6.0'
+        comment:
+          en: 'Driver potential torque request, after processing'
+          fr: 'Couple potentiel demandé par le conducteur, après traitement'
+          es: 'Par potencial solicitado por el conductor, tras el procesamiento'
+          de: 'Potenzielles fahrerangefordertes Drehmoment, nach der Verarbeitung'
+          it: 'Coppia potenziale richiesta dal conducente, dopo l''elaborazione'
+          pl: 'Potencjalny moment żądany przez kierowcę, po przetworzeniu'
+          ru: 'Потенциальный момент, запрошенный водителем, после обработки'
+          zh: '驾驶员潜在扭矩请求(已处理)'
+          hu: 'A vezető által kért potenciális nyomaték, feldolgozás után'
+          pt: 'Binário potencial solicitado pelo condutor, após processamento'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      ANTICIPATED_ENGINE_TORQUE:
+        bits: '7.7-7.0'
+        comment:
+          en: 'Anticipated engine torque'
+          fr: 'Couple moteur anticipé'
+          es: 'Par de motor anticipado'
+          de: 'Antizipiertes Motordrehmoment'
+          it: 'Coppia motore anticipata'
+          pl: 'Przewidywany moment obrotowy silnika'
+          ru: 'Ожидаемый крутящий момент двигателя'
+          zh: '预期发动机扭矩'
+          hu: 'Előrejelzett motornyomaték'
+          pt: 'Binário do motor antecipado'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      DRIVER_TORQUE_REQUEST_PROCESSED:
+        bits: '8.7-8.0'
+        comment:
+          en: 'Driver torque request after hybrid vehicle processing'
+          fr: 'Couple demandé par le conducteur après traitement véhicule hybride'
+          es: 'Par solicitado por el conductor tras el procesamiento del vehículo híbrido'
+          de: 'Vom Fahrer angefordertes Drehmoment nach Hybridfahrzeug-Verarbeitung'
+          it: 'Coppia richiesta dal conducente dopo l''elaborazione del veicolo ibrido'
+          pl: 'Moment obrotowy żądany przez kierowcę po przetworzeniu przez układ hybrydowy'
+          ru: 'Запрошенный водителем момент после обработки гибридной системой'
+          zh: '经混合动力车辆处理后的驾驶员扭矩请求'
+          hu: 'A vezető által kért nyomaték a hibrid jármű feldolgozása után'
+          pt: 'Binário solicitado pelo condutor após processamento do veículo híbrido'
+        type: 'uint'
+        factor: 2.5
+        offset: -200
+        min: -200
+        max: 435
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x50

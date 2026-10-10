@@ -1,0 +1,222 @@
+id: 0x2A8
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_4'
+type: 'can'
+length: 6
+comment:
+  en: 'Power interface unit data: battery level, low-battery/EV/power-down warnings and EV power state.'
+  fr: 'Données de l''unité d''interface de puissance (PIU) : niveau de batterie, alertes batterie faible/VE/extinction et état de puissance VE.'
+  es: 'Datos de la unidad de interfaz de potencia (PIU): nivel de batería, avisos de batería baja/VE/apagado y estado de potencia VE.'
+  de: 'Daten der Leistungsschnittstelleneinheit (PIU): Batteriestand, Warnungen bei niedrigem Batteriestand/EV/Abschaltung sowie EV-Leistungszustand.'
+  it: 'Dati dell''unità di interfaccia di potenza (PIU): livello batteria, avvisi batteria bassa/EV/spegnimento e stato di potenza EV.'
+  pl: 'Dane jednostki interfejsu mocy (PIU): poziom baterii, ostrzeżenia o niskim poziomie baterii/EV/wyłączeniu oraz stan mocy EV.'
+  ru: 'Данные силового интерфейсного блока (PIU): уровень заряда батареи, предупреждения о низком заряде/EV/отключении питания и статус мощности EV.'
+  zh: '电源接口单元(PIU)数据:电池电量、低电量/电动车/断电警告及电动车电源状态。'
+  hu: 'A teljesítmény-interfész egység (PIU) adatai: akkumulátorszint, alacsony akkumulátorszint-/EV-/lekapcsolási figyelmeztetések, valamint az EV teljesítményállapota.'
+  pt: 'Dados da unidade de interface de potência: nível da bateria, avisos de bateria fraca/EV/desligamento e estado de potência do EV.'
+periodicity: ['20ms']
+senders: ['PIU']
+receivers: ['BSI']
+
+signals:
+  EV_POWER:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Electric propulsion mechanical power'
+      fr: 'Puissance mécanique de propulsion électrique'
+      es: 'Potencia mecánica de propulsión eléctrica'
+      de: 'Mechanische Leistung des Elektroantriebs'
+      it: 'Potenza meccanica di propulsione elettrica'
+      pl: 'Moc mechaniczna napędu elektrycznego'
+      ru: 'Механическая мощность электротяги'
+      zh: '电力驱动机械功率'
+      hu: 'Az elektromos meghajtás mechanikai teljesítménye'
+      pt: 'Potência mecânica da tração elétrica'
+    type: 'uint'
+    factor: 10
+    offset: -100000
+    min: -100000
+    max: 500000
+    units: 'W'
+    invalid: 0xFFFF
+    default: 0x00
+
+  BATTERY_LEVEL:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Battery level'
+      fr: 'Niveau de charge de la batterie'
+      es: 'Nivel de carga de la batería'
+      de: 'Ladezustand der Batterie'
+      it: 'Livello di carica della batteria'
+      pl: 'Poziom naładowania akumulatora'
+      ru: 'Уровень заряда батареи'
+      zh: '电池电量'
+      hu: 'Az akkumulátor töltöttségi szintje'
+      pt: 'Nível de carga da bateria'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  BATTERY_LEVEL_WARNING:
+    bits: '4.7'
+    comment:
+      en: 'Low battery level warning on'
+      fr: 'Alerte de niveau de batterie bas activée'
+      es: 'Aviso de nivel bajo de batería activado'
+      de: 'Warnung wegen niedrigem Batteriestand aktiv'
+      it: 'Avviso di livello batteria basso attivo'
+      pl: 'Aktywne ostrzeżenie o niskim poziomie naładowania baterii'
+      ru: 'Активно предупреждение о низком уровне заряда батареи'
+      zh: '电池电量低警告激活'
+      hu: 'Alacsony akkumulátorszint-figyelmeztetés bekapcsolva'
+      pt: 'Aviso de nível de bateria baixo ativado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  POWER_DOWN_WARNING:
+    bits: '4.6'
+    comment:
+      en: 'Entering power-limitation (limp-home / turtle) mode'
+      fr: 'Entrée en mode de limitation de puissance (mode dégradé "tortue")'
+      es: 'Entrada en modo de limitación de potencia (modo degradado "tortuga")'
+      de: 'Eintritt in den Leistungsbegrenzungsmodus (Notlauf-/"Schildkröten"-Modus)'
+      it: 'Ingresso in modalità di limitazione della potenza (modalità degradata "tartaruga")'
+      pl: 'Wejście w tryb ograniczenia mocy (tryb awaryjny "żółwia")'
+      ru: 'Переход в режим ограничения мощности (аварийный режим "черепаха")'
+      zh: '进入功率限制(跛行/龟速)模式'
+      hu: 'Belépés a teljesítménykorlátozó (vészjáró / "teknős") módba'
+      pt: 'Entrada em modo de limitação de potência (modo degradado «tartaruga»)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  EV_SYSTEM_FAULT:
+    bits: '4.5'
+    comment:
+      en: 'Electric vehicle system fault'
+      fr: 'Défaut du système électrique du véhicule'
+      es: 'Fallo del sistema eléctrico del vehículo'
+      de: 'Fehler des Elektrofahrzeugsystems'
+      it: 'Guasto del sistema elettrico del veicolo'
+      pl: 'Usterka układu elektrycznego pojazdu'
+      ru: 'Неисправность электрической системы автомобиля'
+      zh: '电动车系统故障'
+      hu: 'Az elektromos jármű rendszerének hibája'
+      pt: 'Avaria do sistema do veículo elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  UNUSED_1:
+    bits: '4.4-4.0'
+    unused: true
+
+  BRAKE_PEDAL_POSITION:
+    bits: '5.7-6.7'
+    comment:
+      en: 'Brake pedal position'
+      fr: 'Position de la pédale de frein'
+      es: 'Posición del pedal de freno'
+      de: 'Bremspedalposition'
+      it: 'Posizione del pedale del freno'
+      pl: 'Pozycja pedału hamulca'
+      ru: 'Положение педали тормоза'
+      zh: '刹车踏板位置'
+      hu: 'A fékpedál helyzete'
+      pt: 'Posição do pedal do travão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 50
+    units: 'mm'
+    invalid: 0x1FF
+    default: 0x00
+
+  UNUSED_2:
+    bits: '6.6-6.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 10ms'
+      fr: 'Aussi observée avec une période de 10ms'
+      es: 'También observada con un periodo de 10ms'
+      de: 'Auch mit einer Periode von 10ms beobachtet'
+      it: 'Osservata anche con un periodo di 10ms'
+      pl: 'Obserwowana także z okresem 10ms'
+      ru: 'Также наблюдалась с периодом 10ms'
+      zh: '也观察到周期为10ms'
+      hu: 'Megfigyelve 10ms periódussal is'
+      pt: 'Também observada com um período de 10ms'
+    periodicity: ['10ms']

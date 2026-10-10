@@ -1,0 +1,141 @@
+id: 0x316
+name: 'ACC_DECELERATION_REQUEST'
+type: 'can'
+length: 2
+comment:
+  en: 'Adaptive cruise control deceleration request: plateau request, record identifier and deceleration type.'
+  fr: 'Demande de décélération du régulateur adaptatif : demande de plateau, identifiant d''enregistrement et type de décélération.'
+  es: 'Solicitud de deceleración del control de crucero adaptativo: solicitud de meseta, identificador de registro y tipo de deceleración.'
+  de: 'Verzögerungsanforderung des adaptiven Tempomaten: Plateauanforderung, Datensatzkennung und Verzögerungstyp.'
+  it: 'Richiesta di decelerazione del cruise control adattivo: richiesta di plateau, identificatore di registro e tipo di decelerazione.'
+  pl: 'Żądanie opóźnienia aktywnego tempomatu: żądanie plateau, identyfikator rekordu i typ opóźnienia.'
+  ru: 'Запрос замедления адаптивного круиз-контроля: запрос плато, идентификатор записи и тип замедления.'
+  zh: '自适应巡航控制减速请求:平台请求、记录标识符和减速类型。'
+  hu: 'Az adaptív tempomat lassítási kérése: fennsík kérés, rekordazonosító és lassítás típusa.'
+  pt: 'Pedido de desaceleração do regulador de velocidade adaptativo: pedido de patamar, identificador de registo e tipo de desaceleração.'
+periodicity: ['20ms']
+senders: ['ARTIV']
+receivers: ['CVM']
+
+signals:
+  RECORD_ID:
+    bits: '1.7-1.2'
+    comment:
+      en: 'Recorded identifier'
+      fr: 'Identifiant enregistré'
+      es: 'Identificador registrado'
+      de: 'Aufgezeichnete Kennung'
+      it: 'Identificativo registrato'
+      pl: 'Zarejestrowany identyfikator'
+      ru: 'Записанный идентификатор'
+      zh: '已记录的标识符'
+      hu: 'Rögzített azonosító'
+      pt: 'Identificador registado'
+    type: 'uint'
+    min: 0
+    max: 50
+    invalid: 0x3F
+
+  DETECTION_DEVICE_DECELERATION_TYPE:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Detection device deceleration type'
+      fr: 'Type de décélération du dispositif de détection'
+      es: 'Tipo de deceleración del dispositivo de detección'
+      de: 'Verzögerungsart des Erkennungsgeräts'
+      it: 'Tipo di decelerazione del dispositivo di rilevamento'
+      pl: 'Rodzaj opóźnienia urządzenia wykrywającego'
+      ru: 'Тип замедления устройства обнаружения'
+      zh: '探测装置的减速类型'
+      hu: 'Az érzékelő eszköz lassítási típusa'
+      pt: 'Tipo de desaceleração do dispositivo de deteção'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No braking'
+        fr: 'Pas de freinage'
+        es: 'Sin frenado'
+        de: 'Keine Bremsung'
+        it: 'Nessuna frenata'
+        pl: 'Brak hamowania'
+        ru: 'Торможение отсутствует'
+        zh: '无制动'
+        hu: 'Nincs fékezés'
+        pt: 'Sem travagem'
+      0x01:
+        en: 'ACC braking'
+        fr: 'Freinage ACC'
+        es: 'Frenado ACC'
+        de: 'ACC-Bremsung'
+        it: 'Frenata ACC'
+        pl: 'Hamowanie ACC'
+        ru: 'Торможение ACC'
+        zh: 'ACC制动'
+        hu: 'ACC fékezés'
+        pt: 'Travagem ACC'
+      0x02:
+        en: 'High-speed automatic braking / AFUi braking'
+        fr: 'Freinage automatique haute vitesse / freinage AFUi'
+        es: 'Frenado automático a alta velocidad / frenado AFUi'
+        de: 'Automatische Hochgeschwindigkeitsbremsung / AFUi-Bremsung'
+        it: 'Frenata automatica ad alta velocità / frenata AFUi'
+        pl: 'Automatyczne hamowanie przy dużej prędkości / hamowanie AFUi'
+        ru: 'Автоматическое торможение на высокой скорости / торможение AFUi'
+        zh: '高速自动制动/AFUi制动'
+        hu: 'Nagysebességű automatikus fékezés / AFUi fékezés'
+        pt: 'Travagem automática de alta velocidade / travagem AFUi'
+      0x03:
+        en: 'Low speed automatic braking / FARC2 braking'
+        fr: 'Freinage automatique basse vitesse / freinage FARC2'
+        es: 'Frenado automático a baja velocidad / frenado FARC2'
+        de: 'Automatische Bremsung bei niedriger Geschwindigkeit / FARC2-Bremsung'
+        it: 'Frenata automatica a bassa velocità / frenata FARC2'
+        pl: 'Automatyczne hamowanie przy niskiej prędkości / hamowanie FARC2'
+        ru: 'Автоматическое торможение на низкой скорости / торможение FARC2'
+        zh: '低速自动制动/FARC2制动'
+        hu: 'Alacsony sebességű automatikus fékezés / FARC2 fékezés'
+        pt: 'Travagem automática a baixa velocidade / travagem FARC2'
+
+  DETECTION_DEVICE_DECELERATION_CONTROL_REQUEST:
+    bits: '2.7'
+    comment:
+      en: 'Deceleration control request from the detection device'
+      fr: 'Demande de pilotage de la décélération par le dispositif de détection'
+      es: 'Solicitud de control de deceleración por el dispositivo de detección'
+      de: 'Anforderung der Verzögerungssteuerung durch das Erkennungsgerät'
+      it: 'Richiesta di controllo della decelerazione da parte del dispositivo di rilevamento'
+      pl: 'Żądanie sterowania opóźnieniem przez urządzenie wykrywające'
+      ru: 'Запрос управления замедлением от устройства обнаружения'
+      zh: '探测装置的减速控制请求'
+      hu: 'A lassítás vezérlésének kérése az érzékelő eszköz részéről'
+      pt: 'Pedido de controlo da desaceleração pelo dispositivo de deteção'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No UCF control request'
+        fr: 'Pas de demande de pilotage UCF'
+        es: 'Sin solicitud de control UCF'
+        de: 'Keine UCF-Ansteuerungsanforderung'
+        it: 'Nessuna richiesta di pilotaggio UCF'
+        pl: 'Brak żądania sterowania UCF'
+        ru: 'Нет запроса управления UCF'
+        zh: '无UCF控制请求'
+        hu: 'Nincs UCF vezérlési kérés'
+        pt: 'Sem pedido de controlo UCF'
+      0x01:
+        en: 'UCF control request'
+        fr: 'Demande de pilotage UCF'
+        es: 'Solicitud de control UCF'
+        de: 'UCF-Ansteuerungsanforderung'
+        it: 'Richiesta di comando UCF'
+        pl: 'Żądanie sterowania UCF'
+        ru: 'Запрос управления UCF'
+        zh: 'UCF 控制请求'
+        hu: 'UCF vezérlési kérés'
+        pt: 'Pedido de controlo UCF'
+
+  UNUSED_1:
+    bits: '2.6-2.0'
+    unused: true

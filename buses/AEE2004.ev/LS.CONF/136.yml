@@ -1,0 +1,83 @@
+id: 0x136
+name: 'BSI_SLOW_DATA_2'
+type: 'can'
+length: 2
+comment:
+  en: 'AdBlue (urea) range and display request.'
+  fr: 'Autonomie AdBlue (urée) et demande d''affichage.'
+  es: 'Autonomía de AdBlue (urea) y solicitud de visualización.'
+  de: 'AdBlue-(Harnstoff-)Reichweite und Anzeigeanforderung.'
+  it: 'Autonomia AdBlue (urea) e richiesta di visualizzazione.'
+  pl: 'Zasięg AdBlue (mocznika) i żądanie wyświetlania.'
+  ru: 'Запас хода AdBlue (мочевины) и запрос отображения.'
+  zh: 'AdBlue(尿素)续航里程和显示请求。'
+  hu: 'AdBlue (karbamid) hatótáv és megjelenítési kérés.'
+  pt: 'Autonomia de AdBlue (ureia) e pedido de apresentação.'
+periodicity: ['500ms']
+senders: ['BSI']
+receivers: ['MATT', 'CMB']
+
+signals:
+  UREA_REMAINING_AUTONOMY:
+    bits: '1.7-2.2'
+    comment:
+      en: 'Remaining urea (AdBlue) range'
+      fr: 'Autonomie d''urée (AdBlue) restante'
+      es: 'Autonomía restante de urea (AdBlue)'
+      de: 'Verbleibende Harnstoff-(AdBlue-)Reichweite'
+      it: 'Autonomia residua di urea (AdBlue)'
+      pl: 'Pozostały zasięg na moczniku (AdBlue)'
+      ru: 'Оставшийся запас хода на мочевине (AdBlue)'
+      zh: '尿素(AdBlue)剩余续航里程'
+      hu: 'Fennmaradó AdBlue (karbamid) hatótávolság'
+      pt: 'Autonomia restante de ureia (AdBlue)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 10000
+    units: 'km'
+    invalid: 0x3FFF
+    default: 0x3FFE
+
+  UREA_AUTONOMY_DISPLAY_REQUEST:
+    bits: '2.1'
+    comment:
+      en: 'Request to display urea (AdBlue) range in the instrument cluster'
+      fr: 'Demande d''affichage de l''autonomie d''urée (AdBlue) dans le combiné'
+      es: 'Solicitud de visualización de la autonomía de urea (AdBlue) en el cuadro de instrumentos'
+      de: 'Anforderung zur Anzeige der Harnstoff-(AdBlue-)Reichweite im Kombiinstrument'
+      it: 'Richiesta di visualizzazione dell''autonomia di urea (AdBlue) nel quadro strumenti'
+      pl: 'Żądanie wyświetlenia zasięgu na moczniku (AdBlue) w zestawie wskaźników'
+      ru: 'Запрос отображения запаса хода на мочевине (AdBlue) на приборной панели'
+      zh: '请求在仪表盘显示尿素(AdBlue)续航里程'
+      hu: 'Az AdBlue hatótávolság megjelenítési kérése a műszerfalon'
+      pt: 'Pedido de visualização da autonomia de ureia (AdBlue) no quadro de instrumentos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  UNUSED_1:
+    bits: '2.0'
+    unused: true

@@ -1,0 +1,550 @@
+id: 0x4E0
+name: 'BCD_STATUS'
+type: 'van'
+length: 7
+comment:
+  en: 'Status of the particulate filter additive injection ECU: operational flag and fault flags, cumulated injected additive, fuel cap sensor, additive level and particulate filter downstream temperature.'
+  fr: 'État du système d''injection d''additif : indicateur de fonctionnement et défauts, quantité d''additif injecté cumulée, capteur de bouchon de réservoir, niveau d''additif et température en aval du filtre à particules.'
+  es: 'Estado de la centralita de inyección de aditivo del filtro de partículas: indicador de funcionamiento y de fallo, cantidad acumulada de aditivo inyectado, sensor del tapón de depósito, nivel de aditivo y temperatura aguas abajo del filtro de partículas.'
+  de: 'Status des Steuergeräts für die Additiv-Einspritzung des Partikelfilters: Betriebs- und Fehlerkennung, kumulierte eingespritzte Additivmenge, Tankdeckelsensor, Additivstand und Temperatur stromabwärts des Partikelfilters.'
+  it: 'Stato della centralina di iniezione additivo del filtro antiparticolato: indicatore di funzionamento e guasto, quantità cumulata di additivo iniettato, sensore tappo serbatoio, livello additivo e temperatura a valle del filtro antiparticolato.'
+  pl: 'Stan sterownika wtrysku dodatku do filtra cząstek stałych: flaga pracy i usterek, skumulowana ilość wtryśniętego dodatku, czujnik korka wlewu, poziom dodatku i temperatura za filtrem cząstek stałych.'
+  ru: 'Статус блока управления впрыском присадки сажевого фильтра: флаги работы и неисправности, накопленное количество впрыснутой присадки, датчик крышки бака, уровень присадки и температура за сажевым фильтром.'
+  zh: '颗粒物过滤器添加剂喷射控制单元状态:运行和故障标志、累计喷射添加剂量、油箱盖传感器、添加剂液位及颗粒物过滤器下游温度。'
+  hu: 'A részecskeszűrő adalékbefecskendező vezérlőegységének állapota: üzemi és hibajelző, összesített befecskendezett adalékmennyiség, tanksapka-érzékelő, adalékszint és a részecskeszűrő utáni hőmérséklet.'
+  pt: 'Estado da unidade de controlo de injeção de aditivo do filtro de partículas: indicador operacional e indicadores de avaria, aditivo injetado acumulado, sensor da tampa do depósito, nível de aditivo e temperatura a jusante do filtro de partículas.'
+periodicity: ['1000ms']
+senders: ['ADDGO']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  ADDITIVE_SYSTEM_OPERATIONAL:
+    bits: '2.7'
+    comment:
+      en: 'Additive ECU able to dose additive (system state combining pump, injector, sensor and gauge faults)'
+      fr: 'Le calculateur d''additivation peut doser l''additif (état combinant les défauts pompe, injecteur, capteur et jauge)'
+      es: 'La centralita de aditivo puede dosificar el aditivo (estado que combina los fallos de bomba, inyector, sensor y sonda)'
+      de: 'Additiv-Steuergerät kann Additiv dosieren (Zustand aus Pumpen-, Injektor-, Sensor- und Anzeigefehlern)'
+      it: 'La centralina additivo è in grado di dosare l''additivo (stato che combina i guasti di pompa, iniettore, sensore e indicatore)'
+      pl: 'Sterownik dodatku jest w stanie dozować dodatek (stan łączący usterki pompy, wtryskiwacza, czujnika i wskaźnika)'
+      ru: 'Блок управления присадкой способен дозировать присадку (состояние, объединяющее неисправности насоса, форсунки, датчика и указателя)'
+      zh: '添加剂控制单元能够计量添加剂(综合泵、喷油器、传感器和液位故障的状态)'
+      hu: 'Az adalékadagoló vezérlőegység képes adagolni az adalékot (a szivattyú, injektor, érzékelő és jelző hibáit összesítő állapot)'
+      pt: 'A centralina de aditivo consegue doseá-lo (estado que combina falhas da bomba, injetor, sensor e sonda)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unable to dose additive'
+        fr: 'Incapable d''additiver'
+        es: 'Incapaz de dosificar el aditivo'
+        de: 'Additivdosierung nicht möglich'
+        it: 'Impossibile dosare l''additivo'
+        pl: 'Nie można dozować dodatku'
+        ru: 'Невозможно дозировать присадку'
+        zh: '无法加注添加剂'
+        hu: 'Az adalék adagolása nem lehetséges'
+        pt: 'Incapaz de dosear o aditivo'
+      0x01:
+        en: 'Able to dose additive'
+        fr: 'Capable d''additiver'
+        es: 'Capaz de dosificar aditivo'
+        de: 'Fähig zur Additivdosierung'
+        it: 'In grado di dosare l''additivo'
+        pl: 'Zdolny do dozowania dodatku'
+        ru: 'Способен дозировать присадку'
+        zh: '能够添加添加剂'
+        hu: 'Adalékanyag adagolására képes'
+        pt: 'Capaz de dosear aditivo'
+
+  PUMP_FAULT:
+    bits: '2.6'
+    comment:
+      en: 'Additive pump fault'
+      fr: 'Défaut de la pompe d''additif'
+      es: 'Fallo de la bomba de aditivo'
+      de: 'Fehler der Additivpumpe'
+      it: 'Guasto della pompa additivo'
+      pl: 'Usterka pompy dodatku'
+      ru: 'Неисправность насоса присадки'
+      zh: '添加剂泵故障'
+      hu: 'Adalékszivattyú hibája'
+      pt: 'Falha da bomba de aditivo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Pump fault'
+        fr: 'Défaut de la pompe'
+        es: 'Fallo de la bomba'
+        de: 'Pumpenfehler'
+        it: 'Guasto della pompa'
+        pl: 'Usterka pompy'
+        ru: 'Неисправность насоса'
+        zh: '泵故障'
+        hu: 'Szivattyúhiba'
+        pt: 'Falha da bomba'
+
+  UNUSED_1:
+    bits: '2.5'
+    unused: true
+
+  ECU_FAULT:
+    bits: '2.4'
+    comment:
+      en: 'Additive dosing ECU internal fault'
+      fr: 'Défaut interne du calculateur d''additivation'
+      es: 'Fallo interno de la centralita de dosificación de aditivo'
+      de: 'Interner Fehler des Additiv-Steuergeräts'
+      it: 'Guasto interno della centralina di dosaggio additivo'
+      pl: 'Wewnętrzna usterka sterownika dozowania dodatku'
+      ru: 'Внутренняя неисправность блока управления дозированием присадки'
+      zh: '添加剂计量控制单元内部故障'
+      hu: 'Az adalékadagoló vezérlőegység belső hibája'
+      pt: 'Falha interna da unidade de dosagem de aditivo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'ECU fault'
+        fr: 'Défaut du calculateur'
+        es: 'Fallo de la ECU'
+        de: 'Steuergerätefehler'
+        it: 'Guasto della centralina'
+        pl: 'Usterka sterownika'
+        ru: 'Неисправность блока управления'
+        zh: '控制单元故障'
+        hu: 'Vezérlőegység hiba'
+        pt: 'Falha da unidade de controlo'
+
+  DPF_OUTLET_TEMP_SENSOR_FAULT:
+    bits: '2.3'
+    comment:
+      en: 'Particulate filter outlet temperature sensor fault (always 0 on engines without this sensor)'
+      fr: 'Défaut du capteur de température en sortie du filtre à particules (toujours à 0 sur les moteurs sans ce capteur)'
+      es: 'Fallo del sensor de temperatura de salida del filtro de partículas (siempre a 0 en motores sin este sensor)'
+      de: 'Fehler des Temperatursensors am Partikelfilterausgang (bei Motoren ohne diesen Sensor immer 0)'
+      it: 'Guasto del sensore di temperatura a valle del filtro antiparticolato (sempre 0 sui motori privi di questo sensore)'
+      pl: 'Usterka czujnika temperatury za filtrem cząstek stałych (zawsze 0 w silnikach bez tego czujnika)'
+      ru: 'Неисправность датчика температуры на выходе сажевого фильтра (всегда 0 на двигателях без этого датчика)'
+      zh: '颗粒过滤器出口温度传感器故障(无此传感器的发动机始终为0)'
+      hu: 'A részecskeszűrő kimeneti hőmérséklet-érzékelőjének hibája (az érzékelő nélküli motoroknál mindig 0)'
+      pt: 'Falha do sensor de temperatura à saída do filtro de partículas (sempre a 0 em motores sem este sensor)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Temperature sensor fault'
+        fr: 'Défaut de la sonde de température'
+        es: 'Fallo de la sonda de temperatura'
+        de: 'Temperatursensor-Fehler'
+        it: 'Guasto della sonda di temperatura'
+        pl: 'Usterka czujnika temperatury'
+        ru: 'Неисправность датчика температуры'
+        zh: '温度传感器故障'
+        hu: 'Hőmérséklet-érzékelő hiba'
+        pt: 'Avaria do sensor de temperatura'
+
+  ADDITIVE_LEVEL_SENSOR_FAULT:
+    bits: '2.2'
+    comment:
+      en: 'Additive level sensor fault'
+      fr: 'Défaut du capteur de niveau d''additif'
+      es: 'Fallo del sensor de nivel de aditivo'
+      de: 'Fehler des Additiv-Füllstandssensors'
+      it: 'Guasto del sensore di livello additivo'
+      pl: 'Usterka czujnika poziomu dodatku'
+      ru: 'Неисправность датчика уровня присадки'
+      zh: '添加剂液位传感器故障'
+      hu: 'Adalékszint-érzékelő hibája'
+      pt: 'Falha do sensor de nível de aditivo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Level sensor fault'
+        fr: 'Défaut du capteur de niveau'
+        es: 'Fallo del sensor de nivel'
+        de: 'Fehler des Füllstandssensors'
+        it: 'Guasto del sensore di livello'
+        pl: 'Usterka czujnika poziomu'
+        ru: 'Неисправность датчика уровня'
+        zh: '液位传感器故障'
+        hu: 'Szintérzékelő hiba'
+        pt: 'Avaria do sensor de nível'
+
+  FUEL_GAUGE_FAULT:
+    bits: '2.1'
+    comment:
+      en: 'Fuel gauge data fault (invalid fuel level values)'
+      fr: 'Défaut des données de jauge à carburant (valeurs de niveau invalides)'
+      es: 'Fallo de datos del indicador de combustible (valores de nivel inválidos)'
+      de: 'Fehler der Kraftstoffanzeigedaten (ungültige Füllstandswerte)'
+      it: 'Guasto dei dati dell''indicatore carburante (valori di livello non validi)'
+      pl: 'Usterka danych wskaźnika paliwa (nieprawidłowe wartości poziomu)'
+      ru: 'Ошибка данных указателя уровня топлива (недопустимые значения уровня)'
+      zh: '燃油表数据故障(油位值无效)'
+      hu: 'Üzemanyagszint-jelző adathibája (érvénytelen szintértékek)'
+      pt: 'Falha dos dados do indicador de combustível (valores de nível inválidos)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fuel gauge fault'
+        fr: 'Défaut de la jauge de carburant'
+        es: 'Fallo del indicador de combustible'
+        de: 'Fehler der Kraftstoffanzeige'
+        it: 'Guasto dell''indicatore del livello carburante'
+        pl: 'Usterka wskaźnika paliwa'
+        ru: 'Неисправность указателя уровня топлива'
+        zh: '燃油表故障'
+        hu: 'Az üzemanyagszint-jelző hibája'
+        pt: 'Falha do indicador de combustível'
+
+  FUEL_CAP_SENSOR_FAULT:
+    bits: '2.0'
+    comment:
+      en: 'Fuel cap sensor fault'
+      fr: 'Défaut du capteur de bouchon'
+      es: 'Fallo del sensor del tapón de combustible'
+      de: 'Fehler des Tankdeckelsensors'
+      it: 'Guasto del sensore del tappo'
+      pl: 'Usterka czujnika korka wlewu'
+      ru: 'Неисправность датчика крышки топливного бака'
+      zh: '油箱盖传感器故障'
+      hu: 'Tanksapka-érzékelő hibája'
+      pt: 'Falha do sensor da tampa do depósito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Cap sensor fault'
+        fr: 'Défaut du capteur de bouchon'
+        es: 'Fallo del sensor del tapón'
+        de: 'Fehler des Verschlusssensors'
+        it: 'Guasto del sensore del tappo'
+        pl: 'Usterka czujnika korka'
+        ru: 'Неисправность датчика крышки'
+        zh: '加油口盖传感器故障'
+        hu: 'A kupak érzékelőjének hibája'
+        pt: 'Falha do sensor da tampa'
+
+  ADDITIVE_INJECTED_TOTAL:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Cumulated additive quantity injected since the particulate filter was new, 16-bit MSB first split across two bytes (raw > 65530 invalid)'
+      fr: 'Quantité cumulée d''additif injecté depuis que le filtre à particules est neuf, sur 16 bits MSB en premier répartis sur deux octets (brut > 65530 invalide)'
+      es: 'Cantidad acumulada de aditivo inyectado desde que el filtro de partículas era nuevo, 16 bits con el MSB primero repartidos en dos bytes (bruto > 65530 inválido)'
+      de: 'Kumulierte eingespritzte Additivmenge seit Neuzustand des Partikelfilters, 16 Bit, MSB zuerst, auf zwei Byte verteilt (Rohwert > 65530 ungültig)'
+      it: 'Quantità cumulata di additivo iniettato da quando il filtro antiparticolato era nuovo, 16 bit con MSB per primo su due byte (grezzo > 65530 non valido)'
+      pl: 'Skumulowana ilość dodatku wtryśniętego od nowości filtra cząstek stałych, 16 bitów, MSB jako pierwszy, w dwóch bajtach (surowa wartość > 65530 nieprawidłowa)'
+      ru: 'Суммарное количество присадки, впрыснутой с момента установки нового сажевого фильтра, 16 бит, старший байт первым, в двух байтах (сырое значение > 65530 недопустимо)'
+      zh: '自颗粒过滤器全新以来累计喷射的添加剂量,16位,高字节在前,分两个字节存储(原始值大于65530无效)'
+      hu: 'A részecskeszűrő új állapota óta befecskendezett adalék összesített mennyisége, 16 bit, MSB elöl, két bájtra osztva (65530 feletti nyers érték érvénytelen)'
+      pt: 'Quantidade acumulada de aditivo injetado desde que o filtro de partículas era novo, em 16 bits com o MSB primeiro repartidos em dois bytes (bruto > 65530 inválido)'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 3276500
+    units: 'mg'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  FUEL_CAP_SENSOR:
+    bits: '5.7-5.6'
+    comment:
+      en: 'Fuel filler cap presence sensor'
+      fr: 'Capteur de présence du bouchon de réservoir'
+      es: 'Sensor de presencia del tapón de combustible'
+      de: 'Sensor für die Anwesenheit des Tankdeckels'
+      it: 'Sensore di presenza del tappo del serbatoio carburante'
+      pl: 'Czujnik obecności korka wlewu paliwa'
+      ru: 'Датчик наличия крышки топливного бака'
+      zh: '燃油加油口盖存在传感器'
+      hu: 'Üzemanyag-betöltő sapka jelenlét érzékelője'
+      pt: 'Sensor de presença da tampa do depósito'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Cap absent'
+        fr: 'Bouchon absent'
+        es: 'Tapón ausente'
+        de: 'Deckel fehlt'
+        it: 'Tappo assente'
+        pl: 'Brak korka'
+        ru: 'Крышка отсутствует'
+        zh: '油箱盖缺失'
+        hu: 'A sapka hiányzik'
+        pt: 'Tampão ausente'
+      0x02:
+        en: 'Cap present'
+        fr: 'Bouchon présent'
+        es: 'Tapón presente'
+        de: 'Deckel vorhanden'
+        it: 'Tappo presente'
+        pl: 'Korek obecny'
+        ru: 'Крышка установлена'
+        zh: '油箱盖存在'
+        hu: 'Kupak jelen van'
+        pt: 'Tampa presente'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  ADDITIVE_LOW_LEVEL:
+    bits: '5.5-5.4'
+    comment:
+      en: 'Additive tank minimum level warning (reached when remaining additive covers about 3000 km)'
+      fr: 'Alerte de niveau minimum du réservoir d''additif (atteinte quand l''additif restant permet environ 3000 km)'
+      es: 'Alerta de nivel mínimo del depósito de aditivo (alcanzada cuando el aditivo restante cubre unos 3000 km)'
+      de: 'Warnung für Mindeststand des Additivbehälters (erreicht, wenn das verbleibende Additiv für ca. 3000 km reicht)'
+      it: 'Avviso di livello minimo del serbatoio additivo (raggiunto quando l''additivo residuo copre circa 3000 km)'
+      pl: 'Ostrzeżenie o minimalnym poziomie zbiornika dodatku (osiągane, gdy pozostały dodatek wystarcza na ok. 3000 km)'
+      ru: 'Предупреждение о минимальном уровне бака присадки (срабатывает, когда оставшейся присадки хватает примерно на 3000 км)'
+      zh: '添加剂箱最低液位警告(剩余添加剂可支持约3000公里时触发)'
+      hu: 'Az adaléktartály minimális szintjének figyelmeztetése (akkor jelez, ha a maradék adalék kb. 3000 km-re elegendő)'
+      pt: 'Alerta de nível mínimo do depósito de aditivo (atingida quando o aditivo restante cobre cerca de 3000 km)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Minimum level reached'
+        fr: 'Niveau minimum atteint'
+        es: 'Nivel mínimo alcanzado'
+        de: 'Mindeststand erreicht'
+        it: 'Livello minimo raggiunto'
+        pl: 'Osiągnięto poziom minimalny'
+        ru: 'Достигнут минимальный уровень'
+        zh: '已达到最低液位'
+        hu: 'A minimális szint elérve'
+        pt: 'Nível mínimo atingido'
+      0x02:
+        en: 'Minimum level not reached'
+        fr: 'Niveau minimum non atteint'
+        es: 'Nivel mínimo no alcanzado'
+        de: 'Mindeststand nicht erreicht'
+        it: 'Livello minimo non raggiunto'
+        pl: 'Nie osiągnięto poziomu minimalnego'
+        ru: 'Минимальный уровень не достигнут'
+        zh: '未达到最低液位'
+        hu: 'A minimális szint nincs elérve'
+        pt: 'Nível mínimo não alcançado'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  ADDITIVE_LEVEL:
+    bits: '5.3-5.0'
+    comment:
+      en: 'Additive tank level in fifteenths of full (0 = empty, 15 = full)'
+      fr: 'Niveau du réservoir d''additif en quinzièmes du plein (0 = vide, 15 = plein)'
+      es: 'Nivel del depósito de aditivo en quinceavos del lleno (0 = vacío, 15 = lleno)'
+      de: 'Additivbehälterfüllstand in Fünfzehnteln (0 = leer, 15 = voll)'
+      it: 'Livello del serbatoio additivo in quindicesimi del pieno (0 = vuoto, 15 = pieno)'
+      pl: 'Poziom zbiornika dodatku w piętnastych częściach pełnego (0 = pusty, 15 = pełny)'
+      ru: 'Уровень бака присадки в пятнадцатых долях полного бака (0 = пусто, 15 = полно)'
+      zh: '添加剂箱液位,以满箱的十五分之一为单位(0=空,15=满)'
+      hu: 'Az adaléktartály szintje a teli tartály tizenötödrészeiben (0 = üres, 15 = tele)'
+      pt: 'Nível do depósito de aditivo em quinze avos do cheio (0 = vazio, 15 = cheio)'
+    type: 'enum'
+    factor: 1
+    units: '1/15'
+    values:
+      0x00:
+        en: 'Tank empty'
+        fr: 'Réservoir vide'
+        es: 'Depósito vacío'
+        de: 'Tank leer'
+        it: 'Serbatoio vuoto'
+        pl: 'Zbiornik pusty'
+        ru: 'Бак пуст'
+        zh: '油箱空'
+        hu: 'A tartály üres'
+        pt: 'Depósito vazio'
+      0x0F:
+        en: 'Full'
+        fr: 'Réservoir plein'
+        es: 'Depósito lleno'
+        de: 'Voll'
+        it: 'Pieno'
+        pl: 'Pełny'
+        ru: 'Полный'
+        zh: '已满'
+        hu: 'Tele'
+        pt: 'Depósito cheio'
+
+  DPF_OUTLET_TEMPERATURE_RAW:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Particulate filter outlet temperature, raw ADC value (not in degC); 0xFF when no sensor is fitted'
+      fr: 'Température en sortie du filtre à particules, valeur brute du convertisseur (pas en °C) ; 0xFF si aucun capteur n''est monté'
+      es: 'Temperatura de salida del filtro de partículas, valor bruto del convertidor (no en °C); 0xFF si no hay sensor montado'
+      de: 'Temperatur am Partikelfilterausgang, roher AD-Wandlerwert (nicht in °C); 0xFF, wenn kein Sensor verbaut ist'
+      it: 'Temperatura in uscita dal filtro antiparticolato, valore grezzo del convertitore A/D (non in °C); 0xFF se non è montato alcun sensore'
+      pl: 'Temperatura na wyjściu filtra cząstek stałych, surowa wartość przetwornika A/C (nie w °C); 0xFF, gdy nie zamontowano czujnika'
+      ru: 'Температура на выходе сажевого фильтра, необработанное значение АЦП (не в °C); 0xFF при отсутствии датчика'
+      zh: '颗粒过滤器出口温度,ADC原始值(非摄氏度);未安装传感器时为0xFF'
+      hu: 'A részecskeszűrő kimeneti hőmérséklete, nyers A/D-átalakítási érték (nem °C-ban); 0xFF, ha nincs felszerelve érzékelő'
+      pt: 'Temperatura de saída do filtro de partículas, valor bruto do conversor (não em °C); 0xFF se não houver sensor instalado'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: '°C'
+    invalid: 0xFF
+    default: 0x00
+
+  FOOTER:
+    bits: '7.7-7.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 100ms'
+      fr: 'Aussi observée avec une période de 100ms'
+      es: 'También observada con un periodo de 100ms'
+      de: 'Auch mit einer Periode von 100ms beobachtet'
+      it: 'Osservata anche con un periodo di 100ms'
+      pl: 'Obserwowana także z okresem 100ms'
+      ru: 'Также наблюдалась с периодом 100ms'
+      zh: '也观察到周期为100ms'
+      hu: 'Megfigyelve 100ms periódussal is'
+      pt: 'Também observada com um período de 100ms'
+    periodicity: ['100ms']

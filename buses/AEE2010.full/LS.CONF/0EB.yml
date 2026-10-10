@@ -1,0 +1,1315 @@
+id: 0x0EB
+name: 'RETRACTABLE_ROOF_STATUS_2'
+type: 'can'
+length: 7
+comment:
+  en: 'Retractable hard-top status: authorisation to move, lock state, window state, cabriolet mode requests and roof position.'
+  fr: 'État du toit escamotable : autorisation de mouvement, état de verrouillage, état des vitres, demandes de mode cabriolet et position du toit.'
+  es: 'Estado del techo retráctil: autorización de movimiento, estado de bloqueo, estado de las ventanillas, solicitudes de modo descapotable y posición del techo.'
+  de: 'Status des versenkbaren Hardtops: Bewegungsfreigabe, Verriegelungsstatus, Fensterstatus, Cabrio-Modus-Anforderungen und Dachposition.'
+  it: 'Stato del tettuccio rigido retrattile: autorizzazione al movimento, stato di blocco, stato dei finestrini, richieste di modalità cabriolet e posizione del tetto.'
+  pl: 'Stan chowanego twardego dachu: zezwolenie na ruch, stan blokady, stan szyb, żądania trybu kabriolet i pozycja dachu.'
+  ru: 'Статус складной жёсткой крыши: разрешение на движение, состояние блокировки, состояние окон, запросы режима кабриолет и положение крыши.'
+  zh: '硬顶敞篷车顶状态:移动许可、锁止状态、车窗状态、敞篷模式请求及车顶位置。'
+  hu: 'A behúzható kemény tető állapota: mozgásengedély, zárállapot, ablakállapot, kabrió mód kérések és a tető helyzete.'
+  pt: 'Estado do teto rígido retrátil: autorização de movimento, estado de trancagem, estado do vidro, pedidos do modo cabriolet e posição do teto.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['200ms', 'trigger']
+senders: ['BTE']
+receivers: ['BSI']
+
+signals:
+  WINDOW_UNINITIALIZED:
+    bits: '1.7'
+    comment:
+      en: 'Uninitialised power window'
+      fr: 'Lève-vitre désinitialisé'
+      es: 'Elevalunas desinicializado'
+      de: 'Nicht initialisierter Fensterheber'
+      it: 'Alzacristallo non inizializzato'
+      pl: 'Niezainicjowana szyba'
+      ru: 'Неинициализированный стеклоподъёмник'
+      zh: '未初始化的车窗'
+      hu: 'Nem inicializált ablakemelő'
+      pt: 'Vidro elétrico não inicializado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Window initialized'
+        fr: 'Vitre initialisee'
+        es: 'Ventanilla inicializada'
+        de: 'Fenster initialisiert'
+        it: 'Finestrino inizializzato'
+        pl: 'Szyba zainicjalizowana'
+        ru: 'Окно инициализировано'
+        zh: '车窗已初始化'
+        hu: 'Ablak inicializálva'
+        pt: 'Vidro inicializado'
+      0x01:
+        en: 'Window uninitialised'
+        fr: 'Vitre non initialisée'
+        es: 'Ventanilla no inicializada'
+        de: 'Fensterheber nicht initialisiert'
+        it: 'Vetro non inizializzato'
+        pl: 'Szyba niezainicjowana'
+        ru: 'Стекло не инициализировано'
+        zh: '车窗未初始化'
+        hu: 'Az ablak nincs inicializálva'
+        pt: 'Vidro não inicializado'
+
+  LVEAP_CPC_SUPPLY_HOLD_REQUEST:
+    bits: '1.6'
+    comment:
+      en: 'Request to maintain the +CPC supply voltage of the LVEAP'
+      fr: 'Demande de maintien de l''alimentation +CPC des LVEAP'
+      es: 'Solicitud de mantenimiento de la alimentación +CPC de los LVEAP'
+      de: 'Anforderung zum Halten der +CPC-Versorgungsspannung der LVEAP'
+      it: 'Richiesta di mantenimento dell''alimentazione +CPC dei LVEAP'
+      pl: 'Żądanie utrzymania zasilania +CPC modułów LVEAP'
+      ru: 'Запрос удержания питания +CPC модулей LVEAP'
+      zh: '请求保持LVEAP的+CPC供电'
+      hu: 'A LVEAP +CPC tápfeszültségének fenntartási kérése'
+      pt: 'Pedido de manutenção da alimentação +CPC dos LVEAP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  ROOF_INTERNAL_AUTHORIZATION:
+    bits: '1.5-1.3'
+    comment:
+      en: 'Internal authorization from the roof control unit (BTE)'
+      fr: 'Autorisation interne du boîtier de commande du toit (BTE)'
+      es: 'Autorización interna de la unidad de control del techo (BTE)'
+      de: 'Interne Freigabe des Dachsteuergeräts (BTE)'
+      it: 'Autorizzazione interna della centralina del tetto (BTE)'
+      pl: 'Wewnętrzne zezwolenie sterownika dachu (BTE)'
+      ru: 'Внутреннее разрешение блока управления крышей (BTE)'
+      zh: '车顶控制单元(BTE)内部授权'
+      hu: 'A tetővezérlő egység (BTE) belső engedélye'
+      pt: 'Autorização interna da unidade de comando do tejadilho (BTE)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x01:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x02:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        en: 'Closing'
+        fr: 'Fermeture'
+        es: 'Cierre'
+        de: 'Schließen'
+        it: 'Chiusura'
+        pl: 'Zamykanie'
+        ru: 'Закрытие'
+        zh: '关闭中'
+        hu: 'Zárás'
+        pt: 'A fechar'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Opening/closing'
+        fr: 'Ouverture/fermeture'
+        es: 'Apertura/cierre'
+        de: 'Öffnen/Schließen'
+        it: 'Apertura/chiusura'
+        pl: 'Otwieranie/zamykanie'
+        ru: 'Открытие/закрытие'
+        zh: '打开/关闭'
+        hu: 'Nyitás/zárás'
+        pt: 'Abertura/fecho'
+
+  ROOF_INTERNAL_MOTION_AUTHORIZATION:
+    bits: '1.2-1.0'
+    comment:
+      en: 'Internal authorization to carry out a roof motion'
+      fr: 'Autorisation interne pour réaliser un mouvement de toit'
+      es: 'Autorización interna para realizar un movimiento del techo'
+      de: 'Interne Freigabe zur Durchführung einer Dachbewegung'
+      it: 'Autorizzazione interna per eseguire un movimento del tetto'
+      pl: 'Wewnętrzne zezwolenie na wykonanie ruchu dachu'
+      ru: 'Внутреннее разрешение на выполнение движения крыши'
+      zh: '执行车顶动作的内部授权'
+      hu: 'Belső engedély a tetőmozgatás végrehajtásához'
+      pt: 'Autorização interna para realizar um movimento do tejadilho'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x01:
+        unused: true
+      0x02:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        en: 'Closing'
+        fr: 'Fermeture'
+        es: 'Cierre'
+        de: 'Schließen'
+        it: 'Chiusura'
+        pl: 'Zamykanie'
+        ru: 'Закрытие'
+        zh: '关闭中'
+        hu: 'Zárás'
+        pt: 'A fechar'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  ROOF_POSITION_PERCENT:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Retractable roof position'
+      fr: 'Position du toit rétractable'
+      es: 'Posición del techo retráctil'
+      de: 'Position des Klappdachs'
+      it: 'Posizione del tetto retrattile'
+      pl: 'Pozycja dachu chowanego'
+      ru: 'Положение складной крыши'
+      zh: '折叠车顶位置'
+      hu: 'A nyitható tető helyzete'
+      pt: 'Posição do tejadilho retrátil'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x64
+    default: 0x00
+
+  ROOF_WINDOWS_POSITION_STATE:
+    bits: '2.0'
+    comment:
+      en: 'Window position state for roof operation'
+      fr: 'État de la position des vitres pour la manœuvre du toit'
+      es: 'Estado de la posición de las ventanillas para la maniobra del techo'
+      de: 'Zustand der Fensterposition für die Dachbetätigung'
+      it: 'Stato della posizione dei finestrini per la manovra del tetto'
+      pl: 'Stan pozycji szyb dla manewru dachu'
+      ru: 'Состояние положения стёкол для работы крыши'
+      zh: '车顶操作所需车窗位置状态'
+      hu: 'Az ablakok helyzetének állapota a tető működtetéséhez'
+      pt: 'Estado da posição dos vidros para a operação do teto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not OK'
+        fr: 'Non conforme'
+        es: 'No correcto'
+        de: 'Nicht in Ordnung'
+        it: 'Non corretto'
+        pl: 'Nieprawidłowe'
+        ru: 'Не в норме'
+        zh: '不正常'
+        hu: 'Nem megfelelő'
+        pt: 'Não conforme'
+      0x01:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+
+  ROOF_OPERATION_REQUEST:
+    bits: '3.7-3.5'
+    comment:
+      en: 'Roof operation request'
+      fr: 'Demande de manœuvre du toit'
+      es: 'Solicitud de maniobra del techo'
+      de: 'Anforderung zur Dachbetätigung'
+      it: 'Richiesta di manovra del tetto'
+      pl: 'Żądanie manewru dachu'
+      ru: 'Запрос на операцию с крышей'
+      zh: '车顶操作请求'
+      hu: 'A tető működtetésének kérése'
+      pt: 'Pedido de operação do teto'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Closing request'
+        fr: 'Demande de fermeture'
+        es: 'Solicitud de cierre'
+        de: 'Anforderung Schließen'
+        it: 'Richiesta di chiusura'
+        pl: 'Żądanie zamknięcia'
+        ru: 'Запрос закрытия'
+        zh: '关闭请求'
+        hu: 'Zárási kérés'
+        pt: 'Pedido de fecho'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        en: 'Opening requested'
+        fr: 'Demande d''ouverture'
+        es: 'Apertura solicitada'
+        de: 'Öffnen angefordert'
+        it: 'Apertura richiesta'
+        pl: 'Żądanie otwarcia'
+        ru: 'Запрошено открытие'
+        zh: '请求开启'
+        hu: 'Nyitás kérve'
+        pt: 'Abertura pedida'
+      0x05:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x06:
+        unused: true
+      0x07:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+
+  ROOF_OPERATION_REQUEST_VALIDATED:
+    bits: '3.4-3.2'
+    comment:
+      en: 'Validated roof operation request'
+      fr: 'Demande de manœuvre du toit validée'
+      es: 'Solicitud de maniobra del techo validada'
+      de: 'Validierte Anforderung zur Dachbetätigung'
+      it: 'Richiesta di manovra del tetto convalidata'
+      pl: 'Zatwierdzone żądanie manewru dachu'
+      ru: 'Подтверждённый запрос на операцию с крышей'
+      zh: '已验证的车顶操作请求'
+      hu: 'Érvényesített tetőműködtetési kérés'
+      pt: 'Pedido de operação do teto validado'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Closing request'
+        fr: 'Demande de fermeture'
+        es: 'Solicitud de cierre'
+        de: 'Anforderung Schließen'
+        it: 'Richiesta di chiusura'
+        pl: 'Żądanie zamknięcia'
+        ru: 'Запрос закрытия'
+        zh: '关闭请求'
+        hu: 'Zárási kérés'
+        pt: 'Pedido de fecho'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        en: 'Opening requested'
+        fr: 'Demande d''ouverture'
+        es: 'Apertura solicitada'
+        de: 'Öffnen angefordert'
+        it: 'Apertura richiesta'
+        pl: 'Żądanie otwarcia'
+        ru: 'Запрошено открытие'
+        zh: '请求开启'
+        hu: 'Nyitás kérve'
+        pt: 'Abertura pedida'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+
+  ROOF_EXTERNAL_AUTHORIZATION:
+    bits: '3.1-3.0'
+    comment:
+      en: 'External (vehicle) authorization for the retractable roof'
+      fr: 'Autorisation externe (véhicule) du toit rétractable'
+      es: 'Autorización externa (vehículo) del techo retráctil'
+      de: 'Externe (Fahrzeug-)Freigabe für das Klappdach'
+      it: 'Autorizzazione esterna (veicolo) per il tetto retrattile'
+      pl: 'Zewnętrzne (pojazdowe) zezwolenie na dach chowany'
+      ru: 'Внешнее (от автомобиля) разрешение для складной крыши'
+      zh: '折叠车顶的外部(整车)授权'
+      hu: 'A (jármű felőli) külső engedély a nyitható tetőhöz'
+      pt: 'Autorização externa (veículo) do tejadilho retrátil'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x02:
+        en: 'Allowed'
+        fr: 'Autorisée'
+        es: 'Permitida'
+        de: 'Erlaubt'
+        it: 'Consentita'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+      0x03:
+        unused: true
+
+  ROOF_POSITION_USER_VIEW:
+    bits: '4.7-4.5'
+    comment:
+      en: 'Roof position as shown to the user'
+      fr: 'Position du toit telle que présentée à l''utilisateur'
+      es: 'Posición del techo tal como se muestra al usuario'
+      de: 'Dachposition, wie sie dem Nutzer angezeigt wird'
+      it: 'Posizione del tetto come mostrata all''utente'
+      pl: 'Pozycja dachu prezentowana użytkownikowi'
+      ru: 'Положение крыши, отображаемое пользователю'
+      zh: '向用户显示的车顶位置'
+      hu: 'A felhasználónak megjelenített tetőpozíció'
+      pt: 'Posição do teto apresentada ao utilizador'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x01:
+        en: 'Closing movement'
+        fr: 'Mouvement de fermeture'
+        es: 'Movimiento de cierre'
+        de: 'Schließbewegung'
+        it: 'Movimento di chiusura'
+        pl: 'Ruch zamykania'
+        ru: 'Движение закрытия'
+        zh: '关闭动作'
+        hu: 'Záró mozgás'
+        pt: 'Movimento de fecho'
+      0x02:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+      0x03:
+        en: 'Intermediate'
+        fr: 'Intermédiaire'
+        es: 'Intermedio'
+        de: 'Mittel'
+        it: 'Intermedio'
+        pl: 'Pośredni'
+        ru: 'Промежуточный'
+        zh: '中间'
+        hu: 'Köztes'
+        pt: 'Intermédio'
+      0x04:
+        en: 'Opening movement'
+        fr: 'Mouvement d''ouverture'
+        es: 'Movimiento de apertura'
+        de: 'Öffnungsbewegung'
+        it: 'Movimento di apertura'
+        pl: 'Ruch otwierania'
+        ru: 'Движение открытия'
+        zh: '打开动作'
+        hu: 'Nyitási mozgás'
+        pt: 'Movimento de abertura'
+      0x05:
+        en: 'Convertible'
+        fr: 'Cabriolet'
+        es: 'Descapotable'
+        de: 'Cabrio'
+        it: 'Cabriolet'
+        pl: 'Kabriolet'
+        ru: 'Кабриолет'
+        zh: '敞篷车'
+        hu: 'Kabrió'
+        pt: 'Descapotável'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  ROOF_LOCK_COMMAND:
+    bits: '4.4-4.3'
+    comment:
+      en: 'Roof lock command'
+      fr: 'Commande de verrouillage du toit'
+      es: 'Mando de bloqueo del techo'
+      de: 'Befehl zur Dachverriegelung'
+      it: 'Comando di bloccaggio del tetto'
+      pl: 'Polecenie blokady dachu'
+      ru: 'Команда блокировки крыши'
+      zh: '车顶锁指令'
+      hu: 'A tető zárparancsa'
+      pt: 'Comando de bloqueio do teto'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Pas de commande'
+        es: 'Sin orden'
+        de: 'Kein Befehl'
+        it: 'Nessun comando'
+        pl: 'Brak polecenia'
+        ru: 'Нет команды'
+        zh: '无指令'
+        hu: 'Nincs parancs'
+        pt: 'Sem comando'
+      0x01:
+        en: 'Lock'
+        fr: 'Verrouillage'
+        es: 'Bloqueo'
+        de: 'Verriegelung'
+        it: 'Blocco'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '锁止'
+        hu: 'Zárás'
+        pt: 'Bloqueio'
+      0x02:
+        en: 'Unlock'
+        fr: 'Déverrouillage'
+        es: 'Desbloqueo'
+        de: 'Entriegelung'
+        it: 'Sblocco'
+        pl: 'Odblokowanie'
+        ru: 'Разблокировка'
+        zh: '解锁'
+        hu: 'Kioldás'
+        pt: 'Destrancar'
+      0x03:
+        unused: true
+
+  ROOF_LATCH_SYSTEM_STATE:
+    bits: '4.2-4.1'
+    comment:
+      en: 'Roof latch system state'
+      fr: 'État du système de verrouillage du toit'
+      es: 'Estado del sistema de bloqueo del techo'
+      de: 'Zustand des Dachverriegelungssystems'
+      it: 'Stato del sistema di bloccaggio del tetto'
+      pl: 'Stan systemu blokady dachu'
+      ru: 'Состояние системы блокировки крыши'
+      zh: '车顶锁止系统状态'
+      hu: 'A tetőzár rendszer állapota'
+      pt: 'Estado do sistema de trinco do teto'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Tested'
+        fr: 'Testé'
+        es: 'Probado'
+        de: 'Getestet'
+        it: 'Testato'
+        pl: 'Przetestowane'
+        ru: 'Проверено'
+        zh: '已测试'
+        hu: 'Tesztelve'
+        pt: 'Testado'
+      0x02:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+      0x03:
+        en: 'Not tested'
+        fr: 'Non testé'
+        es: 'No probado'
+        de: 'Nicht getestet'
+        it: 'Non testato'
+        pl: 'Nietestowane'
+        ru: 'Не протестировано'
+        zh: '未测试'
+        hu: 'Nem tesztelve'
+        pt: 'Não testado'
+
+  ROOF_INITIALIZATION_STATE:
+    bits: '4.0'
+    comment:
+      en: 'Roof initialization state'
+      fr: 'État d''initialisation du toit'
+      es: 'Estado de inicialización del techo'
+      de: 'Initialisierungszustand des Dachs'
+      it: 'Stato di inizializzazione del tetto'
+      pl: 'Stan inicjalizacji dachu'
+      ru: 'Состояние инициализации крыши'
+      zh: '车顶初始化状态'
+      hu: 'A tető inicializálási állapota'
+      pt: 'Estado de inicialização do teto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not OK'
+        fr: 'Non conforme'
+        es: 'No correcto'
+        de: 'Nicht in Ordnung'
+        it: 'Non corretto'
+        pl: 'Nieprawidłowe'
+        ru: 'Не в норме'
+        zh: '不正常'
+        hu: 'Nem megfelelő'
+        pt: 'Não conforme'
+      0x01:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+
+  ROOF_UNLOCK_SYSTEM_STATE:
+    bits: '5.7-5.6'
+    comment:
+      en: 'Roof unlocking system state'
+      fr: 'État du système de déverrouillage du toit'
+      es: 'Estado del sistema de desbloqueo del techo'
+      de: 'Zustand des Dachentriegelungssystems'
+      it: 'Stato del sistema di sbloccaggio del tetto'
+      pl: 'Stan systemu odblokowania dachu'
+      ru: 'Состояние системы разблокировки крыши'
+      zh: '车顶解锁系统状态'
+      hu: 'A tetőkioldó rendszer állapota'
+      pt: 'Estado do sistema de desbloqueio do teto'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Unlocked'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
+        de: 'Entriegelt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueado'
+      0x02:
+        en: 'Not unlocked'
+        fr: 'Non déverrouillé'
+        es: 'No desbloqueado'
+        de: 'Nicht entriegelt'
+        it: 'Non sbloccato'
+        pl: 'Nieodblokowane'
+        ru: 'Не разблокировано'
+        zh: '未解锁'
+        hu: 'Nincs kioldva'
+        pt: 'Não destrancado'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ROOF_LOCK_SYSTEM_STATE:
+    bits: '5.5-5.4'
+    comment:
+      en: 'Roof locking system state'
+      fr: 'État du système de verrouillage du toit'
+      es: 'Estado del sistema de bloqueo del techo'
+      de: 'Zustand des Dachverriegelungssystems'
+      it: 'Stato del sistema di bloccaggio del tetto'
+      pl: 'Stan systemu blokowania dachu'
+      ru: 'Состояние системы блокировки крыши'
+      zh: '车顶锁定系统状态'
+      hu: 'A tetőzáró rendszer állapota'
+      pt: 'Estado do sistema de bloqueio do teto'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Not locked'
+        fr: 'Non verrouillé'
+        es: 'No bloqueado'
+        de: 'Nicht verriegelt'
+        it: 'Non bloccato'
+        pl: 'Niezablokowany'
+        ru: 'Не заблокировано'
+        zh: '未锁定'
+        hu: 'Nincs zárva'
+        pt: 'Não bloqueado'
+      0x02:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ECO_MODE_CYCLE_COUNT:
+    bits: '5.3-5.0'
+    comment:
+      en: 'Number of cycles performed in energy-saving mode'
+      fr: 'Nombre de cycles réalisés en mode économie d''énergie'
+      es: 'Número de ciclos realizados en modo de ahorro de energía'
+      de: 'Anzahl der im Energiesparmodus durchgeführten Zyklen'
+      it: 'Numero di cicli eseguiti in modalità di risparmio energetico'
+      pl: 'Liczba cykli wykonanych w trybie oszczędzania energii'
+      ru: 'Количество циклов, выполненных в энергосберегающем режиме'
+      zh: '节能模式下完成的循环次数'
+      hu: 'Az energiatakarékos módban végrehajtott ciklusok száma'
+      pt: 'Número de ciclos realizados em modo de poupança de energia'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: '0'
+        fr: '0'
+        es: '0'
+        de: '0'
+        it: '0'
+        pl: '0'
+        ru: '0'
+        zh: '0'
+        hu: '0'
+        pt: '0'
+      0x01:
+        en: '1'
+        fr: '1'
+        es: '1'
+        de: '1'
+        it: '1'
+        pl: '1'
+        ru: '1'
+        zh: '1'
+        hu: '1'
+        pt: '1'
+      0x02:
+        en: '2'
+        fr: '2'
+        es: '2'
+        de: '2'
+        it: '2'
+        pl: '2'
+        ru: '2'
+        zh: '2'
+        hu: '2'
+        pt: '2'
+      0x03:
+        en: '3'
+        fr: '3'
+        es: '3'
+        de: '3'
+        it: '3'
+        pl: '3'
+        ru: '3'
+        zh: '3'
+        hu: '3'
+        pt: '3'
+      0x04:
+        en: '4'
+        fr: '4'
+        es: '4'
+        de: '4'
+        it: '4'
+        pl: '4'
+        ru: '4'
+        zh: '4'
+        hu: '4'
+        pt: '4'
+      0x05:
+        en: '5'
+        fr: '5'
+        es: '5'
+        de: '5'
+        it: '5'
+        pl: '5'
+        ru: '5'
+        zh: '5'
+        hu: '5'
+        pt: '5'
+      0x06:
+        en: '6'
+        fr: '6'
+        es: '6'
+        de: '6'
+        it: '6'
+        pl: '6'
+        ru: '6'
+        zh: '6'
+        hu: '6'
+        pt: '6'
+      0x07:
+        en: '7'
+        fr: '7'
+        es: '7'
+        de: '7'
+        it: '7'
+        pl: '7'
+        ru: '7'
+        zh: '7'
+        hu: '7'
+        pt: '7'
+      0x08:
+        en: '8'
+        fr: '8'
+        es: '8'
+        de: '8'
+        it: '8'
+        pl: '8'
+        ru: '8'
+        zh: '8'
+        hu: '8'
+        pt: '8'
+      0x09:
+        en: '9'
+        fr: '9'
+        es: '9'
+        de: '9'
+        it: '9'
+        pl: '9'
+        ru: '9'
+        zh: '9'
+        hu: '9'
+        pt: '9'
+      0x0A:
+        en: '10'
+        fr: '10'
+        es: '10'
+        de: '10'
+        it: '10'
+        pl: '10'
+        ru: '10'
+        zh: '10'
+        hu: '10'
+        pt: '10'
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  ROOF_CONVERTIBLE_POSITION_RIGHT:
+    bits: '6.7-6.6'
+    comment:
+      en: 'Right-side retractable roof convertible-position status'
+      fr: 'État de la position cabriolet du toit rétractable, côté droit'
+      es: 'Estado de la posición descapotable del techo retráctil, lado derecho'
+      de: 'Cabrio-Positionsstatus des Klappdachs, rechte Seite'
+      it: 'Stato della posizione cabriolet del tetto retrattile, lato destro'
+      pl: 'Stan pozycji kabrioletu chowanego dachu, strona prawa'
+      ru: 'Состояние положения «кабриолет» складной крыши, правая сторона'
+      zh: '折叠车顶右侧敞篷位置状态'
+      hu: 'A nyitható tető kabrió helyzetének állapota, jobb oldal'
+      pt: 'Estado da posição descapotável do lado direito do teto retrátil'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Sliding roof in convertible position'
+        fr: 'Toit ouvrant en position cabriolet'
+        es: 'Techo corredizo en posición descapotable'
+        de: 'Schiebedach in Cabrio-Position'
+        it: 'Tetto scorrevole in posizione cabriolet'
+        pl: 'Dach przesuwny w pozycji kabriolet'
+        ru: 'Сдвижная крыша в положении кабриолет'
+        zh: '滑动车顶处于敞篷位置'
+        hu: 'Tolótető kabrió helyzetben'
+        pt: 'Teto de abrir em posição convertível'
+      0x02:
+        en: 'Roof in non-convertible position'
+        fr: 'Toit en position non cabriolet'
+        es: 'Techo en posición no descapotable'
+        de: 'Dach in Nicht-Cabrio-Position'
+        it: 'Tetto in posizione non cabriolet'
+        pl: 'Dach w pozycji niekabrioletowej'
+        ru: 'Крыша в положении не кабриолет'
+        zh: '车顶处于非敞篷位置'
+        hu: 'A tető nem kabrió pozícióban'
+        pt: 'Teto em posição não descapotável'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ROOF_CONVERTIBLE_POSITION_LEFT:
+    bits: '6.5-6.4'
+    comment:
+      en: 'Left-side retractable roof convertible-position status'
+      fr: 'État de la position cabriolet du toit rétractable, côté gauche'
+      es: 'Estado de la posición descapotable del techo retráctil, lado izquierdo'
+      de: 'Cabrio-Positionsstatus des Klappdachs, linke Seite'
+      it: 'Stato della posizione cabriolet del tetto retrattile, lato sinistro'
+      pl: 'Stan pozycji kabrioletu chowanego dachu, strona lewa'
+      ru: 'Состояние положения «кабриолет» складной крыши, левая сторона'
+      zh: '折叠车顶左侧敞篷位置状态'
+      hu: 'A nyitható tető kabrió helyzetének állapota, bal oldal'
+      pt: 'Estado da posição descapotável do lado esquerdo do teto retrátil'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Sliding roof in convertible position'
+        fr: 'Toit ouvrant en position cabriolet'
+        es: 'Techo corredizo en posición descapotable'
+        de: 'Schiebedach in Cabrio-Position'
+        it: 'Tetto scorrevole in posizione cabriolet'
+        pl: 'Dach przesuwny w pozycji kabriolet'
+        ru: 'Сдвижная крыша в положении кабриолет'
+        zh: '滑动车顶处于敞篷位置'
+        hu: 'Tolótető kabrió helyzetben'
+        pt: 'Teto de abrir em posição convertível'
+      0x02:
+        en: 'Roof in non-convertible position'
+        fr: 'Toit en position non cabriolet'
+        es: 'Techo en posición no descapotable'
+        de: 'Dach in Nicht-Cabrio-Position'
+        it: 'Tetto in posizione non cabriolet'
+        pl: 'Dach w pozycji niekabrioletowej'
+        ru: 'Крыша в положении не кабриолет'
+        zh: '车顶处于非敞篷位置'
+        hu: 'A tető nem kabrió pozícióban'
+        pt: 'Teto em posição não descapotável'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  ROOF_THERMAL_PROTECTION_STATE:
+    bits: '6.3'
+    comment:
+      en: 'Roof motor thermal protection state'
+      fr: 'État de la protection thermique du moteur de toit'
+      es: 'Estado de la protección térmica del motor del techo'
+      de: 'Zustand des thermischen Schutzes des Dachmotors'
+      it: 'Stato della protezione termica del motore del tetto'
+      pl: 'Stan zabezpieczenia termicznego silnika dachu'
+      ru: 'Состояние тепловой защиты двигателя крыши'
+      zh: '车顶电机热保护状态'
+      hu: 'A tetőmotor hővédelmének állapota'
+      pt: 'Estado da proteção térmica do motor do teto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  UNUSED_1:
+    bits: '6.2-6.0'
+    unused: true
+
+  ROOF_STRIKER_LOCK_STATE_RIGHT:
+    bits: '7.7-7.6'
+    comment:
+      en: 'Locking state of the right roof striker'
+      fr: 'État de verrouillage de la gâche de toit droite'
+      es: 'Estado de bloqueo del enganche del techo derecho'
+      de: 'Verriegelungszustand des rechten Dachschließbolzens'
+      it: 'Stato di bloccaggio del riscontro del tetto destro'
+      pl: 'Stan blokady zaczepu dachu prawego'
+      ru: 'Состояние блокировки правого фиксатора крыши'
+      zh: '右侧车顶锁扣锁止状态'
+      hu: 'A jobb oldali tetőzár-pecek zárási állapota'
+      pt: 'Estado de bloqueio do trinco direito do teto'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+      0x02:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+      0x03:
+        en: 'Not locked'
+        fr: 'Non verrouillé'
+        es: 'No bloqueado'
+        de: 'Nicht verriegelt'
+        it: 'Non bloccato'
+        pl: 'Niezablokowany'
+        ru: 'Не заблокировано'
+        zh: '未锁定'
+        hu: 'Nincs zárva'
+        pt: 'Não bloqueado'
+
+  ROOF_STRIKER_LOCK_STATE_LEFT:
+    bits: '7.5-7.4'
+    comment:
+      en: 'Locking state of the left roof striker'
+      fr: 'État de verrouillage de la gâche de toit gauche'
+      es: 'Estado de bloqueo del enganche del techo izquierdo'
+      de: 'Verriegelungszustand des linken Dachschließbolzens'
+      it: 'Stato di bloccaggio del riscontro del tetto sinistro'
+      pl: 'Stan blokady zaczepu dachu lewego'
+      ru: 'Состояние блокировки левого фиксатора крыши'
+      zh: '左侧车顶锁扣锁止状态'
+      hu: 'A bal oldali tetőzár-pecek zárási állapota'
+      pt: 'Estado de bloqueio do trinco esquerdo do teto'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+      0x02:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+      0x03:
+        en: 'Not locked'
+        fr: 'Non verrouillé'
+        es: 'No bloqueado'
+        de: 'Nicht verriegelt'
+        it: 'Non bloccato'
+        pl: 'Niezablokowany'
+        ru: 'Не заблокировано'
+        zh: '未锁定'
+        hu: 'Nincs zárva'
+        pt: 'Não bloqueado'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 7.7-7.6'
+          fr: 'Aussi observé aux bits 7.7-7.6'
+          es: 'También observado en los bits 7.7-7.6'
+          de: 'Auch an den Bits 7.7-7.6 beobachtet'
+          it: 'Osservato anche ai bit 7.7-7.6'
+          pl: 'Obserwowany także na bitach 7.7-7.6'
+          ru: 'Также наблюдался в битах 7.7-7.6'
+          zh: '也观察到位于位7.7-7.6'
+          hu: 'Megfigyelve a(z) 7.7-7.6 biteken is'
+          pt: 'Também observado nos bits 7.7-7.6'
+        bits: '7.7-7.6'
+
+  ROOF_MOTOR_COMMAND_INCONSISTENCY:
+    bits: '7.3'
+    comment:
+      en: 'Inconsistency detected on the roof motor command'
+      fr: 'Incohérence détectée sur la commande du moteur de toit'
+      es: 'Incoherencia detectada en el mando del motor del techo'
+      de: 'Erkannte Unstimmigkeit im Dachmotorbefehl'
+      it: 'Incoerenza rilevata sul comando del motore del tetto'
+      pl: 'Wykryto niespójność w poleceniu silnika dachu'
+      ru: 'Обнаружено несоответствие в команде двигателя крыши'
+      zh: '检测到车顶电机指令不一致'
+      hu: 'Következetlenség észlelve a tetőmotor parancsában'
+      pt: 'Inconsistência detetada no comando do motor do teto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not detected'
+        fr: 'Non détectée'
+        es: 'No detectada'
+        de: 'Nicht erkannt'
+        it: 'Non rilevata'
+        pl: 'Nie wykryto'
+        ru: 'Не обнаружено'
+        zh: '未检测到'
+        hu: 'Nincs észlelve'
+        pt: 'Não detetada'
+      0x01:
+        en: 'detected'
+        fr: 'détectée'
+        es: 'Detectado'
+        de: 'Erkannt'
+        it: 'Rilevato'
+        pl: 'Wykryto'
+        ru: 'Обнаружено'
+        zh: '已检测到'
+        hu: 'Érzékelve'
+        pt: 'detetado'
+
+  ROOF_LOCK_COMMAND_INCONSISTENCY:
+    bits: '7.2'
+    comment:
+      en: 'Inconsistency detected on the roof lock command'
+      fr: 'Incohérence détectée sur la commande de verrouillage du toit'
+      es: 'Incoherencia detectada en el mando de bloqueo del techo'
+      de: 'Erkannte Unstimmigkeit im Dachverriegelungsbefehl'
+      it: 'Incoerenza rilevata sul comando di bloccaggio del tetto'
+      pl: 'Wykryto niespójność w poleceniu blokady dachu'
+      ru: 'Обнаружено несоответствие в команде блокировки крыши'
+      zh: '检测到车顶锁指令不一致'
+      hu: 'Következetlenség észlelve a tetőzár parancsában'
+      pt: 'Inconsistência detetada no comando do trinco do teto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not detected'
+        fr: 'Non détectée'
+        es: 'No detectada'
+        de: 'Nicht erkannt'
+        it: 'Non rilevata'
+        pl: 'Nie wykryto'
+        ru: 'Не обнаружено'
+        zh: '未检测到'
+        hu: 'Nincs észlelve'
+        pt: 'Não detetada'
+      0x01:
+        en: 'detected'
+        fr: 'détectée'
+        es: 'Detectado'
+        de: 'Erkannt'
+        it: 'Rilevato'
+        pl: 'Wykryto'
+        ru: 'Обнаружено'
+        zh: '已检测到'
+        hu: 'Érzékelve'
+        pt: 'detetado'
+
+  UNUSED_2:
+    bits: '7.1-7.0'
+    unused: true

@@ -1,0 +1,408 @@
+id: 0x482
+name: 'STOP_START_SUPERVISOR_DATA'
+type: 'can'
+length: 6
+comment:
+  en: 'Stop-start supervisor data: system fault, button pressed, low-voltage battery state of charge and inhibition status.'
+  fr: 'Données du superviseur stop-start : défaut système, bouton appuyé, état de charge batterie basse tension et état d''inhibition.'
+  es: 'Datos del supervisor stop-start: fallo del sistema, botón pulsado, estado de carga de la batería de baja tensión y estado de inhibición.'
+  de: 'Daten des Stopp-Start-Supervisors: Systemfehler, Taster gedrückt, Ladezustand der Niederspannungsbatterie und Sperrstatus.'
+  it: 'Dati del supervisore stop-start: guasto sistema, pulsante premuto, stato di carica della batteria a bassa tensione e stato di inibizione.'
+  pl: 'Dane nadzorcy stop-start: usterka systemu, wciśnięty przycisk, stan naładowania akumulatora niskiego napięcia i stan blokady.'
+  ru: 'Данные супервизора старт-стоп: неисправность системы, нажатие кнопки, уровень заряда низковольтной батареи и статус блокировки.'
+  zh: '启停监控数据:系统故障、按钮按下、低压电池充电状态和抑制状态。'
+  hu: 'Stop-start felügyeleti adatok: rendszerhiba, gomb megnyomva, kisfeszültségű akkumulátor töltöttségi állapota és letiltási állapot.'
+  pt: 'Dados do supervisor do stop-start: avaria do sistema, botão premido, estado de carga da bateria de baixa tensão e estado de inibição.'
+observations:
+  en: 'On change of the powertrain operating status. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur changement de l''état de fonctionnement du GMP. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al cambiar el estado de funcionamiento del grupo motopropulsor. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Änderung des Betriebszustands des Antriebsstrangs. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Al cambiamento dello stato di funzionamento del gruppo motopropulsore. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Przy zmianie stanu pracy układu napędowego. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении рабочего состояния силового агрегата. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '动力总成运行状态变化时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A hajtáslánc üzemállapotának változásakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança do estado de funcionamento do grupo motopropulsor. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['100ms', 'trigger']
+senders: ['SCDT', 'AR2S']
+receivers: ['BSI', 'BVA']
+
+signals:
+  POWERTRAIN_STATUS:
+    bits: '1.7-1.5'
+    comment:
+      en: 'Powertrain operating status (off, stopped, starting, restarting, running)'
+      fr: 'État de fonctionnement du groupe motopropulseur (coupé, arrêté, en démarrage, en redémarrage, en marche)'
+      es: 'Estado de funcionamiento del grupo motopropulsor (apagado, parado, arrancando, reiniciando, en marcha)'
+      de: 'Betriebsstatus des Antriebsstrangs (aus, gestoppt, startend, neustartend, laufend)'
+      it: 'Stato di funzionamento del gruppo motopropulsore (spento, fermo, in avviamento, in riavvio, in funzione)'
+      pl: 'Stan pracy zespołu napędowego (wyłączony, zatrzymany, uruchamianie, ponowne uruchamianie, pracujący)'
+      ru: 'Рабочее состояние силового агрегата (выключен, остановлен, запуск, перезапуск, работает)'
+      zh: '动力总成运行状态(关闭、停止、启动中、重启中、运转中)'
+      hu: 'A hajtáslánc üzemállapota (kikapcsolva, leállítva, indul, újraindul, üzemel)'
+      pt: 'Estado de funcionamento do grupo motopropulsor (desligado, parado, a arrancar, a reiniciar, em marcha)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Powertrain cut'
+        fr: 'GMP coupé'
+        es: 'Grupo motopropulsor cortado'
+        de: 'Antriebsstrang abgeschaltet'
+        it: 'Gruppo propulsore disinserito'
+        pl: 'Układ napędowy odcięty'
+        ru: 'Силовой агрегат отключён'
+        zh: '动力总成已切断'
+        hu: 'A hajtáslánc lekapcsolva'
+        pt: 'Grupo motopropulsor cortado'
+      0x01:
+        en: 'Powertrain stopped'
+        fr: 'GMP arrêté'
+        es: 'Grupo motopropulsor detenido'
+        de: 'Antriebsstrang gestoppt'
+        it: 'Gruppo propulsore fermo'
+        pl: 'Układ napędowy zatrzymany'
+        ru: 'Силовой агрегат остановлен'
+        zh: '动力总成已停止'
+        hu: 'A hajtáslánc leállítva'
+        pt: 'Grupo motopropulsor parado'
+      0x02:
+        en: 'Powertrain starting'
+        fr: 'Groupe motopropulseur en démarrage'
+        es: 'Grupo motopropulsor en arranque'
+        de: 'Antriebsstrang startet'
+        it: 'Gruppo motopropulsore in avviamento'
+        pl: 'Zespół napędowy w trakcie rozruchu'
+        ru: 'Силовой агрегат запускается'
+        zh: '动力总成启动中'
+        hu: 'Az erőátviteli rendszer indul'
+        pt: 'Grupo motopropulsor a arrancar'
+      0x03:
+        en: 'Powertrain restarting'
+        fr: 'GMP en redémarrage'
+        es: 'Cadena cinemática en reinicio'
+        de: 'Antriebsstrang startet neu'
+        it: 'Trasmissione in fase di riavvio'
+        pl: 'Zespół napędowy w trakcie ponownego uruchamiania'
+        ru: 'Силовой агрегат перезапускается'
+        zh: '动力总成重启中'
+        hu: 'A hajtáslánc újraindul'
+        pt: 'Grupo motopropulsor a reiniciar'
+      0x04:
+        en: 'Powertrain running'
+        fr: 'Groupe motopropulseur en fonctionnement'
+        es: 'Grupo motopropulsor en funcionamiento'
+        de: 'Antriebsstrang in Betrieb'
+        it: 'Gruppo motopropulsore in funzione'
+        pl: 'Układ napędowy pracuje'
+        ru: 'Силовой агрегат работает'
+        zh: '动力总成运转中'
+        hu: 'A hajtáslánc üzemel'
+        pt: 'Grupo motopropulsor em funcionamento'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  STOP_START_BUTTON_PRESSED:
+    bits: '1.3'
+    comment:
+      en: 'Stop & Start inhibit button pressed by the driver'
+      fr: 'Bouton d''inhibition Stop & Start enfoncé par le conducteur'
+      es: 'Botón de inhibición Stop & Start pulsado por el conductor'
+      de: 'Stop & Start-Deaktivierungstaste vom Fahrer gedrückt'
+      it: 'Pulsante di disattivazione Stop & Start premuto dal conducente'
+      pl: 'Przycisk wyłączenia Stop & Start wciśnięty przez kierowcę'
+      ru: 'Кнопка отключения Stop & Start нажата водителем'
+      zh: '驾驶员按下Stop & Start禁用按钮'
+      hu: 'A vezető megnyomta a Stop & Start letiltó gombot'
+      pt: 'Botão de inibição Stop & Start premido pelo condutor'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Push released'
+        fr: 'Bouton relâché'
+        es: 'Pulsador liberado'
+        de: 'Taste losgelassen'
+        it: 'Pulsante rilasciato'
+        pl: 'Przycisk zwolniony'
+        ru: 'Кнопка отпущена'
+        zh: '按钮释放'
+        hu: 'Gomb elengedve'
+        pt: 'Botão libertado'
+      0x01:
+        en: 'Push button pressed'
+        fr: 'Bouton poussoir appuyé'
+        es: 'Botón pulsador presionado'
+        de: 'Taster gedrückt'
+        it: 'Pulsante premuto'
+        pl: 'Naciśnięto przycisk'
+        ru: 'Кнопка нажата'
+        zh: '按钮已按下'
+        hu: 'Nyomógomb megnyomva'
+        pt: 'Botão pressionável pressionado'
+
+  STOP_START_SYSTEM_FAULT:
+    bits: '1.2'
+    comment:
+      en: 'Stop & Start system fault status (function available or unavailable)'
+      fr: 'État de défaut du système Stop & Start (fonction disponible ou indisponible)'
+      es: 'Estado de fallo del sistema Stop & Start (función disponible o no disponible)'
+      de: 'Fehlerstatus des Stop & Start-Systems (Funktion verfügbar oder nicht verfügbar)'
+      it: 'Stato di guasto del sistema Stop & Start (funzione disponibile o non disponibile)'
+      pl: 'Stan usterki systemu Stop & Start (funkcja dostępna lub niedostępna)'
+      ru: 'Статус неисправности системы Stop & Start (функция доступна или недоступна)'
+      zh: 'Stop & Start系统故障状态(功能可用或不可用)'
+      hu: 'A Stop & Start rendszer hibaállapota (funkció elérhető vagy nem elérhető)'
+      pt: 'Estado de falha do sistema Stop & Start (função disponível ou indisponível)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Stop-and-start function available'
+        fr: 'Fonction Stop & Start disponible'
+        es: 'Función Stop & Start disponible'
+        de: 'Stop & Start-Funktion verfügbar'
+        it: 'Funzione Stop & Start disponibile'
+        pl: 'Funkcja Stop & Start dostępna'
+        ru: 'Функция Stop & Start доступна'
+        zh: '启停功能可用'
+        hu: 'Stop & Start funkció elérhető'
+        pt: 'Função stop-and-start disponível'
+      0x01:
+        en: 'Stop & Start function unavailable due to a fault'
+        fr: 'Fonction Stop & Start indisponible en raison d''une défaillance'
+        es: 'Función Stop & Start no disponible debido a un fallo'
+        de: 'Start-Stopp-Funktion aufgrund eines Fehlers nicht verfügbar'
+        it: 'Funzione Stop & Start non disponibile a causa di un guasto'
+        pl: 'Funkcja Stop & Start niedostępna z powodu usterki'
+        ru: 'Функция Стоп-старт недоступна из-за неисправности'
+        zh: '由于故障,启停功能不可用'
+        hu: 'Stop & Start funkció hiba miatt nem elérhető'
+        pt: 'Função Stop & Start indisponível devido a uma falha'
+
+  UNUSED_1:
+    bits: '1.1-1.0'
+    unused: true
+
+  UNUSED_2:
+    bits: '2.7-2.6'
+    unused: true
+
+  READINESS_CODE_STATUS:
+    bits: '2.5'
+    comment:
+      en: 'Completion status of on-board diagnostic readiness code tests'
+      fr: 'État d''achèvement des tests du code de disponibilité (Readiness Code) du diagnostic embarqué'
+      es: 'Estado de finalización de las pruebas del código de disponibilidad (Readiness Code) del diagnóstico a bordo'
+      de: 'Abschlussstatus der Readiness-Code-Tests der On-Board-Diagnose'
+      it: 'Stato di completamento dei test del codice di disponibilità (Readiness Code) della diagnosi di bordo'
+      pl: 'Stan ukończenia testów kodu gotowości (Readiness Code) diagnostyki pokładowej'
+      ru: 'Статус завершения тестов кода готовности (Readiness Code) бортовой диагностики'
+      zh: '车载诊断就绪代码(Readiness Code)测试完成状态'
+      hu: 'A fedélzeti diagnosztika készenléti kód (Readiness Code) teszteinek befejezési állapota'
+      pt: 'Estado de conclusão dos testes do código de disponibilidade (Readiness Code) do diagnóstico de bordo'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Done'
+        fr: 'Fait'
+        es: 'Hecho'
+        de: 'Erledigt'
+        it: 'Fatto'
+        pl: 'Wykonano'
+        ru: 'Выполнено'
+        zh: '已完成'
+        hu: 'Kész'
+        pt: 'Concluído'
+      0x01:
+        en: 'Not done'
+        fr: 'Non réalisé'
+        es: 'No realizado'
+        de: 'Nicht durchgeführt'
+        it: 'Non eseguito'
+        pl: 'Niewykonane'
+        ru: 'Не выполнено'
+        zh: '未完成'
+        hu: 'Nem végezték el'
+        pt: 'Não realizado'
+
+  STOP_START_INHIBITED:
+    bits: '2.4'
+    comment:
+      en: 'Stop & Start function inhibited due to a fault or driver request'
+      fr: 'Fonction Stop & Start inhibée suite à un défaut ou à une demande du conducteur'
+      es: 'Función Stop & Start inhibida por un fallo o una solicitud del conductor'
+      de: 'Stop & Start-Funktion aufgrund eines Fehlers oder einer Fahreranforderung deaktiviert'
+      it: 'Funzione Stop & Start inibita a causa di un guasto o di una richiesta del conducente'
+      pl: 'Funkcja Stop & Start zablokowana z powodu usterki lub żądania kierowcy'
+      ru: 'Функция Stop & Start отключена из-за неисправности или запроса водителя'
+      zh: '因故障或驾驶员请求而禁用Stop & Start功能'
+      hu: 'A Stop & Start funkció hiba vagy vezetői kérés miatt letiltva'
+      pt: 'Função Stop & Start inibida na sequência de uma falha ou de um pedido do condutor'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Stop&start function active'
+        fr: 'Fonction start&stop active'
+        es: 'Función start&stop activa'
+        de: 'Start&Stop-Funktion aktiv'
+        it: 'Funzione start&stop attiva'
+        pl: 'Funkcja start&stop aktywna'
+        ru: 'Функция старт-стоп активна'
+        zh: '启停功能激活'
+        hu: 'Start&stop funkció aktív'
+        pt: 'Função Start&Stop ativa'
+      0x01:
+        en: 'Stop & Start function cancelled'
+        fr: 'Fonction Stop & Start annulée'
+        es: 'Función Stop & Start cancelada'
+        de: 'Stop & Start-Funktion abgebrochen'
+        it: 'Funzione Stop & Start annullata'
+        pl: 'Funkcja Stop & Start anulowana'
+        ru: 'Функция Stop & Start отменена'
+        zh: '自动启停功能已取消'
+        hu: 'Stop & Start funkció megszakítva'
+        pt: 'Função Stop & Start cancelada'
+
+  UNUSED_3:
+    bits: '2.3-2.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '3.7-3.6'
+    unused: true
+
+  UNUSED_5:
+    bits: '3.5-3.4'
+    unused: true
+
+  UNUSED_6:
+    bits: '3.3'
+    unused: true
+
+  UNUSED_7:
+    bits: '3.2-3.0'
+    unused: true
+
+  UNUSED_8:
+    bits: '4.7-4.3'
+    unused: true
+
+  MIL_ON_COUNTER_RESET_REQUEST:
+    bits: '4.2'
+    comment:
+      en: 'Request to reset the MIL-ON distance counters'
+      fr: 'Demande de remise à zéro des compteurs de distance voyant MIL allumé'
+      es: 'Solicitud de reinicio de los contadores de distancia con testigo MIL encendido'
+      de: 'Anforderung zum Zurücksetzen der Kilometerzähler bei aktiver MIL-Warnleuchte'
+      it: 'Richiesta di azzeramento dei contatori di distanza con spia MIL accesa'
+      pl: 'Żądanie zerowania liczników przebiegu przy zapalonej kontrolce MIL'
+      ru: 'Запрос на сброс счётчиков пробега при включенной лампе MIL'
+      zh: 'MIL指示灯点亮里程计数器复位请求'
+      hu: 'A MIL jelzőlámpa világítása alatti távolságszámlálók nullázási kérése'
+      pt: 'Pedido de reinicialização dos contadores de distância com luz avisadora MIL acesa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'MIL-on distance counter increment'
+        fr: 'Incrémentation du compteur de distance avec voyant MIL allumé'
+        es: 'Incremento del contador de distancia con testigo MIL encendido'
+        de: 'Erhöhung des Kilometerzählers bei eingeschalteter MIL-Leuchte'
+        it: 'Incremento del contatore di distanza con spia MIL accesa'
+        pl: 'Zwiększenie licznika dystansu przy zapalonej lampce MIL'
+        ru: 'Увеличение счётчика пробега при включённой лампе MIL'
+        zh: 'MIL灯亮起时的里程计数器递增'
+        hu: 'A távolságszámláló növelése a MIL lámpa világítása mellett'
+        pt: 'Incremento do contador de distância com testemunho MIL aceso'
+      0x01:
+        en: 'Km counter reset possible'
+        fr: 'Réinitialisation possible du compteur km'
+        es: 'Reinicio posible del contador km'
+        de: 'Kilometerzähler-Reset möglich'
+        it: 'Reset possibile del contachilometri'
+        pl: 'Możliwe zresetowanie licznika km'
+        ru: 'Возможен сброс счётчика км'
+        zh: '可重置公里计数器'
+        hu: 'Km-számláló visszaállítása lehetséges'
+        pt: 'Reinicialização possível do conta-quilómetros'
+
+  UNUSED_9:
+    bits: '4.1'
+    unused: true
+
+  MIL_LAMP_REQUEST_AR2S:
+    bits: '4.0'
+    comment:
+      en: 'MIL lamp lighting request (AR2S)'
+      fr: 'Demande d''allumage du témoin MIL via l''AR2S'
+      es: 'Solicitud de encendido del testigo MIL a través del AR2S'
+      de: 'Anforderung zum Einschalten der MIL-Warnleuchte über AR2S'
+      it: 'Richiesta di accensione della spia MIL tramite l''AR2S'
+      pl: 'Żądanie zapalenia kontrolki MIL przez AR2S'
+      ru: 'Запрос включения лампы MIL через AR2S'
+      zh: '通过AR2S请求点亮MIL故障灯'
+      hu: 'A MIL jelzőlámpa bekapcsolási kérése az AR2S-en keresztül'
+      pt: 'Pedido de acendimento do testemunho MIL via AR2S'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No lighting requested'
+        fr: 'Pas d''allumage demandé'
+        es: 'Sin encendido solicitado'
+        de: 'Kein Einschalten angefordert'
+        it: 'Nessuna accensione richiesta'
+        pl: 'Brak żądania włączenia'
+        ru: 'Нет запроса на включение'
+        zh: '未请求点亮'
+        hu: 'Nincs bekapcsolási kérés'
+        pt: 'Sem acendimento pedido'
+      0x01:
+        en: 'Lighting requested'
+        fr: 'Allumage demandé'
+        es: 'Encendido solicitado'
+        de: 'Einschalten angefordert'
+        it: 'Accensione richiesta'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '请求点亮'
+        hu: 'Bekapcsolás kérve'
+        pt: 'Acendimento pedido'
+
+  LV_BATTERY_SOC:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Low-voltage battery state of charge'
+      fr: 'État de charge de la batterie basse tension'
+      es: 'Estado de carga de la batería de baja tensión'
+      de: 'Ladezustand der Niederspannungsbatterie'
+      it: 'Stato di carica della batteria a bassa tensione'
+      pl: 'Stan naładowania akumulatora niskiego napięcia'
+      ru: 'Уровень заряда низковольтной батареи'
+      zh: '低压蓄电池荷电状态(SOC)'
+      hu: 'A kisfeszültségű akkumulátor töltöttségi állapota'
+      pt: 'Estado de carga da bateria de baixa tensão'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  UNUSED_10:
+    bits: '6.7-6.0'
+    unused: true

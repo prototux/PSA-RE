@@ -1,0 +1,250 @@
+id: 0x2A7
+name: 'CRUISE_CONTROL_PRESET_SPEEDS'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ENGINE_SPEED_CONTROLLER_MIN_TORQUE_LIMIT:
+    bits: '2.7-3.3'
+    comment:
+      en: 'Minimum torque limit of the engine speed controller'
+      fr: 'Limite de couple minimum du régulateur de régime'
+      es: 'Límite de par mínimo del regulador de régimen'
+      de: 'Minimale Drehmomentgrenze des Drehzahlreglers'
+      it: 'Limite di coppia minima del regolatore di regime'
+      pl: 'Dolny limit momentu obrotowego regulatora prędkości obrotowej'
+      ru: 'Предел минимального момента регулятора частоты вращения'
+      zh: '转速调节器最小扭矩限值'
+      hu: 'A fordulatszám-szabályozó minimális nyomatékhatára'
+      pt: 'Limite mínimo de binário do regulador de regime do motor'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 0
+    units: 'Nm'
+    invalid: 0x1FFF
+    default: 0x1F40
+
+  ENGINE_SPEED_CONTROLLER_MAX_TORQUE_LIMIT:
+    bits: '3.2-5.6'
+    comment:
+      en: 'Maximum torque limit of the engine speed controller'
+      fr: 'Limite de couple maximum du régulateur de régime'
+      es: 'Límite de par máximo del regulador de régimen'
+      de: 'Maximale Drehmomentgrenze des Drehzahlreglers'
+      it: 'Limite di coppia massima del regolatore di regime'
+      pl: 'Górny limit momentu obrotowego regulatora prędkości obrotowej'
+      ru: 'Предел максимального момента регулятора частоты вращения'
+      zh: '转速调节器最大扭矩限值'
+      hu: 'A fordulatszám-szabályozó maximális nyomatékhatára'
+      pt: 'Limite máximo de binário do regulador de regime do motor'
+    type: 'uint'
+    factor: 0.0625
+    min: 0
+    max: 500
+    units: 'Nm'
+    invalid: 0x1FFF
+    default: 0x00
+
+  HV_BATTERY_MAX_CURRENT:
+    bits: '5.5-6.2'
+    comment:
+      en: 'Maximum current accepted by the high-voltage battery'
+      fr: 'Courant maximum admissible par la batterie haute tension'
+      es: 'Corriente máxima admisible por la batería de alta tensión'
+      de: 'Maximal zulässiger Strom der Hochvoltbatterie'
+      it: 'Corrente massima ammissibile dalla batteria ad alta tensione'
+      pl: 'Maksymalny prąd dopuszczalny dla akumulatora wysokiego napięcia'
+      ru: 'Максимально допустимый ток высоковольтной батареи'
+      zh: '高压电池允许的最大电流'
+      hu: 'A nagyfeszültségű akkumulátor által megengedett maximális áram'
+      pt: 'Corrente máxima admissível pela bateria de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 250
+    units: 'A'
+    invalid: 0xFFF
+    default: 0x9C4
+
+  HV_BATTERY_MIN_CURRENT:
+    bits: '6.1-8.6'
+    comment:
+      en: 'Minimum current accepted by the high-voltage battery'
+      fr: 'Courant minimum admissible par la batterie haute tension'
+      es: 'Corriente mínima admisible por la batería de alta tensión'
+      de: 'Minimal zulässiger Strom der Hochvoltbatterie'
+      it: 'Corrente minima ammissibile dalla batteria ad alta tensione'
+      pl: 'Minimalny prąd dopuszczalny dla akumulatora wysokiego napięcia'
+      ru: 'Минимально допустимый ток высоковольтной батареи'
+      zh: '高压电池允许的最小电流'
+      hu: 'A nagyfeszültségű akkumulátor által megengedett minimális áram'
+      pt: 'Corrente mínima admissível pela bateria de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    offset: -250
+    min: -250
+    max: 0
+    units: 'A'
+    invalid: 0xFFF
+    default: 0x00
+
+  FRONT_INVERTER_MODE_REQUEST:
+    bits: '8.5-8.2'
+    comment:
+      en: 'Front inverter operating mode request'
+      fr: 'Consigne de mode de pilotage de l''onduleur avant'
+      es: 'Consigna de modo de control del inversor delantero'
+      de: 'Betriebsmodus-Anforderung des vorderen Wechselrichters'
+      it: 'Richiesta di modalità di comando dell''inverter anteriore'
+      pl: 'Żądany tryb sterowania falownika przedniego'
+      ru: 'Запрос режима управления передним инвертором'
+      zh: '前逆变器工作模式请求'
+      hu: 'Az első inverter üzemmódjának kérése'
+      pt: 'Consigna de modo de controlo do inversor dianteiro'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Czuwanie'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x01:
+        en: 'Internal speed control'
+        fr: 'Régulation interne de régime'
+        es: 'Regulación interna de régimen'
+        de: 'Interne Drehzahlregelung'
+        it: 'Regolazione interna del regime'
+        pl: 'Wewnętrzna regulacja obrotów'
+        ru: 'Внутреннее регулирование оборотов'
+        zh: '内部转速调节'
+        hu: 'Belső fordulatszám-szabályozás'
+        pt: 'Regulação interna de regime'
+      0x02:
+        en: 'Torque control'
+        fr: 'Régulation de couple'
+        es: 'Regulación de par'
+        de: 'Drehmomentregelung'
+        it: 'Regolazione di coppia'
+        pl: 'Regulacja momentu obrotowego'
+        ru: 'Регулирование крутящего момента'
+        zh: '扭矩调节'
+        hu: 'Nyomatékszabályozás'
+        pt: 'Regulação de binário'
+      0x03:
+        en: 'External speed control'
+        fr: 'Régulation externe de régime'
+        es: 'Regulación externa de régimen'
+        de: 'Externe Drehzahlregelung'
+        it: 'Regolazione esterna del regime'
+        pl: 'Zewnętrzna regulacja obrotów'
+        ru: 'Внешнее регулирование оборотов'
+        zh: '外部转速调节'
+        hu: 'Külső fordulatszám-szabályozás'
+        pt: 'Regulação externa do regime'
+      0x04:
+        en: 'Voltage control'
+        fr: 'Régulation de tension'
+        es: 'Control de tensión'
+        de: 'Spannungsregelung'
+        it: 'Regolazione di tensione'
+        pl: 'Regulacja napięcia'
+        ru: 'Регулирование напряжения'
+        zh: '电压调节'
+        hu: 'Feszültségszabályozás'
+        pt: 'Controlo de tensão'
+      0x05:
+        en: 'Offset angle adaptation'
+        fr: 'Adaptation du décalage d''angle'
+        es: 'Adaptación del desplazamiento angular'
+        de: 'Anpassung des Winkeloffsets'
+        it: 'Adattamento dell''offset angolare'
+        pl: 'Adaptacja przesunięcia kąta'
+        ru: 'Адаптация смещения угла'
+        zh: '角度偏移适应'
+        hu: 'Szögeltolás-adaptáció'
+        pt: 'Adaptação do desvio de ângulo'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Shut off'
+        fr: 'Coupé'
+        es: 'Cortado'
+        de: 'Abgeschaltet'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Отключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Cortado'

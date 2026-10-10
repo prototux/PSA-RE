@@ -1,0 +1,267 @@
+id: 0x0B5
+name: 'HEATED_STEERING_WHEEL_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Heated steering wheel status: heating state, temperature, degraded-mode and context-loss events, fault response.'
+  fr: 'État du volant chauffant : état de chauffe, température, événements de mode dégradé et de perte de contexte, réponse de défaut.'
+  es: 'Estado del volante calefactado: estado de calefacción, temperatura, eventos de modo degradado y de pérdida de contexto, respuesta de fallo.'
+  de: 'Status der Lenkradheizung: Heizzustand, Temperatur, Ereignisse für degradierten Modus und Kontextverlust, Fehlerrückmeldung.'
+  it: 'Stato del volante riscaldato: stato di riscaldamento, temperatura, eventi di modalità degradata e perdita di contesto, risposta di guasto.'
+  pl: 'Stan podgrzewanej kierownicy: stan ogrzewania, temperatura, zdarzenia trybu awaryjnego i utraty kontekstu, odpowiedź o usterce.'
+  ru: 'Статус подогрева руля: состояние нагрева, температура, события деградированного режима и потери контекста, ответ о неисправности.'
+  zh: '方向盘加热状态:加热状态、温度、降级模式和上下文丢失事件、故障响应。'
+  hu: 'A fűthető kormány állapota: fűtési állapot, hőmérséklet, korlátozott üzemmód és kontextusvesztés események, hibaválasz.'
+  pt: 'Estado do volante aquecido: estado de aquecimento, temperatura, eventos de modo degradado e de perda de contexto, resposta de avaria.'
+periodicity: ['40ms']
+senders: ['HDC']
+receivers: ['BSI']
+
+signals:
+  HEATED_STEERING_WHEEL_STATE:
+    bits: '1.2-1.0'
+    comment:
+      en: 'Heated steering wheel state'
+      fr: 'État du volant chauffant'
+      es: 'Estado del volante calefactado'
+      de: 'Status der Lenkradheizung'
+      it: 'Stato del volante riscaldato'
+      pl: 'Stan ogrzewania kierownicy'
+      ru: 'Состояние подогрева руля'
+      zh: '方向盘加热状态'
+      hu: 'Fűthető kormánykerék állapota'
+      pt: 'Estado do volante aquecido'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Level 1'
+        fr: 'Niveau 1'
+        es: 'Nivel 1'
+        de: 'Stufe 1'
+        it: 'Livello 1'
+        pl: 'Poziom 1'
+        ru: 'Уровень 1'
+        zh: '等级1'
+        hu: '1. szint'
+        pt: 'Nível 1'
+      0x02:
+        en: 'Level 2'
+        fr: 'Niveau 2'
+        es: 'Nivel 2'
+        de: 'Stufe 2'
+        it: 'Livello 2'
+        pl: 'Poziom 2'
+        ru: 'Уровень 2'
+        zh: '2级'
+        hu: '2. szint'
+        pt: 'Nível 2'
+      0x03:
+        en: 'Level 3'
+        fr: 'Niveau 3'
+        es: 'Nivel 3'
+        de: 'Stufe 3'
+        it: 'Livello 3'
+        pl: 'Poziom 3'
+        ru: 'Уровень 3'
+        zh: '级别3'
+        hu: '3. szint'
+        pt: 'Nível 3'
+      0x04:
+        en: 'Load shedding'
+        fr: 'Délestage'
+        es: 'Deslastre'
+        de: 'Lastabwurf'
+        it: 'Distacco del carico'
+        pl: 'Zrzut obciążenia'
+        ru: 'Сброс нагрузки'
+        zh: '负载削减'
+        hu: 'Terheléskorlátozás'
+        pt: 'Corte de carga'
+      0x05:
+        unused: true
+      0x06:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+      0x07:
+        en: 'Failure'
+        fr: 'Défaillance'
+        es: 'Fallo'
+        de: 'Ausfall'
+        it: 'Guasto'
+        pl: 'Awaria'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodás'
+        pt: 'Falha'
+
+  HEATED_STEERING_WHEEL_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Heated steering wheel temperature sensor value'
+      fr: 'Valeur de la sonde de température du volant chauffant'
+      es: 'Valor del sensor de temperatura del volante calefactado'
+      de: 'Temperaturfühlerwert der Lenkradheizung'
+      it: 'Valore del sensore di temperatura del volante riscaldato'
+      pl: 'Wartość czujnika temperatury ogrzewanej kierownicy'
+      ru: 'Значение датчика температуры подогрева руля'
+      zh: '方向盘加热温度传感器数值'
+      hu: 'A fűthető kormánykerék hőmérséklet-érzékelőjének értéke'
+      pt: 'Valor do sensor de temperatura do volante aquecido'
+    type: 'uint'
+    factor: 1
+    offset: -15
+    min: -15
+    max: 45
+    units: '°C'
+    invalid: 0xFF
+
+  BSI_CONTEXT_RELEVANCE:
+    bits: '4.2'
+    comment:
+      en: 'Relevance of the BSI context to the fault event'
+      fr: 'Pertinence du contexte BSI à l''évènement'
+      es: 'Relevancia del contexto de la BSI en el evento'
+      de: 'Relevanz des BSI-Kontexts für das Ereignis'
+      it: 'Rilevanza del contesto BSI per l''evento'
+      pl: 'Trafność kontekstu BSI dla zdarzenia'
+      ru: 'Релевантность контекста BSI для события'
+      zh: 'BSI上下文与事件的相关性'
+      hu: 'A BSI kontextus relevanciája az eseményhez'
+      pt: 'Relevância do contexto da BSI para o evento de avaria'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Relevance of the BSI contexts ensured'
+        fr: 'Pertinence des contextes BSI assurée'
+        es: 'Pertinencia de los contextos BSI garantizada'
+        de: 'Relevanz der BSI-Kontexte sichergestellt'
+        it: 'Pertinenza dei contesti BSI garantita'
+        pl: 'Trafność kontekstów BSI zapewniona'
+        ru: 'Достоверность контекстов BSI обеспечена'
+        zh: 'BSI情境相关性已确保'
+        hu: 'A BSI kontextusok relevanciája biztosítva'
+        pt: 'Pertinência dos contextos BSI assegurada'
+      0x01:
+        en: 'Relevance of the BSI contexts not ensured'
+        fr: 'Pertinence des contextes BSI non assurée'
+        es: 'Pertinencia de los contextos BSI no garantizada'
+        de: 'Relevanz der BSI-Kontexte nicht sichergestellt'
+        it: 'Pertinenza dei contesti BSI non garantita'
+        pl: 'Trafność kontekstów BSI niezapewniona'
+        ru: 'Актуальность контекстов BSI не гарантирована'
+        zh: 'BSI上下文的相关性未得到保证'
+        hu: 'A BSI kontextusok relevanciája nem biztosított'
+        pt: 'Pertinência dos contextos BSI não garantida'
+
+  EVENT_TYPE:
+    bits: '4.1'
+    comment:
+      en: 'Fault event type: appearance or disappearance'
+      fr: 'Type de l''évènement : apparition ou disparition'
+      es: 'Tipo de evento: aparición o desaparición'
+      de: 'Ereignistyp: Auftreten oder Verschwinden'
+      it: 'Tipo di evento: comparsa o scomparsa'
+      pl: 'Typ zdarzenia: pojawienie się lub zniknięcie'
+      ru: 'Тип события: появление или исчезновение'
+      zh: '事件类型:出现或消失'
+      hu: 'Eseménytípus: megjelenés vagy eltűnés'
+      pt: 'Tipo de evento de avaria: aparecimento ou desaparecimento'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Disappearance'
+        fr: 'Disparition'
+        es: 'Desaparición'
+        de: 'Verschwinden'
+        it: 'Scomparsa'
+        pl: 'Zanik'
+        ru: 'Исчезновение'
+        zh: '消失'
+        hu: 'Eltűnés'
+        pt: 'Desaparecimento'
+      0x01:
+        en: 'Appearance'
+        fr: 'Apparition'
+        es: 'Aparición'
+        de: 'Erscheinen'
+        it: 'Comparsa'
+        pl: 'Pojawienie się'
+        ru: 'Появление'
+        zh: '出现'
+        hu: 'Megjelenés'
+        pt: 'Aparência'
+
+  SWEB_RESPONSE_ERROR:
+    bits: '4.0'
+    comment:
+      en: 'SWEB slave reports an error in the response field'
+      fr: 'Esclave SWEB : erreur dans le champ réponse'
+      es: 'El esclavo SWEB contiene un error en el campo de respuesta'
+      de: 'SWEB-Slave meldet einen Fehler im Antwortfeld'
+      it: 'Lo slave SWEB contiene un errore nel campo risposta'
+      pl: 'Podrzędny moduł SWEB zgłasza błąd w polu odpowiedzi'
+      ru: 'Подчинённое устройство SWEB сообщает об ошибке в поле ответа'
+      zh: 'SWEB从设备响应字段中存在错误'
+      hu: 'A SWEB alegység hibát jelez a válaszmezőben'
+      pt: 'Escravo SWEB: erro no campo de resposta'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No error detected'
+        fr: 'Aucune erreur détectée'
+        es: 'No se ha detectado ningún error'
+        de: 'Kein Fehler erkannt'
+        it: 'Nessun errore rilevato'
+        pl: 'Nie wykryto błędu'
+        ru: 'Ошибок не обнаружено'
+        zh: '未检测到错误'
+        hu: 'Nincs észlelt hiba'
+        pt: 'Nenhum erro detetado'
+      0x01:
+        en: 'Error detected'
+        fr: 'Erreur détectée'
+        es: 'Error detectado'
+        de: 'Fehler erkannt'
+        it: 'Errore rilevato'
+        pl: 'Wykryto błąd'
+        ru: 'Обнаружена ошибка'
+        zh: '检测到错误'
+        hu: 'Hiba észlelve'
+        pt: 'Erro detetado'
+
+  DEGRADED_MODE:
+    bits: '5.4-5.0'
+    comment:
+      en: 'Degraded operating mode flag'
+      fr: 'Mode dégradé'
+      es: 'Indicador de modo degradado'
+      de: 'Notlaufmodus-Kennzeichen'
+      it: 'Indicatore di modalità degradata'
+      pl: 'Flaga trybu awaryjnego'
+      ru: 'Флаг аварийного режима работы'
+      zh: '降级模式标志'
+      hu: 'Korlátozott üzemmód jelzője'
+      pt: 'Indicador de modo de funcionamento degradado'
+    type: 'uint'
+    min: 0
+    max: 15
+    invalid: 0x1F

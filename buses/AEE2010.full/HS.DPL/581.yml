@@ -1,0 +1,381 @@
+id: 0x581
+name: 'SCR_SYSTEM_DATA_2'
+type: 'can'
+length: 8
+comment:
+  en: 'SCR system data: secure-dosing feedback counters and event timing, heater electrical power (3 zones plus supply), secure-valve and system status.'
+  fr: 'Données système SCR : compteurs de retour de dosage sécurisé et horodatage d''événement, puissance électrique de chauffage (3 zones plus alimentation), état de la vanne sécurisée et état système.'
+  es: 'Datos del sistema SCR: contadores de retorno de dosificación segura y sincronización de eventos, potencia eléctrica de calefacción (3 zonas más alimentación), estado de la válvula segura y estado del sistema.'
+  de: 'SCR-Systemdaten: Rückmeldezähler der Sicherheitsdosierung und Ereigniszeitpunkt, elektrische Heizleistung (3 Zonen plus Versorgung), Status des Sicherheitsventils und Systemstatus.'
+  it: 'Dati del sistema SCR: contatori di riscontro dosaggio sicuro e tempistica evento, potenza elettrica di riscaldamento (3 zone più alimentazione), stato della valvola di sicurezza e stato del sistema.'
+  pl: 'Dane systemu SCR: liczniki sprzężenia zwrotnego bezpiecznego dozowania i czas zdarzenia, moc elektryczna grzania (3 strefy plus zasilanie), stan zaworu bezpieczeństwa i stan systemu.'
+  ru: 'Данные системы SCR: счётчики обратной связи безопасного дозирования и время события, электрическая мощность нагрева (3 зоны плюс питание), статус предохранительного клапана и статус системы.'
+  zh: 'SCR系统数据:安全计量反馈计数器和事件计时、加热电功率(3个区域加供电)、安全阀和系统状态。'
+  hu: 'SCR rendszer adatok: biztonságos adagolás visszajelző számlálói és eseményidőzítés, fűtési elektromos teljesítmény (3 zóna plusz tápellátás), biztonsági szelep és rendszerállapot.'
+  pt: 'Dados do sistema SCR: contadores de retorno de dosagem segura e temporização de eventos, potência elétrica do aquecedor (3 zonas mais alimentação), estado da válvula segura e do sistema.'
+periodicity: ['1000ms']
+senders: ['SCR']
+receivers: ['CMM']
+
+signals:
+  SCR_LINE_HEATING_POWER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Electric power consumed by the SCR supply line heater'
+      fr: 'Puissance électrique consommée par le chauffage de la ligne d''alimentation SCR'
+      es: 'Potencia eléctrica consumida por la calefacción de la línea de alimentación del SCR'
+      de: 'Elektrische Leistungsaufnahme der Heizung der SCR-Versorgungsleitung'
+      it: 'Potenza elettrica assorbita dal riscaldamento della linea di alimentazione SCR'
+      pl: 'Moc elektryczna pobierana przez ogrzewanie przewodu zasilającego SCR'
+      ru: 'Электрическая мощность, потребляемая подогревом магистрали подачи SCR'
+      zh: 'SCR供给管路加热器消耗的电功率'
+      hu: 'Az SCR tápvezeték fűtésének elektromos teljesítményfelvétele'
+      pt: 'Potência elétrica consumida pelo aquecimento da linha de alimentação SCR'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 253
+    units: 'W'
+    invalid: 0xFF
+    default: 0xFE
+
+  SCR_LINE_HEATING_STATE:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Operating state of the SCR supply line heating (inactive / active / protection / faulty)'
+      fr: 'État de fonctionnement du chauffage de la ligne d''alimentation SCR (inactif / actif / protection / défaillant)'
+      es: 'Estado de funcionamiento de la calefacción de la línea de alimentación del SCR (inactiva / activa / protección / avería)'
+      de: 'Betriebszustand der Heizung der SCR-Versorgungsleitung (inaktiv / aktiv / Schutzmodus / gestört)'
+      it: 'Stato di funzionamento del riscaldamento della linea di alimentazione SCR (inattivo / attivo / protezione / guasto)'
+      pl: 'Stan ogrzewania przewodu zasilającego SCR (nieaktywne / aktywne / ochrona / uszkodzone)'
+      ru: 'Рабочее состояние подогрева магистрали подачи SCR (неактивен / активен / защита / неисправность)'
+      zh: 'SCR供给管路加热工作状态(未激活/激活/保护/故障)'
+      hu: 'Az SCR tápvezeték fűtésének üzemállapota (inaktív / aktív / védelem / hibás)'
+      pt: 'Estado de funcionamento do aquecimento da linha de alimentação SCR (inativo / ativo / proteção / avariado)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        en: 'Protection'
+        fr: 'Protection'
+        es: 'Protección'
+        de: 'Schutz'
+        it: 'Protezione'
+        pl: 'Ochrona'
+        ru: 'Защита'
+        zh: '保护'
+        hu: 'Védelem'
+        pt: 'Proteção'
+      0x03:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  UNUSED_1:
+    bits: '2.5-2.0'
+    unused: true
+
+  SCR_UREA_CONCENTRATION:
+    bits: '3.7-4.6'
+    comment:
+      en: 'Mass concentration of urea in the SCR fluid'
+      fr: 'Concentration massique en urée dans le fluide SCR'
+      es: 'Concentración másica de urea en el fluido SCR'
+      de: 'Massenkonzentration des Harnstoffs im SCR-Fluid'
+      it: 'Concentrazione massica di urea nel fluido SCR'
+      pl: 'Stężenie masowe mocznika w płynie SCR'
+      ru: 'Массовая концентрация мочевины в жидкости SCR'
+      zh: 'SCR液中尿素的质量浓度'
+      hu: 'A karbamid tömegkoncentrációja az SCR folyadékban'
+      pt: 'Concentração mássica de ureia no fluido SCR'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 100
+    invalid: 0x3FF
+    default: 0x3FE
+
+  UNUSED_2:
+    bits: '4.5-4.0'
+    unused: true
+
+  SCR_TANK_HEATING_POWER:
+    bits: '5.7-6.7'
+    comment:
+      en: 'Electric power consumed by the SCR tank heater'
+      fr: 'Puissance électrique consommée par le chauffage du réservoir SCR'
+      es: 'Potencia eléctrica consumida por la calefacción del depósito SCR'
+      de: 'Elektrische Leistungsaufnahme der Heizung des SCR-Tanks'
+      it: 'Potenza elettrica assorbita dal riscaldamento del serbatoio SCR'
+      pl: 'Moc elektryczna pobierana przez ogrzewanie zbiornika SCR'
+      ru: 'Электрическая мощность, потребляемая подогревом бака SCR'
+      zh: 'SCR箱加热器消耗的电功率'
+      hu: 'Az SCR tartály fűtésének elektromos teljesítményfelvétele'
+      pt: 'Potência elétrica consumida pelo aquecimento do depósito SCR'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 300
+    units: 'W'
+    invalid: 0x1FF
+    default: 0x1FE
+
+  SCR_TANK_HEATING_STATE:
+    bits: '6.6-6.5'
+    comment:
+      en: 'Operating state of the SCR tank heating (inactive / active / protection / faulty)'
+      fr: 'État de fonctionnement du chauffage du réservoir SCR (inactif / actif / protection / défaillant)'
+      es: 'Estado de funcionamiento de la calefacción del depósito SCR (inactiva / activa / protección / avería)'
+      de: 'Betriebszustand der Heizung des SCR-Tanks (inaktiv / aktiv / Schutzmodus / gestört)'
+      it: 'Stato di funzionamento del riscaldamento del serbatoio SCR (inattivo / attivo / protezione / guasto)'
+      pl: 'Stan ogrzewania zbiornika SCR (nieaktywne / aktywne / ochrona / uszkodzone)'
+      ru: 'Рабочее состояние подогрева бака SCR (неактивен / активен / защита / неисправность)'
+      zh: 'SCR箱加热工作状态(未激活/激活/保护/故障)'
+      hu: 'Az SCR tartály fűtésének üzemállapota (inaktív / aktív / védelem / hibás)'
+      pt: 'Estado de funcionamento do aquecimento do depósito SCR (inativo / ativo / proteção / avariado)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        en: 'Protection'
+        fr: 'Protection'
+        es: 'Protección'
+        de: 'Schutz'
+        it: 'Protezione'
+        pl: 'Ochrona'
+        ru: 'Защита'
+        zh: '保护'
+        hu: 'Védelem'
+        pt: 'Proteção'
+      0x03:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  SCR_CONTROL_UNIT_STATE:
+    bits: '6.4-6.3'
+    comment:
+      en: 'Operating state of the SCR tank control unit (unavailable / available / protection / faulty)'
+      fr: 'État de fonctionnement de l''unité de contrôle du réservoir SCR (indisponible / disponible / protection / défaillant)'
+      es: 'Estado de funcionamiento de la unidad de control del depósito SCR (no disponible / disponible / protección / avería)'
+      de: 'Betriebszustand des Steuergeräts des SCR-Tanks (nicht verfügbar / verfügbar / Schutzmodus / gestört)'
+      it: 'Stato di funzionamento dell''unità di controllo del serbatoio SCR (non disponibile / disponibile / protezione / guasto)'
+      pl: 'Stan pracy jednostki sterującej zbiornika SCR (niedostępna / dostępna / ochrona / uszkodzona)'
+      ru: 'Рабочее состояние блока управления бака SCR (недоступен / доступен / защита / неисправность)'
+      zh: 'SCR尿素箱控制单元工作状态(不可用/可用/保护/故障)'
+      hu: 'Az SCR tartály vezérlőegységének üzemállapota (nem elérhető / elérhető / védelem / hibás)'
+      pt: 'Estado de funcionamento da unidade de controlo do depósito SCR (indisponível / disponível / proteção / avariado)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+      0x02:
+        en: 'Protection'
+        fr: 'Protection'
+        es: 'Protección'
+        de: 'Schutz'
+        it: 'Protezione'
+        pl: 'Ochrona'
+        ru: 'Защита'
+        zh: '保护'
+        hu: 'Védelem'
+        pt: 'Proteção'
+      0x03:
+        en: 'Failed'
+        fr: 'Défaillant'
+        es: 'Fallido'
+        de: 'Ausgefallen'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodott'
+        pt: 'Falhado'
+
+  SCR_FLUID_TYPE:
+    bits: '6.2-6.0'
+    comment:
+      en: 'Type of fluid detected in the SCR tank (appropriate / inappropriate / hazardous / undefined / reserved)'
+      fr: 'Type de fluide détecté dans le réservoir SCR (approprié / inapproprié / dangereux / indéfini / réservé)'
+      es: 'Tipo de fluido detectado en el depósito SCR (adecuado / inadecuado / peligroso / indefinido / reservado)'
+      de: 'Im SCR-Tank erkannte Flüssigkeitsart (geeignet / ungeeignet / gefährlich / undefiniert / reserviert)'
+      it: 'Tipo di fluido rilevato nel serbatoio SCR (idoneo / non idoneo / pericoloso / non definito / riservato)'
+      pl: 'Rodzaj płynu wykrytego w zbiorniku SCR (odpowiedni / nieodpowiedni / niebezpieczny / nieokreślony / zarezerwowany)'
+      ru: 'Тип жидкости, обнаруженной в баке SCR (подходящая / неподходящая / опасная / не определена / резерв)'
+      zh: 'SCR箱内检测到的液体类型(合适/不合适/危险/未定义/保留)'
+      hu: 'Az SCR tartályban észlelt folyadék típusa (megfelelő / nem megfelelő / veszélyes / nem meghatározott / fenntartott)'
+      pt: 'Tipo de fluido detetado no depósito SCR (adequado / inadequado / perigoso / indefinido / reservado)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Correct fluid'
+        fr: 'Fluide approprié'
+        es: 'Fluido correcto'
+        de: 'Richtige Flüssigkeit'
+        it: 'Fluido corretto'
+        pl: 'Właściwy płyn'
+        ru: 'Правильная жидкость'
+        zh: '正确的液体'
+        hu: 'Megfelelő folyadék'
+        pt: 'Líquido correto'
+      0x01:
+        en: 'Improper Fluid'
+        fr: 'Fluide Inapproprié'
+        es: 'Fluido inadecuado'
+        de: 'Ungeeignetes Fluid'
+        it: 'Fluido non appropriato'
+        pl: 'Niewłaściwy płyn'
+        ru: 'Неподходящая жидкость'
+        zh: '液体不合适'
+        hu: 'Nem megfelelő folyadék'
+        pt: 'Fluido inadequado'
+      0x02:
+        en: 'Hazardous fluid'
+        fr: 'Fluide dangereux'
+        es: 'Fluido peligroso'
+        de: 'Gefährliche Flüssigkeit'
+        it: 'Fluido pericoloso'
+        pl: 'Niebezpieczny płyn'
+        ru: 'Опасная жидкость'
+        zh: '危险液体'
+        hu: 'Veszélyes folyadék'
+        pt: 'Líquido perigoso'
+      0x03:
+        en: 'Undefined'
+        fr: 'Indéfini'
+        es: 'Indefinido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Meghatározatlan'
+        pt: 'Indefinido'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  SCR_FLUID_TEMPERATURE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Temperature of the SCR fluid'
+      fr: 'Température du fluide SCR'
+      es: 'Temperatura del fluido SCR'
+      de: 'Temperatur des SCR-Fluids'
+      it: 'Temperatura del fluido SCR'
+      pl: 'Temperatura płynu SCR'
+      ru: 'Температура жидкости SCR'
+      zh: 'SCR液温度'
+      hu: 'Az SCR folyadék hőmérséklete'
+      pt: 'Temperatura do fluido SCR'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 100
+    units: '°C'
+    invalid: 0xFF
+
+  SCR_TANK_CAPACITY:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Filling capacity of the SCR tank'
+      fr: 'Capacité de remplissage du réservoir SCR'
+      es: 'Capacidad de llenado del depósito SCR'
+      de: 'Füllkapazität des SCR-Tanks'
+      it: 'Capacità di riempimento del serbatoio SCR'
+      pl: 'Pojemność napełniania zbiornika SCR'
+      ru: 'Вместимость бака SCR'
+      zh: 'SCR箱加注容量'
+      hu: 'Az SCR tartály feltöltési kapacitása'
+      pt: 'Capacidade de enchimento do depósito SCR'
+    type: 'uint'
+    factor: 0.2
+    min: 0
+    max: 51
+    units: 'L'

@@ -1,0 +1,217 @@
+id: 0x190
+name: 'AC_INTERNAL_SENSOR_INFO'
+type: 'can'
+length: 5
+comment:
+  en: 'Air conditioning control module data from passenger-compartment sensors: cabin humidity, sunshine sensors, cabin and evaporator temperature.'
+  fr: 'Données du module de contrôle climatisation issues de capteurs habitacle : humidité habitacle, capteurs d''ensoleillement, température habitacle et évaporateur.'
+  es: 'Datos del módulo de control del climatizador de sensores del habitáculo: humedad del habitáculo, sensores de sol, temperatura del habitáculo y del evaporador.'
+  de: 'Daten des Klimasteuermoduls von Innenraumsensoren: Innenraumfeuchtigkeit, Sonnensensoren, Innenraum- und Verdampfertemperatur.'
+  it: 'Dati del modulo di controllo del climatizzatore dai sensori dell''abitacolo: umidità dell''abitacolo, sensori di soleggiamento, temperatura dell''abitacolo e dell''evaporatore.'
+  pl: 'Dane modułu sterowania klimatyzacją z czujników wnętrza: wilgotność wnętrza, czujniki nasłonecznienia, temperatura wnętrza i parownika.'
+  ru: 'Данные модуля управления кондиционером от датчиков салона: влажность салона, датчики солнца, температура салона и испарителя.'
+  zh: '空调控制模块车内传感器数据:车内湿度、日照传感器、车内及蒸发器温度。'
+  hu: 'A klíma vezérlőmodul utastér-érzékelőktől származó adatai: utastér páratartalma, napsugárzás-érzékelők, utastér és párologtató hőmérséklete.'
+  pt: 'Dados do módulo de controlo da climatização provenientes de sensores do habitáculo: humidade do habitáculo, sensores de luminosidade, temperatura do habitáculo e do evaporador.'
+periodicity: ['20050ms']
+senders: ['CLIM_AV']
+receivers: ['BSI', 'CLIM_AR']
+
+signals:
+  EVAPORATOR_SENSOR_TEMPERATURE:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Evaporator sensor temperature'
+      fr: 'Température de la sonde évaporateur'
+      es: 'Temperatura de la sonda del evaporador'
+      de: 'Temperatur des Verdampferfühlers'
+      it: 'Temperatura della sonda dell''evaporatore'
+      pl: 'Temperatura czujnika parownika'
+      ru: 'Температура датчика испарителя'
+      zh: '蒸发器传感器温度'
+      hu: 'Párologtató érzékelő hőmérséklete'
+      pt: 'Temperatura da sonda do evaporador'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 85
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  LEFT_SUNLIGHT_MEASUREMENT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Left-side sunlight measurement'
+      fr: 'Mesure d''ensoleillement côté gauche'
+      es: 'Medición de luz solar lado izquierdo'
+      de: 'Sonnenlichtmessung linke Seite'
+      it: 'Misurazione dell''irraggiamento solare lato sinistro'
+      pl: 'Pomiar nasłonecznienia po lewej stronie'
+      ru: 'Измерение солнечного освещения слева'
+      zh: '左侧日照测量'
+      hu: 'Bal oldali napfénymérés'
+      pt: 'Medição de luz solar do lado esquerdo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  RIGHT_SUNLIGHT_MEASUREMENT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Right-side sunlight measurement'
+      fr: 'Mesure d''ensoleillement côté droit'
+      es: 'Medición de luz solar lado derecho'
+      de: 'Sonnenlichtmessung rechte Seite'
+      it: 'Misurazione dell''irraggiamento solare lato destro'
+      pl: 'Pomiar nasłonecznienia po prawej stronie'
+      ru: 'Измерение солнечного освещения справа'
+      zh: '右侧日照测量'
+      hu: 'Jobb oldali napfénymérés'
+      pt: 'Medição de luz solar do lado direito'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  REAR_LEFT_BLOWER_MOTOR_FAULT:
+    bits: '5.7'
+    comment:
+      en: 'Rear left (or default) blower motor fault'
+      fr: 'Défaut du moteur de pulseur arrière gauche (ou par défaut)'
+      es: 'Fallo del motor del ventilador trasero izquierdo (o por defecto)'
+      de: 'Fehler des hinteren linken Gebläsemotors (oder Standard)'
+      it: 'Guasto del motore ventola posteriore sinistro (o predefinito)'
+      pl: 'Usterka silnika dmuchawy tylnej lewej (lub domyślnej)'
+      ru: 'Неисправность заднего левого мотора вентилятора отопителя (или по умолчанию)'
+      zh: '左后鼓风机电机故障(或默认)'
+      hu: 'Bal hátsó (vagy alapértelmezett) fűtőventilátor motor hibája'
+      pt: 'Falha do motor do ventilador traseiro esquerdo (ou por defeito)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault absent'
+        fr: 'Défaut absent'
+        es: 'Fallo ausente'
+        de: 'Kein Fehler'
+        it: 'Guasto assente'
+        pl: 'Brak usterki'
+        ru: 'Неисправность отсутствует'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Falha ausente'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Usterka obecna'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba fennáll'
+        pt: 'Falha presente'
+
+  REAR_RIGHT_BLOWER_MOTOR_FAULT:
+    bits: '5.6'
+    comment:
+      en: 'Rear right blower motor fault'
+      fr: 'Défaut du moteur du pulseur arrière droit'
+      es: 'Fallo del motor del ventilador trasero derecho'
+      de: 'Fehler des Gebläsemotors hinten rechts'
+      it: 'Guasto del motore ventola posteriore destra'
+      pl: 'Usterka silnika dmuchawy tylnej prawej'
+      ru: 'Неисправность двигателя заднего правого вентилятора'
+      zh: '右后鼓风机电机故障'
+      hu: 'A hátsó jobb fúvómotor hibája'
+      pt: 'Falha do motor do ventilador traseiro direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault absent'
+        fr: 'Défaut absent'
+        es: 'Fallo ausente'
+        de: 'Kein Fehler'
+        it: 'Guasto assente'
+        pl: 'Brak usterki'
+        ru: 'Неисправность отсутствует'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Falha ausente'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Usterka obecna'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba fennáll'
+        pt: 'Falha presente'
+
+  FRONT_BLOWER_MOTOR_FAULT:
+    bits: '5.5'
+    comment:
+      en: 'Front blower motor fault'
+      fr: 'Défaut du moteur de pulseur avant'
+      es: 'Fallo del motor del ventilador delantero'
+      de: 'Fehler des vorderen Gebläsemotors'
+      it: 'Guasto del motore ventola anteriore'
+      pl: 'Usterka silnika dmuchawy przedniej'
+      ru: 'Неисправность переднего мотора вентилятора отопителя'
+      zh: '前鼓风机电机故障'
+      hu: 'Első fűtőventilátor motor hibája'
+      pt: 'Falha do motor do ventilador dianteiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fault absent'
+        fr: 'Défaut absent'
+        es: 'Fallo ausente'
+        de: 'Kein Fehler'
+        it: 'Guasto assente'
+        pl: 'Brak usterki'
+        ru: 'Неисправность отсутствует'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Falha ausente'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Usterka obecna'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba fennáll'
+        pt: 'Falha presente'
+
+  UNUSED_1:
+    bits: '5.4-5.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 200ms'
+      fr: 'Aussi observée avec une période de 200ms'
+      es: 'También observada con un periodo de 200ms'
+      de: 'Auch mit einer Periode von 200ms beobachtet'
+      it: 'Osservata anche con un periodo di 200ms'
+      pl: 'Obserwowana także z okresem 200ms'
+      ru: 'Также наблюдалась с периодом 200ms'
+      zh: '也观察到周期为200ms'
+      hu: 'Megfigyelve 200ms periódussal is'
+      pt: 'Também observada com um período de 200ms'
+    periodicity: ['200ms']

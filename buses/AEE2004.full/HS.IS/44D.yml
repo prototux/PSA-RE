@@ -1,58 +1,143 @@
 id: 0x44D
-name: 'STABILITY_SYSTEM_WHEEL_DATA'
-length: 8
+name: 'WHEEL_SPEEDS_ABS'
+alt_names: ['STABILITY_SYSTEM_WHEEL_DATA']
 type: 'can'
-comment: 
-  en: 'Frame which contains precalculated wheel speed averages'
-  fr: 'Cadre contenant des moyennes de vitesse de roue précalculées'
-  de: 'Frame welcher vorberechnete durschnitts Radgeschwindigkeiten enthält'
-periodicity: 40 # calculated 41.1 ms based on how many 0x208 frames before one 0x44D 
-senders: 
- - 'ABS'
+length: 8
+comment:
+  en: 'Wheel speeds, sent by the ABS unit.'
+  fr: 'Vitesses des roues, émises par le calculateur ABS.'
+  es: 'Velocidades de las ruedas, enviadas por la unidad ABS.'
+  de: 'Raddrehzahlen, gesendet vom ABS-Steuergerät.'
+  it: 'Velocità delle ruote, inviate dalla centralina ABS.'
+  pl: 'Prędkości kół, wysyłane przez sterownik ABS.'
+  ru: 'Скорости колёс, отправляются блоком ABS.'
+  zh: '车轮速度，由 ABS 控制单元发送。'
+  hu: 'Keréksebességek, az ABS vezérlőegység küldi.'
+  pt: 'Velocidades das rodas, enviadas pela unidade ABS.'
+periodicity: ['40ms']
+senders: ['ABS']
 receivers:
- - 'BSI'
+  - 'PIU'
+  - 'ARTIV'
+  - 'BVA'
+  - 'CMM'
+  - 'HCU1'
+  - 'CAAR'
+  - 'SBW'
+  - 'ACC'
+  - 'AMVAR'
+  - 'AR2S'
+  - 'BSI'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'CSS'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'BCP'
+  - 'SCDT'
+  - 'BHI'
+  - 'TBMU'
+  - 'DAE'
 
 signals:
-  AVERAGE_SPEED_FRONT_WHEELS:
+  FRONT_WHEELS_AVERAGE_SPEED:
     bits: '1.7-2.0'
-    type: 'float'
+    alt_names: ['AVERAGE_SPEED_FRONT_WHEELS']
+    comment:
+      en: 'Vehicle speed averaged from the front wheels'
+      fr: 'Vitesse véhicule moyenne calculée à partir des roues avant'
+      es: 'Velocidad del vehículo promediada a partir de las ruedas delanteras'
+      de: 'Aus den Vorderrädern gemittelte Fahrzeuggeschwindigkeit'
+      it: 'Velocità del veicolo mediata dalle ruote anteriori'
+      pl: 'Prędkość pojazdu uśredniona z kół przednich'
+      ru: 'Скорость автомобиля, усреднённая по передним колёсам'
+      zh: '由前轮平均计算的车速'
+      hu: 'Az első kerekekből átlagolt járműsebesség'
+      pt: 'Velocidade média do veículo calculada a partir das rodas dianteiras'
+    type: 'uint'
     factor: 0.01
     min: 0
-    max: 655.35 # 0xFFFF * 0.01
-    comment:
-      en: 'Measured average speed of front wheels'
-      fr: 'Vitesse moyenne mesurée des roues avant'
-      de: 'Gemessene durschnitts Geschwindigkeit der Vorderräder'
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
 
   REAR_LEFT_WHEEL_SPEED:
     bits: '3.7-4.0'
-    type: 'float'
+    comment:
+      en: 'Rear left wheel speed.'
+      fr: 'Vitesse de la roue arrière gauche.'
+      es: 'Velocidad de la rueda trasera izquierda.'
+      de: 'Geschwindigkeit des linken Hinterrads.'
+      it: 'Velocità della ruota posteriore sinistra.'
+      pl: 'Prędkość lewego tylnego koła.'
+      ru: 'Скорость заднего левого колеса.'
+      zh: '左后轮车速。'
+      hu: 'A bal hátsó kerék sebessége.'
+      pt: 'Velocidade da roda traseira esquerda'
+    type: 'uint'
     factor: 0.01
     min: 0
-    max: 655.35 # 0xFFFF * 0.01
-    comment:
-      en: 'Measured speed of rear left wheel'
-      fr: 'Vitesse mesurée de la roue arrière gauche'
-      de: 'Gemessene Geschwindigkeit des linken Hinderrades'
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
 
   REAR_RIGHT_WHEEL_SPEED:
     bits: '5.7-6.0'
-    type: 'float'
+    comment:
+      en: 'Rear right wheel speed.'
+      fr: 'Vitesse de la roue arrière droite.'
+      es: 'Velocidad de la rueda trasera derecha.'
+      de: 'Geschwindigkeit des rechten Hinterrads.'
+      it: 'Velocità della ruota posteriore destra.'
+      pl: 'Prędkość prawego tylnego koła.'
+      ru: 'Скорость заднего правого колеса.'
+      zh: '右后轮车速。'
+      hu: 'A jobb hátsó kerék sebessége.'
+      pt: 'Velocidade da roda traseira direita'
+    type: 'uint'
     factor: 0.01
     min: 0
-    max: 655.35 # 0xFFFF * 0.01
-    comment:
-      en: 'Measured speed of rear right wheel'
-      fr: 'Vitesse mesurée de la roue arrière droite'
-      de: 'Gemessene Geschwindigkeit des rechten Hinderrades'
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
 
-  AVERAGE_ROTATIONS_FRONT_WHEELS:
+  FRONT_WHEELS_AVERAGE_RPM:
     bits: '7.7-8.0'
-    type: 'float'
-    factor: 0.01
-    min: 0
-    max: 655.35 # 0xFFFF * 0.01
+    alt_names: ['AVERAGE_ROTATIONS_FRONT_WHEELS']
     comment:
-      en: 'Average rotations of front wheels'
-      fr: 'Rotations moyennes des roues avant'
-      de: 'Durschnittliche Drehzahl der Vorderräder'
+      en: 'Front wheels average rotational speed'
+      fr: 'Régime moyen des roues avant'
+      es: 'Régimen medio de las ruedas delanteras'
+      de: 'Mittlere Drehzahl der Vorderräder'
+      it: 'Regime medio delle ruote anteriori'
+      pl: 'Średnia prędkość obrotowa kół przednich'
+      ru: 'Средняя частота вращения передних колёс'
+      zh: '前轮平均转速'
+      hu: 'Az első kerekek átlagos fordulatszáma'
+      pt: 'Regime médio das rodas dianteiras'
+    type: 'uint'
+    factor: 0.04
+    min: 0
+    max: 2621
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0xFFFF
+    alternatives:
+      - note:
+          en: 'Other scaling observed'
+          fr: 'Autre mise à l''échelle observée'
+          es: 'Otro escalado observado'
+          de: 'Andere Skalierung beobachtet'
+          it: 'Altra scala osservata'
+          pl: 'Zaobserwowano inne skalowanie'
+          ru: 'Наблюдалось другое масштабирование'
+          zh: '观察到其他缩放方式'
+          hu: 'Más skálázás is megfigyelhető'
+          pt: 'Outra escala observada'
+        factor: 0.01

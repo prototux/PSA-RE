@@ -1,0 +1,1321 @@
+id: 0x305
+name: 'STEERING_WHEEL_ANGLE'
+type: 'can-tp'
+comment:
+  en: 'Multi-frame payload carrying the dashcam''s recorded video list to the display.'
+  fr: 'Charge utile multi-trame transportant la liste des vidéos enregistrées par le dashcam vers l''écran.'
+  es: 'Carga útil multitrama que transporta la lista de vídeos grabados por el dashcam hacia la pantalla.'
+  de: 'Mehrrahmen-Nutzlast mit der Liste der von der Dashcam aufgezeichneten Videos für das Display.'
+  it: 'Payload multi-trama che trasporta l''elenco dei video registrati dal dashcam verso il display.'
+  pl: 'Wieloramkowy ładunek listy nagranych filmów wideorejestratora przesyłany do wyświetlacza.'
+  ru: 'Многокадровые данные списка записанных видеорегистратором роликов, передаваемые на дисплей.'
+  zh: '承载行车记录仪录像列表发送给显示屏的多帧载荷。'
+  hu: 'Több keretből álló hasznos adat, amely a fedélzeti kamera felvett videóinak listáját viszi a kijelzőnek.'
+  pt: 'Carga útil multitrama que transporta a lista de vídeos gravados pela câmara de bordo para o ecrã.'
+periodicity: ['trigger']
+senders: ['IDVR']
+receivers: ['BTEL', 'OVIP']
+isotp:
+  flow_control_id: 0x2C5
+
+signals:
+  PAYLOAD:
+    bits: '1.7-n'
+    comment:
+      en: 'Application data (reassembled)'
+      fr: 'Données applicatives (réassemblées)'
+      es: 'Datos de aplicación (reensamblados)'
+      de: 'Anwendungsdaten (wieder zusammengesetzt)'
+      it: 'Dati applicativi (riassemblati)'
+      pl: 'Dane aplikacyjne (ponownie złożone)'
+      ru: 'Прикладные данные (пересобранные)'
+      zh: '应用数据（重组后）'
+      hu: 'Alkalmazásadatok (újraösszeállítva)'
+      pt: 'Dados de aplicação (reagrupados)'
+    type: 'bytes'
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['trigger']
+    senders: ['IDVR']
+    receivers: ['BTEL', 'OVIP']
+    signals:
+      IDVR_DIRECTORY_TYPE:
+        bits: '1.7-1.4'
+        comment:
+          en: 'Type of directory sent (dashcam dating list mode)'
+          fr: 'Type de répertoire envoyé (mode liste de datation de la caméra embarquée)'
+          es: 'Tipo de directorio enviado (modo lista de fechas de la cámara de a bordo)'
+          de: 'Art des gesendeten Verzeichnisses (Dashcam-Datumslistenmodus)'
+          it: 'Tipo di cartella inviata (modalità elenco datazione dashcam)'
+          pl: 'Rodzaj wysłanego katalogu (tryb listy dat kamery samochodowej)'
+          ru: 'Тип отправленного каталога (режим списка дат видеорегистратора)'
+          zh: '发送的目录类型(行车记录仪日期列表模式)'
+          hu: 'A küldött könyvtár típusa (fedélzeti kamera dátumlista módja)'
+          pt: 'Tipo de diretório enviado (modo lista de datação da câmara embarcada)'
+        type: 'enum'
+        mux_selector: true
+        values:
+          0x00:
+            en: 'IDVR dated list mode'
+            fr: 'Mode liste datée IDVR'
+            es: 'Modo de lista con fecha IDVR'
+            de: 'IDVR-Modus Liste mit Datum'
+            it: 'Modalità elenco datato IDVR'
+            pl: 'Tryb listy z datą IDVR'
+            ru: 'Режим списка с датой IDVR'
+            zh: 'IDVR带日期列表模式'
+            hu: 'IDVR dátumozott lista mód'
+            pt: 'Modo de lista datada do IDVR'
+          0x01:
+            unused: true
+          0x02:
+            unused: true
+          0x03:
+            unused: true
+          0x04:
+            unused: true
+          0x05:
+            unused: true
+          0x06:
+            unused: true
+          0x07:
+            unused: true
+          0x08:
+            unused: true
+          0x09:
+            unused: true
+          0x0A:
+            unused: true
+          0x0B:
+            unused: true
+          0x0C:
+            unused: true
+          0x0D:
+            unused: true
+          0x0E:
+            unused: true
+          0x0F:
+            unused: true
+      IDVR_LIST_TYPE:
+        bits: '1.3-1.2'
+        comment:
+          en: 'Position of the recording in the file tree structure (dashcam)'
+          fr: 'Emplacement de l''enregistrement dans l''arborescence des fichiers (caméra embarquée)'
+          es: 'Ubicación de la grabación en el árbol de archivos (cámara de a bordo)'
+          de: 'Position der Aufnahme in der Dateibaumstruktur (Dashcam)'
+          it: 'Posizione della registrazione nella struttura ad albero dei file (dashcam)'
+          pl: 'Położenie nagrania w strukturze drzewa plików (kamera samochodowa)'
+          ru: 'Расположение записи в древовидной структуре файлов (видеорегистратор)'
+          zh: '录像在文件树结构中的位置(行车记录仪)'
+          hu: 'A felvétel helye a fájlfastruktúrában (fedélzeti kamera)'
+          pt: 'Posição da gravação na estrutura de pastas (câmara de bordo)'
+        type: 'enum'
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'Daily recorded list'
+            fr: 'Liste des enregistrements journaliers'
+            es: 'Lista de grabaciones diarias'
+            de: 'Liste der Tagesaufzeichnungen'
+            it: 'Elenco delle registrazioni giornaliere'
+            pl: 'Lista codziennych nagrań'
+            ru: 'Список ежедневных записей'
+            zh: '每日录像列表'
+            hu: 'Napi felvételek listája'
+            pt: 'Lista de gravações diárias'
+          0x01:
+            en: 'Accident recorded list'
+            fr: 'Liste des enregistrements d''accident'
+            es: 'Lista de grabaciones de accidentes'
+            de: 'Liste der Unfallaufzeichnungen'
+            it: 'Elenco delle registrazioni di incidenti'
+            pl: 'Lista nagrań wypadków'
+            ru: 'Список записей ДТП'
+            zh: '事故录像列表'
+            hu: 'Balesetfelvételek listája'
+            pt: 'Lista de acidentes registados'
+          0x02:
+            unused: true
+          0x03:
+            unused: true
+      UNUSED_1:
+        bits: '1.1-1.0'
+        unused: true
+      IDVR_LIST_TOTAL_SIZE:
+        bits: '2.7-3.0'
+        comment:
+          en: 'Size of the list (total number of programs in the list, dashcam)'
+          fr: 'Taille de la liste (nombre total de programmes, caméra embarquée)'
+          es: 'Tamaño de la lista (número total de programas, cámara de a bordo)'
+          de: 'Listengröße (Gesamtzahl der Programme, Dashcam)'
+          it: 'Dimensione dell''elenco (numero totale di programmi, dashcam)'
+          pl: 'Rozmiar listy (całkowita liczba programów, kamera samochodowa)'
+          ru: 'Размер списка (общее число программ, видеорегистратор)'
+          zh: '列表大小(节目总数,行车记录仪)'
+          hu: 'A lista mérete (a programok teljes száma, fedélzeti kamera)'
+          pt: 'Tamanho da lista (número total de programas na lista, câmara embarcada)'
+        type: 'uint'
+        min: 0
+        max: 65534
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      IDVR_LIST_BLOCK_FIRST_POSITION:
+        bits: '4.7-5.0'
+        comment:
+          en: 'Position in the list of the first program name of the block shown on screen (dashcam)'
+          fr: 'Position dans la liste du premier nom de programme du bloc affiché à l''écran (caméra embarquée)'
+          es: 'Posición en la lista del primer nombre de programa del bloque mostrado en pantalla (cámara de a bordo)'
+          de: 'Position in der Liste des ersten Programmnamens des auf dem Bildschirm angezeigten Blocks (Dashcam)'
+          it: 'Posizione nell''elenco del primo nome di programma del blocco visualizzato sullo schermo (dashcam)'
+          pl: 'Pozycja na liście pierwszej nazwy programu bloku wyświetlanego na ekranie (kamera samochodowa)'
+          ru: 'Позиция в списке первого имени программы блока, отображаемого на экране (видеорегистратор)'
+          zh: '屏幕显示块中第一个节目名称在列表中的位置(行车记录仪)'
+          hu: 'A képernyőn megjelenített blokk első programnevének listabeli pozíciója (fedélzeti kamera)'
+          pt: 'Posição na lista do primeiro nome de programa do bloco apresentado no ecrã (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 65534
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      IDVR_LIST_BLOCK_SIZE:
+        bits: '6.7-6.5'
+        comment:
+          en: 'Number of programs in the block sent by the dashcam (IDVR)'
+          fr: 'Nombre de programmes dans le bloc envoyé par la caméra embarquée (IDVR)'
+          es: 'Número de programas en el bloque enviado por la cámara de a bordo (IDVR)'
+          de: 'Anzahl der Programme im von der Dashcam (IDVR) gesendeten Block'
+          it: 'Numero di programmi nel blocco inviato dalla dashcam (IDVR)'
+          pl: 'Liczba programów w bloku wysłanym przez kamerę samochodową (IDVR)'
+          ru: 'Число программ в блоке, отправленном видеорегистратором (IDVR)'
+          zh: '行车记录仪(IDVR)发送块中的节目数量'
+          hu: 'A fedélzeti kamera (IDVR) által küldött blokkban lévő programok száma'
+          pt: 'Número de programas no bloco enviado pela câmara embarcada (IDVR)'
+        type: 'uint'
+        min: 0
+        max: 6
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      IDVR_LIST_SELECTED_POSITION:
+        bits: '6.4-6.2'
+        comment:
+          en: 'Position of the selected program in the block shown on screen (dashcam)'
+          fr: 'Position du programme sélectionné dans le bloc affiché à l''écran (caméra embarquée)'
+          es: 'Posición del programa seleccionado en el bloque mostrado en pantalla (cámara de a bordo)'
+          de: 'Position des ausgewählten Programms im auf dem Bildschirm angezeigten Block (Dashcam)'
+          it: 'Posizione del programma selezionato nel blocco visualizzato sullo schermo (dashcam)'
+          pl: 'Pozycja wybranego programu w bloku wyświetlanym na ekranie (kamera samochodowa)'
+          ru: 'Позиция выбранной программы в блоке, отображаемом на экране (видеорегистратор)'
+          zh: '屏幕显示块中已选节目的位置(行车记录仪)'
+          hu: 'A kiválasztott program pozíciója a képernyőn megjelenített blokkban (fedélzeti kamera)'
+          pt: 'Posição do programa selecionado no bloco apresentado no ecrã (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 5
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_2:
+        bits: '6.1-6.0'
+        unused: true
+      DASHCAM_VIDEO_SEND_1:
+        bits: '7.7'
+        comment:
+          en: 'Video 1 transmitted (dashcam recording list)'
+          fr: 'Vidéo 1 transmise (liste des enregistrements de la caméra embarquée)'
+          es: 'Vídeo 1 transmitido (lista de grabaciones de la cámara de a bordo)'
+          de: 'Video 1 übertragen (Dashcam-Aufnahmeliste)'
+          it: 'Video 1 trasmesso (elenco registrazioni dashcam)'
+          pl: 'Nagranie wideo 1 przesłane (lista nagrań kamery samochodowej)'
+          ru: 'Видео 1 передано (список записей видеорегистратора)'
+          zh: '视频1已发送(行车记录仪录像列表)'
+          hu: 'A(z) 1. videó elküldve (fedélzeti kamera felvételi listája)'
+          pt: 'Vídeo 1 transmitido (lista de gravações da câmara embarcada)'
+        type: 'bool'
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'No'
+            fr: 'Non'
+            es: 'No'
+            de: 'Nein'
+            it: 'No'
+            pl: 'Nie'
+            ru: 'Нет'
+            zh: '否'
+            hu: 'Nem'
+            pt: 'Não'
+          0x01:
+            en: 'Yes'
+            fr: 'Oui'
+            es: 'Sí'
+            de: 'Ja'
+            it: 'Sì'
+            pl: 'Tak'
+            ru: 'Да'
+            zh: '是'
+            hu: 'Igen'
+            pt: 'Sim'
+      DASHCAM_VIDEO_SEND_2:
+        bits: '7.6'
+        comment:
+          en: 'Video 2 transmitted (dashcam recording list)'
+          fr: 'Vidéo 2 transmise (liste des enregistrements de la caméra embarquée)'
+          es: 'Vídeo 2 transmitido (lista de grabaciones de la cámara de a bordo)'
+          de: 'Video 2 übertragen (Dashcam-Aufnahmeliste)'
+          it: 'Video 2 trasmesso (elenco registrazioni dashcam)'
+          pl: 'Nagranie wideo 2 przesłane (lista nagrań kamery samochodowej)'
+          ru: 'Видео 2 передано (список записей видеорегистратора)'
+          zh: '视频2已发送(行车记录仪录像列表)'
+          hu: 'A(z) 2. videó elküldve (fedélzeti kamera felvételi listája)'
+          pt: 'Vídeo 2 transmitido (lista de gravações da câmara embarcada)'
+        type: 'bool'
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'No'
+            fr: 'Non'
+            es: 'No'
+            de: 'Nein'
+            it: 'No'
+            pl: 'Nie'
+            ru: 'Нет'
+            zh: '否'
+            hu: 'Nem'
+            pt: 'Não'
+          0x01:
+            en: 'Yes'
+            fr: 'Oui'
+            es: 'Sí'
+            de: 'Ja'
+            it: 'Sì'
+            pl: 'Tak'
+            ru: 'Да'
+            zh: '是'
+            hu: 'Igen'
+            pt: 'Sim'
+      DASHCAM_VIDEO_SEND_3:
+        bits: '7.5'
+        comment:
+          en: 'Video 3 transmitted (dashcam recording list)'
+          fr: 'Vidéo 3 transmise (liste des enregistrements de la caméra embarquée)'
+          es: 'Vídeo 3 transmitido (lista de grabaciones de la cámara de a bordo)'
+          de: 'Video 3 übertragen (Dashcam-Aufnahmeliste)'
+          it: 'Video 3 trasmesso (elenco registrazioni dashcam)'
+          pl: 'Nagranie wideo 3 przesłane (lista nagrań kamery samochodowej)'
+          ru: 'Видео 3 передано (список записей видеорегистратора)'
+          zh: '视频3已发送(行车记录仪录像列表)'
+          hu: 'A(z) 3. videó elküldve (fedélzeti kamera felvételi listája)'
+          pt: 'Vídeo 3 transmitido (lista de gravações da câmara embarcada)'
+        type: 'bool'
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'No'
+            fr: 'Non'
+            es: 'No'
+            de: 'Nein'
+            it: 'No'
+            pl: 'Nie'
+            ru: 'Нет'
+            zh: '否'
+            hu: 'Nem'
+            pt: 'Não'
+          0x01:
+            en: 'Yes'
+            fr: 'Oui'
+            es: 'Sí'
+            de: 'Ja'
+            it: 'Sì'
+            pl: 'Tak'
+            ru: 'Да'
+            zh: '是'
+            hu: 'Igen'
+            pt: 'Sim'
+      DASHCAM_VIDEO_SEND_4:
+        bits: '7.4'
+        comment:
+          en: 'Video 4 transmitted (dashcam recording list)'
+          fr: 'Vidéo 4 transmise (liste des enregistrements de la caméra embarquée)'
+          es: 'Vídeo 4 transmitido (lista de grabaciones de la cámara de a bordo)'
+          de: 'Video 4 übertragen (Dashcam-Aufnahmeliste)'
+          it: 'Video 4 trasmesso (elenco registrazioni dashcam)'
+          pl: 'Nagranie wideo 4 przesłane (lista nagrań kamery samochodowej)'
+          ru: 'Видео 4 передано (список записей видеорегистратора)'
+          zh: '视频4已发送(行车记录仪录像列表)'
+          hu: 'A(z) 4. videó elküldve (fedélzeti kamera felvételi listája)'
+          pt: 'Vídeo 4 transmitido (lista de gravações da câmara embarcada)'
+        type: 'bool'
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'No'
+            fr: 'Non'
+            es: 'No'
+            de: 'Nein'
+            it: 'No'
+            pl: 'Nie'
+            ru: 'Нет'
+            zh: '否'
+            hu: 'Nem'
+            pt: 'Não'
+          0x01:
+            en: 'Yes'
+            fr: 'Oui'
+            es: 'Sí'
+            de: 'Ja'
+            it: 'Sì'
+            pl: 'Tak'
+            ru: 'Да'
+            zh: '是'
+            hu: 'Igen'
+            pt: 'Sim'
+      DASHCAM_VIDEO_SEND_5:
+        bits: '7.3'
+        comment:
+          en: 'Video 5 transmitted (dashcam recording list)'
+          fr: 'Vidéo 5 transmise (liste des enregistrements de la caméra embarquée)'
+          es: 'Vídeo 5 transmitido (lista de grabaciones de la cámara de a bordo)'
+          de: 'Video 5 übertragen (Dashcam-Aufnahmeliste)'
+          it: 'Video 5 trasmesso (elenco registrazioni dashcam)'
+          pl: 'Nagranie wideo 5 przesłane (lista nagrań kamery samochodowej)'
+          ru: 'Видео 5 передано (список записей видеорегистратора)'
+          zh: '视频5已发送(行车记录仪录像列表)'
+          hu: 'A(z) 5. videó elküldve (fedélzeti kamera felvételi listája)'
+          pt: 'Vídeo 5 transmitido (lista de gravações da câmara embarcada)'
+        type: 'bool'
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'No'
+            fr: 'Non'
+            es: 'No'
+            de: 'Nein'
+            it: 'No'
+            pl: 'Nie'
+            ru: 'Нет'
+            zh: '否'
+            hu: 'Nem'
+            pt: 'Não'
+          0x01:
+            en: 'Yes'
+            fr: 'Oui'
+            es: 'Sí'
+            de: 'Ja'
+            it: 'Sì'
+            pl: 'Tak'
+            ru: 'Да'
+            zh: '是'
+            hu: 'Igen'
+            pt: 'Sim'
+      DASHCAM_VIDEO_SEND_6:
+        bits: '7.2'
+        comment:
+          en: 'Video 6 transmitted (dashcam recording list)'
+          fr: 'Vidéo 6 transmise (liste des enregistrements de la caméra embarquée)'
+          es: 'Vídeo 6 transmitido (lista de grabaciones de la cámara de a bordo)'
+          de: 'Video 6 übertragen (Dashcam-Aufnahmeliste)'
+          it: 'Video 6 trasmesso (elenco registrazioni dashcam)'
+          pl: 'Nagranie wideo 6 przesłane (lista nagrań kamery samochodowej)'
+          ru: 'Видео 6 передано (список записей видеорегистратора)'
+          zh: '视频6已发送(行车记录仪录像列表)'
+          hu: 'A(z) 6. videó elküldve (fedélzeti kamera felvételi listája)'
+          pt: 'Vídeo 6 transmitido (lista de gravações da câmara embarcada)'
+        type: 'bool'
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'No'
+            fr: 'Non'
+            es: 'No'
+            de: 'Nein'
+            it: 'No'
+            pl: 'Nie'
+            ru: 'Нет'
+            zh: '否'
+            hu: 'Nem'
+            pt: 'Não'
+          0x01:
+            en: 'Yes'
+            fr: 'Oui'
+            es: 'Sí'
+            de: 'Ja'
+            it: 'Sì'
+            pl: 'Tak'
+            ru: 'Да'
+            zh: '是'
+            hu: 'Igen'
+            pt: 'Sim'
+      UNUSED_3:
+        bits: '7.1-7.0'
+        unused: true
+      UNUSED_4:
+        bits: '8.7-9.0'
+        unused: true
+      DASHCAM_VIDEO_YEAR_1:
+        bits: '10.7-10.0'
+        comment:
+          en: 'Year of video 1 (dashcam recording list)'
+          fr: 'Année de la vidéo 1 (liste des enregistrements de la caméra embarquée)'
+          es: 'Año del vídeo 1 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Jahr von Video 1 (Dashcam-Aufnahmeliste)'
+          it: 'Anno del video 1 (elenco registrazioni dashcam)'
+          pl: 'Rok nagrania wideo 1 (lista nagrań kamery samochodowej)'
+          ru: 'Год видео 1 (список записей видеорегистратора)'
+          zh: '视频1的年份(行车记录仪录像列表)'
+          hu: 'A(z) 1. videó éve (fedélzeti kamera felvételi listája)'
+          pt: 'Ano do vídeo 1 (lista de gravações da dashcam)'
+        type: 'uint'
+        factor: 1
+        offset: 2000
+        min: 2000
+        max: 2254
+        units: 'year'
+        invalid: 0xFF
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_MONTH_1:
+        bits: '11.7-11.4'
+        comment:
+          en: 'Month of video 1 (dashcam recording list)'
+          fr: 'Mois de la vidéo 1 (liste des enregistrements de la caméra embarquée)'
+          es: 'Mes del vídeo 1 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Monat von Video 1 (Dashcam-Aufnahmeliste)'
+          it: 'Mese del video 1 (elenco registrazioni dashcam)'
+          pl: 'Miesiąc nagrania wideo 1 (lista nagrań kamery samochodowej)'
+          ru: 'Месяц видео 1 (список записей видеорегистратора)'
+          zh: '视频1的月份(行车记录仪录像列表)'
+          hu: 'A(z) 1. videó hónapja (fedélzeti kamera felvételi listája)'
+          pt: 'Mês do vídeo 1 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 12
+        units: 'month'
+        invalid: 0x0F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_SAME_DATE_INDEX_1:
+        bits: '11.3-11.0'
+        comment:
+          en: 'Index of video 1 among recordings with the same date (dashcam)'
+          fr: 'Numéro de la vidéo 1 parmi les enregistrements de même date (caméra embarquée)'
+          es: 'Número del vídeo 1 entre las grabaciones con la misma fecha (cámara de a bordo)'
+          de: 'Nummer von Video 1 unter den Aufnahmen mit gleichem Datum (Dashcam)'
+          it: 'Numero del video 1 tra le registrazioni con la stessa data (dashcam)'
+          pl: 'Numer nagrania wideo 1 wśród nagrań z tą samą datą (kamera samochodowa)'
+          ru: 'Номер видео 1 среди записей с одной датой (видеорегистратор)'
+          zh: '同日期录像中视频1的编号(行车记录仪)'
+          hu: 'A(z) 1. videó sorszáma az azonos dátumú felvételek között (fedélzeti kamera)'
+          pt: 'Número do vídeo 1 entre as gravações da mesma data (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 9
+        default: 0x00
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_DAY_1:
+        bits: '12.7-12.2'
+        comment:
+          en: 'Day of video 1 (dashcam recording list)'
+          fr: 'Jour de la vidéo 1 (liste des enregistrements de la caméra embarquée)'
+          es: 'Día del vídeo 1 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Tag von Video 1 (Dashcam-Aufnahmeliste)'
+          it: 'Giorno del video 1 (elenco registrazioni dashcam)'
+          pl: 'Dzień nagrania wideo 1 (lista nagrań kamery samochodowej)'
+          ru: 'День видео 1 (список записей видеорегистратора)'
+          zh: '视频1的日期(行车记录仪录像列表)'
+          hu: 'A(z) 1. videó napja (fedélzeti kamera felvételi listája)'
+          pt: 'Dia do vídeo 1 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 31
+        units: 'day'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_5:
+        bits: '12.1-12.0'
+        unused: true
+      DASHCAM_VIDEO_HOUR_1:
+        bits: '13.7-13.3'
+        comment:
+          en: 'Hour of video 1 (dashcam recording list)'
+          fr: 'Heure de la vidéo 1 (liste des enregistrements de la caméra embarquée)'
+          es: 'Hora del vídeo 1 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Stunde von Video 1 (Dashcam-Aufnahmeliste)'
+          it: 'Ora del video 1 (elenco registrazioni dashcam)'
+          pl: 'Godzina nagrania wideo 1 (lista nagrań kamery samochodowej)'
+          ru: 'Час видео 1 (список записей видеорегистратора)'
+          zh: '视频1的小时(行车记录仪录像列表)'
+          hu: 'A(z) 1. videó órája (fedélzeti kamera felvételi listája)'
+          pt: 'Hora do vídeo 1 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 24
+        units: 'h'
+        invalid: 0x1F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_6:
+        bits: '13.2-13.0'
+        unused: true
+      DASHCAM_VIDEO_MINUTE_1:
+        bits: '14.7-14.2'
+        comment:
+          en: 'Minute of video 1 (dashcam recording list)'
+          fr: 'Minute de la vidéo 1 (liste des enregistrements de la caméra embarquée)'
+          es: 'Minuto del vídeo 1 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Minute von Video 1 (Dashcam-Aufnahmeliste)'
+          it: 'Minuto del video 1 (elenco registrazioni dashcam)'
+          pl: 'Minuta nagrania wideo 1 (lista nagrań kamery samochodowej)'
+          ru: 'Минута видео 1 (список записей видеорегистратора)'
+          zh: '视频1的分钟(行车记录仪录像列表)'
+          hu: 'A(z) 1. videó perce (fedélzeti kamera felvételi listája)'
+          pt: 'Minuto do vídeo 1 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 59
+        units: 'min'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_7:
+        bits: '14.1-14.0'
+        unused: true
+      DASHCAM_VIDEO_YEAR_2:
+        bits: '15.7-15.0'
+        comment:
+          en: 'Year of video 2 (dashcam recording list)'
+          fr: 'Année de la vidéo 2 (liste des enregistrements de la caméra embarquée)'
+          es: 'Año del vídeo 2 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Jahr von Video 2 (Dashcam-Aufnahmeliste)'
+          it: 'Anno del video 2 (elenco registrazioni dashcam)'
+          pl: 'Rok nagrania wideo 2 (lista nagrań kamery samochodowej)'
+          ru: 'Год видео 2 (список записей видеорегистратора)'
+          zh: '视频2的年份(行车记录仪录像列表)'
+          hu: 'A(z) 2. videó éve (fedélzeti kamera felvételi listája)'
+          pt: 'Ano do vídeo 2 (lista de gravações da dashcam)'
+        type: 'uint'
+        factor: 1
+        offset: 2000
+        min: 2000
+        max: 2254
+        units: 'year'
+        invalid: 0xFF
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_MONTH_2:
+        bits: '16.7-16.4'
+        comment:
+          en: 'Month of video 2 (dashcam recording list)'
+          fr: 'Mois de la vidéo 2 (liste des enregistrements de la caméra embarquée)'
+          es: 'Mes del vídeo 2 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Monat von Video 2 (Dashcam-Aufnahmeliste)'
+          it: 'Mese del video 2 (elenco registrazioni dashcam)'
+          pl: 'Miesiąc nagrania wideo 2 (lista nagrań kamery samochodowej)'
+          ru: 'Месяц видео 2 (список записей видеорегистратора)'
+          zh: '视频2的月份(行车记录仪录像列表)'
+          hu: 'A(z) 2. videó hónapja (fedélzeti kamera felvételi listája)'
+          pt: 'Mês do vídeo 2 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 12
+        units: 'month'
+        invalid: 0x0F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_SAME_DATE_INDEX_2:
+        bits: '16.3-16.0'
+        comment:
+          en: 'Index of video 2 among recordings with the same date (dashcam)'
+          fr: 'Numéro de la vidéo 2 parmi les enregistrements de même date (caméra embarquée)'
+          es: 'Número del vídeo 2 entre las grabaciones con la misma fecha (cámara de a bordo)'
+          de: 'Nummer von Video 2 unter den Aufnahmen mit gleichem Datum (Dashcam)'
+          it: 'Numero del video 2 tra le registrazioni con la stessa data (dashcam)'
+          pl: 'Numer nagrania wideo 2 wśród nagrań z tą samą datą (kamera samochodowa)'
+          ru: 'Номер видео 2 среди записей с одной датой (видеорегистратор)'
+          zh: '同日期录像中视频2的编号(行车记录仪)'
+          hu: 'A(z) 2. videó sorszáma az azonos dátumú felvételek között (fedélzeti kamera)'
+          pt: 'Número do vídeo 2 entre as gravações da mesma data (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 9
+        default: 0x00
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_DAY_2:
+        bits: '17.7-17.2'
+        comment:
+          en: 'Day of video 2 (dashcam recording list)'
+          fr: 'Jour de la vidéo 2 (liste des enregistrements de la caméra embarquée)'
+          es: 'Día del vídeo 2 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Tag von Video 2 (Dashcam-Aufnahmeliste)'
+          it: 'Giorno del video 2 (elenco registrazioni dashcam)'
+          pl: 'Dzień nagrania wideo 2 (lista nagrań kamery samochodowej)'
+          ru: 'День видео 2 (список записей видеорегистратора)'
+          zh: '视频2的日期(行车记录仪录像列表)'
+          hu: 'A(z) 2. videó napja (fedélzeti kamera felvételi listája)'
+          pt: 'Dia do vídeo 2 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 31
+        units: 'day'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_8:
+        bits: '17.1-17.0'
+        unused: true
+      DASHCAM_VIDEO_HOUR_2:
+        bits: '18.7-18.3'
+        comment:
+          en: 'Hour of video 2 (dashcam recording list)'
+          fr: 'Heure de la vidéo 2 (liste des enregistrements de la caméra embarquée)'
+          es: 'Hora del vídeo 2 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Stunde von Video 2 (Dashcam-Aufnahmeliste)'
+          it: 'Ora del video 2 (elenco registrazioni dashcam)'
+          pl: 'Godzina nagrania wideo 2 (lista nagrań kamery samochodowej)'
+          ru: 'Час видео 2 (список записей видеорегистратора)'
+          zh: '视频2的小时(行车记录仪录像列表)'
+          hu: 'A(z) 2. videó órája (fedélzeti kamera felvételi listája)'
+          pt: 'Hora do vídeo 2 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 24
+        units: 'h'
+        invalid: 0x1F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_9:
+        bits: '18.2-18.0'
+        unused: true
+      DASHCAM_VIDEO_MINUTE_2:
+        bits: '19.7-19.2'
+        comment:
+          en: 'Minute of video 2 (dashcam recording list)'
+          fr: 'Minute de la vidéo 2 (liste des enregistrements de la caméra embarquée)'
+          es: 'Minuto del vídeo 2 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Minute von Video 2 (Dashcam-Aufnahmeliste)'
+          it: 'Minuto del video 2 (elenco registrazioni dashcam)'
+          pl: 'Minuta nagrania wideo 2 (lista nagrań kamery samochodowej)'
+          ru: 'Минута видео 2 (список записей видеорегистратора)'
+          zh: '视频2的分钟(行车记录仪录像列表)'
+          hu: 'A(z) 2. videó perce (fedélzeti kamera felvételi listája)'
+          pt: 'Minuto do vídeo 2 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 59
+        units: 'min'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_10:
+        bits: '19.1-19.0'
+        unused: true
+      DASHCAM_VIDEO_YEAR_3:
+        bits: '20.7-20.0'
+        comment:
+          en: 'Year of video 3 (dashcam recording list)'
+          fr: 'Année de la vidéo 3 (liste des enregistrements de la caméra embarquée)'
+          es: 'Año del vídeo 3 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Jahr von Video 3 (Dashcam-Aufnahmeliste)'
+          it: 'Anno del video 3 (elenco registrazioni dashcam)'
+          pl: 'Rok nagrania wideo 3 (lista nagrań kamery samochodowej)'
+          ru: 'Год видео 3 (список записей видеорегистратора)'
+          zh: '视频3的年份(行车记录仪录像列表)'
+          hu: 'A(z) 3. videó éve (fedélzeti kamera felvételi listája)'
+          pt: 'Ano do vídeo 3 (lista de gravações da dashcam)'
+        type: 'uint'
+        factor: 1
+        offset: 2000
+        min: 2000
+        max: 2254
+        units: 'year'
+        invalid: 0xFF
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_MONTH_3:
+        bits: '21.7-21.4'
+        comment:
+          en: 'Month of video 3 (dashcam recording list)'
+          fr: 'Mois de la vidéo 3 (liste des enregistrements de la caméra embarquée)'
+          es: 'Mes del vídeo 3 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Monat von Video 3 (Dashcam-Aufnahmeliste)'
+          it: 'Mese del video 3 (elenco registrazioni dashcam)'
+          pl: 'Miesiąc nagrania wideo 3 (lista nagrań kamery samochodowej)'
+          ru: 'Месяц видео 3 (список записей видеорегистратора)'
+          zh: '视频3的月份(行车记录仪录像列表)'
+          hu: 'A(z) 3. videó hónapja (fedélzeti kamera felvételi listája)'
+          pt: 'Mês do vídeo 3 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 12
+        units: 'month'
+        invalid: 0x0F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_SAME_DATE_INDEX_3:
+        bits: '21.3-21.0'
+        comment:
+          en: 'Index of video 3 among recordings with the same date (dashcam)'
+          fr: 'Numéro de la vidéo 3 parmi les enregistrements de même date (caméra embarquée)'
+          es: 'Número del vídeo 3 entre las grabaciones con la misma fecha (cámara de a bordo)'
+          de: 'Nummer von Video 3 unter den Aufnahmen mit gleichem Datum (Dashcam)'
+          it: 'Numero del video 3 tra le registrazioni con la stessa data (dashcam)'
+          pl: 'Numer nagrania wideo 3 wśród nagrań z tą samą datą (kamera samochodowa)'
+          ru: 'Номер видео 3 среди записей с одной датой (видеорегистратор)'
+          zh: '同日期录像中视频3的编号(行车记录仪)'
+          hu: 'A(z) 3. videó sorszáma az azonos dátumú felvételek között (fedélzeti kamera)'
+          pt: 'Número do vídeo 3 entre as gravações da mesma data (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 9
+        default: 0x00
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_DAY_3:
+        bits: '22.7-22.2'
+        comment:
+          en: 'Day of video 3 (dashcam recording list)'
+          fr: 'Jour de la vidéo 3 (liste des enregistrements de la caméra embarquée)'
+          es: 'Día del vídeo 3 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Tag von Video 3 (Dashcam-Aufnahmeliste)'
+          it: 'Giorno del video 3 (elenco registrazioni dashcam)'
+          pl: 'Dzień nagrania wideo 3 (lista nagrań kamery samochodowej)'
+          ru: 'День видео 3 (список записей видеорегистратора)'
+          zh: '视频3的日期(行车记录仪录像列表)'
+          hu: 'A(z) 3. videó napja (fedélzeti kamera felvételi listája)'
+          pt: 'Dia do vídeo 3 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 31
+        units: 'day'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_11:
+        bits: '22.1-22.0'
+        unused: true
+      DASHCAM_VIDEO_HOUR_3:
+        bits: '23.7-23.3'
+        comment:
+          en: 'Hour of video 3 (dashcam recording list)'
+          fr: 'Heure de la vidéo 3 (liste des enregistrements de la caméra embarquée)'
+          es: 'Hora del vídeo 3 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Stunde von Video 3 (Dashcam-Aufnahmeliste)'
+          it: 'Ora del video 3 (elenco registrazioni dashcam)'
+          pl: 'Godzina nagrania wideo 3 (lista nagrań kamery samochodowej)'
+          ru: 'Час видео 3 (список записей видеорегистратора)'
+          zh: '视频3的小时(行车记录仪录像列表)'
+          hu: 'A(z) 3. videó órája (fedélzeti kamera felvételi listája)'
+          pt: 'Hora do vídeo 3 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 24
+        units: 'h'
+        invalid: 0x1F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_12:
+        bits: '23.2-23.0'
+        unused: true
+      DASHCAM_VIDEO_MINUTE_3:
+        bits: '24.7-24.2'
+        comment:
+          en: 'Minute of video 3 (dashcam recording list)'
+          fr: 'Minute de la vidéo 3 (liste des enregistrements de la caméra embarquée)'
+          es: 'Minuto del vídeo 3 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Minute von Video 3 (Dashcam-Aufnahmeliste)'
+          it: 'Minuto del video 3 (elenco registrazioni dashcam)'
+          pl: 'Minuta nagrania wideo 3 (lista nagrań kamery samochodowej)'
+          ru: 'Минута видео 3 (список записей видеорегистратора)'
+          zh: '视频3的分钟(行车记录仪录像列表)'
+          hu: 'A(z) 3. videó perce (fedélzeti kamera felvételi listája)'
+          pt: 'Minuto do vídeo 3 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 59
+        units: 'min'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_13:
+        bits: '24.1-24.0'
+        unused: true
+      DASHCAM_VIDEO_YEAR_4:
+        bits: '25.7-25.0'
+        comment:
+          en: 'Year of video 4 (dashcam recording list)'
+          fr: 'Année de la vidéo 4 (liste des enregistrements de la caméra embarquée)'
+          es: 'Año del vídeo 4 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Jahr von Video 4 (Dashcam-Aufnahmeliste)'
+          it: 'Anno del video 4 (elenco registrazioni dashcam)'
+          pl: 'Rok nagrania wideo 4 (lista nagrań kamery samochodowej)'
+          ru: 'Год видео 4 (список записей видеорегистратора)'
+          zh: '视频4的年份(行车记录仪录像列表)'
+          hu: 'A(z) 4. videó éve (fedélzeti kamera felvételi listája)'
+          pt: 'Ano do vídeo 4 (lista de gravações da dashcam)'
+        type: 'uint'
+        factor: 1
+        offset: 2000
+        min: 2000
+        max: 2254
+        units: 'year'
+        invalid: 0xFF
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_MONTH_4:
+        bits: '26.7-26.4'
+        comment:
+          en: 'Month of video 4 (dashcam recording list)'
+          fr: 'Mois de la vidéo 4 (liste des enregistrements de la caméra embarquée)'
+          es: 'Mes del vídeo 4 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Monat von Video 4 (Dashcam-Aufnahmeliste)'
+          it: 'Mese del video 4 (elenco registrazioni dashcam)'
+          pl: 'Miesiąc nagrania wideo 4 (lista nagrań kamery samochodowej)'
+          ru: 'Месяц видео 4 (список записей видеорегистратора)'
+          zh: '视频4的月份(行车记录仪录像列表)'
+          hu: 'A(z) 4. videó hónapja (fedélzeti kamera felvételi listája)'
+          pt: 'Mês do vídeo 4 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 12
+        units: 'month'
+        invalid: 0x0F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_SAME_DATE_INDEX_4:
+        bits: '26.3-26.0'
+        comment:
+          en: 'Index of video 4 among recordings with the same date (dashcam)'
+          fr: 'Numéro de la vidéo 4 parmi les enregistrements de même date (caméra embarquée)'
+          es: 'Número del vídeo 4 entre las grabaciones con la misma fecha (cámara de a bordo)'
+          de: 'Nummer von Video 4 unter den Aufnahmen mit gleichem Datum (Dashcam)'
+          it: 'Numero del video 4 tra le registrazioni con la stessa data (dashcam)'
+          pl: 'Numer nagrania wideo 4 wśród nagrań z tą samą datą (kamera samochodowa)'
+          ru: 'Номер видео 4 среди записей с одной датой (видеорегистратор)'
+          zh: '同日期录像中视频4的编号(行车记录仪)'
+          hu: 'A(z) 4. videó sorszáma az azonos dátumú felvételek között (fedélzeti kamera)'
+          pt: 'Número do vídeo 4 entre as gravações da mesma data (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 9
+        default: 0x00
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_DAY_4:
+        bits: '27.7-27.2'
+        comment:
+          en: 'Day of video 4 (dashcam recording list)'
+          fr: 'Jour de la vidéo 4 (liste des enregistrements de la caméra embarquée)'
+          es: 'Día del vídeo 4 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Tag von Video 4 (Dashcam-Aufnahmeliste)'
+          it: 'Giorno del video 4 (elenco registrazioni dashcam)'
+          pl: 'Dzień nagrania wideo 4 (lista nagrań kamery samochodowej)'
+          ru: 'День видео 4 (список записей видеорегистратора)'
+          zh: '视频4的日期(行车记录仪录像列表)'
+          hu: 'A(z) 4. videó napja (fedélzeti kamera felvételi listája)'
+          pt: 'Dia do vídeo 4 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 31
+        units: 'day'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_14:
+        bits: '27.1-27.0'
+        unused: true
+      DASHCAM_VIDEO_HOUR_4:
+        bits: '28.7-28.3'
+        comment:
+          en: 'Hour of video 4 (dashcam recording list)'
+          fr: 'Heure de la vidéo 4 (liste des enregistrements de la caméra embarquée)'
+          es: 'Hora del vídeo 4 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Stunde von Video 4 (Dashcam-Aufnahmeliste)'
+          it: 'Ora del video 4 (elenco registrazioni dashcam)'
+          pl: 'Godzina nagrania wideo 4 (lista nagrań kamery samochodowej)'
+          ru: 'Час видео 4 (список записей видеорегистратора)'
+          zh: '视频4的小时(行车记录仪录像列表)'
+          hu: 'A(z) 4. videó órája (fedélzeti kamera felvételi listája)'
+          pt: 'Hora do vídeo 4 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 24
+        units: 'h'
+        invalid: 0x1F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_15:
+        bits: '28.2-28.0'
+        unused: true
+      DASHCAM_VIDEO_MINUTE_4:
+        bits: '29.7-29.2'
+        comment:
+          en: 'Minute of video 4 (dashcam recording list)'
+          fr: 'Minute de la vidéo 4 (liste des enregistrements de la caméra embarquée)'
+          es: 'Minuto del vídeo 4 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Minute von Video 4 (Dashcam-Aufnahmeliste)'
+          it: 'Minuto del video 4 (elenco registrazioni dashcam)'
+          pl: 'Minuta nagrania wideo 4 (lista nagrań kamery samochodowej)'
+          ru: 'Минута видео 4 (список записей видеорегистратора)'
+          zh: '视频4的分钟(行车记录仪录像列表)'
+          hu: 'A(z) 4. videó perce (fedélzeti kamera felvételi listája)'
+          pt: 'Minuto do vídeo 4 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 59
+        units: 'min'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_16:
+        bits: '29.1-29.0'
+        unused: true
+      DASHCAM_VIDEO_YEAR_5:
+        bits: '30.7-30.0'
+        comment:
+          en: 'Year of video 5 (dashcam recording list)'
+          fr: 'Année de la vidéo 5 (liste des enregistrements de la caméra embarquée)'
+          es: 'Año del vídeo 5 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Jahr von Video 5 (Dashcam-Aufnahmeliste)'
+          it: 'Anno del video 5 (elenco registrazioni dashcam)'
+          pl: 'Rok nagrania wideo 5 (lista nagrań kamery samochodowej)'
+          ru: 'Год видео 5 (список записей видеорегистратора)'
+          zh: '视频5的年份(行车记录仪录像列表)'
+          hu: 'A(z) 5. videó éve (fedélzeti kamera felvételi listája)'
+          pt: 'Ano do vídeo 5 (lista de gravações da dashcam)'
+        type: 'uint'
+        factor: 1
+        offset: 2000
+        min: 2000
+        max: 2254
+        units: 'year'
+        invalid: 0xFF
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_MONTH_5:
+        bits: '31.7-31.4'
+        comment:
+          en: 'Month of video 5 (dashcam recording list)'
+          fr: 'Mois de la vidéo 5 (liste des enregistrements de la caméra embarquée)'
+          es: 'Mes del vídeo 5 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Monat von Video 5 (Dashcam-Aufnahmeliste)'
+          it: 'Mese del video 5 (elenco registrazioni dashcam)'
+          pl: 'Miesiąc nagrania wideo 5 (lista nagrań kamery samochodowej)'
+          ru: 'Месяц видео 5 (список записей видеорегистратора)'
+          zh: '视频5的月份(行车记录仪录像列表)'
+          hu: 'A(z) 5. videó hónapja (fedélzeti kamera felvételi listája)'
+          pt: 'Mês do vídeo 5 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 12
+        units: 'month'
+        invalid: 0x0F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_SAME_DATE_INDEX_5:
+        bits: '31.3-31.0'
+        comment:
+          en: 'Index of video 5 among recordings with the same date (dashcam)'
+          fr: 'Numéro de la vidéo 5 parmi les enregistrements de même date (caméra embarquée)'
+          es: 'Número del vídeo 5 entre las grabaciones con la misma fecha (cámara de a bordo)'
+          de: 'Nummer von Video 5 unter den Aufnahmen mit gleichem Datum (Dashcam)'
+          it: 'Numero del video 5 tra le registrazioni con la stessa data (dashcam)'
+          pl: 'Numer nagrania wideo 5 wśród nagrań z tą samą datą (kamera samochodowa)'
+          ru: 'Номер видео 5 среди записей с одной датой (видеорегистратор)'
+          zh: '同日期录像中视频5的编号(行车记录仪)'
+          hu: 'A(z) 5. videó sorszáma az azonos dátumú felvételek között (fedélzeti kamera)'
+          pt: 'Número do vídeo 5 entre as gravações da mesma data (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 9
+        default: 0x00
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_DAY_5:
+        bits: '32.7-32.2'
+        comment:
+          en: 'Day of video 5 (dashcam recording list)'
+          fr: 'Jour de la vidéo 5 (liste des enregistrements de la caméra embarquée)'
+          es: 'Día del vídeo 5 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Tag von Video 5 (Dashcam-Aufnahmeliste)'
+          it: 'Giorno del video 5 (elenco registrazioni dashcam)'
+          pl: 'Dzień nagrania wideo 5 (lista nagrań kamery samochodowej)'
+          ru: 'День видео 5 (список записей видеорегистратора)'
+          zh: '视频5的日期(行车记录仪录像列表)'
+          hu: 'A(z) 5. videó napja (fedélzeti kamera felvételi listája)'
+          pt: 'Dia do vídeo 5 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 31
+        units: 'day'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_17:
+        bits: '32.1-32.0'
+        unused: true
+      DASHCAM_VIDEO_HOUR_5:
+        bits: '33.7-33.3'
+        comment:
+          en: 'Hour of video 5 (dashcam recording list)'
+          fr: 'Heure de la vidéo 5 (liste des enregistrements de la caméra embarquée)'
+          es: 'Hora del vídeo 5 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Stunde von Video 5 (Dashcam-Aufnahmeliste)'
+          it: 'Ora del video 5 (elenco registrazioni dashcam)'
+          pl: 'Godzina nagrania wideo 5 (lista nagrań kamery samochodowej)'
+          ru: 'Час видео 5 (список записей видеорегистратора)'
+          zh: '视频5的小时(行车记录仪录像列表)'
+          hu: 'A(z) 5. videó órája (fedélzeti kamera felvételi listája)'
+          pt: 'Hora do vídeo 5 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 24
+        units: 'h'
+        invalid: 0x1F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_18:
+        bits: '33.2-33.0'
+        unused: true
+      DASHCAM_VIDEO_MINUTE_5:
+        bits: '34.7-34.2'
+        comment:
+          en: 'Minute of video 5 (dashcam recording list)'
+          fr: 'Minute de la vidéo 5 (liste des enregistrements de la caméra embarquée)'
+          es: 'Minuto del vídeo 5 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Minute von Video 5 (Dashcam-Aufnahmeliste)'
+          it: 'Minuto del video 5 (elenco registrazioni dashcam)'
+          pl: 'Minuta nagrania wideo 5 (lista nagrań kamery samochodowej)'
+          ru: 'Минута видео 5 (список записей видеорегистратора)'
+          zh: '视频5的分钟(行车记录仪录像列表)'
+          hu: 'A(z) 5. videó perce (fedélzeti kamera felvételi listája)'
+          pt: 'Minuto do vídeo 5 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 59
+        units: 'min'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_19:
+        bits: '34.1-34.0'
+        unused: true
+      DASHCAM_VIDEO_YEAR_6:
+        bits: '35.7-35.0'
+        comment:
+          en: 'Year of video 6 (dashcam recording list)'
+          fr: 'Année de la vidéo 6 (liste des enregistrements de la caméra embarquée)'
+          es: 'Año del vídeo 6 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Jahr von Video 6 (Dashcam-Aufnahmeliste)'
+          it: 'Anno del video 6 (elenco registrazioni dashcam)'
+          pl: 'Rok nagrania wideo 6 (lista nagrań kamery samochodowej)'
+          ru: 'Год видео 6 (список записей видеорегистратора)'
+          zh: '视频6的年份(行车记录仪录像列表)'
+          hu: 'A(z) 6. videó éve (fedélzeti kamera felvételi listája)'
+          pt: 'Ano do vídeo 6 (lista de gravações da dashcam)'
+        type: 'uint'
+        factor: 1
+        offset: 2000
+        min: 2000
+        max: 2254
+        units: 'year'
+        invalid: 0xFF
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_MONTH_6:
+        bits: '36.7-36.4'
+        comment:
+          en: 'Month of video 6 (dashcam recording list)'
+          fr: 'Mois de la vidéo 6 (liste des enregistrements de la caméra embarquée)'
+          es: 'Mes del vídeo 6 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Monat von Video 6 (Dashcam-Aufnahmeliste)'
+          it: 'Mese del video 6 (elenco registrazioni dashcam)'
+          pl: 'Miesiąc nagrania wideo 6 (lista nagrań kamery samochodowej)'
+          ru: 'Месяц видео 6 (список записей видеорегистратора)'
+          zh: '视频6的月份(行车记录仪录像列表)'
+          hu: 'A(z) 6. videó hónapja (fedélzeti kamera felvételi listája)'
+          pt: 'Mês do vídeo 6 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 12
+        units: 'month'
+        invalid: 0x0F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_SAME_DATE_INDEX_6:
+        bits: '36.3-36.0'
+        comment:
+          en: 'Index of video 6 among recordings with the same date (dashcam)'
+          fr: 'Numéro de la vidéo 6 parmi les enregistrements de même date (caméra embarquée)'
+          es: 'Número del vídeo 6 entre las grabaciones con la misma fecha (cámara de a bordo)'
+          de: 'Nummer von Video 6 unter den Aufnahmen mit gleichem Datum (Dashcam)'
+          it: 'Numero del video 6 tra le registrazioni con la stessa data (dashcam)'
+          pl: 'Numer nagrania wideo 6 wśród nagrań z tą samą datą (kamera samochodowa)'
+          ru: 'Номер видео 6 среди записей с одной датой (видеорегистратор)'
+          zh: '同日期录像中视频6的编号(行车记录仪)'
+          hu: 'A(z) 6. videó sorszáma az azonos dátumú felvételek között (fedélzeti kamera)'
+          pt: 'Número do vídeo 6 entre as gravações da mesma data (câmara de bordo)'
+        type: 'uint'
+        min: 0
+        max: 9
+        default: 0x00
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      DASHCAM_VIDEO_DAY_6:
+        bits: '37.7-37.2'
+        comment:
+          en: 'Day of video 6 (dashcam recording list)'
+          fr: 'Jour de la vidéo 6 (liste des enregistrements de la caméra embarquée)'
+          es: 'Día del vídeo 6 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Tag von Video 6 (Dashcam-Aufnahmeliste)'
+          it: 'Giorno del video 6 (elenco registrazioni dashcam)'
+          pl: 'Dzień nagrania wideo 6 (lista nagrań kamery samochodowej)'
+          ru: 'День видео 6 (список записей видеорегистратора)'
+          zh: '视频6的日期(行车记录仪录像列表)'
+          hu: 'A(z) 6. videó napja (fedélzeti kamera felvételi listája)'
+          pt: 'Dia do vídeo 6 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 1
+        max: 31
+        units: 'day'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_20:
+        bits: '37.1-37.0'
+        unused: true
+      DASHCAM_VIDEO_HOUR_6:
+        bits: '38.7-38.3'
+        comment:
+          en: 'Hour of video 6 (dashcam recording list)'
+          fr: 'Heure de la vidéo 6 (liste des enregistrements de la caméra embarquée)'
+          es: 'Hora del vídeo 6 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Stunde von Video 6 (Dashcam-Aufnahmeliste)'
+          it: 'Ora del video 6 (elenco registrazioni dashcam)'
+          pl: 'Godzina nagrania wideo 6 (lista nagrań kamery samochodowej)'
+          ru: 'Час видео 6 (список записей видеорегистратора)'
+          zh: '视频6的小时(行车记录仪录像列表)'
+          hu: 'A(z) 6. videó órája (fedélzeti kamera felvételi listája)'
+          pt: 'Hora do vídeo 6 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 24
+        units: 'h'
+        invalid: 0x1F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_21:
+        bits: '38.2-38.0'
+        unused: true
+      DASHCAM_VIDEO_MINUTE_6:
+        bits: '39.7-39.2'
+        comment:
+          en: 'Minute of video 6 (dashcam recording list)'
+          fr: 'Minute de la vidéo 6 (liste des enregistrements de la caméra embarquée)'
+          es: 'Minuto del vídeo 6 (lista de grabaciones de la cámara de a bordo)'
+          de: 'Minute von Video 6 (Dashcam-Aufnahmeliste)'
+          it: 'Minuto del video 6 (elenco registrazioni dashcam)'
+          pl: 'Minuta nagrania wideo 6 (lista nagrań kamery samochodowej)'
+          ru: 'Минута видео 6 (список записей видеорегистратора)'
+          zh: '视频6的分钟(行车记录仪录像列表)'
+          hu: 'A(z) 6. videó perce (fedélzeti kamera felvételi listája)'
+          pt: 'Minuto do vídeo 6 (lista de gravações da câmara de bordo)'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 59
+        units: 'min'
+        invalid: 0x3F
+        mux:
+          selector: 'IDVR_DIRECTORY_TYPE'
+          values: [0x00]
+      UNUSED_22:
+        bits: '39.1-39.0'
+        unused: true

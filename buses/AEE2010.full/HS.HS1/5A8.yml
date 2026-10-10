@@ -1,0 +1,389 @@
+id: 0x5A8
+name: 'ENGINE_PERFORMANCE_DATA_3'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine performance data sent by the engine ECU: displayed torque and power, minimum torque and performance index.'
+  fr: 'Données de performance moteur envoyées par le calculateur moteur : couple et puissance affichés, couple minimal et indice de performance.'
+  es: 'Datos de rendimiento del motor enviados por la centralita del motor: par y potencia mostrados, par mínimo e índice de rendimiento.'
+  de: 'Vom Motorsteuergerät gesendete Motorleistungsdaten: angezeigtes Drehmoment und Leistung, Mindestdrehmoment und Leistungsindex.'
+  it: 'Dati di prestazione motore inviati dalla centralina motore: coppia e potenza visualizzate, coppia minima e indice di prestazione.'
+  pl: 'Dane osiągów silnika wysyłane przez sterownik silnika: wyświetlany moment obrotowy i moc, minimalny moment obrotowy i wskaźnik osiągów.'
+  ru: 'Данные о характеристиках двигателя, отправляемые ЭБУ двигателя: отображаемый крутящий момент и мощность, минимальный крутящий момент и индекс производительности.'
+  zh: '由发动机ECU发送的发动机性能数据：显示的扭矩和功率、最小扭矩和性能指数。'
+  hu: 'A motorvezérlő egység által küldött motorteljesítmény-adatok: kijelzett nyomaték és teljesítmény, minimális nyomaték és teljesítményindex.'
+  pt: 'Dados de desempenho do motor enviados pela unidade de controlo do motor: binário e potência apresentados, binário mínimo e índice de desempenho.'
+periodicity: ['1000ms']
+senders: ['CMM']
+receivers: ['BSI']
+
+signals:
+  UREA_LEVEL_RANGE_BEFORE_START_INHIBIT:
+    bits: '1.7-2.1'
+    comment:
+      en: 'Distance remaining before starting is inhibited due to a low AdBlue level (km)'
+      fr: 'Distance restante avant l''interdiction de démarrage due au niveau d''urée (km)'
+      es: 'Distancia restante antes de la prohibición de arranque debida al nivel de urea (km)'
+      de: 'Verbleibende Strecke bis zur Startsperre wegen niedrigem AdBlue-Füllstand (km)'
+      it: 'Distanza residua prima del divieto di avviamento dovuto al livello dell''urea (km)'
+      pl: 'Pozostały dystans do zablokowania rozruchu z powodu poziomu mocznika (km)'
+      ru: 'Оставшееся расстояние до блокировки пуска из-за уровня мочевины (км)'
+      zh: '因尿素液位导致禁止起动前的剩余距离(km)'
+      hu: 'A hátralévő távolság az AdBlue-szint miatti indítástiltásig (km)'
+      pt: 'Distância restante até o arranque ser inibido devido a um nível baixo de AdBlue (km)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 30000
+    units: 'km'
+    default: 0xBB8
+
+  UREA_FAULT_RANGE_BEFORE_START_INHIBIT:
+    bits: '3.7-4.6'
+    comment:
+      en: 'Distance remaining before starting is inhibited due to an AdBlue injection system fault (km)'
+      fr: 'Distance restante avant l''interdiction de démarrage due à une défaillance du système d''injection d''urée (km)'
+      es: 'Distancia restante antes de la prohibición de arranque debida a un fallo del sistema de inyección de urea (km)'
+      de: 'Verbleibende Strecke bis zur Startsperre wegen eines Fehlers des AdBlue-Einspritzsystems (km)'
+      it: 'Distanza residua prima del divieto di avviamento dovuto a un guasto del sistema di iniezione dell''urea (km)'
+      pl: 'Pozostały dystans do zablokowania rozruchu z powodu usterki układu wtrysku mocznika (km)'
+      ru: 'Оставшееся расстояние до блокировки пуска из-за неисправности системы впрыска мочевины (км)'
+      zh: '因尿素喷射系统故障导致禁止起动前的剩余距离(km)'
+      hu: 'A hátralévő távolság az AdBlue-befecskendező rendszer hibája miatti indítástiltásig (km)'
+      pt: 'Distância restante até o arranque ser inibido devido a uma avaria do sistema de injeção de AdBlue (km)'
+    type: 'uint'
+    factor: 10
+    min: 0
+    max: 10000
+    units: 'km'
+    default: 0x3E8
+
+  UREA_LEVEL_ALERT:
+    bits: '4.5-4.3'
+    comment:
+      en: 'Remaining AdBlue level alert, expressed as driving range'
+      fr: 'Alerte de niveau d''urée restant, exprimée en autonomie kilométrique'
+      es: 'Alerta de nivel de AdBlue restante, expresada en autonomía'
+      de: 'Warnung vor verbleibendem AdBlue-Füllstand, angegeben als Reichweite'
+      it: 'Avviso di livello AdBlue residuo, espresso come autonomia chilometrica'
+      pl: 'Ostrzeżenie o poziomie płynu AdBlue, wyrażone jako zasięg'
+      ru: 'Предупреждение об остатке AdBlue, выраженное в виде запаса хода'
+      zh: 'AdBlue尿素液剩余量警告(以续航里程表示)'
+      hu: 'Az AdBlue-szint riasztása, hatótávolságban kifejezve'
+      pt: 'Alerta de nível de ureia restante, expressa em autonomia quilométrica'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'High level'
+        fr: 'Niveau haut'
+        es: 'Nivel alto'
+        de: 'Hoher Stand'
+        it: 'Livello alto'
+        pl: 'Wysoki poziom'
+        ru: 'Высокий уровень'
+        zh: '高液位'
+        hu: 'Magas szint'
+        pt: 'Nível alto'
+      0x01:
+        en: 'Low level, threshold 1'
+        fr: 'Niveau bas, seuil 1'
+        es: 'Nivel bajo, umbral 1'
+        de: 'Niedriger Stand, Schwelle 1'
+        it: 'Livello basso, soglia 1'
+        pl: 'Niski poziom, próg 1'
+        ru: 'Низкий уровень, порог 1'
+        zh: '低液位,阈值1'
+        hu: 'Alacsony szint, 1. küszöb'
+        pt: 'Nível baixo, limiar 1'
+      0x02:
+        en: 'Low level, threshold 2'
+        fr: 'Niveau bas, seuil 2'
+        es: 'Nivel bajo, umbral 2'
+        de: 'Niedriger Stand, Schwelle 2'
+        it: 'Livello basso, soglia 2'
+        pl: 'Niski poziom, próg 2'
+        ru: 'Низкий уровень, порог 2'
+        zh: '低电平,阈值2'
+        hu: 'Alacsony szint, 2. küszöb'
+        pt: 'Nível baixo, limiar 2'
+      0x03:
+        en: 'low level threshold 3'
+        fr: 'Niveau bas seuil3'
+        es: 'Umbral de nivel bajo 3'
+        de: 'Niedrigpegel-Schwelle 3'
+        it: 'Soglia di livello basso 3'
+        pl: 'Próg niskiego poziomu 3'
+        ru: 'Порог низкого уровня 3'
+        zh: '低电平阈值3'
+        hu: 'Alacsony szint küszöb 3'
+        pt: 'Limiar de nível baixo 3'
+      0x04:
+        en: 'low level null'
+        fr: 'Niveau bas nul'
+        es: 'Nivel bajo nulo'
+        de: 'Niedrigpegel null'
+        it: 'Livello basso nullo'
+        pl: 'Niski poziom zerowy'
+        ru: 'Низкий уровень нулевой'
+        zh: '低电平为零'
+        hu: 'Alacsony szint nulla'
+        pt: 'Nível baixo nulo'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  SCR_OPERATING_STATE:
+    bits: '4.2-4.1'
+    comment:
+      en: 'SCR system operating state'
+      fr: 'État de fonctionnement du système SCR'
+      es: 'Estado de funcionamiento del sistema SCR'
+      de: 'Betriebszustand des SCR-Systems'
+      it: 'Stato di funzionamento del sistema SCR'
+      pl: 'Stan działania układu SCR'
+      ru: 'Рабочее состояние системы SCR'
+      zh: 'SCR系统运行状态'
+      hu: 'Az SCR rendszer üzemi állapota'
+      pt: 'Estado de funcionamento do sistema SCR'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'SCR system functional'
+        fr: 'Système SCR fonctionnel'
+        es: 'Sistema SCR funcional'
+        de: 'SCR-System funktionsfähig'
+        it: 'Sistema SCR funzionante'
+        pl: 'Sprawny układ SCR'
+        ru: 'Система SCR исправна'
+        zh: 'SCR系统正常运行'
+        hu: 'Az SCR rendszer működőképes'
+        pt: 'Sistema SCR funcional'
+      0x01:
+        en: 'Failing SCR system, confirmed'
+        fr: 'Système SCR défaillant, confirmé'
+        es: 'Sistema SCR defectuoso, confirmado'
+        de: 'SCR-System ausgefallen, bestätigt'
+        it: 'Sistema SCR guasto, confermato'
+        pl: 'Awaria układu SCR, potwierdzona'
+        ru: 'Неисправность системы SCR подтверждена'
+        zh: 'SCR系统故障，已确认'
+        hu: 'Hibás SCR-rendszer, megerősítve'
+        pt: 'Sistema SCR defeituoso, confirmado'
+      0x02:
+        en: 'SCR system faulty, threshold'
+        fr: 'Système SCR défaillant, seuil'
+        es: 'Sistema SCR defectuoso, umbral'
+        de: 'SCR-System fehlerhaft, Schwelle'
+        it: 'Sistema SCR guasto, soglia'
+        pl: 'Usterka systemu SCR, próg'
+        ru: 'Неисправность системы SCR, порог'
+        zh: 'SCR系统故障,阈值'
+        hu: 'SCR rendszer hibás, küszöbérték'
+        pt: 'Sistema SCR defeituoso, limiar'
+      0x03:
+        en: 'SCR system degradation 0'
+        fr: 'Dégradation du système SCR 0'
+        es: 'Degradación del sistema SCR 0'
+        de: 'SCR-System-Verschlechterung 0'
+        it: 'Degrado del sistema SCR 0'
+        pl: 'Degradacja systemu SCR 0'
+        ru: 'Ухудшение системы SCR 0'
+        zh: 'SCR系统劣化0'
+        hu: 'SCR rendszer romlása 0'
+        pt: 'Degradação 0 do sistema SCR'
+
+  GEARBOX_VACUUM_OPTIMIZATION_REQUEST:
+    bits: '4.0'
+    comment:
+      en: 'Request to adapt the gearbox shift schedule for vacuum optimization needs'
+      fr: 'Demande d''adaptation de la loi de passage de la boîte de vitesses pour les besoins d''optimisation du vide'
+      es: 'Solicitud de adaptación de la ley de paso de la caja de cambios para las necesidades de optimización del vacío'
+      de: 'Anforderung zur Anpassung der Schaltstrategie des Getriebes für den Unterdruck-Optimierungsbedarf'
+      it: 'Richiesta di adattamento della legge di cambiata del cambio per le esigenze di ottimizzazione del vuoto'
+      pl: 'Żądanie dostosowania charakterystyki zmiany biegów skrzyni biegów na potrzeby optymalizacji podciśnienia'
+      ru: 'Запрос на адаптацию логики переключения передач для оптимизации разрежения'
+      zh: '为真空优化需求调整变速箱换挡策略的请求'
+      hu: 'A sebességváltó kapcsolási stratégiájának módosítási kérése a vákuum-optimalizálási igény miatt'
+      pt: 'Pedido de adaptação da lei de mudanças da caixa de velocidades para as necessidades de otimização do vácuo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: '0b0: Not activated'
+        fr: '0b0 : non activé'
+        es: '0b0: no activado'
+        de: '0b0: nicht aktiviert'
+        it: '0b0: non attivato'
+        pl: '0b0: nieaktywowane'
+        ru: '0b0: не активировано'
+        zh: '0b0:未激活'
+        hu: '0b0: nem aktiválva'
+        pt: '0b0: não ativado'
+      0x01:
+        en: '0b1: Activated'
+        fr: '0b1 : activé'
+        es: '0b1: activado'
+        de: '0b1: aktiviert'
+        it: '0b1: attivato'
+        pl: '0b1: aktywowane'
+        ru: '0b1: активировано'
+        zh: '0b1:已激活'
+        hu: '0b1: aktiválva'
+        pt: '0b1: Ativado'
+
+  UREA_FILL_VOLUME_REMAINING:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Volume of AdBlue that can still be added to the tank (L)'
+      fr: 'Volume d''urée pouvant encore être ajouté dans le réservoir (L)'
+      es: 'Volumen de urea que todavía se puede añadir al depósito (L)'
+      de: 'Noch in den Tank nachfüllbares AdBlue-Volumen (L)'
+      it: 'Volume di urea ancora aggiungibile nel serbatoio (L)'
+      pl: 'Objętość mocznika, którą można jeszcze dolać do zbiornika (L)'
+      ru: 'Объём мочевины, который ещё можно долить в бак (л)'
+      zh: '仍可加入尿素箱的尿素体积(L)'
+      hu: 'A tartályba még betölthető AdBlue mennyisége (L)'
+      pt: 'Volume de ureia que ainda pode ser adicionado ao depósito (L)'
+    type: 'uint'
+    factor: 0.2
+    min: 0
+    max: 50.8
+    units: 'L'
+    invalid: 0xFF
+    default: 0xFE
+
+  UREA_TANK_VOLUME:
+    bits: '6.7-6.3'
+    comment:
+      en: 'AdBlue tank volume (L)'
+      fr: 'Volume du réservoir d''urée (L)'
+      es: 'Volumen del depósito de urea (L)'
+      de: 'Volumen des AdBlue-Tanks (L)'
+      it: 'Volume del serbatoio urea (L)'
+      pl: 'Pojemność zbiornika mocznika (L)'
+      ru: 'Объём бака мочевины (л)'
+      zh: '尿素箱容积(L)'
+      hu: 'Az AdBlue-tartály térfogata (L)'
+      pt: 'Volume do depósito de ureia (L)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 30
+    units: 'L'
+    invalid: 0x1F
+    default: 0x00
+
+  EMISSION_CONSTRAINT_LEVEL:
+    bits: '6.2-7.7'
+    comment:
+      en: 'Intensity of the emission constraint (CO2, NOx) used to arbitrate powertrain levers'
+      fr: 'Intensité de la contrainte sur les émissions (CO2, NOx) pour le pilotage des leviers du GMP'
+      es: 'Intensidad de la restricción de emisiones (CO2, NOx) para el pilotaje de las palancas de la cadena cinemática'
+      de: 'Stärke der Emissionsbeschränkung (CO2, NOx) zur Steuerung der Antriebsstrang-Stellhebel'
+      it: 'Intensità del vincolo sulle emissioni (CO2, NOx) per il pilotaggio delle leve del powertrain'
+      pl: 'Poziom ograniczenia emisji (CO2, NOx) do sterowania parametrami układu napędowego'
+      ru: 'Уровень ограничения по выбросам (CO2, NOx) для управления рычагами силового агрегата'
+      zh: '用于动力总成调控的排放约束强度(CO2、NOx)'
+      hu: 'A kibocsátási korlátozás mértéke (CO2, NOx) a hajtáslánc-beavatkozók vezérléséhez'
+      pt: 'Intensidade da restrição de emissões (CO2, NOx) para o controlo das alavancas do grupo motopropulsor'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 1
+    invalid: 0x0F
+    default: 0x00
+
+  POWERTRAIN_EMISSION_MODE_REQUEST:
+    bits: '7.6-7.4'
+    comment:
+      en: 'Powertrain mode requested by the Euro 6.2 emission arbitration function'
+      fr: 'Mode du GMP demandé par la fonction d''arbitrage Euro 6.2'
+      es: 'Modo de la cadena cinemática solicitado por la función de arbitraje Euro 6.2'
+      de: 'Vom Euro-6.2-Emissionsarbitrierungsfunktion angeforderter Antriebsstrangmodus'
+      it: 'Modalità powertrain richiesta dalla funzione di arbitraggio Euro 6.2'
+      pl: 'Tryb układu napędowego żądany przez funkcję arbitrażu emisji Euro 6.2'
+      ru: 'Режим силового агрегата, запрошенный функцией арбитража выбросов Евро 6.2'
+      zh: '欧6.2排放仲裁功能请求的动力总成模式'
+      hu: 'Az Euro 6.2 kibocsátás-arbitrálási funkció által kért hajtáslánc-üzemmód'
+      pt: 'Modo do GMP solicitado pela função de arbitragem Euro 6.2'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Nominal'
+        fr: 'Nominal'
+        es: 'Nominal'
+        de: 'Nominal'
+        it: 'Nominale'
+        pl: 'Nominalny'
+        ru: 'Номинальный'
+        zh: '标称'
+        hu: 'Névleges'
+        pt: 'Nominal'
+      0x01:
+        en: 'Prioritise NOx reduction at source (initialisation mode) / O2 richness (petrol)'
+        fr: 'Prioriser la réduction des NOx à la source (mode d''initialisation) / la richesse en O2 (essence)'
+        es: 'Priorizar la reducción de NOx en origen (modo de inicialización) / la riqueza de O2 (gasolina)'
+        de: 'Priorisierung der NOx-Reduzierung an der Quelle (Initialisierungsmodus) / O2-Gemischanreicherung (Benzin)'
+        it: 'Priorità alla riduzione degli NOx all''origine (modalità di inizializzazione) / alla ricchezza di O2 (benzina)'
+        pl: 'Priorytet redukcji NOx u źródła (tryb inicjalizacji) / wzbogacenia O2 (benzyna)'
+        ru: 'Приоритет снижения NOx у источника (режим инициализации) / обогащения O2 (бензин)'
+        zh: '优先在源头降低NOx(初始化模式)/优先富氧(汽油)'
+        hu: 'NOx-csökkentés priorizálása a forrásnál (inicializálási mód) / O2-dúsítás (benzin)'
+        pt: 'Priorizar a redução de NOx na fonte (modo de inicialização) / riqueza de O2 (gasolina)'
+      0x02:
+        en: 'Prioritise exhaust flow'
+        fr: 'Prioriser le débit d''échappement'
+        es: 'Priorizar el caudal de escape'
+        de: 'Abgasstrom priorisieren'
+        it: 'Dare priorità al flusso di scarico'
+        pl: 'Priorytet dla przepływu spalin'
+        ru: 'Приоритет расхода выхлопных газов'
+        zh: '优先排气流量'
+        hu: 'Kipufogógáz-áramlás priorizálása'
+        pt: 'Priorizar o fluxo de escape'
+      0x03:
+        en: 'Prioritise exhaust gas thermal protection'
+        fr: 'Prioriser la thermique de l''échappement'
+        es: 'Priorizar la térmica del escape'
+        de: 'Priorisierung des thermischen Schutzes der Abgasanlage'
+        it: 'Priorità alla protezione termica dello scarico'
+        pl: 'Priorytet ochrony termicznej układu wydechowego'
+        ru: 'Приоритет тепловой защиты выхлопной системы'
+        zh: '优先排气温度保护'
+        hu: 'Kipufogógáz hővédelem priorizálása'
+        pt: 'Priorizar a proteção térmica dos gases de escape'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  ACCESSORY_BELT_TEMPERATURE:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Accessory belt temperature (°C)'
+      fr: 'Température de la courroie d''accessoires (°C)'
+      es: 'Temperatura de la correa de accesorios (°C)'
+      de: 'Temperatur des Nebenaggregateriemens (°C)'
+      it: 'Temperatura della cinghia degli accessori (°C)'
+      pl: 'Temperatura paska osprzętu (°C)'
+      ru: 'Температура ремня привода навесного оборудования (°C)'
+      zh: '附件皮带温度(°C)'
+      hu: 'A segédhajtás-szíj hőmérséklete (°C)'
+      pt: 'Temperatura da correia de acessórios (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    default: 0x3C

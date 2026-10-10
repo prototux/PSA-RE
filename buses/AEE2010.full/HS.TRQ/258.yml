@@ -1,0 +1,265 @@
+id: 0x258
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_5'
+type: 'can'
+length: 8
+comment:
+  en: 'Real-time engine torque data for hybrid coordination: engine and resistive torque, torque limits and target idle speed'
+  fr: 'Données dynamiques de couple moteur pour la coordination hybride : couple moteur et résistant, limites de couple et régime de ralenti cible'
+  es: 'Datos dinámicos del par motor para la coordinación híbrida: par motor y resistente, límites de par y régimen de ralentí objetivo'
+  de: 'Dynamische Motordrehmomentdaten für die Hybridkoordination: Motor- und Widerstandsmoment, Drehmomentgrenzen und Ziel-Leerlaufdrehzahl'
+  it: 'Dati dinamici di coppia motore per il coordinamento ibrido: coppia motore e resistente, limiti di coppia e regime del minimo target'
+  pl: 'Dynamiczne dane momentu obrotowego silnika do koordynacji hybrydowej: moment silnika i moment oporowy, limity momentu i docelowe obroty biegu jałowego'
+  ru: 'Динамические данные крутящего момента двигателя для гибридной координации: момент двигателя и момент сопротивления, пределы момента и целевые обороты холостого хода'
+  zh: '用于混动协调的发动机转矩动态数据:发动机转矩与阻力转矩、转矩限值及目标怠速'
+  hu: 'A hibrid koordinációhoz szükséges dinamikus motornyomaték-adatok: motor- és ellennyomaték, nyomatékhatárok és cél alapjárati fordulatszám'
+  pt: 'Dados de binário do motor em tempo real para a coordenação híbrida: binário do motor e resistente, limites de binário e regime de ralenti alvo.'
+periodicity: ['10ms']
+senders: ['CMM']
+receivers: ['HCU1']
+
+signals:
+  PROCESS_COUNTER_4BIT:
+    bits: '1.7-1.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  TORQUE_SETPOINT_AIR_PATH:
+    bits: '2.7-3.5'
+    comment:
+      en: 'Torque setpoint taken into account on the air path.'
+      fr: 'Consigne de couple prise en compte sur la branche air.'
+      es: 'Consigna de par tenida en cuenta en la vía de aire.'
+      de: 'Auf dem Luftpfad berücksichtigter Drehmoment-Sollwert.'
+      it: 'Consegna di coppia considerata sul ramo aria.'
+      pl: 'Zadana wartość momentu obrotowego uwzględniona w ścieżce powietrza.'
+      ru: 'Заданный крутящий момент, учитываемый по воздушному контуру.'
+      zh: '空气路径上考虑的转矩设定值。'
+      hu: 'A légútra figyelembe vett nyomatéki alapjel.'
+      pt: 'Consigna de binário considerada no ramo de ar'
+    type: 'uint'
+    factor: 0.5
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+
+  TORQUE_SETPOINT_IGNITION_PATH:
+    bits: '3.4-4.2'
+    comment:
+      en: 'Torque setpoint taken into account on the ignition timing path.'
+      fr: 'Consigne de couple prise en compte sur la branche avance.'
+      es: 'Consigna de par tenida en cuenta en la vía de avance del encendido.'
+      de: 'Auf dem Zündwinkelpfad berücksichtigter Drehmoment-Sollwert.'
+      it: 'Consegna di coppia considerata sul ramo anticipo.'
+      pl: 'Zadana wartość momentu obrotowego uwzględniona w ścieżce kąta wyprzedzenia zapłonu.'
+      ru: 'Заданный крутящий момент, учитываемый по контуру угла опережения зажигания.'
+      zh: '点火提前角路径上考虑的转矩设定值。'
+      hu: 'A gyújtáselőállítási útra figyelembe vett nyomatéki alapjel.'
+      pt: 'Consigna de binário considerada no ramo de avanço da ignição'
+    type: 'uint'
+    factor: 0.5
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+
+  ENGINE_MIN_TORQUE_LIMIT:
+    bits: '4.1-6.7'
+    comment:
+      en: 'Minimum engine torque limit, excluding the front electric machine'
+      fr: 'Couple moteur limite minimal, hors prise en compte de la machine électrique avant'
+      es: 'Par límite mínimo del motor, sin considerar la máquina eléctrica delantera'
+      de: 'Minimales Motordrehmoment-Limit ohne Berücksichtigung der vorderen E-Maschine'
+      it: 'Coppia motore limite minima, esclusa la macchina elettrica anteriore'
+      pl: 'Minimalny limit momentu obrotowego silnika, bez uwzględnienia przedniej maszyny elektrycznej'
+      ru: 'Минимальный предел крутящего момента двигателя без учёта передней электромашины'
+      zh: '发动机最小转矩限值(不含前电机)'
+      hu: 'Minimális motornyomaték-korlát, az elülső elektromos gép figyelembevétele nélkül'
+      pt: 'Binário limite mínimo do motor, sem considerar a máquina elétrica dianteira'
+    type: 'uint'
+    factor: 0.5
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  MIN_LIMITED_EFFECTIVE_ENGINE_TORQUE:
+    bits: '6.6-7.4'
+    comment:
+      en: 'Current minimum effective engine torque (limited).'
+      fr: 'Couple moteur effectif (CME) minimum courant.'
+      es: 'Par motor efectivo (CME) mínimo actual.'
+      de: 'Aktuelles minimales effektives Motordrehmoment (CME).'
+      it: 'Coppia motore effettiva (CME) minima corrente.'
+      pl: 'Bieżący minimalny efektywny moment obrotowy silnika (CME).'
+      ru: 'Текущий минимальный эффективный крутящий момент двигателя (CME).'
+      zh: '当前最小有效发动机转矩(CME)。'
+      hu: 'A jelenlegi minimális effektív motornyomaték (CME).'
+      pt: 'Binário efetivo do motor (CME) mínimo atual'
+    type: 'uint'
+    factor: 0.5
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x3E8
+
+  CRANK_ENABLE:
+    bits: '7.3'
+    comment:
+      en: 'Engine cranking enable'
+      fr: 'Autorisation de démarrage du moteur'
+      es: 'Autorización de arranque del motor'
+      de: 'Freigabe des Motoranlassens'
+      it: 'Abilitazione all''avviamento del motore'
+      pl: 'Zezwolenie na rozruch silnika'
+      ru: 'Разрешение запуска двигателя'
+      zh: '发动机起动允许'
+      hu: 'Motorindítás engedélyezése'
+      pt: 'Autorização de arranque do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Crank disabled'
+        fr: 'Pas d''autorisation de démarrage'
+        es: 'Sin autorización de arranque'
+        de: 'Keine Startfreigabe'
+        it: 'Nessuna autorizzazione di avviamento'
+        pl: 'Brak zezwolenia na rozruch'
+        ru: 'Нет разрешения на запуск'
+        zh: '无起动许可'
+        hu: 'Nincs indítási engedély'
+        pt: 'Arranque desativado'
+      0x01:
+        en: 'Crank enabled'
+        fr: 'Démarrage autorisé'
+        es: 'Arranque autorizado'
+        de: 'Anlassen freigegeben'
+        it: 'Avviamento abilitato'
+        pl: 'Rozruch dozwolony'
+        ru: 'Прокрутка разрешена'
+        zh: '允许起动'
+        hu: 'Indítás engedélyezve'
+        pt: 'Arranque ativado'
+
+  ALTERNATOR_TORQUE_CONTROL_MODE:
+    bits: '7.2-7.1'
+    comment:
+      en: 'Alternator control mode requested by the engine ECU.'
+      fr: 'Mode de pilotage de l''alternateur souhaité par le calculateur moteur.'
+      es: 'Modo de control del alternador solicitado por la centralita del motor.'
+      de: 'Vom Motorsteuergerät gewünschter Lichtmaschinen-Regelmodus.'
+      it: 'Modalità di pilotaggio dell''alternatore richiesta dalla centralina motore.'
+      pl: 'Tryb sterowania alternatorem żądany przez sterownik silnika.'
+      ru: 'Режим управления генератором, запрошенный блоком управления двигателем.'
+      zh: '发动机控制单元请求的发电机控制模式。'
+      hu: 'A motorvezérlő által kért generátorvezérlési mód.'
+      pt: 'Modo de controlo do alternador desejado pela unidade de controlo do motor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Aucune demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Load shedding request 1'
+        fr: 'Demande de délestage 1'
+        es: 'Solicitud de deslastre 1'
+        de: 'Lastabwurfanforderung 1'
+        it: 'Richiesta di distacco di carico 1'
+        pl: 'Żądanie zrzutu obciążenia 1'
+        ru: 'Запрос сброса нагрузки 1'
+        zh: '1级卸载请求'
+        hu: '1. terheléscsökkentési kérés'
+        pt: 'Pedido de corte de carga 1'
+      0x02:
+        en: 'Power cut request 2'
+        fr: 'Demande de délestage 2'
+        es: 'Solicitud de deslastre 2'
+        de: 'Lastabwurfanforderung 2'
+        it: 'Richiesta di distacco carico 2'
+        pl: 'Żądanie zrzutu obciążenia 2'
+        ru: 'Запрос сброса нагрузки 2'
+        zh: '卸载请求2'
+        hu: 'Tehermentesítési kérés 2'
+        pt: 'Pedido de deslastre 2'
+      0x03:
+        en: 'Freeze requested'
+        fr: 'Demande de figeage'
+        es: 'Solicitud de congelación'
+        de: 'Anforderung Einfrieren'
+        it: 'Richiesta di congelamento'
+        pl: 'Żądanie zamrożenia'
+        ru: 'Запрос фиксации'
+        zh: '请求冻结'
+        hu: 'Rögzítési kérés'
+        pt: 'Pedido de congelamento'
+
+  UNUSED_1:
+    bits: '7.0'
+    unused: true
+
+  UNUSED_2:
+    bits: '8.7-8.6'
+    unused: true
+
+  AC_TORQUE_CONSUMPTION:
+    bits: '8.5-8.0'
+    comment:
+      en: 'Torque drawn by the air conditioning.'
+      fr: 'Couple prélevé par la climatisation.'
+      es: 'Par consumido por el aire acondicionado.'
+      de: 'Vom Klimakompressor beanspruchtes Drehmoment.'
+      it: 'Coppia assorbita dal climatizzatore.'
+      pl: 'Moment obrotowy pobierany przez klimatyzację.'
+      ru: 'Крутящий момент, потребляемый кондиционером.'
+      zh: '空调消耗的转矩。'
+      hu: 'A klíma által elvont nyomaték.'
+      pt: 'Binário consumido pelo ar condicionado'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 31
+    units: 'Nm'
+    invalid: 0x3F
+    default: 0x00

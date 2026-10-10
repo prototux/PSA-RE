@@ -1,0 +1,489 @@
+id: 0x153
+name: 'STEERING_LOCK_STATUS'
+type: 'can'
+length: 6
+comment:
+  en: 'Electric steering column lock status: anti-scanning, rolling code, motor power/command state, column state, unlock handshake.'
+  fr: 'État de l''antivol électrique de colonne de direction : anti-scanning, code tournant, alimentation et commande moteur, état colonne, déverrouillage.'
+  es: 'Estado del antirrobo eléctrico de la columna de dirección: antiescaneo, código variable, alimentación y mando del motor, estado de la columna, protocolo de desbloqueo.'
+  de: 'Status der elektrischen Lenksäulenverriegelung: Anti-Scanning, Rollcode, Motorversorgung/-ansteuerung, Säulenstatus, Entriegelungs-Handshake.'
+  it: 'Stato del bloccasterzo elettrico: anti-scanning, codice variabile, alimentazione e comando motore, stato del piantone, handshake di sblocco.'
+  pl: 'Stan elektrycznej blokady kolumny kierowniczej: ochrona przed skanowaniem, kod zmienny, zasilanie i sterowanie silnikiem, stan kolumny, uzgadnianie odblokowania.'
+  ru: 'Статус электрического замка рулевой колонки: защита от сканирования, плавающий код, питание и управление двигателем, состояние колонки, квитирование разблокировки.'
+  zh: '电动转向柱锁状态:防扫描、滚动码、电机供电/指令状态、转向柱状态、解锁握手。'
+  hu: 'Az elektromos kormányoszlop-zár állapota: letapogatás elleni védelem, kódvándorlás, motor tápellátás/vezérlés állapota, oszlop állapota, kioldási kézfogás.'
+  pt: 'Estado do bloqueio elétrico da coluna de direção: anti-varrimento, código rolante, estado de alimentação/comando do motor, estado da coluna, acordo de destrancagem.'
+periodicity: ['200ms', 'trigger']
+senders: ['AVE']
+receivers: ['BSI']
+
+signals:
+  MOTOR_POWER_SUPPLY_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Motor power supply status'
+      fr: 'État de l''alimentation puissance du moteur'
+      es: 'Estado de la alimentación de potencia del motor'
+      de: 'Status der Leistungsversorgung des Motors'
+      it: 'Stato dell''alimentazione di potenza del motore'
+      pl: 'Stan zasilania mocy silnika'
+      ru: 'Состояние силового питания двигателя'
+      zh: '电机动力供电状态'
+      hu: 'A motor teljesítményellátásának állapota'
+      pt: 'Estado da alimentação de potência do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Absent'
+        fr: 'Absente'
+        es: 'Ausente'
+        de: 'Nicht vorhanden'
+        it: 'Assente'
+        pl: 'Brak'
+        ru: 'Отсутствует'
+        zh: '缺失'
+        hu: 'Hiányzik'
+        pt: 'Ausente'
+      0x01:
+        en: 'Present'
+        fr: 'Présente'
+        es: 'Presente'
+        de: 'Vorhanden'
+        it: 'Presente'
+        pl: 'Obecny'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presente'
+
+  STEERING_COLUMN_LOCK_STATUS:
+    bits: '1.6-1.5'
+    comment:
+      en: 'Steering column lock status'
+      fr: 'État de verrouillage de la colonne de direction'
+      es: 'Estado de bloqueo de la columna de dirección'
+      de: 'Status der Lenksäulenverriegelung'
+      it: 'Stato di bloccaggio del piantone dello sterzo'
+      pl: 'Stan blokady kolumny kierowniczej'
+      ru: 'Состояние блокировки рулевой колонки'
+      zh: '转向柱锁止状态'
+      hu: 'A kormányoszlop-zár állapota'
+      pt: 'Estado de bloqueio da coluna de direção'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Unlocked'
+        fr: 'Débloquée'
+        es: 'Desbloqueada'
+        de: 'Entriegelt'
+        it: 'Sbloccata'
+        pl: 'Odblokowana'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueada'
+      0x01:
+        en: 'Blocked'
+        fr: 'Bloquée'
+        es: 'Bloqueada'
+        de: 'Blockiert'
+        it: 'Bloccata'
+        pl: 'Zablokowana'
+        ru: 'Заблокировано'
+        zh: '已锁止'
+        hu: 'Blokkolva'
+        pt: 'Bloqueada'
+      0x02:
+        en: 'Undetermined'
+        fr: 'Indéterminée'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未确定'
+        hu: 'Meghatározatlan'
+        pt: 'Indeterminado'
+
+  MOTOR_COMMAND_STATUS:
+    bits: '1.4-1.3'
+    comment:
+      en: 'Motor command status'
+      fr: 'État de la commande du moteur'
+      es: 'Estado del mando del motor'
+      de: 'Status der Motoransteuerung'
+      it: 'Stato del comando del motore'
+      pl: 'Stan sterowania silnikiem'
+      ru: 'Состояние управления двигателем'
+      zh: '电机指令状态'
+      hu: 'A motor vezérlésének állapota'
+      pt: 'Estado do comando do motor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'If no command is in progress'
+        fr: 'Si aucune commande n''est en cours'
+        es: 'Si no hay ningún comando en curso'
+        de: 'Wenn kein Befehl aktiv ist'
+        it: 'Se nessun comando è in corso'
+        pl: 'Jeśli żadne polecenie nie jest w toku'
+        ru: 'Если ни одна команда не выполняется'
+        zh: '如果没有正在进行的指令'
+        hu: 'Ha nincs folyamatban lévő parancs'
+        pt: 'Se nenhum comando estiver em curso'
+      0x01:
+        en: 'If the motor is commanded to lock the column'
+        fr: 'Si le moteur est commandé pour bloquer la colonne'
+        es: 'Si el motor recibe la orden de bloquear la columna'
+        de: 'Wenn der Motor zum Sperren der Lenksäule angesteuert wird'
+        it: 'Se il motore è comandato per bloccare la colonna'
+        pl: 'Jeśli silnik jest sterowany w celu zablokowania kolumny'
+        ru: 'Если двигатель управляется для блокировки колонки'
+        zh: '当电机被命令锁止转向柱时'
+        hu: 'Ha a motor a kormányoszlop reteszelésére van vezérelve'
+        pt: 'Se o motor for comandado para bloquear a coluna'
+      0x02:
+        en: 'If the motor is commanded to unlock the column'
+        fr: 'Si le moteur est commandé pour déverrouiller la colonne'
+        es: 'Si el motor está accionado para desbloquear la columna'
+        de: 'Wenn der Motor zum Entriegeln der Lenksäule angesteuert wird'
+        it: 'Se il motore è comandato per sbloccare il piantone'
+        pl: 'Jeśli silnik jest sterowany w celu odblokowania kolumny'
+        ru: 'Если двигатель управляется для разблокировки колонки'
+        zh: '若电机被控制以解锁转向柱'
+        hu: 'Ha a motor a kormányoszlop kioldására van vezérelve'
+        pt: 'Se o motor for comandado para destrancar a coluna'
+
+  ANTITHEFT_FAULT:
+    bits: '1.2'
+    comment:
+      en: 'Anti-theft system fault'
+      fr: 'Défaut du système antivol'
+      es: 'Fallo del sistema antirrobo'
+      de: 'Fehler der Diebstahlsicherung'
+      it: 'Guasto del sistema antifurto'
+      pl: 'Usterka systemu antywłamaniowego'
+      ru: 'Неисправность противоугонной системы'
+      zh: '防盗系统故障'
+      hu: 'A lopásgátló rendszer hibája'
+      pt: 'Falha do sistema antirroubo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Défaut absent'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Guasto assente'
+        pl: 'Brak usterki'
+        ru: 'Неисправность отсутствует'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Falha ausente'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  RESET_STATUS:
+    bits: '1.1'
+    comment:
+      en: 'Reset status'
+      fr: 'État du reset'
+      es: 'Estado del reinicio'
+      de: 'Reset-Status'
+      it: 'Stato del reset'
+      pl: 'Stan resetu'
+      ru: 'Состояние сброса'
+      zh: '复位状态'
+      hu: 'A visszaállítás állapota'
+      pt: 'Estado de reinicialização'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reset inactive'
+        fr: 'reset inactif'
+        es: 'Reinicio inactivo'
+        de: 'Reset inaktiv'
+        it: 'Reset inattivo'
+        pl: 'Reset nieaktywny'
+        ru: 'Сброс неактивен'
+        zh: '重置未激活'
+        hu: 'Visszaállítás inaktív'
+        pt: 'Reinício inativo'
+      0x01:
+        en: 'Reset active'
+        fr: 'reset actif'
+        es: 'Reinicio activo'
+        de: 'Reset aktiv'
+        it: 'Reset attivo'
+        pl: 'Reset aktywny'
+        ru: 'Сброс активен'
+        zh: '重置激活'
+        hu: 'Visszaállítás aktív'
+        pt: 'Reinício ativo'
+
+  ADML_AVE_ANTISCANNING_STATUS:
+    bits: '1.0'
+    comment:
+      en: 'Anti-scanning status of the ADML-AVE link'
+      fr: 'État de l''anti-scanning de la liaison ADML-AVE'
+      es: 'Estado del anti-escaneo del enlace ADML-AVE'
+      de: 'Anti-Scanning-Status der ADML-AVE-Verbindung'
+      it: 'Stato dell''anti-scansione del collegamento ADML-AVE'
+      pl: 'Stan zabezpieczenia przed skanowaniem łącza ADML-AVE'
+      ru: 'Состояние защиты от сканирования канала ADML-AVE'
+      zh: 'ADML-AVE链路防扫描状态'
+      hu: 'Az ADML-AVE kapcsolat letapogatás elleni védelmének állapota'
+      pt: 'Estado do anti-scanning da ligação ADML-AVE'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Anti-scanning inactive'
+        fr: 'Antiscanning inactif'
+        es: 'Antiscanning inactivo'
+        de: 'Anti-Scanning inaktiv'
+        it: 'Antiscanning inattivo'
+        pl: 'Funkcja antiscanning nieaktywna'
+        ru: 'Защита от сканирования неактивна'
+        zh: '反扫描功能未激活'
+        hu: 'Antiscanning inaktív'
+        pt: 'Anti-scanning inativo'
+      0x01:
+        en: 'Anti-scanning active'
+        fr: 'Anti-scanning actif'
+        es: 'Antiescaneo activo'
+        de: 'Anti-Scanning aktiv'
+        it: 'Anti-scanning attivo'
+        pl: 'Ochrona antyskanująca aktywna'
+        ru: 'Защита от сканирования активна'
+        zh: '防扫描激活'
+        hu: 'Vizsgálat elleni védelem aktív'
+        pt: 'Anti-varrimento ativo'
+
+  ANTITHEFT_CHANNEL1_STATUS:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Anti-theft status, channel 1'
+      fr: 'Statut de l''antivol, canal 1'
+      es: 'Estado del antirrobo, canal 1'
+      de: 'Status der Diebstahlsicherung, Kanal 1'
+      it: 'Stato dell''antifurto, canale 1'
+      pl: 'Stan antywłamaniówki, kanał 1'
+      ru: 'Состояние противоугонной системы, канал 1'
+      zh: '防盗状态,通道1'
+      hu: 'A lopásgátló állapota, 1. csatorna'
+      pt: 'Estado do antirroubo, canal 1'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x53:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+      0xAB:
+        en: 'Unlocked'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
+        de: 'Entriegelt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueado'
+
+  BSI_POWER_CUTOFF_AUTHORIZATION:
+    bits: '3.7'
+    comment:
+      en: 'Authorization for the BSI to cut off the power supply'
+      fr: 'Autorisation donnée à la BSI de couper l''alimentation'
+      es: 'Autorización a la BSI para cortar la alimentación'
+      de: 'Berechtigung für die BSI, die Stromversorgung zu unterbrechen'
+      it: 'Autorizzazione alla BSI di interrompere l''alimentazione'
+      pl: 'Zezwolenie dla BSI na odcięcie zasilania'
+      ru: 'Разрешение для BSI на отключение питания'
+      zh: '授权BSI切断电源'
+      hu: 'A BSI felhatalmazása a tápellátás megszakítására'
+      pt: 'Autorização dada ao BSI para cortar a alimentação'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Cutoff not authorized'
+        fr: 'Coupure non autorisée'
+        es: 'Corte no autorizado'
+        de: 'Abschaltung nicht zulässig'
+        it: 'Interruzione non autorizzata'
+        pl: 'Odcięcie niedozwolone'
+        ru: 'Отключение не разрешено'
+        zh: '切断未授权'
+        hu: 'Lekapcsolás nem engedélyezett'
+        pt: 'Corte não autorizado'
+      0x01:
+        en: 'Cut-off authorized'
+        fr: 'Coupure autorisée'
+        es: 'Corte autorizado'
+        de: 'Abschaltung zulässig'
+        it: 'Interruzione autorizzata'
+        pl: 'Wyłączenie dozwolone'
+        ru: 'Отключение разрешено'
+        zh: '允许切断'
+        hu: 'Lekapcsolás engedélyezve'
+        pt: 'Corte autorizado'
+
+  AVE_BSI_LINK_UNLOCKED:
+    bits: '3.6'
+    comment:
+      en: 'AVE-to-BSI link unlock status'
+      fr: 'État de déverrouillage de la liaison AVE-BSI'
+      es: 'Estado de desbloqueo del enlace AVE-BSI'
+      de: 'Entriegelungsstatus der AVE-BSI-Verbindung'
+      it: 'Stato di sblocco del collegamento AVE-BSI'
+      pl: 'Stan odblokowania łącza AVE-BSI'
+      ru: 'Состояние разблокировки канала AVE-BSI'
+      zh: 'AVE至BSI链路解锁状态'
+      hu: 'Az AVE-BSI kapcsolat zárolásfeloldási állapota'
+      pt: 'Estado de desbloqueio da ligação AVE-BSI'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No unlocking'
+        fr: 'Pas de déverrouillage'
+        es: 'Sin desbloqueo'
+        de: 'Keine Entriegelung'
+        it: 'Nessuno sblocco'
+        pl: 'Brak odblokowania'
+        ru: 'Разблокировки нет'
+        zh: '无解锁'
+        hu: 'Nincs kioldás'
+        pt: 'Sem desbloqueio'
+      0x01:
+        en: 'Unlocking'
+        fr: 'Déverrouillage'
+        es: 'Desbloqueo'
+        de: 'Entriegelung'
+        it: 'Sblocco'
+        pl: 'Odblokowanie'
+        ru: 'Разблокировка'
+        zh: '解锁'
+        hu: 'Kioldás'
+        pt: 'Desbloqueio'
+
+  UNUSED_1:
+    bits: '3.5-3.4'
+    unused: true
+
+  ANTITHEFT_CHANNEL2_STATUS:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Anti-theft status, channel 2'
+      fr: 'Statut de l''antivol, canal 2'
+      es: 'Estado del antirrobo, canal 2'
+      de: 'Status der Diebstahlsicherung, Kanal 2'
+      it: 'Stato dell''antifurto, canale 2'
+      pl: 'Stan antywłamaniówki, kanał 2'
+      ru: 'Состояние противоугонной системы, канал 2'
+      zh: '防盗状态,通道2'
+      hu: 'A lopásgátló állapota, 2. csatorna'
+      pt: 'Estado do antirroubo, canal 2'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x05:
+        en: 'Locked'
+        fr: 'Verrouillé'
+        es: 'Bloqueado'
+        de: 'Verriegelt'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已锁定'
+        hu: 'Zárolva'
+        pt: 'Bloqueado'
+      0x0C:
+        en: 'Unlocked'
+        fr: 'Déverrouillé'
+        es: 'Desbloqueado'
+        de: 'Entriegelt'
+        it: 'Sbloccato'
+        pl: 'Odblokowane'
+        ru: 'Разблокировано'
+        zh: '已解锁'
+        hu: 'Kioldva'
+        pt: 'Desbloqueado'
+
+  ROLLING_CODE:
+    bits: '4.7-4.0'
+    comment:
+      en: '1-byte rolling code'
+      fr: 'Code tournant sur 1 octet'
+      es: 'Código rotativo de 1 byte'
+      de: '1-Byte-Rollcode'
+      it: 'Codice variabile su 1 byte'
+      pl: 'Kod zmienny na 1 bajcie'
+      ru: 'Плавающий код на 1 байт'
+      zh: '1字节滚动码'
+      hu: '1 bájtos forgó kód'
+      pt: 'Código rotativo de 1 byte'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  ANTITHEFT_SEQUENCER_CONTROL:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Anti-theft sequencer control'
+      fr: 'Contrôle du séquenceur de l''antivol'
+      es: 'Control del secuenciador antirrobo'
+      de: 'Steuerung des Diebstahlsicherungs-Sequenzers'
+      it: 'Controllo del sequenziatore antifurto'
+      pl: 'Sterowanie sekwencerem antywłamaniowym'
+      ru: 'Управление секвенсором противоугонной системы'
+      zh: '防盗时序控制器控制'
+      hu: 'A lopásgátló szekvenszer vezérlése'
+      pt: 'Controlo do sequenciador do antirroubo'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  LATCH_POSITION_SENSOR_RAW:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Raw value of the latch position sensor'
+      fr: 'Valeur brute du capteur de position du pêne'
+      es: 'Valor bruto del sensor de posición del pestillo'
+      de: 'Rohwert des Schlossfallen-Positionssensors'
+      it: 'Valore grezzo del sensore di posizione del nottolino'
+      pl: 'Surowa wartość czujnika położenia zapadki zamka'
+      ru: 'Необработанное значение датчика положения защёлки замка'
+      zh: '锁舌位置传感器原始值'
+      hu: 'A zárnyelv-helyzetérzékelő nyers értéke'
+      pt: 'Valor bruto do sensor de posição do trinco'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00

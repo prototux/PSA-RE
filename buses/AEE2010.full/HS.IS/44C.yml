@@ -1,0 +1,93 @@
+id: 0x44C
+name: 'IHU_DATA'
+type: 'can'
+length: 3
+comment:
+  en: 'IHU node data: average voltage and measured temperature.'
+  fr: 'Données du module IHU : tension moyenne et température mesurée.'
+  es: 'Datos del módulo IHU: tensión media y temperatura medida.'
+  de: 'Daten des IHU-Moduls: mittlere Spannung und gemessene Temperatur.'
+  it: 'Dati del modulo IHU: tensione media e temperatura misurata.'
+  pl: 'Dane modułu IHU: napięcie średnie i zmierzona temperatura.'
+  ru: 'Данные модуля IHU: среднее напряжение и измеренная температура.'
+  zh: 'IHU模块数据:平均电压和测量温度。'
+  hu: 'Az IHU modul adatai: átlagfeszültség és mért hőmérséklet.'
+  pt: 'Dados do nó IHU: tensão média e temperatura medida.'
+periodicity: ['50ms']
+senders: ['IHU']
+receivers: ['CMM']
+
+signals:
+  CHECKSUM_FRAME_44C:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_44C:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  MEASURED_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Measured temperature (°C)'
+      fr: 'Température mesurée (°C)'
+      es: 'Temperatura medida (°C)'
+      de: 'Gemessene Temperatur (°C)'
+      it: 'Temperatura misurata (°C)'
+      pl: 'Zmierzona temperatura (°C)'
+      ru: 'Измеренная температура (°C)'
+      zh: '测得温度(°C)'
+      hu: 'Mért hőmérséklet (°C)'
+      pt: 'Temperatura medida (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -50
+    max: 205
+    units: '°C'
+    default: 0x32
+
+  POWER_STAGE_MEAN_VOLTAGE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Average value of the voltages measured on the power stages (V)'
+      fr: 'Valeur moyenne des tensions mesurées sur les étages de puissance (V)'
+      es: 'Valor medio de las tensiones medidas en las etapas de potencia (V)'
+      de: 'Mittelwert der an den Leistungsstufen gemessenen Spannungen (V)'
+      it: 'Valore medio delle tensioni misurate sugli stadi di potenza (V)'
+      pl: 'Wartość średnia napięć mierzonych na stopniach mocy (V)'
+      ru: 'Среднее значение напряжений, измеренных на силовых каскадах (В)'
+      zh: '功率级测量电压的平均值(V)'
+      hu: 'A teljesítményfokozatokon mért feszültségek átlagértéke (V)'
+      pt: 'Valor médio das tensões medidas nos andares de potência (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 25.5
+    units: 'V'
+    default: 0x00

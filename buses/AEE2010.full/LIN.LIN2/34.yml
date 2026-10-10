@@ -1,0 +1,257 @@
+id: 0x34
+name: 'BATTERY_MONITOR_MEASUREMENTS_2'
+type: 'lin'
+length: 8
+comment:
+  en: 'Battery monitor measurements: current range/value, minimum standby current, temperature, voltage, predicted start voltage.'
+  fr: 'Mesures du moniteur de batterie : plage/valeur de courant, courant de veille minimal, température, tension, tension de démarrage prédite.'
+  es: 'Mediciones del monitor de batería: rango/valor de corriente, corriente mínima en reposo, temperatura, tensión, tensión de arranque prevista.'
+  de: 'Messwerte der Batterieüberwachung: Strombereich/-wert, minimaler Ruhestrom, Temperatur, Spannung, vorhergesagte Startspannung.'
+  it: 'Misure del monitor batteria: intervallo/valore di corrente, corrente minima di standby, temperatura, tensione, tensione di avviamento prevista.'
+  pl: 'Pomiary monitora akumulatora: zakres/wartość prądu, minimalny prąd czuwania, temperatura, napięcie, przewidywane napięcie rozruchowe.'
+  ru: 'Измерения монитора батареи: диапазон/значение тока, минимальный ток покоя, температура, напряжение, прогнозируемое напряжение пуска.'
+  zh: '电池监测器测量值:电流范围/数值、最小待机电流、温度、电压、预测启动电压。'
+  hu: 'Az akkumulátorfigyelő mérései: áramtartomány/érték, minimális készenléti áram, hőmérséklet, feszültség, becsült indítási feszültség.'
+  pt: 'Medições do monitor da bateria: gama/valor de corrente, corrente mínima em standby, temperatura, tensão, tensão de arranque prevista.'
+periodicity: ['trigger']
+senders: ['BECB']
+receivers: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  BATTERY_VOLTAGE:
+    bits: '1.0-2.5'
+    comment:
+      en: 'Battery voltage'
+      fr: 'Tension batterie'
+      es: 'Tensión de la batería'
+      de: 'Batteriespannung'
+      it: 'Tensione della batteria'
+      pl: 'Napięcie akumulatora'
+      ru: 'Напряжение батареи'
+      zh: '电池电压'
+      hu: 'Akkumulátor feszültsége'
+      pt: 'Tensão da bateria'
+    type: 'uint'
+    factor: 0.001
+    offset: 3
+    min: 3
+    max: 18
+
+  BATTERY_CURRENT:
+    bits: '3.0-4.7'
+    comment:
+      en: 'Battery current'
+      fr: 'Courant de la batterie'
+      es: 'Corriente de la batería'
+      de: 'Batteriestrom'
+      it: 'Corrente della batteria'
+      pl: 'Prąd akumulatora'
+      ru: 'Ток батареи'
+      zh: '电池电流'
+      hu: 'Akkumulátoráram'
+      pt: 'Corrente da bateria'
+    type: 'uint'
+    factor: 0.001
+    offset: -1
+
+  BATTERY_TEMPERATURE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Battery temperature'
+      fr: 'Température batterie'
+      es: 'Temperatura de la batería'
+      de: 'Batterietemperatur'
+      it: 'Temperatura della batteria'
+      pl: 'Temperatura akumulatora'
+      ru: 'Температура батареи'
+      zh: '电池温度'
+      hu: 'Akkumulátor hőmérséklete'
+      pt: 'Temperatura da bateria'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 105
+    invalid: 0xFF
+
+  STANDBY_CURRENT_MEASUREMENT:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Standby current measurement'
+      fr: 'Mesure du courant de veille'
+      es: 'Medición de la corriente en reposo'
+      de: 'Messung des Ruhestroms'
+      it: 'Misurazione della corrente di stand-by'
+      pl: 'Pomiar prądu spoczynkowego'
+      ru: 'Измерение тока покоя'
+      zh: '静态电流测量'
+      hu: 'Nyugalmi áram mérése'
+      pt: 'Medição da corrente em repouso'
+    type: 'uint'
+    factor: 0.005
+    min: 0
+    max: 1
+    invalid: 0xFF
+
+  STARTING_PREDICTED_VOLTAGE:
+    bits: '7.0-8.2'
+    comment:
+      en: 'Predicted battery voltage at engine start'
+      fr: 'Tension batterie prédite au démarrage moteur'
+      es: 'Tensión de batería prevista en el arranque del motor'
+      de: 'Vorhergesagte Batteriespannung beim Motorstart'
+      it: 'Tensione batteria prevista all''avviamento motore'
+      pl: 'Przewidywane napięcie akumulatora przy rozruchu silnika'
+      ru: 'Прогнозируемое напряжение батареи при запуске двигателя'
+      zh: '发动机启动时预测的电池电压'
+      hu: 'Az akkumulátor motorindításkor becsült feszültsége'
+      pt: 'Tensão de bateria prevista no arranque do motor'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 13
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      BATTERY_CURRENT_MEASUREMENT_RANGE:
+        bits: '2.7-2.6'
+        comment:
+          en: 'Measurement range used for the battery current sensor'
+          fr: 'Gamme de mesure utilisée pour le capteur de courant batterie'
+          es: 'Rango de medición utilizado para el sensor de corriente de la batería'
+          de: 'Für den Batteriestromsensor verwendeter Messbereich'
+          it: 'Intervallo di misura utilizzato per il sensore di corrente della batteria'
+          pl: 'Zakres pomiarowy używany przez czujnik prądu akumulatora'
+          ru: 'Диапазон измерения, используемый датчиком тока батареи'
+          zh: '电池电流传感器所用的量程'
+          hu: 'Az akkumulátor áramérzékelőjéhez használt mérési tartomány'
+          pt: 'Gama de medição utilizada para o sensor de corrente da bateria'
+        type: 'enum'
+        values:
+          0x00:
+            en: '[-1A ; +1A]'
+            fr: '[-1A ; +1A]'
+            es: '[-1A ; +1A]'
+            de: '[-1A ; +1A]'
+            it: '[-1A ; +1A]'
+            pl: '[-1A ; +1A]'
+            ru: '[-1А ; +1А]'
+            zh: '[-1A ; +1A]'
+            hu: '[-1A ; +1A]'
+            pt: '[-1A ; +1A]'
+          0x01:
+            en: '[-200A ; +200A]'
+            fr: '[-200A ; +200A]'
+            es: '[-200A ; +200A]'
+            de: '[-200A ; +200A]'
+            it: '[-200A ; +200A]'
+            pl: '[-200A ; +200A]'
+            ru: '[-200A ; +200A]'
+            zh: '[-200A ; +200A]'
+            hu: '[-200A ; +200A]'
+            pt: '[-200A ; +200A]'
+          0x02:
+            en: '[-1500A; +1500A]'
+            fr: '[-1500 A ; +1500 A]'
+            es: '[-1500 A; +1500 A]'
+            de: '[-1500 A; +1500 A]'
+            it: '[-1500 A; +1500 A]'
+            pl: '[-1500 A; +1500 A]'
+            ru: '[-1500 А; +1500 А]'
+            zh: '[-1500A;+1500A]'
+            hu: '[-1500 A; +1500 A]'
+            pt: '[-1500 A; +1500 A]'
+          0x03:
+            en: 'Invalid'
+            fr: 'Invalide'
+            es: 'Inválido'
+            de: 'Ungültig'
+            it: 'Non valido'
+            pl: 'Nieprawidłowe'
+            ru: 'Недействительно'
+            zh: '无效'
+            hu: 'Érvénytelen'
+            pt: 'Inválido'
+      BATTERY_CURRENT:
+        bits: '3.0-4.7'
+        comment:
+          en: 'Battery current'
+          fr: 'Courant de la batterie'
+          es: 'Corriente de la batería'
+          de: 'Batteriestrom'
+          it: 'Corrente della batteria'
+          pl: 'Prąd akumulatora'
+          ru: 'Ток батареи'
+          zh: '电池电流'
+          hu: 'Akkumulátoráram'
+          pt: 'Corrente da bateria'
+        type: 'uint'
+        factor: 0.001
+        offset: -1
+      BATTERY_TEMPERATURE:
+        bits: '5.7-5.0'
+        comment:
+          en: 'Battery temperature'
+          fr: 'Température batterie'
+          es: 'Temperatura de la batería'
+          de: 'Batterietemperatur'
+          it: 'Temperatura della batteria'
+          pl: 'Temperatura akumulatora'
+          ru: 'Температура батареи'
+          zh: '电池温度'
+          hu: 'Akkumulátor hőmérséklete'
+          pt: 'Temperatura da bateria'
+        type: 'uint'
+        factor: 1
+        offset: -40
+        min: -40
+        max: 105
+        invalid: 0xFF
+      STANDBY_CURRENT_MEASUREMENT:
+        bits: '6.7-6.0'
+        comment:
+          en: 'Standby current measurement'
+          fr: 'Mesure du courant de veille'
+          es: 'Medición de la corriente en reposo'
+          de: 'Messung des Ruhestroms'
+          it: 'Misurazione della corrente di stand-by'
+          pl: 'Pomiar prądu spoczynkowego'
+          ru: 'Измерение тока покоя'
+          zh: '静态电流测量'
+          hu: 'Nyugalmi áram mérése'
+          pt: 'Medição da corrente em repouso'
+        type: 'uint'
+        factor: 0.005
+        min: 0
+        max: 1
+        invalid: 0xFF
+      STARTING_PREDICTED_VOLTAGE:
+        bits: '7.0-8.2'
+        comment:
+          en: 'Predicted battery voltage at engine start'
+          fr: 'Tension batterie prédite au démarrage moteur'
+          es: 'Tensión de batería prevista en el arranque del motor'
+          de: 'Vorhergesagte Batteriespannung beim Motorstart'
+          it: 'Tensione batteria prevista all''avviamento motore'
+          pl: 'Przewidywane napięcie akumulatora przy rozruchu silnika'
+          ru: 'Прогнозируемое напряжение батареи при запуске двигателя'
+          zh: '发动机启动时预测的电池电压'
+          hu: 'Az akkumulátor motorindításkor becsült feszültsége'
+          pt: 'Tensão de bateria prevista no arranque do motor'
+        type: 'uint'
+        factor: 0.01
+        min: 0
+        max: 13

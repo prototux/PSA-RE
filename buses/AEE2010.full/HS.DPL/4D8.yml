@@ -1,0 +1,132 @@
+id: 0x4D8
+name: 'ENGINE_ECU_DATA_6'
+type: 'can'
+length: 5
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['1000ms']
+senders: ['CMM']
+receivers: ['SCR']
+
+signals:
+  VEHICLE_SPEED:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Vehicle speed (km/h)'
+      fr: 'Vitesse du véhicule (km/h)'
+      es: 'Velocidad del vehículo (km/h)'
+      de: 'Fahrzeuggeschwindigkeit (km/h)'
+      it: 'Velocità del veicolo (km/h)'
+      pl: 'Prędkość pojazdu (km/h)'
+      ru: 'Скорость автомобиля (км/ч)'
+      zh: '车速(km/h)'
+      hu: 'Járműsebesség (km/h)'
+      pt: 'Velocidade do veículo (km/h)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0x00
+
+  OUTSIDE_AIR_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Outside air temperature (°C)'
+      fr: 'Température d''air extérieur (°C)'
+      es: 'Temperatura del aire exterior (°C)'
+      de: 'Außenlufttemperatur (°C)'
+      it: 'Temperatura dell''aria esterna (°C)'
+      pl: 'Temperatura powietrza zewnętrznego (°C)'
+      ru: 'Температура наружного воздуха (°C)'
+      zh: '车外空气温度(°C)'
+      hu: 'Külső levegő hőmérséklete (°C)'
+      pt: 'Temperatura do ar exterior (°C)'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFC
+
+  SCR_LINE_HEATING_POWER_REQUEST:
+    bits: '3.7-3.1'
+    comment:
+      en: 'Electrical power requested for heating the SCR supply line'
+      fr: 'Puissance électrique demandée pour le réchauffage de la ligne d''alimentation SCR'
+      es: 'Potencia eléctrica solicitada para el calentamiento de la línea de alimentación SCR'
+      de: 'Angeforderte elektrische Leistung zur Beheizung der SCR-Zuleitung'
+      it: 'Potenza elettrica richiesta per il riscaldamento della linea di alimentazione SCR'
+      pl: 'Żądana moc elektryczna do ogrzewania przewodu zasilającego SCR'
+      ru: 'Запрошенная электрическая мощность для подогрева питающей магистрали SCR'
+      zh: 'SCR供给管路加热所需的电功率请求'
+      hu: 'Az SCR-tápvezeték fűtéséhez kért elektromos teljesítmény'
+      pt: 'Potência elétrica solicitada para o aquecimento da linha de alimentação SCR'
+    type: 'uint'
+    min: 0
+    max: 100
+    default: 0x00
+
+  UNUSED_1:
+    bits: '3.0'
+    unused: true
+
+  SCR_TANK_HEATING_POWER_ALLOCATION:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Electrical power allocated to heating the SCR tank'
+      fr: 'Puissance électrique allouée au réchauffage du réservoir SCR'
+      es: 'Potencia eléctrica asignada al calentamiento del depósito SCR'
+      de: 'Der SCR-Tankbeheizung zugewiesene elektrische Leistung'
+      it: 'Potenza elettrica assegnata al riscaldamento del serbatoio SCR'
+      pl: 'Moc elektryczna przydzielona do ogrzewania zbiornika SCR'
+      ru: 'Электрическая мощность, выделенная на подогрев бака SCR'
+      zh: '分配给SCR储液罐加热的电功率'
+      hu: 'Az SCR-tartály fűtésére elosztott elektromos teljesítmény'
+      pt: 'Potência elétrica alocada ao aquecimento do depósito SCR'
+    type: 'uint'
+    min: 0
+    max: 100
+    default: 0x00
+
+  UNUSED_2:
+    bits: '4.0'
+    unused: true
+
+  ATMOSPHERIC_PRESSURE_HIGH_ALTITUDE:
+    bits: '5.7-5.3'
+    comment:
+      en: 'Atmospheric pressure at high altitude (hPa)'
+      fr: 'Pression atmosphérique en haute altitude (hPa)'
+      es: 'Presión atmosférica a gran altitud (hPa)'
+      de: 'Atmosphärendruck in großer Höhe (hPa)'
+      it: 'Pressione atmosferica ad alta quota (hPa)'
+      pl: 'Ciśnienie atmosferyczne na dużej wysokości (hPa)'
+      ru: 'Атмосферное давление на большой высоте (гПа)'
+      zh: '高海拔大气压力(hPa)'
+      hu: 'Légköri nyomás nagy magasságban (hPa)'
+      pt: 'Pressão atmosférica a grande altitude (hPa)'
+    type: 'uint'
+    factor: 20
+    offset: 685
+    min: 540
+    max: 1120
+    units: 'hPa'
+    invalid: 0x1F
+    default: 0x1E
+
+  UNUSED_3:
+    bits: '5.2-5.0'
+    unused: true

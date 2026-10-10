@@ -1,0 +1,136 @@
+id: 0x2DF
+name: 'EMF_REPLY_PAYLOAD'
+type: 'can-tp'
+comment:
+  en: 'Multi-frame reply payload from the EMF module (pairing code data).'
+  fr: 'Charge utile de la réponse multi-trame du module EMF (données de code de jumelage).'
+  es: 'Carga útil de la respuesta multitrama del módulo EMF (datos de código de emparejamiento).'
+  de: 'Nutzdaten der Mehrfachrahmen-Antwort des EMF-Moduls (Kopplungscode-Daten).'
+  it: 'Payload della risposta multi-trama del modulo EMF (dati del codice di associazione).'
+  pl: 'Dane odpowiedzi wieloramkowej modułu EMF (dane kodu parowania).'
+  ru: 'Полезная нагрузка многокадрового ответа модуля EMF (данные кода сопряжения).'
+  zh: 'EMF模块的多帧应答有效载荷(配对代码数据)。'
+  hu: 'Az EMF modul többkeretes válaszának hasznos adattartalma (párosítási kód adatai).'
+  pt: 'Payload de resposta multi-trama do módulo EMF (dados do código de emparelhamento).'
+periodicity: ['trigger']
+senders: ['CMB', 'EMF', 'ICSV']
+receivers: ['RAD', 'KML']
+isotp:
+  flow_control_id: 0x263
+
+signals:
+  PAYLOAD:
+    bits: '1.7-n'
+    comment:
+      en: 'Application data (reassembled)'
+      fr: 'Données applicatives (réassemblées)'
+      es: 'Datos de aplicación (reensamblados)'
+      de: 'Anwendungsdaten (wieder zusammengesetzt)'
+      it: 'Dati applicativi (riassemblati)'
+      pl: 'Dane aplikacyjne (ponownie złożone)'
+      ru: 'Прикладные данные (пересобранные)'
+      zh: '应用数据（重组后）'
+      hu: 'Alkalmazásadatok (újraösszeállítva)'
+      pt: 'Dados de aplicação (reagrupados)'
+    type: 'bytes'
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['trigger']
+    senders: ['CMB', 'EMF', 'ICSV']
+    receivers: ['RAD', 'KML']
+    signals:
+      PEERING_CODE_ENTRY_MODE:
+        bits: '1.7-1.4'
+        comment:
+          en: 'Peering code entry mode.'
+          fr: 'Mode de saisie du code d''appairage.'
+          es: 'Modo de introducción del código de emparejamiento.'
+          de: 'Eingabemodus des Kopplungscodes.'
+          it: 'Modalità di inserimento del codice di associazione.'
+          pl: 'Tryb wprowadzania kodu parowania.'
+          ru: 'Режим ввода кода сопряжения.'
+          zh: '配对代码输入模式。'
+          hu: 'A párosítási kód megadási módja.'
+          pt: 'Modo de introdução do código de emparelhamento.'
+        type: 'enum'
+        mux_selector: true
+        values:
+          0x00:
+            en: 'Pairing code'
+            fr: 'Code d''appairage'
+            es: 'Código de emparejamiento'
+            de: 'Kopplungscode'
+            it: 'Codice di associazione'
+            pl: 'Kod parowania'
+            ru: 'Код сопряжения'
+            zh: '配对码'
+            hu: 'Párosítási kód'
+            pt: 'Código de emparelhamento'
+      UNUSED_1:
+        bits: '1.3-1.1'
+        unused: true
+      PEERING_CODE_AVAILABILITY:
+        bits: '1.0'
+        comment:
+          en: 'Peering code availability.'
+          fr: 'Disponibilité du code d''appairage.'
+          es: 'Disponibilidad del código de emparejamiento.'
+          de: 'Verfügbarkeit des Kopplungscodes.'
+          it: 'Disponibilità del codice di associazione.'
+          pl: 'Dostępność kodu parowania.'
+          ru: 'Доступность кода сопряжения.'
+          zh: '配对代码可用性。'
+          hu: 'A párosítási kód elérhetősége.'
+          pt: 'Disponibilidade do código de emparelhamento'
+        type: 'bool'
+        mux:
+          selector: 'PEERING_CODE_ENTRY_MODE'
+          values: [0x00]
+        values:
+          0x00:
+            en: 'No'
+            fr: 'Non'
+            es: 'No'
+            de: 'Nein'
+            it: 'No'
+            pl: 'Nie'
+            ru: 'Нет'
+            zh: '否'
+            hu: 'Nem'
+            pt: 'Não'
+          0x01:
+            en: 'Yes'
+            fr: 'oui'
+            es: 'sí'
+            de: 'ja'
+            it: 'sì'
+            pl: 'tak'
+            ru: 'да'
+            zh: '是'
+            hu: 'igen'
+            pt: 'Sim'
+      PEERING_CODE:
+        bits: '2.7-18.0'
+        comment:
+          en: 'Peering code.'
+          fr: 'Code d''appairage.'
+          es: 'Código de emparejamiento.'
+          de: 'Kopplungscode.'
+          it: 'Codice di associazione.'
+          pl: 'Kod parowania.'
+          ru: 'Код сопряжения.'
+          zh: '配对代码。'
+          hu: 'Párosítási kód.'
+          pt: 'Código de emparelhamento'
+        type: 'str'

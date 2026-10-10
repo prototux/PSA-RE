@@ -1,0 +1,301 @@
+id: 0x448
+name: 'AIRBAG_LAMPS_STATUS'
+type: 'van'
+length: 5
+comment:
+  en: 'Airbag system warning lamp requests: passenger airbag off lamp, rollover lamp and general airbag lamp (on/off and steady/flashing).'
+  fr: 'Demandes des voyants du système airbag : voyant airbag passager désactivé, voyant retournement et voyant général airbag (marche/arrêt et fixe/clignotant).'
+  es: 'Solicitudes de los testigos del sistema de airbag: testigo de airbag del pasajero desactivado, testigo de vuelco y testigo general de airbag (encendido/apagado y fijo/parpadeante).'
+  de: 'Anforderungen der Airbag-Kontrollleuchten: Beifahrer-Airbag-Aus-Leuchte, Überschlag-Kontrollleuchte und allgemeine Airbag-Kontrollleuchte (ein/aus und dauerhaft/blinkend).'
+  it: 'Richieste delle spie del sistema airbag: spia airbag passeggero disattivato, spia ribaltamento e spia generale airbag (acceso/spento e fisso/lampeggiante).'
+  pl: 'Żądania kontrolek systemu poduszek powietrznych: kontrolka wyłączenia poduszki pasażera, kontrolka przewrócenia i ogólna kontrolka poduszek powietrznych (włącz/wyłącz i ciągłe/migające).'
+  ru: 'Запросы индикаторов системы подушек безопасности: индикатор отключения подушки пассажира, индикатор опрокидывания и общий индикатор подушек безопасности (вкл/выкл и постоянный/мигающий).'
+  zh: '安全气囊系统警示灯请求:乘客安全气囊关闭指示灯、翻车指示灯及安全气囊总指示灯(开/关及常亮/闪烁)。'
+  hu: 'A légzsákrendszer jelzőlámpáinak kérései: utas légzsák kikapcsolva lámpa, borulásjelző lámpa és általános légzsák jelzőlámpa (be/ki és folyamatos/villogó).'
+  pt: 'Pedidos das luzes avisadoras do sistema de airbags: luz de airbag do passageiro desligado, luz de capotamento e luz geral do airbag (ligada/desligada e fixa/intermitente).'
+periodicity: ['500ms']
+senders: ['RBG']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '2.7-2.2'
+    unused: true
+
+  PASSENGER_AIRBAG_OFF_LAMP_MODE:
+    bits: '2.1'
+    comment:
+      en: 'Passenger airbag off lamp steady or flashing'
+      fr: 'Fréquence d''allumage du voyant sac passager'
+      es: 'Testigo de airbag de pasajero desactivado fijo o parpadeante'
+      de: 'Kontrollleuchte Beifahrerairbag aus dauerhaft oder blinkend'
+      it: 'Spia airbag passeggero disattivato fissa o lampeggiante'
+      pl: 'Kontrolka wyłączonej poduszki pasażera świeci ciągle lub miga'
+      ru: 'Индикатор отключённой подушки пассажира горит постоянно или мигает'
+      zh: '副驾驶安全气囊关闭指示灯常亮或闪烁'
+      hu: 'Az utasoldali légzsák kikapcsolva lámpa folyamatosan világít vagy villog'
+      pt: 'Indicador de airbag do passageiro desligado fixo ou intermitente'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Flashing'
+        fr: 'Clignotant'
+        es: 'Intermitente'
+        de: 'Blinkend'
+        it: 'Lampeggiante'
+        pl: 'Migający'
+        ru: 'Мигающий'
+        zh: '闪烁'
+        hu: 'Villogó'
+        pt: 'Intermitente'
+      0x01:
+        en: 'Steady'
+        fr: 'Fixe'
+        es: 'Fijo'
+        de: 'Dauerlicht'
+        it: 'Fisso'
+        pl: 'Ciągłe'
+        ru: 'Постоянно'
+        zh: '常亮'
+        hu: 'Folyamatos'
+        pt: 'Fixo'
+
+  PASSENGER_AIRBAG_OFF_LAMP:
+    bits: '2.0'
+    comment:
+      en: 'Passenger airbag off lamp request'
+      fr: 'État du voyant d''inhibition du sac passager'
+      es: 'Solicitud del testigo de airbag de pasajero desactivado'
+      de: 'Anforderung Kontrollleuchte Beifahrerairbag aus'
+      it: 'Richiesta spia airbag passeggero disattivato'
+      pl: 'Żądanie kontrolki wyłączonej poduszki pasażera'
+      ru: 'Запрос индикатора отключённой подушки пассажира'
+      zh: '副驾驶安全气囊关闭指示灯请求'
+      hu: 'Az utasoldali légzsák kikapcsolva lámpa kérése'
+      pt: 'Pedido da luz avisadora de inibição do airbag do passageiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  UNUSED_2:
+    bits: '3.7-3.4'
+    unused: true
+
+  ROLLOVER_LAMP_MODE:
+    bits: '3.3'
+    comment:
+      en: 'Rollover lamp steady or flashing'
+      fr: 'Fréquence d''allumage du voyant de retournement'
+      es: 'Testigo de vuelco fijo o parpadeante'
+      de: 'Überschlag-Kontrollleuchte dauerhaft oder blinkend'
+      it: 'Spia di ribaltamento fissa o lampeggiante'
+      pl: 'Kontrolka dachowania świeci ciągle lub miga'
+      ru: 'Индикатор опрокидывания горит постоянно или мигает'
+      zh: '侧翻警示灯常亮或闪烁'
+      hu: 'A borulásjelző lámpa folyamatosan világít vagy villog'
+      pt: 'Indicador de capotamento fixo ou intermitente'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Flashing'
+        fr: 'Clignotant'
+        es: 'Intermitente'
+        de: 'Blinkend'
+        it: 'Lampeggiante'
+        pl: 'Migający'
+        ru: 'Мигающий'
+        zh: '闪烁'
+        hu: 'Villogó'
+        pt: 'Intermitente'
+      0x01:
+        en: 'Steady'
+        fr: 'Fixe'
+        es: 'Fijo'
+        de: 'Dauerlicht'
+        it: 'Fisso'
+        pl: 'Ciągłe'
+        ru: 'Постоянно'
+        zh: '常亮'
+        hu: 'Folyamatos'
+        pt: 'Fixo'
+
+  ROLLOVER_LAMP:
+    bits: '3.2'
+    comment:
+      en: 'Rollover lamp request'
+      fr: 'État du voyant de retournement'
+      es: 'Solicitud del testigo de vuelco'
+      de: 'Anforderung der Überschlag-Kontrollleuchte'
+      it: 'Richiesta della spia di ribaltamento'
+      pl: 'Żądanie kontrolki dachowania'
+      ru: 'Запрос индикатора опрокидывания'
+      zh: '侧翻指示灯请求'
+      hu: 'A borulásjelző lámpa kérése'
+      pt: 'Pedido do indicador luminoso de capotamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  AIRBAG_LAMP_MODE:
+    bits: '3.1'
+    comment:
+      en: 'General airbag lamp steady or flashing'
+      fr: 'Fréquence d''allumage du voyant général'
+      es: 'Testigo general de airbag fijo o parpadeante'
+      de: 'Allgemeine Airbag-Kontrollleuchte dauerhaft oder blinkend'
+      it: 'Spia generale airbag fissa o lampeggiante'
+      pl: 'Ogólna kontrolka poduszki powietrznej świeci ciągle lub miga'
+      ru: 'Общий индикатор подушки безопасности горит постоянно или мигает'
+      zh: '通用安全气囊指示灯常亮或闪烁'
+      hu: 'Az általános légzsák lámpa folyamatosan világít vagy villog'
+      pt: 'Indicador geral do airbag fixo ou intermitente'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Flashing'
+        fr: 'Clignotant'
+        es: 'Intermitente'
+        de: 'Blinkend'
+        it: 'Lampeggiante'
+        pl: 'Migający'
+        ru: 'Мигающий'
+        zh: '闪烁'
+        hu: 'Villogó'
+        pt: 'Intermitente'
+      0x01:
+        en: 'Steady'
+        fr: 'Fixe'
+        es: 'Fijo'
+        de: 'Dauerlicht'
+        it: 'Fisso'
+        pl: 'Ciągłe'
+        ru: 'Постоянно'
+        zh: '常亮'
+        hu: 'Folyamatos'
+        pt: 'Fixo'
+
+  AIRBAG_LAMP:
+    bits: '3.0'
+    comment:
+      en: 'General airbag lamp request'
+      fr: 'État du voyant général'
+      es: 'Solicitud del testigo general de airbag'
+      de: 'Anforderung der allgemeinen Airbag-Kontrollleuchte'
+      it: 'Richiesta della spia generale airbag'
+      pl: 'Żądanie ogólnej kontrolki poduszki powietrznej'
+      ru: 'Запрос общего индикатора подушки безопасности'
+      zh: '通用安全气囊指示灯请求'
+      hu: 'Az általános légzsák lámpa kérése'
+      pt: 'Pedido do indicador luminoso geral do airbag'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  UNUSED_3:
+    bits: '4.7-4.0'
+    unused: true
+
+  FOOTER:
+    bits: '5.7-5.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

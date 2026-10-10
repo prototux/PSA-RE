@@ -1,0 +1,318 @@
+id: 0x40A
+name: 'SHIFT_BY_WIRE_DYNAMIC_DATA'
+type: 'can'
+length: 3
+comment:
+  en: 'Shift-by-wire data: lever/joystick position, neutral-forcing request, driving mode and fault state.'
+  fr: 'Données de la commande de boîte électrique (shift-by-wire) : position du levier/joystick, demande de forçage point mort, mode de conduite et état de défaut.'
+  es: 'Datos del selector de marchas electrónico (shift-by-wire): posición de la palanca/joystick, solicitud de forzado a punto muerto, modo de conducción y estado de fallo.'
+  de: 'Daten der elektronischen Gangwahl (Shift-by-Wire): Hebel-/Joystickposition, Anforderung zur Neutralstellung, Fahrmodus und Fehlerstatus.'
+  it: 'Dati del selettore marce elettronico (shift-by-wire): posizione della leva/joystick, richiesta di forzatura in folle, modalità di guida e stato di guasto.'
+  pl: 'Dane elektronicznej dźwigni zmiany biegów (shift-by-wire): pozycja dźwigni/joysticka, żądanie wymuszenia biegu neutralnego, tryb jazdy i stan usterki.'
+  ru: 'Данные электронного переключения передач (shift-by-wire): положение рычага/джойстика, запрос принудительного перевода в нейтраль, режим движения и статус неисправности.'
+  zh: '电子换挡(Shift-by-Wire)数据:挡杆/操纵杆位置、强制空挡请求、驾驶模式及故障状态。'
+  hu: 'Az elektronikus váltókar (shift-by-wire) adatai: kar-/joystickpozíció, üresbe kényszerítés kérése, vezetési mód és hibaállapot.'
+  pt: 'Dados de shift-by-wire: posição da alavanca/joystick, pedido de forçar ponto morto, modo de condução e estado de avaria.'
+periodicity: ['20ms']
+senders: ['SBW']
+receivers: ['ABS', 'BVA', 'BSI']
+
+signals:
+  JOYSTICK_POSITION:
+    bits: '1.7-1.5'
+    comment:
+      en: 'Joystick position / driver request'
+      fr: 'Position du joystick / demande du conducteur'
+      es: 'Posición del joystick / solicitud del conductor'
+      de: 'Joystickposition / Fahreranforderung'
+      it: 'Posizione del joystick / richiesta del conducente'
+      pl: 'Pozycja joysticka / żądanie kierowcy'
+      ru: 'Положение джойстика / запрос водителя'
+      zh: '操纵杆位置/驾驶员请求'
+      hu: 'A joystick helyzete / a vezető kérése'
+      pt: 'Posição do joystick / pedido do condutor'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'P'
+        fr: 'P'
+        es: 'P'
+        de: 'P'
+        it: 'P'
+        pl: 'P'
+        ru: 'P'
+        zh: 'P'
+        hu: 'P'
+        pt: 'P'
+      0x01:
+        en: 'R'
+        fr: 'R'
+        es: 'R'
+        de: 'R'
+        it: 'R'
+        pl: 'R'
+        ru: 'R'
+        zh: 'R'
+        hu: 'R'
+        pt: 'R'
+      0x02:
+        en: 'N'
+        fr: 'N'
+        es: 'N'
+        de: 'N'
+        it: 'N'
+        pl: 'N'
+        ru: 'N'
+        zh: 'N'
+        hu: 'N'
+        pt: 'N'
+      0x03:
+        en: 'D or M* (Drive / Manual)'
+        fr: 'D ou M* (Drive / Manuel)'
+        es: 'D o M* (Drive / Manual)'
+        de: 'D oder M* (Drive / Manuell)'
+        it: 'D o M* (Drive / Manuale)'
+        pl: 'D lub M* (Drive / Ręczny)'
+        ru: 'D или M* (Drive / Ручной)'
+        zh: 'D或M*(D挡/手动)'
+        hu: 'D vagy M* (Drive / Kézi)'
+        pt: 'D ou M* (Drive / Manual)'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Unknown position'
+        fr: 'Position incertaine'
+        es: 'Posición desconocida'
+        de: 'Unbekannte Position'
+        it: 'Posizione sconosciuta'
+        pl: 'Nieznana pozycja'
+        ru: 'Неизвестное положение'
+        zh: '位置未知'
+        hu: 'Ismeretlen pozíció'
+        pt: 'Posição desconhecida'
+
+  SBW_ACTUATOR_POSITION:
+    bits: '1.4-1.2'
+    comment:
+      en: 'Shift-by-wire (SBW) actuator position'
+      fr: 'Position de l''actionneur du levier électronique (SBW)'
+      es: 'Posición del actuador del selector electrónico (SBW)'
+      de: 'Position des Shift-by-Wire-(SBW-)Aktuators'
+      it: 'Posizione dell''attuatore del cambio elettronico (SBW)'
+      pl: 'Pozycja siłownika elektronicznej dźwigni zmiany biegów (SBW)'
+      ru: 'Положение исполнительного механизма электронного селектора (SBW)'
+      zh: '电子换挡(SBW)执行器位置'
+      hu: 'Az elektronikus váltó (SBW) aktuátorának helyzete'
+      pt: 'Posição do atuador da alavanca eletrónica (SBW)'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'P'
+        fr: 'P'
+        es: 'P'
+        de: 'P'
+        it: 'P'
+        pl: 'P'
+        ru: 'P'
+        zh: 'P'
+        hu: 'P'
+        pt: 'P'
+      0x01:
+        en: 'R'
+        fr: 'R'
+        es: 'R'
+        de: 'R'
+        it: 'R'
+        pl: 'R'
+        ru: 'R'
+        zh: 'R'
+        hu: 'R'
+        pt: 'R'
+      0x02:
+        en: 'N'
+        fr: 'N'
+        es: 'N'
+        de: 'N'
+        it: 'N'
+        pl: 'N'
+        ru: 'N'
+        zh: 'N'
+        hu: 'N'
+        pt: 'N'
+      0x03:
+        en: 'D'
+        fr: 'D'
+        es: 'D'
+        de: 'D'
+        it: 'D'
+        pl: 'D'
+        ru: 'D'
+        zh: 'D'
+        hu: 'D'
+        pt: 'D'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Unknown position'
+        fr: 'Position incertaine'
+        es: 'Posición desconocida'
+        de: 'Unbekannte Position'
+        it: 'Posizione sconosciuta'
+        pl: 'Nieznana pozycja'
+        ru: 'Неизвестное положение'
+        zh: '位置未知'
+        hu: 'Ismeretlen pozíció'
+        pt: 'Posição desconhecida'
+
+  SBW_FAULT_STATE:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Shift-by-wire (SBW) faults / states'
+      fr: 'Défauts / états du levier électronique (SBW)'
+      es: 'Fallos / estados del selector electrónico (SBW)'
+      de: 'Fehler/Zustände des Shift-by-Wire (SBW)'
+      it: 'Guasti / stati del cambio elettronico (SBW)'
+      pl: 'Usterki / stany elektronicznej dźwigni zmiany biegów (SBW)'
+      ru: 'Неисправности/состояния электронного селектора передач (SBW)'
+      zh: '电子换挡(SBW)故障/状态'
+      hu: 'Az elektronikus váltó (SBW) hibái / állapotai'
+      pt: 'Falhas / estados do seletor eletrónico (SBW)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+
+  CHECKSUM:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Shift-by-wire (SBW) dynamic frame checksum'
+      fr: 'Somme de contrôle dynamique de la trame du levier électronique (SBW)'
+      es: 'Suma de comprobación dinámica de la trama del selector electrónico (SBW)'
+      de: 'Dynamische Prüfsumme des Shift-by-Wire-(SBW-)Frames'
+      it: 'Checksum dinamico del frame del cambio elettronico (SBW)'
+      pl: 'Dynamiczna suma kontrolna ramki elektronicznej dźwigni zmiany biegów (SBW)'
+      ru: 'Динамическая контрольная сумма кадра электронного селектора передач (SBW)'
+      zh: '电子换挡(SBW)动态帧校验和'
+      hu: 'Az elektronikus váltó (SBW) dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação dinâmica da trama do seletor eletrónico (SBW)'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '2.3-2.0'
+    comment:
+      en: 'Free-running counter (0 to 15), incremented on each new calculation'
+      fr: 'Compteur cyclique (0 à 15), incrémenté à chaque nouveau calcul'
+      es: 'Contador cíclico (0 a 15), incrementado en cada nuevo cálculo'
+      de: 'Umlaufender Zähler (0 bis 15), bei jeder neuen Berechnung erhöht'
+      it: 'Contatore ciclico (0-15), incrementato a ogni nuovo calcolo'
+      pl: 'Licznik cykliczny (0-15), zwiększany przy każdym nowym obliczeniu'
+      ru: 'Циклический счётчик (0-15), увеличивается при каждом новом расчёте'
+      zh: '循环计数器(0至15),每次新计算时递增'
+      hu: 'Körforgó számláló (0–15), minden új számításkor nő'
+      pt: 'Contador cíclico (0 a 15), incrementado a cada novo cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ELECTRIC_NEUTRAL_FORCE_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Request to force the electronic gear selector to neutral'
+      fr: 'Demande de forçage du levier électronique en position neutre'
+      es: 'Solicitud de forzado del selector electrónico a punto muerto'
+      de: 'Anforderung zum Erzwingen der Neutralstellung des elektronischen Wählhebels'
+      it: 'Richiesta di forzatura del selettore elettronico in folle'
+      pl: 'Żądanie wymuszenia pozycji neutralnej elektronicznej dźwigni zmiany biegów'
+      ru: 'Запрос принудительного перевода электронного селектора в нейтраль'
+      zh: '请求强制电子换挡杆置于空挡'
+      hu: 'Az elektronikus váltókar üresbe kényszerítésének kérése'
+      pt: 'Pedido de forçagem do seletor eletrónico para a posição de ponto morto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No forcing request'
+        fr: 'Pas de demande de forçage'
+        es: 'Sin solicitud de forzado'
+        de: 'Keine Zwangsanforderung'
+        it: 'Nessuna richiesta di forzatura'
+        pl: 'Brak żądania wymuszenia'
+        ru: 'Нет запроса на принудительное включение'
+        zh: '无强制请求'
+        hu: 'Nincs kényszerítési kérés'
+        pt: 'Sem pedido de forçagem'
+      0x01:
+        en: 'Electrical neutral forcing request'
+        fr: 'Demande de forçage en neutre électrique'
+        es: 'Solicitud de forzado a punto muerto eléctrico'
+        de: 'Anforderung zur elektrischen Neutralstellung'
+        it: 'Richiesta di forzatura in folle elettrico'
+        pl: 'Żądanie wymuszenia neutralnego biegu elektrycznego'
+        ru: 'Запрос принудительной электрической нейтрали'
+        zh: '电动空挡强制请求'
+        hu: 'Elektromos üresjárat kényszerítési kérése'
+        pt: 'Pedido elétrico de forçar ponto morto'
+
+  DRIVER_MODE:
+    bits: '3.6-3.5'
+    comment:
+      en: 'Acquires the driver''s requests and forwards them to the automatic gearbox'
+      fr: 'Acquiert les demandes du conducteur et les transmet à la boîte automatique'
+      es: 'Adquiere las solicitudes del conductor y las transmite a la caja automática'
+      de: 'Erfasst die Fahreranforderungen und leitet sie an das Automatikgetriebe weiter'
+      it: 'Acquisisce le richieste del conducente e le trasmette al cambio automatico'
+      pl: 'Odbiera żądania kierowcy i przekazuje je do skrzyni automatycznej'
+      ru: 'Считывает запросы водителя и передаёт их в автоматическую коробку передач'
+      zh: '获取驾驶员请求并传递给自动变速箱'
+      hu: 'Fogadja a vezető kéréseit, és továbbítja azokat az automata váltónak'
+      pt: 'Adquire os pedidos do condutor e transmite-os à caixa automática'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Auto mode'
+        fr: 'Mode auto'
+        es: 'Modo automático'
+        de: 'Automatikmodus'
+        it: 'Modalità automatica'
+        pl: 'Tryb automatyczny'
+        ru: 'Автоматический режим'
+        zh: '自动模式'
+        hu: 'Automata mód'
+        pt: 'Modo automático'
+      0x02:
+        en: 'Manual mode'
+        fr: 'Mode séquentiel'
+        es: 'Modo secuencial'
+        de: 'Sequentieller Modus'
+        it: 'Modalità sequenziale'
+        pl: 'Tryb sekwencyjny'
+        ru: 'Последовательный режим'
+        zh: '顺序模式'
+        hu: 'Szekvenciális üzemmód'
+        pt: 'Modo sequencial'
+      0x03:
+        unused: true

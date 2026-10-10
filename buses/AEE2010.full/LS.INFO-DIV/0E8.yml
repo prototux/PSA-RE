@@ -1,0 +1,161 @@
+id: 0x0E8
+name: 'ENGINE_UNLOCK_STATUS_CLIENT'
+type: 'can'
+length: 6
+comment:
+  en: 'Powertrain dynamic data: instantaneous and percentage boost, power and torque.'
+  fr: 'Données dynamiques de motorisation : suralimentation, puissance et couple instantanés et en pourcentage.'
+  es: 'Datos dinámicos de la motorización: sobrealimentación, potencia y par instantáneos y en porcentaje.'
+  de: 'Dynamische Antriebsstrangdaten: momentaner und prozentualer Ladedruck, Leistung und Drehmoment.'
+  it: 'Dati dinamici della motorizzazione: sovralimentazione, potenza e coppia istantanee e in percentuale.'
+  pl: 'Dynamiczne dane napędu: chwilowe i procentowe doładowanie, moc i moment obrotowy.'
+  ru: 'Динамические данные силовой установки: мгновенный и процентный наддув, мощность и крутящий момент.'
+  zh: '动力总成动态数据：瞬时及百分比增压、功率和扭矩。'
+  hu: 'A hajtáslánc dinamikus adatai: pillanatnyi és százalékos feltöltés, teljesítmény és nyomaték.'
+  pt: 'Dados dinâmicos do grupo motopropulsor: sobrealimentação, potência e binário instantâneos e em percentagem.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['OVIP', 'CMB', 'MATT', 'RAD']
+
+signals:
+  POWERTRAIN_POWER_INSTANT:
+    bits: '1.7-2.7'
+    comment:
+      en: 'Powertrain instantaneous power value'
+      fr: 'Valeur instantanée de puissance du groupe motopropulseur'
+      es: 'Valor instantáneo de potencia del grupo motopropulsor'
+      de: 'Momentanwert der Antriebsstrangleistung'
+      it: 'Valore istantaneo di potenza del gruppo propulsore'
+      pl: 'Chwilowa wartość mocy zespołu napędowego'
+      ru: 'Мгновенное значение мощности силового агрегата'
+      zh: '动力总成瞬时功率值'
+      hu: 'Hajtáslánc pillanatnyi teljesítmény érték'
+      pt: 'Valor instantâneo de potência do grupo motopropulsor'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 500
+    units: 'hp'
+    default: 0x00
+
+  POWERTRAIN_POWER_PERCENT:
+    bits: '2.6-2.0'
+    comment:
+      en: 'Powertrain power percentage'
+      fr: 'Pourcentage de puissance du groupe motopropulseur'
+      es: 'Porcentaje de potencia del grupo motopropulsor'
+      de: 'Prozentuale Antriebsstrangleistung'
+      it: 'Percentuale di potenza del gruppo propulsore'
+      pl: 'Procent mocy zespołu napędowego'
+      ru: 'Процент мощности силового агрегата'
+      zh: '动力总成功率百分比'
+      hu: 'Hajtáslánc teljesítmény százalék'
+      pt: 'Percentagem de potência do grupo motopropulsor'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x65
+    default: 0x00
+
+  POWERTRAIN_BOOST_INSTANT:
+    bits: '3.7-3.2'
+    comment:
+      en: 'Powertrain instantaneous boost value'
+      fr: 'Valeur instantanée du boost du groupe motopropulseur'
+      es: 'Valor instantáneo del boost del grupo motopropulsor'
+      de: 'Momentanwert des Antriebsstrang-Boosts'
+      it: 'Valore istantaneo del boost del gruppo propulsore'
+      pl: 'Chwilowa wartość doładowania (boost) zespołu napędowego'
+      ru: 'Мгновенное значение буста силового агрегата'
+      zh: '动力总成瞬时加速助力值'
+      hu: 'Hajtáslánc pillanatnyi boost érték'
+      pt: 'Valor instantâneo de sobrealimentação do grupo motopropulsor'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 5
+    units: 'bar'
+    default: 0x00
+
+  UNUSED_1:
+    bits: '3.1-3.0'
+    unused: true
+
+  UNUSED_2:
+    bits: '4.7'
+    unused: true
+
+  POWERTRAIN_BOOST_PERCENT:
+    bits: '4.6-4.0'
+    comment:
+      en: 'Powertrain boost percentage'
+      fr: 'Pourcentage de boost du groupe motopropulseur'
+      es: 'Porcentaje de boost del grupo motopropulsor'
+      de: 'Prozentualer Antriebsstrang-Boost'
+      it: 'Percentuale di boost del gruppo propulsore'
+      pl: 'Procent doładowania (boost) zespołu napędowego'
+      ru: 'Процент буста силового агрегата'
+      zh: '动力总成加速助力百分比'
+      hu: 'Hajtáslánc boost százalék'
+      pt: 'Percentagem de sobrealimentação do grupo motopropulsor'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x65
+    default: 0x00
+
+  POWERTRAIN_TORQUE_INSTANT:
+    bits: '5.7-6.7'
+    comment:
+      en: 'Powertrain instantaneous torque value'
+      fr: 'Valeur instantanée de couple du groupe motopropulseur'
+      es: 'Valor instantáneo de par del grupo motopropulsor'
+      de: 'Momentanwert des Antriebsstrangdrehmoments'
+      it: 'Valore istantaneo di coppia del gruppo propulsore'
+      pl: 'Chwilowa wartość momentu obrotowego zespołu napędowego'
+      ru: 'Мгновенное значение крутящего момента силового агрегата'
+      zh: '动力总成瞬时扭矩值'
+      hu: 'Hajtáslánc pillanatnyi nyomaték érték'
+      pt: 'Valor instantâneo de binário do grupo motopropulsor'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 500
+    units: 'Nm'
+    default: 0x00
+
+  POWERTRAIN_TORQUE_PERCENT:
+    bits: '6.6-6.0'
+    comment:
+      en: 'Powertrain torque percentage'
+      fr: 'Pourcentage de couple du groupe motopropulseur'
+      es: 'Porcentaje de par del grupo motopropulsor'
+      de: 'Prozentuales Antriebsstrangdrehmoment'
+      it: 'Percentuale di coppia del gruppo propulsore'
+      pl: 'Procent momentu obrotowego zespołu napędowego'
+      ru: 'Процент крутящего момента силового агрегата'
+      zh: '动力总成扭矩百分比'
+      hu: 'Hajtáslánc nyomaték százalék'
+      pt: 'Percentagem de binário do grupo motopropulsor'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x65
+    default: 0x00

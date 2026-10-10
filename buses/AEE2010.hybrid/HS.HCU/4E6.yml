@@ -1,0 +1,143 @@
+id: 0x4E6
+name: 'HYBRID_MOTOR_TEMPERATURE'
+type: 'can'
+length: 5
+comment:
+  en: 'Hybrid electric motor temperatures: inverter, rotor and stator.'
+  fr: 'Températures du moteur électrique hybride : onduleur, rotor et stator.'
+  es: 'Temperaturas del motor eléctrico híbrido: inversor, rotor y estátor.'
+  de: 'Temperaturen des Hybrid-Elektromotors: Wechselrichter, Rotor und Stator.'
+  it: 'Temperature del motore elettrico ibrido: inverter, rotore e statore.'
+  pl: 'Temperatury silnika elektrycznego hybrydy: falownik, wirnik i stojan.'
+  ru: 'Температуры гибридного электродвигателя: инвертор, ротор и статор.'
+  zh: '混合动力电机温度:逆变器、转子和定子。'
+  hu: 'A hibrid elektromos motor hőmérsékletei: inverter, rotor és sztátor.'
+  pt: 'Temperaturas do motor elétrico híbrido: inversor, rotor e estator.'
+periodicity: ['100ms']
+senders: ['HCU2']
+receivers: ['HCU1']
+
+signals:
+  CHECKSUM_FRAME_4E6:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_4E6:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  INVERTER_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Actual inverter temperature (°C)'
+      fr: 'Température actuelle de l''onduleur (°C)'
+      es: 'Temperatura actual del inversor (°C)'
+      de: 'Aktuelle Wechselrichtertemperatur (°C)'
+      it: 'Temperatura attuale dell''inverter (°C)'
+      pl: 'Aktualna temperatura falownika (°C)'
+      ru: 'Текущая температура инвертора (°C)'
+      zh: '当前逆变器温度(°C)'
+      hu: 'Az inverter aktuális hőmérséklete (°C)'
+      pt: 'Temperatura atual do inversor (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 213
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  STATOR_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Actual stator temperature (°C)'
+      fr: 'Température actuelle du stator (°C)'
+      es: 'Temperatura actual del estátor (°C)'
+      de: 'Aktuelle Statortemperatur (°C)'
+      it: 'Temperatura attuale dello statore (°C)'
+      pl: 'Aktualna temperatura stojana (°C)'
+      ru: 'Текущая температура статора (°C)'
+      zh: '当前定子温度(°C)'
+      hu: 'Az állórész aktuális hőmérséklete (°C)'
+      pt: 'Temperatura atual do estator (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 213
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  ROTOR_TEMPERATURE:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Actual rotor temperature (°C)'
+      fr: 'Température actuelle du rotor (°C)'
+      es: 'Temperatura actual del rotor (°C)'
+      de: 'Aktuelle Rotortemperatur (°C)'
+      it: 'Temperatura attuale del rotore (°C)'
+      pl: 'Aktualna temperatura wirnika (°C)'
+      ru: 'Текущая температура ротора (°C)'
+      zh: '当前转子温度(°C)'
+      hu: 'A rotor aktuális hőmérséklete (°C)'
+      pt: 'Temperatura atual do rotor (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 213
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  FRONT_EMOTOR_LOSSES_N1:
+    bits: '5.7-5.1'
+    comment:
+      en: 'Front electric motor power losses at speed N1 (W)'
+      fr: 'Pertes de puissance de la machine électrique avant à la vitesse N1 (W)'
+      es: 'Pérdidas de potencia de la máquina eléctrica delantera a la velocidad N1 (W)'
+      de: 'Leistungsverluste der vorderen elektrischen Maschine bei Drehzahl N1 (W)'
+      it: 'Perdite di potenza della macchina elettrica anteriore alla velocità N1 (W)'
+      pl: 'Straty mocy przedniej maszyny elektrycznej przy prędkości N1 (W)'
+      ru: 'Потери мощности переднего электродвигателя на скорости N1 (Вт)'
+      zh: '前电机在N1转速下的功率损耗(W)'
+      hu: 'Az első elektromos gép teljesítményvesztesége N1 fordulatszámon (W)'
+      pt: 'Perdas de potência da máquina elétrica dianteira à velocidade N1 (W)'
+    type: 'uint'
+    factor: 200
+    min: 0
+    max: 20000
+    units: 'W'
+    invalid: 0x7F
+    default: 0x00
+
+  UNUSED_1:
+    bits: '5.0'
+    unused: true

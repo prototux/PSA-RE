@@ -1,0 +1,176 @@
+id: 0x0A8
+name: 'IMMO_RESPONSE'
+type: 'can'
+length: 6
+comment:
+  en: 'Powertrain dynamic data: instantaneous and percentage lateral and longitudinal acceleration, plus telemetry power display request.'
+  fr: 'Données dynamiques de motorisation : accélérations latérale et longitudinale instantanées et en pourcentage, ainsi que demande d''affichage de puissance télémétrie.'
+  es: 'Datos dinámicos de la motorización: aceleraciones lateral y longitudinal instantáneas y en porcentaje, además de la solicitud de visualización de potencia de telemetría.'
+  de: 'Dynamische Antriebsstrangdaten: momentane und prozentuale Quer- und Längsbeschleunigung sowie Telemetrie-Leistungsanzeigeanforderung.'
+  it: 'Dati dinamici della motorizzazione: accelerazioni laterale e longitudinale istantanee e in percentuale, oltre alla richiesta di visualizzazione della potenza telemetrica.'
+  pl: 'Dynamiczne dane napędu: chwilowe i procentowe przyspieszenie boczne i wzdłużne oraz żądanie wyświetlenia mocy telemetrii.'
+  ru: 'Динамические данные силовой установки: мгновенное и процентное боковое и продольное ускорение, а также запрос отображения мощности телеметрии.'
+  zh: '动力总成动态数据：瞬时及百分比横向和纵向加速度，以及遥测功率显示请求。'
+  hu: 'A hajtáslánc dinamikus adatai: pillanatnyi és százalékos oldal- és hosszirányú gyorsulás, valamint a telemetriai teljesítmény-kijelzés kérése.'
+  pt: 'Dados dinâmicos do grupo motopropulsor: aceleração lateral e longitudinal instantânea e em percentagem, além do pedido de apresentação de potência em telemetria.'
+observations:
+  en: 'On state change of: LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+  fr: 'Sur changement d''état de : LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+  es: 'Al cambiar el estado de: LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+  de: 'Bei Statusänderung von: LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+  it: 'Al cambiamento di stato di: LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+  pl: 'Wysyłane przy zmianie stanu: LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+  ru: 'При изменении состояния: LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+  zh: '当GMP_ACCEL_LAT_INST, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, GMP_ACCEL_LONG_INST状态变化时'
+  hu: 'A(z) LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT állapotváltozásakor'
+  pt: 'Na mudança de estado de: LATERAL_ACCELERATION_INSTANT, LONGITUDINAL_ACCELERATION_PERCENT, TELEMETRY_PAGE_START_REQUEST, LATERAL_ACCELERATION_PERCENT, LONGITUDINAL_ACCELERATION_INSTANT'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['CMB', 'MATT']
+
+signals:
+  LATERAL_ACCELERATION_INSTANT:
+    bits: '1.7-1.3'
+    comment:
+      en: 'HMI instantaneous lateral acceleration value'
+      fr: 'Valeur instantanée d''accélération latérale pour l''IHM'
+      es: 'Valor instantáneo de aceleración lateral para la IHM'
+      de: 'Momentanwert der Querbeschleunigung für das HMI'
+      it: 'Valore istantaneo di accelerazione laterale per l''HMI'
+      pl: 'Chwilowa wartość przyspieszenia bocznego dla HMI'
+      ru: 'Мгновенное значение бокового ускорения для HMI'
+      zh: 'HMI 瞬时横向加速度值'
+      hu: 'HMI pillanatnyi oldalirányú gyorsulás érték'
+      pt: 'Valor instantâneo de aceleração lateral da IHM'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 2
+    units: 'g'
+    default: 0x00
+
+  UNUSED_1:
+    bits: '1.2-1.0'
+    unused: true
+
+  LONGITUDINAL_ACCELERATION_PERCENT:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Longitudinal acceleration percentage'
+      fr: 'Pourcentage d''accélération longitudinale'
+      es: 'Porcentaje de aceleración longitudinal'
+      de: 'Prozentuale Längsbeschleunigung'
+      it: 'Percentuale di accelerazione longitudinale'
+      pl: 'Procent przyspieszenia wzdłużnego'
+      ru: 'Процент продольного ускорения'
+      zh: '纵向加速度百分比'
+      hu: 'Hosszirányú gyorsulás százalék'
+      pt: 'Percentagem de aceleração longitudinal'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.7-2.3'
+          fr: 'Aussi observé aux bits 2.7-2.3'
+          es: 'También observado en los bits 2.7-2.3'
+          de: 'Auch an den Bits 2.7-2.3 beobachtet'
+          it: 'Osservato anche ai bit 2.7-2.3'
+          pl: 'Obserwowany także na bitach 2.7-2.3'
+          ru: 'Также наблюдался в битах 2.7-2.3'
+          zh: '也观察到位于位2.7-2.3'
+          hu: 'Megfigyelve a(z) 2.7-2.3 biteken is'
+          pt: 'Também observado nos bits 2.7-2.3'
+        bits: '2.7-2.3'
+
+  TELEMETRY_PAGE_START_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Telemetry page start request (dynamic mode active)'
+      fr: 'Demande de lancement de la page télémétrie (mode dynamique actif)'
+      es: 'Solicitud de inicio de la página de telemetría (modo dinámico activo)'
+      de: 'Anforderung zum Start der Telemetrieseite (Dynamikmodus aktiv)'
+      it: 'Richiesta di avvio della pagina di telemetria (modalità dinamica attiva)'
+      pl: 'Żądanie uruchomienia strony telemetrii (tryb dynamiczny aktywny)'
+      ru: 'Запрос запуска страницы телеметрии (активен динамический режим)'
+      zh: '遥测页面启动请求(动态模式激活时)'
+      hu: 'Telemetria oldal indítási kérés (dinamikus mód aktív)'
+      pt: 'Pedido de início da página de telemetria (modo dinâmico ativo)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  LATERAL_ACCELERATION_PERCENT:
+    bits: '3.7-3.1'
+    comment:
+      en: 'Lateral acceleration percentage'
+      fr: 'Pourcentage d''accélération latérale'
+      es: 'Porcentaje de aceleración lateral'
+      de: 'Prozentuale Querbeschleunigung'
+      it: 'Percentuale di accelerazione laterale'
+      pl: 'Procent przyspieszenia bocznego'
+      ru: 'Процент бокового ускорения'
+      zh: '横向加速度百分比'
+      hu: 'Oldalirányú gyorsulás százalék'
+      pt: 'Percentagem de aceleração lateral'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  UNUSED_2:
+    bits: '3.0'
+    unused: true
+
+  LONGITUDINAL_ACCELERATION_INSTANT:
+    bits: '4.7-4.3'
+    comment:
+      en: 'HMI instantaneous longitudinal acceleration value'
+      fr: 'Valeur instantanée d''accélération longitudinale pour l''IHM'
+      es: 'Valor instantáneo de aceleración longitudinal para la IHM'
+      de: 'Momentanwert der Längsbeschleunigung für das HMI'
+      it: 'Valore istantaneo di accelerazione longitudinale per l''HMI'
+      pl: 'Chwilowa wartość przyspieszenia wzdłużnego dla HMI'
+      ru: 'Мгновенное значение продольного ускорения для HMI'
+      zh: 'HMI 瞬时纵向加速度值'
+      hu: 'HMI pillanatnyi hosszirányú gyorsulás érték'
+      pt: 'Valor instantâneo de aceleração longitudinal da IHM'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 2
+    units: 'g'
+    default: 0x00
+
+  UNUSED_3:
+    bits: '4.2-4.0'
+    unused: true

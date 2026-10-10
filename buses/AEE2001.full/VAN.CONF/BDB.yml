@@ -1,0 +1,340 @@
+id: 0xBDB
+name: 'CLIMATE_IO_MODULE_STATUS'
+type: 'van'
+length: 2
+comment:
+  en: 'Input states of the climate I/O module (switch positions of the climate control panel: blower speed, heated rear window, temperature mix, A/C, recirculation, defrost). Also used by the body controller to supervise the module.'
+  fr: 'États d''entrée du module I/O climatisation (positions des commandes du panneau de climatisation : vitesse de pulseur, lunette chauffante, mélange de température, climatisation, recyclage, désembuage). Utilisée aussi par la BSI pour superviser le module.'
+  es: 'Estados de entrada del módulo I/O de climatización (posiciones de los mandos del panel de climatización: velocidad de ventilador, luneta térmica, mezcla de temperatura, A/C, recirculación, desempañado). Usada también por la BSI para supervisar el módulo.'
+  de: 'Eingangszustände des Klima-I/O-Moduls (Schalterstellungen des Klimabedienfelds: Gebläsedrehzahl, Heckscheibenheizung, Temperaturmischung, Klimaanlage, Umluft, Entfrosten). Wird auch von der BSI zur Modulüberwachung genutzt.'
+  it: 'Stati di ingresso del modulo I/O climatizzazione (posizioni dei comandi del pannello climatizzatore: velocità ventola, lunotto termico, miscelazione temperatura, A/C, ricircolo, sbrinamento). Usata anche dalla BSI per supervisionare il modulo.'
+  pl: 'Stany wejściowe modułu I/O klimatyzacji (pozycje przełączników panelu klimatyzacji: prędkość dmuchawy, ogrzewana szyba tylna, mieszanie temperatury, A/C, recyrkulacja, odszranianie). Używana także przez BSI do nadzoru modułu.'
+  ru: 'Входные состояния модуля ввода-вывода климат-контроля (положения переключателей панели климат-контроля: скорость вентилятора, обогрев заднего стекла, смешение температуры, кондиционер, рециркуляция, обдув). Также используется BSI для контроля модуля.'
+  zh: '空调I/O模块输入状态(空调面板开关位置:风扇速度、后窗加热、温度混合、空调、内循环、除雾)。也被车身控制器用于监控该模块。'
+  hu: 'A klíma I/O modul bemeneti állapotai (a klímapanel kapcsolóállásai: ventilátorsebesség, hátsó ablakfűtés, hőmérséklet-keverés, klíma, recirkuláció, párátlanítás). A BSI is használja a modul felügyeletére.'
+  pt: 'Estados de entrada do módulo de E/S da climatização (posições dos comutadores do painel de climatização: velocidade do ventilador, vidro traseiro aquecido, mistura de temperatura, ar condicionado, recirculação, desembaciamento). Também utilizado pelo computador de servidão para supervisionar o módulo.'
+periodicity: ['50ms']
+senders: ['CLIM_AV']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.2'
+    unused: true
+
+  DISTRIBUTION_DEFROST_POSITION:
+    bits: '1.1'
+    comment:
+      en: 'Air distribution control in defrost position'
+      fr: 'Commande de distribution d''air en position dégivrage'
+      es: 'Mando de distribución de aire en posición de descongelación'
+      de: 'Luftverteilungssteuerung in Enteisungsstellung'
+      it: 'Comando di distribuzione dell''aria in posizione sbrinamento'
+      pl: 'Sterowanie rozdziałem powietrza w pozycji odszraniania'
+      ru: 'Управление распределением воздуха в положении обдува стекла'
+      zh: '除霜位置的空气分配控制'
+      hu: 'A légelosztás vezérlése jégtelenítő állásban'
+      pt: 'Comando de distribuição de ar em posição de descongelação'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Position other than defrost'
+        fr: 'Position différente de « dégivrage »'
+        es: 'Posición diferente de «descongelación»'
+        de: 'Position ungleich «Enteisung»'
+        it: 'Posizione diversa da «sbrinamento»'
+        pl: 'Pozycja inna niż „odszranianie”'
+        ru: 'Положение отличное от «разморозки»'
+        zh: '非「除霜」位置'
+        hu: 'A „jégtelenítés”-től eltérő helyzet'
+        pt: 'Posição diferente de desembaciamento'
+      0x01:
+        en: '"Defrost" position'
+        fr: 'Position « Dégivrage »'
+        es: 'Posición "Desempañado"'
+        de: 'Stellung „Entfrosten“'
+        it: 'Posizione "Sbrinamento"'
+        pl: 'Pozycja „Odszranianie”'
+        ru: 'Положение «Разморозка»'
+        zh: '“除霜”位置'
+        hu: '„Jégmentesítés” állás'
+        pt: 'Posição "Descongelação"'
+
+  UNUSED_2:
+    bits: '1.0'
+    unused: true
+
+  BLOWER_SPEED4_SELECTED:
+    bits: '2.7'
+    comment:
+      en: 'Blower switch at speed 4 (only one speed bit may be set; none set = blower off)'
+      fr: 'Commande du pulseur à la vitesse 4 (un seul bit de vitesse à la fois; aucun bit = pulseur arrêté)'
+      es: 'Mando del ventilador en velocidad 4 (solo un bit de velocidad a la vez; ninguno = ventilador apagado)'
+      de: 'Gebläsesteuerung auf Stufe 4 (nur ein Geschwindigkeitsbit gleichzeitig; keines gesetzt = Gebläse aus)'
+      it: 'Comando del ventilatore alla velocità 4 (un solo bit di velocità alla volta; nessuno = ventilatore spento)'
+      pl: 'Sterowanie dmuchawą na biegu 4 (tylko jeden bit prędkości naraz; brak = dmuchawa wyłączona)'
+      ru: 'Управление вентилятором на скорости 4 (только один бит скорости одновременно; ни один не установлен = вентилятор выключен)'
+      zh: '送风机4速控制(同时只能设置一个速度位;都不设置=送风机关闭)'
+      hu: 'A fúvó 4. sebességfokozatának vezérlése (egyszerre csak egy sebességbit állítható be; egyik sem = fúvó kikapcsolva)'
+      pt: 'Comando do ventilador na velocidade 4 (apenas um bit de velocidade de cada vez; nenhum = ventilador desligado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Speed 4'
+        fr: 'Vitesse 4'
+        es: 'Velocidad 4'
+        de: 'Geschwindigkeit 4'
+        it: 'Velocità 4'
+        pl: 'Prędkość 4'
+        ru: 'Скорость 4'
+        zh: '车速4'
+        hu: '4 sebesség'
+        pt: 'Velocidade 4'
+
+  HEATED_REAR_WINDOW_SWITCH:
+    bits: '2.6'
+    comment:
+      en: 'Heated rear window switch'
+      fr: 'Commande de lunette arrière chauffante'
+      es: 'Mando de la luneta trasera térmica'
+      de: 'Schalter der beheizten Heckscheibe'
+      it: 'Comando del lunotto termico posteriore'
+      pl: 'Przełącznik ogrzewania tylnej szyby'
+      ru: 'Переключатель обогрева заднего стекла'
+      zh: '后窗加热开关'
+      hu: 'A fűthető hátsó szélvédő kapcsolója'
+      pt: 'Comando do vidro traseiro térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non actif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  MIX_FULL_HOT_POSITION:
+    bits: '2.5'
+    comment:
+      en: 'Temperature mixing flap control in full hot position'
+      fr: 'Commande du volet de mixage en position tout chaud'
+      es: 'Mando de la trampilla de mezcla en posición todo caliente'
+      de: 'Steuerung der Mischklappe in Stellung ganz warm'
+      it: 'Comando della paratia di miscelazione in posizione tutto caldo'
+      pl: 'Sterowanie klapą mieszania w pozycji pełne ciepło'
+      ru: 'Управление заслонкой смешивания в положении полностью тепло'
+      zh: '混合风门控制处于全热位置'
+      hu: 'A keverőlapát vezérlése teljesen meleg állásban'
+      pt: 'Comando da comporta de mistura em posição totalmente quente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Position other than full hot'
+        fr: 'Position différente de « tout chaud »'
+        es: 'Posición distinta de «todo caliente»'
+        de: 'Position ungleich „ganz warm“'
+        it: 'Posizione diversa da "tutto caldo"'
+        pl: 'Pozycja inna niż „całkowicie ciepło”'
+        ru: 'Положение, отличное от «полностью тепло»'
+        zh: '非“全热”位置'
+        hu: 'Nem a „teljesen meleg” pozíció'
+        pt: 'Posição diferente de totalmente quente'
+      0x01:
+        en: 'Full hot position'
+        fr: 'Position tout chaud'
+        es: 'Posición todo caliente'
+        de: 'Position ganz warm'
+        it: 'Posizione tutto caldo'
+        pl: 'Pozycja maksymalnego ciepła'
+        ru: 'Положение «полностью тепло»'
+        zh: '全热位置'
+        hu: 'Teljesen meleg pozíció'
+        pt: 'Posição totalmente quente'
+
+  AC_SWITCH:
+    bits: '2.4'
+    comment:
+      en: 'A/C (refrigeration) switch'
+      fr: 'Commande de réfrigération (climatisation)'
+      es: 'Mando de refrigeración (climatización)'
+      de: 'Kälteanlagenschalter (Klimaanlage)'
+      it: 'Comando di refrigerazione (climatizzazione)'
+      pl: 'Przełącznik chłodzenia (klimatyzacji)'
+      ru: 'Переключатель охлаждения (кондиционирования)'
+      zh: '制冷(空调)开关'
+      hu: 'Hűtés (klíma) kapcsoló'
+      pt: 'Comando de refrigeração (ar condicionado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non actif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  RECIRCULATION_SWITCH:
+    bits: '2.3'
+    comment:
+      en: 'Air recirculation switch'
+      fr: 'Commande de recyclage d''air'
+      es: 'Mando de recirculación de aire'
+      de: 'Umluftschalter'
+      it: 'Comando di ricircolo dell''aria'
+      pl: 'Przełącznik recyrkulacji powietrza'
+      ru: 'Переключатель рециркуляции воздуха'
+      zh: '空气内循环开关'
+      hu: 'Légkeringetés kapcsoló'
+      pt: 'Comando de recirculação de ar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Outside air'
+        fr: 'Air extérieur'
+        es: 'Aire exterior'
+        de: 'Außenluft'
+        it: 'Aria esterna'
+        pl: 'Powietrze zewnętrzne'
+        ru: 'Наружный воздух'
+        zh: '外部空气'
+        hu: 'Külső levegő'
+        pt: 'Ar exterior'
+      0x01:
+        en: 'Recirculation'
+        fr: 'Recyclage'
+        es: 'Recirculación'
+        de: 'Umluft'
+        it: 'Ricircolo'
+        pl: 'Recyrkulacja'
+        ru: 'Рециркуляция'
+        zh: '内循环'
+        hu: 'Recirkuláció'
+        pt: 'Recirculação'
+
+  BLOWER_SPEED3_SELECTED:
+    bits: '2.2'
+    comment:
+      en: 'Blower switch at speed 3 (only one speed bit may be set; none set = blower off)'
+      fr: 'Commande du pulseur à la vitesse 3 (un seul bit de vitesse à la fois; aucun bit = pulseur arrêté)'
+      es: 'Mando del ventilador en velocidad 3 (solo un bit de velocidad a la vez; ninguno = ventilador apagado)'
+      de: 'Gebläsesteuerung auf Stufe 3 (nur ein Geschwindigkeitsbit gleichzeitig; keines gesetzt = Gebläse aus)'
+      it: 'Comando del ventilatore alla velocità 3 (un solo bit di velocità alla volta; nessuno = ventilatore spento)'
+      pl: 'Sterowanie dmuchawą na biegu 3 (tylko jeden bit prędkości naraz; brak = dmuchawa wyłączona)'
+      ru: 'Управление вентилятором на скорости 3 (только один бит скорости одновременно; ни один не установлен = вентилятор выключен)'
+      zh: '送风机3速控制(同时只能设置一个速度位;都不设置=送风机关闭)'
+      hu: 'A fúvó 3. sebességfokozatának vezérlése (egyszerre csak egy sebességbit állítható be; egyik sem = fúvó kikapcsolva)'
+      pt: 'Comando do ventilador na velocidade 3 (apenas um bit de velocidade de cada vez; nenhum = ventilador desligado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Speed 3'
+        fr: 'Vitesse 3'
+        es: 'Velocidad 3'
+        de: 'Geschwindigkeit 3'
+        it: 'Velocità 3'
+        pl: 'Prędkość 3'
+        ru: 'Скорость 3'
+        zh: '速度3'
+        hu: '3. sebesség'
+        pt: 'Velocidade 3'
+
+  BLOWER_SPEED2_SELECTED:
+    bits: '2.1'
+    comment:
+      en: 'Blower switch at speed 2 (only one speed bit may be set; none set = blower off)'
+      fr: 'Commande du pulseur à la vitesse 2 (un seul bit de vitesse à la fois; aucun bit = pulseur arrêté)'
+      es: 'Mando del ventilador en velocidad 2 (solo un bit de velocidad a la vez; ninguno = ventilador apagado)'
+      de: 'Gebläsesteuerung auf Stufe 2 (nur ein Geschwindigkeitsbit gleichzeitig; keines gesetzt = Gebläse aus)'
+      it: 'Comando del ventilatore alla velocità 2 (un solo bit di velocità alla volta; nessuno = ventilatore spento)'
+      pl: 'Sterowanie dmuchawą na biegu 2 (tylko jeden bit prędkości naraz; brak = dmuchawa wyłączona)'
+      ru: 'Управление вентилятором на скорости 2 (только один бит скорости одновременно; ни один не установлен = вентилятор выключен)'
+      zh: '送风机2速控制(同时只能设置一个速度位;都不设置=送风机关闭)'
+      hu: 'A fúvó 2. sebességfokozatának vezérlése (egyszerre csak egy sebességbit állítható be; egyik sem = fúvó kikapcsolva)'
+      pt: 'Comando do ventilador na velocidade 2 (apenas um bit de velocidade de cada vez; nenhum = ventilador desligado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Speed 2'
+        fr: 'Vitesse 2'
+        es: 'Velocidad 2'
+        de: 'Geschwindigkeit 2'
+        it: 'Velocità 2'
+        pl: 'Prędkość 2'
+        ru: 'Скорость 2'
+        zh: '速度2'
+        hu: '2. sebesség'
+        pt: 'Velocidade 2'
+
+  BLOWER_SPEED1_SELECTED:
+    bits: '2.0'
+    comment:
+      en: 'Blower switch at speed 1 (only one speed bit may be set; none set = blower off)'
+      fr: 'Commande du pulseur à la vitesse 1 (un seul bit de vitesse à la fois; aucun bit = pulseur arrêté)'
+      es: 'Mando del ventilador en velocidad 1 (solo un bit de velocidad a la vez; ninguno = ventilador apagado)'
+      de: 'Gebläsesteuerung auf Stufe 1 (nur ein Geschwindigkeitsbit gleichzeitig; keines gesetzt = Gebläse aus)'
+      it: 'Comando del ventilatore alla velocità 1 (un solo bit di velocità alla volta; nessuno = ventilatore spento)'
+      pl: 'Sterowanie dmuchawą na biegu 1 (tylko jeden bit prędkości naraz; brak = dmuchawa wyłączona)'
+      ru: 'Управление вентилятором на скорости 1 (только один бит скорости одновременно; ни один не установлен = вентилятор выключен)'
+      zh: '送风机1速控制(同时只能设置一个速度位;都不设置=送风机关闭)'
+      hu: 'A fúvó 1. sebességfokozatának vezérlése (egyszerre csak egy sebességbit állítható be; egyik sem = fúvó kikapcsolva)'
+      pt: 'Comando do ventilador na velocidade 1 (apenas um bit de velocidade de cada vez; nenhum = ventilador desligado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Speed 1'
+        fr: 'Vitesse 1'
+        es: 'Velocidad 1'
+        de: 'Geschwindigkeit 1'
+        it: 'Velocità 1'
+        pl: 'Prędkość 1'
+        ru: 'Скорость 1'
+        zh: '速度1'
+        hu: '1. sebesség'
+        pt: 'Velocidade 1'

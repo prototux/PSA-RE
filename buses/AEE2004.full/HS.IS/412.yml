@@ -1,192 +1,1485 @@
 id: 0x412
-name: 'GATEWAY_DATA'
+name: 'BSI_CABIN_DATA_2'
+alt_names: ['GATEWAY_DATA']
+type: 'can'
 length: 8
 comment:
-  en: 'This is data that is gatewated or gathered from/by the BSI and sent into the IS bus'
-  fr: "Il s'agit de données qui sont contrôlées ou collectées depuis/par le BSI et envoyées dans le bus IS"
-  de: 'Diese Daten kommen von anderen Bussen über das BSI in den IS Bus'
-type: 'can'
-periodicity: 50
-senders:
-  - 'BSI'
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+observations:
+  en: 'On state change of: BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur changement d''état de : BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al cambiar el estado de: BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Statusänderung von: BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Al cambiamento di stato di: BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Wysyłane przy zmianie stanu: BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении состояния: BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '当CONTACT_FREIN1, INFO_PALETTE_BV状态变化时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A(z) BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO állapotváltozásakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança de estado de: BRAKE_PEDAL_SWITCH, GEARBOX_PADDLE_INFO. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['50ms', 'trigger']
+senders: ['BSI']
 receivers:
+  - 'ARTIV'
+  - 'PIU'
+  - 'ABS'
+  - 'SCDT'
+  - 'BCP'
+  - 'FSE'
+  - 'CSS'
   - 'CMM'
+  - 'CAAR'
+  - 'BVA'
+  - 'AR2S'
+  - 'HCU1'
+  - 'BHI'
+  - 'AMVAR'
+  - 'ACC'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'DSG'
+  - 'DIAG_TOOL'
+  - 'SBW'
+  - 'TBMU'
+  - 'DAE'
 
 signals:
-  UNKNOWN_1:
-    bits: '1.7-1.6'
-  BREAK_PEDAL_CONTACT:
+  ELECTRICAL_SYSTEM_NEED_FAULT:
+    bits: '1.7'
+    comment:
+      en: 'Electrical system need management fault'
+      fr: 'Défaut de gestion des besoins du système électrique'
+      es: 'Fallo de gestión de las necesidades del sistema eléctrico'
+      de: 'Fehler der Bedarfsverwaltung des elektrischen Systems'
+      it: 'Guasto di gestione delle esigenze del sistema elettrico'
+      pl: 'Usterka zarządzania potrzebami układu elektrycznego'
+      ru: 'Неисправность управления потребностями электрической системы'
+      zh: '电气系统需求管理故障'
+      hu: 'Az elektromos rendszer igénykezelésének hibája'
+      pt: 'Falha de gestão das necessidades do sistema elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  UNUSED_1:
+    bits: '1.6'
+    unused: true
+
+  BRAKE_PEDAL_SWITCH:
     bits: '1.5'
+    alt_names: ['BREAK_PEDAL_CONTACT']
+    comment:
+      en: 'Main brake pedal switch state'
+      fr: 'État du contacteur principal de la pédale de frein'
+      es: 'Estado del interruptor principal del pedal de freno'
+      de: 'Zustand des Hauptbremslichtschalters'
+      it: 'Stato dell''interruttore principale del pedale del freno'
+      pl: 'Stan głównego wyłącznika pedału hamulca'
+      ru: 'Состояние основного выключателя педали тормоза'
+      zh: '制动踏板主开关状态'
+      hu: 'A fékpedál fő kapcsolójának állapota'
+      pt: 'Estado do interruptor principal do pedal de travão'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Break pedal contact open'
-        fr: 'Contact de pédale de frein ouvert'
-        de: 'Bremspedalkontakt offen'
+        en: 'Brake pedal released'
+        fr: 'Pédale de frein relâchée'
+        es: 'Pedal de freno soltado'
+        de: 'Bremspedal losgelassen'
+        it: 'Pedale del freno rilasciato'
+        pl: 'Pedał hamulca zwolniony'
+        ru: 'Педаль тормоза отпущена'
+        zh: '制动踏板已松开'
+        hu: 'Fékpedál elengedve'
+        pt: 'Pedal de travão solto'
       0x01:
-        en: 'Break pedal contact closed'
-        fr: 'Contact de pédale de frein fermé'
-        de: 'Bremspedalkontakt geschlossen'
-  IGNITION_KEY_POSITION:
+        en: 'Brake pedal pressed'
+        fr: 'Appui sur la pédale de frein'
+        es: 'Pedal de freno pulsado'
+        de: 'Bremspedal betätigt'
+        it: 'Pedale del freno premuto'
+        pl: 'Naciśnięty pedał hamulca'
+        ru: 'Нажата педаль тормоза'
+        zh: '制动踏板已按下'
+        hu: 'Fékpedál lenyomva'
+        pt: 'Pressão no pedal do travão'
+
+  IGNITION_SWITCH_ON:
     bits: '1.4'
+    alt_names: ['IGNITION_KEY_POSITION']
+    comment:
+      en: 'Ignition switch position: accessory/on (+APC)'
+      fr: 'Position de la clé de contact : accessoire/marche (+APC)'
+      es: 'Posición de la llave de contacto: accesorio/marcha (+APC)'
+      de: 'Zündschlüsselposition: Zubehör/Ein (+APC)'
+      it: 'Posizione della chiave di accensione: accessori/marcia (+APC)'
+      pl: 'Pozycja stacyjki: akcesoria/włączona (+APC)'
+      ru: 'Положение ключа зажигания: аксессуары/включено (+APC)'
+      zh: '点火开关位置:附件/开启(+APC)'
+      hu: 'Gyújtáskapcsoló állása: tartozék/bekapcsolva (+APC)'
+      pt: 'Posição da chave de ignição: acessório/ligado (+APC)'
+    type: 'bool'
     values:
       0x00:
-        en: 'Ignition off'
-        fr: 'Contact coupé'
-        de: 'Zündung inaktiv'
+        en: 'Ignition key not in +APC position'
+        fr: 'Clé de contact hors position +APC'
+        es: 'Llave de contacto fuera de la posición +APC'
+        de: 'Zündschlüssel nicht in Position +APC'
+        it: 'Chiave di accensione non in posizione +APC'
+        pl: 'Kluczyk zapłonu poza pozycją +APC'
+        ru: 'Ключ зажигания не в положении +APC'
+        zh: '点火钥匙未处于+APC位置'
+        hu: 'A gyújtáskulcs nincs +APC pozícióban'
+        pt: 'Chave de ignição fora da posição +APC'
       0x01:
-        en: 'Ignition on'
-        fr: 'Allumage en marche'
-        de: 'Zündung aktiv'
-  HANDBREAK_CONTACT:
+        en: 'Ignition key in +APC position'
+        fr: 'Clé de contact sur +APC'
+        es: 'Llave de contacto en posición +APC'
+        de: 'Zündschlüssel in Position +APC'
+        it: 'Chiave di accensione in posizione +APC'
+        pl: 'Kluczyk w pozycji +APC'
+        ru: 'Ключ зажигания в положении +APC'
+        zh: '点火钥匙位于 +APC 位置'
+        hu: 'Gyújtáskulcs +APC helyzetben'
+        pt: 'Chave de contacto na posição +APC'
+
+  PARKING_BRAKE_SWITCH:
     bits: '1.3'
-    values: 
+    alt_names: ['HANDBREAK_CONTACT']
+    comment:
+      en: 'Handbrake (parking brake) switch state'
+      fr: 'État du contacteur de frein à main (frein de stationnement)'
+      es: 'Estado del interruptor del freno de mano (freno de estacionamiento)'
+      de: 'Zustand des Handbremsschalters (Feststellbremse)'
+      it: 'Stato dell''interruttore del freno a mano (freno di stazionamento)'
+      pl: 'Stan wyłącznika hamulca ręcznego (postojowego)'
+      ru: 'Состояние выключателя стояночного тормоза'
+      zh: '手刹(驻车制动)开关状态'
+      hu: 'A kéziferék (rögzítőfék) kapcsolójának állapota'
+      pt: 'Estado do interruptor do travão de mão (travão de estacionamento)'
+    type: 'bool'
+    default: 0x00
+    values:
       0x00:
-        en: 'Handbreak contact open'
-        fr: 'Contact de frein à main ouvert'
-        de: 'Handbremse-Kontakt offen'
+        en: 'Parking brake released'
+        fr: 'Frein de parc relâché'
+        es: 'Freno de estacionamiento liberado'
+        de: 'Feststellbremse gelöst'
+        it: 'Freno di stazionamento rilasciato'
+        pl: 'Hamulec postojowy zwolniony'
+        ru: 'Стояночный тормоз отпущен'
+        zh: '驻车制动已释放'
+        hu: 'A rögzítőfék kioldva'
+        pt: 'Travão de estacionamento solto'
       0x01:
-        en: 'Handbreak contact closed'
-        fr: 'Contact de frein à main fermé'
-        de: 'Handbremse-Kontakt geschlossen'
-  IN_REVERSE_GEAR:
+        en: 'Parking brake applied'
+        fr: 'Frein de parc serré'
+        es: 'Freno de estacionamiento aplicado'
+        de: 'Feststellbremse angezogen'
+        it: 'Freno di stazionamento inserito'
+        pl: 'Hamulec postojowy zaciągnięty'
+        ru: 'Стояночный тормоз включён'
+        zh: '驻车制动已拉起'
+        hu: 'Rögzítőfék behúzva'
+        pt: 'Travão de estacionamento aplicado'
+
+  REVERSE_GEAR_MANUAL_GEARBOX:
     bits: '1.2'
+    alt_names: ['IN_REVERSE_GEAR']
+    comment:
+      en: 'Reverse gear engaged (manual gearbox)'
+      fr: 'Marche arrière engagée (boîte de vitesses mécanique)'
+      es: 'Marcha atrás engranada (caja de cambios manual)'
+      de: 'Rückwärtsgang eingelegt (Schaltgetriebe)'
+      it: 'Retromarcia inserita (cambio manuale)'
+      pl: 'Włączony bieg wsteczny (skrzynia manualna)'
+      ru: 'Включена передача заднего хода (механическая коробка передач)'
+      zh: '倒挡挂入(手动变速箱)'
+      hu: 'Hátrameneti fokozat bekapcsolva (manuális váltó)'
+      pt: 'Marcha-atrás engatada (caixa manual)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Not in reverse'
-        fr: 'Pas en marche arrière'
-        de: 'Nicht im Rückwertsgang'
+        en: 'Forward range or neutral'
+        fr: 'Marche avant ou point mort'
+        es: 'Marcha adelante o punto muerto'
+        de: 'Vorwärtsgang oder Neutral'
+        it: 'Marcia avanti o folle'
+        pl: 'Bieg do przodu lub neutralny'
+        ru: 'Передача вперёд или нейтраль'
+        zh: '前进挡或空挡'
+        hu: 'Előremenet vagy üresjárat'
+        pt: 'Marcha à frente ou ponto morto'
       0x01:
-        en: 'In reverse'
-        fr: 'En marche arrière'
-        de: 'Im Rückwertsgang'
-  IGNITION_START_POSITION:
+        en: 'Reverse engaged'
+        fr: 'Marche arrière engagée'
+        es: 'Marcha atrás engranada'
+        de: 'Rückwärtsgang eingelegt'
+        it: 'Retromarcia innestata'
+        pl: 'Wsteczny włączony'
+        ru: 'Задняя передача включена'
+        zh: '倒挡已挂入'
+        hu: 'Hátramenet bekapcsolva'
+        pt: 'Marcha-atrás engrenada'
+
+  UNUSED_2:
     bits: '1.1'
-    values:
-      0x00:
-        en: 'Not in start position'
-        fr: 'Pas en position de départ'
-        de: 'Nicht in Startposition'
-      0x01:
-        en: 'In starting position'
-        fr: 'En position de départ'
-        de: 'In Startposition'
-  UNKNOWN_2:
+    unused: true
+
+  BRAKE_PEDAL_SWITCH_DISABLED:
     bits: '1.0'
-  UNKNOWN_3:
-    bits: '2.7-2.3'
-  REQUEST_ENGINE_OIL_MESSUREMENT:
-    bits: '2.2'
+    comment:
+      en: 'Main brake pedal switch out-of-service status'
+      fr: 'État hors service du contacteur principal de la pédale de frein'
+      es: 'Estado fuera de servicio del interruptor principal del pedal de freno'
+      de: 'Außerbetriebsstatus des Hauptbremslichtschalters'
+      it: 'Stato fuori servizio dell''interruttore principale del pedale del freno'
+      pl: 'Stan wyłączenia z eksploatacji głównego wyłącznika pedału hamulca'
+      ru: 'Статус неисправности основного выключателя педали тормоза'
+      zh: '制动踏板主开关的失效状态'
+      hu: 'A fékpedál fő kapcsolójának üzemen kívüli állapota'
+      pt: 'Estado fora de serviço do interruptor principal do pedal de travão'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Engine Oil messurement not requested'
-        fr: "Mesure de l'huile moteur non demandée"
-        de: 'Motorölstandmessung nicht angefordert'
+        en: 'Main brake switch OK'
+        fr: 'Contact principal de la pédale de frein OK'
+        es: 'Interruptor principal del pedal de freno OK'
+        de: 'Haupt-Bremspedalschalter OK'
+        it: 'Interruttore principale del pedale del freno OK'
+        pl: 'Główny styk pedału hamulca OK'
+        ru: 'Основной выключатель педали тормоза в норме'
+        zh: '制动踏板主开关正常'
+        hu: 'A fékpedál fő kapcsolója rendben'
+        pt: 'Contacto principal do pedal de travão OK'
       0x01:
-        en: 'Engine Oil messurement requested'
-        fr: "Mesure de l'huile moteur demandée"
-        de: 'Motorölstandmessung angefordert'
+        en: 'Main brake switch faulty'
+        fr: 'Contact principal pédale de frein hors service'
+        es: 'Interruptor principal del pedal de freno defectuoso'
+        de: 'Hauptbremslichtschalter fehlerhaft'
+        it: 'Interruttore principale del pedale del freno guasto'
+        pl: 'Uszkodzony główny wyłącznik pedału hamulca'
+        ru: 'Основной выключатель педали тормоза неисправен'
+        zh: '刹车踏板主开关故障'
+        hu: 'A fékpedál fő kapcsolója hibás'
+        pt: 'Contacto principal do pedal de travão fora de serviço'
+
+  SPORTINESS_REQUEST:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Driving sportiness request from the driver HMI'
+      fr: 'Demande de sportivité de conduite émise par l''IHM conducteur'
+      es: 'Solicitud de deportividad de conducción emitida por el HMI del conductor'
+      de: 'Vom Fahrer-HMI gesendete Anforderung des Fahrsportivitätsgrads'
+      it: 'Richiesta di sportività di guida emessa dall''HMI del conducente'
+      pl: 'Żądanie sportowości jazdy wysłane przez interfejs kierowcy (HMI)'
+      ru: 'Запрос спортивности вождения от HMI водителя'
+      zh: '驾驶员人机界面发出的驾驶运动性请求'
+      hu: 'A vezetői kezelőfelület (HMI) sportosság-kérése'
+      pt: 'Pedido de desportividade de condução emitido pelo HMI do condutor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Comfort'
+        fr: 'Confort'
+        es: 'Confort'
+        de: 'Komfort'
+        it: 'Comfort'
+        pl: 'Komfort'
+        ru: 'Комфорт'
+        zh: '舒适'
+        hu: 'Kényelem'
+        pt: 'Conforto'
+      0x01:
+        en: 'Comfort'
+        fr: 'Agrément'
+        es: 'Confort'
+        de: 'Fahrkomfort'
+        it: 'Comfort'
+        pl: 'Komfort'
+        ru: 'Комфорт'
+        zh: '舒适性'
+        hu: 'Kényelem'
+        pt: 'Conforto'
+      0x02:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x03:
+        unused: true
+
+  CRUISE_CONTROL_COMMANDS:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Cruise control button commands'
+      fr: 'Commandes des boutons de régulation de vitesse'
+      es: 'Comandos de los botones del control de crucero'
+      de: 'Bedienbefehle der Tempomat-Tasten'
+      it: 'Comandi dei pulsanti del cruise control'
+      pl: 'Polecenia przycisków tempomatu'
+      ru: 'Команды кнопок круиз-контроля'
+      zh: '巡航控制按钮指令'
+      hu: 'A tempomat gombjainak parancsai'
+      pt: 'Comandos dos botões do regulador de velocidade'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action on the buttons'
+        fr: 'Pas d''action sur les boutons'
+        es: 'Sin acción en los botones'
+        de: 'Keine Betätigung der Tasten'
+        it: 'Nessuna azione sui pulsanti'
+        pl: 'Brak działania na przyciskach'
+        ru: 'Нет воздействия на кнопки'
+        zh: '未操作按钮'
+        hu: 'Nincs gombművelet'
+        pt: 'Sem ação nos botões'
+      0x01:
+        en: 'Increment (or acceleration) button pressed'
+        fr: 'Bouton incrément (ou accélération) appuyé'
+        es: 'Botón de incremento (o aceleración) pulsado'
+        de: 'Erhöhungstaste (oder Beschleunigung) gedrückt'
+        it: 'Pulsante di incremento (o accelerazione) premuto'
+        pl: 'Naciśnięty przycisk zwiększania (lub przyspieszenia)'
+        ru: 'Нажата кнопка увеличения (или ускорения)'
+        zh: '递增(或加速)按钮已按下'
+        hu: 'A növelő (vagy gyorsító) gomb megnyomva'
+        pt: 'Botão de incremento (ou aceleração) pressionado'
+      0x02:
+        en: 'Decrement (or deceleration) button pressed'
+        fr: 'Bouton de décrément (ou décélération) enfoncé'
+        es: 'Botón de decremento (o deceleración) pulsado'
+        de: 'Dekrement-Taste (oder Verzögerung) gedrückt'
+        it: 'Pulsante di decremento (o decelerazione) premuto'
+        pl: 'Naciśnięty przycisk zmniejszania (lub zwalniania)'
+        ru: 'Нажата кнопка уменьшения (или замедления)'
+        zh: '减小(或减速)按钮已按下'
+        hu: 'Csökkentés (vagy lassítás) gomb megnyomva'
+        pt: 'Botão de decremento (ou desaceleração) premido'
+      0x03:
+        en: 'Deactivation (or cancel) button pressed'
+        fr: 'Bouton de désactivation (ou d''annulation) appuyé'
+        es: 'Botón de desactivación (o cancelación) pulsado'
+        de: 'Deaktivierungs- (oder Abbruch-)Taste gedrückt'
+        it: 'Pulsante di disattivazione (o annullamento) premuto'
+        pl: 'Wciśnięty przycisk dezaktywacji (lub anulowania)'
+        ru: 'Нажата кнопка отключения (или отмены)'
+        zh: '已按下停用(或取消)按钮'
+        hu: 'Kikapcsoló (vagy törlő) gomb megnyomva'
+        pt: 'Botão de desativação (ou cancelar) premido'
+
+  CABIN_HEATING_REQUEST:
+    bits: '2.3'
+    comment:
+      en: 'Cabin heating system activation request'
+      fr: 'Demande de mise en marche du chauffage habitacle'
+      es: 'Solicitud de activación de la calefacción del habitáculo'
+      de: 'Aktivierungsanforderung der Innenraumheizung'
+      it: 'Richiesta di attivazione del riscaldamento abitacolo'
+      pl: 'Żądanie włączenia ogrzewania kabiny'
+      ru: 'Запрос включения отопления салона'
+      zh: '座舱制热系统启动请求'
+      hu: 'Az utastérfűtés bekapcsolási kérése'
+      pt: 'Pedido de ativação do aquecimento do habitáculo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No activation request'
+        fr: 'Pas de demande de mise en marche'
+        es: 'Sin solicitud de puesta en marcha'
+        de: 'Keine Einschaltanforderung'
+        it: 'Nessuna richiesta di avviamento'
+        pl: 'Brak żądania uruchomienia'
+        ru: 'Запрос включения отсутствует'
+        zh: '无启动请求'
+        hu: 'Nincs bekapcsolási kérés'
+        pt: 'Sem pedido de ativação'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande de mise en marche'
+        es: 'Solicitud de puesta en marcha'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de colocação em funcionamento'
+
+  ENGINE_OIL_MEASUREMENT_REQUEST:
+    bits: '2.2'
+    alt_names: ['REQUEST_ENGINE_OIL_MESSUREMENT']
+    comment:
+      en: 'Engine oil measurement request'
+      fr: 'Demande de mesure de l''huile moteur'
+      es: 'Solicitud de medición del aceite del motor'
+      de: 'Anforderung der Motorölmessung'
+      it: 'Richiesta di misurazione dell''olio motore'
+      pl: 'Żądanie pomiaru oleju silnikowego'
+      ru: 'Запрос измерения моторного масла'
+      zh: '发动机机油测量请求'
+      hu: 'A motorolaj mérésének kérése'
+      pt: 'Pedido de medição do óleo do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No engine oil measurement request'
+        fr: 'Pas de demande de mesure d''huile moteur'
+        es: 'Sin solicitud de medición de aceite del motor'
+        de: 'Keine Anforderung Motorölmessung'
+        it: 'Nessuna richiesta di misurazione dell''olio motore'
+        pl: 'Brak żądania pomiaru oleju silnikowego'
+        ru: 'Нет запроса измерения моторного масла'
+        zh: '无发动机机油测量请求'
+        hu: 'Nincs motorolaj-mérési kérés'
+        pt: 'Sem pedido de medição de óleo do motor'
+      0x01:
+        en: 'Engine oil measurement request'
+        fr: 'Demande de mesures d''huile moteur'
+        es: 'Solicitud de medición de aceite de motor'
+        de: 'Anforderung Motorölmessung'
+        it: 'Richiesta di misurazione dell''olio motore'
+        pl: 'Żądanie pomiaru oleju silnikowego'
+        ru: 'Запрос измерения моторного масла'
+        zh: '请求机油测量'
+        hu: 'Motorolaj mérés kérése'
+        pt: 'Pedido de medição do óleo do motor'
+
   UNKNOWN_4:
     bits: '2.1-2.0'
-  REQUEST_STABILITY_PROGRAM_DISABLE:
+
+  ASR_ESP_DISCONNECT_REQUEST:
     bits: '3.7'
+    alt_names: ['REQUEST_STABILITY_PROGRAM_DISABLE']
+    comment:
+      en: 'ASR or ESP disconnection request'
+      fr: 'Demande de déconnexion de l''ASR ou de l''ESP'
+      es: 'Solicitud de desconexión del ASR o del ESP'
+      de: 'Trennanforderung von ASR oder ESP'
+      it: 'Richiesta di disconnessione di ASR o ESP'
+      pl: 'Żądanie odłączenia ASR lub ESP'
+      ru: 'Запрос отключения ASR или ESP'
+      zh: 'ASR或ESP断开请求'
+      hu: 'Az ASR vagy ESP lekapcsolási kérése'
+      pt: 'Pedido de desligação do ASR ou do ESP'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No disabling of SP requested'
-        fr: 'Aucune désactivation du SP demandée'
-        de: 'Keine Anfrage das Stabilitätsprogramm zu deaktiveren'
+        en: 'No ASR or CDC disconnection requested'
+        fr: 'Pas de demande de déconnexion ASR ou CDC'
+        es: 'Sin solicitud de desconexión de ASR o CDC'
+        de: 'Keine Trennungsanforderung von ASR oder CDC'
+        it: 'Nessuna richiesta di disconnessione ASR o CDC'
+        pl: 'Brak żądania odłączenia ASR lub CDC'
+        ru: 'Нет запроса отключения ASR или CDC'
+        zh: '无ASR或CDC断开请求'
+        hu: 'Nincs ASR- vagy CDC-leválasztási kérés'
+        pt: 'Sem pedido de desativação do ASR ou CDC'
       0x01:
-        en: 'Disabling of SP requested'
-        fr: 'Désactivation du SP demandée'
-        de: 'Anfrage das Stabilitätsprogramm zu deaktiveren'
-  UNKNOWN_5:
-    bits: '3.6-3.0'
-  HEATING_ACTION:
-    bits: '4.7-4.6'
+        en: 'ASR or CDS disconnection requested'
+        fr: 'Demande de déconnexion ASR ou CDS'
+        es: 'Solicitud de desconexión ASR o CDS'
+        de: 'Anforderung Trennung ASR oder CDS'
+        it: 'Richiesta di disconnessione ASR o CDS'
+        pl: 'Żądanie odłączenia ASR lub CDS'
+        ru: 'Запрос отключения ASR или CDS'
+        zh: '请求断开ASR或CDS'
+        hu: 'ASR vagy CDS lekapcsolási kérés'
+        pt: 'Pedido de desativação do ASR ou CDS'
+
+  UNUSED_3:
+    bits: '3.6'
+    unused: true
+
+  HEIGHT_MINUS_INFO:
+    bits: '3.5'
+    comment:
+      en: 'Vehicle height "-" button information'
+      fr: 'Information du bouton hauteur véhicule « - »'
+      es: 'Información del botón de altura del vehículo «-»'
+      de: 'Information der Fahrzeughöhen-Taste „-“'
+      it: 'Informazione del pulsante altezza veicolo «-»'
+      pl: 'Informacja przycisku wysokości pojazdu „-”'
+      ru: 'Информация кнопки высоты автомобиля «-»'
+      zh: '车辆高度“-”按钮信息'
+      hu: 'A jármű magasság „-” gombjának állapota'
+      pt: 'Informação do botão de altura do veículo «-»'
+    type: 'bool'
+    default: 0x00
     values:
-      0x00: # 0b00
-        en: 'No heating'
-        fr: 'Pas de chauffage'
-        de: 'Keine Heizung'
-      0x01: # 0b01
-        en: 'Heating Mode 1'
-        fr: 'Mode de chauffage 1'
-        de: 'Heizmodus 1'
-      0x02: # 0b10
-        en: 'Heating Mode 2'
-        fr: 'Mode de chauffage 2'
-        de: 'Heizmodus 2'
-      0x03: # 0b11
-        en: 'Heating mode 1 & 2'
-        fr: 'Mode de chauffage 1 et 2'
-        de: 'Heizmodus 1 & 2'
-  UNKNOWN_6:
-    bits: '4.5-4.0'
-  UNKNOWN_7:
-    bits: '5.7-5.0'
-  MOTOR_OIL_TEMPERATURE:
+      0x00:
+        en: 'Height "-" request inactive'
+        fr: 'Demande de hauteur "-" inactive'
+        es: 'Solicitud de altura "-" inactiva'
+        de: 'Anforderung Höhe "-" inaktiv'
+        it: 'Richiesta altezza "-" inattiva'
+        pl: 'Żądanie wysokości "-" nieaktywne'
+        ru: 'Запрос высоты "-" неактивен'
+        zh: '高度"-"请求未激活'
+        hu: 'Magasság "-" kérés inaktív'
+        pt: 'Pedido de altura "-" inativo'
+      0x01:
+        en: 'Height "-" information available'
+        fr: 'Information hauteur « - » active'
+        es: 'Información de altura «-» activa'
+        de: 'Höheninformation „-“ aktiv'
+        it: 'Informazione altezza «-» attiva'
+        pl: 'Informacja o wysokości «-» aktywna'
+        ru: 'Информация о высоте «-» активна'
+        zh: '高度“-”信息可用'
+        hu: 'Magasság „-” információ aktív'
+        pt: 'Informação de altura «-» ativa'
+
+  HEIGHT_PLUS_INFO:
+    bits: '3.4'
+    comment:
+      en: 'Vehicle height "+" button information'
+      fr: 'Information du bouton hauteur véhicule « + »'
+      es: 'Información del botón de altura del vehículo «+»'
+      de: 'Information der Fahrzeughöhen-Taste „+“'
+      it: 'Informazione del pulsante altezza veicolo «+»'
+      pl: 'Informacja przycisku wysokości pojazdu „+”'
+      ru: 'Информация кнопки высоты автомобиля «+»'
+      zh: '车辆高度“+”按钮信息'
+      hu: 'A jármű magasság „+” gombjának állapota'
+      pt: 'Informação do botão de altura do veículo «+»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Height “+” information not available'
+        fr: 'Information hauteur « + » indisponible'
+        es: 'Información de altura «+» no disponible'
+        de: 'Information Höhe „+“ nicht verfügbar'
+        it: 'Informazione altezza «+» non disponibile'
+        pl: 'Informacja o wysokości „+” niedostępna'
+        ru: 'Информация высоты «+» недоступна'
+        zh: '高度“+”信息不可用'
+        hu: 'A magasság „+” információja nem elérhető'
+        pt: 'Informação de altura “+” não disponível'
+      0x01:
+        en: 'Height "+" push information not available'
+        fr: 'Information poussoir hauteur « + » non disponible'
+        es: 'Información del pulsador de altura "+" no disponible'
+        de: 'Höhentaste „+“ Information nicht verfügbar'
+        it: 'Informazione pulsante altezza "+" non disponibile'
+        pl: 'Informacja przycisku wysokości „+” niedostępna'
+        ru: 'Информация кнопки высоты «+» недоступна'
+        zh: '高度“+”按键信息不可用'
+        hu: 'A magasság „+” gomb információja nem elérhető'
+        pt: 'Informação do pulsador de altura "+" não disponível'
+
+  UNUSED_4:
+    bits: '3.3'
+    unused: true
+
+  GEARBOX_SPORT_SWITCH:
+    bits: '3.1'
+    comment:
+      en: 'Gearbox sport mode switch pressed'
+      fr: 'Interrupteur du mode sport de la boîte de vitesses appuyé'
+      es: 'Interruptor del modo sport de la caja de cambios pulsado'
+      de: 'Sportmodusschalter des Getriebes gedrückt'
+      it: 'Interruttore della modalità sport del cambio premuto'
+      pl: 'Naciśnięty przełącznik trybu sport skrzyni biegów'
+      ru: 'Нажат переключатель спортивного режима коробки передач'
+      zh: '变速箱运动模式开关被按下'
+      hu: 'A váltó sportmód-kapcsolója megnyomva'
+      pt: 'Interruptor do modo sport da caixa de velocidades premido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Gearbox Sport switch not pressed'
+        fr: 'Interrupteur BV Sport non enfoncé'
+        es: 'Interruptor de caja Sport no pulsado'
+        de: 'BV-Sport-Schalter nicht gedrückt'
+        it: 'Interruttore cambio Sport non premuto'
+        pl: 'Przełącznik skrzyni Sport niewciśnięty'
+        ru: 'Переключатель спортивного режима КПП не нажат'
+        zh: '变速箱运动开关未按下'
+        hu: 'A váltó Sport kapcsolója nincs megnyomva'
+        pt: 'Interruptor Sport da caixa não premido'
+      0x01:
+        en: 'Gearbox Sport switch pressed'
+        fr: 'Interrupteur Sport de la boîte de vitesses appuyé'
+        es: 'Interruptor Sport de la caja de cambios pulsado'
+        de: 'Sport-Schalter des Getriebes gedrückt'
+        it: 'Interruttore Sport del cambio premuto'
+        pl: 'Wciśnięty przełącznik Sport skrzyni biegów'
+        ru: 'Нажата кнопка Sport коробки передач'
+        zh: '变速箱运动模式开关被按下'
+        hu: 'A váltó Sport kapcsolója lenyomva'
+        pt: 'Comutador desportivo da caixa premido'
+
+  GEARBOX_SNOW_SWITCH:
+    bits: '3.0'
+    comment:
+      en: 'Gearbox snow mode switch pressed'
+      fr: 'Interrupteur du mode neige de la boîte de vitesses appuyé'
+      es: 'Interruptor del modo nieve de la caja de cambios pulsado'
+      de: 'Schneemodusschalter des Getriebes gedrückt'
+      it: 'Interruttore della modalità neve del cambio premuto'
+      pl: 'Naciśnięty przełącznik trybu śnieżnego skrzyni biegów'
+      ru: 'Нажат переключатель снежного режима коробки передач'
+      zh: '变速箱雪地模式开关被按下'
+      hu: 'A váltó hómód-kapcsolója megnyomva'
+      pt: 'Interruptor do modo neve da caixa de velocidades premido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'AGB snow switch / snow-sport push button not pressed'
+        fr: 'Interrupteur BV neige / bouton poussoir sport-neige non appuyé'
+        es: 'Interruptor de caja de cambios en nieve / botón sport-nieve no pulsado'
+        de: 'AGB-Schneeschalter / Sport-Schnee-Taster nicht gedrückt'
+        it: 'Interruttore cambio neve / pulsante sport-neve non premuto'
+        pl: 'Przełącznik trybu śnieg skrzyni biegów / przycisk sport-śnieg nienaciśnięty'
+        ru: 'Переключатель режима «снег» КП / кнопка спорт-снег не нажата'
+        zh: '变速箱雪地开关/运动-雪地按钮未按下'
+        hu: 'A váltó hó kapcsolója / sport-hó nyomógomb nincs megnyomva'
+        pt: 'Interruptor de caixa de neve / botão sport-neve não pressionado'
+      0x01:
+        en: 'Gearbox snow switch pressed / sport-snow combined switch on'
+        fr: 'Interrupteur boîte de vitesses "neige" appuyé / commutateur sport-neige combiné actif'
+        es: 'Interruptor de caja de cambios "nieve" pulsado / conmutador combinado sport-nieve activo'
+        de: 'Getriebe-Schneeschalter gedrückt / kombinierter Sport-Schnee-Schalter aktiv'
+        it: 'Interruttore cambio "neve" premuto / commutatore combinato sport-neve attivo'
+        pl: 'Wciśnięty przełącznik skrzyni biegów "śnieg" / aktywny łączony przełącznik sport-śnieg'
+        ru: 'Нажат переключатель коробки передач "снег" / активен комбинированный переключатель спорт-снег'
+        zh: '变速箱雪地开关已按下 / 运动-雪地组合开关已开启'
+        hu: 'A váltó hó kapcsolója megnyomva / sport-hó kombinált kapcsoló bekapcsolva'
+        pt: 'Interruptor de caixa de velocidades "neve" pressionado / comutador combinado sport-neve ativo'
+
+  CABIN_ADDITIONAL_HEATING_REQUEST:
+    bits: '4.7-4.6'
+    alt_names: ['HEATING_ACTION']
+    comment:
+      en: 'Additional/programmable cabin heating control request'
+      fr: 'Demande de commande des chauffages additionnels/programmables de l''habitacle'
+      es: 'Solicitud de mando de las calefacciones adicionales/programables del habitáculo'
+      de: 'Steueranforderung der zusätzlichen/programmierbaren Innenraumheizungen'
+      it: 'Richiesta di comando dei riscaldamenti aggiuntivi/programmabili dell''abitacolo'
+      pl: 'Żądanie sterowania dodatkowym/programowalnym ogrzewaniem kabiny'
+      ru: 'Запрос управления дополнительным/программируемым отоплением салона'
+      zh: '座舱附加/可编程加热控制请求'
+      hu: 'Az utastér kiegészítő/programozható fűtésének vezérlési kérése'
+      pt: 'Pedido de comando dos aquecimentos adicionais/programáveis do habitáculo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No cabin heating'
+        fr: 'Pas de chauffage habitacle'
+        es: 'Sin calefacción del habitáculo'
+        de: 'Keine Innenraumheizung'
+        it: 'Nessun riscaldamento dell''abitacolo'
+        pl: 'Brak ogrzewania wnętrza'
+        ru: 'Нет обогрева салона'
+        zh: '无车内加热'
+        hu: 'Nincs utastérfűtés'
+        pt: 'Sem aquecimento do habitáculo'
+      0x01:
+        en: 'CMM output “additional cabin heater 1 active”'
+        fr: 'Sortie CMM « chauffage habitacle additionnel n° 1 actif »'
+        es: 'Salida CMM «calefacción adicional del habitáculo n.º 1 activa»'
+        de: 'CMM-Ausgang „Zusatzheizung Innenraum Nr. 1 aktiv“'
+        it: 'Uscita CMM «riscaldamento abitacolo aggiuntivo n. 1 attivo»'
+        pl: 'Wyjście CMM „dodatkowe ogrzewanie kabiny nr 1 aktywne”'
+        ru: 'Выход CMM «дополнительный обогрев салона №1 активен»'
+        zh: 'CMM输出“1号附加座舱加热器激活”'
+        hu: 'CMM kimenet „1. sz. kiegészítő utastérfűtés aktív”'
+        pt: 'Saída da CMM “aquecedor auxiliar do habitáculo 1 ativo”'
+      0x02:
+        en: 'Engine ECU output, additional cabin heater 2 running'
+        fr: 'Sortie du calculateur moteur, chauffage habitacle additionnel n°2 actif'
+        es: 'Salida del calculador motor, calefactor de habitáculo adicional n.º 2 activo'
+        de: 'Motorsteuergerät-Ausgang, zusätzliche Innenraumheizung Nr. 2 aktiv'
+        it: 'Uscita della centralina motore, riscaldatore abitacolo aggiuntivo n. 2 attivo'
+        pl: 'Wyjście sterownika silnika, dodatkowa nagrzewnica kabiny nr 2 aktywna'
+        ru: 'Выход блока управления двигателем, дополнительный отопитель салона №2 работает'
+        zh: '发动机ECU输出,附加座舱加热器2号运行中'
+        hu: 'Motorvezérlő kimenet, 2. számú kiegészítő utastérfűtés működik'
+        pt: 'Saída da centralina do motor, aquecedor auxiliar do habitáculo n.º 2 ativo'
+      0x03:
+        en: 'Output CMM "additional car body heating n°1" running'
+        fr: 'Sortie CMM "chauffage habitacleadditionnel n°1" &"chauffage habitacleadditionnel n°2 "actives'
+        es: 'Salida CMM: calefacción adicional del habitáculo n.º 1 y n.º 2 activas'
+        de: 'CMM-Ausgang: Zusatzheizung Innenraum Nr. 1 und Nr. 2 aktiv'
+        it: 'Uscita CMM: riscaldamento abitacolo supplementare n.1 e n.2 attivi'
+        pl: 'Wyjście CMM: dodatkowe ogrzewanie kabiny nr 1 i nr 2 aktywne'
+        ru: 'Выход CMM: дополнительный обогрев салона №1 и №2 активны'
+        zh: 'CMM输出:1号和2号辅助座舱加热器激活'
+        hu: 'CMM kimenet: 1. és 2. kiegészítő utastérfűtés aktív'
+        pt: 'Saída CMM: aquecimento adicional do habitáculo n.º 1 e n.º 2 ativos'
+
+  UNUSED_5:
+    bits: '4.5'
+    unused: true
+
+  AIR_PUMP_STATUS:
+    bits: '4.4-4.3'
+    comment:
+      en: 'Secondary air pump status'
+      fr: 'État de la pompe à air secondaire'
+      es: 'Estado de la bomba de aire secundaria'
+      de: 'Status der Sekundärluftpumpe'
+      it: 'Stato della pompa dell''aria secondaria'
+      pl: 'Stan pompy powietrza wtórnego'
+      ru: 'Статус насоса вторичного воздуха'
+      zh: '二次空气泵状态'
+      hu: 'A másodlagos levegőszivattyú állapota'
+      pt: 'Estado da bomba de ar secundário'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Air pump fault-free'
+        fr: 'Pas de défaut de la pompe IAE'
+        es: 'Sin fallo de la bomba IAE'
+        de: 'IAE-Pumpe fehlerfrei'
+        it: 'Nessun guasto della pompa IAE'
+        pl: 'Brak usterki pompy IAE'
+        ru: 'Неисправность насоса IAE отсутствует'
+        zh: '二次空气泵无故障'
+        hu: 'Az IAE szivattyú hibamentes'
+        pt: 'Bomba de ar sem avaria'
+      0x01:
+        en: 'IAE pump fault: open circuit or short to ground'
+        fr: 'Défaut pompe IAE en circuit ouvert ou court-circuit à la masse'
+        es: 'Fallo de la bomba IAE: circuito abierto o cortocircuito a masa'
+        de: 'Fehler IAE-Pumpe: Unterbrechung oder Kurzschluss nach Masse'
+        it: 'Guasto pompa IAE: circuito aperto o cortocircuito a massa'
+        pl: 'Usterka pompy IAE: przerwa w obwodzie lub zwarcie do masy'
+        ru: 'Неисправность насоса IAE: обрыв цепи или короткое замыкание на массу'
+        zh: 'IAE泵故障:开路或对地短路'
+        hu: 'IAE szivattyú hiba: szakadás vagy testzárlat'
+        pt: 'Falha da bomba IAE: circuito aberto ou curto-circuito à massa'
+      0x02:
+        en: 'Secondary air pump short circuit to +12V'
+        fr: 'Pompe à air en court-circuit au +12V'
+        es: 'Bomba de aire en cortocircuito a +12V'
+        de: 'Sekundärluftpumpe kurzgeschlossen mit +12V'
+        it: 'Pompa dell''aria in cortocircuito a +12V'
+        pl: 'Zwarcie pompy powietrza do +12V'
+        ru: 'Короткое замыкание насоса вторичного воздуха на +12В'
+        zh: '空气泵与+12V短路'
+        hu: 'A légszivattyú +12V-ra zárlatos'
+        pt: 'Bomba de ar secundário em curto-circuito a +12V'
+      0x03:
+        en: 'Undetermined failure-mode fault'
+        fr: 'Défaut de mode de défaillance indéterminé'
+        es: 'Fallo de modo de fallo indeterminado'
+        de: 'Fehler mit unbestimmtem Fehlermodus'
+        it: 'Guasto con modalità di guasto indeterminata'
+        pl: 'Usterka o nieokreślonym trybie awarii'
+        ru: 'Неисправность с неопределённым режимом отказа'
+        zh: '未确定的故障模式'
+        hu: 'Meghatározatlan hibaállapot'
+        pt: 'Avaria de modo de falha indeterminado'
+    alternatives:
+      - note:
+          en: 'On other cars (other equipment), these bits carry this status instead'
+          fr: 'Sur d''autres véhicules (autre équipement), ces bits portent cet état à la place'
+          es: 'En otros vehículos (otro equipamiento), estos bits llevan este estado en su lugar'
+          de: 'Bei anderen Fahrzeugen (andere Ausstattung) enthalten diese Bits stattdessen diesen Status'
+          it: 'Su altre vetture (altro equipaggiamento), questi bit portano invece questo stato'
+          pl: 'W innych samochodach (inne wyposażenie) te bity przenoszą zamiast tego ten stan'
+          ru: 'На других автомобилях (другое оснащение) эти биты передают вместо этого данное состояние'
+          zh: '在其他车型（其他配置）上，这些位改为承载此状态'
+          hu: 'Más autókon (más felszereltség) ezek a bitek helyette ezt az állapotot hordozzák'
+          pt: 'Noutros veículos (outro equipamento), estes bits transportam este estado em vez disso'
+        comment:
+          en: 'Diagnostic status of the secondary air pump (pulsair) relay control line'
+          fr: 'État de diagnostic de la ligne de commande du relais de la pompe à air secondaire (pulsair)'
+          es: 'Estado de diagnóstico de la línea de mando del relé de la bomba de aire secundaria (pulsair)'
+          de: 'Diagnosestatus der Steuerleitung des Sekundärluftpumpenrelais (Pulsair)'
+          it: 'Stato diagnostico della linea di comando del relè della pompa dell''aria secondaria (pulsair)'
+          pl: 'Stan diagnostyczny linii sterującej przekaźnika pompy powietrza wtórnego (pulsair)'
+          ru: 'Диагностический статус линии управления реле насоса вторичного воздуха (pulsair)'
+          zh: '二次空气泵(pulsair)继电器控制线路的诊断状态'
+          hu: 'A másodlagos levegőszivattyú (pulsair) relévezetékének diagnosztikai állapota'
+          pt: 'Estado de diagnóstico da linha de comando do relé da bomba de ar secundária (pulsair)'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'Unspecified'
+            fr: 'Indéterminé'
+            es: 'No especificado'
+            de: 'Nicht spezifiziert'
+            it: 'Non specificato'
+            pl: 'Nieokreślone'
+            ru: 'Не указано'
+            zh: '未指定'
+            hu: 'Meghatározatlan'
+            pt: 'Não especificado'
+          0x01:
+            en: 'No fault'
+            fr: 'Pas de défaut'
+            es: 'Sin fallo'
+            de: 'Kein Fehler'
+            it: 'Nessun guasto'
+            pl: 'Brak usterki'
+            ru: 'Нет неисправности'
+            zh: '无故障'
+            hu: 'Nincs hiba'
+            pt: 'Sem avaria'
+          0x02:
+            en: 'Open circuit or short circuit to ground'
+            fr: 'Circuit ouvert ou court-circuit à la masse'
+            es: 'Circuito abierto o cortocircuito a masa'
+            de: 'Unterbrechung oder Kurzschluss nach Masse'
+            it: 'Circuito aperto o cortocircuito a massa'
+            pl: 'Obwód otwarty lub zwarcie do masy'
+            ru: 'Обрыв цепи или короткое замыкание на массу'
+            zh: '开路或对地短路'
+            hu: 'Szakadás vagy testzárlat'
+            pt: 'Circuito aberto ou curto-circuito à massa'
+          0x03:
+            en: 'Short circuit to +BAT'
+            fr: 'Court-circuit au +BAT'
+            es: 'Cortocircuito a +BAT'
+            de: 'Kurzschluss zu +BAT'
+            it: 'Cortocircuito a +BAT'
+            pl: 'Zwarcie do +BAT'
+            ru: 'Короткое замыкание на +BAT'
+            zh: '短路至+BAT'
+            hu: 'Rövidzárlat +BAT-hoz'
+            pt: 'Curto-circuito a +BAT'
+      - note:
+          en: 'On other cars (other equipment), these bits carry this status instead'
+          fr: 'Sur d''autres véhicules (autre équipement), ces bits portent cet état à la place'
+          es: 'En otros vehículos (otro equipamiento), estos bits llevan este estado en su lugar'
+          de: 'Bei anderen Fahrzeugen (andere Ausstattung) enthalten diese Bits stattdessen diesen Status'
+          it: 'Su altre vetture (altro equipaggiamento), questi bit portano invece questo stato'
+          pl: 'W innych samochodach (inne wyposażenie) te bity przenoszą zamiast tego ten stan'
+          ru: 'На других автомобилях (другое оснащение) эти биты передают вместо этого данное состояние'
+          zh: '在其他车型（其他配置）上，这些位改为承载此状态'
+          hu: 'Más autókon (más felszereltség) ezek a bitek helyette ezt az állapotot hordozzák'
+          pt: 'Noutros veículos (outro equipamento), estes bits transportam este estado em vez disso'
+        comment:
+          en: 'RTE water pump status'
+          fr: 'État de la pompe à eau RTE'
+          es: 'Estado de la bomba de agua RTE'
+          de: 'Status der RTE-Wasserpumpe'
+          it: 'Stato della pompa dell''acqua RTE'
+          pl: 'Stan pompy wody RTE'
+          ru: 'Статус водяного насоса RTE'
+          zh: 'RTE水泵状态'
+          hu: 'Az RTE vízszivattyú állapota'
+          pt: 'Estado da bomba de água RTE'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'RTE water pump OK'
+            fr: 'Pompe à eau RTE OK'
+            es: 'Bomba de agua RTE correcta'
+            de: 'RTE-Wasserpumpe OK'
+            it: 'Pompa dell''acqua RTE OK'
+            pl: 'Pompa wody RTE OK'
+            ru: 'Водяной насос RTE в норме'
+            zh: 'RTE水泵正常'
+            hu: 'RTE vízszivattyú rendben'
+            pt: 'Bomba de água RTE OK'
+          0x01:
+            en: 'RTE water pump open circuit'
+            fr: 'Pompe à eau RTE en circuit ouvert'
+            es: 'Bomba de agua RTE en circuito abierto'
+            de: 'RTE-Wasserpumpe Unterbrechung'
+            it: 'Pompa dell''acqua RTE in circuito aperto'
+            pl: 'Przerwa w obwodzie pompy wody RTE'
+            ru: 'Обрыв цепи водяного насоса RTE'
+            zh: 'RTE水泵开路'
+            hu: 'RTE vízszivattyú szakadás'
+            pt: 'Bomba de água RTE em circuito aberto'
+          0x02:
+            en: 'RTE water pump short-circuited'
+            fr: 'Pompe à eau RTE en court-circuit'
+            es: 'Bomba de agua RTE en cortocircuito'
+            de: 'RTE-Wasserpumpe kurzgeschlossen'
+            it: 'Pompa dell''acqua RTE in cortocircuito'
+            pl: 'Zwarcie pompy wody RTE'
+            ru: 'Короткое замыкание водяного насоса RTE'
+            zh: 'RTE水泵短路'
+            hu: 'RTE vízszivattyú rövidzárlata'
+            pt: 'Bomba de água RTE em curto-circuito'
+          0x03:
+            unused: true
+
+  FUEL_GAUGE_DIAGNOSTIC:
+    bits: '4.2-4.1'
+    comment:
+      en: 'Fuel gauge diagnostic (low fuel, invalid, short-circuit, open circuit)'
+      fr: 'Diagnostic de la jauge à carburant (niveau bas, invalide, court-circuit, circuit ouvert)'
+      es: 'Diagnóstico del indicador de combustible (nivel bajo, no válido, cortocircuito, circuito abierto)'
+      de: 'Diagnose der Kraftstoffanzeige (niedriger Stand, ungültig, Kurzschluss, Unterbrechung)'
+      it: 'Diagnosi dell''indicatore del carburante (livello basso, non valido, cortocircuito, circuito aperto)'
+      pl: 'Diagnostyka wskaźnika paliwa (niski poziom, nieprawidłowy, zwarcie, przerwa w obwodzie)'
+      ru: 'Диагностика указателя топлива (низкий уровень, недействительно, короткое замыкание, обрыв цепи)'
+      zh: '燃油表诊断(低油位、无效、短路、开路)'
+      hu: 'Az üzemanyagszintjelző diagnosztikája (alacsony szint, érvénytelen, rövidzár, szakadás)'
+      pt: 'Diagnóstico do indicador de combustível (nível baixo, inválido, curto-circuito, circuito aberto)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fuel gauge fault'
+        fr: 'Pas de défaut de la jauge à carburant'
+        es: 'Sin fallo del indicador de combustible'
+        de: 'Kein Fehler der Kraftstoffanzeige'
+        it: 'Nessun guasto dell''indicatore del carburante'
+        pl: 'Brak usterki wskaźnika paliwa'
+        ru: 'Нет неисправности указателя топлива'
+        zh: '燃油表无故障'
+        hu: 'Nincs üzemanyagszint-mérő hiba'
+        pt: 'Sem falha do indicador de combustível'
+      0x01:
+        en: 'Invalid fuel gauge'
+        fr: 'Jauge à carburant invalide'
+        es: 'Indicador de combustible no válido'
+        de: 'Kraftstoffanzeige ungültig'
+        it: 'Indicatore carburante non valido'
+        pl: 'Nieprawidłowy wskaźnik paliwa'
+        ru: 'Недействительный указатель топлива'
+        zh: '燃油表无效'
+        hu: 'Érvénytelen üzemanyagszint-jelző'
+        pt: 'Indicador de combustível inválido'
+      0x02:
+        en: 'Fuel gauge short-circuited to ground'
+        fr: 'Jauge à carburant en court-circuit à la masse'
+        es: 'Indicador de combustible en cortocircuito a masa'
+        de: 'Kraftstoffanzeige kurzgeschlossen gegen Masse'
+        it: 'Livello carburante in cortocircuito a massa'
+        pl: 'Zwarcie wskaźnika paliwa do masy'
+        ru: 'Датчик уровня топлива замкнут на массу'
+        zh: '燃油表对地短路'
+        hu: 'Üzemanyagszint-jeladó testre zárva'
+        pt: 'Indicador de combustível em curto-circuito à massa'
+      0x03:
+        en: 'Fuel gauge open circuit'
+        fr: 'Jauge à carburant en circuit ouvert'
+        es: 'Indicador de combustible en circuito abierto'
+        de: 'Kraftstoffanzeige mit offenem Stromkreis'
+        it: 'Indicatore del carburante a circuito aperto'
+        pl: 'Wskaźnik paliwa w obwodzie otwartym'
+        ru: 'Указатель топлива с обрывом цепи'
+        zh: '燃油表电路断路'
+        hu: 'Az üzemanyagszint-mérő áramköre szakadt'
+        pt: 'Indicador de combustível em circuito aberto'
+
+  FUEL_LOW:
+    bits: '4.0'
+    comment:
+      en: 'Minimum fuel level reached'
+      fr: 'Niveau de carburant minimum atteint'
+      es: 'Nivel de combustible mínimo alcanzado'
+      de: 'Minimaler Kraftstoffstand erreicht'
+      it: 'Livello minimo di carburante raggiunto'
+      pl: 'Osiągnięty minimalny poziom paliwa'
+      ru: 'Достигнут минимальный уровень топлива'
+      zh: '已达到最低燃油液位'
+      hu: 'Elérte a minimális üzemanyagszintet'
+      pt: 'Nível mínimo de combustível atingido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Level above minimum'
+        fr: 'Niveau supérieur au minimum'
+        es: 'Nivel superior al mínimo'
+        de: 'Stand über Mindestwert'
+        it: 'Livello superiore al minimo'
+        pl: 'Poziom powyżej minimum'
+        ru: 'Уровень выше минимального'
+        zh: '液位高于最低值'
+        hu: 'Szint a minimum felett'
+        pt: 'Nível acima do mínimo'
+      0x01:
+        en: 'Minimum level reached'
+        fr: 'Niveau minimum atteint'
+        es: 'Nivel mínimo alcanzado'
+        de: 'Mindeststand erreicht'
+        it: 'Livello minimo raggiunto'
+        pl: 'Osiągnięto poziom minimalny'
+        ru: 'Достигнут минимальный уровень'
+        zh: '已达到最低液位'
+        hu: 'A minimális szint elérve'
+        pt: 'Nível mínimo atingido'
+
+  UNUSED_6:
+    bits: '5.7'
+    unused: true
+
+  UNUSED_7:
+    bits: '5.6'
+    unused: true
+
+  TRUNK_HEIGHT_MINUS_PUSH_INFO:
+    bits: '5.5'
+    comment:
+      en: 'Trunk height "-" push-button information'
+      fr: 'Information du bouton-poussoir hauteur coffre « - »'
+      es: 'Información del pulsador de altura del maletero «-»'
+      de: 'Information der Taste Kofferraumhöhe „-“'
+      it: 'Informazione del pulsante altezza bagagliaio «-»'
+      pl: 'Informacja przycisku wysokości bagażnika „-”'
+      ru: 'Информация кнопки высоты багажника «-»'
+      zh: '行李厢高度“-”按钮信息'
+      hu: 'A csomagtér magasság „-” gombjának állapota'
+      pt: 'Informação do botão de altura da bagageira «-»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Trunk height "-" push information not active'
+        fr: 'Information poussoir hauteur coffre « - » inactive'
+        es: 'Información del pulsador de altura del maletero "-" inactiva'
+        de: 'Kofferraumhöhen-Taste „-“ Information inaktiv'
+        it: 'Informazione pulsante altezza bagagliaio "-" inattiva'
+        pl: 'Informacja przycisku wysokości bagażnika „-” nieaktywna'
+        ru: 'Информация кнопки высоты багажника «-» неактивна'
+        zh: '行李厢高度“-”按键信息未激活'
+        hu: 'A csomagtartó magasság „-” gomb információja inaktív'
+        pt: 'Informação do pulsador de altura da bagageira "-" inativa'
+      0x01:
+        en: 'Boot-height decrease button pressed'
+        fr: 'Bouton hauteur coffre « - » actionné'
+        es: 'Botón de altura del maletero «-» pulsado'
+        de: 'Kofferraumhöhe-Taste „-“ gedrückt'
+        it: 'Pulsante altezza bagagliaio «-» premuto'
+        pl: 'Wciśnięto przycisk wysokości bagażnika «-»'
+        ru: 'Нажата кнопка высоты багажника «-»'
+        zh: '已按下行李箱高度“-”按钮'
+        hu: 'A csomagtartó magasság „-” gomb megnyomva'
+        pt: 'Botão de altura da mala «-» acionado'
+
+  TRUNK_HEIGHT_PLUS_PUSH_INFO:
+    bits: '5.4'
+    comment:
+      en: 'Trunk height "+" push-button information'
+      fr: 'Information du bouton-poussoir hauteur coffre « + »'
+      es: 'Información del pulsador de altura del maletero «+»'
+      de: 'Information der Taste Kofferraumhöhe „+“'
+      it: 'Informazione del pulsante altezza bagagliaio «+»'
+      pl: 'Informacja przycisku wysokości bagażnika „+”'
+      ru: 'Информация кнопки высоты багажника «+»'
+      zh: '行李厢高度“+”按钮信息'
+      hu: 'A csomagtér magasság „+” gombjának állapota'
+      pt: 'Informação do botão de altura da bagageira «+»'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Boot height “+” push information not available'
+        fr: 'Information de poussée hauteur coffre « + » indisponible'
+        es: 'Información de pulsación de altura del maletero «+» no disponible'
+        de: 'Information Taster Kofferraumhöhe „+“ nicht verfügbar'
+        it: 'Informazione pressione altezza bagagliaio «+» non disponibile'
+        pl: 'Informacja o wciśnięciu wysokości bagażnika „+” niedostępna'
+        ru: 'Информация нажатия высоты багажника «+» недоступна'
+        zh: '行李箱高度“+”按压信息不可用'
+        hu: 'A csomagtér magasság „+” nyomás információja nem elérhető'
+        pt: 'Informação de pressão “+” de altura da bagageira não disponível'
+      0x01:
+        en: 'Trunk height "+" push information active'
+        fr: 'Information poussoir hauteur coffre « + » active'
+        es: 'Información del pulsador de altura del maletero "+" activa'
+        de: 'Kofferraumhöhen-Taste „+“ Information aktiv'
+        it: 'Informazione pulsante altezza bagagliaio "+" attiva'
+        pl: 'Informacja przycisku wysokości bagażnika „+” aktywna'
+        ru: 'Информация кнопки высоты багажника «+» активна'
+        zh: '行李厢高度“+”按键信息已激活'
+        hu: 'A csomagtartó magasság „+” gomb információja aktív'
+        pt: 'Informação do pulsador de altura da bagageira "+" ativa'
+
+  UNUSED_8:
+    bits: '5.3'
+    unused: true
+
+  UNUSED_9:
+    bits: '5.2'
+    unused: true
+
+  SLIDING_ROOF_STATE:
+    bits: '5.1-5.0'
+    comment:
+      en: 'Sliding roof position state'
+      fr: 'État de la position du toit ouvrant'
+      es: 'Estado de la posición del techo corredizo'
+      de: 'Zustand der Schiebedachposition'
+      it: 'Stato della posizione del tettuccio scorrevole'
+      pl: 'Stan pozycji szyberdachu'
+      ru: 'Состояние положения сдвижной крыши (люка)'
+      zh: '天窗位置状态'
+      hu: 'A panorámatető helyzetének állapota'
+      pt: 'Estado da posição do teto de abrir'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Sliding roof closed'
+        fr: 'Toit ouvrant fermé'
+        es: 'Techo corredizo cerrado'
+        de: 'Schiebedach geschlossen'
+        it: 'Tettuccio scorrevole chiuso'
+        pl: 'Szyberdach zamknięty'
+        ru: 'Сдвижная крыша закрыта'
+        zh: '天窗关闭'
+        hu: 'Tolótető zárva'
+        pt: 'Teto de abrir fechado'
+      0x01:
+        en: 'Sliding roof half-open / open'
+        fr: 'Toit ouvrant entrouvert / ouvert'
+        es: 'Techo corredizo entreabierto / abierto'
+        de: 'Schiebedach halb geöffnet / geöffnet'
+        it: 'Tetto scorrevole socchiuso / aperto'
+        pl: 'Szyberdach uchylony / otwarty'
+        ru: 'Сдвижная крыша приоткрыта / открыта'
+        zh: '天窗半开/全开'
+        hu: 'Tolótető félig nyitva / nyitva'
+        pt: 'Teto de abrir entreaberto / aberto'
+      0x02:
+        en: 'Sliding roof in convertible position'
+        fr: 'Toit ouvrant en position cabriolet'
+        es: 'Techo corredizo en posición descapotable'
+        de: 'Schiebedach in Cabrio-Position'
+        it: 'Tetto scorrevole in posizione cabriolet'
+        pl: 'Dach przesuwny w pozycji kabriolet'
+        ru: 'Сдвижная крыша в положении кабриолет'
+        zh: '滑动车顶处于敞篷位置'
+        hu: 'Tolótető kabrió helyzetben'
+        pt: 'Teto de abrir em posição convertível'
+      0x03:
+        en: 'Fault / invalid'
+        fr: 'Défaut / invalide'
+        es: 'Fallo / no válido'
+        de: 'Fehler / ungültig'
+        it: 'Guasto / non valido'
+        pl: 'Usterka / nieprawidłowe'
+        ru: 'Неисправность / недействительно'
+        zh: '故障/无效'
+        hu: 'Hiba / érvénytelen'
+        pt: 'Falha / inválido'
+
+  ENGINE_OIL_TEMPERATURE_BSI:
     bits: '6.7-6.0'
-    type: 'int'
+    alt_names: ['MOTOR_OIL_TEMPERATURE']
+    comment:
+      en: 'Engine oil temperature, as acquired by the BSI'
+      fr: 'Température d''huile moteur, acquise par la BSI'
+      es: 'Temperatura del aceite del motor, adquirida por la BSI'
+      de: 'Von der BSI erfasste Motoröltemperatur'
+      it: 'Temperatura dell''olio motore, acquisita dalla BSI'
+      pl: 'Temperatura oleju silnikowego, pozyskana przez BSI'
+      ru: 'Температура моторного масла, полученная BSI'
+      zh: 'BSI获取的发动机机油温度'
+      hu: 'A BSI által mért motorolaj-hőmérséklet'
+      pt: 'Temperatura do óleo do motor, adquirida pela BSI'
+    type: 'uint'
     factor: 1
-    min: -40
     offset: -40
-    max: 215 # 0xFF - 40
+    min: -40
+    max: 214
     units: '°C'
+    invalid: 0xFF
+    default: 0x14
+
   TRUNK_STATE:
     bits: '7.7'
+    type: 'bool'
     values:
       0x00:
         en: 'Closed'
         fr: 'Fermé'
+        es: 'Cerrado'
         de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
         en: 'Open'
         fr: 'Ouvrir'
+        es: 'Abrir'
         de: 'Offen'
+        it: 'Aprire'
+        pl: 'Otwórz'
+        ru: 'Открыть'
+        zh: '打开'
+        hu: 'Nyitás'
+        pt: 'Abrir'
+
   REAR_RIGHT_DOOR:
     bits: '7.6'
+    type: 'bool'
     values:
       0x00:
         en: 'Closed'
         fr: 'Fermé'
+        es: 'Cerrado'
         de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
         en: 'Open'
         fr: 'Ouvrir'
+        es: 'Abrir'
         de: 'Offen'
+        it: 'Aprire'
+        pl: 'Otwórz'
+        ru: 'Открыть'
+        zh: '打开'
+        hu: 'Nyitás'
+        pt: 'Abrir'
+
   REAR_LEFT_DOOR:
     bits: '7.5'
+    type: 'bool'
     values:
       0x00:
         en: 'Closed'
         fr: 'Fermé'
+        es: 'Cerrado'
         de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
         en: 'Open'
         fr: 'Ouvrir'
+        es: 'Abrir'
         de: 'Offen'
+        it: 'Aprire'
+        pl: 'Otwórz'
+        ru: 'Открыть'
+        zh: '打开'
+        hu: 'Nyitás'
+        pt: 'Abrir'
+
   PASSENGER_DOOR:
     bits: '7.4'
+    type: 'bool'
     values:
       0x00:
         en: 'Closed'
         fr: 'Fermé'
+        es: 'Cerrado'
         de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
         en: 'Open'
         fr: 'Ouvrir'
+        es: 'Abrir'
         de: 'Offen'
+        it: 'Aprire'
+        pl: 'Otwórz'
+        ru: 'Открыть'
+        zh: '打开'
+        hu: 'Nyitás'
+        pt: 'Abrir'
+
   DRIVER_DOOR:
     bits: '7.3'
+    type: 'bool'
     values:
       0x00:
         en: 'Closed'
         fr: 'Fermé'
+        es: 'Cerrado'
         de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
         en: 'Open'
         fr: 'Ouvrir'
+        es: 'Abrir'
         de: 'Offen'
-  UNKNOWN_8:
-    bits: '7.2-7.0'
-  UNKNOWN_9:
+        it: 'Aprire'
+        pl: 'Otwórz'
+        ru: 'Открыть'
+        zh: '打开'
+        hu: 'Nyitás'
+        pt: 'Abrir'
+
+  REAR_WINDOW_STATUS:
+    bits: '7.2'
+    comment:
+      en: 'Rear window status'
+      fr: 'État de la lunette arrière'
+      es: 'Estado de la luneta trasera'
+      de: 'Zustand der Heckscheibe'
+      it: 'Stato del lunotto posteriore'
+      pl: 'Stan tylnej szyby'
+      ru: 'Состояние заднего стекла'
+      zh: '后风窗状态'
+      hu: 'A hátsó szélvédő állapota'
+      pt: 'Estado do vidro traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rear window closed or no rear window'
+        fr: 'Lunette arrière fermé ou absente'
+        es: 'Luneta trasera cerrada o ausente'
+        de: 'Heckscheibe geschlossen oder nicht vorhanden'
+        it: 'Lunotto posteriore chiuso o assente'
+        pl: 'Tylna szyba zamknięta lub nieobecna'
+        ru: 'Заднее стекло закрыто или отсутствует'
+        zh: '后窗关闭或不存在'
+        hu: 'Hátsó ablak zárva vagy nincs'
+        pt: 'Vidro traseiro fechado ou ausente'
+      0x01:
+        en: 'Rear window open'
+        fr: 'Lunette arrière ouverte'
+        es: 'Luna trasera abierta'
+        de: 'Heckscheibe offen'
+        it: 'Lunotto posteriore aperto'
+        pl: 'Tylna szyba otwarta'
+        ru: 'Заднее стекло открыто'
+        zh: '后窗已打开'
+        hu: 'Hátsó ablak nyitva'
+        pt: 'Vidro traseiro aberto'
+
+  MIN_ADDITIVE_LEVEL_REACHED:
+    bits: '7.1-7.0'
+    comment:
+      en: 'Minimum exhaust additive (AdBlue) level reached'
+      fr: 'Niveau minimum d''additif d''échappement (AdBlue) atteint'
+      es: 'Nivel mínimo del aditivo de escape (AdBlue) alcanzado'
+      de: 'Mindeststand des Abgasadditivs (AdBlue) erreicht'
+      it: 'Livello minimo dell''additivo di scarico (AdBlue) raggiunto'
+      pl: 'Osiągnięty minimalny poziom dodatku spalinowego (AdBlue)'
+      ru: 'Достигнут минимальный уровень присадки выхлопной системы (AdBlue)'
+      zh: '尾气添加剂(AdBlue)已达到最低液位'
+      hu: 'Elérte a kipufogó-adalék (AdBlue) minimális szintjét'
+      pt: 'Nível mínimo do aditivo de escape (AdBlue) atingido'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Invalid data'
+        fr: 'Donnée invalide'
+        es: 'Dato no válido'
+        de: 'Ungültige Daten'
+        it: 'Dato non valido'
+        pl: 'Nieprawidłowe dane'
+        ru: 'Недействительные данные'
+        zh: '无效数据'
+        hu: 'Érvénytelen adat'
+        pt: 'Dados inválidos'
+      0x01:
+        en: 'Minimum level reached'
+        fr: 'Niveau minimum atteint'
+        es: 'Nivel mínimo alcanzado'
+        de: 'Mindeststand erreicht'
+        it: 'Livello minimo raggiunto'
+        pl: 'Osiągnięto poziom minimalny'
+        ru: 'Достигнут минимальный уровень'
+        zh: '已达到最低液位'
+        hu: 'Minimális szint elérve'
+        pt: 'Nível mínimo atingido'
+      0x02:
+        en: 'Minimum level not reached'
+        fr: 'Niveau minimal non atteint'
+        es: 'Nivel mínimo no alcanzado'
+        de: 'Mindestfüllstand nicht erreicht'
+        it: 'Livello minimo non raggiunto'
+        pl: 'Nie osiągnięto poziomu minimalnego'
+        ru: 'Минимальный уровень не достигнут'
+        zh: '未达到最低液位'
+        hu: 'Nem érte el a minimumszintet'
+        pt: 'Nível mínimo não atingido'
+      0x03:
+        en: 'Invalid data'
+        fr: 'Donnée invalide'
+        es: 'Dato no válido'
+        de: 'Ungültige Daten'
+        it: 'Dato non valido'
+        pl: 'Nieprawidłowe dane'
+        ru: 'Недействительные данные'
+        zh: '无效数据'
+        hu: 'Érvénytelen adat'
+        pt: 'Dados inválidos'
+
+  FAP_DOWNSTREAM_TEMPERATURE:
     bits: '8.7-8.0'
+    comment:
+      en: 'Temperature downstream of the particulate filter (FAP), monitored by the CMM'
+      fr: 'Température en aval du filtre à particules (FAP), surveillée par le CMM'
+      es: 'Temperatura aguas abajo del filtro de partículas (FAP), supervisada por el CMM'
+      de: 'Temperatur hinter dem Partikelfilter (FAP), überwacht vom CMM'
+      it: 'Temperatura a valle del filtro antiparticolato (FAP), monitorata dal CMM'
+      pl: 'Temperatura za filtrem cząstek stałych (FAP), monitorowana przez CMM'
+      ru: 'Температура после сажевого фильтра (FAP), контролируемая CMM'
+      zh: '颗粒物过滤器(FAP)下游温度,由CMM监测'
+      hu: 'A részecskeszűrő (FAP) utáni hőmérséklet, amelyet a CMM felügyel'
+      pt: 'Temperatura a jusante do filtro de partículas (FAP), supervisionada pelo CMM'
+    type: 'uint'
+    min: 3
+    max: 250
+    invalid: 0xFF

@@ -1,0 +1,117 @@
+id: 0x5C6
+name: 'MCU_TEMPERATURE_STATUS'
+type: 'can'
+length: 3
+comment:
+  en: 'Motor control unit status: warning-lamp request, inverter temperature and stator temperature.'
+  fr: 'État de l''unité de contrôle moteur : demande de voyant, température onduleur et température stator.'
+  es: 'Estado de la unidad de control del motor: solicitud de testigo, temperatura del inversor y temperatura del estátor.'
+  de: 'Status der Motorsteuereinheit: Kontrollleuchtenanforderung, Wechselrichter- und Statortemperatur.'
+  it: 'Stato dell''unità di controllo motore: richiesta spia, temperatura inverter e temperatura statore.'
+  pl: 'Stan jednostki sterującej silnikiem: żądanie kontrolki, temperatura falownika i temperatura stojana.'
+  ru: 'Статус блока управления электродвигателем: запрос индикатора, температура инвертора и температура статора.'
+  zh: '电机控制单元状态:警示灯请求、逆变器温度和定子温度。'
+  hu: 'A motorvezérlő egység állapota: jelzőlámpa-kérés, inverter- és sztátorhőmérséklet.'
+  pt: 'Estado da unidade de controlo do motor elétrico: pedido da luz avisadora, temperatura do inversor e temperatura do estator.'
+observations:
+  en: 'On state change of: MCU_MIL_REQUEST'
+  fr: 'Sur changement d''état de : MCU_MIL_REQUEST'
+  es: 'Al cambiar el estado de: MCU_MIL_REQUEST'
+  de: 'Bei Statusänderung von: MCU_MIL_REQUEST'
+  it: 'Al cambiamento di stato di: MCU_MIL_REQUEST'
+  pl: 'Wysyłane przy zmianie stanu: MCU_MIL_REQUEST'
+  ru: 'При изменении состояния: MCU_MIL_REQUEST'
+  zh: '当DMD_ALLUMAGE_MIL_DEFAUTS_MCU状态变化时'
+  hu: 'A(z) MCU_MIL_REQUEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: MCU_MIL_REQUEST'
+periodicity: ['1000ms', 'trigger']
+senders: ['CMEL']
+receivers: ['OBC', 'CMM']
+
+signals:
+  PEM_INVERTER_TEMPERATURE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Front electric machine (PEM) inverter temperature (°C)'
+      fr: 'Température de l''onduleur de la machine électrique avant (PEM) (°C)'
+      es: 'Temperatura del inversor de la máquina eléctrica delantera (PEM) (°C)'
+      de: 'Wechselrichtertemperatur der vorderen elektrischen Maschine (PEM) (°C)'
+      it: 'Temperatura dell''inverter della macchina elettrica anteriore (PEM) (°C)'
+      pl: 'Temperatura falownika przedniej maszyny elektrycznej (PEM) (°C)'
+      ru: 'Температура инвертора передней электрической машины (PEM) (°C)'
+      zh: '前电机(PEM)逆变器温度(°C)'
+      hu: 'Az első elektromos gép (PEM) inverterének hőmérséklete (°C)'
+      pt: 'Temperatura do inversor da máquina elétrica dianteira (PEM) (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x28
+
+  PEM_STATOR_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Front electric machine (PEM) stator temperature (°C)'
+      fr: 'Température du stator de la machine électrique avant (PEM) (°C)'
+      es: 'Temperatura del estátor de la máquina eléctrica delantera (PEM) (°C)'
+      de: 'Statortemperatur der vorderen elektrischen Maschine (PEM) (°C)'
+      it: 'Temperatura dello statore della macchina elettrica anteriore (PEM) (°C)'
+      pl: 'Temperatura stojana przedniej maszyny elektrycznej (PEM) (°C)'
+      ru: 'Температура статора передней электрической машины (PEM) (°C)'
+      zh: '前电机(PEM)定子温度(°C)'
+      hu: 'Az első elektromos gép (PEM) állórészének hőmérséklete (°C)'
+      pt: 'Temperatura do estator da máquina elétrica dianteira (PEM) (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x28
+
+  MCU_MIL_REQUEST:
+    bits: '3.7'
+    comment:
+      en: 'Steady MIL lamp lighting request from the motor control unit (MCU)'
+      fr: 'Demande d''allumage fixe du témoin MIL par le calculateur moteur électrique (MCU)'
+      es: 'Solicitud de encendido fijo del testigo MIL por la unidad de control del motor (MCU)'
+      de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte durch die Motorsteuereinheit (MCU)'
+      it: 'Richiesta di accensione fissa della spia MIL da parte dell''unità di controllo motore (MCU)'
+      pl: 'Żądanie stałego świecenia kontrolki MIL ze sterownika silnika (MCU)'
+      ru: 'Запрос постоянного включения лампы MIL от блока управления электродвигателем (MCU)'
+      zh: '电机控制单元(MCU)请求常亮MIL灯'
+      hu: 'A motorvezérlő egység (MCU) kérése a MIL lámpa folyamatos világítására'
+      pt: 'Pedido de acendimento fixo da luz avisadora MIL pela unidade de controlo do motor (MCU)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'MIL lamp continuous lighting request'
+        fr: 'Demande d''allumage continu du témoin MIL'
+        es: 'Solicitud de encendido continuo del testigo MIL'
+        de: 'Anforderung des Dauerleuchtens der MIL-Kontrollleuchte'
+        it: 'Richiesta di accensione continua della spia MIL'
+        pl: 'Żądanie ciągłego świecenia kontrolki MIL'
+        ru: 'Запрос постоянного включения индикатора MIL'
+        zh: 'MIL 灯常亮请求'
+        hu: 'MIL lámpa folyamatos világításának kérése'
+        pt: 'Pedido de acendimento contínuo da luz MIL'
+
+  UNUSED_1:
+    bits: '3.6-3.0'
+    unused: true

@@ -1,0 +1,279 @@
+id: 0x1A1
+name: 'BSI_DISPLAY_MESSAGE'
+type: 'can'
+length: 8
+comment:
+  en: 'New message pointer sent by the BSI to the display on change: message priority, media and content pointer.'
+  fr: 'Pointeur de nouveau message envoyé par la BSI à l''afficheur sur changement : priorité, support et pointeur de contenu du message.'
+  es: 'Puntero de nuevo mensaje enviado por la BSI a la pantalla al cambiar: prioridad, soporte y puntero de contenido del mensaje.'
+  de: 'Von der BSI bei Änderung an das Display gesendeter Zeiger auf eine neue Nachricht: Priorität, Medium und Inhaltszeiger der Nachricht.'
+  it: 'Puntatore di nuovo messaggio inviato dalla BSI al display al cambio: priorità, supporto e puntatore al contenuto del messaggio.'
+  pl: 'Wskaźnik nowej wiadomości wysyłany przez BSI do wyświetlacza przy zmianie: priorytet, nośnik i wskaźnik treści wiadomości.'
+  ru: 'Указатель нового сообщения, отправляемый BSI на дисплей при изменении: приоритет, носитель и указатель содержимого сообщения.'
+  zh: '由BSI在状态变化时发送给显示屏的新消息指针：消息优先级、媒介及内容指针。'
+  hu: 'A BSI által a kijelzőnek küldött új üzenet-mutató, változáskor: az üzenet prioritása, hordozója és tartalommutatója.'
+  pt: 'Ponteiro de nova mensagem enviado pela BSI ao visor na mudança: prioridade da mensagem, média e ponteiro de conteúdo.'
+observations:
+  en: 'On state change of: DISPLAY_MESSAGE'
+  fr: 'Sur changement d''état de : DISPLAY_MESSAGE'
+  es: 'Al cambiar el estado de: DISPLAY_MESSAGE'
+  de: 'Bei Statusänderung von: DISPLAY_MESSAGE'
+  it: 'Al cambiamento di stato di: DISPLAY_MESSAGE'
+  pl: 'Wysyłane przy zmianie stanu: DISPLAY_MESSAGE'
+  ru: 'При изменении состояния: DISPLAY_MESSAGE'
+  zh: '当NOUV_MESS状态变化时'
+  hu: 'A(z) DISPLAY_MESSAGE állapotváltozásakor'
+  pt: 'Na mudança de estado de: DISPLAY_MESSAGE'
+periodicity: ['200ms', 'trigger']
+senders: ['ICSV', 'BSI']
+receivers: ['EMF', 'CMB', 'BTEL', 'MATT', 'OVIP', 'VTH', 'RAD']
+
+signals:
+  DISPLAY_MESSAGE:
+    bits: '1.7'
+    comment:
+      en: 'New message to display (toggle bit)'
+      fr: 'Nouveau message à afficher (bit bascule)'
+      es: 'Nuevo mensaje para mostrar (bit de conmutación)'
+      de: 'Neue anzuzeigende Meldung (Umschaltbit)'
+      it: 'Nuovo messaggio da visualizzare (bit di commutazione)'
+      pl: 'Nowy komunikat do wyświetlenia (bit przełączający)'
+      ru: 'Новое сообщение для отображения (переключающий бит)'
+      zh: '待显示的新消息(切换位)'
+      hu: 'Megjelenítendő új üzenet (váltóbit)'
+      pt: 'Nova mensagem a mostrar (bit de comutação)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Value 1'
+        fr: 'Valeur 1'
+        es: 'Valor 1'
+        de: 'Wert 1'
+        it: 'Valore 1'
+        pl: 'Wartość 1'
+        ru: 'Значение 1'
+        zh: '数值1'
+        hu: '1. érték'
+        pt: 'Valor 1'
+      0x01:
+        en: 'Value 2'
+        fr: 'Valeur 2'
+        es: 'Valor 2'
+        de: 'Wert 2'
+        it: 'Valore 2'
+        pl: 'Wartość 2'
+        ru: 'Значение 2'
+        zh: '值2'
+        hu: '2. érték'
+        pt: 'Valor 2'
+
+  MESSAGE_ID:
+    bits: '1.6-2.0'
+    comment:
+      en: 'Points to the message to display'
+      fr: 'Pointe sur le message à afficher'
+      es: 'Apunta al mensaje a mostrar'
+      de: 'Zeigt auf die anzuzeigende Meldung'
+      it: 'Punta al messaggio da visualizzare'
+      pl: 'Wskazuje komunikat do wyświetlenia'
+      ru: 'Указывает на отображаемое сообщение'
+      zh: '指向待显示的消息'
+      hu: 'A megjelenítendő üzenetre mutat'
+      pt: 'Aponta para a mensagem a apresentar'
+    type: 'uint'
+    min: 0
+    max: 32767
+    default: 0x00
+
+  DEST_EMF:
+    bits: '3.7'
+    comment:
+      en: 'Pointer to be consumed by a type-A media (e.g. EMF)'
+      fr: 'Pointeur à consommer par un média de type A (ex : EMF)'
+      es: 'Puntero a consumir por un medio de tipo A (ej.: EMF)'
+      de: 'Zeiger, der von einem Medium des Typs A (z. B. EMF) verarbeitet werden soll'
+      it: 'Puntatore da elaborare da parte di un media di tipo A (es.: EMF)'
+      pl: 'Wskaźnik do przetworzenia przez medium typu A (np. EMF)'
+      ru: 'Указатель для обработки медиа типа A (например, EMF)'
+      zh: '供A类媒体(如EMF)使用的指针'
+      hu: 'A típusú médiának (pl. EMF) szánt mutató'
+      pt: 'Ponteiro a consumir por um suporte de tipo A (ex.: EMF)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Media type A, not a consumer'
+        fr: 'Média de type A, non consommateur'
+        es: 'Medio de tipo A, no consumidor'
+        de: 'Medientyp A, kein Verbraucher'
+        it: 'Supporto di tipo A, non consumatore'
+        pl: 'Nośnik typu A, niebędący odbiorcą'
+        ru: 'Носитель типа A, не потребитель'
+        zh: 'A类媒体，非消费方'
+        hu: 'A típusú média, nem fogyasztó'
+        pt: 'Suporte tipo A, não consumidor'
+      0x01:
+        en: 'Media type A consumer'
+        fr: 'Média type A consommateur'
+        es: 'Medio tipo A consumidor'
+        de: 'Medientyp A Verbraucher'
+        it: 'Media tipo A consumatore'
+        pl: 'Nośnik typu A odbiorca'
+        ru: 'Носитель типа A потребитель'
+        zh: 'A类媒体消费者'
+        hu: 'A típusú média fogyasztó'
+        pt: 'Consumidor de tipo de suporte A'
+
+  DEST_CMB:
+    bits: '3.6'
+    comment:
+      en: 'Pointer to be consumed by a type-B media (e.g. CMB)'
+      fr: 'Pointeur à consommer par un média de type B (ex : CMB)'
+      es: 'Puntero a consumir por un medio de tipo B (ej.: CMB)'
+      de: 'Zeiger, der von einem Medium des Typs B (z. B. CMB) verarbeitet werden soll'
+      it: 'Puntatore da elaborare da parte di un media di tipo B (es.: CMB)'
+      pl: 'Wskaźnik do przetworzenia przez medium typu B (np. CMB)'
+      ru: 'Указатель для обработки медиа типа B (например, CMB)'
+      zh: '供B类媒体(如CMB)使用的指针'
+      hu: 'B típusú médiának (pl. CMB) szánt mutató'
+      pt: 'Ponteiro a consumir por um suporte de tipo B (ex.: CMB)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Media type B, not consuming'
+        fr: 'Média type B non consommateur'
+        es: 'Medio tipo B, sin consumo'
+        de: 'Medientyp B, nicht verbrauchend'
+        it: 'Supporto tipo B, non in uso'
+        pl: 'Nośnik typu B, nieużywany'
+        ru: 'Носитель типа B, не используется'
+        zh: 'B类媒体,未使用'
+        hu: 'B típusú médium, nem fogyasztó'
+        pt: 'Tipo de suporte B, sem consumo'
+      0x01:
+        en: 'Media type B consumer'
+        fr: 'Media type B consommateur'
+        es: 'Consumidor de tipo de medio B'
+        de: 'Verbraucher Medientyp B'
+        it: 'Consumatore tipo di supporto B'
+        pl: 'Odbiornik typu nośnika B'
+        ru: 'Потребитель типа носителя B'
+        zh: '媒体类型B消费者'
+        hu: 'B típusú média fogyasztó'
+        pt: 'Consumidor de tipo de suporte B'
+
+  DISPLAY_AVAILABILITY_AUTHORIZATION:
+    bits: '3.5'
+    comment:
+      en: 'Display availability authorization'
+      fr: 'Autorisation de disponibilité d''affichage'
+      es: 'Autorización de disponibilidad de la pantalla'
+      de: 'Freigabe der Anzeigeverfügbarkeit'
+      it: 'Autorizzazione di disponibilità del display'
+      pl: 'Zezwolenie na dostępność wyświetlacza'
+      ru: 'Разрешение доступности дисплея'
+      zh: '显示可用性授权'
+      hu: 'A kijelző elérhetőségének engedélyezése'
+      pt: 'Autorização de disponibilidade de visualização'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Authorised'
+        fr: 'Autorisé'
+        es: 'Autorizado'
+        de: 'Zulässig'
+        it: 'Autorizzato'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '已授权'
+        hu: 'Engedélyezve'
+        pt: 'Autorizado'
+      0x01:
+        en: 'Not authorized'
+        fr: 'Non autorisé'
+        es: 'No autorizado'
+        de: 'Nicht erlaubt'
+        it: 'Non autorizzato'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nincs engedélyezve'
+        pt: 'Não autorizado'
+
+  CHECK_IN_PROGRESS:
+    bits: '3.4'
+    comment:
+      en: 'Check in progress'
+      fr: 'Vérification en cours'
+      es: 'Comprobación en curso'
+      de: 'Prüfung läuft'
+      it: 'Controllo in corso'
+      pl: 'Trwa sprawdzanie'
+      ru: 'Проверка выполняется'
+      zh: '检查进行中'
+      hu: 'Ellenőrzés folyamatban'
+      pt: 'Verificação em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No check in progress'
+        fr: 'Pas de contrôle en cours'
+        es: 'Sin comprobación en curso'
+        de: 'Keine laufende Prüfung'
+        it: 'Nessun controllo in corso'
+        pl: 'Brak trwającej kontroli'
+        ru: 'Проверка не выполняется'
+        zh: '无正在进行的检查'
+        hu: 'Nincs folyamatban ellenőrzés'
+        pt: 'Sem verificação em curso'
+      0x01:
+        en: 'Checking in progress'
+        fr: 'Vérification en cours'
+        es: 'Comprobación en curso'
+        de: 'Prüfung läuft'
+        it: 'Controllo in corso'
+        pl: 'Trwa sprawdzanie'
+        ru: 'Выполняется проверка'
+        zh: '检查中'
+        hu: 'Ellenőrzés folyamatban'
+        pt: 'Verificação em curso'
+
+  PRIORITY:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Priority level of the message pointer'
+      fr: 'Niveau de priorité du pointeur de message'
+      es: 'Nivel de prioridad del puntero de mensaje'
+      de: 'Prioritätsstufe des Nachrichtenzeigers'
+      it: 'Livello di priorità del puntatore del messaggio'
+      pl: 'Poziom priorytetu wskaźnika komunikatu'
+      ru: 'Уровень приоритета указателя сообщения'
+      zh: '消息指针的优先级'
+      hu: 'Az üzenetmutató prioritási szintje'
+      pt: 'Nível de prioridade do ponteiro de mensagem'
+    type: 'uint'
+    min: 0
+    max: 14
+    default: 0x00
+
+  MESSAGE_ARGS:
+    bits: '4.7-8.0'
+    comment:
+      en: 'Parameters related to the pointer'
+      fr: 'Paramètres liés au pointeur'
+      es: 'Parámetros relacionados con el puntero'
+      de: 'Parameter im Zusammenhang mit dem Zeiger'
+      it: 'Parametri relativi al puntatore'
+      pl: 'Parametry związane ze wskaźnikiem'
+      ru: 'Параметры, связанные с указателем'
+      zh: '与指针相关的参数'
+      hu: 'A mutatóhoz kapcsolódó paraméterek'
+      pt: 'Parâmetros relacionados com o ponteiro'
+    type: 'uint'
+    min: 0
+    max: 1099511627775
+    default: 0xFFFFFFFFFF

@@ -1,0 +1,151 @@
+id: 0x05
+name: 'RAIN_LIGHT_SENSOR_FAST_DATA'
+type: 'lin'
+length: 4
+comment:
+  en: 'Vehicle data (passenger seat belt buckle, vehicle speed) sent by the BSI to the occupant classification system.'
+  fr: 'Données véhicule (bouclage ceinture passager, vitesse véhicule) envoyées par la BSI au système de classification d''occupant.'
+  es: 'Datos del vehículo (cierre del cinturón del pasajero, velocidad del vehículo) enviados por la BSI al sistema de clasificación de ocupantes.'
+  de: 'Fahrzeugdaten (Beifahrergurtschloss, Fahrzeuggeschwindigkeit), von der BSI an das Insassenerkennungssystem gesendet.'
+  it: 'Dati veicolo (chiusura cintura passeggero, velocità veicolo) inviati dalla BSI al sistema di classificazione occupante.'
+  pl: 'Dane pojazdu (zapięcie pasa pasażera, prędkość pojazdu) wysyłane przez BSI do systemu klasyfikacji pasażera.'
+  ru: 'Данные автомобиля (пряжка ремня пассажира, скорость автомобиля), отправляемые BSI в систему классификации пассажира.'
+  zh: '由BSI发送给乘员分类系统的车辆数据（乘客安全带锁扣、车速）。'
+  hu: 'Járműadatok (utas biztonsági öv csatja, jármű sebessége), amelyeket a BSI küld az utasérzékelő rendszernek.'
+  pt: 'Dados do veículo (fecho do cinto de segurança do passageiro, velocidade do veículo) enviados pela BSI ao sistema de classificação de ocupantes.'
+periodicity: ['trigger']
+senders: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  SPEED:
+    bits: '1.0-3.1'
+    comment:
+      en: 'Instantaneous vehicle speed (average of the driven wheels)'
+      fr: 'Vitesse instantanée du véhicule (moyenne des roues motrices)'
+      es: 'Velocidad instantánea del vehículo (media de las ruedas motrices)'
+      de: 'Momentane Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder)'
+      it: 'Velocità istantanea del veicolo (media delle ruote motrici)'
+      pl: 'Chwilowa prędkość pojazdu (średnia z kół napędowych)'
+      ru: 'Мгновенная скорость автомобиля (среднее по ведущим колёсам)'
+      zh: '车辆瞬时车速(驱动轮平均值)'
+      hu: 'Pillanatnyi jármű sebesség (a hajtott kerekek átlaga)'
+      pt: 'Velocidade instantânea do veículo (média das rodas motrizes)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+
+  SECURISATION:
+    bits: '3.0'
+    comment:
+      en: 'Vehicle speed information security status'
+      fr: 'Sécurisation de l''information de vitesse véhicule'
+      es: 'Estado de seguridad de la información de velocidad del vehículo'
+      de: 'Absicherungsstatus der Fahrzeuggeschwindigkeitsinformation'
+      it: 'Stato di sicurezza dell''informazione di velocità del veicolo'
+      pl: 'Stan zabezpieczenia informacji o prędkości pojazdu'
+      ru: 'Статус защиты информации о скорости автомобиля'
+      zh: '车速信息安全状态'
+      hu: 'A járműsebesség-információ biztonsági állapota'
+      pt: 'Estado de segurança da informação de velocidade do veículo'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Speed information unavailable'
+        fr: 'Information de vitesse indisponible'
+        es: 'Información de velocidad no disponible'
+        de: 'Geschwindigkeitsinformation nicht verfügbar'
+        it: 'Informazioni di velocità non disponibili'
+        pl: 'Informacja o prędkości niedostępna'
+        ru: 'Информация о скорости недоступна'
+        zh: '车速信息不可用'
+        hu: 'Sebességinformáció nem elérhető'
+        pt: 'Informação de velocidade indisponível'
+      0x01:
+        en: 'Speed information available'
+        fr: 'Information de vitesse disponible'
+        es: 'Información de velocidad disponible'
+        de: 'Geschwindigkeitsinformation verfügbar'
+        it: 'Informazione di velocità disponibile'
+        pl: 'Dostępna informacja o prędkości'
+        ru: 'Информация о скорости доступна'
+        zh: '车速信息可用'
+        hu: 'Sebességinformáció elérhető'
+        pt: 'Informação de velocidade disponível'
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      BELT_BUCKLE_PASSENGER:
+        bits: '3.1-3.0'
+        comment:
+          en: 'Front passenger seatbelt buckling status'
+          fr: 'État de bouclage de la ceinture passager avant'
+          es: 'Estado de abrochado del cinturón del pasajero delantero'
+          de: 'Schließzustand des vorderen Beifahrersicherheitsgurts'
+          it: 'Stato di allacciamento della cintura del passeggero anteriore'
+          pl: 'Stan zapięcia pasa przedniego pasażera'
+          ru: 'Состояние пристёгивания переднего пассажирского ремня'
+          zh: '前排乘客安全带扣合状态'
+          hu: 'Az első utasoldali biztonsági öv becsatolási állapota'
+          pt: 'Estado de aperto do cinto do passageiro dianteiro'
+        type: 'enum'
+        values:
+          0x00:
+            en: 'Not monitored'
+            fr: 'Non surveillé'
+            es: 'No supervisado'
+            de: 'Nicht überwacht'
+            it: 'Non monitorato'
+            pl: 'Bez nadzoru'
+            ru: 'Не отслеживается'
+            zh: '未监控'
+            hu: 'Nem felügyelt'
+            pt: 'Não monitorizado'
+          0x01:
+            en: 'Seat belt unfastened'
+            fr: 'Ceinture de sécurité non attachée'
+            es: 'Cinturón de seguridad sin abrochar'
+            de: 'Sicherheitsgurt nicht angelegt'
+            it: 'Cintura di sicurezza non allacciata'
+            pl: 'Niezapięty pas bezpieczeństwa'
+            ru: 'Ремень безопасности не пристёгнут'
+            zh: '安全带未系好'
+            hu: 'A biztonsági öv nincs becsatolva'
+            pt: 'Cinto de segurança não apertado'
+          0x02:
+            en: 'Seat belt fastened'
+            fr: 'Ceinture bouclée'
+            es: 'Cinturón abrochado'
+            de: 'Sicherheitsgurt angelegt'
+            it: 'Cintura allacciata'
+            pl: 'Pas zapięty'
+            ru: 'Ремень пристёгнут'
+            zh: '安全带已系好'
+            hu: 'Biztonsági öv becsatolva'
+            pt: 'Cinto apertado'
+          0x03:
+            en: 'Buckle switch failure'
+            fr: 'Défaillance du contacteur de boucle'
+            es: 'Fallo del interruptor de hebilla'
+            de: 'Ausfall des Gurtschlossschalters'
+            it: 'Guasto dell''interruttore della fibbia'
+            pl: 'Awaria wyłącznika klamry pasa'
+            ru: 'Отказ выключателя пряжки ремня'
+            zh: '带扣开关故障'
+            hu: 'Csatkapcsoló meghibásodása'
+            pt: 'Falha do comutador do fecho do cinto'

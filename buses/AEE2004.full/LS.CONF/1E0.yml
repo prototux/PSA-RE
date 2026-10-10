@@ -1,380 +1,1050 @@
 id: 0x1E0
-name: 'RADIO_STATUS_CONFIG'
-alt_names: ['ETAT_RADIO_GEN_V']
+name: 'RADIO_CONFIG_STATUS'
+alt_names: ['RADIO_STATUS_CONFIG']
+type: 'can'
 length: 5
 comment:
-  en: 'General radio configuration'
-  fr: 'Configuration generale de la radio'
-type: 'can'
-periodicity: ['500ms']
-senders:
-  - 'RAD'
-  - 'PASS_ICSV'
-receivers:
-  - 'EMF'
-  - 'CMB_EMF'
-  - 'PASS_ICSV'
+  en: 'Radio configuration and status: ambience selection, CD-text, scan, random track, PTY and RDS settings.'
+  fr: 'Configuration et état de l''autoradio : sélection d''ambiance, CD-text, balayage, lecture aléatoire, PTY et réglages RDS.'
+  es: 'Configuración y estado de la radio: selección de ambiente, CD-text, escaneo, reproducción aleatoria, PTY y ajustes RDS.'
+  de: 'Konfiguration und Status des Radios: Ambiente-Auswahl, CD-Text, Scan, Zufallswiedergabe, PTY und RDS-Einstellungen.'
+  it: 'Configurazione e stato dell''autoradio: selezione ambiente, CD-text, scansione, riproduzione casuale, PTY e impostazioni RDS.'
+  pl: 'Konfiguracja i stan radia: wybór klimatu dźwięku, CD-text, skanowanie, odtwarzanie losowe, PTY i ustawienia RDS.'
+  ru: 'Конфигурация и статус радио: выбор эквалайзера, CD-текст, сканирование, случайное воспроизведение, PTY и настройки RDS.'
+  zh: '收音机的配置和状态:音效选择、CD文本、扫描、随机播放、PTY和RDS设置。'
+  hu: 'A rádió konfigurációja és állapota: hangzás kiválasztása, CD-szöveg, pásztázás, véletlen lejátszás, PTY és RDS beállítások.'
+  pt: 'Configuração e estado da rádio: seleção de ambiente, CD-text, varrimento, faixa aleatória, definições PTY e RDS.'
+observations:
+  en: 'On parameter change. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur modification d''un paramètre. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al modificar un parámetro. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Parameteränderung. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Alla modifica di un parametro. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Przy zmianie wartości parametru. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении параметра. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '参数被修改时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'Paraméter módosításakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança de parâmetro. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['500ms', 'trigger']
+senders: ['RAD', 'ICSV']
+receivers: ['EMF', 'CMB', 'ICSV']
 
 signals:
   TRACK_INTRO_OPTION:
     bits: '1.7-1.6'
-    alt_names: ['ISCAN_CFG_CD']
     comment:
-      en: 'Intro Scan reading mode Code Item=0x41'
-      fr: 'Mode de lecture Intro Scan Code Item=0x41'
+      en: 'Track intro-scan mode option'
+      fr: 'Option du mode de lecture intro-scan'
+      es: 'Opción del modo de reproducción intro-scan'
+      de: 'Option des Intro-Scan-Modus'
+      it: 'Opzione della modalità intro-scan'
+      pl: 'Opcja trybu odtwarzania intro-scan'
+      ru: 'Опция режима интро-сканирования треков'
+      zh: '曲目片段扫描模式选项'
+      hu: 'Bevezető-pásztázás mód beállítása'
+      pt: 'Opção do modo de pré-audição de faixas (intro-scan)'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Unavailable'
-        fr: 'Indisponible'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Available'
-        fr: 'Disponible'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
   TRACK_INTRO_ENABLED:
     bits: '1.5'
-    alt_names: ['ISCAN_STAT']
     comment:
-      en: 'Activation status of IntroScan reading mode'
-      fr: 'Statut d''activation du mode de lecture IntroScan'
+      en: 'Track intro-scan mode activation status'
+      fr: 'État d''activation du mode de lecture intro-scan'
+      es: 'Estado de activación del modo de reproducción intro-scan'
+      de: 'Aktivierungsstatus des Intro-Scan-Modus'
+      it: 'Stato di attivazione della modalità intro-scan'
+      pl: 'Stan aktywacji trybu odtwarzania intro-scan'
+      ru: 'Статус активации режима интро-сканирования'
+      zh: '曲目片段扫描模式激活状态'
+      hu: 'Bevezető-pásztázás mód aktiválási állapota'
+      pt: 'Estado de ativação do modo de pré-audição de faixas'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
 
   RANDOM_OPTION:
     bits: '1.4-1.3'
-    alt_names: ['RDM_TRK_CFG_CD']
     comment:
-      en: 'Shuffle mode of tracks Code Item=0x42'
-      fr: 'Mode de lecture aléatoire des pistes Code Item=0x42'
+      en: 'Track shuffle mode option'
+      fr: 'Option du mode de lecture aléatoire des plages'
+      es: 'Opción del modo de reproducción aleatoria de pistas'
+      de: 'Option des Zufallswiedergabemodus für Titel'
+      it: 'Opzione della modalità di riproduzione casuale delle tracce'
+      pl: 'Opcja trybu losowego odtwarzania utworów'
+      ru: 'Опция режима случайного воспроизведения треков'
+      zh: '曲目随机播放模式选项'
+      hu: 'Számok véletlenszerű lejátszásának beállítása'
+      pt: 'Opção do modo de reprodução aleatória das faixas'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Unavailable'
-        fr: 'Indisponible'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Available'
-        fr: 'Disponible'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
   RANDOM_ENABLED:
     bits: '1.2'
-    alt_names: ['RDM_TRK_STAT']
     comment:
-      en: 'Activation status of shuffle mode of tracks / files'
-      fr: 'Statut d''activation du mode de lecture aléatoire des pistes/fichiers'
+      en: 'Track/file shuffle mode activation status'
+      fr: 'État d''activation du mode de lecture aléatoire des plages/fichiers'
+      es: 'Estado de activación del modo de reproducción aleatoria de pistas/archivos'
+      de: 'Aktivierungsstatus des Zufallswiedergabemodus für Titel/Dateien'
+      it: 'Stato di attivazione della modalità di riproduzione casuale di tracce/file'
+      pl: 'Stan aktywacji trybu losowego odtwarzania utworów/plików'
+      ru: 'Статус активации режима случайного воспроизведения треков/файлов'
+      zh: '曲目/文件随机播放模式激活状态'
+      hu: 'Szám/fájl véletlenszerű lejátszásának aktiválási állapota'
+      pt: 'Estado de ativação do modo de reprodução aleatória de faixas/ficheiros'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
 
   REPEAT_OPTION:
     bits: '1.1-1.0'
-    alt_names: ['REP_DSK_CFG_CD']
+    comment:
+      en: 'Disc repeat mode option'
+      fr: 'Option du mode de répétition disque'
+      es: 'Opción del modo de repetición de disco'
+      de: 'Option des Disc-Wiederholungsmodus'
+      it: 'Opzione della modalità di ripetizione del disco'
+      pl: 'Opcja trybu powtarzania płyty'
+      ru: 'Опция режима повтора диска'
+      zh: '光盘重复播放模式选项'
+      hu: 'Lemezismétlési mód beállítása'
+      pt: 'Opção do modo de repetição de disco'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Unavailable'
-        fr: 'Indisponible'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Available'
-        fr: 'Disponible'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
   REPEAT_ENABLED:
     bits: '2.7'
-    alt_names: ['REP_DSK_STAT']
     comment:
-      en: 'State of activation of disk/directory repetition mode'
-      fr: 'Etat d''activation du mode de répétition disque/répertoire'
+      en: 'Disc/directory repeat mode activation status'
+      fr: 'État d''activation du mode de répétition disque/répertoire'
+      es: 'Estado de activación del modo de repetición de disco/directorio'
+      de: 'Aktivierungsstatus des Wiederholungsmodus für Disc/Verzeichnis'
+      it: 'Stato di attivazione della modalità di ripetizione disco/cartella'
+      pl: 'Stan aktywacji trybu powtarzania płyty/katalogu'
+      ru: 'Статус активации режима повтора диска/каталога'
+      zh: '光盘/目录重复播放模式激活状态'
+      hu: 'Lemez/könyvtár ismétlési mód aktiválási állapota'
+      pt: 'Estado de ativação do modo de repetição de disco/diretório'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
 
   CD_TEXT_CFG:
     bits: '2.6-2.5'
-    alt_names: ['CDTEXT_CFG_CD']
     comment:
-      en: 'CD Text mode Code Item=0x44'
-      fr: 'Mode CD Text Code Item=0x44'
+      en: 'CD-Text mode option'
+      fr: 'Option du mode CD Texte'
+      es: 'Opción del modo CD Texto'
+      de: 'Option des CD-Text-Modus'
+      it: 'Opzione della modalità CD Text'
+      pl: 'Opcja trybu CD Text'
+      ru: 'Опция режима CD-Text'
+      zh: 'CD文本模式选项'
+      hu: 'CD-szöveg mód beállítása'
+      pt: 'Opção do modo CD Texto'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Available'
-        fr: 'Disponible'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
+      0x02:
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
       0x03:
         en: 'Reserved'
         fr: 'Réservé'
+        es: 'Reservado'
+        de: 'Reserviert'
+        it: 'Riservato'
+        pl: 'Zarezerwowane'
+        ru: 'Зарезервировано'
+        zh: '保留'
+        hu: 'Fenntartva'
+        pt: 'Reservado'
 
   CD_TEXT_STAT:
     bits: '2.4'
-    alt_names: ['CDTEXT_STAT']
     comment:
-      en: 'Activation status of CD Text mode'
-      fr: 'Etat d''activation du mode CD Text'
+      en: 'CD-Text mode activation status'
+      fr: 'État d''activation du mode CD Texte'
+      es: 'Estado de activación del modo CD Texto'
+      de: 'Aktivierungsstatus des CD-Text-Modus'
+      it: 'Stato di attivazione della modalità CD Text'
+      pl: 'Stan aktywacji trybu CD Text'
+      ru: 'Статус активации режима CD-Text'
+      zh: 'CD文本模式激活状态'
+      hu: 'CD-szöveg mód aktiválási állapota'
+      pt: 'Estado de ativação do modo CD Texto'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
 
-  CHARACTER_SET:
+  UNUSED_1:
     bits: '2.3'
-    alt_names: ['CARACT_MAUD']
-    comment:
-      en: 'Character set used for text display'
-      fr: 'Jeu de caractères utilisé pour l''affichage du texte'
-    values:
-      0x00:
-        en: 'ASCII'
-        fr: 'ASCII'
-      0x01:
-        en: 'UTF-8'
-        fr: 'UTF-8'
+    unused: true
 
-  SHUFFLE_MODE_CONFIG:
+  UNUSED_2:
     bits: '2.2-2.1'
-    alt_names: ['RDM_ALL_CFG_CD']
-    comment:
-      en: 'Overall shuffle mode (random all) Code Item = 0x45'
-      fr: 'Mode de lecture aléatoire des disques/répertoires Code Item=0x45'
-    values:
-      0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
-      0x01:
-        en: 'Unavailable'
-        fr: 'Indisponible'
-      0x02:
-        en: 'Available'
-        fr: 'Disponible'
+    unused: true
 
-  SHUFFLE_MODE_STATUS:
+  UNUSED_3:
     bits: '2.0'
-    alt_names: ['RDM_ALL_STAT']
-    comment:
-      en: 'Overall shuffle mode (random all) status'
-      fr: 'Statut du mode de lecture aléatoire des disques/répertoires'
-    values:
-      0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
-      0x01:
-        en: 'Enabled'
-        fr: 'Active'
+    unused: true
 
   RDS_ALT_FREQ_OPTION:
     bits: '3.7-3.6'
-    alt_names: ['RDS_CFG_RAD']
     comment:
-      en: 'RDS tracking Code Item=0x01'
-      fr: 'Suivi RDS Code Item=0x01'
+      en: 'RDS alternative frequency tracking option'
+      fr: 'Option de suivi RDS (fréquences alternatives)'
+      es: 'Opción de seguimiento RDS (frecuencias alternativas)'
+      de: 'Option der RDS-Alternativfrequenzverfolgung'
+      it: 'Opzione di inseguimento RDS (frequenze alternative)'
+      pl: 'Opcja śledzenia RDS (częstotliwości alternatywne)'
+      ru: 'Опция слежения RDS (альтернативные частоты)'
+      zh: 'RDS备用频率跟踪选项'
+      hu: 'RDS alternatív frekvenciakövetés beállítása'
+      pt: 'Opção de seguimento RDS (frequências alternativas)'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Not activable'
-        fr: 'Non activable'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Activable'
-        fr: 'Activable'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
   RDS_ALT_FREQ_ENABLED:
     bits: '3.5'
-    alt_names: ['RDS_STAT']
     comment:
-      en: 'RDS tracking status'
-      fr: 'Statut du suivi RDS'
+      en: 'RDS alternative frequency tracking activation status'
+      fr: 'État d''activation du suivi RDS'
+      es: 'Estado de activación del seguimiento RDS'
+      de: 'Aktivierungsstatus der RDS-Verfolgung'
+      it: 'Stato di attivazione dell''inseguimento RDS'
+      pl: 'Stan aktywacji śledzenia RDS'
+      ru: 'Статус активации слежения RDS'
+      zh: 'RDS跟踪激活状态'
+      hu: 'RDS követés aktiválási állapota'
+      pt: 'Estado de ativação do seguimento RDS'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.5'
+          fr: 'Aussi observé aux bits 1.5'
+          es: 'También observado en los bits 1.5'
+          de: 'Auch an den Bits 1.5 beobachtet'
+          it: 'Osservato anche ai bit 1.5'
+          pl: 'Obserwowany także na bitach 1.5'
+          ru: 'Также наблюдался в битах 1.5'
+          zh: '也观察到位于位1.5'
+          hu: 'Megfigyelve a(z) 1.5 biteken is'
+          pt: 'Também observado nos bits 1.5'
+        bits: '1.5'
 
   TMC_OPTION:
     bits: '3.4-3.3'
-    alt_names: ['TMC_CFG_RAD']
     comment:
-      en: 'TMC Code Item=0x02'
-      fr: 'TMC Code Item=0x02'
+      en: 'Traffic message channel (TMC) information option'
+      fr: 'Option des informations trafic (TMC)'
+      es: 'Opción de información de tráfico (TMC)'
+      de: 'Option der Verkehrsinformationen (TMC)'
+      it: 'Opzione delle informazioni sul traffico (TMC)'
+      pl: 'Opcja informacji drogowych (TMC)'
+      ru: 'Опция дорожной информации (TMC)'
+      zh: '交通信息通道(TMC)选项'
+      hu: 'Forgalmi információ (TMC) beállítása'
+      pt: 'Opção das informações de tráfego (TMC)'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Not activable'
-        fr: 'Non activable'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Activable'
-        fr: 'Activable'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
   TMC_STATUS:
     bits: '3.2'
-    alt_names: ['TMC_STAT_RAD']
     comment:
-      en: 'TMC status'
-      fr: 'Etat du TMC'
+      en: 'TMC information activation status'
+      fr: 'État d''activation des informations TMC'
+      es: 'Estado de activación de la información TMC'
+      de: 'Aktivierungsstatus der TMC-Informationen'
+      it: 'Stato di attivazione delle informazioni TMC'
+      pl: 'Stan aktywacji informacji TMC'
+      ru: 'Статус активации информации TMC'
+      zh: 'TMC信息激活状态'
+      hu: 'TMC információ aktiválási állapota'
+      pt: 'Estado de ativação das informações TMC'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
 
   REG_MODE_OPTION:
     bits: '3.1-3.0'
-    alt_names: ['REG_CFG_RAD']
     comment:
-      en: 'REG Mode Code Item=0x03'
-      fr: 'Mode REG Code Item=0x03'
+      en: 'REG mode option (regional RDS)'
+      fr: 'Option du mode REG (RDS régional)'
+      es: 'Opción del modo REG (RDS regional)'
+      de: 'Option des REG-Modus (regionales RDS)'
+      it: 'Opzione della modalità REG (RDS regionale)'
+      pl: 'Opcja trybu REG (RDS regionalny)'
+      ru: 'Опция режима REG (региональный RDS)'
+      zh: 'REG模式选项(区域RDS)'
+      hu: 'REG mód beállítása (regionális RDS)'
+      pt: 'Opção do modo REG (RDS regional)'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Not activable'
-        fr: 'Non activable'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Activable'
-        fr: 'Activable'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
-  REG_MODE_ENABLED:
+  REG_MODE_STATUS:
     bits: '4.7'
-    alt_names: ['REG_STAT_RAD']
+    alt_names: ['REG_MODE_ENABLED', 'REG_STAT_RAD']
     comment:
-      en: 'REG Mode status'
-      fr: 'Etat du mode REG'
+      en: 'REG mode activation status'
+      fr: 'État d''activation du mode REG'
+      es: 'Estado de activación del modo REG'
+      de: 'Aktivierungsstatus des REG-Modus'
+      it: 'Stato di attivazione della modalità REG'
+      pl: 'Stan aktywacji trybu REG'
+      ru: 'Статус активации режима REG'
+      zh: 'REG模式激活状态'
+      hu: 'REG mód aktiválási állapota'
+      pt: 'Estado de ativação do modo REG'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.7'
+          fr: 'Aussi observé aux bits 2.7'
+          es: 'También observado en los bits 2.7'
+          de: 'Auch an den Bits 2.7 beobachtet'
+          it: 'Osservato anche ai bit 2.7'
+          pl: 'Obserwowany także na bitach 2.7'
+          ru: 'Также наблюдался в битах 2.7'
+          zh: '也观察到位于位2.7'
+          hu: 'Megfigyelve a(z) 2.7 biteken is'
+          pt: 'Também observado nos bits 2.7'
+        bits: '2.7'
 
   VOLUME_AUTO_OPTION:
     bits: '4.6-4.5'
-    alt_names: ['VAUTO_CFG_RAD']
     comment:
-      en: 'Volume auto mode Code Item=0x04'
-      fr: 'Mode volume auto Code Item=0x04'
+      en: 'Automatic volume option'
+      fr: 'Option du volume automatique'
+      es: 'Opción de volumen automático'
+      de: 'Option der automatischen Lautstärke'
+      it: 'Opzione del volume automatico'
+      pl: 'Opcja automatycznej głośności'
+      ru: 'Опция автоматической громкости'
+      zh: '自动音量选项'
+      hu: 'Automatikus hangerő beállítása'
+      pt: 'Opção de volume automático'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Not activable'
-        fr: 'Non activable'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Activable'
-        fr: 'Activable'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
-  VOLUME_AUTO_ENABLED:
+  VOLUME_AUTO_STATUS:
     bits: '4.4'
-    alt_names: ['VAUTO_STAT_RAD']
+    alt_names: ['VOLUME_AUTO_ENABLED', 'VAUTO_STAT_RAD']
     comment:
-      en: 'Volume auto mode status'
-      fr: 'Etat du mode volume auto'
+      en: 'Automatic volume activation status'
+      fr: 'État d''activation du volume automatique'
+      es: 'Estado de activación del volumen automático'
+      de: 'Aktivierungsstatus der automatischen Lautstärke'
+      it: 'Stato di attivazione del volume automatico'
+      pl: 'Stan aktywacji automatycznej głośności'
+      ru: 'Статус активации автоматической громкости'
+      zh: '自动音量激活状态'
+      hu: 'Automatikus hangerő aktiválási állapota'
+      pt: 'Estado de ativação do volume automático'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
 
   AMBIENCE_OPTION:
     bits: '4.3-4.2'
-    alt_names: ['AMB_SEL_CFG']
     comment:
-      en: 'Selection of a musical environment Code Item=0x05'
-      fr: 'Sélection d''un environnement musical Code Item=0x05'
+      en: 'Musical ambience selection option'
+      fr: 'Option de sélection d''une ambiance musicale'
+      es: 'Opción de selección de un ambiente musical'
+      de: 'Option zur Auswahl einer Klangambiente'
+      it: 'Opzione di selezione di un''ambientazione musicale'
+      pl: 'Opcja wyboru nastroju muzycznego'
+      ru: 'Опция выбора музыкальной атмосферы'
+      zh: '音乐氛围选择选项'
+      hu: 'Zenei hangulat kiválasztásának beállítása'
+      pt: 'Opção de seleção de um ambiente musical'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Not activable'
-        fr: 'Non activable'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Activable'
-        fr: 'Activable'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
 
-  UNUSED_1:
+  UNUSED_4:
     bits: '4.1-4.0'
     unused: true
 
   RADIO_TEXT_OPTION:
     bits: '5.7-5.6'
-    alt_names: ['RDTEXT_CFG_TUN']
     comment:
-      en: 'Radio Text mode Code Item=0x24'
-      fr: 'Mode Radio Text Code Item=0x24'
+      en: 'Radio-Text mode option'
+      fr: 'Option du mode Radio-Texte'
+      es: 'Opción del modo Radio-Texto'
+      de: 'Option des Radiotext-Modus'
+      it: 'Opzione della modalità Radio-Text'
+      pl: 'Opcja trybu Radio-Tekst'
+      ru: 'Опция режима Radio-Text'
+      zh: '电台文本模式选项'
+      hu: 'Radio-Text mód beállítása'
+      pt: 'Opção do modo Radio-Texto'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Not activable'
-        fr: 'Non activable'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Activable'
-        fr: 'Activable'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.6-2.5'
+          fr: 'Aussi observé aux bits 2.6-2.5'
+          es: 'También observado en los bits 2.6-2.5'
+          de: 'Auch an den Bits 2.6-2.5 beobachtet'
+          it: 'Osservato anche ai bit 2.6-2.5'
+          pl: 'Obserwowany także na bitach 2.6-2.5'
+          ru: 'Также наблюдался в битах 2.6-2.5'
+          zh: '也观察到位于位2.6-2.5'
+          hu: 'Megfigyelve a(z) 2.6-2.5 biteken is'
+          pt: 'Também observado nos bits 2.6-2.5'
+        bits: '2.6-2.5'
 
   RADIO_TEXT_ENABLED:
     bits: '5.5'
-    alt_names: ['RDTEXT_STAT']
     comment:
-      en: 'Radio Text mode status'
-      fr: 'Etat du mode Radio Text'
+      en: 'Radio-Text mode activation status'
+      fr: 'État d''activation du mode Radio-Texte'
+      es: 'Estado de activación del modo Radio-Texto'
+      de: 'Aktivierungsstatus des Radiotext-Modus'
+      it: 'Stato di attivazione della modalità Radio-Text'
+      pl: 'Stan aktywacji trybu Radio-Tekst'
+      ru: 'Статус активации режима Radio-Text'
+      zh: '电台文本模式激活状态'
+      hu: 'Radio-Text mód aktiválási állapota'
+      pt: 'Estado de ativação do modo Radio-Texto'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Disabled'
-        fr: 'Desactive'
+        en: 'Option deactivated'
+        fr: 'Option désactivée'
+        es: 'Opción desactivada'
+        de: 'Option deaktiviert'
+        it: 'Opzione disattivata'
+        pl: 'Opcja wyłączona'
+        ru: 'Опция отключена'
+        zh: '选项已停用'
+        hu: 'Opció letiltva'
+        pt: 'Opção desativada'
       0x01:
-        en: 'Enabled'
-        fr: 'Active'
+        en: 'Option activated'
+        fr: 'Option activée'
+        es: 'Opción activada'
+        de: 'Option aktiviert'
+        it: 'Opzione attivata'
+        pl: 'Opcja aktywowana'
+        ru: 'Опция активирована'
+        zh: '选项已激活'
+        hu: 'Opció aktiválva'
+        pt: 'Opção ativada'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.4'
+          fr: 'Aussi observé aux bits 2.4'
+          es: 'También observado en los bits 2.4'
+          de: 'Auch an den Bits 2.4 beobachtet'
+          it: 'Osservato anche ai bit 2.4'
+          pl: 'Obserwowany także na bitach 2.4'
+          ru: 'Также наблюдался в битах 2.4'
+          zh: '也观察到位于位2.4'
+          hu: 'Megfigyelve a(z) 2.4 biteken is'
+          pt: 'Também observado nos bits 2.4'
+        bits: '2.4'
 
   PTY_OPTION:
     bits: '5.4-5.3'
-    alt_names: ['PTY_SEL_CFG_TUN']
     comment:
-      en: 'PTY selection mode Code Item=0x25'
-      fr: 'Mode de sélection du PTY Code Item=0x25'
+      en: 'Program type (PTY) selection option'
+      fr: 'Option de sélection d''un type de programme (PTY)'
+      es: 'Opción de selección de un tipo de programa (PTY)'
+      de: 'Option zur Auswahl eines Programmtyps (PTY)'
+      it: 'Opzione di selezione di un tipo di programma (PTY)'
+      pl: 'Opcja wyboru typu programu (PTY)'
+      ru: 'Опция выбора типа программы (PTY)'
+      zh: '节目类型(PTY)选择选项'
+      hu: 'Műsortípus (PTY) kiválasztásának beállítása'
+      pt: 'Opção de seleção de um tipo de programa (PTY)'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Not available'
-        fr: 'Non-disponible'
+        en: 'Option unavailable'
+        fr: 'Option indisponible'
+        es: 'Opción no disponible'
+        de: 'Option nicht verfügbar'
+        it: 'Opzione non disponibile'
+        pl: 'Opcja niedostępna'
+        ru: 'Опция недоступна'
+        zh: '选项不可用'
+        hu: 'Opció nem elérhető'
+        pt: 'Opção indisponível'
       0x01:
-        en: 'Not activable'
-        fr: 'Non activable'
+        en: 'Option cannot be activated'
+        fr: 'Option non activable'
+        es: 'Opción no activable'
+        de: 'Option nicht aktivierbar'
+        it: 'Opzione non attivabile'
+        pl: 'Opcji nie można aktywować'
+        ru: 'Опцию невозможно активировать'
+        zh: '选项无法激活'
+        hu: 'Az opció nem aktiválható'
+        pt: 'Opção não ativável'
       0x02:
-        en: 'Activable'
-        fr: 'Activable'
+        en: 'Option can be activated'
+        fr: 'Option activable'
+        es: 'Opción activable'
+        de: 'Option aktivierbar'
+        it: 'Opzione attivabile'
+        pl: 'Opcja możliwa do aktywacji'
+        ru: 'Опцию можно активировать'
+        zh: '可激活的选装功能'
+        hu: 'Az opció aktiválható'
+        pt: 'Opção pode ser ativada'
+      0x03:
+        unused: true
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.3-2.2'
+          fr: 'Aussi observé aux bits 2.3-2.2'
+          es: 'También observado en los bits 2.3-2.2'
+          de: 'Auch an den Bits 2.3-2.2 beobachtet'
+          it: 'Osservato anche ai bit 2.3-2.2'
+          pl: 'Obserwowany także na bitach 2.3-2.2'
+          ru: 'Также наблюдался в битах 2.3-2.2'
+          zh: '也观察到位于位2.3-2.2'
+          hu: 'Megfigyelve a(z) 2.3-2.2 biteken is'
+          pt: 'Também observado nos bits 2.3-2.2'
+        bits: '2.3-2.2'
 
-  UNUSED_2:
+  UNUSED_5:
     bits: '5.2-5.0'
     unused: true

@@ -1,0 +1,86 @@
+id: 0x984
+name: 'RELATIVE_DATE'
+type: 'van'
+length: 5
+comment:
+  en: 'Relative day/year counter broadcast by the multifunction display, counted since its permanent supply was last connected (not the calendar date, so user clock setting does not disturb service interval timing).'
+  fr: 'Compteur relatif de jours/années diffusé par l''afficheur multifonction, compté depuis la dernière connexion de son alimentation permanente (pas la date calendaire, pour que le réglage de l''heure utilisateur ne perturbe pas l''échéance d''entretien).'
+  es: 'Contador relativo de días/años difundido por la pantalla multifunción, contado desde la última conexión de su alimentación permanente (no es la fecha del calendario, para que el ajuste de la hora del usuario no afecte al intervalo de mantenimiento).'
+  de: 'Relativer Tage-/Jahreszähler, vom Multifunktionsdisplay gesendet, gezählt seit dem letzten Anschluss seiner Dauerversorgung (nicht das Kalenderdatum, damit die Nutzereinstellung der Uhr das Wartungsintervall nicht stört).'
+  it: 'Contatore relativo di giorni/anni trasmesso dal display multifunzione, contato dall''ultimo collegamento della sua alimentazione permanente (non la data di calendario, così che l''impostazione dell''orologio utente non disturbi la scadenza di manutenzione).'
+  pl: 'Względny licznik dni/lat nadawany przez wyświetlacz wielofunkcyjny, liczony od ostatniego podłączenia jego zasilania stałego (nie jest to data kalendarzowa, dzięki czemu ustawienie zegara przez użytkownika nie zakłóca terminu przeglądu).'
+  ru: 'Относительный счётчик дней/лет, транслируемый многофункциональным дисплеем, отсчитываемый с последнего подключения его постоянного питания (не календарная дата, поэтому настройка часов пользователем не влияет на интервал обслуживания).'
+  zh: '由多功能显示屏广播的相对日/年计数器,自其常电最后一次连接以来计数(不是日历日期,因此用户的时钟设置不会影响保养周期计时)。'
+  hu: 'A multifunkciós kijelző által sugárzott relatív nap-/évszámláló, az állandó tápellátás utolsó csatlakoztatása óta számolva (nem a naptári dátum, így a felhasználói óra beállítása nem zavarja a szervizintervallum számítását).'
+  pt: 'Contador relativo de dia/ano difundido pelo visor multifunções, contado desde a última ligação da sua alimentação permanente (não é a data de calendário, para que o ajuste do relógio pelo utilizador não perturbe a contagem do intervalo de revisão).'
+periodicity: ['60000ms']
+senders: ['EMF', 'BTEL']
+receivers: ['CMB', 'BCD', 'BSI']
+van:
+  access: 'write'
+  ack: false
+  rtr: false
+  reply: 'none'
+
+signals:
+  DAY_COUNT:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Day counter since the instrument cluster permanent supply was last connected (BCD; 0xFFFF = invalid)'
+      fr: 'Compteur de jours depuis la dernière mise sous tension permanente du combiné d''instruments (BCD ; 0xFFFF = invalide)'
+      es: 'Contador de días desde la última conexión permanente del cuadro de instrumentos (BCD; 0xFFFF = no válido)'
+      de: 'Tageszähler seit dem letzten Anschluss der Dauerversorgung des Kombiinstruments (BCD; 0xFFFF = ungültig)'
+      it: 'Contatore di giorni dall''ultimo collegamento dell''alimentazione permanente del quadro strumenti (BCD; 0xFFFF = non valido)'
+      pl: 'Licznik dni od ostatniego podłączenia zasilania stałego zestawu wskaźników (BCD; 0xFFFF = nieprawidłowe)'
+      ru: 'Счётчик дней с момента последнего подключения постоянного питания приборной панели (BCD; 0xFFFF = недействительно)'
+      zh: '自仪表组常电最近一次接通以来的天计数(BCD码;0xFFFF表示无效)'
+      hu: 'A műszerfal állandó tápellátásának utolsó bekapcsolása óta eltelt napok száma (BCD; 0xFFFF = érvénytelen)'
+      pt: 'Contador de dias desde a última ligação da alimentação permanente do quadrante (BCD; 0xFFFF = inválido)'
+    type: 'bcd'
+    invalid: 0xFFFF
+    default: 0x00
+    values:
+      0xFFFF:
+        en: 'Invalid value'
+        fr: 'Valeur invalide'
+        es: 'Valor no válido'
+        de: 'Ungültiger Wert'
+        it: 'Valore non valido'
+        pl: 'Nieprawidłowa wartość'
+        ru: 'Недопустимое значение'
+        zh: '无效值'
+        hu: 'Érvénytelen érték'
+        pt: 'Valor inválido'
+
+  YEAR_COUNT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Year counter since the instrument cluster permanent supply was last connected (BCD; 0xFF = invalid)'
+      fr: 'Compteur d''années depuis la dernière mise sous tension permanente du combiné d''instruments (BCD ; 0xFF = invalide)'
+      es: 'Contador de años desde la última conexión permanente del cuadro de instrumentos (BCD; 0xFF = no válido)'
+      de: 'Jahreszähler seit dem letzten Anschluss der Dauerversorgung des Kombiinstruments (BCD; 0xFF = ungültig)'
+      it: 'Contatore di anni dall''ultimo collegamento dell''alimentazione permanente del quadro strumenti (BCD; 0xFF = non valido)'
+      pl: 'Licznik lat od ostatniego podłączenia zasilania stałego zestawu wskaźników (BCD; 0xFF = nieprawidłowe)'
+      ru: 'Счётчик лет с момента последнего подключения постоянного питания приборной панели (BCD; 0xFF = недействительно)'
+      zh: '自仪表组常电最近一次接通以来的年计数(BCD码;0xFF表示无效)'
+      hu: 'A műszerfal állandó tápellátásának utolsó bekapcsolása óta eltelt évek száma (BCD; 0xFF = érvénytelen)'
+      pt: 'Contador de anos desde a última ligação permanente do quadro de instrumentos (BCD; 0xFF = inválido)'
+    type: 'bcd'
+    invalid: 0xFF
+    default: 0x00
+    values:
+      0xFF:
+        en: 'Invalid value'
+        fr: 'Valeur invalide'
+        es: 'Valor no válido'
+        de: 'Ungültiger Wert'
+        it: 'Valore non valido'
+        pl: 'Nieprawidłowa wartość'
+        ru: 'Недопустимое значение'
+        zh: '无效值'
+        hu: 'Érvénytelen érték'
+        pt: 'Valor inválido'
+
+  UNUSED_1:
+    bits: '4.7-5.0'
+    unused: true

@@ -1,0 +1,136 @@
+id: 0x1B6
+name: 'WIFI'
+type: 'can-tp'
+comment:
+  en: 'Family of frames sharing this ID: the content depends on WIFI_INFO_TYPE'
+  fr: 'Famille de trames partageant cet identifiant : le contenu dépend de WIFI_INFO_TYPE'
+  es: 'Familia de tramas que comparten este identificador: el contenido depende de WIFI_INFO_TYPE'
+  de: 'Familie von Botschaften mit dieser ID: der Inhalt hängt von WIFI_INFO_TYPE ab'
+  it: 'Famiglia di frame che condividono questo ID: il contenuto dipende da WIFI_INFO_TYPE'
+  pl: 'Rodzina ramek o tym samym identyfikatorze: zawartość zależy od WIFI_INFO_TYPE'
+  ru: 'Семейство кадров с этим идентификатором: содержимое зависит от WIFI_INFO_TYPE'
+  zh: '共用此ID的一组帧：内容取决于WIFI_INFO_TYPE'
+  hu: 'Ezt az azonosítót megosztó keretcsalád: a tartalom a(z) WIFI_INFO_TYPE értékétől függ'
+  pt: 'Família de tramas que partilham este identificador: o conteúdo depende de WIFI_INFO_TYPE'
+periodicity: ['trigger']
+senders: ['MDS']
+receivers: ['EMF', 'BTEL', 'OVIP']
+isotp:
+  flow_control_id: 0x376
+
+signals:
+  WIFI_INFO_TYPE:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Type of WiFi network information.'
+      fr: 'Type d''information réseau WiFi.'
+      es: 'Tipo de información de red WiFi.'
+      de: 'Art der WLAN-Netzwerkinformation.'
+      it: 'Tipo di informazione della rete WiFi.'
+      pl: 'Rodzaj informacji o sieci WiFi.'
+      ru: 'Тип информации о сети WiFi.'
+      zh: 'WiFi网络信息类型。'
+      hu: 'A WiFi hálózati információ típusa.'
+      pt: 'Tipo de informação da rede WiFi.'
+    type: 'enum'
+    mux_selector: true
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'WIFI SSID'
+        fr: 'WIFI SSID'
+        es: 'WIFI SSID'
+        de: 'WIFI SSID'
+        it: 'WIFI SSID'
+        pl: 'WIFI SSID'
+        ru: 'WIFI SSID'
+        zh: 'WIFI SSID'
+        hu: 'WIFI SSID'
+        pt: 'WIFI SSID'
+      0x02:
+        en: 'WIFI security key'
+        fr: 'WIFI security key'
+        es: 'WIFI security key'
+        de: 'WIFI security key'
+        it: 'WIFI security key'
+        pl: 'WIFI security key'
+        ru: 'WIFI security key'
+        zh: 'WIFI security key'
+        hu: 'WIFI security key'
+        pt: 'WIFI security key'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  UNUSED_1:
+    bits: '1.3-1.0'
+    unused: true
+
+  WIFI_PASSWORD:
+    bits: '2.7-61.0'
+    comment:
+      en: 'WiFi password.'
+      fr: 'Mot de passe WiFi.'
+      es: 'Contraseña WiFi.'
+      de: 'WLAN-Passwort.'
+      it: 'Password WiFi.'
+      pl: 'Hasło WiFi.'
+      ru: 'Пароль WiFi.'
+      zh: 'WiFi密码。'
+      hu: 'WiFi-jelszó.'
+      pt: 'Palavra-passe do WiFi.'
+    type: 'str'
+    mux:
+      selector: 'WIFI_INFO_TYPE'
+      values: [0x02]
+
+  WIFI_SSID:
+    bits: '2.7-61.0'
+    comment:
+      en: 'WiFi SSID.'
+      fr: 'SSID WiFi.'
+      es: 'SSID WiFi.'
+      de: 'WLAN-SSID.'
+      it: 'SSID WiFi.'
+      pl: 'SSID WiFi.'
+      ru: 'SSID сети WiFi.'
+      zh: 'WiFi SSID。'
+      hu: 'WiFi SSID.'
+      pt: 'SSID do WiFi.'
+    type: 'str'
+    mux:
+      selector: 'WIFI_INFO_TYPE'
+      values: [0x01]

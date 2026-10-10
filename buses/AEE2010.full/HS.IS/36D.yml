@@ -1,0 +1,201 @@
+id: 0x36D
+name: 'BRAKE_DYNAMIC_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Brake control unit data: hydraulic hold state, road-slope estimation and vehicle-motion-control status.'
+  fr: 'Données du calculateur de freinage : état de maintien hydraulique, estimation de la pente et état du contrôle de mouvement du véhicule.'
+  es: 'Datos de la centralita de frenos: estado de retención hidráulica, estimación de la pendiente y estado del control de movimiento del vehículo.'
+  de: 'Daten des Bremssteuergeräts: Zustand des hydraulischen Haltens, Steigungsschätzung und Status der Fahrzeugbewegungsregelung.'
+  it: 'Dati della centralina freni: stato di mantenimento idraulico, stima della pendenza e stato del controllo del movimento del veicolo.'
+  pl: 'Dane sterownika hamulców: stan podtrzymania hydraulicznego, szacowanie nachylenia drogi i stan kontroli ruchu pojazdu.'
+  ru: 'Данные блока управления тормозами: состояние гидравлического удержания, оценка уклона дороги и статус контроля движения автомобиля.'
+  zh: '制动控制单元数据:液压保持状态、坡度估算及车辆运动控制状态。'
+  hu: 'A fékvezérlő egység adatai: hidraulikus tartás állapota, lejtő becslése és a jármű mozgásszabályozásának állapota.'
+  pt: 'Dados da unidade de controlo de travagem: estado de retenção hidráulica, estimativa de inclinação da estrada e estado de controlo de movimento do veículo.'
+periodicity: ['40ms']
+senders: ['ABS']
+receivers: ['AAS']
+
+signals:
+  VMC_STATUS:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Status of longitudinal control by the braking system'
+      fr: 'État du contrôle longitudinal par le système de freinage'
+      es: 'Estado del control longitudinal por el sistema de frenado'
+      de: 'Status der Längsregelung durch das Bremssystem'
+      it: 'Stato del controllo longitudinale tramite l''impianto frenante'
+      pl: 'Stan sterowania wzdłużnego przez układ hamulcowy'
+      ru: 'Статус продольного управления тормозной системой'
+      zh: '制动系统纵向控制状态'
+      hu: 'A fékrendszer általi hosszirányú szabályozás állapota'
+      pt: 'Estado do controlo longitudinal pelo sistema de travagem'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Ready'
+        fr: 'Prêt'
+        es: 'Listo'
+        de: 'Bereit'
+        it: 'Pronto'
+        pl: 'Gotowy'
+        ru: 'Готово'
+        zh: '就绪'
+        hu: 'Kész'
+        pt: 'Pronto'
+      0x02:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '1.5'
+    unused: true
+
+  HYDRAULIC_HOLD_STATUS:
+    bits: '1.4'
+    comment:
+      en: 'Status of the hydraulic pressure level needed to hold the vehicle stationary'
+      fr: 'État du niveau de pression hydraulique nécessaire pour maintenir le véhicule à l''arrêt'
+      es: 'Estado del nivel de presión hidráulica necesario para mantener el vehículo detenido'
+      de: 'Status des Hydraulikdruckniveaus zum Halten des stehenden Fahrzeugs'
+      it: 'Stato del livello di pressione idraulica necessario per mantenere fermo il veicolo'
+      pl: 'Stan poziomu ciśnienia hydraulicznego potrzebnego do utrzymania pojazdu w miejscu'
+      ru: 'Состояние уровня гидравлического давления, необходимого для удержания автомобиля на месте'
+      zh: '维持车辆静止所需液压压力水平的状态'
+      hu: 'A jármű álló helyzetben tartásához szükséges hidraulikanyomás-szint állapota'
+      pt: 'Estado do nível de pressão hidráulica necessário para manter o veículo parado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not held'
+        fr: 'Non maintenu'
+        es: 'No mantenido'
+        de: 'Nicht gehalten'
+        it: 'Non mantenuto'
+        pl: 'Nie utrzymywany'
+        ru: 'Не удерживается'
+        zh: '未保持'
+        hu: 'Nincs tartva'
+        pt: 'Não mantido'
+      0x01:
+        en: 'Held'
+        fr: 'Maintenu'
+        es: 'Retenido'
+        de: 'Gehalten'
+        it: 'Mantenuto'
+        pl: 'Przytrzymany'
+        ru: 'Удерживается'
+        zh: '保持'
+        hu: 'Tartva'
+        pt: 'Mantido'
+
+  DYNAMIC_SLOPE_VALUE:
+    bits: '1.3-2.6'
+    comment:
+      en: 'Dynamically estimated road slope (%)'
+      fr: 'Pente dynamique estimée (%)'
+      es: 'Pendiente dinámica estimada (%)'
+      de: 'Dynamisch geschätzte Fahrbahnsteigung (%)'
+      it: 'Pendenza dinamica stimata (%)'
+      pl: 'Dynamicznie szacowane nachylenie drogi (%)'
+      ru: 'Динамически оцениваемый уклон дороги (%)'
+      zh: '动态估算的道路坡度(%)'
+      hu: 'A dinamikusan becsült útlejtés (%)'
+      pt: 'Inclinação dinâmica estimada (%)'
+    type: 'uint'
+    factor: 1
+    offset: -30
+    min: -30
+    max: 30
+    units: '%'
+    invalid: 0x3F
+    default: 0x3E
+
+  DYNAMIC_SLOPE_ACCURACY:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Accuracy of the dynamically estimated road slope'
+      fr: 'Précision de la pente dynamique estimée'
+      es: 'Precisión de la pendiente dinámica estimada'
+      de: 'Genauigkeit der dynamisch geschätzten Fahrbahnsteigung'
+      it: 'Precisione della pendenza dinamica stimata'
+      pl: 'Dokładność dynamicznie szacowanego nachylenia drogi'
+      ru: 'Точность динамически оцениваемого уклона дороги'
+      zh: '动态估算道路坡度的精度'
+      hu: 'A dinamikusan becsült útlejtés pontossága'
+      pt: 'Precisão da inclinação dinâmica estimada'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Good'
+        fr: 'Bonne'
+        es: 'Buena'
+        de: 'Gut'
+        it: 'Buona'
+        pl: 'Dobra'
+        ru: 'Хорошая'
+        zh: '良好'
+        hu: 'Jó'
+        pt: 'Boa'
+      0x01:
+        en: 'Medium'
+        fr: 'Moyenne'
+        es: 'Media'
+        de: 'Mittel'
+        it: 'Media'
+        pl: 'Średni'
+        ru: 'Средний'
+        zh: '中等'
+        hu: 'Közepes'
+        pt: 'Média'
+      0x02:
+        en: 'Low'
+        fr: 'Faible'
+        es: 'Bajo'
+        de: 'Niedrig'
+        it: 'Basso'
+        pl: 'Niski'
+        ru: 'Низкий'
+        zh: '低'
+        hu: 'Alacsony'
+        pt: 'Baixo'
+      0x03:
+        en: 'Undefined'
+        fr: 'Indéfini'
+        es: 'Indefinido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Meghatározatlan'
+        pt: 'Indefinido'
+
+  UNUSED_2:
+    bits: '2.3-4.0'
+    unused: true

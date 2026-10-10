@@ -1,0 +1,77 @@
+id: 0x228
+name: 'EASY_MOVE_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Odometer reading from the BSI, plus a time counter and a global-time-reset counter.'
+  fr: 'Kilométrage envoyé par la BSI, ainsi qu''un compteur temporel et un compteur de remise à zéro du temps global.'
+  es: 'Kilometraje enviado por la BSI, además de un contador temporal y un contador de reinicio del tiempo global.'
+  de: 'Kilometerstand vom BSI, sowie ein Zeitzähler und ein Zähler für den Reset der Gesamtzeit.'
+  it: 'Chilometraggio inviato dalla BSI, oltre a un contatore temporale e un contatore di reset del tempo globale.'
+  pl: 'Przebieg wysyłany przez BSI, a także licznik czasu i licznik kasowania czasu globalnego.'
+  ru: 'Пробег, отправляемый BSI, а также счётчик времени и счётчик сброса глобального времени.'
+  zh: 'BSI发送的里程数,以及一个时间计数器和一个全局时间复位计数器。'
+  hu: 'A BSI által küldött km-óraállás, valamint egy időszámláló és egy globális idő-nullázási számláló.'
+  pt: 'Leitura do conta-quilómetros da BSI, além de um contador de tempo e de um contador de reposição de tempo global.'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI', 'BSM']
+receivers: ['ACC', 'ARTIV', 'ECR']
+
+signals:
+  VEHICLE_TIME_COUNTER:
+    bits: '1.7-4.0'
+    comment:
+      en: 'Vehicle time counter; value 0xFFFFFFFE means unavailable'
+      fr: 'Compteur temporel véhicule ; valeur 0xFFFFFFFE = indisponible'
+      es: 'Contador temporal del vehículo; valor 0xFFFFFFFE = no disponible'
+      de: 'Fahrzeugzeitzähler; Wert 0xFFFFFFFE = nicht verfügbar'
+      it: 'Contatore temporale veicolo; valore 0xFFFFFFFE = non disponibile'
+      pl: 'Licznik czasu pojazdu; wartość 0xFFFFFFFE = niedostępne'
+      ru: 'Временной счётчик автомобиля; значение 0xFFFFFFFE означает «недоступно»'
+      zh: '车辆时间计数器;值0xFFFFFFFE表示不可用'
+      hu: 'Jármű időszámláló; a 0xFFFFFFFE érték „nem elérhető”-t jelent'
+      pt: 'Contador temporal do veículo; valor 0xFFFFFFFE = indisponível'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 429496729.3
+    units: 's'
+    invalid: 0xFFFFFFFF
+
+  ODOMETER:
+    bits: '5.7-7.0'
+    comment:
+      en: 'Absolute distance travelled by the vehicle (matching the value shown to the driver) (km)'
+      fr: 'Kilométrage absolu parcouru par le véhicule (cohérent avec la valeur affichée au conducteur) (km)'
+      es: 'Kilometraje absoluto recorrido por el vehículo (coherente con el valor mostrado al conductor) (km)'
+      de: 'Absolute vom Fahrzeug zurückgelegte Strecke (übereinstimmend mit der dem Fahrer angezeigten Angabe) (km)'
+      it: 'Chilometraggio assoluto percorso dal veicolo (coerente con il valore mostrato al conducente) (km)'
+      pl: 'Bezwzględny przebieg pojazdu (zgodny z wartością wyświetlaną kierowcy) (km)'
+      ru: 'Абсолютный пробег автомобиля (соответствующий значению, показываемому водителю) (км)'
+      zh: '车辆行驶的绝对里程(与显示给驾驶员的数值一致)(km)'
+      hu: 'A jármű által megtett abszolút távolság (megegyezik a vezetőnek kijelzett értékkel) (km)'
+      pt: 'Distância absoluta percorrida pelo veículo (correspondente ao valor apresentado ao condutor) (km)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 16777214
+    units: 'km'
+    invalid: 0xFFFFFF
+
+  TIME_COUNTER_RESET_COUNTER:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Reset counter of the vehicle time counter (GCT); value 0xFE means unavailable'
+      fr: 'Compteur de réinitialisation du compteur temporel véhicule (GCT) ; valeur 0xFE = indisponible'
+      es: 'Contador de reinicios del contador temporal del vehículo (GCT); valor 0xFE = no disponible'
+      de: 'Rücksetzzähler des Fahrzeugzeitzählers (GCT); Wert 0xFE = nicht verfügbar'
+      it: 'Contatore dei reset del contatore temporale veicolo (GCT); valore 0xFE = non disponibile'
+      pl: 'Licznik resetów licznika czasu pojazdu (GCT); wartość 0xFE = niedostępne'
+      ru: 'Счётчик сбросов временного счётчика автомобиля (GCT); значение 0xFE означает «недоступно»'
+      zh: '车辆时间计数器(GCT)的复位计数器;值0xFE表示不可用'
+      hu: 'A jármű időszámlálójának (GCT) visszaállítási számlálója; a 0xFE érték „nem elérhető”-t jelent'
+      pt: 'Contador de reinícios do contador temporal do veículo (GCT); valor 0xFE = indisponível'
+    type: 'uint'
+    min: 0
+    max: 253
+    invalid: 0xFF

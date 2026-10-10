@@ -1,0 +1,408 @@
+id: 0x363
+name: 'USB_LIST_READ_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'USB media list browsing status: list index, total entries, selected list, elapsed time and track-change origin.'
+  fr: 'État de navigation dans la liste USB : index de liste, nombre total d''entrées, liste sélectionnée, temps écoulé et origine du changement de piste.'
+  es: 'Estado de navegación de la lista USB: índice de lista, número total de entradas, lista seleccionada, tiempo transcurrido y origen del cambio de pista.'
+  de: 'Status der USB-Listen-Navigation: Listenindex, Gesamtanzahl der Einträge, ausgewählte Liste, verstrichene Zeit und Ursprung des Titelwechsels.'
+  it: 'Stato di navigazione dell''elenco USB: indice elenco, numero totale di voci, elenco selezionato, tempo trascorso e origine del cambio traccia.'
+  pl: 'Stan przeglądania listy USB: indeks listy, łączna liczba pozycji, wybrana lista, czas, który upłynął i źródło zmiany utworu.'
+  ru: 'Статус просмотра списка USB: индекс списка, общее количество записей, выбранный список, прошедшее время и источник смены трека.'
+  zh: 'USB媒体列表浏览状态:列表索引、条目总数、所选列表、已用时间及曲目更改来源。'
+  hu: 'Az USB médialista böngészésének állapota: listaindex, összes bejegyzés száma, kiválasztott lista, eltelt idő és a számváltás forrása.'
+  pt: 'Estado de navegação na lista de suportes USB: índice da lista, total de entradas, lista selecionada, tempo decorrido e origem da mudança de faixa.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['1000ms', 'trigger']
+senders: ['RAD', 'KML', 'ICSV']
+receivers: ['CMB', 'EMF', 'MATT']
+
+signals:
+  PLAYLIST_TRACK_INDEX:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Index of the music track being played in the selected list'
+      fr: 'Indice du morceau en cours de lecture dans la liste sélectionnée'
+      es: 'Índice de la pista en reproducción en la lista seleccionada'
+      de: 'Index des abgespielten Musiktitels in der ausgewählten Liste'
+      it: 'Indice del brano in riproduzione nell''elenco selezionato'
+      pl: 'Indeks odtwarzanego utworu na wybranej liście'
+      ru: 'Индекс воспроизводимого трека в выбранном списке'
+      zh: '所选列表中正在播放曲目的索引'
+      hu: 'A kiválasztott listában lejátszott szám indexe'
+      pt: 'Índice da faixa de música em reprodução na lista selecionada'
+    type: 'uint'
+    min: 0
+    max: 65533
+    invalid: 0xFFFF
+    default: 0xFFFE
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.7-2.6'
+          fr: 'Aussi observé aux bits 1.7-2.6'
+          es: 'También observado en los bits 1.7-2.6'
+          de: 'Auch an den Bits 1.7-2.6 beobachtet'
+          it: 'Osservato anche ai bit 1.7-2.6'
+          pl: 'Obserwowany także na bitach 1.7-2.6'
+          ru: 'Также наблюдался в битах 1.7-2.6'
+          zh: '也观察到位于位1.7-2.6'
+          hu: 'Megfigyelve a(z) 1.7-2.6 biteken is'
+          pt: 'Também observado nos bits 1.7-2.6'
+        bits: '1.7-2.6'
+
+  PLAYLIST_TRACK_COUNT:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Total number of tracks in the selected list'
+      fr: 'Nombre total de morceaux dans la liste sélectionnée'
+      es: 'Número total de pistas en la lista seleccionada'
+      de: 'Gesamtzahl der Titel in der ausgewählten Liste'
+      it: 'Numero totale di brani nell''elenco selezionato'
+      pl: 'Całkowita liczba utworów na wybranej liście'
+      ru: 'Общее число треков в выбранном списке'
+      zh: '所选列表中的曲目总数'
+      hu: 'A kiválasztott lista összes száma'
+      pt: 'Número total de faixas na lista selecionada'
+    type: 'uint'
+    min: 0
+    max: 65533
+    invalid: 0xFFFF
+    default: 0xFFFE
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.5-3.4'
+          fr: 'Aussi observé aux bits 2.5-3.4'
+          es: 'También observado en los bits 2.5-3.4'
+          de: 'Auch an den Bits 2.5-3.4 beobachtet'
+          it: 'Osservato anche ai bit 2.5-3.4'
+          pl: 'Obserwowany także na bitach 2.5-3.4'
+          ru: 'Также наблюдался в битах 2.5-3.4'
+          zh: '也观察到位于位2.5-3.4'
+          hu: 'Megfigyelve a(z) 2.5-3.4 biteken is'
+          pt: 'Também observado nos bits 2.5-3.4'
+        bits: '2.5-3.4'
+
+  SELECTED_LIST_NUMBER:
+    bits: '5.7-6.4'
+    comment:
+      en: 'Number of the current list among all lists of the selected type'
+      fr: 'Numéro de liste en cours parmi toutes les listes du type sélectionné'
+      es: 'Número de la lista actual entre todas las listas del tipo seleccionado'
+      de: 'Nummer der aktuellen Liste unter allen Listen des ausgewählten Typs'
+      it: 'Numero dell''elenco corrente tra tutti gli elenchi del tipo selezionato'
+      pl: 'Numer bieżącej listy spośród wszystkich list wybranego typu'
+      ru: 'Номер текущего списка среди всех списков выбранного типа'
+      zh: '所选类型所有列表中当前列表的编号'
+      hu: 'Az aktuális lista száma a kiválasztott típus összes listája között'
+      pt: 'Número da lista atual entre todas as listas do tipo selecionado'
+    type: 'uint'
+    min: 0
+    max: 4093
+    invalid: 0xFFF
+    default: 0xFFE
+
+  SELECTED_LIST_TYPE:
+    bits: '6.3-6.1'
+    comment:
+      en: 'Type of the list currently played'
+      fr: 'Type de la liste sélectionnée en cours de lecture'
+      es: 'Tipo de la lista actualmente reproducida'
+      de: 'Typ der aktuell abgespielten Liste'
+      it: 'Tipo dell''elenco attualmente in riproduzione'
+      pl: 'Typ aktualnie odtwarzanej listy'
+      ru: 'Тип воспроизводимого в данный момент списка'
+      zh: '当前播放列表的类型'
+      hu: 'Az éppen lejátszott lista típusa'
+      pt: 'Tipo da lista atualmente em reprodução'
+    type: 'enum'
+    default: 0x06
+    values:
+      0x00:
+        en: 'Directory'
+        fr: 'Répertoire'
+        es: 'Directorio'
+        de: 'Verzeichnis'
+        it: 'Rubrica'
+        pl: 'Katalog'
+        ru: 'Каталог'
+        zh: '目录'
+        hu: 'Könyvtár'
+        pt: 'Diretório'
+      0x01:
+        en: 'Artist'
+        fr: 'Artiste'
+        es: 'Artista'
+        de: 'Interpret'
+        it: 'Artista'
+        pl: 'Wykonawca'
+        ru: 'Исполнитель'
+        zh: '艺术家'
+        hu: 'Előadó'
+        pt: 'Artista'
+      0x02:
+        en: 'Genre'
+        fr: 'Genre'
+        es: 'Género'
+        de: 'Genre'
+        it: 'Genere'
+        pl: 'Gatunek'
+        ru: 'Жанр'
+        zh: '流派'
+        hu: 'Műfaj'
+        pt: 'Género'
+      0x03:
+        en: 'Playlist'
+        fr: 'Playlist'
+        es: 'Lista de reproducción'
+        de: 'Playlist'
+        it: 'Playlist'
+        pl: 'Playlista'
+        ru: 'Плейлист'
+        zh: '播放列表'
+        hu: 'Lejátszási lista'
+        pt: 'Lista de reprodução'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 3.3-3.2'
+          fr: 'Aussi observé aux bits 3.3-3.2'
+          es: 'También observado en los bits 3.3-3.2'
+          de: 'Auch an den Bits 3.3-3.2 beobachtet'
+          it: 'Osservato anche ai bit 3.3-3.2'
+          pl: 'Obserwowany także na bitach 3.3-3.2'
+          ru: 'Также наблюдался в битах 3.3-3.2'
+          zh: '也观察到位于位3.3-3.2'
+          hu: 'Megfigyelve a(z) 3.3-3.2 biteken is'
+          pt: 'Também observado nos bits 3.3-3.2'
+        bits: '3.3-3.2'
+
+  FILE_ELAPSED_TIME_SIGN:
+    bits: '6.0'
+    comment:
+      en: 'Sign of the time elapsed since the start of the file'
+      fr: 'Signe du temps écoulé depuis le début du fichier'
+      es: 'Signo del tiempo transcurrido desde el inicio del archivo'
+      de: 'Vorzeichen der seit Dateibeginn verstrichenen Zeit'
+      it: 'Segno del tempo trascorso dall''inizio del file'
+      pl: 'Znak czasu, który upłynął od początku pliku'
+      ru: 'Знак времени, прошедшего с начала файла'
+      zh: '自文件开始经过时间的符号'
+      hu: 'A fájl kezdete óta eltelt idő előjele'
+      pt: 'Sinal do tempo decorrido desde o início do ficheiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Positive'
+        fr: 'Positif'
+        es: 'Positivo'
+        de: 'Positiv'
+        it: 'Positivo'
+        pl: 'Dodatni'
+        ru: 'Положительно'
+        zh: '正'
+        hu: 'Pozitív'
+        pt: 'Positivo'
+      0x01:
+        en: 'Negative'
+        fr: 'Négatif'
+        es: 'Negativo'
+        de: 'Negativ'
+        it: 'Negativo'
+        pl: 'Ujemny'
+        ru: 'Отрицательный'
+        zh: '负'
+        hu: 'Negatív'
+        pt: 'Negativo'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 5.7'
+          fr: 'Aussi observé aux bits 5.7'
+          es: 'También observado en los bits 5.7'
+          de: 'Auch an den Bits 5.7 beobachtet'
+          it: 'Osservato anche ai bit 5.7'
+          pl: 'Obserwowany także na bitach 5.7'
+          ru: 'Также наблюдался в битах 5.7'
+          zh: '也观察到位于位5.7'
+          hu: 'Megfigyelve a(z) 5.7 biteken is'
+          pt: 'Também observado nos bits 5.7'
+        bits: '5.7'
+
+  FILE_ELAPSED_SECONDS:
+    bits: '7.7-7.2'
+    comment:
+      en: 'Seconds elapsed since the start of the file'
+      fr: 'Nombre de secondes écoulées depuis le début du fichier'
+      es: 'Segundos transcurridos desde el inicio del archivo'
+      de: 'Verstrichene Sekunden seit Dateibeginn'
+      it: 'Secondi trascorsi dall''inizio del file'
+      pl: 'Liczba sekund od początku pliku'
+      ru: 'Секунды, прошедшие с начала файла'
+      zh: '自文件开始已过去的秒数'
+      hu: 'A fájl kezdete óta eltelt másodpercek'
+      pt: 'Segundos decorridos desde o início do ficheiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 59
+    units: 's'
+    invalid: 0x3F
+    default: 0x3E
+    alternatives:
+      - note:
+          en: 'Also observed at bits 5.6-5.0'
+          fr: 'Aussi observé aux bits 5.6-5.0'
+          es: 'También observado en los bits 5.6-5.0'
+          de: 'Auch an den Bits 5.6-5.0 beobachtet'
+          it: 'Osservato anche ai bit 5.6-5.0'
+          pl: 'Obserwowany także na bitach 5.6-5.0'
+          ru: 'Также наблюдался в битах 5.6-5.0'
+          zh: '也观察到位于位5.6-5.0'
+          hu: 'Megfigyelve a(z) 5.6-5.0 biteken is'
+          pt: 'Também observado nos bits 5.6-5.0'
+        bits: '5.6-5.0'
+
+  USB_TRACK_CHANGE_ORIGIN:
+    bits: '7.1-7.0'
+    comment:
+      en: 'Origin of the USB audio track change'
+      fr: 'Origine du changement de plage audio USB'
+      es: 'Origen del cambio de pista de audio USB'
+      de: 'Ursprung des USB-Audiotitelwechsels'
+      it: 'Origine del cambio di traccia audio USB'
+      pl: 'Źródło zmiany utworu audio USB'
+      ru: 'Источник смены USB-аудиодорожки'
+      zh: 'USB音轨切换来源'
+      hu: 'Az USB hangsáv-váltás eredete'
+      pt: 'Origem da mudança de faixa de áudio USB'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No track change'
+        fr: 'Pas de changement de plage'
+        es: 'Sin cambio de pista'
+        de: 'Kein Titelwechsel'
+        it: 'Nessun cambio di traccia'
+        pl: 'Brak zmiany utworu'
+        ru: 'Без смены дорожки'
+        zh: '无曲目切换'
+        hu: 'Nincs számváltás'
+        pt: 'Sem mudança de faixa'
+      0x01:
+        en: 'Automatic change'
+        fr: 'Changement automatique'
+        es: 'Cambio automático'
+        de: 'Automatischer Wechsel'
+        it: 'Cambio automatico'
+        pl: 'Zmiana automatyczna'
+        ru: 'Автоматическое переключение'
+        zh: '自动切换'
+        hu: 'Automatikus váltás'
+        pt: 'Mudança automática'
+      0x02:
+        en: 'Manual change'
+        fr: 'Changement manuel'
+        es: 'Cambio manual'
+        de: 'Manueller Wechsel'
+        it: 'Cambio manuale'
+        pl: 'Zmiana ręczna'
+        ru: 'Ручное переключение'
+        zh: '手动更改'
+        hu: 'Kézi váltás'
+        pt: 'Mudança manual'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  FILE_ELAPSED_MINUTES:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Minutes elapsed since the start of the file'
+      fr: 'Nombre de minutes écoulées depuis le début du fichier'
+      es: 'Minutos transcurridos desde el inicio del archivo'
+      de: 'Verstrichene Minuten seit Dateibeginn'
+      it: 'Minuti trascorsi dall''inizio del file'
+      pl: 'Liczba minut od początku pliku'
+      ru: 'Минуты, прошедшие с начала файла'
+      zh: '自文件开始已过去的分钟数'
+      hu: 'A fájl kezdete óta eltelt percek'
+      pt: 'Minutos decorridos desde o início do ficheiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 253
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFE
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.7-4.0'
+          fr: 'Aussi observé aux bits 4.7-4.0'
+          es: 'También observado en los bits 4.7-4.0'
+          de: 'Auch an den Bits 4.7-4.0 beobachtet'
+          it: 'Osservato anche ai bit 4.7-4.0'
+          pl: 'Obserwowany także na bitach 4.7-4.0'
+          ru: 'Также наблюдался в битах 4.7-4.0'
+          zh: '也观察到位于位4.7-4.0'
+          hu: 'Megfigyelve a(z) 4.7-4.0 biteken is'
+          pt: 'Também observado nos bits 4.7-4.0'
+        bits: '4.7-4.0'
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 100ms'
+      fr: 'Aussi observée avec une période de 100ms'
+      es: 'También observada con un periodo de 100ms'
+      de: 'Auch mit einer Periode von 100ms beobachtet'
+      it: 'Osservata anche con un periodo di 100ms'
+      pl: 'Obserwowana także z okresem 100ms'
+      ru: 'Также наблюдалась с периодом 100ms'
+      zh: '也观察到周期为100ms'
+      hu: 'Megfigyelve 100ms periódussal is'
+      pt: 'Também observada com um período de 100ms'
+    periodicity: ['100ms']

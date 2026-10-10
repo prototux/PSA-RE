@@ -1,0 +1,568 @@
+id: 0x166
+name: 'PARKING_CAMERA_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Parking camera status: view display mode, activation state, wheel reference counters and detected parking slot data.'
+  fr: 'État de la caméra de recul : mode d''affichage de la vue, activation, compteurs de référence roue et données de la place détectée.'
+  es: 'Estado de la cámara de aparcamiento: modo de visualización, activación, contadores de referencia de rueda y datos de la plaza detectada.'
+  de: 'Status der Einparkkamera: Ansichtsmodus, Aktivierung, Radreferenzzähler und Daten des erkannten Parkplatzes.'
+  it: 'Stato della telecamera di parcheggio: modalità di visualizzazione, attivazione, contatori di riferimento ruota e dati del posto auto rilevato.'
+  pl: 'Stan kamery parkowania: tryb wyświetlania widoku, aktywacja, liczniki referencyjne koła i dane wykrytego miejsca parkingowego.'
+  ru: 'Статус парковочной камеры: режим отображения, активация, счётчики опорных импульсов колеса и данные обнаруженного места парковки.'
+  zh: '泊车摄像头状态:视图显示模式、激活状态、车轮参考计数器及检测到的车位数据。'
+  hu: 'A tolatókamera állapota: nézet megjelenítési módja, aktiválás, kerék referenciaszámlálók és a felismert parkolóhely adatai.'
+  pt: 'Estado da câmara de estacionamento: modo de apresentação da vista, estado de ativação, contadores de referência das rodas e dados da vaga de estacionamento detetada.'
+observations:
+  en: 'On state change of: AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+  fr: 'Sur changement d''état de : AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+  es: 'Al cambiar el estado de: AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+  de: 'Bei Statusänderung von: AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+  it: 'Al cambiamento di stato di: AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+  pl: 'Wysyłane przy zmianie stanu: AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+  ru: 'При изменении состояния: AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+  zh: '当ETAT_ACTIV_AVP, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, VPK_PARK_SLOT_ID状态变化时'
+  hu: 'A(z) AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID állapotváltozásakor'
+  pt: 'Na mudança de estado de: AVP_ACTIVATION_STATUS, VPARK_ACTIVATION_STATUS, VPARK_VIEW_DISPLAY_REQUEST, VPARK_AUTO_DISPLAY, PARKING_SLOT_ID'
+periodicity: ['200ms', 'trigger']
+senders: ['AVP']
+receivers: ['ICSV', 'CMB', 'BTEL', 'OVIP', 'AAS', 'RAD']
+
+signals:
+  AVP_ACTIVATION_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Front parking assist (AVP) activation status'
+      fr: 'État d''activation AVP'
+      es: 'Estado de activación del asistente de aparcamiento delantero (AVP)'
+      de: 'Aktivierungsstatus der vorderen Einparkhilfe (AVP)'
+      it: 'Stato di attivazione dell''assistenza al parcheggio anteriore (AVP)'
+      pl: 'Stan aktywacji przedniego wspomagania parkowania (AVP)'
+      ru: 'Статус активации переднего парковочного ассистента (AVP)'
+      zh: '前泊车辅助(AVP)激活状态'
+      hu: 'Az elülső parkolássegítő (AVP) aktiválási állapota'
+      pt: 'Estado de ativação do assistente de estacionamento dianteiro (AVP)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  PARK_CAMERA_VIEW_DISPLAY:
+    bits: '1.6-1.5'
+    comment:
+      en: 'Front parking assist (AVP) view display'
+      fr: 'Affichage de la vue AVP'
+      es: 'Visualización de la vista del asistente de aparcamiento delantero (AVP)'
+      de: 'Anzeige der Ansicht der vorderen Einparkhilfe (AVP)'
+      it: 'Visualizzazione della vista dell''assistenza al parcheggio anteriore (AVP)'
+      pl: 'Wyświetlanie widoku przedniego wspomagania parkowania (AVP)'
+      ru: 'Отображение вида переднего парковочного ассистента (AVP)'
+      zh: '前泊车辅助(AVP)视图显示'
+      hu: 'Az elülső parkolássegítő (AVP) nézetének megjelenítése'
+      pt: 'Visualização da vista do assistente de estacionamento dianteiro (AVP)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No AVP display'
+        fr: 'Pas d''affichage AVP'
+        es: 'Sin visualización AVP'
+        de: 'Keine AVP-Anzeige'
+        it: 'Nessuna visualizzazione AVP'
+        pl: 'Brak wyświetlania AVP'
+        ru: 'Нет отображения AVP'
+        zh: '无AVP显示'
+        hu: 'Nincs AVP kijelzés'
+        pt: 'Sem visualização AVP'
+      0x01:
+        en: 'Front view display'
+        fr: 'Affichage de la vue avant'
+        es: 'Visualización de la vista delantera'
+        de: 'Anzeige der Vorderansicht'
+        it: 'Visualizzazione della vista anteriore'
+        pl: 'Wyświetlanie widoku przedniego'
+        ru: 'Отображение переднего вида'
+        zh: '前视图显示'
+        hu: 'Első nézet megjelenítése'
+        pt: 'Apresentação da vista dianteira'
+      0x02:
+        en: 'Panoramic view display'
+        fr: 'Affichage vue panoramique'
+        es: 'Visualización de vista panorámica'
+        de: 'Panoramaansicht-Anzeige'
+        it: 'Visualizzazione vista panoramica'
+        pl: 'Wyświetlanie widoku panoramicznego'
+        ru: 'Отображение панорамного вида'
+        zh: '全景视图显示'
+        hu: 'Panorámás nézet megjelenítése'
+        pt: 'Apresentação da vista panorâmica'
+      0x03:
+        en: 'Rear view display'
+        fr: 'Affichage vue arrière'
+        es: 'Visualización de vista trasera'
+        de: 'Anzeige der Heckansicht'
+        it: 'Visualizzazione vista posteriore'
+        pl: 'Wyświetlanie widoku tylnego'
+        ru: 'Отображение вида сзади'
+        zh: '后视图显示'
+        hu: 'Hátsó nézet megjelenítése'
+        pt: 'Apresentação da vista traseira'
+
+  VPARK_VIEW_DISPLAY_REQUEST:
+    bits: '1.4-1.2'
+    comment:
+      en: 'Request for VPARK display, with the type of view to show in contextual view'
+      fr: 'Demande d''affichage VPARK avec le type de vue à afficher en vue contextuelle'
+      es: 'Solicitud de visualización de VPARK con el tipo de vista a mostrar en vista contextual'
+      de: 'Anforderung der VPARK-Anzeige mit dem Anzeigetyp für die Kontextansicht'
+      it: 'Richiesta di visualizzazione VPARK con il tipo di vista da mostrare in vista contestuale'
+      pl: 'Żądanie wyświetlenia VPARK z typem widoku do pokazania w widoku kontekstowym'
+      ru: 'Запрос отображения VPARK с типом вида для контекстного отображения'
+      zh: 'VPARK显示请求,含情境视图中要显示的视图类型'
+      hu: 'VPARK megjelenítési kérés, a kontextuális nézetben megjelenítendő nézettípussal'
+      pt: 'Pedido de visualização VPARK com o tipo de vista a mostrar em vista contextual'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No VPARK display'
+        fr: 'Pas d''affichage VPARK'
+        es: 'Sin visualización VPARK'
+        de: 'Keine VPARK-Anzeige'
+        it: 'Nessuna visualizzazione VPARK'
+        pl: 'Brak wyświetlania VPARK'
+        ru: 'Нет отображения VPARK'
+        zh: '无VPARK显示'
+        hu: 'Nincs VPARK megjelenítés'
+        pt: 'Sem apresentação VPARK'
+      0x01:
+        en: 'display view front'
+        fr: 'Aff vue AV'
+        es: 'Mostrar vista delantera'
+        de: 'Vorderansicht anzeigen'
+        it: 'Visualizza vista anteriore'
+        pl: 'Wyświetl widok z przodu'
+        ru: 'Отображение вида спереди'
+        zh: '显示前视图'
+        hu: 'Elülső nézet megjelenítése'
+        pt: 'Mostrar vista dianteira'
+      0x02:
+        en: 'Display rear view'
+        fr: 'Affichage de la vue arrière'
+        es: 'Visualización de la vista trasera'
+        de: 'Anzeige der Rückansicht'
+        it: 'Visualizzazione della vista posteriore'
+        pl: 'Wyświetlanie widoku z tyłu'
+        ru: 'Отображение вида сзади'
+        zh: '显示后视图'
+        hu: 'Hátsó nézet megjelenítése'
+        pt: 'Visualização da vista traseira'
+      0x03:
+        en: 'Display front zoom view'
+        fr: 'Affichage de la vue zoom avant'
+        es: 'Visualización de la vista de zoom delantera'
+        de: 'Anzeige der vorderen Zoomansicht'
+        it: 'Visualizzazione della vista zoom anteriore'
+        pl: 'Wyświetlanie widoku powiększenia przedniego'
+        ru: 'Отображение увеличенного вида спереди'
+        zh: '显示前方放大视图'
+        hu: 'Első nagyított nézet megjelenítése'
+        pt: 'Apresentação da vista de zoom dianteira'
+      0x04:
+        en: 'Display rear zoom view'
+        fr: 'Affichage vue zoom arrière'
+        es: 'Visualización de vista de zoom trasera'
+        de: 'Anzeige Heck-Zoomansicht'
+        it: 'Visualizzazione vista zoom posteriore'
+        pl: 'Wyświetlanie widoku powiększenia z tyłu'
+        ru: 'Отображение увеличенного вида сзади'
+        zh: '显示后方放大视图'
+        hu: 'Hátsó nagyított nézet megjelenítése'
+        pt: 'Apresentação da vista de zoom traseira'
+      0x05:
+        en: 'Display front side view'
+        fr: 'Affichage de la vue latérale avant'
+        es: 'Visualización de la vista lateral delantera'
+        de: 'Anzeige der vorderen Seitenansicht'
+        it: 'Visualizzazione della vista laterale anteriore'
+        pl: 'Wyświetlanie widoku bocznego przedniego'
+        ru: 'Отображение переднего бокового вида'
+        zh: '显示前侧视图'
+        hu: 'Első oldalnézet megjelenítése'
+        pt: 'Visualização da vista lateral dianteira'
+      0x06:
+        en: 'Rear side view display'
+        fr: 'Affichage vue latérale arrière'
+        es: 'Visualización vista lateral trasera'
+        de: 'Anzeige seitliche Heckansicht'
+        it: 'Visualizzazione vista laterale posteriore'
+        pl: 'Wyświetlanie widoku bocznego tylnego'
+        ru: 'Отображение бокового заднего вида'
+        zh: '后侧视图显示'
+        hu: 'Hátsó oldalnézet megjelenítése'
+        pt: 'Visualização de vista lateral traseira'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  VPARK_ACTIVATION_STATUS:
+    bits: '1.1'
+    comment:
+      en: 'VPARK activation state'
+      fr: 'État d''activation VPARK'
+      es: 'Estado de activación de VPARK'
+      de: 'Aktivierungszustand von VPARK'
+      it: 'Stato di attivazione VPARK'
+      pl: 'Stan aktywacji VPARK'
+      ru: 'Состояние активации VPARK'
+      zh: 'VPARK激活状态'
+      hu: 'VPARK aktiválási állapota'
+      pt: 'Estado de ativação do VPARK'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  VPARK_AUTO_DISPLAY:
+    bits: '1.0'
+    comment:
+      en: 'Automatic VPARK display'
+      fr: 'Affichage VPARK automatique'
+      es: 'Visualización automática de VPARK'
+      de: 'Automatische VPARK-Anzeige'
+      it: 'Visualizzazione automatica VPARK'
+      pl: 'Automatyczne wyświetlanie VPARK'
+      ru: 'Автоматическое отображение VPARK'
+      zh: 'VPARK自动显示'
+      hu: 'Automatikus VPARK megjelenítés'
+      pt: 'Visualização automática de VPARK'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Activated'
+        fr: 'Activé'
+        es: 'Activado'
+        de: 'Aktiviert'
+        it: 'Attivato'
+        pl: 'Aktywowane'
+        ru: 'Активировано'
+        zh: '已激活'
+        hu: 'Aktiválva'
+        pt: 'Ativado'
+
+  PARKING_SLOT_DEPTH:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Depth of the measured parking space'
+      fr: 'Profondeur de la place mesurée'
+      es: 'Profundidad del hueco de aparcamiento medido'
+      de: 'Tiefe der gemessenen Parklücke'
+      it: 'Profondità del posto auto misurato'
+      pl: 'Głębokość zmierzonego miejsca parkingowego'
+      ru: 'Глубина измеренного парковочного места'
+      zh: '测量车位的深度'
+      hu: 'A mért parkolóhely mélysége'
+      pt: 'Profundidade do lugar de estacionamento medido'
+    type: 'uint'
+    factor: 4
+    min: 0
+    max: 1020
+    units: 'cm'
+    default: 0x00
+
+  PARKING_SLOT_LENGTH:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Length of the measured parking space'
+      fr: 'Longueur de la place mesurée'
+      es: 'Longitud del hueco de aparcamiento medido'
+      de: 'Länge der gemessenen Parklücke'
+      it: 'Lunghezza del posto auto misurato'
+      pl: 'Długość zmierzonego miejsca parkingowego'
+      ru: 'Длина измеренного парковочного места'
+      zh: '测量车位的长度'
+      hu: 'A mért parkolóhely hossza'
+      pt: 'Comprimento do lugar de estacionamento medido'
+    type: 'uint'
+    factor: 4
+    min: 0
+    max: 1020
+    units: 'cm'
+    default: 0x00
+
+  PARKING_SLOT_ORIENTATION:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Orientation of the measured parking space relative to the vehicle centre axis'
+      fr: 'Orientation de la place mesurée par rapport à l''axe central du véhicule'
+      es: 'Orientación del hueco medido respecto al eje central del vehículo'
+      de: 'Ausrichtung der gemessenen Parklücke bezogen auf die Fahrzeugmittelachse'
+      it: 'Orientamento del posto misurato rispetto all''asse centrale del veicolo'
+      pl: 'Orientacja zmierzonego miejsca względem osi centralnej pojazdu'
+      ru: 'Ориентация измеренного места относительно центральной оси автомобиля'
+      zh: '测量车位相对车辆中轴线的朝向'
+      hu: 'A mért parkolóhely tájolása a jármű középtengelyéhez képest'
+      pt: 'Orientação do lugar medido em relação ao eixo central do veículo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 255
+    units: '°'
+    default: 0x00
+
+  PARKING_SLOT_POSITION_X:
+    bits: '5.7-6.7'
+    comment:
+      en: 'X position of the measured parking space relative to the vehicle centre axis'
+      fr: 'Position en X de la place mesurée par rapport à l''axe central du véhicule'
+      es: 'Posición X del hueco medido respecto al eje central del vehículo'
+      de: 'X-Position der gemessenen Parklücke bezogen auf die Fahrzeugmittelachse'
+      it: 'Posizione X del posto misurato rispetto all''asse centrale del veicolo'
+      pl: 'Pozycja X zmierzonego miejsca względem osi centralnej pojazdu'
+      ru: 'Положение X измеренного места относительно центральной оси автомобиля'
+      zh: '测量车位相对车辆中轴线的X位置'
+      hu: 'A mért parkolóhely X pozíciója a jármű középtengelyéhez képest'
+      pt: 'Posição X do lugar medido em relação ao eixo central do veículo'
+    type: 'uint'
+    factor: 4
+    offset: -1020
+    min: -1020
+    units: 'cm'
+    default: 0xFF
+
+  PARKING_SLOT_POSITION_Y:
+    bits: '6.6-6.0'
+    comment:
+      en: 'Y position of the measured parking space relative to the vehicle centre axis'
+      fr: 'Position en Y de la place mesurée par rapport à l''axe central du véhicule'
+      es: 'Posición Y del hueco medido respecto al eje central del vehículo'
+      de: 'Y-Position der gemessenen Parklücke bezogen auf die Fahrzeugmittelachse'
+      it: 'Posizione Y del posto misurato rispetto all''asse centrale del veicolo'
+      pl: 'Pozycja Y zmierzonego miejsca względem osi centralnej pojazdu'
+      ru: 'Положение Y измеренного места относительно центральной оси автомобиля'
+      zh: '测量车位相对车辆中轴线的Y位置'
+      hu: 'A mért parkolóhely Y pozíciója a jármű középtengelyéhez képest'
+      pt: 'Posição Y do lugar medido em relação ao eixo central do veículo'
+    type: 'uint'
+    factor: 4
+    offset: -252
+    min: -252
+    max: 252
+    units: 'cm'
+    default: 0x3F
+
+  REAR_LEFT_WHEEL_ANGULAR_POSITION:
+    bits: '7.7-7.3'
+    comment:
+      en: 'Angular position of the rear left road wheel at the moment of measurement'
+      fr: 'Position angulaire de la roue arrière gauche au moment de la mesure'
+      es: 'Posición angular de la rueda trasera izquierda en el momento de la medición'
+      de: 'Winkelposition des hinteren linken Rads zum Messzeitpunkt'
+      it: 'Posizione angolare della ruota posteriore sinistra al momento della misurazione'
+      pl: 'Pozycja kątowa tylnego lewego koła w chwili pomiaru'
+      ru: 'Угловое положение заднего левого колеса в момент измерения'
+      zh: '测量时刻后左轮的角位置'
+      hu: 'A hátsó bal kerék szöghelyzete a mérés pillanatában'
+      pt: 'Posição angular da roda traseira esquerda no momento da medição'
+    type: 'uint'
+    min: 0
+    max: 31
+    default: 0x00
+
+  REAR_RIGHT_WHEEL_ANGULAR_POSITION:
+    bits: '7.2-8.6'
+    comment:
+      en: 'Angular position of the rear right road wheel at the moment of measurement'
+      fr: 'Position angulaire de la roue arrière droite au moment de la mesure'
+      es: 'Posición angular de la rueda trasera derecha en el momento de la medición'
+      de: 'Winkelposition des hinteren rechten Rads zum Messzeitpunkt'
+      it: 'Posizione angolare della ruota posteriore destra al momento della misurazione'
+      pl: 'Pozycja kątowa tylnego prawego koła w chwili pomiaru'
+      ru: 'Угловое положение заднего правого колеса в момент измерения'
+      zh: '测量时刻后右轮的角位置'
+      hu: 'A hátsó jobb kerék szöghelyzete a mérés pillanatában'
+      pt: 'Posição angular da roda traseira direita no momento da medição'
+    type: 'uint'
+    min: 0
+    max: 31
+    default: 0x00
+
+  VPARK_CAMERA_STATUS:
+    bits: '8.5-8.4'
+    comment:
+      en: 'VPARK functionality state, with the type of operational camera'
+      fr: 'État de la fonctionnalité VPARK, avec le type de caméra opérationnelle'
+      es: 'Estado de la funcionalidad VPARK, con el tipo de cámara operativa'
+      de: 'Zustand der VPARK-Funktion mit dem Typ der aktiven Kamera'
+      it: 'Stato della funzionalità VPARK, con il tipo di telecamera operativa'
+      pl: 'Stan funkcji VPARK wraz z typem działającej kamery'
+      ru: 'Состояние функции VPARK с типом работающей камеры'
+      zh: 'VPARK功能状态,含工作摄像头类型'
+      hu: 'A VPARK funkció állapota, a működő kamera típusával'
+      pt: 'Estado da funcionalidade VPARK, com o tipo de câmara operacional'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'VPK info absent'
+        fr: 'Information VPK absente'
+        es: 'Información VPK ausente'
+        de: 'VPK-Information nicht vorhanden'
+        it: 'Informazione VPK assente'
+        pl: 'Brak informacji VPK'
+        ru: 'Информация VPK отсутствует'
+        zh: 'VPK信息缺失'
+        hu: 'A VPK-információ hiányzik'
+        pt: 'Informação VPK ausente'
+      0x01:
+        en: 'Rear camera'
+        fr: 'Rear camera'
+        es: 'Rear camera'
+        de: 'Rear camera'
+        it: 'Rear camera'
+        pl: 'Rear camera'
+        ru: 'Rear camera'
+        zh: 'Rear camera'
+        hu: 'Rear camera'
+        pt: 'Rear camera'
+      0x02:
+        en: 'Front camera'
+        fr: 'Front camera'
+        es: 'Front camera'
+        de: 'Front camera'
+        it: 'Front camera'
+        pl: 'Front camera'
+        ru: 'Front camera'
+        zh: 'Front camera'
+        hu: 'Front camera'
+        pt: 'Front camera'
+      0x03:
+        en: 'Front/rear camera info (VPK)'
+        fr: 'Information caméra avant/arrière (VPK)'
+        es: 'Información de cámara delantera/trasera (VPK)'
+        de: 'Vorder-/Rückkamera-Information (VPK)'
+        it: 'Informazione telecamera anteriore/posteriore (VPK)'
+        pl: 'Informacja z kamery przedniej/tylnej (VPK)'
+        ru: 'Информация передней/задней камеры (VPK)'
+        zh: '前/后摄像头信息 (VPK)'
+        hu: 'Első/hátsó kamera információ (VPK)'
+        pt: 'Informação da câmara dianteira/traseira (VPK)'
+
+  PARKING_SLOT_DEPTH_SOURCE:
+    bits: '8.3'
+    comment:
+      en: 'Whether the parking space depth is estimated or measured'
+      fr: 'Profondeur estimée ou mesurée'
+      es: 'Indica si la profundidad del hueco es estimada o medida'
+      de: 'Ob die Parklückentiefe geschätzt oder gemessen wurde'
+      it: 'Indica se la profondità del posto è stimata o misurata'
+      pl: 'Wskazuje, czy głębokość miejsca jest szacowana czy zmierzona'
+      ru: 'Указывает, оценена или измерена глубина места'
+      zh: '指示车位深度为估算值还是测量值'
+      hu: 'Jelzi, hogy a parkolóhely mélysége becsült vagy mért'
+      pt: 'Indica se a profundidade do lugar é estimada ou medida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Estimated'
+        fr: 'Estimé'
+        es: 'Estimado'
+        de: 'Geschätzt'
+        it: 'Stimato'
+        pl: 'Szacowany'
+        ru: 'Расчётное'
+        zh: '估算值'
+        hu: 'Becsült'
+        pt: 'Estimado'
+      0x01:
+        en: 'Measured'
+        fr: 'Mesuré'
+        es: 'Medido'
+        de: 'Gemessen'
+        it: 'Misurato'
+        pl: 'Zmierzone'
+        ru: 'Измерено'
+        zh: '已测量'
+        hu: 'Mért'
+        pt: 'Medido'
+
+  PARKING_SLOT_ID:
+    bits: '8.2-8.0'
+    comment:
+      en: 'Identifier of the measured parking space'
+      fr: 'Identifiant de la place mesurée'
+      es: 'Identificador del hueco de aparcamiento medido'
+      de: 'Kennung der gemessenen Parklücke'
+      it: 'Identificativo del posto auto misurato'
+      pl: 'Identyfikator zmierzonego miejsca parkingowego'
+      ru: 'Идентификатор измеренного парковочного места'
+      zh: '测量车位的标识符'
+      hu: 'A mért parkolóhely azonosítója'
+      pt: 'Identificador do lugar de estacionamento medido'
+    type: 'uint'
+    min: 0
+    max: 7
+    default: 0x00

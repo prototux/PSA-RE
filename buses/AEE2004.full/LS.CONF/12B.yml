@@ -1,43 +1,112 @@
 id: 0x12B
 name: 'ROOF_COMMANDS'
-alt_names: ['TE_CDE']
-length: 1
 type: 'can'
-periodicity: ['1000ms']
-senders:
-  - 'BSI'
-receivers:
-  - 'BTE'
+length: 1
+comment:
+  en: 'Roof command frame: authorisation for roof operation and boot/tailgate airbag inhibition'
+  fr: 'Trame de commandes du toit : autorisation de fonctionnement du toit et inhibition airbag du coffre à bagages'
+  es: 'Trama de comandos del techo: autorización de funcionamiento del techo e inhibición del airbag del maletero'
+  de: 'Dachbefehls-Frame: Freigabe der Dachfunktion und Airbag-Sperre für den Kofferraum'
+  it: 'Trama dei comandi del tetto: autorizzazione al funzionamento del tetto e inibizione airbag del bagagliaio'
+  pl: 'Ramka poleceń dachu: zezwolenie na działanie dachu i blokada poduszki powietrznej bagażnika'
+  ru: 'Кадр команд крыши: разрешение работы крыши и блокировка подушки безопасности багажника'
+  zh: '车顶指令帧:车顶操作授权及行李厢气囊抑制'
+  hu: 'Tetőparancs keret: a tető működésének engedélyezése és a csomagtér légzsák letiltása'
+  pt: 'Trama de comando do teto: autorização para o funcionamento do teto e inibição do airbag da mala/porta traseira.'
+observations:
+  en: 'On state change of: BTE_LOCK, BTE_TRUNK_LOCK'
+  fr: 'Sur changement d''état de : BTE_LOCK, BTE_TRUNK_LOCK'
+  es: 'Al cambiar el estado de: BTE_LOCK, BTE_TRUNK_LOCK'
+  de: 'Bei Statusänderung von: BTE_LOCK, BTE_TRUNK_LOCK'
+  it: 'Al cambiamento di stato di: BTE_LOCK, BTE_TRUNK_LOCK'
+  pl: 'Wysyłane przy zmianie stanu: BTE_LOCK, BTE_TRUNK_LOCK'
+  ru: 'При изменении состояния: BTE_LOCK, BTE_TRUNK_LOCK'
+  zh: '当AUT_TE, AC_COF_BAG_INH状态变化时'
+  hu: 'A(z) BTE_LOCK, BTE_TRUNK_LOCK állapotváltozásakor'
+  pt: 'Na mudança de estado de: BTE_LOCK, BTE_TRUNK_LOCK'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['BTE']
 
 signals:
   BTE_LOCK:
     bits: '1.7'
-    alt_names: ['AUT_TE']
     comment:
-      en: 'BTE is unlocked'
-      fr: 'Deverouillage BTE'
+      en: 'Authorization for convertible roof (TE) operation.'
+      fr: 'Autorisation de fonctionnement du toit escamotable (TE).'
+      es: 'Autorización de funcionamiento del techo escamoteable (TE).'
+      de: 'Freigabe für den Betrieb des Klappdachs (TE).'
+      it: 'Autorizzazione al funzionamento del tetto scomparibile (TE).'
+      pl: 'Zezwolenie na działanie chowanego dachu (TE).'
+      ru: 'Разрешение на работу складной крыши (TE).'
+      zh: '折叠车顶(TE)运行授权。'
+      hu: 'A behajtható tető (TE) működésének engedélyezése.'
+      pt: 'Autorização de funcionamento do tejadilho retrátil (TE).'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Locked'
-        fr: 'Verouille'
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
       0x01:
-        en: 'Unlocked'
-        fr: 'Deverouille'
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
 
   UNUSED_1:
     bits: '1.6-1.1'
     unused: true
 
-  BTE_TRUNK_LOCK: # As on the CCs it's the BTE that manage the trunk...
+  BTE_TRUNK_LOCK:
     bits: '1.0'
-    alt_names: ['AC_COF_BAG_INH']
     comment:
-      en: 'Trunk is locked'
-      fr: 'Verouillage coffre'
+      en: 'Trunk lock actuator disabled.'
+      fr: 'Actionneur de serrure du coffre à bagages inhibé.'
+      es: 'Actuador de la cerradura del maletero inhibido.'
+      de: 'Stellantrieb des Kofferraumschlosses deaktiviert.'
+      it: 'Attuatore della serratura del bagagliaio disabilitato.'
+      pl: 'Wyłączony siłownik zamka bagażnika.'
+      ru: 'Исполнительный механизм замка багажника отключён.'
+      zh: '行李箱锁执行器被禁用。'
+      hu: 'A csomagtér záractuátora letiltva.'
+      pt: 'Atuador da fechadura da mala inibido.'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Unlocked'
-        fr: 'Deverouille'
+        en: 'Command allowed'
+        fr: 'Commande possible'
+        es: 'Comando posible'
+        de: 'Befehl möglich'
+        it: 'Comando possibile'
+        pl: 'Polecenie możliwe'
+        ru: 'Команда возможна'
+        zh: '指令可行'
+        hu: 'Parancs lehetséges'
+        pt: 'Comando permitido'
       0x01:
-        en: 'Locked'
-        fr: 'Verouille'
+        en: 'Command inhibited'
+        fr: 'Commande inhibée'
+        es: 'Mando inhibido'
+        de: 'Befehl gesperrt'
+        it: 'Comando inibito'
+        pl: 'Polecenie zablokowane'
+        ru: 'Команда заблокирована'
+        zh: '指令已禁用'
+        hu: 'A parancs letiltva'
+        pt: 'Comando inibido'

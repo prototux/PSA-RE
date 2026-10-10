@@ -1,0 +1,452 @@
+id: 0x099
+name: 'ENGINE_BAY_BOX_STATUS'
+type: 'can'
+length: 4
+comment:
+  en: 'Engine-bay box inputs: fuel pump/injection power relay feedback, air pump relay feedback, water-in-diesel and oil pressure warnings.'
+  fr: 'État des paramètres moteur : pression d''huile, présence d''eau dans le gazole, relais de pompe à air et relais de puissance.'
+  es: 'Entradas de la caja del compartimento motor: retorno del relé de potencia de la bomba de combustible/inyección, retorno del relé de la bomba de aire, avisos de agua en el gasóleo y de presión de aceite.'
+  de: 'Eingänge der Motorraumbox: Rückmeldung des Kraftstoffpumpen-/Einspritz-Leistungsrelais, Rückmeldung des Luftpumpenrelais, Warnungen für Wasser im Diesel und Öldruck.'
+  it: 'Ingressi della centralina vano motore: riscontro relè di potenza pompa carburante/iniezione, riscontro relè pompa aria, avvisi acqua nel gasolio e pressione olio.'
+  pl: 'Wejścia modułu komory silnika: sprzężenie zwrotne przekaźnika mocy pompy paliwa/wtrysku, sprzężenie zwrotne przekaźnika pompy powietrza, ostrzeżenia o wodzie w oleju napędowym i ciśnieniu oleju.'
+  ru: 'Входы блока моторного отсека: обратная связь силового реле топливного насоса/впрыска, обратная связь реле воздушного насоса, предупреждения о воде в дизельном топливе и давлении масла.'
+  zh: '发动机舱盒输入:燃油泵/喷油功率继电器反馈、气泵继电器反馈、柴油含水及机油压力警告。'
+  hu: 'A motortéri doboz bemenetei: üzemanyagszivattyú/befecskendezés teljesítményrelé visszajelzése, légszivattyú relé visszajelzése, gázolajban lévő víz és olajnyomás figyelmeztetések.'
+  pt: 'Entradas da caixa do compartimento do motor: retorno do relé de potência da bomba de combustível/injeção, retorno do relé da bomba de ar, avisos de água no gasóleo e de pressão de óleo.'
+observations:
+  en: 'On state change of: REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+  fr: 'Sur changement d''état de : REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+  es: 'Al cambiar el estado de: REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+  de: 'Bei Statusänderung von: REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+  it: 'Al cambiamento di stato di: REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+  pl: 'Wysyłane przy zmianie stanu: REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+  ru: 'При изменении состояния: REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+  zh: '当E_MARCHE_ARR, E_POS_AF_AV状态变化时'
+  hu: 'A(z) REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE állapotváltozásakor'
+  pt: 'Na mudança de estado de: REVERSE_GEAR_STATE, FRONT_WIPER_FIXED_STOP_STATE'
+periodicity: ['100ms', 'trigger']
+senders: ['BSM']
+receivers: ['BSI']
+
+signals:
+  WASHER_FLUID_MIN_LEVEL_WARNING:
+    bits: '1.7'
+    comment:
+      en: 'Windscreen washer fluid minimum level warning state'
+      fr: 'État de l''alerte de niveau minimum du liquide lave-glace'
+      es: 'Estado de la alerta de nivel mínimo del líquido limpiaparabrisas'
+      de: 'Warnzustand für den Mindeststand der Scheibenwaschflüssigkeit'
+      it: 'Stato dell''allarme livello minimo del liquido lavavetro'
+      pl: 'Stan ostrzeżenia o minimalnym poziomie płynu do spryskiwaczy'
+      ru: 'Состояние предупреждения о минимальном уровне жидкости омывателя'
+      zh: '风窗洗涤液最低液位警告状态'
+      hu: 'A szélvédőmosó-folyadék minimális szintjének figyelmeztető állapota'
+      pt: 'Estado do aviso de nível mínimo do líquido lava-para-brisas'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  HEADLIGHT_CORRECTOR_FAULT:
+    bits: '1.6'
+    comment:
+      en: 'Headlight beam corrector fault'
+      fr: 'Défaut du correcteur d''assiette des projecteurs'
+      es: 'Fallo del corrector de altura de los faros'
+      de: 'Fehler des Scheinwerfer-Leuchtweitenreglers'
+      it: 'Guasto del correttore di assetto dei proiettori'
+      pl: 'Usterka korektora zasięgu reflektorów'
+      ru: 'Неисправность корректора света фар'
+      zh: '大灯高度调节器故障'
+      hu: 'A fényszóró-állásszabályozó hibája'
+      pt: 'Avaria do corretor do feixe dos faróis'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  REVERSE_GEAR_STATE:
+    bits: '1.5'
+    comment:
+      en: 'Reverse gear engagement state'
+      fr: 'État d''engagement de la marche arrière'
+      es: 'Estado de engranaje de la marcha atrás'
+      de: 'Einlegestatus des Rückwärtsgangs'
+      it: 'Stato di innesto della retromarcia'
+      pl: 'Stan włączenia biegu wstecznego'
+      ru: 'Состояние включения задней передачи'
+      zh: '倒挡挂入状态'
+      hu: 'A hátrameneti fokozat bekapcsolási állapota'
+      pt: 'Estado de engate da marcha-atrás'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reverse not engaged'
+        fr: 'Marche arrière non enclenchée'
+        es: 'Marcha atrás no engranada'
+        de: 'Rückwärtsgang nicht eingelegt'
+        it: 'Retromarcia non innestata'
+        pl: 'Bieg wsteczny niewłączony'
+        ru: 'Задняя передача не включена'
+        zh: '倒挡未挂入'
+        hu: 'Hátrameneti fokozat nincs bekapcsolva'
+        pt: 'Marcha-atrás não engrenada'
+      0x01:
+        en: 'Reverse engaged'
+        fr: 'Marche arrière enclenchée'
+        es: 'Marcha atrás engranada'
+        de: 'Rückwärtsgang eingelegt'
+        it: 'Retromarcia innestata'
+        pl: 'Włączony bieg wsteczny'
+        ru: 'Задний ход включён'
+        zh: '已挂倒挡'
+        hu: 'Hátramenet bekapcsolva'
+        pt: 'Marcha-atrás engrenada'
+
+  FRONT_WIPER_FIXED_STOP_STATE:
+    bits: '1.4'
+    comment:
+      en: 'Front wiper fixed stop position status'
+      fr: 'État de la position d''arrêt fixe de l''essuie-glace avant'
+      es: 'Estado de la posición de parada fija del limpiaparabrisas delantero'
+      de: 'Status der Ruhestellung des Frontscheibenwischers'
+      it: 'Stato della posizione di arresto fisso del tergicristallo anteriore'
+      pl: 'Stan pozycji zatrzymania stałego wycieraczki przedniej'
+      ru: 'Состояние фиксированного положения остановки переднего стеклоочистителя'
+      zh: '前雨刷固定停止位置状态'
+      hu: 'Az elülső ablaktörlő rögzített leállási helyzetének állapota'
+      pt: 'Estado da posição de batente fixo do limpa-para-brisas dianteiro'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not in position'
+        fr: 'Pas en position'
+        es: 'No en posición'
+        de: 'Nicht in Position'
+        it: 'Non in posizione'
+        pl: 'Nie w pozycji'
+        ru: 'Не в положении'
+        zh: '未到位'
+        hu: 'Nincs pozícióban'
+        pt: 'Fora de posição'
+      0x01:
+        en: 'In position'
+        fr: 'En position'
+        es: 'En posición'
+        de: 'In Position'
+        it: 'In posizione'
+        pl: 'W pozycji'
+        ru: 'В положении'
+        zh: '到位'
+        hu: 'Pozícióban'
+        pt: 'Em posição'
+
+  ENGINE_COOLANT_LEVEL_WARNING:
+    bits: '1.3'
+    comment:
+      en: 'Engine coolant level warning state'
+      fr: 'État de l''alerte de niveau du liquide de refroidissement moteur'
+      es: 'Estado de la alerta de nivel del líquido refrigerante del motor'
+      de: 'Warnzustand des Motorkühlmittelstands'
+      it: 'Stato dell''allarme livello del liquido di raffreddamento motore'
+      pl: 'Stan ostrzeżenia o poziomie płynu chłodzącego silnika'
+      ru: 'Состояние предупреждения об уровне охлаждающей жидкости двигателя'
+      zh: '发动机冷却液液位警告状态'
+      hu: 'A motor hűtőfolyadék-szintjének figyelmeztető állapota'
+      pt: 'Estado do aviso de nível do líquido de refrigeração do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  OIL_PRESSURE_WARNING:
+    bits: '1.2'
+    comment:
+      en: 'Oil pressure warning state'
+      fr: 'État de l''alerte de pression d''huile'
+      es: 'Estado de la alerta de presión de aceite'
+      de: 'Warnzustand des Öldrucks'
+      it: 'Stato dell''allarme di pressione dell''olio'
+      pl: 'Stan ostrzeżenia o ciśnieniu oleju'
+      ru: 'Состояние предупреждения о давлении масла'
+      zh: '机油压力警告状态'
+      hu: 'Az olajnyomás figyelmeztető állapota'
+      pt: 'Estado do aviso de pressão do óleo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Alert activated'
+        fr: 'Alerte activée'
+        es: 'Alerta activada'
+        de: 'Alarm aktiviert'
+        it: 'Allarme attivato'
+        pl: 'Alarm aktywowany'
+        ru: 'Тревога активирована'
+        zh: '警报已激活'
+        hu: 'Riasztás aktiválva'
+        pt: 'Alerta ativado'
+
+  WATER_IN_DIESEL_PRESENCE:
+    bits: '1.1'
+    comment:
+      en: 'Water present in diesel fuel'
+      fr: 'Présence d''eau dans le gazole'
+      es: 'Presencia de agua en el gasóleo'
+      de: 'Wasser im Dieselkraftstoff vorhanden'
+      it: 'Presenza di acqua nel gasolio'
+      pl: 'Obecność wody w oleju napędowym'
+      ru: 'Наличие воды в дизельном топливе'
+      zh: '柴油中存在水分'
+      hu: 'Víz jelenléte a gázolajban'
+      pt: 'Presença de água no gasóleo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No presence'
+        fr: 'Pas de présence'
+        es: 'Sin presencia'
+        de: 'Keine Anwesenheit'
+        it: 'Nessuna presenza'
+        pl: 'Brak obecności'
+        ru: 'Отсутствие присутствия'
+        zh: '无存在'
+        hu: 'Nincs jelenlét'
+        pt: 'Sem presença'
+      0x01:
+        en: 'Presence'
+        fr: 'Présence'
+        es: 'Presencia'
+        de: 'Anwesenheit'
+        it: 'Presenza'
+        pl: 'Obecność'
+        ru: 'Присутствие'
+        zh: '存在'
+        hu: 'Jelenlét'
+        pt: 'Presença'
+
+  UNUSED_1:
+    bits: '1.0'
+    unused: true
+
+  ENGINE_OIL_LEVEL_RAW:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Engine oil level, raw sensor value'
+      fr: 'Niveau d''huile moteur, valeur brute du capteur'
+      es: 'Nivel de aceite del motor, valor bruto del sensor'
+      de: 'Motorölstand, Rohwert des Sensors'
+      it: 'Livello dell''olio motore, valore grezzo del sensore'
+      pl: 'Poziom oleju silnikowego, surowa wartość czujnika'
+      ru: 'Уровень масла двигателя, необработанное значение датчика'
+      zh: '发动机机油液位,传感器原始值'
+      hu: 'Motorolajszint, az érzékelő nyers értéke'
+      pt: 'Nível de óleo do motor, valor bruto do sensor'
+    type: 'uint'
+    factor: 3
+    min: 0
+    max: 750
+    units: 'mV'
+    invalid: 0xFF
+    default: 0xFF
+
+  ENGINE_OIL_TEMPERATURE_RAW:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Engine oil temperature, raw sensor resistance'
+      fr: 'Température d''huile moteur, résistance brute du capteur'
+      es: 'Temperatura del aceite del motor, resistencia bruta del sensor'
+      de: 'Motoröltemperatur, roher Sensorwiderstand'
+      it: 'Temperatura dell''olio motore, resistenza grezza del sensore'
+      pl: 'Temperatura oleju silnikowego, surowa rezystancja czujnika'
+      ru: 'Температура масла двигателя, необработанное сопротивление датчика'
+      zh: '发动机机油温度,传感器原始电阻值'
+      hu: 'Motorolaj-hőmérséklet, az érzékelő nyers ellenállásértéke'
+      pt: 'Temperatura do óleo do motor, resistência bruta do sensor'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 162755
+    units: 'Ohm'
+    invalid: 0xFF
+
+  MEAP_POWER_STATUS:
+    bits: '4.7'
+    comment:
+      en: 'MEAP power supply status'
+      fr: 'État de l''alimentation du MEAP'
+      es: 'Estado de la alimentación del MEAP'
+      de: 'Status der MEAP-Stromversorgung'
+      it: 'Stato dell''alimentazione del MEAP'
+      pl: 'Stan zasilania MEAP'
+      ru: 'Состояние питания MEAP'
+      zh: 'MEAP电源状态'
+      hu: 'A MEAP tápellátásának állapota'
+      pt: 'Estado da alimentação do MEAP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'NOK'
+        fr: 'NOK'
+        es: 'NOK'
+        de: 'NOK'
+        it: 'NOK'
+        pl: 'NOK'
+        ru: 'NOK'
+        zh: 'NOK'
+        hu: 'NOK'
+        pt: 'NOK'
+
+  MEAP_POSITION:
+    bits: '4.6-4.5'
+    comment:
+      en: 'Active grille shutter (MEAP) position'
+      fr: 'Position du volet d''air actif (MEAP)'
+      es: 'Posición de la persiana de aire activa (MEAP)'
+      de: 'Position der aktiven Kühlerjalousie (MEAP)'
+      it: 'Posizione della serranda attiva del radiatore (MEAP)'
+      pl: 'Pozycja aktywnej żaluzji chłodnicy (MEAP)'
+      ru: 'Положение активных жалюзи радиатора (MEAP)'
+      zh: '主动进气格栅(MEAP)位置'
+      hu: 'Az aktív hűtőrács-zsalu (MEAP) helyzete'
+      pt: 'Posição da grelha de ar ativa (MEAP)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'MEAP blocked open'
+        fr: 'MEAP bloqué ouvert'
+        es: 'MEAP bloqueado abierto'
+        de: 'MEAP blockiert offen'
+        it: 'MEAP bloccato aperto'
+        pl: 'MEAP zablokowany w pozycji otwartej'
+        ru: 'MEAP заблокирован в открытом состоянии'
+        zh: 'MEAP锁定于打开状态'
+        hu: 'A MEAP nyitva blokkolva'
+        pt: 'MEAP bloqueado aberto'
+      0x01:
+        en: 'MEAP open'
+        fr: 'MEAP ouvert'
+        es: 'MEAP abierto'
+        de: 'MEAP offen'
+        it: 'MEAP aperto'
+        pl: 'MEAP otwarty'
+        ru: 'MEAP открыт'
+        zh: 'MEAP打开'
+        hu: 'MEAP nyitva'
+        pt: 'MEAP aberto'
+      0x02:
+        en: 'MEAP closed'
+        fr: 'MEAP fermé'
+        es: 'MEAP cerrado'
+        de: 'MEAP geschlossen'
+        it: 'MEAP chiuso'
+        pl: 'MEAP zamknięty'
+        ru: 'MEAP закрыт'
+        zh: 'MEAP关闭'
+        hu: 'MEAP zárva'
+        pt: 'MEAP fechado'
+      0x03:
+        en: 'MEAP failure'
+        fr: 'Défaillance MEAP'
+        es: 'Fallo MEAP'
+        de: 'MEAP-Störung'
+        it: 'Guasto MEAP'
+        pl: 'Awaria MEAP'
+        ru: 'Отказ MEAP'
+        zh: 'MEAP 故障'
+        hu: 'MEAP-hiba'
+        pt: 'Falha do MEAP'
+
+  UNUSED_2:
+    bits: '4.4-4.0'
+    unused: true

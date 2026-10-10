@@ -1,0 +1,121 @@
+id: 0x16F
+name: 'BSRF_COMMAND_2'
+type: 'can'
+length: 8
+comment:
+  en: 'Calibrated longitudinal acceleration, wheel longitudinal acceleration, gearbox torque request, real torque and refrigerant pressure, sent by the BSI to the telematics gateway.'
+  fr: 'Accélération longitudinale calibrée, accélération longitudinale aux roues, demande de couple boîte, couple réel et pression de réfrigérant, envoyées par la BSI à la passerelle télématique.'
+  es: 'Aceleración longitudinal calibrada, aceleración longitudinal en las ruedas, solicitud de par de la caja, par real y presión del refrigerante, enviadas por la BSI a la pasarela telemática.'
+  de: 'Kalibrierte Längsbeschleunigung, Radlängsbeschleunigung, Getriebedrehmomentanforderung, Realdrehmoment und Kältemitteldruck, von der BSI an das Telematik-Gateway gesendet.'
+  it: 'Accelerazione longitudinale calibrata, accelerazione longitudinale alle ruote, richiesta di coppia cambio, coppia reale e pressione del refrigerante, inviate dalla BSI al gateway telematico.'
+  pl: 'Skalibrowane przyspieszenie wzdłużne, przyspieszenie wzdłużne kół, żądanie momentu obrotowego skrzyni biegów, rzeczywisty moment obrotowy i ciśnienie czynnika chłodniczego, wysyłane przez BSI do bramki telematycznej.'
+  ru: 'Калиброванное продольное ускорение, продольное ускорение колёс, запрос крутящего момента коробки передач, реальный крутящий момент и давление хладагента, отправляемые BSI в телематический шлюз.'
+  zh: '校准纵向加速度、车轮纵向加速度、变速箱扭矩请求、实际扭矩及制冷剂压力，由BSI发送给远程信息处理网关。'
+  hu: 'Kalibrált hosszirányú gyorsulás, kerék hosszirányú gyorsulása, váltónyomaték-kérés, tényleges nyomaték és hűtőközeg-nyomás, a BSI küldi a telematikai átjárónak.'
+  pt: 'Aceleração longitudinal calibrada, aceleração longitudinal da roda, pedido de binário da caixa de velocidades, binário real e pressão do refrigerante, enviados pela BSI ao gateway telemático.'
+periodicity: ['100ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  CALIBRATED_LONGITUDINAL_ACCELERATION:
+    bits: '1.7-2.4'
+    comment:
+      en: 'Calibrated longitudinal acceleration'
+      fr: 'Accélération longitudinale calibrée'
+      es: 'Aceleración longitudinal calibrada'
+      de: 'Kalibrierte Längsbeschleunigung'
+      it: 'Accelerazione longitudinale calibrata'
+      pl: 'Skalibrowane przyspieszenie wzdłużne'
+      ru: 'Откалиброванное продольное ускорение'
+      zh: '校准后的纵向加速度'
+      hu: 'Kalibrált hosszirányú gyorsulás'
+      pt: 'Aceleração longitudinal calibrada'
+    type: 'uint'
+    factor: 0.02
+    offset: -40.96
+    min: -40.96
+    max: 40.92
+    invalid: 0xFFF
+
+  UNUSED_1:
+    bits: '2.3-2.0'
+    unused: true
+
+  LONGITUDINAL_ACCELERATION_WHEEL_SENSOR:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Longitudinal acceleration, from wheel sensors'
+      fr: 'Accélération longitudinale, mesurée par les capteurs de roue'
+      es: 'Aceleración longitudinal, medida por los sensores de rueda'
+      de: 'Längsbeschleunigung, von den Radsensoren gemessen'
+      it: 'Accelerazione longitudinale, misurata dai sensori ruota'
+      pl: 'Przyspieszenie wzdłużne, mierzone czujnikami koła'
+      ru: 'Продольное ускорение, измеренное датчиками колёс'
+      zh: '由轮速传感器测得的纵向加速度'
+      hu: 'Hosszirányú gyorsulás, a kerékérzékelők mérése alapján'
+      pt: 'Aceleração longitudinal, medida pelos sensores de roda'
+    type: 'uint'
+    factor: 0.08
+    offset: -14
+    min: -14
+    max: 6.32
+    invalid: 0xFF
+
+  ACTUAL_TORQUE:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Actual engine torque'
+      fr: 'Couple moteur réel'
+      es: 'Par de motor real'
+      de: 'Tatsächliches Motordrehmoment'
+      it: 'Coppia motore reale'
+      pl: 'Rzeczywisty moment obrotowy silnika'
+      ru: 'Фактический крутящий момент двигателя'
+      zh: '实际发动机扭矩'
+      hu: 'Tényleges motornyomaték'
+      pt: 'Binário real do motor'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    invalid: 0xFF
+
+  COOLING_SYSTEM_PRESSURE_2:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Cooling system pressure, sensor 2'
+      fr: 'Pression du circuit de refroidissement, capteur 2'
+      es: 'Presión del circuito de refrigeración, sensor 2'
+      de: 'Kühlkreislaufdruck, Sensor 2'
+      it: 'Pressione del circuito di raffreddamento, sensore 2'
+      pl: 'Ciśnienie w układzie chłodzenia, czujnik 2'
+      ru: 'Давление в системе охлаждения, датчик 2'
+      zh: '冷却系统压力,传感器2'
+      hu: 'Hűtőrendszer nyomása, 2. érzékelő'
+      pt: 'Pressão do circuito de arrefecimento, sensor 2'
+    type: 'uint'
+    factor: 11110
+    min: 110
+    max: 2904
+    invalid: 0xFF
+
+  GEARBOX_TORQUE_REQUEST_SETPOINT:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Torque setpoint requested in the gearbox-engine torque dialog'
+      fr: 'Consigne de couple demandée dans le dialogue de couple boîte-moteur'
+      es: 'Consigna de par solicitada en el diálogo de par caja-motor'
+      de: 'Angeforderter Drehmomentsollwert im Getriebe-Motor-Drehmomentdialog'
+      it: 'Consegna di coppia richiesta nel dialogo di coppia cambio-motore'
+      pl: 'Zadana wartość momentu żądana w dialogu momentu skrzynia-silnik'
+      ru: 'Заданное значение момента, запрашиваемое в диалоге момент коробка-двигатель'
+      zh: '变速箱-发动机扭矩对话中请求的扭矩设定值'
+      hu: 'A váltó-motor nyomatékdialógusban kért nyomaték-alapjel'
+      pt: 'Consigna de binário solicitada no diálogo de binário caixa-motor'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408

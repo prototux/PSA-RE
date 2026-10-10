@@ -1,0 +1,772 @@
+id: 0x3B8
+name: 'ENGINE_COASTING_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['40ms']
+senders: ['CMM']
+receivers: ['BSI', 'BVA']
+
+signals:
+  ENGINE_SPEED_COMPLEMENT:
+    bits: '1.7-2.0'
+    comment:
+      en: 'One''s complement of the engine speed, for functional safety'
+      fr: 'Complément à 1 du régime moteur, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del régimen del motor, para la seguridad funcional'
+      de: 'Einerkomplement der Motordrehzahl, für die Betriebssicherheit'
+      it: 'Complemento a 1 del regime motore, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 obrotów silnika, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 оборотов двигателя, для функциональной безопасности'
+      zh: '发动机转速的反码,用于功能安全'
+      hu: 'A motorfordulatszám egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do regime do motor, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 65535
+    invalid: 0x00
+    default: 0x00
+
+  ACTUAL_TORQUE_COMPLEMENT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'One''s complement of the actual torque, for functional safety'
+      fr: 'Complément à 1 du couple réel, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del par real, para la seguridad funcional'
+      de: 'Einerkomplement des tatsächlichen Drehmoments, für die Betriebssicherheit'
+      it: 'Complemento a 1 della coppia reale, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 rzeczywistego momentu obrotowego, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 фактического момента, для функциональной безопасности'
+      zh: '实际扭矩的反码,用于功能安全'
+      hu: 'A tényleges nyomaték egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do binário real, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 255
+    invalid: 0x00
+    default: 0xCD
+
+  DRIVER_DEMAND_COMPLEMENT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'One''s complement of the driver demand, for functional safety'
+      fr: 'Complément à 1 de la volonté du conducteur, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 de la demanda del conductor, para la seguridad funcional'
+      de: 'Einerkomplement des Fahrerwunschs, für die Betriebssicherheit'
+      it: 'Complemento a 1 della richiesta del conducente, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 żądania kierowcy, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 запроса водителя, для функциональной безопасности'
+      zh: '驾驶员需求的反码,用于功能安全'
+      hu: 'A vezetői igény egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 da vontade do condutor, para a segurança funcional'
+    type: 'uint'
+    min: 55
+    max: 255
+    invalid: 0x00
+    default: 0xFF
+
+  DRIVER_POTENTIAL_TORQUE_REQUEST_PROCESSED_COMPLEMENT:
+    bits: '5.7-5.0'
+    comment:
+      en: 'One''s complement of the driver potential torque request after processing, for functional safety'
+      fr: 'Complément à 1 du couple potentiel demandé par le conducteur après traitement, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del par potencial solicitado por el conductor tras el procesamiento, para la seguridad funcional'
+      de: 'Einerkomplement des potenziellen fahrerangeforderten Drehmoments nach der Verarbeitung, für die Betriebssicherheit'
+      it: 'Complemento a 1 della coppia potenziale richiesta dal conducente dopo l''elaborazione, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 potencjalnego momentu żądanego przez kierowcę po przetworzeniu, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 потенциального момента, запрошенного водителем после обработки, для функциональной безопасности'
+      zh: '驾驶员潜在扭矩请求(已处理)的反码,用于功能安全'
+      hu: 'A vezető által kért, feldolgozott potenciális nyomaték egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do binário potencial solicitado pelo condutor após processamento, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 255
+    invalid: 0x00
+    default: 0xCD
+
+  DRIVER_TORQUE_REQUEST_PROCESSED_COMPLEMENT:
+    bits: '6.7-6.0'
+    comment:
+      en: 'One''s complement of the driver torque request after processing, for functional safety'
+      fr: 'Complément à 1 du couple demandé par le conducteur après traitement, pour la sécurité de fonctionnement'
+      es: 'Complemento a 1 del par solicitado por el conductor tras el procesamiento, para la seguridad funcional'
+      de: 'Einerkomplement des fahrerangeforderten Drehmoments nach der Verarbeitung, für die Betriebssicherheit'
+      it: 'Complemento a 1 della coppia richiesta dal conducente dopo l''elaborazione, per la sicurezza funzionale'
+      pl: 'Dopełnienie do 1 momentu żądanego przez kierowcę po przetworzeniu, dla bezpieczeństwa funkcjonalnego'
+      ru: 'Дополнение до 1 запрошенного водителем момента после обработки, для функциональной безопасности'
+      zh: '驾驶员请求扭矩(已处理)的反码,用于功能安全'
+      hu: 'A vezető által kért, feldolgozott nyomaték egyes komplemense, funkcionális biztonság céljából'
+      pt: 'Complemento a 1 do binário solicitado pelo condutor após processamento, para a segurança funcional'
+    type: 'uint'
+    min: 1
+    max: 255
+    invalid: 0x00
+    default: 0xCD
+
+  PROCESS_COUNTER:
+    bits: '7.7-7.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  COASTING_SAILING_STATE:
+    bits: '7.3'
+    comment:
+      en: 'Coasting ''sailing'' function state'
+      fr: 'État de la fonction coasting sailing'
+      es: 'Estado de la función de deslizamiento libre ''sailing'''
+      de: 'Segelfunktionszustand „Sailing“'
+      it: 'Stato della funzione coasting sailing'
+      pl: 'Stan funkcji żeglowania „sailing”'
+      ru: 'Состояние функции наката «sailing»'
+      zh: '滑行"sailing"功能状态'
+      hu: 'Vitorlázó „sailing” funkció állapota'
+      pt: 'Estado da função de deslizamento livre ''sailing'''
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Without sailing (coasting)'
+        fr: 'Sans roue libre'
+        es: 'Sin navegación en punto muerto'
+        de: 'Ohne Segeln (Freilauf)'
+        it: 'Senza navigazione in folle'
+        pl: 'Bez żeglowania (wybiegu)'
+        ru: 'Без наката (sailing)'
+        zh: '无滑行'
+        hu: 'Vitorlázás nélkül (szabadonfutás)'
+        pt: 'Sem deslize (marcha livre)'
+      0x01:
+        en: 'Sailing'
+        fr: 'Roue libre (sailing)'
+        es: 'Navegación en punto muerto (sailing)'
+        de: 'Segeln (Freilauf)'
+        it: 'Navigazione a ruota libera (sailing)'
+        pl: 'Żeglowanie (tryb wybiegu)'
+        ru: 'Режим наката (sailing)'
+        zh: '滑行模式'
+        hu: 'Vitorlázás (szabadonfutás)'
+        pt: 'Marcha livre (sailing)'
+
+  COASTING_FREEWHEEL_CLUTCH_OPEN_STATE:
+    bits: '7.2'
+    comment:
+      en: 'Coasting freewheel state: clutch open'
+      fr: 'État coasting freewheel : embrayage ouvert'
+      es: 'Estado de deslizamiento libre: embrague abierto'
+      de: 'Segelzustand Freilauf: Kupplung offen'
+      it: 'Stato coasting freewheel: frizione aperta'
+      pl: 'Stan swobodnego biegu (coasting): sprzęgło otwarte'
+      ru: 'Состояние наката (freewheel): сцепление разомкнуто (открыто)'
+      zh: '滑行自由轮状态:离合器打开'
+      hu: 'Vitorlázó szabadonfutás állapot: kuplung nyitva'
+      pt: 'Estado de deslizamento livre: embraiagem aberta'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Without freewheeling, clutch open'
+        fr: 'Sans roue libre, embrayage ouvert'
+        es: 'Sin rueda libre, embrague abierto'
+        de: 'Ohne Freilauf, Kupplung offen'
+        it: 'Senza ruota libera, frizione aperta'
+        pl: 'Bez wybiegu, sprzęgło rozłączone'
+        ru: 'Без свободного хода, сцепление разомкнуто'
+        zh: '无空转，离合器分离'
+        hu: 'Szabadonfutás nélkül, kuplung nyitva'
+        pt: 'Sem roda livre, embraiagem aberta'
+      0x01:
+        en: 'Freewheeling, throttle open'
+        fr: 'Roue libre, papillon ouvert'
+        es: 'Rueda libre, mariposa abierta'
+        de: 'Freilauf, Drosselklappe offen'
+        it: 'Ruota libera, farfalla aperta'
+        pl: 'Wolne koło, przepustnica otwarta'
+        ru: 'Свободный ход, дроссель открыт'
+        zh: '空转，节气门打开'
+        hu: 'Szabadonfutás, fojtószelep nyitva'
+        pt: 'Roda livre, borboleta aberta'
+
+  COASTING_FREEWHEEL_CLUTCH_DISENGAGED_STATE:
+    bits: '7.1'
+    comment:
+      en: 'Coasting freewheel state: clutch disengaged'
+      fr: 'État coasting freewheel : embrayage débrayé'
+      es: 'Estado de deslizamiento libre: embrague desembragado'
+      de: 'Segelzustand Freilauf: Kupplung ausgekuppelt'
+      it: 'Stato coasting freewheel: frizione disinnestata'
+      pl: 'Stan swobodnego biegu (coasting): sprzęgło rozłączone'
+      ru: 'Состояние наката (freewheel): сцепление разомкнуто'
+      zh: '滑行自由轮状态:离合器分离'
+      hu: 'Vitorlázó szabadonfutás állapot: kuplung kinyomva'
+      pt: 'Estado de deslizamento livre: embraiagem desengatada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Without freewheeling, powertrain disconnected'
+        fr: 'Sans roue libre, groupe motopropulseur désaccouplé'
+        es: 'Sin rueda libre, grupo motopropulsor desacoplado'
+        de: 'Ohne Freilauf, Antriebsstrang entkoppelt'
+        it: 'Senza ruota libera, gruppo motopropulsore disaccoppiato'
+        pl: 'Bez wolnego koła, układ napędowy odłączony'
+        ru: 'Без свободного хода, силовой агрегат отсоединён'
+        zh: '无空转，动力总成已脱开'
+        hu: 'Szabadonfutás nélkül, a hajtáslánc lekapcsolva'
+        pt: 'Sem roda livre, grupo motopropulsor desacoplado'
+      0x01:
+        en: 'Freewheeling, roof detached'
+        fr: 'Roue libre, toit désolidarisé'
+        es: 'Rueda libre, techo desacoplado'
+        de: 'Freilauf, Dach getrennt'
+        it: 'Ruota libera, tetto scollegato'
+        pl: 'Wolne koło, dach odłączony'
+        ru: 'Свободный ход, крыша отсоединена'
+        zh: '自由轮，车顶已脱离'
+        hu: 'Szabadonfutás, a tető leválasztva'
+        pt: 'Roda livre, tejadilho desacoplado'
+
+  COASTING_OPTIPMI_STATE:
+    bits: '7.0'
+    comment:
+      en: 'Coasting OptiPMI function state'
+      fr: 'État de la fonction coasting OptiPMI'
+      es: 'Estado de la función de deslizamiento libre OptiPMI'
+      de: 'Segelfunktionszustand OptiPMI'
+      it: 'Stato della funzione coasting OptiPMI'
+      pl: 'Stan funkcji żeglowania OptiPMI'
+      ru: 'Состояние функции наката OptiPMI'
+      zh: 'OptiPMI滑行功能状态'
+      hu: 'OptiPMI vitorlázó funkció állapota'
+      pt: 'Estado da função de deslizamento livre OptiPMI'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Without optiPMI'
+        fr: 'Sans optiPMI'
+        es: 'Sin optiPMI'
+        de: 'Ohne optiPMI'
+        it: 'Senza optiPMI'
+        pl: 'Bez optiPMI'
+        ru: 'Без optiPMI'
+        zh: '无optiPMI'
+        hu: 'optiPMI nélkül'
+        pt: 'Sem optiPMI'
+      0x01:
+        en: 'OptiPMI'
+        fr: 'OptiPMI'
+        es: 'OptiPMI'
+        de: 'OptiPMI'
+        it: 'OptiPMI'
+        pl: 'OptiPMI'
+        ru: 'OptiPMI'
+        zh: 'OptiPMI'
+        hu: 'OptiPMI'
+        pt: 'OptiPMI'
+
+  COASTING_STATE_RESERVED_4:
+    bits: '8.7'
+    comment:
+      en: 'Coasting function state, reserved (4)'
+      fr: 'État de la fonction coasting, réservé (4)'
+      es: 'Estado de la función de deslizamiento libre, reservado (4)'
+      de: 'Segelfunktionszustand, reserviert (4)'
+      it: 'Stato della funzione coasting, riservato (4)'
+      pl: 'Stan funkcji żeglowania, zarezerwowany (4)'
+      ru: 'Состояние функции наката, зарезервировано (4)'
+      zh: '滑行功能状态,保留(4)'
+      hu: 'Vitorlázó funkció állapota, fenntartva (4)'
+      pt: 'Estado da função de deslizamento livre, reservado (4)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reserved, inactive'
+        fr: 'Réservé, inactif'
+        es: 'Reservado, inactivo'
+        de: 'Reserviert, inaktiv'
+        it: 'Riservato, inattivo'
+        pl: 'Zarezerwowane, nieaktywne'
+        ru: 'Зарезервировано, неактивно'
+        zh: '保留,未激活'
+        hu: 'Fenntartva, inaktív'
+        pt: 'Reservado, inativo'
+      0x01:
+        en: 'Reserved, active'
+        fr: 'Réservé, actif'
+        es: 'Reservado, activo'
+        de: 'Reserviert, aktiv'
+        it: 'Riservato, attivo'
+        pl: 'Zarezerwowane, aktywne'
+        ru: 'Зарезервировано, активно'
+        zh: '保留,已激活'
+        hu: 'Fenntartva, aktív'
+        pt: 'Reservado, ativo'
+
+  COASTING_STATE_RESERVED_5:
+    bits: '8.6'
+    comment:
+      en: 'Coasting function state, reserved (5)'
+      fr: 'État de la fonction coasting, réservé (5)'
+      es: 'Estado de la función de deslizamiento libre, reservado (5)'
+      de: 'Segelfunktionszustand, reserviert (5)'
+      it: 'Stato della funzione coasting, riservato (5)'
+      pl: 'Stan funkcji żeglowania, zarezerwowany (5)'
+      ru: 'Состояние функции наката, зарезервировано (5)'
+      zh: '滑行功能状态,保留(5)'
+      hu: 'Vitorlázó funkció állapota, fenntartva (5)'
+      pt: 'Estado da função de deslizamento livre, reservado (5)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reserved, inactive'
+        fr: 'Réservé, inactif'
+        es: 'Reservado, inactivo'
+        de: 'Reserviert, inaktiv'
+        it: 'Riservato, inattivo'
+        pl: 'Zarezerwowane, nieaktywne'
+        ru: 'Зарезервировано, неактивно'
+        zh: '保留,未激活'
+        hu: 'Fenntartva, inaktív'
+        pt: 'Reservado, inativo'
+      0x01:
+        en: 'Reserved, active'
+        fr: 'Réservé, actif'
+        es: 'Reservado, activo'
+        de: 'Reserviert, aktiv'
+        it: 'Riservato, attivo'
+        pl: 'Zarezerwowane, aktywne'
+        ru: 'Зарезервировано, активно'
+        zh: '保留,已激活'
+        hu: 'Fenntartva, aktív'
+        pt: 'Reservado, ativo'
+
+  COASTING_STATE_RESERVED_6:
+    bits: '8.5'
+    comment:
+      en: 'Coasting function state, reserved (6)'
+      fr: 'État de la fonction coasting, réservé (6)'
+      es: 'Estado de la función de deslizamiento libre, reservado (6)'
+      de: 'Segelfunktionszustand, reserviert (6)'
+      it: 'Stato della funzione coasting, riservato (6)'
+      pl: 'Stan funkcji żeglowania, zarezerwowany (6)'
+      ru: 'Состояние функции наката, зарезервировано (6)'
+      zh: '滑行功能状态,保留(6)'
+      hu: 'Vitorlázó funkció állapota, fenntartva (6)'
+      pt: 'Estado da função de deslizamento livre, reservado (6)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reserved, inactive'
+        fr: 'Réservé, inactif'
+        es: 'Reservado, inactivo'
+        de: 'Reserviert, inaktiv'
+        it: 'Riservato, inattivo'
+        pl: 'Zarezerwowane, nieaktywne'
+        ru: 'Зарезервировано, неактивно'
+        zh: '保留,未激活'
+        hu: 'Fenntartva, inaktív'
+        pt: 'Reservado, inativo'
+      0x01:
+        en: 'Reserved, active'
+        fr: 'Réservé, actif'
+        es: 'Reservado, activo'
+        de: 'Reserviert, aktiv'
+        it: 'Riservato, attivo'
+        pl: 'Zarezerwowane, aktywne'
+        ru: 'Зарезервировано, активно'
+        zh: '保留,已激活'
+        hu: 'Fenntartva, aktív'
+        pt: 'Reservado, ativo'
+
+  COASTING_STATE_RESERVED_7:
+    bits: '8.4'
+    comment:
+      en: 'Coasting function state, reserved (7)'
+      fr: 'État de la fonction coasting, réservé (7)'
+      es: 'Estado de la función de deslizamiento libre, reservado (7)'
+      de: 'Segelfunktionszustand, reserviert (7)'
+      it: 'Stato della funzione coasting, riservato (7)'
+      pl: 'Stan funkcji żeglowania, zarezerwowany (7)'
+      ru: 'Состояние функции наката, зарезервировано (7)'
+      zh: '滑行功能状态,保留(7)'
+      hu: 'Vitorlázó funkció állapota, fenntartva (7)'
+      pt: 'Estado da função de deslizamento livre, reservado (7)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reserved, inactive'
+        fr: 'Réservé, inactif'
+        es: 'Reservado, inactivo'
+        de: 'Reserviert, inaktiv'
+        it: 'Riservato, inattivo'
+        pl: 'Zarezerwowane, nieaktywne'
+        ru: 'Зарезервировано, неактивно'
+        zh: '保留,未激活'
+        hu: 'Fenntartva, inaktív'
+        pt: 'Reservado, inativo'
+      0x01:
+        en: 'Reserved, active'
+        fr: 'Réservé, actif'
+        es: 'Reservado, activo'
+        de: 'Reserviert, aktiv'
+        it: 'Riservato, attivo'
+        pl: 'Zarezerwowane, aktywne'
+        ru: 'Зарезервировано, активно'
+        zh: '保留,已激活'
+        hu: 'Fenntartva, aktív'
+        pt: 'Reservado, ativo'
+
+  ECO_SPORT_MODE_AVAILABILITY:
+    bits: '8.3-8.2'
+    comment:
+      en: 'Availability of Eco and/or Sport mode'
+      fr: 'Disponibilité des modes Éco et/ou Sport'
+      es: 'Disponibilidad de los modos Eco y/o Sport'
+      de: 'Verfügbarkeit von Eco- und/oder Sportmodus'
+      it: 'Disponibilità delle modalità Eco e/o Sport'
+      pl: 'Dostępność trybu Eco i/lub Sport'
+      ru: 'Доступность режимов Eco и/или Sport'
+      zh: '经济/运动模式可用性'
+      hu: 'Az Eco és/vagy Sport üzemmód elérhetősége'
+      pt: 'Disponibilidade dos modos Eco e/ou Sport'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Eco and sport modes available'
+        fr: 'Modes Éco et Sport disponibles'
+        es: 'Modos Eco y Sport disponibles'
+        de: 'Eco- und Sportmodus verfügbar'
+        it: 'Modalità Eco e Sport disponibili'
+        pl: 'Dostępne tryby Eco i Sport'
+        ru: 'Доступны режимы Эко и Спорт'
+        zh: '经济与运动模式均可用'
+        hu: 'Eco és Sport mód elérhető'
+        pt: 'Modos Eco e desportivo disponíveis'
+      0x01:
+        en: 'Eco mode available'
+        fr: 'Mode éco disponible'
+        es: 'Modo eco disponible'
+        de: 'Eco-Modus verfügbar'
+        it: 'Modalità eco disponibile'
+        pl: 'Tryb eco dostępny'
+        ru: 'Экономичный режим доступен'
+        zh: '经济模式可用'
+        hu: 'Eco mód elérhető'
+        pt: 'Modo eco disponível'
+      0x02:
+        en: 'Sport mode available'
+        fr: 'Mode sport disponible'
+        es: 'Modo deportivo disponible'
+        de: 'Sport-Modus verfügbar'
+        it: 'Modalità sport disponibile'
+        pl: 'Tryb sportowy dostępny'
+        ru: 'Спортивный режим доступен'
+        zh: '运动模式可用'
+        hu: 'Sport mód elérhető'
+        pt: 'Modo desportivo disponível'
+      0x03:
+        en: 'No mode available'
+        fr: 'Aucun mode disponible'
+        es: 'Ningún modo disponible'
+        de: 'Kein Modus verfügbar'
+        it: 'Nessuna modalità disponibile'
+        pl: 'Brak dostępnego trybu'
+        ru: 'Нет доступного режима'
+        zh: '无可用模式'
+        hu: 'Nincs elérhető üzemmód'
+        pt: 'Nenhum modo disponível'
+
+  UNUSED_1:
+    bits: '8.1-8.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      ENGINE_SPEED_COMPLEMENT:
+        bits: '1.7-2.0'
+        comment:
+          en: 'One''s complement of the engine speed, for functional safety'
+          fr: 'Complément à 1 du régime moteur, pour la sécurité de fonctionnement'
+          es: 'Complemento a 1 del régimen del motor, para la seguridad funcional'
+          de: 'Einerkomplement der Motordrehzahl, für die Betriebssicherheit'
+          it: 'Complemento a 1 del regime motore, per la sicurezza funzionale'
+          pl: 'Dopełnienie do 1 obrotów silnika, dla bezpieczeństwa funkcjonalnego'
+          ru: 'Дополнение до 1 оборотов двигателя, для функциональной безопасности'
+          zh: '发动机转速的反码,用于功能安全'
+          hu: 'A motorfordulatszám egyes komplemense, funkcionális biztonság céljából'
+          pt: 'Complemento a 1 do regime do motor, para a segurança funcional'
+        type: 'uint'
+        min: 1
+        max: 65535
+        invalid: 0x00
+        default: 0x00
+      ACTUAL_TORQUE_COMPLEMENT:
+        bits: '3.7-3.0'
+        comment:
+          en: 'One''s complement of the actual torque, for functional safety'
+          fr: 'Complément à 1 du couple réel, pour la sécurité de fonctionnement'
+          es: 'Complemento a 1 del par real, para la seguridad funcional'
+          de: 'Einerkomplement des tatsächlichen Drehmoments, für die Betriebssicherheit'
+          it: 'Complemento a 1 della coppia reale, per la sicurezza funzionale'
+          pl: 'Dopełnienie do 1 rzeczywistego momentu obrotowego, dla bezpieczeństwa funkcjonalnego'
+          ru: 'Дополнение до 1 фактического момента, для функциональной безопасности'
+          zh: '实际扭矩的反码,用于功能安全'
+          hu: 'A tényleges nyomaték egyes komplemense, funkcionális biztonság céljából'
+          pt: 'Complemento a 1 do binário real, para a segurança funcional'
+        type: 'uint'
+        min: 1
+        max: 255
+        invalid: 0x00
+        default: 0xCD
+      DRIVER_DEMAND_COMPLEMENT:
+        bits: '4.7-4.0'
+        comment:
+          en: 'One''s complement of the driver demand, for functional safety'
+          fr: 'Complément à 1 de la volonté du conducteur, pour la sécurité de fonctionnement'
+          es: 'Complemento a 1 de la demanda del conductor, para la seguridad funcional'
+          de: 'Einerkomplement des Fahrerwunschs, für die Betriebssicherheit'
+          it: 'Complemento a 1 della richiesta del conducente, per la sicurezza funzionale'
+          pl: 'Dopełnienie do 1 żądania kierowcy, dla bezpieczeństwa funkcjonalnego'
+          ru: 'Дополнение до 1 запроса водителя, для функциональной безопасности'
+          zh: '驾驶员需求的反码,用于功能安全'
+          hu: 'A vezetői igény egyes komplemense, funkcionális biztonság céljából'
+          pt: 'Complemento a 1 da vontade do condutor, para a segurança funcional'
+        type: 'uint'
+        min: 55
+        max: 255
+        invalid: 0x00
+        default: 0xFF
+      DRIVER_POTENTIAL_TORQUE_REQUEST_PROCESSED_COMPLEMENT:
+        bits: '5.7-5.0'
+        comment:
+          en: 'One''s complement of the driver potential torque request after processing, for functional safety'
+          fr: 'Complément à 1 du couple potentiel demandé par le conducteur après traitement, pour la sécurité de fonctionnement'
+          es: 'Complemento a 1 del par potencial solicitado por el conductor tras el procesamiento, para la seguridad funcional'
+          de: 'Einerkomplement des potenziellen fahrerangeforderten Drehmoments nach der Verarbeitung, für die Betriebssicherheit'
+          it: 'Complemento a 1 della coppia potenziale richiesta dal conducente dopo l''elaborazione, per la sicurezza funzionale'
+          pl: 'Dopełnienie do 1 potencjalnego momentu żądanego przez kierowcę po przetworzeniu, dla bezpieczeństwa funkcjonalnego'
+          ru: 'Дополнение до 1 потенциального момента, запрошенного водителем после обработки, для функциональной безопасности'
+          zh: '驾驶员潜在扭矩请求(已处理)的反码,用于功能安全'
+          hu: 'A vezető által kért, feldolgozott potenciális nyomaték egyes komplemense, funkcionális biztonság céljából'
+          pt: 'Complemento a 1 do binário potencial solicitado pelo condutor após processamento, para a segurança funcional'
+        type: 'uint'
+        min: 1
+        max: 255
+        invalid: 0x00
+        default: 0xCD
+      DRIVER_TORQUE_REQUEST_PROCESSED_COMPLEMENT:
+        bits: '6.7-6.0'
+        comment:
+          en: 'One''s complement of the driver torque request after processing, for functional safety'
+          fr: 'Complément à 1 du couple demandé par le conducteur après traitement, pour la sécurité de fonctionnement'
+          es: 'Complemento a 1 del par solicitado por el conductor tras el procesamiento, para la seguridad funcional'
+          de: 'Einerkomplement des fahrerangeforderten Drehmoments nach der Verarbeitung, für die Betriebssicherheit'
+          it: 'Complemento a 1 della coppia richiesta dal conducente dopo l''elaborazione, per la sicurezza funzionale'
+          pl: 'Dopełnienie do 1 momentu żądanego przez kierowcę po przetworzeniu, dla bezpieczeństwa funkcjonalnego'
+          ru: 'Дополнение до 1 запрошенного водителем момента после обработки, для функциональной безопасности'
+          zh: '驾驶员请求扭矩(已处理)的反码,用于功能安全'
+          hu: 'A vezető által kért, feldolgozott nyomaték egyes komplemense, funkcionális biztonság céljából'
+          pt: 'Complemento a 1 do binário solicitado pelo condutor após processamento, para a segurança funcional'
+        type: 'uint'
+        min: 1
+        max: 255
+        invalid: 0x00
+        default: 0xCD
+      PROCESS_COUNTER:
+        bits: '7.7-7.4'
+        comment:
+          en: 'Rolling counter incremented at each calculation cycle'
+          fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+          es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+          de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+          it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+          pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+          ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+          zh: '每个计算周期递增的循环计数器'
+          hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+          pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+        type: 'uint'
+        min: 0
+        max: 15
+        default: 0x00
+      COASTING_FUNCTION_STATE:
+        bits: '7.3-8.4'
+        comment:
+          en: 'Coasting function state (HMI activation / COASTING state stream)'
+          fr: 'État des fonctions coasting (flux d''état d''activation IHM / état COASTING)'
+          es: 'Estado de las funciones de deslizamiento libre (flujo de estado de activación HMI / estado COASTING)'
+          de: 'Zustand der Segelfunktionen (HMI-Aktivierungsstatus / COASTING-Status)'
+          it: 'Stato delle funzioni di coasting (stato di attivazione HMI / stato COASTING)'
+          pl: 'Stan funkcji żeglowania (stan aktywacji HMI / stan COASTING)'
+          ru: 'Состояние функций наката (состояние активации HMI / состояние COASTING)'
+          zh: '滑行功能状态(人机界面激活状态/COASTING状态)'
+          hu: 'A vitorlázó (coasting) funkciók állapota (HMI aktiválási állapot / COASTING állapot)'
+          pt: 'Estado das funções de deslizamento livre (fluxo de estado de ativação IHM / estado COASTING)'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'No coasting state'
+            fr: 'Sans état de roue libre (coasting)'
+            es: 'Sin estado de marcha libre (coasting)'
+            de: 'Ohne Segelbetrieb-Zustand'
+            it: 'Senza stato di ruota libera (coasting)'
+            pl: 'Bez stanu jazdy na wybiegu (coasting)'
+            ru: 'Без состояния наката (coasting)'
+            zh: '无滑行状态'
+            hu: 'Vitorlázás állapot nélkül'
+            pt: 'Sem estado de roda livre (coasting)'
+          0x01:
+            en: 'Sailing'
+            fr: 'Roue libre (sailing)'
+            es: 'Navegación en punto muerto (sailing)'
+            de: 'Segeln (Freilauf)'
+            it: 'Navigazione a ruota libera (sailing)'
+            pl: 'Żeglowanie (tryb wybiegu)'
+            ru: 'Режим наката (sailing)'
+            zh: '滑行模式'
+            hu: 'Vitorlázás (szabadonfutás)'
+            pt: 'Marcha livre (sailing)'
+          0x02:
+            en: 'Freewheeling, throttle open'
+            fr: 'Roue libre, papillon ouvert'
+            es: 'Rueda libre, mariposa abierta'
+            de: 'Freilauf, Drosselklappe offen'
+            it: 'Ruota libera, farfalla aperta'
+            pl: 'Wolne koło, przepustnica otwarta'
+            ru: 'Свободный ход, дроссель открыт'
+            zh: '空转，节气门打开'
+            hu: 'Szabadonfutás, fojtószelep nyitva'
+            pt: 'Roda livre, borboleta aberta'
+          0x04:
+            en: 'Freewheeling, roof detached'
+            fr: 'Roue libre, toit désolidarisé'
+            es: 'Rueda libre, techo desacoplado'
+            de: 'Freilauf, Dach getrennt'
+            it: 'Ruota libera, tetto scollegato'
+            pl: 'Wolne koło, dach odłączony'
+            ru: 'Свободный ход, крыша отсоединена'
+            zh: '自由轮，车顶已脱离'
+            hu: 'Szabadonfutás, a tető leválasztva'
+            pt: 'Roda livre, tejadilho desacoplado'
+          0x08:
+            en: 'OptiPMI'
+            fr: 'OptiPMI'
+            es: 'OptiPMI'
+            de: 'OptiPMI'
+            it: 'OptiPMI'
+            pl: 'OptiPMI'
+            ru: 'OptiPMI'
+            zh: 'OptiPMI'
+            hu: 'OptiPMI'
+            pt: 'OptiPMI'
+          0x10:
+            unused: true
+          0x20:
+            unused: true
+          0x40:
+            unused: true
+          0x80:
+            unused: true
+      ECO_SPORT_MODE_AVAILABILITY:
+        bits: '8.3-8.2'
+        comment:
+          en: 'Availability of Eco and/or Sport mode'
+          fr: 'Disponibilité des modes Éco et/ou Sport'
+          es: 'Disponibilidad de los modos Eco y/o Sport'
+          de: 'Verfügbarkeit von Eco- und/oder Sportmodus'
+          it: 'Disponibilità delle modalità Eco e/o Sport'
+          pl: 'Dostępność trybu Eco i/lub Sport'
+          ru: 'Доступность режимов Eco и/или Sport'
+          zh: '经济/运动模式可用性'
+          hu: 'Az Eco és/vagy Sport üzemmód elérhetősége'
+          pt: 'Disponibilidade dos modos Eco e/ou Sport'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Eco and sport modes available'
+            fr: 'Modes Éco et Sport disponibles'
+            es: 'Modos Eco y Sport disponibles'
+            de: 'Eco- und Sportmodus verfügbar'
+            it: 'Modalità Eco e Sport disponibili'
+            pl: 'Dostępne tryby Eco i Sport'
+            ru: 'Доступны режимы Эко и Спорт'
+            zh: '经济与运动模式均可用'
+            hu: 'Eco és Sport mód elérhető'
+            pt: 'Modos Eco e desportivo disponíveis'
+          0x01:
+            en: 'Eco mode available'
+            fr: 'Mode éco disponible'
+            es: 'Modo eco disponible'
+            de: 'Eco-Modus verfügbar'
+            it: 'Modalità eco disponibile'
+            pl: 'Tryb eco dostępny'
+            ru: 'Экономичный режим доступен'
+            zh: '经济模式可用'
+            hu: 'Eco mód elérhető'
+            pt: 'Modo eco disponível'
+          0x02:
+            en: 'Sport mode available'
+            fr: 'Mode sport disponible'
+            es: 'Modo deportivo disponible'
+            de: 'Sport-Modus verfügbar'
+            it: 'Modalità sport disponibile'
+            pl: 'Tryb sportowy dostępny'
+            ru: 'Спортивный режим доступен'
+            zh: '运动模式可用'
+            hu: 'Sport mód elérhető'
+            pt: 'Modo desportivo disponível'
+          0x03:
+            en: 'No mode available'
+            fr: 'Aucun mode disponible'
+            es: 'Ningún modo disponible'
+            de: 'Kein Modus verfügbar'
+            it: 'Nessuna modalità disponibile'
+            pl: 'Brak dostępnego trybu'
+            ru: 'Нет доступного режима'
+            zh: '无可用模式'
+            hu: 'Nincs elérhető üzemmód'
+            pt: 'Nenhum modo disponível'
+      UNUSED_1:
+        bits: '8.1-8.0'
+        unused: true

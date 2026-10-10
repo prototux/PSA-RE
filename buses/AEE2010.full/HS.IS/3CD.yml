@@ -1,0 +1,394 @@
+id: 0x3CD
+name: 'BRAKE_IN_PROGRESS_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Braking-in-progress status.'
+  fr: 'État de freinage en cours.'
+  es: 'Estado de frenado en curso.'
+  de: 'Status „Bremsung läuft“.'
+  it: 'Stato di frenata in corso.'
+  pl: 'Stan trwającego hamowania.'
+  ru: 'Статус выполняемого торможения.'
+  zh: '制动进行中状态。'
+  hu: 'Folyamatban lévő fékezés állapota.'
+  pt: 'Estado de travagem em curso.'
+periodicity: ['10ms']
+senders: ['ABS']
+receivers:
+  - 'ESM'
+  - 'CVM'
+  - 'BHI'
+  - 'DAE'
+  - 'SCDT'
+  - 'SBW'
+  - 'BCP'
+  - 'FSE'
+  - 'CSS'
+  - 'CMM'
+  - 'ACCEL_SENSOR'
+  - 'CAAR'
+  - 'BVA'
+  - 'AR2S'
+  - 'BSI'
+  - 'BSM'
+  - 'HCU1'
+  - 'AAS'
+  - 'ARTIV'
+
+signals:
+  LATERAL_ACCELERATION:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Lateral acceleration'
+      fr: 'Accélération latérale'
+      es: 'Aceleración lateral'
+      de: 'Querbeschleunigung'
+      it: 'Accelerazione laterale'
+      pl: 'Przyspieszenie boczne'
+      ru: 'Поперечное ускорение'
+      zh: '横向加速度'
+      hu: 'Oldalirányú gyorsulás'
+      pt: 'Aceleração lateral'
+    type: 'sint'
+    factor: 0.05
+    min: -15
+    max: 15
+    units: 'm/s2'
+    invalid: 0x7FFF
+    default: 0x00
+
+  YAW_RATE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Yaw rate'
+      fr: 'Vitesse de lacet'
+      es: 'Velocidad de guiñada'
+      de: 'Gierrate'
+      it: 'Velocità di imbardata'
+      pl: 'Prędkość odchylania (yaw rate)'
+      ru: 'Скорость рыскания'
+      zh: '横摆角速度'
+      hu: 'Legyezésiszög-sebesség'
+      pt: 'Velocidade de guinada'
+    type: 'sint'
+    factor: 0.1
+    min: -100
+    max: 100
+    units: '°/s'
+    invalid: 0x7FFF
+    default: 0x00
+
+  MU_SPLIT_SITUATION:
+    bits: '5.7'
+    comment:
+      en: 'Mu-split situation (asymmetric road grip braking)'
+      fr: 'Situation mu-split (freinage sur adhérence asymétrique)'
+      es: 'Situación mu-split (frenado sobre adherencia asimétrica)'
+      de: 'Mu-Split-Situation (Bremsung bei asymmetrischer Fahrbahnhaftung)'
+      it: 'Situazione mu-split (frenata su aderenza asimmetrica)'
+      pl: 'Sytuacja mu-split (hamowanie na asymetrycznej przyczepności)'
+      ru: 'Ситуация mu-split (торможение при асимметричном сцеплении)'
+      zh: '附着力不对称(mu-split)工况'
+      hu: 'Mu-split helyzet (aszimmetrikus tapadású fékezés)'
+      pt: 'Situação mu-split (travagem sobre aderência assimétrica)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal situation'
+        fr: 'Situation normale'
+        es: 'Situación normal'
+        de: 'Normale Situation'
+        it: 'Situazione normale'
+        pl: 'Sytuacja normalna'
+        ru: 'Нормальная ситуация'
+        zh: '正常状态'
+        hu: 'Normál helyzet'
+        pt: 'Situação normal'
+      0x01:
+        en: 'Mu-split braking'
+        fr: 'Freinage sur sol à adhérence dissymétrique (mu-split)'
+        es: 'Frenado en suelo de adherencia asimétrica (mu-split)'
+        de: 'Bremsen auf Mu-Split-Fahrbahn'
+        it: 'Frenata su fondo ad aderenza asimmetrica (mu-split)'
+        pl: 'Hamowanie na nawierzchni o zróżnicowanej przyczepności (mu-split)'
+        ru: 'Торможение на поверхности с разным сцеплением (mu-split)'
+        zh: '附着力分裂路面制动（mu-split）'
+        hu: 'Fékezés eltérő tapadású úton (mu-split)'
+        pt: 'Travagem em piso de aderência assimétrica (mu-split)'
+
+  BRAKE_PEDAL_SWITCH_3:
+    bits: '5.6'
+    comment:
+      en: 'Main brake pedal switch, brake ECU'
+      fr: 'Contact principal de la pédale de frein, calculateur frein'
+      es: 'Contacto principal del pedal de freno, ECU de freno'
+      de: 'Hauptschalter Bremspedal, Bremssteuergerät'
+      it: 'Interruttore principale pedale freno, centralina freni'
+      pl: 'Główny wyłącznik pedału hamulca, sterownik hamulców'
+      ru: 'Основной выключатель педали тормоза, блок управления тормозами'
+      zh: '制动踏板主开关,制动控制单元'
+      hu: 'Fékpedál fő kapcsolója, fékvezérlő'
+      pt: 'Contacto principal do pedal de travão, unidade de controlo de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Brake pedal released'
+        fr: 'Pédale de frein relâchée'
+        es: 'Pedal de freno soltado'
+        de: 'Bremspedal losgelassen'
+        it: 'Pedale del freno rilasciato'
+        pl: 'Pedał hamulca zwolniony'
+        ru: 'Педаль тормоза отпущена'
+        zh: '制动踏板已松开'
+        hu: 'Fékpedál elengedve'
+        pt: 'Pedal de travão solto'
+      0x01:
+        en: 'Brake pedal pressed'
+        fr: 'Appui sur la pédale de frein'
+        es: 'Pedal de freno pulsado'
+        de: 'Bremspedal betätigt'
+        it: 'Pedale del freno premuto'
+        pl: 'Naciśnięty pedał hamulca'
+        ru: 'Нажата педаль тормоза'
+        zh: '制动踏板已按下'
+        hu: 'Fékpedál lenyomva'
+        pt: 'Pressão no pedal do travão'
+
+  BRAKE_PEDAL_SWITCH_3_FAULT:
+    bits: '5.5'
+    comment:
+      en: 'Main brake pedal switch disabled, brake ECU'
+      fr: 'Contact principal de la pédale de frein hors service, calculateur frein'
+      es: 'Contacto principal del pedal de freno fuera de servicio, ECU de freno'
+      de: 'Hauptschalter Bremspedal außer Betrieb, Bremssteuergerät'
+      it: 'Interruttore principale pedale freno fuori servizio, centralina freni'
+      pl: 'Główny wyłącznik pedału hamulca uszkodzony, sterownik hamulców'
+      ru: 'Основной выключатель педали тормоза неисправен, блок управления тормозами'
+      zh: '制动踏板主开关失效,制动控制单元'
+      hu: 'Fékpedál fő kapcsolója üzemen kívül, fékvezérlő'
+      pt: 'Contacto principal do pedal de travão fora de serviço, unidade de controlo de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Main brake switch OK'
+        fr: 'Contact principal de la pédale de frein OK'
+        es: 'Interruptor principal del pedal de freno OK'
+        de: 'Haupt-Bremspedalschalter OK'
+        it: 'Interruttore principale del pedale del freno OK'
+        pl: 'Główny styk pedału hamulca OK'
+        ru: 'Основной выключатель педали тормоза в норме'
+        zh: '制动踏板主开关正常'
+        hu: 'A fékpedál fő kapcsolója rendben'
+        pt: 'Contacto principal do pedal de travão OK'
+      0x01:
+        en: 'Main brake switch faulty'
+        fr: 'Contact principal pédale de frein hors service'
+        es: 'Interruptor principal del pedal de freno defectuoso'
+        de: 'Hauptbremslichtschalter fehlerhaft'
+        it: 'Interruttore principale del pedale del freno guasto'
+        pl: 'Uszkodzony główny wyłącznik pedału hamulca'
+        ru: 'Основной выключатель педали тормоза неисправен'
+        zh: '刹车踏板主开关故障'
+        hu: 'A fékpedál fő kapcsolója hibás'
+        pt: 'Contacto principal do pedal de travão fora de serviço'
+
+  UNUSED_1:
+    bits: '5.4-5.3'
+    unused: true
+
+  EASYMOVE_RESTART_INHIBIT_REQUEST:
+    bits: '5.2-5.0'
+    comment:
+      en: 'Engine restart inhibition request from Easymove'
+      fr: 'Demande d''inhibition du redémarrage moteur par Easymove'
+      es: 'Solicitud de inhibición del reinicio del motor por Easymove'
+      de: 'Anforderung zur Sperrung des Motorneustarts durch Easymove'
+      it: 'Richiesta di inibizione del riavvio motore da Easymove'
+      pl: 'Żądanie zablokowania ponownego uruchomienia silnika przez Easymove'
+      ru: 'Запрос блокировки повторного запуска двигателя от Easymove'
+      zh: 'Easymove 发出的发动机重启抑制请求'
+      hu: 'Motor újraindításának tiltási kérése az Easymove-tól'
+      pt: 'Pedido de inibição do rearranque do motor do Easymove'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        unused: true
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        en: 'No restart inhibition request'
+        fr: 'Pas de demande d''inhibition de redémarrage'
+        es: 'Sin solicitud de inhibición de reinicio'
+        de: 'Keine Anforderung zur Sperrung des Neustarts'
+        it: 'Nessuna richiesta di inibizione del riavvio'
+        pl: 'Brak żądania zablokowania ponownego uruchomienia'
+        ru: 'Нет запроса на блокировку перезапуска'
+        zh: '无重启抑制请求'
+        hu: 'Nincs újraindítás-tiltási kérés'
+        pt: 'Sem pedido de inibição de reinício'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Restart inhibition requested for EPB locking'
+        fr: 'Demande d''inhibition de redémarrage pour serrage du frein de stationnement électrique'
+        es: 'Solicitud de inhibición de reinicio para el apriete del freno de estacionamiento eléctrico'
+        de: 'Anforderung der Neustartsperre für das Anziehen der elektrischen Feststellbremse'
+        it: 'Richiesta di inibizione riavvio per il serraggio del freno di stazionamento elettrico'
+        pl: 'Żądanie zablokowania ponownego uruchomienia w celu zaciągnięcia elektrycznego hamulca postojowego'
+        ru: 'Запрос блокировки перезапуска для затягивания электрического стояночного тормоза'
+        zh: '请求禁止重启以收紧电子驻车制动'
+        hu: 'Újraindítás tiltásának kérése az elektromos rögzítőfék meghúzásához'
+        pt: 'Inibição de reinício pedida para trancagem do EPB'
+      0x06:
+        en: 'Restart inhibition requested for EPB releasing'
+        fr: 'Demande d''inhibition de redémarrage pour desserrage du frein de stationnement électrique'
+        es: 'Solicitud de inhibición de reinicio para el aflojado del freno de estacionamiento eléctrico'
+        de: 'Anforderung der Neustartsperre für das Lösen der elektrischen Feststellbremse'
+        it: 'Richiesta di inibizione riavvio per lo sblocco del freno di stazionamento elettrico'
+        pl: 'Żądanie zablokowania ponownego uruchomienia w celu zwolnienia elektrycznego hamulca postojowego'
+        ru: 'Запрос блокировки перезапуска для отпускания электрического стояночного тормоза'
+        zh: '请求禁止重启以松开电子驻车制动'
+        hu: 'Újraindítás tiltásának kérése az elektromos rögzítőfék kioldásához'
+        pt: 'Inibição de reinício pedida para libertação do EPB'
+      0x07:
+        unused: true
+    alternatives:
+      - note:
+          en: 'Also observed at bits 7.3-7.2'
+          fr: 'Aussi observé aux bits 7.3-7.2'
+          es: 'También observado en los bits 7.3-7.2'
+          de: 'Auch an den Bits 7.3-7.2 beobachtet'
+          it: 'Osservato anche ai bit 7.3-7.2'
+          pl: 'Obserwowany także na bitach 7.3-7.2'
+          ru: 'Также наблюдался в битах 7.3-7.2'
+          zh: '也观察到位于位7.3-7.2'
+          hu: 'Megfigyelve a(z) 7.3-7.2 biteken is'
+          pt: 'Também observado nos bits 7.3-7.2'
+        bits: '7.3-7.2'
+
+  MASTER_CYLINDER_PRESSURE:
+    bits: '6.7-7.4'
+    comment:
+      en: 'Master cylinder pressure'
+      fr: 'Pression du maître-cylindre'
+      es: 'Presión del cilindro maestro'
+      de: 'Hauptbremszylinderdruck'
+      it: 'Pressione del cilindro maestro'
+      pl: 'Ciśnienie w pompie hamulcowej głównej'
+      ru: 'Давление в главном тормозном цилиндре'
+      zh: '制动主缸压力'
+      hu: 'Főfékhenger nyomása'
+      pt: 'Pressão do cilindro mestre'
+    type: 'uint'
+    factor: 0.1
+    offset: -55
+    min: -55
+    max: 354.4
+    units: 'bar'
+    invalid: 0xFFF
+    default: 0x226
+
+  UNUSED_2:
+    bits: '7.3-7.2'
+    unused: true
+
+  BRAKING_IN_PROGRESS:
+    bits: '7.1-7.0'
+    comment:
+      en: 'Braking in progress'
+      fr: 'Freinage en cours'
+      es: 'Frenado en curso'
+      de: 'Bremsung aktiv'
+      it: 'Frenata in corso'
+      pl: 'Hamowanie w toku'
+      ru: 'Торможение в процессе'
+      zh: '制动进行中'
+      hu: 'Fékezés folyamatban'
+      pt: 'Travagem em curso'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No braking'
+        fr: 'Pas de freinage'
+        es: 'Sin frenado'
+        de: 'Keine Bremsung'
+        it: 'Nessuna frenata'
+        pl: 'Brak hamowania'
+        ru: 'Торможение отсутствует'
+        zh: '无制动'
+        hu: 'Nincs fékezés'
+        pt: 'Sem travagem'
+      0x01:
+        en: 'Braking in progress (driver action)'
+        fr: 'Freinage en cours (action conducteur)'
+        es: 'Frenado en curso (acción del conductor)'
+        de: 'Bremsung läuft (Fahreraktion)'
+        it: 'Frenata in corso (azione del conducente)'
+        pl: 'Trwające hamowanie (działanie kierowcy)'
+        ru: 'Идёт торможение (действие водителя)'
+        zh: '制动中（驾驶员操作）'
+        hu: 'Folyamatban lévő fékezés (vezetői beavatkozás)'
+        pt: 'Travagem em curso (ação do condutor)'
+      0x02:
+        en: 'Dynamic braking in progress'
+        fr: 'Freinage dynamique en cours'
+        es: 'Frenado dinámico en curso'
+        de: 'Dynamisches Bremsen läuft'
+        it: 'Frenata dinamica in corso'
+        pl: 'Trwa hamowanie dynamiczne'
+        ru: 'Динамическое торможение выполняется'
+        zh: '动态制动进行中'
+        hu: 'Dinamikus fékezés folyamatban'
+        pt: 'Travagem dinâmica em curso'
+      0x03:
+        en: 'Braking in progress (controlled action)'
+        fr: 'Freinage en cours (action automatique)'
+        es: 'Frenado en curso (acción automática)'
+        de: 'Bremsung läuft (automatische Aktion)'
+        it: 'Frenata in corso (azione automatica)'
+        pl: 'Trwa hamowanie (działanie automatyczne)'
+        ru: 'Идёт торможение (автоматическое действие)'
+        zh: '制动进行中(自动动作)'
+        hu: 'Fékezés folyamatban (automatikus beavatkozás)'
+        pt: 'Travagem em curso (ação automática)'
+
+  FRAME_CHECKSUM:
+    bits: '8.7-8.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Prüfsumme des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4BIT:
+    bits: '8.3-8.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00

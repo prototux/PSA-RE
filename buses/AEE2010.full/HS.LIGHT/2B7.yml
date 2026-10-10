@@ -1,0 +1,100 @@
+id: 0x2B7
+name: 'FRONT_LIGHTING_LEVELLING_COMMAND'
+type: 'can'
+length: 3
+comment:
+  en: 'Front lighting beam-levelling command: raw vehicle attitude and actuator position command with direction sign.'
+  fr: 'Commande de correction d''assiette de l''éclairage avant : assiette véhicule brute et commande de position de l''actionneur avec signe de direction.'
+  es: 'Comando de nivelación del haz de iluminación delantera: actitud del vehículo en bruto y comando de posición del actuador con signo de dirección.'
+  de: 'Leuchtweitenregelungsbefehl der Frontbeleuchtung: rohe Fahrzeuglage und Aktuator-Positionsbefehl mit Richtungsvorzeichen.'
+  it: 'Comando di correzione assetto dell''illuminazione anteriore: assetto veicolo grezzo e comando di posizione dell''attuatore con segno di direzione.'
+  pl: 'Polecenie regulacji zasięgu oświetlenia przedniego: surowe położenie pojazdu i polecenie pozycji siłownika ze znakiem kierunku.'
+  ru: 'Команда корректора света переднего освещения: необработанное положение автомобиля и команда положения привода со знаком направления.'
+  zh: '前照明光束调平命令:原始车辆姿态和带方向符号的执行器位置命令。'
+  hu: 'Az első világítás fényelosztás-állítási parancsa: nyers jármű dőlés és aktuátor pozícióparancs irányelőjellel.'
+  pt: 'Comando de nivelamento do feixe da iluminação dianteira: atitude em bruto do veículo e comando de posição do atuador com sinal de direção.'
+periodicity: ['20ms']
+senders: ['BCP']
+receivers: ['LED_DRIVER']
+
+signals:
+  HEADLAMP_BEAM_POSITION_COMMAND_SIGN:
+    bits: '1.7'
+    comment:
+      en: 'Sign of the headlamp beam position command'
+      fr: 'Signe de la commande de position du faisceau des phares'
+      es: 'Signo de la orden de posición del haz de los faros'
+      de: 'Vorzeichen des Leuchtweiten-Steuerbefehls'
+      it: 'Segno del comando di posizione del fascio dei fari'
+      pl: 'Znak polecenia ustawienia wiązki reflektorów'
+      ru: 'Знак команды положения пучка фар'
+      zh: '大灯光束位置指令的符号'
+      hu: 'A fényszóró-helyzetparancs előjele'
+      pt: 'Sinal do comando de posição do feixe dos faróis'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Positive'
+        fr: 'Positif'
+        es: 'Positivo'
+        de: 'Positiv'
+        it: 'Positivo'
+        pl: 'Dodatnie'
+        ru: 'Положительное'
+        zh: '正'
+        hu: 'Pozitív'
+        pt: 'Positivo'
+      0x01:
+        en: 'Negative'
+        fr: 'Négative'
+        es: 'Negativo'
+        de: 'Negativ'
+        it: 'Negativo'
+        pl: 'Ujemny'
+        ru: 'Отрицательный'
+        zh: '负'
+        hu: 'Negatív'
+        pt: 'Negativo'
+
+  HEADLAMP_BEAM_POSITION_COMMAND:
+    bits: '1.6-2.5'
+    comment:
+      en: 'Headlamp beam vertical position command'
+      fr: 'Commande de la position verticale du faisceau des phares'
+      es: 'Orden de posición vertical del haz de los faros'
+      de: 'Steuerbefehl für die vertikale Leuchtweitenposition'
+      it: 'Comando di posizione verticale del fascio dei fari'
+      pl: 'Polecenie pionowego ustawienia wiązki reflektorów'
+      ru: 'Команда вертикального положения пучка фар'
+      zh: '大灯光束垂直位置指令'
+      hu: 'A fényszóró fénykévéjének függőleges helyzetparancsa'
+      pt: 'Comando da posição vertical do feixe dos faróis'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 10.2
+    units: '%rad'
+    invalid: 0x3FF
+    default: 0x00
+
+  VEHICLE_ATTITUDE_RAW:
+    bits: '2.1-3.0'
+    comment:
+      en: 'Raw vehicle body attitude, from the headlamp leveling sensor (BEMP)'
+      fr: 'Assiette brute du véhicule, mesurée par le capteur de correction d''assiette des phares (BEMP)'
+      es: 'Actitud bruta del vehículo, medida por el sensor de corrección de altura de los faros (BEMP)'
+      de: 'Rohsignal der Fahrzeugneigung, vom Leuchtweitenregulierungssensor (BEMP) gemessen'
+      it: 'Assetto grezzo del veicolo, misurato dal sensore di correzione assetto fari (BEMP)'
+      pl: 'Surowe pochylenie nadwozia pojazdu, z czujnika korekcji zasięgu reflektorów (BEMP)'
+      ru: 'Необработанный крен кузова автомобиля, от датчика корректора фар (BEMP)'
+      zh: '由大灯高度调节传感器(BEMP)测得的原始车身姿态'
+      hu: 'A jármű nyers dőlésszöge, a fényszóró-magasságállító érzékelő (BEMP) mérése alapján'
+      pt: 'Atitude bruta do veículo, medida pelo sensor de correção da altura dos faróis (BEMP)'
+    type: 'sint'
+    factor: 0.006
+    min: -3
+    max: 3
+    units: '°'
+    invalid: 0x1FF
+    default: 0x00

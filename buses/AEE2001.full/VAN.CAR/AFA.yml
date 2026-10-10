@@ -1,0 +1,2837 @@
+id: 0xAFA
+name: 'PASSENGER_DOOR_MODULE_FAULTS'
+type: 'van'
+length: 18
+comment:
+  en: 'Fault list of the passenger door module, read by the body controller for fault recording.'
+  fr: 'Liste des défauts du module de porte passager, lue par la BSI pour l''enregistrement des défauts.'
+  es: 'Lista de fallos del módulo de puerta del pasajero, leída por la BSI para el registro de fallos.'
+  de: 'Fehlerliste des Beifahrertürmoduls, vom BSI zur Fehleraufzeichnung ausgelesen.'
+  it: 'Elenco dei guasti del modulo porta passeggero, letto dalla BSI per la registrazione dei guasti.'
+  pl: 'Lista usterek modułu drzwi pasażera, odczytywana przez BSI w celu rejestracji usterek.'
+  ru: 'Список неисправностей модуля двери пассажира, считываемый BSI для регистрации неисправностей.'
+  zh: '乘客车门模块的故障列表,由车身控制器读取以记录故障。'
+  hu: 'Az utasoldali ajtómodul hibalistája, amelyet a BSI olvas ki a hibák rögzítéséhez.'
+  pt: 'Lista de avarias do módulo da porta do passageiro, lida pelo computador de servidão para registo de avarias.'
+periodicity: ['500ms']
+senders: ['EDP_P', 'EDP_C']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  DIAG_SERVICE_ID:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Diagnostic service identifier (0x61 = ReadDataByLocalIdentifier positive response); default 0x00'
+      fr: 'Identifiant de service diagnostic (0x61 = réponse positive à ReadDataByLocalIdentifier), valeur par défaut 0x00'
+      es: 'Identificador de servicio de diagnóstico (0x61 = respuesta positiva a ReadDataByLocalIdentifier); valor por defecto 0x00'
+      de: 'Diagnose-Dienstkennung (0x61 = positive Antwort auf ReadDataByLocalIdentifier); Standardwert 0x00'
+      it: 'Identificativo del servizio diagnostico (0x61 = risposta positiva a ReadDataByLocalIdentifier); valore predefinito 0x00'
+      pl: 'Identyfikator usługi diagnostycznej (0x61 = pozytywna odpowiedź na ReadDataByLocalIdentifier); wartość domyślna 0x00'
+      ru: 'Идентификатор диагностической службы (0x61 = положительный ответ на ReadDataByLocalIdentifier); значение по умолчанию 0x00'
+      zh: '诊断服务标识符 (0x61 = ReadDataByLocalIdentifier 肯定响应);默认值 0x00'
+      hu: 'Diagnosztikai szolgáltatás azonosítója (0x61 = pozitív válasz a ReadDataByLocalIdentifier hívásra); alapértelmezett érték 0x00'
+      pt: 'Identificador de serviço de diagnóstico (0x61 = resposta positiva a ReadDataByLocalIdentifier); valor predefinido 0x00'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x61:
+        en: 'Service number (ReadDataByLocalIdentifier response)'
+        fr: 'Numéro de service (réponse ReadDataByLocalIdentifier)'
+        es: 'Número de servicio (respuesta ReadDataByLocalIdentifier)'
+        de: 'Servicenummer (ReadDataByLocalIdentifier-Antwort)'
+        it: 'Numero di servizio (risposta ReadDataByLocalIdentifier)'
+        pl: 'Numer usługi (odpowiedź ReadDataByLocalIdentifier)'
+        ru: 'Номер сервиса (ответ ReadDataByLocalIdentifier)'
+        zh: '服务编号(ReadDataByLocalIdentifier响应)'
+        hu: 'Szolgáltatásszám (ReadDataByLocalIdentifier válasz)'
+        pt: 'Número de serviço (resposta ReadDataByLocalIdentifier)'
+
+  DIAG_LOCAL_ID:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Diagnostic local identifier (0x83); default 0x00'
+      fr: 'Identifiant local pour le diagnostic MDP passager (0x83), valeur par défaut 0x00'
+      es: 'Identificador local de diagnóstico (0x83); valor por defecto 0x00'
+      de: 'Lokale Diagnosekennung (0x83); Standardwert 0x00'
+      it: 'Identificativo locale di diagnosi (0x83); valore predefinito 0x00'
+      pl: 'Lokalny identyfikator diagnostyczny (0x83); wartość domyślna 0x00'
+      ru: 'Локальный диагностический идентификатор (0x83); значение по умолчанию 0x00'
+      zh: '诊断本地标识符 (0x83);默认值 0x00'
+      hu: 'Diagnosztikai helyi azonosító (0x83); alapértelmezett érték 0x00'
+      pt: 'Identificador local de diagnóstico (0x83); predefinição 0x00'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x83:
+        en: 'Local identifier for the passenger door module'
+        fr: 'Identifiant local pour le module de porte passager (MDPP)'
+        es: 'Identificador local del módulo de puerta del pasajero (MDPP)'
+        de: 'Lokale Kennung für das Beifahrertür-Steuergerät (MDPP)'
+        it: 'Identificatore locale del modulo porta passeggero (MDPP)'
+        pl: 'Lokalny identyfikator modułu drzwi pasażera (MDPP)'
+        ru: 'Локальный идентификатор модуля двери пассажира (MDPP)'
+        zh: '乘客门模块(MDPP)本地标识符'
+        hu: 'Az utasoldali ajtómodul (MDPP) helyi azonosítója'
+        pt: 'Identificador local do módulo de porta do passageiro (MDPP)'
+
+  UNUSED_1:
+    bits: '4.7-4.2'
+    unused: true
+
+  WATCHDOG_RESET:
+    bits: '4.1'
+    comment:
+      en: 'Watchdog reset occurred'
+      fr: 'Réinitialisation par chien de garde (watchdog) survenue'
+      es: 'Reinicio por watchdog ocurrido'
+      de: 'Watchdog-Reset aufgetreten'
+      it: 'Reset da watchdog verificato'
+      pl: 'Wystąpił reset przez watchdog'
+      ru: 'Произошёл сброс по сторожевому таймеру (watchdog)'
+      zh: '发生看门狗复位'
+      hu: 'Watchdog reset történt'
+      pt: 'Ocorreu reinicialização por watchdog'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reset occurred'
+        fr: 'Aucune réinitialisation constatée'
+        es: 'No se ha producido ningún reinicio'
+        de: 'Kein Reset aufgetreten'
+        it: 'Nessun reset verificatosi'
+        pl: 'Nie wystąpił reset'
+        ru: 'Сброс не произошёл'
+        zh: '未发生复位'
+        hu: 'Nem történt visszaállítás'
+        pt: 'Nenhuma reposição ocorreu'
+      0x01:
+        en: 'Reset occurred'
+        fr: 'Réinitialisation survenue'
+        es: 'Reinicio ocurrido'
+        de: 'Reset aufgetreten'
+        it: 'Reset avvenuto'
+        pl: 'Wystąpił reset'
+        ru: 'Произошёл сброс'
+        zh: '发生复位'
+        hu: 'Visszaállítás történt'
+        pt: 'Reinicialização ocorrida'
+
+  POWER_DOWN_RESET:
+    bits: '4.0'
+    comment:
+      en: 'Power-down reset occurred'
+      fr: 'Réinitialisation par coupure d''alimentation survenue'
+      es: 'Reinicio por corte de alimentación ocurrido'
+      de: 'Reset durch Spannungsabschaltung aufgetreten'
+      it: 'Reset per interruzione di alimentazione verificato'
+      pl: 'Wystąpił reset przez zanik zasilania'
+      ru: 'Произошёл сброс по отключению питания'
+      zh: '发生断电复位'
+      hu: 'Áramkimaradásos reset történt'
+      pt: 'Ocorreu reinicialização por corte de alimentação'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reset occurred'
+        fr: 'Aucune réinitialisation constatée'
+        es: 'No se ha producido ningún reinicio'
+        de: 'Kein Reset aufgetreten'
+        it: 'Nessun reset verificatosi'
+        pl: 'Nie wystąpił reset'
+        ru: 'Сброс не произошёл'
+        zh: '未发生复位'
+        hu: 'Nem történt visszaállítás'
+        pt: 'Nenhuma reposição ocorreu'
+      0x01:
+        en: 'Reset occurred'
+        fr: 'Réinitialisation survenue'
+        es: 'Reinicio ocurrido'
+        de: 'Reset aufgetreten'
+        it: 'Reset avvenuto'
+        pl: 'Wystąpił reset'
+        ru: 'Произошёл сброс'
+        zh: '发生复位'
+        hu: 'Visszaállítás történt'
+        pt: 'Reinicialização ocorrida'
+
+  DEADLOCK_OUTPUT_FAULT:
+    bits: '5.7'
+    comment:
+      en: 'Deadlock (super-lock) output fault'
+      fr: 'Défaut de la sortie de supercondamnation'
+      es: 'Fallo de la salida de superbloqueo'
+      de: 'Fehler des Doppelverriegelungsausgangs'
+      it: 'Guasto dell''uscita di superchiusura'
+      pl: 'Błąd wyjścia podwójnego ryglowania'
+      ru: 'Неисправность выхода суперблокировки'
+      zh: '二次上锁输出故障'
+      hu: 'Duplazár kimenetének hibája'
+      pt: 'Falha da saída de superbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNLOCK_OUTPUT_FAULT:
+    bits: '5.6'
+    comment:
+      en: 'Unlock output fault'
+      fr: 'Défaut de la sortie de décondamnation'
+      es: 'Fallo de la salida de desbloqueo'
+      de: 'Fehler des Entriegelungsausgangs'
+      it: 'Guasto dell''uscita di apertura'
+      pl: 'Błąd wyjścia odblokowania'
+      ru: 'Неисправность выхода разблокировки замков'
+      zh: '开锁输出故障'
+      hu: 'Nyitás kimenetének hibája'
+      pt: 'Falha da saída de desbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  LOCK_OUTPUT_FAULT:
+    bits: '5.5'
+    comment:
+      en: 'Lock output fault'
+      fr: 'Défaut de la sortie de condamnation'
+      es: 'Fallo de la salida de bloqueo'
+      de: 'Fehler des Verriegelungsausgangs'
+      it: 'Guasto dell''uscita di chiusura'
+      pl: 'Błąd wyjścia blokady'
+      ru: 'Неисправность выхода блокировки замков'
+      zh: '门锁输出故障'
+      hu: 'Zárás kimenetének hibája'
+      pt: 'Falha da saída de bloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_SENSOR_SUPPLY_FAULT:
+    bits: '5.4'
+    comment:
+      en: 'Mirror position sensor supply fault'
+      fr: 'Défaut d''alimentation des capteurs de rétroviseurs'
+      es: 'Fallo de alimentación de los sensores de los retrovisores'
+      de: 'Versorgungsfehler der Spiegel-Positionssensoren'
+      it: 'Guasto di alimentazione dei sensori degli specchietti'
+      pl: 'Błąd zasilania czujników lusterek'
+      ru: 'Неисправность питания датчиков положения зеркал'
+      zh: '后视镜位置传感器供电故障'
+      hu: 'Tükörhelyzet-érzékelők tápellátási hibája'
+      pt: 'Falha de alimentação dos sensores dos retrovisores'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_FOLD_OUTPUT_FAULT:
+    bits: '5.3'
+    comment:
+      en: 'Mirror fold output fault'
+      fr: 'Défaut de la sortie de rabattement du rétroviseur'
+      es: 'Fallo de la salida de plegado del retrovisor'
+      de: 'Fehler des Spiegel-Einklappausgangs'
+      it: 'Guasto dell''uscita di ripiegamento dello specchietto'
+      pl: 'Błąd wyjścia składania lusterka'
+      ru: 'Неисправность выхода складывания зеркала'
+      zh: '后视镜折叠输出故障'
+      hu: 'Tükör behajtás kimenetének hibája'
+      pt: 'Falha da saída de dobragem do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_LEFT_OUTPUT_FAULT:
+    bits: '5.2'
+    comment:
+      en: 'Mirror move-left output fault'
+      fr: 'Défaut de la sortie de déplacement vers la gauche du rétroviseur'
+      es: 'Fallo de la salida de desplazamiento hacia la izquierda del retrovisor'
+      de: 'Fehler des Ausgangs für Spiegelverstellung nach links'
+      it: 'Guasto dell''uscita di spostamento a sinistra dello specchietto'
+      pl: 'Błąd wyjścia przesunięcia lusterka w lewo'
+      ru: 'Неисправность выхода перемещения зеркала влево'
+      zh: '后视镜左移输出故障'
+      hu: 'Tükör balra mozgatás kimenetének hibája'
+      pt: 'Falha da saída de deslocamento para a esquerda do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_UP_OUTPUT_FAULT:
+    bits: '5.1'
+    comment:
+      en: 'Mirror move-up output fault'
+      fr: 'Défaut de la sortie de déplacement vers le haut du rétroviseur'
+      es: 'Fallo de la salida de desplazamiento hacia arriba del retrovisor'
+      de: 'Fehler des Ausgangs für Spiegelverstellung nach oben'
+      it: 'Guasto dell''uscita di spostamento verso l''alto dello specchietto'
+      pl: 'Błąd wyjścia przesunięcia lusterka w górę'
+      ru: 'Неисправность выхода перемещения зеркала вверх'
+      zh: '后视镜上移输出故障'
+      hu: 'Tükör felfelé mozgatás kimenetének hibája'
+      pt: 'Falha da saída de deslocamento para cima do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_COMMON_OUTPUT_FAULT:
+    bits: '5.0'
+    comment:
+      en: 'Mirror common output fault'
+      fr: 'Défaut de la sortie commune du rétroviseur'
+      es: 'Fallo de la salida común del retrovisor'
+      de: 'Fehler des gemeinsamen Spiegelausgangs'
+      it: 'Guasto dell''uscita comune dello specchietto'
+      pl: 'Błąd wspólnego wyjścia lusterka'
+      ru: 'Неисправность общего выхода зеркала'
+      zh: '后视镜公共输出故障'
+      hu: 'Tükör közös kimenetének hibája'
+      pt: 'Falha da saída comum do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  SWITCH_PANEL_LIGHT_OUTPUT_FAULT:
+    bits: '6.7'
+    comment:
+      en: 'Switch panel lighting output fault'
+      fr: 'Défaut de la sortie d''éclairage de la platine'
+      es: 'Fallo de la salida de iluminación de la platina de mandos'
+      de: 'Fehler des Beleuchtungsausgangs der Schalterplatine'
+      it: 'Guasto dell''uscita di illuminazione della plancia comandi'
+      pl: 'Błąd wyjścia podświetlenia panelu przełączników'
+      ru: 'Неисправность выхода подсветки панели переключателей'
+      zh: '开关面板照明输出故障'
+      hu: 'Kapcsolópanel világítás kimenetének hibája'
+      pt: 'Falha da saída de iluminação da platina de comandos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_DEFROST_OUTPUT_FAULT:
+    bits: '6.6'
+    comment:
+      en: 'Mirror defrost output fault'
+      fr: 'Défaut de la sortie de dégivrage du rétroviseur'
+      es: 'Fallo de la salida de desempañado del retrovisor'
+      de: 'Fehler des Spiegelheizungsausgangs'
+      it: 'Guasto dell''uscita di sbrinamento dello specchietto'
+      pl: 'Błąd wyjścia podgrzewania lusterka'
+      ru: 'Неисправность выхода обогрева зеркала'
+      zh: '后视镜除霜输出故障'
+      hu: 'Tükörfűtés kimenetének hibája'
+      pt: 'Falha da saída de desembaciamento do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MEMORY_KEYPAD_TELLTALE_OUTPUT_FAULT:
+    bits: '6.5'
+    comment:
+      en: 'Memory keypad telltale output fault'
+      fr: 'Défaut de la sortie témoin du clavier mémoire'
+      es: 'Fallo de la salida del testigo del teclado de memorias'
+      de: 'Fehler des Kontrollleuchtenausgangs der Memory-Tastatur'
+      it: 'Guasto dell''uscita spia della tastiera memoria'
+      pl: 'Błąd wyjścia kontrolki klawiatury pamięci foteli'
+      ru: 'Неисправность выхода индикатора клавиатуры памяти сидений'
+      zh: '记忆键盘指示灯输出故障'
+      hu: 'Memória-billentyűzet jelzőlámpa kimenetének hibája'
+      pt: 'Falha da saída da luz avisadora do teclado de memórias'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MEMORY_KEYPAD_LIGHT_OUTPUT_FAULT:
+    bits: '6.4'
+    comment:
+      en: 'Memory keypad lighting output fault'
+      fr: 'Défaut de la sortie d''éclairage du clavier mémoire'
+      es: 'Fallo de la salida de iluminación del teclado de memorias'
+      de: 'Fehler des Beleuchtungsausgangs der Memory-Tastatur'
+      it: 'Guasto dell''uscita di illuminazione della tastiera memoria'
+      pl: 'Błąd wyjścia podświetlenia klawiatury pamięci foteli'
+      ru: 'Неисправность выхода подсветки клавиатуры памяти сидений'
+      zh: '记忆键盘照明输出故障'
+      hu: 'Memória-billentyűzet világítás kimenetének hibája'
+      pt: 'Falha da saída de iluminação do teclado de memórias'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  SILL_LIGHT_OUTPUT_FAULT:
+    bits: '6.3'
+    comment:
+      en: 'Sill light output fault'
+      fr: 'Défaut de la sortie d''éclairage de seuil'
+      es: 'Fallo de la salida de luz de umbral'
+      de: 'Fehler des Einstiegsleuchten-Ausgangs'
+      it: 'Guasto dell''uscita luce sottoporta'
+      pl: 'Błąd wyjścia oświetlenia progu'
+      ru: 'Неисправность выхода подсветки порога'
+      zh: '门槛灯输出故障'
+      hu: 'Küszöbvilágítás kimenetének hibája'
+      pt: 'Falha da saída de luz de soleira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_UP_OUTPUT_FAULT:
+    bits: '6.2'
+    comment:
+      en: 'Window up output fault'
+      fr: 'Défaut de la sortie de montée du lève-vitre'
+      es: 'Fallo de la salida de subida del elevalunas'
+      de: 'Fehler des Fensterheber-Aufwärtsausgangs'
+      it: 'Guasto dell''uscita di salita dell''alzacristallo'
+      pl: 'Błąd wyjścia podnoszenia szyby'
+      ru: 'Неисправность выхода подъёма стекла'
+      zh: '车窗上升输出故障'
+      hu: 'Ablak felfelé mozgatás kimenetének hibája'
+      pt: 'Falha da saída de subida do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_AUTO_OUTPUT_FAULT:
+    bits: '6.1'
+    comment:
+      en: 'Window automatic output fault'
+      fr: 'Défaut de la sortie automatique du lève-vitre'
+      es: 'Fallo de la salida automática del elevalunas'
+      de: 'Fehler des Fensterheber-Automatikausgangs'
+      it: 'Guasto dell''uscita automatica dell''alzacristallo'
+      pl: 'Błąd wyjścia automatycznego podnośnika szyby'
+      ru: 'Неисправность выхода автоматического режима стеклоподъёмника'
+      zh: '车窗自动升降输出故障'
+      hu: 'Ablakemelő automata kimenetének hibája'
+      pt: 'Falha da saída automática do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_DOWN_OUTPUT_FAULT:
+    bits: '6.0'
+    comment:
+      en: 'Window down output fault'
+      fr: 'Défaut de la sortie de descente du lève-vitre'
+      es: 'Fallo de la salida de bajada del elevalunas'
+      de: 'Fehler des Fensterheber-Abwärtsausgangs'
+      it: 'Guasto dell''uscita di discesa dell''alzacristallo'
+      pl: 'Błąd wyjścia opuszczania szyby'
+      ru: 'Неисправность выхода опускания стекла'
+      zh: '车窗下降输出故障'
+      hu: 'Ablak lefelé mozgatás kimenetének hibája'
+      pt: 'Falha da saída de descida do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_FOLD_OUTPUT_OPEN_CIRCUIT:
+    bits: '7.7'
+    comment:
+      en: 'Mirror fold output open circuit'
+      fr: 'Circuit ouvert de la sortie de rabattement du rétroviseur'
+      es: 'Circuito abierto de la salida de plegado del retrovisor'
+      de: 'Unterbrechung des Spiegel-Einklappausgangs'
+      it: 'Circuito aperto dell''uscita di ripiegamento dello specchietto'
+      pl: 'Przerwa w obwodzie wyjścia składania lusterka'
+      ru: 'Обрыв цепи выхода складывания зеркала'
+      zh: '后视镜折叠输出断路'
+      hu: 'Tükör behajtás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de dobragem do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_FOLD_OUTPUT_SHORT_CIRCUIT:
+    bits: '7.6'
+    comment:
+      en: 'Mirror fold output short circuit'
+      fr: 'Court-circuit de la sortie de rabattement du rétroviseur'
+      es: 'Cortocircuito de la salida de plegado del retrovisor'
+      de: 'Kurzschluss des Spiegel-Einklappausgangs'
+      it: 'Cortocircuito dell''uscita di ripiegamento dello specchietto'
+      pl: 'Zwarcie wyjścia składania lusterka'
+      ru: 'Короткое замыкание выхода складывания зеркала'
+      zh: '后视镜折叠输出短路'
+      hu: 'Tükör behajtás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de dobragem do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_LEFT_OUTPUT_OPEN_CIRCUIT:
+    bits: '7.5'
+    comment:
+      en: 'Mirror move-left output open circuit'
+      fr: 'Circuit ouvert de la sortie de déplacement vers la gauche du rétroviseur'
+      es: 'Circuito abierto de la salida de desplazamiento hacia la izquierda del retrovisor'
+      de: 'Unterbrechung des Ausgangs für Spiegelverstellung nach links'
+      it: 'Circuito aperto dell''uscita di spostamento a sinistra dello specchietto'
+      pl: 'Przerwa w obwodzie wyjścia przesunięcia lusterka w lewo'
+      ru: 'Обрыв цепи выхода перемещения зеркала влево'
+      zh: '后视镜左移输出断路'
+      hu: 'Tükör balra mozgatás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de deslocamento para a esquerda do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_LEFT_OUTPUT_SHORT_CIRCUIT:
+    bits: '7.4'
+    comment:
+      en: 'Mirror move-left output short circuit'
+      fr: 'Court-circuit de la sortie de déplacement vers la gauche du rétroviseur'
+      es: 'Cortocircuito de la salida de desplazamiento hacia la izquierda del retrovisor'
+      de: 'Kurzschluss des Ausgangs für Spiegelverstellung nach links'
+      it: 'Cortocircuito dell''uscita di spostamento a sinistra dello specchietto'
+      pl: 'Zwarcie wyjścia przesunięcia lusterka w lewo'
+      ru: 'Короткое замыкание выхода перемещения зеркала влево'
+      zh: '后视镜左移输出短路'
+      hu: 'Tükör balra mozgatás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de deslocamento para a esquerda do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_UP_OUTPUT_OPEN_CIRCUIT:
+    bits: '7.3'
+    comment:
+      en: 'Mirror move-up output open circuit'
+      fr: 'Circuit ouvert de la sortie de déplacement vers le haut du rétroviseur'
+      es: 'Circuito abierto de la salida de desplazamiento hacia arriba del retrovisor'
+      de: 'Unterbrechung des Ausgangs für Spiegelverstellung nach oben'
+      it: 'Circuito aperto dell''uscita di spostamento verso l''alto dello specchietto'
+      pl: 'Przerwa w obwodzie wyjścia przesunięcia lusterka w górę'
+      ru: 'Обрыв цепи выхода перемещения зеркала вверх'
+      zh: '后视镜上移输出断路'
+      hu: 'Tükör felfelé mozgatás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de deslocamento para cima do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_UP_OUTPUT_SHORT_CIRCUIT:
+    bits: '7.2'
+    comment:
+      en: 'Mirror move-up output short circuit'
+      fr: 'Court-circuit de la sortie de déplacement vers le haut du rétroviseur'
+      es: 'Cortocircuito de la salida de desplazamiento hacia arriba del retrovisor'
+      de: 'Kurzschluss des Ausgangs für Spiegelverstellung nach oben'
+      it: 'Cortocircuito dell''uscita di spostamento verso l''alto dello specchietto'
+      pl: 'Zwarcie wyjścia przesunięcia lusterka w górę'
+      ru: 'Короткое замыкание выхода перемещения зеркала вверх'
+      zh: '后视镜上移输出短路'
+      hu: 'Tükör felfelé mozgatás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de deslocamento para cima do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_COMMON_OUTPUT_OPEN_CIRCUIT:
+    bits: '7.1'
+    comment:
+      en: 'Mirror common output open circuit'
+      fr: 'Circuit ouvert de la sortie commune du rétroviseur'
+      es: 'Circuito abierto de la salida común del retrovisor'
+      de: 'Unterbrechung des gemeinsamen Spiegelausgangs'
+      it: 'Circuito aperto dell''uscita comune dello specchietto'
+      pl: 'Przerwa w obwodzie wspólnego wyjścia lusterka'
+      ru: 'Обрыв цепи общего выхода зеркала'
+      zh: '后视镜公共输出断路'
+      hu: 'Tükör közös kimenetének szakadása'
+      pt: 'Circuito aberto da saída comum do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_COMMON_OUTPUT_SHORT_CIRCUIT:
+    bits: '7.0'
+    comment:
+      en: 'Mirror common output short circuit'
+      fr: 'Court-circuit de la sortie commune du rétroviseur'
+      es: 'Cortocircuito de la salida común del retrovisor'
+      de: 'Kurzschluss des gemeinsamen Spiegelausgangs'
+      it: 'Cortocircuito dell''uscita comune dello specchietto'
+      pl: 'Zwarcie wspólnego wyjścia lusterka'
+      ru: 'Короткое замыкание общего выхода зеркала'
+      zh: '后视镜公共输出短路'
+      hu: 'Tükör közös kimenetének zárlata'
+      pt: 'Curto-circuito da saída comum do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNUSED_2:
+    bits: '8.7-8.6'
+    unused: true
+
+  DEADLOCK_OUTPUT_OPEN_CIRCUIT:
+    bits: '8.5'
+    comment:
+      en: 'Deadlock output open circuit'
+      fr: 'Circuit ouvert de la sortie de supercondamnation'
+      es: 'Circuito abierto de la salida de superbloqueo'
+      de: 'Unterbrechung des Doppelverriegelungsausgangs'
+      it: 'Circuito aperto dell''uscita di superchiusura'
+      pl: 'Przerwa w obwodzie wyjścia podwójnego ryglowania'
+      ru: 'Обрыв цепи выхода суперблокировки'
+      zh: '二次上锁输出断路'
+      hu: 'Duplazár kimenetének szakadása'
+      pt: 'Circuito aberto da saída de superbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  DEADLOCK_OUTPUT_SHORT_CIRCUIT:
+    bits: '8.4'
+    comment:
+      en: 'Deadlock output short circuit'
+      fr: 'Court-circuit de la sortie de supercondamnation'
+      es: 'Cortocircuito de la salida de superbloqueo'
+      de: 'Kurzschluss des Doppelverriegelungsausgangs'
+      it: 'Cortocircuito dell''uscita di superchiusura'
+      pl: 'Zwarcie wyjścia podwójnego ryglowania'
+      ru: 'Короткое замыкание выхода суперблокировки'
+      zh: '二次上锁输出短路'
+      hu: 'Duplazár kimenetének zárlata'
+      pt: 'Curto-circuito da saída de superbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNLOCK_OUTPUT_OPEN_CIRCUIT:
+    bits: '8.3'
+    comment:
+      en: 'Unlock output open circuit'
+      fr: 'Circuit ouvert de la sortie de décondamnation'
+      es: 'Circuito abierto de la salida de desbloqueo'
+      de: 'Unterbrechung des Entriegelungsausgangs'
+      it: 'Circuito aperto dell''uscita di apertura'
+      pl: 'Przerwa w obwodzie wyjścia odblokowania'
+      ru: 'Обрыв цепи выхода разблокировки замков'
+      zh: '开锁输出断路'
+      hu: 'Nyitás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de desbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNLOCK_OUTPUT_SHORT_CIRCUIT:
+    bits: '8.2'
+    comment:
+      en: 'Unlock output short circuit'
+      fr: 'Court-circuit de la sortie de décondamnation'
+      es: 'Cortocircuito de la salida de desbloqueo'
+      de: 'Kurzschluss des Entriegelungsausgangs'
+      it: 'Cortocircuito dell''uscita di apertura'
+      pl: 'Zwarcie wyjścia odblokowania'
+      ru: 'Короткое замыкание выхода разблокировки замков'
+      zh: '开锁输出短路'
+      hu: 'Nyitás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de desbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  LOCK_OUTPUT_OPEN_CIRCUIT:
+    bits: '8.1'
+    comment:
+      en: 'Lock output open circuit'
+      fr: 'Circuit ouvert de la sortie de condamnation'
+      es: 'Circuito abierto de la salida de bloqueo'
+      de: 'Unterbrechung des Verriegelungsausgangs'
+      it: 'Circuito aperto dell''uscita di chiusura'
+      pl: 'Przerwa w obwodzie wyjścia blokady'
+      ru: 'Обрыв цепи выхода блокировки замков'
+      zh: '门锁输出断路'
+      hu: 'Zárás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de bloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  LOCK_OUTPUT_SHORT_CIRCUIT:
+    bits: '8.0'
+    comment:
+      en: 'Lock output short circuit'
+      fr: 'Court-circuit de la sortie de condamnation'
+      es: 'Cortocircuito de la salida de bloqueo'
+      de: 'Kurzschluss des Verriegelungsausgangs'
+      it: 'Cortocircuito dell''uscita di chiusura'
+      pl: 'Zwarcie wyjścia blokady'
+      ru: 'Короткое замыкание выхода блокировки замков'
+      zh: '门锁输出短路'
+      hu: 'Zárás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de bloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_DEFROST_OUTPUT_OPEN_CIRCUIT:
+    bits: '9.7'
+    comment:
+      en: 'Mirror defrost output open circuit'
+      fr: 'Circuit ouvert de la sortie de dégivrage du rétroviseur'
+      es: 'Circuito abierto de la salida de desempañado del retrovisor'
+      de: 'Unterbrechung des Spiegelheizungsausgangs'
+      it: 'Circuito aperto dell''uscita di sbrinamento dello specchietto'
+      pl: 'Przerwa w obwodzie wyjścia podgrzewania lusterka'
+      ru: 'Обрыв цепи выхода обогрева зеркала'
+      zh: '后视镜除霜输出断路'
+      hu: 'Tükörfűtés kimenetének szakadása'
+      pt: 'Circuito aberto da saída de desembaciamento do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_DEFROST_OUTPUT_SHORT_CIRCUIT:
+    bits: '9.6'
+    comment:
+      en: 'Mirror defrost output short circuit'
+      fr: 'Court-circuit de la sortie de dégivrage du rétroviseur'
+      es: 'Cortocircuito de la salida de desempañado del retrovisor'
+      de: 'Kurzschluss des Spiegelheizungsausgangs'
+      it: 'Cortocircuito dell''uscita di sbrinamento dello specchietto'
+      pl: 'Zwarcie wyjścia podgrzewania lusterka'
+      ru: 'Короткое замыкание выхода обогрева зеркала'
+      zh: '后视镜除霜输出短路'
+      hu: 'Tükörfűtés kimenetének zárlata'
+      pt: 'Curto-circuito da saída de desembaciamento do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_UP_OUTPUT_OPEN_CIRCUIT:
+    bits: '9.5'
+    comment:
+      en: 'Window up output open circuit'
+      fr: 'Circuit ouvert de la sortie de montée du lève-vitre'
+      es: 'Circuito abierto de la salida de subida del elevalunas'
+      de: 'Unterbrechung des Fensterheber-Aufwärtsausgangs'
+      it: 'Circuito aperto dell''uscita di salita dell''alzacristallo'
+      pl: 'Przerwa w obwodzie wyjścia podnoszenia szyby'
+      ru: 'Обрыв цепи выхода подъёма стекла'
+      zh: '车窗上升输出断路'
+      hu: 'Ablak felfelé mozgatás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de subida do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_UP_OUTPUT_SHORT_CIRCUIT:
+    bits: '9.4'
+    comment:
+      en: 'Window up output short circuit'
+      fr: 'Court-circuit de la sortie de montée du lève-vitre'
+      es: 'Cortocircuito de la salida de subida del elevalunas'
+      de: 'Kurzschluss des Fensterheber-Aufwärtsausgangs'
+      it: 'Cortocircuito dell''uscita di salita dell''alzacristallo'
+      pl: 'Zwarcie wyjścia podnoszenia szyby'
+      ru: 'Короткое замыкание выхода подъёма стекла'
+      zh: '车窗上升输出短路'
+      hu: 'Ablak felfelé mozgatás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de subida do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_AUTO_OUTPUT_OPEN_CIRCUIT:
+    bits: '9.3'
+    comment:
+      en: 'Window automatic output open circuit'
+      fr: 'Circuit ouvert de la sortie automatique du lève-vitre'
+      es: 'Circuito abierto de la salida automática del elevalunas'
+      de: 'Unterbrechung des Fensterheber-Automatikausgangs'
+      it: 'Circuito aperto dell''uscita automatica dell''alzacristallo'
+      pl: 'Przerwa w obwodzie wyjścia automatycznego podnośnika szyby'
+      ru: 'Обрыв цепи выхода автоматического режима стеклоподъёмника'
+      zh: '车窗自动升降输出断路'
+      hu: 'Ablakemelő automata kimenetének szakadása'
+      pt: 'Circuito aberto da saída automática do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_AUTO_OUTPUT_SHORT_CIRCUIT:
+    bits: '9.2'
+    comment:
+      en: 'Window automatic output short circuit'
+      fr: 'Court-circuit de la sortie automatique du lève-vitre'
+      es: 'Cortocircuito de la salida automática del elevalunas'
+      de: 'Kurzschluss des Fensterheber-Automatikausgangs'
+      it: 'Cortocircuito dell''uscita automatica dell''alzacristallo'
+      pl: 'Zwarcie wyjścia automatycznego podnośnika szyby'
+      ru: 'Короткое замыкание выхода автоматического режима стеклоподъёмника'
+      zh: '车窗自动升降输出短路'
+      hu: 'Ablakemelő automata kimenetének zárlata'
+      pt: 'Curto-circuito da saída automática do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_DOWN_OUTPUT_OPEN_CIRCUIT:
+    bits: '9.1'
+    comment:
+      en: 'Window down output open circuit'
+      fr: 'Circuit ouvert de la sortie de descente du lève-vitre'
+      es: 'Circuito abierto de la salida de bajada del elevalunas'
+      de: 'Unterbrechung des Fensterheber-Abwärtsausgangs'
+      it: 'Circuito aperto dell''uscita di discesa dell''alzacristallo'
+      pl: 'Przerwa w obwodzie wyjścia opuszczania szyby'
+      ru: 'Обрыв цепи выхода опускания стекла'
+      zh: '车窗下降输出断路'
+      hu: 'Ablak lefelé mozgatás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de descida do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  WINDOW_DOWN_OUTPUT_SHORT_CIRCUIT:
+    bits: '9.0'
+    comment:
+      en: 'Window down output short circuit'
+      fr: 'Court-circuit de la sortie de descente du lève-vitre'
+      es: 'Cortocircuito de la salida de bajada del elevalunas'
+      de: 'Kurzschluss des Fensterheber-Abwärtsausgangs'
+      it: 'Cortocircuito dell''uscita di discesa dell''alzacristallo'
+      pl: 'Zwarcie wyjścia opuszczania szyby'
+      ru: 'Короткое замыкание выхода опускания стекла'
+      zh: '车窗下降输出短路'
+      hu: 'Ablak lefelé mozgatás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de descida do vidro elétrico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_VERTICAL_SENSOR_OUT_OF_RANGE:
+    bits: '10.7'
+    comment:
+      en: 'Mirror up/down position sensor out of range'
+      fr: 'Capteur haut/bas du rétroviseur hors plage'
+      es: 'Sensor arriba/abajo del retrovisor fuera de rango'
+      de: 'Auf/Ab-Positionssensor des Spiegels außerhalb des Bereichs'
+      it: 'Sensore alto/basso dello specchietto fuori campo'
+      pl: 'Czujnik góra/dół lusterka poza zakresem'
+      ru: 'Датчик положения верх/низ зеркала вне диапазона'
+      zh: '后视镜上下位置传感器超出范围'
+      hu: 'Tükör fel/le érzékelője a tartományon kívül'
+      pt: 'Sensor cima/baixo do retrovisor fora de intervalo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MIRROR_HORIZONTAL_SENSOR_OUT_OF_RANGE:
+    bits: '10.6'
+    comment:
+      en: 'Mirror left/right position sensor out of range'
+      fr: 'Capteur gauche/droite du rétroviseur hors plage'
+      es: 'Sensor izquierda/derecha del retrovisor fuera de rango'
+      de: 'Links/Rechts-Positionssensor des Spiegels außerhalb des Bereichs'
+      it: 'Sensore sinistra/destra dello specchietto fuori campo'
+      pl: 'Czujnik lewo/prawo lusterka poza zakresem'
+      ru: 'Датчик положения лево/право зеркала вне диапазона'
+      zh: '后视镜左右位置传感器超出范围'
+      hu: 'Tükör bal/jobb érzékelője a tartományon kívül'
+      pt: 'Sensor esquerda/direita do retrovisor fora de intervalo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MEMORY_KEYPAD_TELLTALE_OUTPUT_OPEN_CIRCUIT:
+    bits: '10.5'
+    comment:
+      en: 'Memory keypad telltale output open circuit'
+      fr: 'Circuit ouvert de la sortie témoin du clavier mémoire'
+      es: 'Circuito abierto de la salida del testigo del teclado de memorias'
+      de: 'Unterbrechung des Kontrollleuchtenausgangs der Memory-Tastatur'
+      it: 'Circuito aperto dell''uscita spia della tastiera memoria'
+      pl: 'Przerwa w obwodzie wyjścia kontrolki klawiatury pamięci foteli'
+      ru: 'Обрыв цепи выхода индикатора клавиатуры памяти сидений'
+      zh: '记忆键盘指示灯输出断路'
+      hu: 'Memória-billentyűzet jelzőlámpa kimenetének szakadása'
+      pt: 'Circuito aberto da saída da luz avisadora do teclado de memórias'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MEMORY_KEYPAD_TELLTALE_OUTPUT_SHORT_CIRCUIT:
+    bits: '10.4'
+    comment:
+      en: 'Memory keypad telltale output short circuit'
+      fr: 'Court-circuit de la sortie témoin du clavier mémoire'
+      es: 'Cortocircuito de la salida del testigo del teclado de memorias'
+      de: 'Kurzschluss des Kontrollleuchtenausgangs der Memory-Tastatur'
+      it: 'Cortocircuito dell''uscita spia della tastiera memoria'
+      pl: 'Zwarcie wyjścia kontrolki klawiatury pamięci foteli'
+      ru: 'Короткое замыкание выхода индикатора клавиатуры памяти сидений'
+      zh: '记忆键盘指示灯输出短路'
+      hu: 'Memória-billentyűzet jelzőlámpa kimenetének zárlata'
+      pt: 'Curto-circuito da saída da luz avisadora do teclado de memórias'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MEMORY_KEYPAD_LIGHT_OUTPUT_OPEN_CIRCUIT:
+    bits: '10.3'
+    comment:
+      en: 'Memory keypad lighting output open circuit'
+      fr: 'Circuit ouvert de la sortie d''éclairage du clavier mémoire'
+      es: 'Circuito abierto de la salida de iluminación del teclado de memorias'
+      de: 'Unterbrechung des Beleuchtungsausgangs der Memory-Tastatur'
+      it: 'Circuito aperto dell''uscita di illuminazione della tastiera memoria'
+      pl: 'Przerwa w obwodzie wyjścia podświetlenia klawiatury pamięci foteli'
+      ru: 'Обрыв цепи выхода подсветки клавиатуры памяти сидений'
+      zh: '记忆键盘照明输出断路'
+      hu: 'Memória-billentyűzet világítás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de iluminação do teclado de memórias'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  MEMORY_KEYPAD_LIGHT_OUTPUT_SHORT_CIRCUIT:
+    bits: '10.2'
+    comment:
+      en: 'Memory keypad lighting output short circuit'
+      fr: 'Court-circuit de la sortie d''éclairage du clavier mémoire'
+      es: 'Cortocircuito de la salida de iluminación del teclado de memorias'
+      de: 'Kurzschluss des Beleuchtungsausgangs der Memory-Tastatur'
+      it: 'Cortocircuito dell''uscita di illuminazione della tastiera memoria'
+      pl: 'Zwarcie wyjścia podświetlenia klawiatury pamięci foteli'
+      ru: 'Короткое замыкание выхода подсветки клавиатуры памяти сидений'
+      zh: '记忆键盘照明输出短路'
+      hu: 'Memória-billentyűzet világítás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de iluminação do teclado de memórias'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  SILL_LIGHT_OUTPUT_OPEN_CIRCUIT:
+    bits: '10.1'
+    comment:
+      en: 'Sill light output open circuit'
+      fr: 'Circuit ouvert de la sortie d''éclairage de seuil'
+      es: 'Circuito abierto de la salida de luz de umbral'
+      de: 'Unterbrechung des Einstiegsleuchten-Ausgangs'
+      it: 'Circuito aperto dell''uscita luce sottoporta'
+      pl: 'Przerwa w obwodzie wyjścia oświetlenia progu'
+      ru: 'Обрыв цепи выхода подсветки порога'
+      zh: '门槛灯输出断路'
+      hu: 'Küszöbvilágítás kimenetének szakadása'
+      pt: 'Circuito aberto da saída de luz de soleira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  SILL_LIGHT_OUTPUT_SHORT_CIRCUIT:
+    bits: '10.0'
+    comment:
+      en: 'Sill light output short circuit'
+      fr: 'Court-circuit de la sortie d''éclairage de seuil'
+      es: 'Cortocircuito de la salida de luz de umbral'
+      de: 'Kurzschluss des Einstiegsleuchten-Ausgangs'
+      it: 'Cortocircuito dell''uscita luce sottoporta'
+      pl: 'Zwarcie wyjścia oświetlenia progu'
+      ru: 'Короткое замыкание выхода подсветки порога'
+      zh: '门槛灯输出短路'
+      hu: 'Küszöbvilágítás kimenetének zárlata'
+      pt: 'Curto-circuito da saída de luz de soleira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNUSED_3:
+    bits: '11.7-11.2'
+    unused: true
+
+  WATCHDOG_RESET_VALID:
+    bits: '11.1'
+    comment:
+      en: 'Validity of the watchdog reset flag'
+      fr: 'Validité du signal de réinitialisation par watchdog'
+      es: 'Validez de la señal de reinicio por watchdog'
+      de: 'Gültigkeit des Watchdog-Reset-Signals'
+      it: 'Validità del segnale di reset da watchdog'
+      pl: 'Ważność sygnału resetu przez watchdog'
+      ru: 'Достоверность признака сброса по сторожевому таймеру'
+      zh: '看门狗复位标志有效性'
+      hu: 'A watchdog reset jel érvényessége'
+      pt: 'Validade do sinal de reinicialização por watchdog'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  POWER_DOWN_RESET_VALID:
+    bits: '11.0'
+    comment:
+      en: 'Validity of the power-down reset flag'
+      fr: 'Validité du signal de réinitialisation par coupure d''alimentation'
+      es: 'Validez de la señal de reinicio por corte de alimentación'
+      de: 'Gültigkeit des Power-Down-Reset-Signals'
+      it: 'Validità del segnale di reset per interruzione di alimentazione'
+      pl: 'Ważność sygnału resetu przez zanik zasilania'
+      ru: 'Достоверность признака сброса по отключению питания'
+      zh: '断电复位标志有效性'
+      hu: 'Az áramkimaradásos reset jel érvényessége'
+      pt: 'Validade do sinal de reinicialização por corte de alimentação'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  DEADLOCK_OUTPUT_FAULT_VALID:
+    bits: '12.7'
+    comment:
+      en: 'Validity of the flag: deadlock (super-lock) output fault'
+      fr: 'Validité du défaut de la sortie de supercondamnation'
+      es: 'Validez del fallo de la salida de superbloqueo'
+      de: 'Gültigkeit des Fehlers des Doppelverriegelungsausgangs'
+      it: 'Validità del guasto dell''uscita di superchiusura'
+      pl: 'Ważność błędu wyjścia podwójnego ryglowania'
+      ru: 'Достоверность признака неисправности выхода суперблокировки'
+      zh: '二次上锁输出故障标志有效性'
+      hu: 'A duplazár kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de sobretrancagem (deadlock)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  UNLOCK_OUTPUT_FAULT_VALID:
+    bits: '12.6'
+    comment:
+      en: 'Validity of the flag: unlock output fault'
+      fr: 'Validité du défaut de la sortie de décondamnation'
+      es: 'Validez del fallo de la salida de desbloqueo'
+      de: 'Gültigkeit des Fehlers des Entriegelungsausgangs'
+      it: 'Validità del guasto dell''uscita di apertura'
+      pl: 'Ważność błędu wyjścia odblokowania'
+      ru: 'Достоверность признака неисправности выхода разблокировки замков'
+      zh: '开锁输出故障标志有效性'
+      hu: 'A nyitás kimeneti hibájának érvényessége'
+      pt: 'Validade da falha da saída de desbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  LOCK_OUTPUT_FAULT_VALID:
+    bits: '12.5'
+    comment:
+      en: 'Validity of the flag: lock output fault'
+      fr: 'Validité du défaut de la sortie de condamnation'
+      es: 'Validez del fallo de la salida de bloqueo'
+      de: 'Gültigkeit des Fehlers des Verriegelungsausgangs'
+      it: 'Validità del guasto dell''uscita di chiusura'
+      pl: 'Ważność błędu wyjścia blokady'
+      ru: 'Достоверность признака неисправности выхода блокировки замков'
+      zh: '门锁输出故障标志有效性'
+      hu: 'A zárás kimeneti hibájának érvényessége'
+      pt: 'Validade da falha da saída de bloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_SENSOR_SUPPLY_FAULT_VALID:
+    bits: '12.4'
+    comment:
+      en: 'Validity of the flag: mirror position sensor supply fault'
+      fr: 'Validité du défaut d''alimentation des capteurs de rétroviseurs'
+      es: 'Validez del fallo de alimentación de los sensores de los retrovisores'
+      de: 'Gültigkeit des Versorgungsfehlers der Spiegel-Positionssensoren'
+      it: 'Validità del guasto di alimentazione dei sensori degli specchietti'
+      pl: 'Ważność błędu zasilania czujników lusterek'
+      ru: 'Достоверность признака неисправности питания датчиков зеркал'
+      zh: '后视镜位置传感器供电故障标志有效性'
+      hu: 'A tükörhelyzet-érzékelők tápellátási hibájának érvényessége'
+      pt: 'Validade da falha de alimentação dos sensores dos retrovisores'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_FOLD_OUTPUT_FAULT_VALID:
+    bits: '12.3'
+    comment:
+      en: 'Validity of the flag: mirror fold output fault'
+      fr: 'Validité du défaut de la sortie de rabattement du rétroviseur'
+      es: 'Validez del fallo de la salida de plegado del retrovisor'
+      de: 'Gültigkeit des Fehlers des Spiegel-Einklappausgangs'
+      it: 'Validità del guasto dell''uscita di ripiegamento dello specchietto'
+      pl: 'Ważność błędu wyjścia składania lusterka'
+      ru: 'Достоверность признака неисправности выхода складывания зеркала'
+      zh: '后视镜折叠输出故障标志有效性'
+      hu: 'A tükör behajtás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de dobragem do espelho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_LEFT_OUTPUT_FAULT_VALID:
+    bits: '12.2'
+    comment:
+      en: 'Validity of the flag: mirror move-left output fault'
+      fr: 'Validité du défaut de la sortie de déplacement vers la gauche du rétroviseur'
+      es: 'Validez del fallo de la salida de desplazamiento hacia la izquierda del retrovisor'
+      de: 'Gültigkeit des Fehlers des Ausgangs für Spiegelverstellung nach links'
+      it: 'Validità del guasto dell''uscita di spostamento a sinistra dello specchietto'
+      pl: 'Ważność błędu wyjścia przesunięcia lusterka w lewo'
+      ru: 'Достоверность признака неисправности выхода перемещения зеркала влево'
+      zh: '后视镜左移输出故障标志有效性'
+      hu: 'A tükör balra mozgatás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de movimento do espelho para a esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_UP_OUTPUT_FAULT_VALID:
+    bits: '12.1'
+    comment:
+      en: 'Validity of the flag: mirror move-up output fault'
+      fr: 'Validité du défaut de la sortie de déplacement vers le haut du rétroviseur'
+      es: 'Validez del fallo de la salida de desplazamiento hacia arriba del retrovisor'
+      de: 'Gültigkeit des Fehlers des Ausgangs für Spiegelverstellung nach oben'
+      it: 'Validità del guasto dell''uscita di spostamento verso l''alto dello specchietto'
+      pl: 'Ważność błędu wyjścia przesunięcia lusterka w górę'
+      ru: 'Достоверность признака неисправности выхода перемещения зеркала вверх'
+      zh: '后视镜上移输出故障标志有效性'
+      hu: 'A tükör felfelé mozgatás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de movimento do espelho para cima'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_COMMON_OUTPUT_FAULT_VALID:
+    bits: '12.0'
+    comment:
+      en: 'Validity of the flag: mirror common output fault'
+      fr: 'Validité du défaut de la sortie commune du rétroviseur'
+      es: 'Validez del fallo de la salida común del retrovisor'
+      de: 'Gültigkeit des Fehlers des gemeinsamen Spiegelausgangs'
+      it: 'Validità del guasto dell''uscita comune dello specchietto'
+      pl: 'Ważność błędu wspólnego wyjścia lusterka'
+      ru: 'Достоверность признака неисправности общего выхода зеркала'
+      zh: '后视镜公共输出故障标志有效性'
+      hu: 'A tükör közös kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída comum do espelho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  SWITCH_PANEL_LIGHT_OUTPUT_FAULT_VALID:
+    bits: '13.7'
+    comment:
+      en: 'Validity of the flag: switch panel lighting output fault'
+      fr: 'Validité du défaut de la sortie d''éclairage de la platine'
+      es: 'Validez del fallo de la salida de iluminación de la platina de mandos'
+      de: 'Gültigkeit des Fehlers des Beleuchtungsausgangs der Schalterplatine'
+      it: 'Validità del guasto dell''uscita di illuminazione della plancia comandi'
+      pl: 'Ważność błędu wyjścia podświetlenia panelu przełączników'
+      ru: 'Достоверность признака неисправности выхода подсветки панели переключателей'
+      zh: '开关面板照明输出故障标志有效性'
+      hu: 'A kapcsolópanel világítás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de iluminação do painel de comutadores'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_DEFROST_OUTPUT_FAULT_VALID:
+    bits: '13.6'
+    comment:
+      en: 'Validity of the flag: mirror defrost output fault'
+      fr: 'Validité du défaut de la sortie de dégivrage du rétroviseur'
+      es: 'Validez del fallo de la salida de desempañado del retrovisor'
+      de: 'Gültigkeit des Fehlers des Spiegelheizungsausgangs'
+      it: 'Validità del guasto dell''uscita di sbrinamento dello specchietto'
+      pl: 'Ważność błędu wyjścia podgrzewania lusterka'
+      ru: 'Достоверность признака неисправности выхода обогрева зеркала'
+      zh: '后视镜除霜输出故障标志有效性'
+      hu: 'A tükörfűtés kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de descongelamento do espelho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MEMORY_KEYPAD_TELLTALE_OUTPUT_FAULT_VALID:
+    bits: '13.5'
+    comment:
+      en: 'Validity of the flag: memory keypad telltale output fault'
+      fr: 'Validité du défaut de la sortie témoin du clavier mémoire'
+      es: 'Validez del fallo de la salida del testigo del teclado de memorias'
+      de: 'Gültigkeit des Fehlers des Kontrollleuchtenausgangs der Memory-Tastatur'
+      it: 'Validità del guasto dell''uscita spia della tastiera memoria'
+      pl: 'Ważność błędu wyjścia kontrolki klawiatury pamięci foteli'
+      ru: 'Достоверность признака неисправности выхода индикатора клавиатуры памяти'
+      zh: '记忆键盘指示灯输出故障标志有效性'
+      hu: 'A memória-billentyűzet jelzőlámpa kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída do avisador do teclado de memória'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MEMORY_KEYPAD_LIGHT_OUTPUT_FAULT_VALID:
+    bits: '13.4'
+    comment:
+      en: 'Validity of the flag: memory keypad lighting output fault'
+      fr: 'Validité du défaut de la sortie d''éclairage du clavier mémoire'
+      es: 'Validez del fallo de la salida de iluminación del teclado de memorias'
+      de: 'Gültigkeit des Fehlers des Beleuchtungsausgangs der Memory-Tastatur'
+      it: 'Validità del guasto dell''uscita di illuminazione della tastiera memoria'
+      pl: 'Ważność błędu wyjścia podświetlenia klawiatury pamięci foteli'
+      ru: 'Достоверность признака неисправности выхода подсветки клавиатуры памяти'
+      zh: '记忆键盘照明输出故障标志有效性'
+      hu: 'A memória-billentyűzet világítás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de iluminação do teclado de memória'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  SILL_LIGHT_OUTPUT_FAULT_VALID:
+    bits: '13.3'
+    comment:
+      en: 'Validity of the flag: sill light output fault'
+      fr: 'Validité du défaut de la sortie d''éclairage de seuil'
+      es: 'Validez del fallo de la salida de luz de umbral'
+      de: 'Gültigkeit des Fehlers des Einstiegsleuchten-Ausgangs'
+      it: 'Validità del guasto dell''uscita luce sottoporta'
+      pl: 'Ważność błędu wyjścia oświetlenia progu'
+      ru: 'Достоверность признака неисправности выхода подсветки порога'
+      zh: '门槛灯输出故障标志有效性'
+      hu: 'A küszöbvilágítás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída da luz da soleira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_UP_OUTPUT_FAULT_VALID:
+    bits: '13.2'
+    comment:
+      en: 'Validity of the flag: window up output fault'
+      fr: 'Validité du défaut de la sortie de montée du lève-vitre'
+      es: 'Validez del fallo de la salida de subida del elevalunas'
+      de: 'Gültigkeit des Fehlers des Fensterheber-Aufwärtsausgangs'
+      it: 'Validità del guasto dell''uscita di salita dell''alzacristallo'
+      pl: 'Ważność błędu wyjścia podnoszenia szyby'
+      ru: 'Достоверность признака неисправности выхода подъёма стекла'
+      zh: '车窗上升输出故障标志有效性'
+      hu: 'Az ablak felfelé mozgatás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de subida do vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_AUTO_OUTPUT_FAULT_VALID:
+    bits: '13.1'
+    comment:
+      en: 'Validity of the flag: window automatic output fault'
+      fr: 'Validité du défaut de la sortie automatique du lève-vitre'
+      es: 'Validez del fallo de la salida automática del elevalunas'
+      de: 'Gültigkeit des Fehlers des Fensterheber-Automatikausgangs'
+      it: 'Validità del guasto dell''uscita automatica dell''alzacristallo'
+      pl: 'Ważność błędu wyjścia automatycznego podnośnika szyby'
+      ru: 'Достоверность признака неисправности автоматического выхода стеклоподъёмника'
+      zh: '车窗自动升降输出故障标志有效性'
+      hu: 'Az ablakemelő automata kimeneti hibájának érvényessége'
+      pt: 'Validade da falha da saída automática do elevador de vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_DOWN_OUTPUT_FAULT_VALID:
+    bits: '13.0'
+    comment:
+      en: 'Validity of the flag: window down output fault'
+      fr: 'Validité du défaut de la sortie de descente du lève-vitre'
+      es: 'Validez del fallo de la salida de bajada del elevalunas'
+      de: 'Gültigkeit des Fehlers des Fensterheber-Abwärtsausgangs'
+      it: 'Validità del guasto dell''uscita di discesa dell''alzacristallo'
+      pl: 'Ważność błędu wyjścia opuszczania szyby'
+      ru: 'Достоверность признака неисправности выхода опускания стекла'
+      zh: '车窗下降输出故障标志有效性'
+      hu: 'Az ablak lefelé mozgatás kimeneti hibájának érvényessége'
+      pt: 'Validade do indicador: avaria da saída de descida do vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_FOLD_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '14.7'
+    comment:
+      en: 'Validity of the flag: mirror fold output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de rabattement du rétroviseur'
+      es: 'Validez del circuito abierto de la salida de plegado del retrovisor'
+      de: 'Gültigkeit der Unterbrechung des Spiegel-Einklappausgangs'
+      it: 'Validità del circuito aperto dell''uscita di ripiegamento dello specchietto'
+      pl: 'Ważność przerwy w obwodzie wyjścia składania lusterka'
+      ru: 'Достоверность признака обрыва цепи выхода складывания зеркала'
+      zh: '后视镜折叠输出断路标志有效性'
+      hu: 'A tükör behajtás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de dobragem do espelho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_FOLD_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '14.6'
+    comment:
+      en: 'Validity of the flag: mirror fold output short circuit'
+      fr: 'Validité du court-circuit de la sortie de rabattement du rétroviseur'
+      es: 'Validez del cortocircuito de la salida de plegado del retrovisor'
+      de: 'Gültigkeit des Kurzschlusses des Spiegel-Einklappausgangs'
+      it: 'Validità del cortocircuito dell''uscita di ripiegamento dello specchietto'
+      pl: 'Ważność zwarcia wyjścia składania lusterka'
+      ru: 'Достоверность признака короткого замыкания выхода складывания зеркала'
+      zh: '后视镜折叠输出短路标志有效性'
+      hu: 'A tükör behajtás kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de dobragem do espelho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_LEFT_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '14.5'
+    comment:
+      en: 'Validity of the flag: mirror move-left output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de déplacement vers la gauche du rétroviseur'
+      es: 'Validez del circuito abierto de la salida de desplazamiento hacia la izquierda del retrovisor'
+      de: 'Gültigkeit der Unterbrechung des Ausgangs für Spiegelverstellung nach links'
+      it: 'Validità del circuito aperto dell''uscita di spostamento a sinistra dello specchietto'
+      pl: 'Ważność przerwy w obwodzie wyjścia przesunięcia lusterka w lewo'
+      ru: 'Достоверность признака обрыва цепи выхода перемещения зеркала влево'
+      zh: '后视镜左移输出断路标志有效性'
+      hu: 'A tükör balra mozgatás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de movimento do espelho para a esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_LEFT_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '14.4'
+    comment:
+      en: 'Validity of the flag: mirror move-left output short circuit'
+      fr: 'Validité du court-circuit de la sortie de déplacement vers la gauche du rétroviseur'
+      es: 'Validez del cortocircuito de la salida de desplazamiento hacia la izquierda del retrovisor'
+      de: 'Gültigkeit des Kurzschlusses des Ausgangs für Spiegelverstellung nach links'
+      it: 'Validità del cortocircuito dell''uscita di spostamento a sinistra dello specchietto'
+      pl: 'Ważność zwarcia wyjścia przesunięcia lusterka w lewo'
+      ru: 'Достоверность признака короткого замыкания выхода перемещения зеркала влево'
+      zh: '后视镜左移输出短路标志有效性'
+      hu: 'A tükör balra mozgatás kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de movimento do espelho para a esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_UP_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '14.3'
+    comment:
+      en: 'Validity of the flag: mirror move-up output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de déplacement vers le haut du rétroviseur'
+      es: 'Validez del circuito abierto de la salida de desplazamiento hacia arriba del retrovisor'
+      de: 'Gültigkeit der Unterbrechung des Ausgangs für Spiegelverstellung nach oben'
+      it: 'Validità del circuito aperto dell''uscita di spostamento verso l''alto dello specchietto'
+      pl: 'Ważność przerwy w obwodzie wyjścia przesunięcia lusterka w górę'
+      ru: 'Достоверность признака обрыва цепи выхода перемещения зеркала вверх'
+      zh: '后视镜上移输出断路标志有效性'
+      hu: 'A tükör felfelé mozgatás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de movimento do espelho para cima'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_UP_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '14.2'
+    comment:
+      en: 'Validity of the flag: mirror move-up output short circuit'
+      fr: 'Validité du court-circuit de la sortie de déplacement vers le haut du rétroviseur'
+      es: 'Validez del cortocircuito de la salida de desplazamiento hacia arriba del retrovisor'
+      de: 'Gültigkeit des Kurzschlusses des Ausgangs für Spiegelverstellung nach oben'
+      it: 'Validità del cortocircuito dell''uscita di spostamento verso l''alto dello specchietto'
+      pl: 'Ważność zwarcia wyjścia przesunięcia lusterka w górę'
+      ru: 'Достоверность признака короткого замыкания выхода перемещения зеркала вверх'
+      zh: '后视镜上移输出短路标志有效性'
+      hu: 'A tükör felfelé mozgatás kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de movimento do espelho para cima'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_COMMON_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '14.1'
+    comment:
+      en: 'Validity of the flag: mirror common output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie commune du rétroviseur'
+      es: 'Validez del circuito abierto de la salida común del retrovisor'
+      de: 'Gültigkeit der Unterbrechung des gemeinsamen Spiegelausgangs'
+      it: 'Validità del circuito aperto dell''uscita comune dello specchietto'
+      pl: 'Ważność przerwy w obwodzie wspólnego wyjścia lusterka'
+      ru: 'Достоверность признака обрыва цепи общего выхода зеркала'
+      zh: '后视镜公共输出断路标志有效性'
+      hu: 'A tükör közös kimeneti szakadásának érvényessége'
+      pt: 'Validade do circuito aberto da saída comum do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_COMMON_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '14.0'
+    comment:
+      en: 'Validity of the flag: mirror common output short circuit'
+      fr: 'Validité du court-circuit de la sortie commune du rétroviseur'
+      es: 'Validez del cortocircuito de la salida común del retrovisor'
+      de: 'Gültigkeit des Kurzschlusses des gemeinsamen Spiegelausgangs'
+      it: 'Validità del cortocircuito dell''uscita comune dello specchietto'
+      pl: 'Ważność zwarcia wspólnego wyjścia lusterka'
+      ru: 'Достоверность признака короткого замыкания общего выхода зеркала'
+      zh: '后视镜公共输出短路标志有效性'
+      hu: 'A tükör közös kimeneti zárlatának érvényessége'
+      pt: 'Validade do curto-circuito da saída comum do retrovisor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  UNUSED_4:
+    bits: '15.7-15.6'
+    unused: true
+
+  DEADLOCK_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '15.5'
+    comment:
+      en: 'Validity of the flag: deadlock output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de supercondamnation'
+      es: 'Validez del circuito abierto de la salida de superbloqueo'
+      de: 'Gültigkeit der Unterbrechung des Doppelverriegelungsausgangs'
+      it: 'Validità del circuito aperto dell''uscita di superchiusura'
+      pl: 'Ważność przerwy w obwodzie wyjścia podwójnego ryglowania'
+      ru: 'Достоверность признака обрыва цепи выхода суперблокировки'
+      zh: '二次上锁输出断路标志有效性'
+      hu: 'A duplazár kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de sobretrancagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  DEADLOCK_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '15.4'
+    comment:
+      en: 'Validity of the flag: deadlock output short circuit'
+      fr: 'Validité du court-circuit de la sortie de supercondamnation'
+      es: 'Validez del cortocircuito de la salida de superbloqueo'
+      de: 'Gültigkeit des Kurzschlusses des Doppelverriegelungsausgangs'
+      it: 'Validità del cortocircuito dell''uscita di superchiusura'
+      pl: 'Ważność zwarcia wyjścia podwójnego ryglowania'
+      ru: 'Достоверность признака короткого замыкания выхода суперблокировки'
+      zh: '二次上锁输出短路标志有效性'
+      hu: 'A duplazár kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de sobretrancagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  UNLOCK_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '15.3'
+    comment:
+      en: 'Validity of the flag: unlock output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de décondamnation'
+      es: 'Validez del circuito abierto de la salida de desbloqueo'
+      de: 'Gültigkeit der Unterbrechung des Entriegelungsausgangs'
+      it: 'Validità del circuito aperto dell''uscita di apertura'
+      pl: 'Ważność przerwy w obwodzie wyjścia odblokowania'
+      ru: 'Достоверность признака обрыва цепи выхода разблокировки замков'
+      zh: '开锁输出断路标志有效性'
+      hu: 'A nyitás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de destrancagem'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  UNLOCK_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '15.2'
+    comment:
+      en: 'Validity of the flag: unlock output short circuit'
+      fr: 'Validité du court-circuit de la sortie de décondamnation'
+      es: 'Validez del cortocircuito de la salida de desbloqueo'
+      de: 'Gültigkeit des Kurzschlusses des Entriegelungsausgangs'
+      it: 'Validità del cortocircuito dell''uscita di apertura'
+      pl: 'Ważność zwarcia wyjścia odblokowania'
+      ru: 'Достоверность признака короткого замыкания выхода разблокировки замков'
+      zh: '开锁输出短路标志有效性'
+      hu: 'A nyitás kimeneti zárlatának érvényessége'
+      pt: 'Validade do curto-circuito da saída de desbloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  LOCK_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '15.1'
+    comment:
+      en: 'Validity of the flag: lock output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de condamnation'
+      es: 'Validez del circuito abierto de la salida de bloqueo'
+      de: 'Gültigkeit der Unterbrechung des Verriegelungsausgangs'
+      it: 'Validità del circuito aperto dell''uscita di chiusura'
+      pl: 'Ważność przerwy w obwodzie wyjścia blokady'
+      ru: 'Достоверность признака обрыва цепи выхода блокировки замков'
+      zh: '门锁输出断路标志有效性'
+      hu: 'A zárás kimeneti szakadásának érvényessége'
+      pt: 'Validade do circuito aberto da saída de bloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  LOCK_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '15.0'
+    comment:
+      en: 'Validity of the flag: lock output short circuit'
+      fr: 'Validité du court-circuit de la sortie de condamnation'
+      es: 'Validez del cortocircuito de la salida de bloqueo'
+      de: 'Gültigkeit des Kurzschlusses des Verriegelungsausgangs'
+      it: 'Validità del cortocircuito dell''uscita di chiusura'
+      pl: 'Ważność zwarcia wyjścia blokady'
+      ru: 'Достоверность признака короткого замыкания выхода блокировки замков'
+      zh: '门锁输出短路标志有效性'
+      hu: 'A zárás kimeneti zárlatának érvényessége'
+      pt: 'Validade do curto-circuito da saída de bloqueio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_DEFROST_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '16.7'
+    comment:
+      en: 'Validity of the flag: mirror defrost output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de dégivrage du rétroviseur'
+      es: 'Validez del circuito abierto de la salida de desempañado del retrovisor'
+      de: 'Gültigkeit der Unterbrechung des Spiegelheizungsausgangs'
+      it: 'Validità del circuito aperto dell''uscita di sbrinamento dello specchietto'
+      pl: 'Ważność przerwy w obwodzie wyjścia podgrzewania lusterka'
+      ru: 'Достоверность признака обрыва цепи выхода обогрева зеркала'
+      zh: '后视镜除霜输出断路标志有效性'
+      hu: 'A tükörfűtés kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de descongelamento do espelho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_DEFROST_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '16.6'
+    comment:
+      en: 'Validity of the flag: mirror defrost output short circuit'
+      fr: 'Validité du court-circuit de la sortie de dégivrage du rétroviseur'
+      es: 'Validez del cortocircuito de la salida de desempañado del retrovisor'
+      de: 'Gültigkeit des Kurzschlusses des Spiegelheizungsausgangs'
+      it: 'Validità del cortocircuito dell''uscita di sbrinamento dello specchietto'
+      pl: 'Ważność zwarcia wyjścia podgrzewania lusterka'
+      ru: 'Достоверность признака короткого замыкания выхода обогрева зеркала'
+      zh: '后视镜除霜输出短路标志有效性'
+      hu: 'A tükörfűtés kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de descongelamento do espelho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_UP_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '16.5'
+    comment:
+      en: 'Validity of the flag: window up output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de montée du lève-vitre'
+      es: 'Validez del circuito abierto de la salida de subida del elevalunas'
+      de: 'Gültigkeit der Unterbrechung des Fensterheber-Aufwärtsausgangs'
+      it: 'Validità del circuito aperto dell''uscita di salita dell''alzacristallo'
+      pl: 'Ważność przerwy w obwodzie wyjścia podnoszenia szyby'
+      ru: 'Достоверность признака обрыва цепи выхода подъёма стекла'
+      zh: '车窗上升输出断路标志有效性'
+      hu: 'Az ablak felfelé mozgatás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de subida do vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_UP_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '16.4'
+    comment:
+      en: 'Validity of the flag: window up output short circuit'
+      fr: 'Validité du court-circuit de la sortie de montée du lève-vitre'
+      es: 'Validez del cortocircuito de la salida de subida del elevalunas'
+      de: 'Gültigkeit des Kurzschlusses des Fensterheber-Aufwärtsausgangs'
+      it: 'Validità del cortocircuito dell''uscita di salita dell''alzacristallo'
+      pl: 'Ważność zwarcia wyjścia podnoszenia szyby'
+      ru: 'Достоверность признака короткого замыкания выхода подъёма стекла'
+      zh: '车窗上升输出短路标志有效性'
+      hu: 'Az ablak felfelé mozgatás kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de subida do vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_AUTO_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '16.3'
+    comment:
+      en: 'Validity of the flag: window automatic output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie automatique du lève-vitre'
+      es: 'Validez del circuito abierto de la salida automática del elevalunas'
+      de: 'Gültigkeit der Unterbrechung des Fensterheber-Automatikausgangs'
+      it: 'Validità del circuito aperto dell''uscita automatica dell''alzacristallo'
+      pl: 'Ważność przerwy w obwodzie wyjścia automatycznego podnośnika szyby'
+      ru: 'Достоверность признака обрыва цепи автоматического выхода стеклоподъёмника'
+      zh: '车窗自动升降输出断路标志有效性'
+      hu: 'Az ablakemelő automata kimeneti szakadásának érvényessége'
+      pt: 'Validade do circuito aberto da saída automática do elevador de vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_AUTO_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '16.2'
+    comment:
+      en: 'Validity of the flag: window automatic output short circuit'
+      fr: 'Validité du court-circuit de la sortie automatique du lève-vitre'
+      es: 'Validez del cortocircuito de la salida automática del elevalunas'
+      de: 'Gültigkeit des Kurzschlusses des Fensterheber-Automatikausgangs'
+      it: 'Validità del cortocircuito dell''uscita automatica dell''alzacristallo'
+      pl: 'Ważność zwarcia wyjścia automatycznego podnośnika szyby'
+      ru: 'Достоверность признака короткого замыкания автоматического выхода стеклоподъёмника'
+      zh: '车窗自动升降输出短路标志有效性'
+      hu: 'Az ablakemelő automata kimeneti zárlatának érvényessége'
+      pt: 'Validade do curto-circuito da saída automática do elevador de vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_DOWN_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '16.1'
+    comment:
+      en: 'Validity of the flag: window down output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie de descente du lève-vitre'
+      es: 'Validez del circuito abierto de la salida de bajada del elevalunas'
+      de: 'Gültigkeit der Unterbrechung des Fensterheber-Abwärtsausgangs'
+      it: 'Validità del circuito aperto dell''uscita di discesa dell''alzacristallo'
+      pl: 'Ważność przerwy w obwodzie wyjścia opuszczania szyby'
+      ru: 'Достоверность признака обрыва цепи выхода опускания стекла'
+      zh: '车窗下降输出断路标志有效性'
+      hu: 'Az ablak lefelé mozgatás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de descida do vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  WINDOW_DOWN_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '16.0'
+    comment:
+      en: 'Validity of the flag: window down output short circuit'
+      fr: 'Validité du court-circuit de la sortie de descente du lève-vitre'
+      es: 'Validez del cortocircuito de la salida de bajada del elevalunas'
+      de: 'Gültigkeit des Kurzschlusses des Fensterheber-Abwärtsausgangs'
+      it: 'Validità del cortocircuito dell''uscita di discesa dell''alzacristallo'
+      pl: 'Ważność zwarcia wyjścia opuszczania szyby'
+      ru: 'Достоверность признака короткого замыкания выхода опускания стекла'
+      zh: '车窗下降输出短路标志有效性'
+      hu: 'Az ablak lefelé mozgatás kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de descida do vidro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_VERTICAL_SENSOR_OUT_OF_RANGE_VALID:
+    bits: '17.7'
+    comment:
+      en: 'Validity of the flag: mirror up/down position sensor out of range'
+      fr: 'Validité de la sortie capteur haut/bas du rétroviseur hors plage'
+      es: 'Validez del sensor arriba/abajo del retrovisor fuera de rango'
+      de: 'Gültigkeit des Auf/Ab-Positionssensors des Spiegels außerhalb des Bereichs'
+      it: 'Validità del sensore alto/basso dello specchietto fuori campo'
+      pl: 'Ważność sygnału czujnika góra/dół lusterka poza zakresem'
+      ru: 'Достоверность признака выхода датчика верх/низ зеркала за пределы диапазона'
+      zh: '后视镜上下位置传感器超出范围标志有效性'
+      hu: 'A tükör fel/le érzékelőjének tartományon kívüli jelzés érvényessége'
+      pt: 'Validade da saída do sensor cima/baixo do retrovisor fora de intervalo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MIRROR_HORIZONTAL_SENSOR_OUT_OF_RANGE_VALID:
+    bits: '17.6'
+    comment:
+      en: 'Validity of the flag: mirror left/right position sensor out of range'
+      fr: 'Validité de la sortie capteur gauche/droite du rétroviseur hors plage'
+      es: 'Validez del sensor izquierda/derecha del retrovisor fuera de rango'
+      de: 'Gültigkeit des Links/Rechts-Positionssensors des Spiegels außerhalb des Bereichs'
+      it: 'Validità del sensore sinistra/destra dello specchietto fuori campo'
+      pl: 'Ważność sygnału czujnika lewo/prawo lusterka poza zakresem'
+      ru: 'Достоверность признака выхода датчика лево/право зеркала за пределы диапазона'
+      zh: '后视镜左右位置传感器超出范围标志有效性'
+      hu: 'A tükör bal/jobb érzékelőjének tartományon kívüli jelzés érvényessége'
+      pt: 'Validade da saída do sensor esquerda/direita do retrovisor fora de intervalo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MEMORY_KEYPAD_TELLTALE_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '17.5'
+    comment:
+      en: 'Validity of the flag: memory keypad telltale output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie témoin du clavier mémoire'
+      es: 'Validez del circuito abierto de la salida del testigo del teclado de memorias'
+      de: 'Gültigkeit der Unterbrechung des Kontrollleuchtenausgangs der Memory-Tastatur'
+      it: 'Validità del circuito aperto dell''uscita spia della tastiera memoria'
+      pl: 'Ważność przerwy w obwodzie wyjścia kontrolki klawiatury pamięci foteli'
+      ru: 'Достоверность признака обрыва цепи выхода индикатора клавиатуры памяти'
+      zh: '记忆键盘指示灯输出断路标志有效性'
+      hu: 'A memória-billentyűzet jelzőlámpa kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída do avisador do teclado de memória'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MEMORY_KEYPAD_TELLTALE_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '17.4'
+    comment:
+      en: 'Validity of the flag: memory keypad telltale output short circuit'
+      fr: 'Validité du court-circuit de la sortie témoin du clavier mémoire'
+      es: 'Validez del cortocircuito de la salida del testigo del teclado de memorias'
+      de: 'Gültigkeit des Kurzschlusses des Kontrollleuchtenausgangs der Memory-Tastatur'
+      it: 'Validità del cortocircuito dell''uscita spia della tastiera memoria'
+      pl: 'Ważność zwarcia wyjścia kontrolki klawiatury pamięci foteli'
+      ru: 'Достоверность признака короткого замыкания выхода индикатора клавиатуры памяти'
+      zh: '记忆键盘指示灯输出短路标志有效性'
+      hu: 'A memória-billentyűzet jelzőlámpa kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída do avisador do teclado de memória'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MEMORY_KEYPAD_LIGHT_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '17.3'
+    comment:
+      en: 'Validity of the flag: memory keypad lighting output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie d''éclairage du clavier mémoire'
+      es: 'Validez del circuito abierto de la salida de iluminación del teclado de memorias'
+      de: 'Gültigkeit der Unterbrechung des Beleuchtungsausgangs der Memory-Tastatur'
+      it: 'Validità del circuito aperto dell''uscita di illuminazione della tastiera memoria'
+      pl: 'Ważność przerwy w obwodzie wyjścia podświetlenia klawiatury pamięci foteli'
+      ru: 'Достоверность признака обрыва цепи выхода подсветки клавиатуры памяти'
+      zh: '记忆键盘照明输出断路标志有效性'
+      hu: 'A memória-billentyűzet világítás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída de iluminação do teclado de memória'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  MEMORY_KEYPAD_LIGHT_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '17.2'
+    comment:
+      en: 'Validity of the flag: memory keypad lighting output short circuit'
+      fr: 'Validité du court-circuit de la sortie d''éclairage du clavier mémoire'
+      es: 'Validez del cortocircuito de la salida de iluminación del teclado de memorias'
+      de: 'Gültigkeit des Kurzschlusses des Beleuchtungsausgangs der Memory-Tastatur'
+      it: 'Validità del cortocircuito dell''uscita di illuminazione della tastiera memoria'
+      pl: 'Ważność zwarcia wyjścia podświetlenia klawiatury pamięci foteli'
+      ru: 'Достоверность признака короткого замыкания выхода подсветки клавиатуры памяти'
+      zh: '记忆键盘照明输出短路标志有效性'
+      hu: 'A memória-billentyűzet világítás kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída de iluminação do teclado de memória'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  SILL_LIGHT_OUTPUT_OPEN_CIRCUIT_VALID:
+    bits: '17.1'
+    comment:
+      en: 'Validity of the flag: sill light output open circuit'
+      fr: 'Validité du circuit ouvert de la sortie d''éclairage de seuil'
+      es: 'Validez del circuito abierto de la salida de luz de umbral'
+      de: 'Gültigkeit der Unterbrechung des Einstiegsleuchten-Ausgangs'
+      it: 'Validità del circuito aperto dell''uscita luce sottoporta'
+      pl: 'Ważność przerwy w obwodzie wyjścia oświetlenia progu'
+      ru: 'Достоверность признака обрыва цепи выхода подсветки порога'
+      zh: '门槛灯输出断路标志有效性'
+      hu: 'A küszöbvilágítás kimeneti szakadásának érvényessége'
+      pt: 'Validade do indicador: circuito aberto da saída da luz da soleira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  SILL_LIGHT_OUTPUT_SHORT_CIRCUIT_VALID:
+    bits: '17.0'
+    comment:
+      en: 'Validity of the flag: sill light output short circuit'
+      fr: 'Validité du court-circuit de la sortie d''éclairage de seuil'
+      es: 'Validez del cortocircuito de la salida de luz de umbral'
+      de: 'Gültigkeit des Kurzschlusses des Einstiegsleuchten-Ausgangs'
+      it: 'Validità del cortocircuito dell''uscita luce sottoporta'
+      pl: 'Ważność zwarcia wyjścia oświetlenia progu'
+      ru: 'Достоверность признака короткого замыкания выхода подсветки порога'
+      zh: '门槛灯输出短路标志有效性'
+      hu: 'A küszöbvilágítás kimeneti zárlatának érvényessége'
+      pt: 'Validade do indicador: curto-circuito da saída da luz da soleira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  FOOTER:
+    bits: '18.7-18.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

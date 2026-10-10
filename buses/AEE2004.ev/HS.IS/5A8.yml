@@ -1,0 +1,198 @@
+id: 0x5A8
+name: 'ENGINE_ECU_DATA_6'
+type: 'can'
+length: 4
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['1000ms']
+senders: ['CMM']
+receivers: ['BSI']
+
+signals:
+  UREA_LEVEL_RANGE_BEFORE_START_INHIBIT:
+    bits: '1.7-2.1'
+    comment:
+      en: 'Distance remaining before starting is inhibited due to a low AdBlue level (km)'
+      fr: 'Distance restante avant l''interdiction de démarrage due au niveau d''urée (km)'
+      es: 'Distancia restante antes de la prohibición de arranque debida al nivel de urea (km)'
+      de: 'Verbleibende Strecke bis zur Startsperre wegen niedrigem AdBlue-Füllstand (km)'
+      it: 'Distanza residua prima del divieto di avviamento dovuto al livello dell''urea (km)'
+      pl: 'Pozostały dystans do zablokowania rozruchu z powodu poziomu mocznika (km)'
+      ru: 'Оставшееся расстояние до блокировки пуска из-за уровня мочевины (км)'
+      zh: '因尿素液位导致禁止起动前的剩余距离(km)'
+      hu: 'A hátralévő távolság az AdBlue-szint miatti indítástiltásig (km)'
+      pt: 'Distância restante até o arranque ser inibido devido a um nível baixo de AdBlue (km)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 10000
+    units: 'km'
+    default: 0xBB8
+
+  UREA_FAULT_RANGE_BEFORE_START_INHIBIT:
+    bits: '3.7-4.6'
+    comment:
+      en: 'Distance remaining before starting is inhibited due to an AdBlue injection system fault (km)'
+      fr: 'Distance restante avant l''interdiction de démarrage due à une défaillance du système d''injection d''urée (km)'
+      es: 'Distancia restante antes de la prohibición de arranque debida a un fallo del sistema de inyección de urea (km)'
+      de: 'Verbleibende Strecke bis zur Startsperre wegen eines Fehlers des AdBlue-Einspritzsystems (km)'
+      it: 'Distanza residua prima del divieto di avviamento dovuto a un guasto del sistema di iniezione dell''urea (km)'
+      pl: 'Pozostały dystans do zablokowania rozruchu z powodu usterki układu wtrysku mocznika (km)'
+      ru: 'Оставшееся расстояние до блокировки пуска из-за неисправности системы впрыска мочевины (км)'
+      zh: '因尿素喷射系统故障导致禁止起动前的剩余距离(km)'
+      hu: 'A hátralévő távolság az AdBlue-befecskendező rendszer hibája miatti indítástiltásig (km)'
+      pt: 'Distância restante até o arranque ser inibido devido a uma avaria do sistema de injeção de AdBlue (km)'
+    type: 'uint'
+    factor: 10
+    min: 0
+    max: 10000
+    units: 'km'
+    default: 0x3E8
+
+  UREA_LEVEL_ALERT:
+    bits: '4.5-4.3'
+    comment:
+      en: 'Remaining AdBlue level alert, expressed as driving range'
+      fr: 'Alerte de niveau d''urée restant, exprimée en autonomie kilométrique'
+      es: 'Alerta de nivel de AdBlue restante, expresada en autonomía'
+      de: 'Warnung vor verbleibendem AdBlue-Füllstand, angegeben als Reichweite'
+      it: 'Avviso di livello AdBlue residuo, espresso come autonomia chilometrica'
+      pl: 'Ostrzeżenie o poziomie płynu AdBlue, wyrażone jako zasięg'
+      ru: 'Предупреждение об остатке AdBlue, выраженное в виде запаса хода'
+      zh: 'AdBlue尿素液剩余量警告(以续航里程表示)'
+      hu: 'Az AdBlue-szint riasztása, hatótávolságban kifejezve'
+      pt: 'Alerta de nível de ureia restante, expressa em autonomia quilométrica'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'High level'
+        fr: 'Niveau haut'
+        es: 'Nivel alto'
+        de: 'Hoher Stand'
+        it: 'Livello alto'
+        pl: 'Wysoki poziom'
+        ru: 'Высокий уровень'
+        zh: '高液位'
+        hu: 'Magas szint'
+        pt: 'Nível alto'
+      0x01:
+        en: 'Low level, threshold 1'
+        fr: 'Niveau bas, seuil 1'
+        es: 'Nivel bajo, umbral 1'
+        de: 'Niedriger Stand, Schwelle 1'
+        it: 'Livello basso, soglia 1'
+        pl: 'Niski poziom, próg 1'
+        ru: 'Низкий уровень, порог 1'
+        zh: '低液位,阈值1'
+        hu: 'Alacsony szint, 1. küszöb'
+        pt: 'Nível baixo, limiar 1'
+      0x02:
+        en: 'Low level, threshold 2'
+        fr: 'Niveau bas, seuil 2'
+        es: 'Nivel bajo, umbral 2'
+        de: 'Niedriger Stand, Schwelle 2'
+        it: 'Livello basso, soglia 2'
+        pl: 'Niski poziom, próg 2'
+        ru: 'Низкий уровень, порог 2'
+        zh: '低电平,阈值2'
+        hu: 'Alacsony szint, 2. küszöb'
+        pt: 'Nível baixo, limiar 2'
+      0x03:
+        en: 'low level threshold 3'
+        fr: 'Niveau bas seuil3'
+        es: 'Umbral de nivel bajo 3'
+        de: 'Niedrigpegel-Schwelle 3'
+        it: 'Soglia di livello basso 3'
+        pl: 'Próg niskiego poziomu 3'
+        ru: 'Порог низкого уровня 3'
+        zh: '低电平阈值3'
+        hu: 'Alacsony szint küszöb 3'
+        pt: 'Limiar de nível baixo 3'
+      0x04:
+        en: 'low level null'
+        fr: 'Niveau bas nul'
+        es: 'Nivel bajo nulo'
+        de: 'Niedrigpegel null'
+        it: 'Livello basso nullo'
+        pl: 'Niski poziom zerowy'
+        ru: 'Низкий уровень нулевой'
+        zh: '低电平为零'
+        hu: 'Alacsony szint nulla'
+        pt: 'Nível baixo nulo'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  SCR_OPERATING_STATE:
+    bits: '4.2-4.1'
+    comment:
+      en: 'SCR system operating state'
+      fr: 'État de fonctionnement du système SCR'
+      es: 'Estado de funcionamiento del sistema SCR'
+      de: 'Betriebszustand des SCR-Systems'
+      it: 'Stato di funzionamento del sistema SCR'
+      pl: 'Stan działania układu SCR'
+      ru: 'Рабочее состояние системы SCR'
+      zh: 'SCR系统运行状态'
+      hu: 'Az SCR rendszer üzemi állapota'
+      pt: 'Estado de funcionamento do sistema SCR'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'SCR system functional'
+        fr: 'Système SCR fonctionnel'
+        es: 'Sistema SCR funcional'
+        de: 'SCR-System funktionsfähig'
+        it: 'Sistema SCR funzionante'
+        pl: 'Sprawny układ SCR'
+        ru: 'Система SCR исправна'
+        zh: 'SCR系统正常运行'
+        hu: 'Az SCR rendszer működőképes'
+        pt: 'Sistema SCR funcional'
+      0x01:
+        en: 'Unused value (01)'
+        fr: 'Valeur non utilisée (01)'
+        es: 'Valor no utilizado (01)'
+        de: 'Nicht genutzter Wert (01)'
+        it: 'Valore non utilizzato (01)'
+        pl: 'Nieużywana wartość (01)'
+        ru: 'Неиспользуемое значение (01)'
+        zh: '未使用值(01)'
+        hu: 'Nem használt érték (01)'
+        pt: 'Valor não utilizado (01)'
+      0x02:
+        en: 'Unused value (10)'
+        fr: 'Valeur non utilisée (10)'
+        es: 'Valor no utilizado (10)'
+        de: 'Nicht verwendeter Wert (10)'
+        it: 'Valore non utilizzato (10)'
+        pl: 'Nieużywana wartość (10)'
+        ru: 'Неиспользуемое значение (10)'
+        zh: '未使用的值(10)'
+        hu: 'Nem használt érték (10)'
+        pt: 'Valor não utilizado (10)'
+      0x03:
+        en: 'Unused value (11)'
+        fr: 'Valeur non utilisée (11)'
+        es: 'Valor no utilizado (11)'
+        de: 'Nicht verwendeter Wert (11)'
+        it: 'Valore non utilizzato (11)'
+        pl: 'Nieużywana wartość (11)'
+        ru: 'Неиспользуемое значение (11)'
+        zh: '未使用的值（11）'
+        hu: 'Nem használt érték (11)'
+        pt: 'Valor não utilizado (11)'

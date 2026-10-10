@@ -1,0 +1,336 @@
+id: 0x40B
+name: 'SECONDARY_LANE_LINE_DATA'
+type: 'can-tp'
+comment:
+  en: 'Secondary lane line detection data from the camera module (CVM): distance to left/right line and detection type for lane-keeping.'
+  fr: 'Données secondaires de détection des lignes de voie issues du module caméra (CVM) : distance aux lignes gauche/droite et type de détection pour l''aide au maintien.'
+  es: 'Datos secundarios de detección de las líneas de carril del módulo de cámara (CVM): distancia a las líneas izquierda/derecha y tipo de detección para el mantenimiento de carril.'
+  de: 'Sekundäre Fahrspurlinien-Erkennungsdaten vom Kameramodul (CVM): Abstand zur linken/rechten Linie und Erkennungstyp für den Spurhalteassistenten.'
+  it: 'Dati secondari di rilevamento delle linee di corsia dal modulo telecamera (CVM): distanza dalle linee sinistra/destra e tipo di rilevamento per il mantenimento di corsia.'
+  pl: 'Dodatkowe dane wykrywania linii pasa ruchu z modułu kamery (CVM): odległość do lewej/prawej linii i typ wykrywania dla wspomagania utrzymania pasa.'
+  ru: 'Дополнительные данные обнаружения линий полосы модулем камеры (CVM): расстояние до левой/правой линии и тип обнаружения для удержания полосы.'
+  zh: '来自摄像头模块(CVM)的辅助车道线检测数据:左右车道线距离及用于车道保持的检测类型。'
+  hu: 'Másodlagos sávvonal-érzékelési adatok a kameramodultól (CVM): bal/jobb vonaltávolság és érzékelési típus a sávtartáshoz.'
+  pt: 'Dados secundários de deteção das linhas de faixa do módulo de câmara (CVM): distância às linhas esquerda/direita e tipo de deteção para a assistência de manutenção de faixa.'
+periodicity: ['50ms']
+senders: ['CVM']
+receivers: ['BSI']
+isotp:
+  addressing: 'normal'
+
+signals:
+  SECONDARY_LEFT_LINE_DISTANCE:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Distance from the camera to the secondary left line edge'
+      fr: 'Distance de la caméra au bord de la ligne secondaire gauche'
+      es: 'Distancia de la cámara al borde de la línea secundaria izquierda'
+      de: 'Abstand der Kamera zur sekundären linken Linienkante'
+      it: 'Distanza della telecamera dal bordo della linea secondaria sinistra'
+      pl: 'Odległość kamery od krawędzi drugorzędnej linii lewej'
+      ru: 'Расстояние от камеры до края вторичной левой линии'
+      zh: '摄像头到次要左侧车道线边缘的距离'
+      hu: 'A kamera távolsága a másodlagos bal vonal szélétől'
+      pt: 'Distância da câmara à borda da linha secundária esquerda'
+    type: 'sint'
+    factor: 0.016
+    min: -5
+    max: 5
+    units: 'm'
+    invalid: 0x1FF
+    default: 0x1FE
+
+  SECONDARY_RIGHT_LINE_DISTANCE:
+    bits: '2.5-3.4'
+    comment:
+      en: 'Distance from the camera to the secondary right line edge'
+      fr: 'Distance de la caméra au bord de la ligne secondaire droite'
+      es: 'Distancia de la cámara al borde de la línea secundaria derecha'
+      de: 'Abstand der Kamera zur sekundären rechten Linienkante'
+      it: 'Distanza della telecamera dal bordo della linea secondaria destra'
+      pl: 'Odległość kamery od krawędzi drugorzędnej linii prawej'
+      ru: 'Расстояние от камеры до края вторичной правой линии'
+      zh: '摄像头到次要右侧车道线边缘的距离'
+      hu: 'A kamera távolsága a másodlagos jobb vonal szélétől'
+      pt: 'Distância da câmara à borda da linha secundária direita'
+    type: 'sint'
+    factor: 0.016
+    min: -5
+    max: 5
+    units: 'm'
+    invalid: 0x1FF
+    default: 0x1FE
+
+  SECONDARY_LEFT_LINE_TYPE:
+    bits: '3.3-3.1'
+    comment:
+      en: 'Secondary left line type, seen by the camera'
+      fr: 'Type de la ligne secondaire gauche, vue par la caméra'
+      es: 'Tipo de la línea secundaria izquierda, vista por la cámara'
+      de: 'Typ der sekundären linken Linie (Kameraerkennung)'
+      it: 'Tipo della linea secondaria sinistra, rilevata dalla telecamera'
+      pl: 'Rodzaj drugorzędnej linii lewej, widziany przez kamerę'
+      ru: 'Тип вторичной левой линии (по данным камеры)'
+      zh: '摄像头识别到的次要左侧车道线类型'
+      hu: 'A másodlagos bal vonal típusa, a kamera által észlelve'
+      pt: 'Tipo da linha secundária esquerda, vista pela câmara'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Undetermined'
+        fr: 'Indéterminé'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未确定'
+        hu: 'Meghatározatlan'
+        pt: 'Indeterminado'
+      0x01:
+        en: 'Solid line detected'
+        fr: 'Ligne continue détectée'
+        es: 'Línea continua detectada'
+        de: 'Durchgezogene Linie erkannt'
+        it: 'Linea continua rilevata'
+        pl: 'Wykryto linię ciągłą'
+        ru: 'Обнаружена сплошная линия'
+        zh: '检测到实线'
+        hu: 'Folytonos vonal érzékelve'
+        pt: 'Linha contínua detetada'
+      0x02:
+        en: 'Dotted line detected'
+        fr: 'Ligne pointillée détectée'
+        es: 'Línea discontinua detectada'
+        de: 'Gestrichelte Linie erkannt'
+        it: 'Linea tratteggiata rilevata'
+        pl: 'Wykryto linię przerywaną'
+        ru: 'Обнаружена прерывистая линия'
+        zh: '检测到虚线'
+        hu: 'Szaggatott vonal észlelve'
+        pt: 'Linha descontínua detetada'
+      0x03:
+        en: 'Double solid line detected'
+        fr: 'Double ligne continue détectée'
+        es: 'Doble línea continua detectada'
+        de: 'Doppelte durchgezogene Linie erkannt'
+        it: 'Doppia linea continua rilevata'
+        pl: 'Wykryto podwójną linię ciągłą'
+        ru: 'Обнаружена двойная сплошная линия'
+        zh: '检测到双实线'
+        hu: 'Dupla folytonos vonal érzékelve'
+        pt: 'Linha dupla contínua detetada'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Road Edge detected'
+        fr: 'Road Edge detected'
+        es: 'Borde de carretera detectado'
+        de: 'Fahrbahnrand erkannt'
+        it: 'Bordo strada rilevato'
+        pl: 'Wykryto krawędź drogi'
+        ru: 'Обнаружена кромка дороги'
+        zh: '检测到路缘'
+        hu: 'Útszél érzékelve'
+        pt: 'Borda da estrada detetada'
+      0x06:
+        en: 'Barrier detected'
+        fr: 'Barrière détectée'
+        es: 'Barrera detectada'
+        de: 'Schranke erkannt'
+        it: 'Barriera rilevata'
+        pl: 'Wykryto barierę'
+        ru: 'Обнаружен барьер'
+        zh: '检测到护栏'
+        hu: 'Korlát észlelve'
+        pt: 'Barreira detetada'
+      0x07:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+
+  SECONDARY_LEFT_LINE_LKA_STATUS:
+    bits: '3.0'
+    comment:
+      en: 'Secondary left line status for the LKA function, seen by the camera'
+      fr: 'État de la ligne secondaire gauche pour la fonction LKA, vue par la caméra'
+      es: 'Estado de la línea secundaria izquierda para la función LKA, vista por la cámara'
+      de: 'Status der sekundären linken Linie für die LKA-Funktion (Kameraerkennung)'
+      it: 'Stato della linea secondaria sinistra per la funzione LKA, rilevata dalla telecamera'
+      pl: 'Stan drugorzędnej linii lewej dla funkcji LKA, widziany przez kamerę'
+      ru: 'Состояние вторичной левой линии для функции LKA (по данным камеры)'
+      zh: '摄像头识别到的次要左侧车道线LKA功能状态'
+      hu: 'A másodlagos bal vonal állapota az LKA funkcióhoz, a kamera által észlelve'
+      pt: 'Estado da linha secundária esquerda para a função LKA, vista pela câmara'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  SECONDARY_RIGHT_LINE_TYPE:
+    bits: '4.7-4.5'
+    comment:
+      en: 'Secondary right line type, seen by the camera'
+      fr: 'Type de la ligne secondaire droite, vue par la caméra'
+      es: 'Tipo de la línea secundaria derecha, vista por la cámara'
+      de: 'Typ der sekundären rechten Linie (Kameraerkennung)'
+      it: 'Tipo della linea secondaria destra, rilevata dalla telecamera'
+      pl: 'Rodzaj drugorzędnej linii prawej, widziany przez kamerę'
+      ru: 'Тип вторичной правой линии (по данным камеры)'
+      zh: '摄像头识别到的次要右侧车道线类型'
+      hu: 'A másodlagos jobb vonal típusa, a kamera által észlelve'
+      pt: 'Tipo da linha secundária direita, vista pela câmara'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Undetermined'
+        fr: 'Indéterminé'
+        es: 'Indeterminado'
+        de: 'Unbestimmt'
+        it: 'Indeterminato'
+        pl: 'Nieokreślone'
+        ru: 'Не определено'
+        zh: '未确定'
+        hu: 'Meghatározatlan'
+        pt: 'Indeterminado'
+      0x01:
+        en: 'Solid line detected'
+        fr: 'Ligne continue détectée'
+        es: 'Línea continua detectada'
+        de: 'Durchgezogene Linie erkannt'
+        it: 'Linea continua rilevata'
+        pl: 'Wykryto linię ciągłą'
+        ru: 'Обнаружена сплошная линия'
+        zh: '检测到实线'
+        hu: 'Folytonos vonal érzékelve'
+        pt: 'Linha contínua detetada'
+      0x02:
+        en: 'Dotted line detected'
+        fr: 'Ligne pointillée détectée'
+        es: 'Línea discontinua detectada'
+        de: 'Gestrichelte Linie erkannt'
+        it: 'Linea tratteggiata rilevata'
+        pl: 'Wykryto linię przerywaną'
+        ru: 'Обнаружена прерывистая линия'
+        zh: '检测到虚线'
+        hu: 'Szaggatott vonal észlelve'
+        pt: 'Linha descontínua detetada'
+      0x03:
+        en: 'Double solid line detected'
+        fr: 'Double ligne continue détectée'
+        es: 'Doble línea continua detectada'
+        de: 'Doppelte durchgezogene Linie erkannt'
+        it: 'Doppia linea continua rilevata'
+        pl: 'Wykryto podwójną linię ciągłą'
+        ru: 'Обнаружена двойная сплошная линия'
+        zh: '检测到双实线'
+        hu: 'Dupla folytonos vonal érzékelve'
+        pt: 'Linha dupla contínua detetada'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Road Edge detected'
+        fr: 'Road Edge detected'
+        es: 'Borde de carretera detectado'
+        de: 'Fahrbahnrand erkannt'
+        it: 'Bordo strada rilevato'
+        pl: 'Wykryto krawędź drogi'
+        ru: 'Обнаружена кромка дороги'
+        zh: '检测到路缘'
+        hu: 'Útszél érzékelve'
+        pt: 'Borda da estrada detetada'
+      0x06:
+        en: 'Barrier detected'
+        fr: 'Barrière détectée'
+        es: 'Barrera detectada'
+        de: 'Schranke erkannt'
+        it: 'Barriera rilevata'
+        pl: 'Wykryto barierę'
+        ru: 'Обнаружен барьер'
+        zh: '检测到护栏'
+        hu: 'Korlát észlelve'
+        pt: 'Barreira detetada'
+      0x07:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+
+  SECONDARY_RIGHT_LINE_LKA_STATUS:
+    bits: '4.4'
+    comment:
+      en: 'Secondary right line status for the LKA function, seen by the camera'
+      fr: 'État de la ligne secondaire droite pour la fonction LKA, vue par la caméra'
+      es: 'Estado de la línea secundaria derecha para la función LKA, vista por la cámara'
+      de: 'Status der sekundären rechten Linie für die LKA-Funktion (Kameraerkennung)'
+      it: 'Stato della linea secondaria destra per la funzione LKA, rilevata dalla telecamera'
+      pl: 'Stan drugorzędnej linii prawej dla funkcji LKA, widziany przez kamerę'
+      ru: 'Состояние вторичной правой линии для функции LKA (по данным камеры)'
+      zh: '摄像头识别到的次要右侧车道线LKA功能状态'
+      hu: 'A másodlagos jobb vonal állapota az LKA funkcióhoz, a kamera által észlelve'
+      pt: 'Estado da linha secundária direita para a função LKA, vista pela câmara'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  UNUSED_1:
+    bits: '4.3-4.0'
+    unused: true

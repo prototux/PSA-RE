@@ -1,0 +1,572 @@
+id: 0x111
+name: 'SUSPENSION_VERSION'
+type: 'can'
+length: 3
+comment:
+  en: 'Driver monitoring camera status: camera failure, driver detection change, eye-closure and field-of-view status, estimated distraction and drowsiness levels.'
+  fr: 'État de la caméra de surveillance du conducteur : défaillance caméra, changement de détection du conducteur, état de fermeture des yeux et de champ de vision, niveaux estimés de distraction et de somnolence.'
+  es: 'Estado de la cámara de supervisión del conductor: fallo de la cámara, cambio de detección del conductor, estado de cierre de ojos y de campo de visión, niveles estimados de distracción y somnolencia.'
+  de: 'Status der Fahrerüberwachungskamera: Kameraausfall, Änderung der Fahrererkennung, Status Augenschluss und Sichtfeld, geschätzte Ablenkungs- und Müdigkeitswerte.'
+  it: 'Stato della telecamera di monitoraggio del conducente: guasto della telecamera, cambio di rilevamento del conducente, stato di chiusura degli occhi e campo visivo, livelli stimati di distrazione e sonnolenza.'
+  pl: 'Stan kamery monitorującej kierowcę: awaria kamery, zmiana wykrycia kierowcy, stan zamknięcia oczu i pola widzenia, szacowane poziomy rozproszenia uwagi i senności.'
+  ru: 'Статус камеры мониторинга водителя: сбой камеры, изменение обнаружения водителя, состояние закрытия глаз и поля зрения, расчётные уровни отвлечения и сонливости.'
+  zh: '驾驶员监测摄像头状态:摄像头故障、驾驶员检测变化、闭眼和视野状态、估计的分心和困倦程度。'
+  hu: 'A vezetőfigyelő kamera állapota: kamerahiba, a vezetőfelismerés változása, szemcsukódási és látótér-állapot, becsült figyelemelterelési és álmossági szint.'
+  pt: 'Estado da câmara de monitorização do condutor: falha da câmara, mudança de deteção do condutor, estado de fecho dos olhos e de campo de visão, níveis estimados de distração e sonolência.'
+periodicity: ['1000ms']
+senders: ['IVC_D']
+receivers: ['BSI']
+
+signals:
+  NEW_DRIVER_DETECTED:
+    bits: '1.7-1.6'
+    comment:
+      en: 'New driver identified in the cockpit'
+      fr: 'Nouveau conducteur identifié dans l''habitacle'
+      es: 'Nuevo conductor identificado en el habitáculo'
+      de: 'Neuer Fahrer im Cockpit erkannt'
+      it: 'Nuovo conducente identificato nell''abitacolo'
+      pl: 'Wykryto nowego kierowcę w kabinie'
+      ru: 'Обнаружен новый водитель в салоне'
+      zh: '在驾驶舱内识别到新驾驶员'
+      hu: 'Új vezető azonosítva a fülkében'
+      pt: 'Novo condutor identificado no habitáculo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+      0x02:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x03:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.7'
+          fr: 'Aussi observé aux bits 1.7'
+          es: 'También observado en los bits 1.7'
+          de: 'Auch an den Bits 1.7 beobachtet'
+          it: 'Osservato anche ai bit 1.7'
+          pl: 'Obserwowany także na bitach 1.7'
+          ru: 'Также наблюдался в битах 1.7'
+          zh: '也观察到位于位1.7'
+          hu: 'Megfigyelve a(z) 1.7 biteken is'
+          pt: 'Também observado nos bits 1.7'
+        bits: '1.7'
+
+  DRIVER_CAMERA_FAILURE:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Indicates whether driver face analysis cannot be performed due to a camera failure'
+      fr: 'Indique si l''analyse du visage du conducteur ne peut pas être effectuée en raison d''une défaillance caméra'
+      es: 'Indica si el análisis facial del conductor no se puede realizar debido a un fallo de la cámara'
+      de: 'Gibt an, ob die Gesichtsanalyse des Fahrers aufgrund eines Kamerafehlers nicht durchgeführt werden kann'
+      it: 'Indica se l''analisi del volto del conducente non può essere eseguita a causa di un guasto della telecamera'
+      pl: 'Wskazuje, czy analiza twarzy kierowcy nie może zostać wykonana z powodu usterki kamery'
+      ru: 'Указывает, невозможно ли выполнить анализ лица водителя из-за неисправности камеры'
+      zh: '指示是否因摄像头故障而无法进行驾驶员面部分析'
+      hu: 'Jelzi, hogy a vezető arcelemzése kameraibiba miatt nem végezhető el'
+      pt: 'Indica se a análise do rosto do condutor não pode ser efetuada devido a uma falha da câmara'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No defect'
+        fr: 'Aucun défaut'
+        es: 'Sin defecto'
+        de: 'Kein Defekt'
+        it: 'Nessun difetto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem defeito'
+      0x01:
+        en: 'DEFECT'
+        fr: 'DEFECT'
+        es: 'DEFECT'
+        de: 'DEFECT'
+        it: 'DEFECT'
+        pl: 'DEFECT'
+        ru: 'DEFECT'
+        zh: 'DEFECT'
+        hu: 'DEFECT'
+        pt: 'DEFECT'
+      0x02:
+        en: 'View blocked'
+        fr: 'Vue bloquée'
+        es: 'Vista bloqueada'
+        de: 'Sicht blockiert'
+        it: 'Vista bloccata'
+        pl: 'Widok zablokowany'
+        ru: 'Обзор заблокирован'
+        zh: '视野被阻挡'
+        hu: 'Nézet blokkolva'
+        pt: 'Vista bloqueada'
+      0x03:
+        unused: true
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.6'
+          fr: 'Aussi observé aux bits 1.6'
+          es: 'También observado en los bits 1.6'
+          de: 'Auch an den Bits 1.6 beobachtet'
+          it: 'Osservato anche ai bit 1.6'
+          pl: 'Obserwowany także na bitach 1.6'
+          ru: 'Также наблюдался в битах 1.6'
+          zh: '也观察到位于位1.6'
+          hu: 'Megfigyelve a(z) 1.6 biteken is'
+          pt: 'Também observado nos bits 1.6'
+        bits: '1.6'
+
+  DRIVER_DISTRACTION_LEVEL:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Estimated driver distraction level'
+      fr: 'Niveau de distraction estimé du conducteur'
+      es: 'Nivel estimado de distracción del conductor'
+      de: 'Geschätzter Ablenkungsgrad des Fahrers'
+      it: 'Livello stimato di distrazione del conducente'
+      pl: 'Szacowany poziom rozproszenia uwagi kierowcy'
+      ru: 'Оценочный уровень отвлечения внимания водителя'
+      zh: '驾驶员分心程度估计'
+      hu: 'A vezető becsült figyelemelterelési szintje'
+      pt: 'Nível estimado de distração do condutor'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Level 1'
+        fr: 'Niveau 1'
+        es: 'Nivel 1'
+        de: 'Stufe 1'
+        it: 'Livello 1'
+        pl: 'Poziom 1'
+        ru: 'Уровень 1'
+        zh: '等级1'
+        hu: '1. szint'
+        pt: 'Nível 1'
+      0x02:
+        en: 'Level 2'
+        fr: 'Niveau 2'
+        es: 'Nivel 2'
+        de: 'Stufe 2'
+        it: 'Livello 2'
+        pl: 'Poziom 2'
+        ru: 'Уровень 2'
+        zh: '2级'
+        hu: '2. szint'
+        pt: 'Nível 2'
+      0x03:
+        en: 'Level 3'
+        fr: 'Niveau 3'
+        es: 'Nivel 3'
+        de: 'Stufe 3'
+        it: 'Livello 3'
+        pl: 'Poziom 3'
+        ru: 'Уровень 3'
+        zh: '级别3'
+        hu: '3. szint'
+        pt: 'Nível 3'
+      0x04:
+        en: 'Level 4'
+        fr: 'Niveau 4'
+        es: 'Nivel 4'
+        de: 'Stufe 4'
+        it: 'Livello 4'
+        pl: 'Poziom 4'
+        ru: 'Уровень 4'
+        zh: '4 级'
+        hu: '4. szint'
+        pt: 'Nível 4'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x0F:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.3-2.0'
+          fr: 'Aussi observé aux bits 2.3-2.0'
+          es: 'También observado en los bits 2.3-2.0'
+          de: 'Auch an den Bits 2.3-2.0 beobachtet'
+          it: 'Osservato anche ai bit 2.3-2.0'
+          pl: 'Obserwowany także na bitach 2.3-2.0'
+          ru: 'Также наблюдался в битах 2.3-2.0'
+          zh: '也观察到位于位2.3-2.0'
+          hu: 'Megfigyelve a(z) 2.3-2.0 biteken is'
+          pt: 'Também observado nos bits 2.3-2.0'
+        bits: '2.3-2.0'
+
+  DRIVER_DROWSINESS_LEVEL:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Estimated driver drowsiness level'
+      fr: 'Niveau de somnolence estimé du conducteur'
+      es: 'Nivel estimado de somnolencia del conductor'
+      de: 'Geschätzter Müdigkeitsgrad des Fahrers'
+      it: 'Livello stimato di sonnolenza del conducente'
+      pl: 'Szacowany poziom senności kierowcy'
+      ru: 'Оценочный уровень сонливости водителя'
+      zh: '驾驶员疲劳程度估计'
+      hu: 'A vezető becsült álmossági szintje'
+      pt: 'Nível estimado de sonolência do condutor'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Level 1'
+        fr: 'Niveau 1'
+        es: 'Nivel 1'
+        de: 'Stufe 1'
+        it: 'Livello 1'
+        pl: 'Poziom 1'
+        ru: 'Уровень 1'
+        zh: '等级1'
+        hu: '1. szint'
+        pt: 'Nível 1'
+      0x02:
+        en: 'Level 2'
+        fr: 'Niveau 2'
+        es: 'Nivel 2'
+        de: 'Stufe 2'
+        it: 'Livello 2'
+        pl: 'Poziom 2'
+        ru: 'Уровень 2'
+        zh: '2级'
+        hu: '2. szint'
+        pt: 'Nível 2'
+      0x03:
+        en: 'Level 3'
+        fr: 'Niveau 3'
+        es: 'Nivel 3'
+        de: 'Stufe 3'
+        it: 'Livello 3'
+        pl: 'Poziom 3'
+        ru: 'Уровень 3'
+        zh: '级别3'
+        hu: '3. szint'
+        pt: 'Nível 3'
+      0x04:
+        en: 'Level 4'
+        fr: 'Niveau 4'
+        es: 'Nivel 4'
+        de: 'Stufe 4'
+        it: 'Livello 4'
+        pl: 'Poziom 4'
+        ru: 'Уровень 4'
+        zh: '4 级'
+        hu: '4. szint'
+        pt: 'Nível 4'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x0F:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+
+  DRIVER_GAZE_OUT_OF_VIEW_STATUS:
+    bits: '2.3-2.1'
+    comment:
+      en: 'Driver eyes-out-of-field-of-view status'
+      fr: 'État des yeux du conducteur hors champ de vision'
+      es: 'Estado de los ojos del conductor fuera del campo de visión'
+      de: 'Status Fahreraugen außerhalb des Sichtfelds'
+      it: 'Stato occhi del conducente fuori campo visivo'
+      pl: 'Stan oczu kierowcy poza polem widzenia'
+      ru: 'Статус взгляда водителя вне поля зрения'
+      zh: '驾驶员视线脱离视野状态'
+      hu: 'A vezető szeme a látótéren kívül állapot'
+      pt: 'Estado dos olhos do condutor fora do campo de visão'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'Central focus'
+        fr: 'Central focus'
+        es: 'Central focus'
+        de: 'Central focus'
+        it: 'Central focus'
+        pl: 'Central focus'
+        ru: 'Central focus'
+        zh: 'Central focus'
+        hu: 'Central focus'
+        pt: 'Central focus'
+      0x01:
+        en: 'Look away'
+        fr: 'Regard détourné'
+        es: 'Mirada desviada'
+        de: 'Blick abgewandt'
+        it: 'Sguardo distolto'
+        pl: 'Wzrok odwrócony'
+        ru: 'Взгляд отведён'
+        zh: '视线转移'
+        hu: 'Elfordított tekintet'
+        pt: 'Olhar desviado'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x07:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.2-1.0'
+          fr: 'Aussi observé aux bits 1.2-1.0'
+          es: 'También observado en los bits 1.2-1.0'
+          de: 'Auch an den Bits 1.2-1.0 beobachtet'
+          it: 'Osservato anche ai bit 1.2-1.0'
+          pl: 'Obserwowany także na bitach 1.2-1.0'
+          ru: 'Также наблюдался в битах 1.2-1.0'
+          zh: '也观察到位于位1.2-1.0'
+          hu: 'Megfigyelve a(z) 1.2-1.0 biteken is'
+          pt: 'Também observado nos bits 1.2-1.0'
+        bits: '1.2-1.0'
+
+  UNUSED_1:
+    bits: '2.0'
+    unused: true
+
+  DRIVER_EYE_CLOSED_STATUS:
+    bits: '3.7-3.5'
+    comment:
+      en: 'Driver drowsiness status including closed-eye detection'
+      fr: 'État de somnolence du conducteur, incluant la détection d''yeux fermés'
+      es: 'Estado de somnolencia del conductor, incluida la detección de ojos cerrados'
+      de: 'Müdigkeitsstatus des Fahrers einschließlich Erkennung geschlossener Augen'
+      it: 'Stato di sonnolenza del conducente, inclusa la rilevazione occhi chiusi'
+      pl: 'Stan senności kierowcy, w tym wykrywanie zamkniętych oczu'
+      ru: 'Статус сонливости водителя, включая обнаружение закрытых глаз'
+      zh: '驾驶员疲劳状态(含闭眼检测)'
+      hu: 'A vezető álmosságának állapota, beleértve a csukott szem érzékelését'
+      pt: 'Estado de sonolência do condutor, incluindo a deteção de olhos fechados'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+      0x02:
+        en: 'Micro sleep'
+        fr: 'Micro-sommeil'
+        es: 'Microsueño'
+        de: 'Sekundenschlaf'
+        it: 'Microsonno'
+        pl: 'Mikrosen'
+        ru: 'Микросон'
+        zh: '微睡眠'
+        hu: 'Mikroalvás'
+        pt: 'Micro-sono'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x07:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.5-1.3'
+          fr: 'Aussi observé aux bits 1.5-1.3'
+          es: 'También observado en los bits 1.5-1.3'
+          de: 'Auch an den Bits 1.5-1.3 beobachtet'
+          it: 'Osservato anche ai bit 1.5-1.3'
+          pl: 'Obserwowany także na bitach 1.5-1.3'
+          ru: 'Также наблюдался в битах 1.5-1.3'
+          zh: '也观察到位于位1.5-1.3'
+          hu: 'Megfigyelve a(z) 1.5-1.3 biteken is'
+          pt: 'Também observado nos bits 1.5-1.3'
+        bits: '1.5-1.3'
+
+  UNUSED_2:
+    bits: '3.4-3.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 100ms'
+      fr: 'Aussi observée avec une période de 100ms'
+      es: 'También observada con un periodo de 100ms'
+      de: 'Auch mit einer Periode von 100ms beobachtet'
+      it: 'Osservata anche con un periodo di 100ms'
+      pl: 'Obserwowana także z okresem 100ms'
+      ru: 'Также наблюдалась с периодом 100ms'
+      zh: '也观察到周期为100ms'
+      hu: 'Megfigyelve 100ms periódussal is'
+      pt: 'Também observada com um período de 100ms'
+    periodicity: ['100ms']

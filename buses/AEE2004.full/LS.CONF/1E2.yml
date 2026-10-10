@@ -1,0 +1,273 @@
+id: 0x1E2
+name: 'CD_CHANGER_TRACK_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'CD changer current track status: track number, origin of change, and elapsed/track time (minutes/seconds).'
+  fr: 'État de la piste courante du changeur CD : numéro de piste, origine du changement et temps écoulé/piste (minutes/secondes).'
+  es: 'Estado de la pista actual del cambiador de CD: número de pista, origen del cambio y tiempo transcurrido/de pista (minutos/segundos).'
+  de: 'Status des aktuellen Titels im CD-Wechsler: Titelnummer, Änderungsursprung und verstrichene Zeit/Titeldauer (Minuten/Sekunden).'
+  it: 'Stato della traccia corrente del caricatore CD: numero di traccia, origine del cambio e tempo trascorso/di traccia (minuti/secondi).'
+  pl: 'Stan bieżącego utworu zmieniarki CD: numer utworu, źródło zmiany oraz czas, który upłynął/czas utworu (minuty/sekundy).'
+  ru: 'Статус текущего трека CD-чейнджера: номер трека, источник смены и прошедшее время/время трека (минуты/секунды).'
+  zh: 'CD换碟机当前曲目状态:曲目编号、更改来源及已用/曲目时间(分/秒)。'
+  hu: 'A CD-váltó aktuális számának állapota: számsorszám, a váltás forrása és az eltelt/szám idő (perc/másodperc).'
+  pt: 'Estado da faixa atual do leitor de CD: número de faixa, origem da mudança, e tempo decorrido/da faixa (minutos/segundos).'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['500ms', 'trigger']
+senders: ['CDC', 'ICSV']
+receivers: ['EMF', 'RAD', 'BTEL', 'CMB', 'MATT']
+
+signals:
+  TRACK_NUMBER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Current track number'
+      fr: 'Numéro de la plage en cours de lecture'
+      es: 'Número de la pista en reproducción'
+      de: 'Nummer des aktuellen Titels'
+      it: 'Numero della traccia in riproduzione'
+      pl: 'Numer odtwarzanej ścieżki'
+      ru: 'Номер текущей дорожки'
+      zh: '当前曲目编号'
+      hu: 'Az aktuális szám száma'
+      pt: 'Número da faixa em reprodução'
+    type: 'enum'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  DURATION_MINUTES:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Total duration of the track, minutes'
+      fr: 'Durée totale de la plage, en minutes'
+      es: 'Duración total de la pista, en minutos'
+      de: 'Gesamtdauer des Titels, in Minuten'
+      it: 'Durata totale della traccia, in minuti'
+      pl: 'Całkowity czas trwania ścieżki, w minutach'
+      ru: 'Общая продолжительность дорожки, в минутах'
+      zh: '曲目总时长(分钟)'
+      hu: 'A szám teljes időtartama percben'
+      pt: 'Duração total da faixa, em minutos'
+    type: 'enum'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  DURATION_SECONDS:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Total duration of the track, seconds'
+      fr: 'Durée totale de la plage, en secondes'
+      es: 'Duración total de la pista, en segundos'
+      de: 'Gesamtdauer des Titels, in Sekunden'
+      it: 'Durata totale della traccia, in secondi'
+      pl: 'Całkowity czas trwania ścieżki, w sekundach'
+      ru: 'Общая продолжительность дорожки, в секундах'
+      zh: '曲目总时长(秒)'
+      hu: 'A szám teljes időtartama másodpercben'
+      pt: 'Duração total da faixa, em segundos'
+    type: 'enum'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  ELAPSED_MINUTES:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Minutes elapsed since the start of the track'
+      fr: 'Minutes écoulées depuis le début de la plage'
+      es: 'Minutos transcurridos desde el inicio de la pista'
+      de: 'Seit Titelbeginn verstrichene Minuten'
+      it: 'Minuti trascorsi dall''inizio della traccia'
+      pl: 'Minuty, które upłynęły od początku ścieżki'
+      ru: 'Минуты, прошедшие с начала дорожки'
+      zh: '自曲目开始经过的分钟数'
+      hu: 'A szám kezdete óta eltelt percek'
+      pt: 'Minutos decorridos desde o início da faixa'
+    type: 'enum'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.6-4.0'
+          fr: 'Aussi observé aux bits 4.6-4.0'
+          es: 'También observado en los bits 4.6-4.0'
+          de: 'Auch an den Bits 4.6-4.0 beobachtet'
+          it: 'Osservato anche ai bit 4.6-4.0'
+          pl: 'Obserwowany także na bitach 4.6-4.0'
+          ru: 'Также наблюдался в битах 4.6-4.0'
+          zh: '也观察到位于位4.6-4.0'
+          hu: 'Megfigyelve a(z) 4.6-4.0 biteken is'
+          pt: 'Também observado nos bits 4.6-4.0'
+        bits: '4.6-4.0'
+
+  TRACK_ELAPSED_SIGN:
+    bits: '5.7'
+    comment:
+      en: 'Sign of the minutes elapsed since the start of the track'
+      fr: 'Signe des minutes écoulées depuis le début de la plage'
+      es: 'Signo de los minutos transcurridos desde el inicio de la pista'
+      de: 'Vorzeichen der seit Titelbeginn verstrichenen Minuten'
+      it: 'Segno dei minuti trascorsi dall''inizio della traccia'
+      pl: 'Znak minut, które upłynęły od początku ścieżki'
+      ru: 'Знак минут, прошедших с начала дорожки'
+      zh: '自曲目开始经过分钟数的正负号'
+      hu: 'A szám kezdete óta eltelt percek előjele'
+      pt: 'Sinal dos minutos decorridos desde o início da faixa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Positive'
+        fr: 'Positif'
+        es: 'Positivo'
+        de: 'Positiv'
+        it: 'Positivo'
+        pl: 'Dodatni'
+        ru: 'Положительно'
+        zh: '正'
+        hu: 'Pozitív'
+        pt: 'Positivo'
+      0x01:
+        en: 'Negative'
+        fr: 'Négatif'
+        es: 'Negativo'
+        de: 'Negativ'
+        it: 'Negativo'
+        pl: 'Ujemny'
+        ru: 'Отрицательный'
+        zh: '负'
+        hu: 'Negatív'
+        pt: 'Negativo'
+
+  ELAPSED_SECONDS:
+    bits: '5.6-5.0'
+    comment:
+      en: 'Seconds elapsed since the start of the track'
+      fr: 'Secondes écoulées depuis le début de la plage'
+      es: 'Segundos transcurridos desde el inicio de la pista'
+      de: 'Seit Titelbeginn verstrichene Sekunden'
+      it: 'Secondi trascorsi dall''inizio della traccia'
+      pl: 'Sekundy, które upłynęły od początku ścieżki'
+      ru: 'Секунды, прошедшие с начала дорожки'
+      zh: '自曲目开始经过的秒数'
+      hu: 'A szám kezdete óta eltelt másodpercek'
+      pt: 'Segundos decorridos desde o início da faixa'
+    type: 'enum'
+    default: 0x7F
+    values:
+      0x7F:
+        en: 'During search phases, or if playback is not possible'
+        fr: 'Pendant les phases de recherche, ou si la lecture est impossible'
+        es: 'Durante las fases de búsqueda, o si la reproducción no es posible'
+        de: 'Während der Suchphasen oder wenn die Wiedergabe nicht möglich ist'
+        it: 'Durante le fasi di ricerca, o se la riproduzione non è possibile'
+        pl: 'Podczas faz wyszukiwania lub gdy odtwarzanie nie jest możliwe'
+        ru: 'Во время фаз поиска или если воспроизведение невозможно'
+        zh: '在搜索阶段期间,或播放不可行时'
+        hu: 'Keresési fázisok alatt, vagy ha a lejátszás nem lehetséges'
+        pt: 'Durante as fases de procura, ou se a reprodução não for possível'
+
+  CDC_TRACK_CHANGE_ORIGIN:
+    bits: '6.7'
+    comment:
+      en: 'Origin of the CD changer audio track change (automatic or manual)'
+      fr: 'Origine du changement de plage audio du changeur CD (automatique ou manuelle)'
+      es: 'Origen del cambio de pista de audio del cambiador de CD (automático o manual)'
+      de: 'Ursache des Titelwechsels des CD-Wechslers (automatisch oder manuell)'
+      it: 'Origine del cambio traccia audio del cambia CD (automatico o manuale)'
+      pl: 'Źródło zmiany ścieżki audio zmieniarki CD (automatyczne lub ręczne)'
+      ru: 'Причина смены аудиодорожки CD-чейнджера (автоматическая или ручная)'
+      zh: 'CD换碟机音轨切换的原因(自动或手动)'
+      hu: 'A CD-váltó hangszámváltásának eredete (automatikus vagy kézi)'
+      pt: 'Origem da mudança de faixa de áudio do leitor de CDs (automática ou manual)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Automatic'
+        fr: 'Automatique'
+        es: 'Automático'
+        de: 'Automatisch'
+        it: 'Automatico'
+        pl: 'Automatyczny'
+        ru: 'Автоматически'
+        zh: '自动'
+        hu: 'Automatikus'
+        pt: 'Automático'
+      0x01:
+        en: 'Manual'
+        fr: 'Manuelle'
+        es: 'Manual'
+        de: 'Manuell'
+        it: 'Manuale'
+        pl: 'Ręczny'
+        ru: 'Ручной'
+        zh: '手动'
+        hu: 'Kézi'
+        pt: 'Manual'
+
+  UNUSED_1:
+    bits: '6.6-6.4'
+    unused: true
+
+  UNUSED_2:
+    bits: '6.3-6.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '7.7-7.0'
+    unused: true

@@ -1,0 +1,391 @@
+id: 0x48C
+name: 'LPG_SYSTEM_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'LPG system data: injector flow, minor/major/severe faults, client request status, fault-code read status, LPG warning-lamp request, level gauge, pressure and system-ready state.'
+  fr: 'Données système GPL : débit injecteurs, défauts mineurs/majeurs/graves, état de la demande client, état de lecture des codes, demande de voyant GPL, jauge, pression et état système prêt.'
+  es: 'Datos del sistema GLP: caudal de inyectores, fallos menores/mayores/graves, estado de la solicitud del cliente, estado de lectura de códigos, solicitud de testigo GLP, indicador de nivel, presión y estado del sistema listo.'
+  de: 'LPG-Systemdaten: Einspritzdurchfluss, geringfügige/größere/schwere Fehler, Status der Kundenanforderung, Status des Fehlercode-Lesens, Anforderung der Autogas-Kontrollleuchte, Füllstandsanzeige, Druck und Systembereitschaft.'
+  it: 'Dati del sistema GPL: portata iniettori, guasti minori/maggiori/gravi, stato della richiesta cliente, stato di lettura codici, richiesta spia GPL, indicatore di livello, pressione e stato sistema pronto.'
+  pl: 'Dane systemu LPG: przepływ wtryskiwaczy, usterki drobne/poważne/krytyczne, stan żądania klienta, stan odczytu kodów, żądanie kontrolki LPG, wskaźnik poziomu, ciśnienie i stan gotowości systemu.'
+  ru: 'Данные системы ГБО: расход форсунок, незначительные/значительные/серьёзные неисправности, статус запроса клиента, статус чтения кодов, запрос индикатора ГБО, указатель уровня, давление и готовность системы.'
+  zh: '液化气系统数据:喷油器流量、轻微/主要/严重故障、客户请求状态、故障码读取状态、液化气警示灯请求、油量表、压力和系统就绪状态。'
+  hu: 'LPG rendszer adatok: befecskendező áramlás, kisebb/nagyobb/súlyos hibák, ügyfélkérés állapota, hibakód-olvasási állapot, LPG jelzőlámpa-kérés, szintjelző, nyomás és rendszerkészenlét.'
+  pt: 'Dados do sistema GPL: caudal do injetor, avarias menores/maiores/graves, estado do pedido do cliente, estado de leitura de códigos de avaria, pedido da luz avisadora de GPL, indicador de nível, pressão e estado de sistema pronto.'
+periodicity: ['100ms']
+senders: ['CGPL']
+receivers: ['CMM', 'BSI']
+
+signals:
+  LPG_CNG_READINESS_CODE_STATE:
+    bits: '1.7'
+    comment:
+      en: 'LPG/CNG system OBD readiness code diagnostic state'
+      fr: 'État de diagnostic des readiness codes OBD du système GPL/GNV'
+      es: 'Estado de diagnóstico de los códigos de preparación OBD del sistema GLP/GNC'
+      de: 'Diagnosezustand der OBD-Readiness-Codes des Autogas-/Erdgassystems'
+      it: 'Stato diagnostico dei readiness code OBD del sistema GPL/GNC'
+      pl: 'Stan diagnostyczny kodów gotowości OBD układu LPG/CNG'
+      ru: 'Диагностический статус кодов готовности OBD системы ГБО/КПГ'
+      zh: 'LPG/CNG系统OBD就绪代码的诊断状态'
+      hu: 'Az LPG/CNG-rendszer OBD readiness kódjainak diagnosztikai állapota'
+      pt: 'Estado de diagnóstico dos códigos de prontidão OBD do sistema GPL/GNC'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Readiness-code diagnostics finished'
+        fr: 'Diagnostic des codes readiness terminé'
+        es: 'Diagnóstico de códigos readiness finalizado'
+        de: 'Diagnose der Readiness-Codes abgeschlossen'
+        it: 'Diagnostica dei codici readiness terminata'
+        pl: 'Zakończono diagnostykę kodów gotowości'
+        ru: 'Диагностика кодов готовности завершена'
+        zh: 'readiness代码诊断已完成'
+        hu: 'A readiness-kódok diagnosztikája befejeződött'
+        pt: 'Diagnóstico dos códigos readiness concluído'
+      0x01:
+        en: 'Readiness code diagnosis not finished'
+        fr: 'Diagnostic des codes readiness non terminé'
+        es: 'Diagnóstico de códigos readiness no terminado'
+        de: 'Readiness-Code-Diagnose nicht abgeschlossen'
+        it: 'Diagnosi dei codici readiness non terminata'
+        pl: 'Diagnostyka kodów readiness niezakończona'
+        ru: 'Диагностика кодов готовности не завершена'
+        zh: '就绪代码诊断未完成'
+        hu: 'A readiness kódok diagnosztikája nem fejeződött be'
+        pt: 'Diagnóstico dos códigos readiness não terminado'
+
+  LPG_DRIVER_REQUEST_STATUS:
+    bits: '1.6'
+    comment:
+      en: 'LPG mode driver request acknowledgment status'
+      fr: 'État de prise en compte de la demande du conducteur de passage en mode GPL'
+      es: 'Estado de confirmación de la solicitud del conductor de cambio a modo GLP'
+      de: 'Bestätigungsstatus der Fahreranforderung zum Wechsel in den Autogasmodus'
+      it: 'Stato di presa in carico della richiesta del conducente di passaggio in modalità GPL'
+      pl: 'Stan uwzględnienia żądania kierowcy przejścia w tryb LPG'
+      ru: 'Статус подтверждения запроса водителя на переход в режим ГБО'
+      zh: '驾驶员请求切换至LPG模式的确认状态'
+      hu: 'A vezető LPG módba váltási kérésének visszaigazolási állapota'
+      pt: 'Estado de confirmação do pedido do condutor de mudança para modo GPL'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No LPG request'
+        fr: 'Pas de demande GPL'
+        es: 'Sin solicitud de GLP'
+        de: 'Keine LPG-Anforderung'
+        it: 'Nessuna richiesta GPL'
+        pl: 'Brak żądania LPG'
+        ru: 'Нет запроса ГБО'
+        zh: '无液化石油气请求'
+        hu: 'Nincs LPG kérés'
+        pt: 'Sem pedido de GPL'
+      0x01:
+        en: 'LPG driver request'
+        fr: 'Demande conducteur GPL'
+        es: 'Solicitud del conductor GLP'
+        de: 'Fahreranforderung LPG'
+        it: 'Richiesta conducente GPL'
+        pl: 'Żądanie kierowcy LPG'
+        ru: 'Запрос водителя по ГБО'
+        zh: 'LPG 驾驶员请求'
+        hu: 'LPG vezetői kérés'
+        pt: 'Pedido do condutor GPL'
+
+  LPG_MAJOR_FAULT:
+    bits: '1.5'
+    comment:
+      en: 'LPG system major fault bit'
+      fr: 'Bit de défaut majeur du système GPL'
+      es: 'Bit de fallo mayor del sistema de GLP'
+      de: 'Bit für schweren Fehler des Autogassystems'
+      it: 'Bit di guasto maggiore del sistema GPL'
+      pl: 'Bit poważnej usterki głównej układu LPG'
+      ru: 'Бит основной неисправности системы ГБО'
+      zh: 'LPG系统主要故障位'
+      hu: 'Az LPG-rendszer jelentős hibabitje'
+      pt: 'Bit de falha maior do sistema de GPL'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'LPG system major fault'
+        fr: 'Défaut majeur du système GPL'
+        es: 'Fallo grave del sistema de GLP'
+        de: 'Schwerer Fehler des LPG-Systems'
+        it: 'Guasto grave del sistema GPL'
+        pl: 'Poważna usterka systemu LPG'
+        ru: 'Серьёзная неисправность системы СНГ'
+        zh: '液化石油气系统重大故障'
+        hu: 'LPG rendszer súlyos hibája'
+        pt: 'Avaria grave do sistema GPL'
+
+  UNUSED_1:
+    bits: '1.4'
+    unused: true
+
+  GAS_MIXTURE_TYPE:
+    bits: '1.3-1.2'
+    comment:
+      en: 'Gas mixture type'
+      fr: 'Type de mélange gaz'
+      es: 'Tipo de mezcla de gas'
+      de: 'Gasgemischtyp'
+      it: 'Tipo di miscela di gas'
+      pl: 'Rodzaj mieszanki gazowej'
+      ru: 'Тип газовой смеси'
+      zh: '燃气混合类型'
+      hu: 'Gázkeverék típusa'
+      pt: 'Tipo de mistura de gás'
+    type: 'uint'
+
+  LPG_SYSTEM_READY:
+    bits: '1.1'
+    comment:
+      en: 'LPG system ready to receive the flow setpoint'
+      fr: 'Système GPL prêt à recevoir la consigne de débit'
+      es: 'Sistema de GLP listo para recibir la consigna de caudal'
+      de: 'Autogassystem bereit, den Durchflusssollwert zu empfangen'
+      it: 'Sistema GPL pronto a ricevere il valore di riferimento della portata'
+      pl: 'Układ LPG gotowy do przyjęcia wartości zadanej przepływu'
+      ru: 'Система ГБО готова принять заданное значение расхода'
+      zh: 'LPG系统已准备好接收流量设定值'
+      hu: 'Az LPG-rendszer kész a beállított áramlási érték fogadására'
+      pt: 'Sistema de GPL pronto para receber a consigna de caudal'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'LPG not ready'
+        fr: 'GPL non prêt'
+        es: 'GLP no listo'
+        de: 'LPG nicht bereit'
+        it: 'GPL non pronto'
+        pl: 'LPG niegotowe'
+        ru: 'СНГ не готов'
+        zh: 'LPG未就绪'
+        hu: 'LPG nincs készen'
+        pt: 'GPL não pronto'
+      0x01:
+        en: 'LPG ready'
+        fr: 'GPL prêt'
+        es: 'GLP listo'
+        de: 'LPG bereit'
+        it: 'GPL pronto'
+        pl: 'LPG gotowe'
+        ru: 'ГБО готово'
+        zh: 'LPG 就绪'
+        hu: 'LPG kész'
+        pt: 'GPL pronto'
+
+  UNUSED_2:
+    bits: '1.0'
+    unused: true
+
+  LPG_FUEL_LEVEL:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Remaining LPG fuel level'
+      fr: 'Niveau de carburant GPL restant'
+      es: 'Nivel restante de combustible GLP'
+      de: 'Verbleibender Autogas-Füllstand'
+      it: 'Livello di carburante GPL rimanente'
+      pl: 'Pozostały poziom paliwa LPG'
+      ru: 'Оставшийся уровень топлива ГБО'
+      zh: '剩余LPG燃油液位'
+      hu: 'A fennmaradó LPG üzemanyagszint'
+      pt: 'Nível restante de combustível GPL'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 127
+    units: 'L'
+    invalid: 0xFF
+
+  LPG_INJECTOR_STATIC_FLOW:
+    bits: '3.7-4.0'
+    comment:
+      en: 'LPG injector static flow, calculated from the injection time'
+      fr: 'Débit statique de l''injecteur GPL, calculé à partir du temps d''injection'
+      es: 'Caudal estático del inyector de GLP, calculado a partir del tiempo de inyección'
+      de: 'Statischer Durchsatz der Autogas-Einspritzdüse, berechnet aus der Einspritzzeit'
+      it: 'Portata statica dell''iniettore GPL, calcolata dal tempo di iniezione'
+      pl: 'Statyczny wydatek wtryskiwacza LPG, obliczony na podstawie czasu wtrysku'
+      ru: 'Статический расход форсунки ГБО, рассчитанный по времени впрыска'
+      zh: '根据喷射时间计算的LPG喷油器静态流量'
+      hu: 'Az LPG-injektor statikus áramlása, a befecskendezési idő alapján számítva'
+      pt: 'Caudal estático do injetor de GPL, calculado a partir do tempo de injeção'
+    type: 'uint'
+    factor: 0.000555
+    min: 0
+    max: 36.371925
+    units: 'g/s'
+    default: 0x00
+
+  LPG_MIL_REQUEST:
+    bits: '5.4'
+    comment:
+      en: 'LPG emission fault MIL lamp request'
+      fr: 'Demande d''allumage du témoin MIL pour défaut de dépollution GPL'
+      es: 'Solicitud de encendido del testigo MIL por fallo de depuración del GLP'
+      de: 'Anforderung der MIL-Leuchte wegen Abgasfehler des Autogassystems'
+      it: 'Richiesta di accensione della spia MIL per guasto di depurazione GPL'
+      pl: 'Żądanie zaświecenia kontrolki MIL z powodu usterki oczyszczania spalin LPG'
+      ru: 'Запрос включения лампы MIL из-за неисправности очистки выхлопа ГБО'
+      zh: 'LPG排放故障MIL灯请求'
+      hu: 'Az LPG kipufogótisztítási hibája miatti MIL lámpa bekapcsolási kérése'
+      pt: 'Pedido do indicador luminoso MIL de avaria de emissões de GPL'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No emission control fault'
+        fr: 'Pas de défaut de dépollution'
+        es: 'Sin fallo de depuración de gases'
+        de: 'Kein Abgasreinigungsfehler'
+        it: 'Nessun guasto del sistema di depurazione'
+        pl: 'Brak usterki układu oczyszczania spalin'
+        ru: 'Нет неисправности системы нейтрализации выбросов'
+        zh: '无排放净化故障'
+        hu: 'Nincs kipufogógáz-tisztítási hiba'
+        pt: 'Sem falha de depuração de gases'
+      0x01:
+        en: 'LPG depollution fault'
+        fr: 'Défaut de dépollution GPL'
+        es: 'Fallo de depuración de gases GLP'
+        de: 'Fehler der LPG-Abgasreinigung'
+        it: 'Guasto di abbattimento emissioni GPL'
+        pl: 'Usterka oczyszczania spalin LPG'
+        ru: 'Неисправность системы очистки выхлопа LPG'
+        zh: 'LPG排放净化故障'
+        hu: 'LPG kipufogógáz-tisztítási hiba'
+        pt: 'Falha de despoluição GPL'
+
+  LPG_PRESSURE:
+    bits: '5.3-6.0'
+    comment:
+      en: 'LPG pressure'
+      fr: 'Pression du GPL'
+      es: 'Presión del GLP'
+      de: 'Autogasdruck'
+      it: 'Pressione del GPL'
+      pl: 'Ciśnienie LPG'
+      ru: 'Давление ГБО'
+      zh: 'LPG压力'
+      hu: 'LPG-nyomás'
+      pt: 'Pressão do GPL'
+    type: 'uint'
+    factor: 5
+    min: 500
+    max: 20470
+    units: 'mbar'
+    invalid: 0xFFF
+
+  LPG_TEMPERATURE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'LPG temperature'
+      fr: 'Température du GPL'
+      es: 'Temperatura del GLP'
+      de: 'Autogastemperatur'
+      it: 'Temperatura del GPL'
+      pl: 'Temperatura LPG'
+      ru: 'Температура ГБО'
+      zh: 'LPG温度'
+      hu: 'LPG-hőmérséklet'
+      pt: 'Temperatura do GPL'
+    type: 'uint'
+    factor: 0.625
+    offset: -40
+    min: -40
+    max: 118.75
+    units: '°C'
+    invalid: 0xFF
+    default: 0xFF
+
+  LPG_MINOR_FAULT:
+    bits: '8.1'
+    comment:
+      en: 'LPG system minor fault bit'
+      fr: 'Bit de défaut mineur du système GPL'
+      es: 'Bit de fallo menor del sistema de GLP'
+      de: 'Bit für geringfügigen Fehler des Autogassystems'
+      it: 'Bit di guasto minore del sistema GPL'
+      pl: 'Bit drobnej usterki układu LPG'
+      ru: 'Бит незначительной неисправности системы ГБО'
+      zh: 'LPG系统轻微故障位'
+      hu: 'Az LPG-rendszer kisebb hibabitje'
+      pt: 'Bit de falha menor do sistema de GPL'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Minor fault of the LPG system'
+        fr: 'Défaut mineur du système GPL'
+        es: 'Fallo menor del sistema GLP'
+        de: 'Kleinerer Fehler des Flüssiggassystems'
+        it: 'Guasto minore del sistema GPL'
+        pl: 'Drobna usterka układu LPG'
+        ru: 'Незначительная неисправность системы СНГ'
+        zh: '液化气系统轻微故障'
+        hu: 'LPG rendszer kisebb hibája'
+        pt: 'Avaria menor do sistema GPL'
+
+  LPG_SEVERE_FAULT:
+    bits: '8.0'
+    comment:
+      en: 'LPG system severe fault bit'
+      fr: 'Bit de défaut grave du système GPL'
+      es: 'Bit de fallo grave del sistema de GLP'
+      de: 'Bit für schwerwiegenden Fehler des Autogassystems'
+      it: 'Bit di guasto grave del sistema GPL'
+      pl: 'Bit poważnej usterki układu LPG'
+      ru: 'Бит серьёзной неисправности системы ГБО'
+      zh: 'LPG系统严重故障位'
+      hu: 'Az LPG-rendszer súlyos hibabitje'
+      pt: 'Bit de falha grave do sistema de GPL'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Critical Default LPG System'
+        fr: 'Défaut grave du Système GPL'
+        es: 'Fallo grave del sistema GLP'
+        de: 'Schwerer Fehler des LPG-Systems'
+        it: 'Guasto grave del sistema GPL'
+        pl: 'Poważna usterka systemu LPG'
+        ru: 'Серьёзная неисправность системы СНГ'
+        zh: 'LPG系统严重故障'
+        hu: 'Súlyos LPG rendszer hiba'
+        pt: 'Falha grave do sistema de GPL'

@@ -1,0 +1,168 @@
+id: 0x26
+name: 'BSI_SLOW_COMMAND'
+type: 'lin'
+length: 4
+comment:
+  en: 'Slow commands sent to the BSI over LIN: fault erase, configuration mode, light/rain sensitivity, outside temperature and vehicle speed.'
+  fr: 'Commandes lentes envoyées à la BSI sur le bus LIN : effacement défaut, mode configuration, sensibilité luminosité/pluie, température extérieure et vitesse véhicule.'
+  es: 'Órdenes lentas enviadas a la BSI por el bus LIN: borrado de fallo, modo de configuración, sensibilidad de luz/lluvia, temperatura exterior y velocidad del vehículo.'
+  de: 'Langsame Befehle, die über den LIN-Bus an die BSI gesendet werden: Fehlerlöschung, Konfigurationsmodus, Licht-/Regensensibilität, Außentemperatur und Fahrzeuggeschwindigkeit.'
+  it: 'Comandi lenti inviati alla BSI sul bus LIN: cancellazione guasto, modalità configurazione, sensibilità luce/pioggia, temperatura esterna e velocità del veicolo.'
+  pl: 'Wolne polecenia wysyłane do BSI po magistrali LIN: kasowanie usterki, tryb konfiguracji, czułość światła/deszczu, temperatura zewnętrzna i prędkość pojazdu.'
+  ru: 'Медленные команды, отправляемые в BSI по шине LIN: стирание неисправности, режим конфигурации, чувствительность света/дождя, наружная температура и скорость автомобиля.'
+  zh: '通过LIN总线发送给BSI的慢速命令：故障清除、配置模式、光线/雨量灵敏度、室外温度和车速。'
+  hu: 'A BSI-nek a LIN buszon küldött lassú parancsok: hibatörlés, konfigurációs mód, fény-/esőérzékenység, külső hőmérséklet és jármű sebessége.'
+  pt: 'Comandos lentos enviados à BSI via LIN: apagamento de avarias, modo de configuração, sensibilidade de luz/chuva, temperatura exterior e velocidade do veículo.'
+periodicity: ['trigger']
+senders: ['BSI']
+receivers: ['ESV']
+lin:
+  master: 'BSI'
+
+signals:
+  VEHICLE_SPEED_LINEAR:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Vehicle speed'
+      fr: 'Vitesse du véhicule'
+      es: 'Velocidad del vehículo'
+      de: 'Fahrzeuggeschwindigkeit'
+      it: 'Velocità del veicolo'
+      pl: 'Prędkość pojazdu'
+      ru: 'Скорость автомобиля'
+      zh: '车速'
+      hu: 'Járműsebesség'
+      pt: 'Velocidade do veículo'
+    type: 'uint'
+    min: 0
+    max: 254
+    invalid: 0xFF
+
+  EXTERNAL_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Outside temperature, T = N/2 - 40 °C; specific codes indicate sensor absent or unmanaged'
+      fr: 'Température extérieure, T = N/2 - 40 °C ; codes spécifiques pour capteur absent ou code non géré'
+      es: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente o código no gestionado'
+      de: 'Außentemperatur, T = N/2 - 40 °C; spezielle Codes für fehlenden Sensor oder nicht verwalteten Code'
+      it: 'Temperatura esterna, T = N/2 - 40 °C; codici specifici per sensore assente o codice non gestito'
+      pl: 'Temperatura zewnętrzna, T = N/2 - 40 °C; specjalne kody dla braku czujnika lub nieobsługiwanego kodu'
+      ru: 'Наружная температура, T = N/2 - 40 °C; специальные коды для отсутствующего датчика или необработанного кода'
+      zh: '车外温度,T = N/2 - 40°C;特定代码表示传感器缺失或代码未处理'
+      hu: 'Külső hőmérséklet, T = N/2 - 40 °C; külön kódok jelzik a hiányzó érzékelőt vagy a nem kezelt kódot'
+      pt: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente ou código não gerido'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    invalid: 0xFF
+
+  CLEAR_FAULTS:
+    bits: '3.7'
+    comment:
+      en: 'Global fault memory erase request'
+      fr: 'Demande d''effacement global des défauts'
+      es: 'Solicitud de borrado global de fallos'
+      de: 'Anforderung zum globalen Löschen der Fehlerspeicher'
+      it: 'Richiesta di cancellazione globale dei guasti'
+      pl: 'Żądanie globalnego kasowania usterek'
+      ru: 'Запрос глобального стирания неисправностей'
+      zh: '全局故障清除请求'
+      hu: 'Globális hibatörlési kérés'
+      pt: 'Pedido de apagamento global das falhas'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  LOG_FAULTS:
+    bits: '3.6'
+    comment:
+      en: 'Fault storage locking (fault memory logging disabled)'
+      fr: 'Verrouillage de la mémorisation des défauts'
+      es: 'Bloqueo del almacenamiento de fallos'
+      de: 'Sperrung der Fehlerspeicherung'
+      it: 'Blocco della memorizzazione dei guasti'
+      pl: 'Blokada zapisu usterek'
+      ru: 'Блокировка записи неисправностей в память'
+      zh: '故障存储锁定'
+      hu: 'A hibatárolás letiltása'
+      pt: 'Bloqueio do armazenamento de avarias (registo na memória de avarias desativado)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Desactivation'
+        fr: 'Desactivation'
+        es: 'Desactivación'
+        de: 'Deaktivierung'
+        it: 'Disattivazione'
+        pl: 'Dezaktywacja'
+        ru: 'Деактивация'
+        zh: '停用'
+        hu: 'Kikapcsolás'
+        pt: 'Desativação'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  LIGHT_SENSOR_SENSITIVITY_REQUESTED:
+    bits: '3.5-3.3'
+    comment:
+      en: 'Requested light sensor sensitivity'
+      fr: 'Sensibilité demandée du capteur de luminosité'
+      es: 'Sensibilidad solicitada del sensor de luminosidad'
+      de: 'Angeforderte Empfindlichkeit des Lichtsensors'
+      it: 'Sensibilità richiesta del sensore di luminosità'
+      pl: 'Żądana czułość czujnika natężenia światła'
+      ru: 'Запрошенная чувствительность датчика освещённости'
+      zh: '请求的光线传感器灵敏度'
+      hu: 'A fényérzékelő kért érzékenysége'
+      pt: 'Sensibilidade pedida do sensor de luminosidade'
+    type: 'uint'
+    min: 0
+    max: 7
+
+  RAIN_SENSOR_SENSITIVITY_REQUESTED:
+    bits: '3.2-3.0'
+    comment:
+      en: 'Requested rain sensor sensitivity'
+      fr: 'Sensibilité demandée du capteur de pluie'
+      es: 'Sensibilidad solicitada del sensor de lluvia'
+      de: 'Angeforderte Empfindlichkeit des Regensensors'
+      it: 'Sensibilità richiesta del sensore pioggia'
+      pl: 'Żądana czułość czujnika deszczu'
+      ru: 'Запрошенная чувствительность датчика дождя'
+      zh: '请求的雨量传感器灵敏度'
+      hu: 'Az esőérzékelő kért érzékenysége'
+      pt: 'Sensibilidade pedida do sensor de chuva'
+    type: 'uint'
+    min: 0
+    max: 7

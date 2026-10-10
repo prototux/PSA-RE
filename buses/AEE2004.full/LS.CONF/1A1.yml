@@ -1,108 +1,374 @@
 id: 0x1A1
 name: 'BSI_DISPLAY_MESSAGE'
-alt_names: ['BSI_CDE_PTR_MESSAGE']
-length: 8
 type: 'can'
-periodicity: ['200ms']
-senders:
-  - 'BSI'
-receivers:
-  - 'EMF'
-  - 'CMB' # After it went to MATT
-  - 'VTH'
-  - 'BTEL'
-  - 'CMB_EMF'
-  - 'RNEG'
-  - 'MATT'
+length: 8
+comment:
+  en: 'New message pointer sent by the BSI to the display on change: message priority, media and content pointer.'
+  fr: 'Pointeur de nouveau message envoyé par la BSI à l''afficheur sur changement : priorité, support et pointeur de contenu du message.'
+  es: 'Puntero de nuevo mensaje enviado por la BSI a la pantalla al cambiar: prioridad, soporte y puntero de contenido del mensaje.'
+  de: 'Von der BSI bei Änderung an das Display gesendeter Zeiger auf eine neue Nachricht: Priorität, Medium und Inhaltszeiger der Nachricht.'
+  it: 'Puntatore di nuovo messaggio inviato dalla BSI al display al cambio: priorità, supporto e puntatore al contenuto del messaggio.'
+  pl: 'Wskaźnik nowej wiadomości wysyłany przez BSI do wyświetlacza przy zmianie: priorytet, nośnik i wskaźnik treści wiadomości.'
+  ru: 'Указатель нового сообщения, отправляемый BSI на дисплей при изменении: приоритет, носитель и указатель содержимого сообщения.'
+  zh: '由BSI在状态变化时发送给显示屏的新消息指针：消息优先级、媒介及内容指针。'
+  hu: 'A BSI által a kijelzőnek küldött új üzenet-mutató, változáskor: az üzenet prioritása, hordozója és tartalommutatója.'
+  pt: 'Ponteiro de nova mensagem enviado pela BSI ao visor na mudança: prioridade da mensagem, média e ponteiro de conteúdo.'
+observations:
+  en: 'On state change of: DISPLAY_MESSAGE'
+  fr: 'Sur changement d''état de : DISPLAY_MESSAGE'
+  es: 'Al cambiar el estado de: DISPLAY_MESSAGE'
+  de: 'Bei Statusänderung von: DISPLAY_MESSAGE'
+  it: 'Al cambiamento di stato di: DISPLAY_MESSAGE'
+  pl: 'Wysyłane przy zmianie stanu: DISPLAY_MESSAGE'
+  ru: 'При изменении состояния: DISPLAY_MESSAGE'
+  zh: '当NOUV_MESS状态变化时'
+  hu: 'A(z) DISPLAY_MESSAGE állapotváltozásakor'
+  pt: 'Na mudança de estado de: DISPLAY_MESSAGE'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['EMF', 'CMB', 'BTEL', 'MATT', 'VTH']
 
 signals:
   DISPLAY_MESSAGE:
     bits: '1.7'
-    alt_names: ['NOUV_MESS']
     comment:
-      en: 'Display new message'
-      fr: 'Afficher nouveau message'
+      en: 'New message to display (toggle bit)'
+      fr: 'Nouveau message à afficher (bit bascule)'
+      es: 'Nuevo mensaje para mostrar (bit de conmutación)'
+      de: 'Neue anzuzeigende Meldung (Umschaltbit)'
+      it: 'Nuovo messaggio da visualizzare (bit di commutazione)'
+      pl: 'Nowy komunikat do wyświetlenia (bit przełączający)'
+      ru: 'Новое сообщение для отображения (переключающий бит)'
+      zh: '待显示的新消息(切换位)'
+      hu: 'Megjelenítendő új üzenet (váltóbit)'
+      pt: 'Nova mensagem a mostrar (bit de comutação)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'No new message'
         fr: 'Aucun nouveau message'
+        es: 'Ningún mensaje nuevo'
+        de: 'Keine neue Nachricht'
+        it: 'Nessun nuovo messaggio'
+        pl: 'Brak nowej wiadomości'
+        ru: 'Нет новых сообщений'
+        zh: '无新消息'
+        hu: 'Nincs új üzenet'
+        pt: 'Nenhuma mensagem nova'
       0x01:
         en: 'New message'
         fr: 'Nouveau message'
+        es: 'Nuevo mensaje'
+        de: 'Neue Nachricht'
+        it: 'Nuovo messaggio'
+        pl: 'Nowa wiadomość'
+        ru: 'Новое сообщение'
+        zh: '新消息'
+        hu: 'Új üzenet'
+        pt: 'Nova mensagem'
 
   MESSAGE_ID:
     bits: '1.6-2.0'
-    alt_names: ['POINT_MESS']
     comment:
-      en: 'Message number'
-      fr: 'Numero du message'
+      en: 'Points to the message to display'
+      fr: 'Pointe sur le message à afficher'
+      es: 'Apunta al mensaje a mostrar'
+      de: 'Zeigt auf die anzuzeigende Meldung'
+      it: 'Punta al messaggio da visualizzare'
+      pl: 'Wskazuje komunikat do wyświetlenia'
+      ru: 'Указывает на отображаемое сообщение'
+      zh: '指向待显示的消息'
+      hu: 'A megjelenítendő üzenetre mutat'
+      pt: 'Aponta para a mensagem a apresentar'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Check control OK'
+        fr: 'Contrôle OK'
+        es: 'Control OK'
+        de: 'Check Control OK'
+        it: 'Check control OK'
+        pl: 'Check control OK'
+        ru: 'Check Control в норме'
+        zh: '检查控制正常'
+        hu: 'Check control rendben'
+        pt: 'Controlo OK'
+      0x01:
+        en: 'Coolant temperature warning'
+        fr: 'Alerte de température d''eau'
+        es: 'Alerta de temperatura del refrigerante'
+        de: 'Warnung Kühlmitteltemperatur'
+        it: 'Avviso di temperatura del liquido di raffreddamento'
+        pl: 'Ostrzeżenie o temperaturze płynu chłodzącego'
+        ru: 'Предупреждение о температуре охлаждающей жидкости'
+        zh: '冷却液温度警告'
+        hu: 'Hűtőfolyadék-hőmérséklet figyelmeztetés'
+        pt: 'Alerta de temperatura da água'
+      0x02:
+        en: 'Oil temperature warning'
+        fr: 'Alerte température d''huile'
+        es: 'Aviso de temperatura de aceite'
+        de: 'Warnung Öltemperatur'
+        it: 'Avviso temperatura olio'
+        pl: 'Ostrzeżenie o temperaturze oleju'
+        ru: 'Предупреждение о температуре масла'
+        zh: '机油温度警告'
+        hu: 'Olajhőmérséklet-figyelmeztetés'
+        pt: 'Aviso de temperatura do óleo'
+      0x03:
+        en: 'Water level alert'
+        fr: 'Alerte de niveau d''eau'
+        es: 'Alerta de nivel de agua'
+        de: 'Wasserstandswarnung'
+        it: 'Allarme livello acqua'
+        pl: 'Alarm poziomu wody'
+        ru: 'Предупреждение об уровне воды'
+        zh: '水位警报'
+        hu: 'Vízszint-riasztás'
+        pt: 'Alerta de nível de água'
+      0x04:
+        en: 'Oil level alert'
+        fr: 'Alerte niveau d''huile'
+        es: 'Alerta de nivel de aceite'
+        de: 'Ölstandwarnung'
+        it: 'Allarme livello olio'
+        pl: 'Alert poziomu oleju'
+        ru: 'Оповещение об уровне масла'
+        zh: '机油液位警报'
+        hu: 'Olajszint riasztás'
+        pt: 'Alerta de nível de óleo'
+      0x05:
+        en: 'Oil pressure'
+        fr: 'Pression d''huile'
+        es: 'Presión de aceite'
+        de: 'Öldruck'
+        it: 'Pressione olio'
+        pl: 'Ciśnienie oleju'
+        ru: 'Давление масла'
+        zh: '机油压力'
+        hu: 'Olajnyomás'
+        pt: 'Pressão de óleo'
+      0x06:
+        en: 'Gearbox oil temperature warning'
+        fr: 'Alerte température d''huile de boîte de vitesses'
+        es: 'Aviso de temperatura de aceite de la caja de cambios'
+        de: 'Warnung Getriebeöltemperatur'
+        it: 'Avviso temperatura olio del cambio'
+        pl: 'Ostrzeżenie o temperaturze oleju skrzyni biegów'
+        ru: 'Предупреждение о температуре масла коробки передач'
+        zh: '变速箱油温警告'
+        hu: 'Váltóolaj-hőmérséklet figyelmeztetés'
+        pt: 'Aviso de temperatura do óleo da caixa de velocidades'
 
   DEST_EMF:
     bits: '3.7'
-    alt_names: ['MEDIA1']
     comment:
-      en: 'EMF should display the message'
-      fr: 'Le destinataire EMF doit afficher le message'
+      en: 'Pointer to be consumed by a type-A media (e.g. EMF)'
+      fr: 'Pointeur à consommer par un média de type A (ex : EMF)'
+      es: 'Puntero a consumir por un medio de tipo A (ej.: EMF)'
+      de: 'Zeiger, der von einem Medium des Typs A (z. B. EMF) verarbeitet werden soll'
+      it: 'Puntatore da elaborare da parte di un media di tipo A (es.: EMF)'
+      pl: 'Wskaźnik do przetworzenia przez medium typu A (np. EMF)'
+      ru: 'Указатель для обработки медиа типа A (например, EMF)'
+      zh: '供A类媒体(如EMF)使用的指针'
+      hu: 'A típusú médiának (pl. EMF) szánt mutató'
+      pt: 'Ponteiro a consumir por um suporte de tipo A (ex.: EMF)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No'
-        fr: 'Non'
+        en: 'Media type A, non-consumer'
+        fr: 'Média de type A, non consommateur'
+        es: 'Medio de tipo A, no consumidor'
+        de: 'Medientyp A, kein Verbraucher'
+        it: 'Supporto tipo A, non consumatore'
+        pl: 'Nośnik typu A, nie odbiorca'
+        ru: 'Носитель типа A, не потребитель'
+        zh: 'A类媒体，非消费型'
+        hu: 'A típusú adathordozó, nem fogyasztó'
+        pt: 'Media do tipo A, não consumidor'
       0x01:
-        en: 'Yes'
-        fr: 'Oui'
+        en: 'Media type A consumer'
+        fr: 'Média type A consommateur'
+        es: 'Medio tipo A consumidor'
+        de: 'Medientyp A Verbraucher'
+        it: 'Media tipo A consumatore'
+        pl: 'Nośnik typu A konsumencki'
+        ru: 'Носитель типа A потребительский'
+        zh: '消费级A类媒体'
+        hu: 'A típusú fogyasztói média'
+        pt: 'Suporte tipo A consumidor'
 
   DEST_CMB:
     bits: '3.6'
-    alt_names: ['MEDIA2']
     comment:
-      en: 'CMB should display the message'
-      fr: 'Le destinataire CMB doit afficher le message'
+      en: 'Pointer to be consumed by a type-B media (e.g. CMB)'
+      fr: 'Pointeur à consommer par un média de type B (ex : CMB)'
+      es: 'Puntero a consumir por un medio de tipo B (ej.: CMB)'
+      de: 'Zeiger, der von einem Medium des Typs B (z. B. CMB) verarbeitet werden soll'
+      it: 'Puntatore da elaborare da parte di un media di tipo B (es.: CMB)'
+      pl: 'Wskaźnik do przetworzenia przez medium typu B (np. CMB)'
+      ru: 'Указатель для обработки медиа типа B (например, CMB)'
+      zh: '供B类媒体(如CMB)使用的指针'
+      hu: 'B típusú médiának (pl. CMB) szánt mutató'
+      pt: 'Ponteiro a consumir por um suporte de tipo B (ex.: CMB)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No'
-        fr: 'Non'
+        en: 'Non-consuming type B media'
+        fr: 'Média de type B non consommateur'
+        es: 'Medio tipo B no consumidor'
+        de: 'Medium Typ B, nicht verbrauchend'
+        it: 'Supporto tipo B non consumabile'
+        pl: 'Nośnik typu B nieeksploatujący'
+        ru: 'Носитель типа B, не расходуемый'
+        zh: '非消耗型B类媒体'
+        hu: 'Nem fogyó B típusú adathordozó'
+        pt: 'Suporte de tipo B não consumidor'
       0x01:
-        en: 'Yes'
-        fr: 'Oui'
+        en: 'Media type B, consumer'
+        fr: 'Média de type B, consommateur'
+        es: 'Medio de tipo B, consumidor'
+        de: 'Medientyp B, Verbraucher'
+        it: 'Supporto tipo B, consumatore'
+        pl: 'Nośnik typu B, odbiorca'
+        ru: 'Носитель типа B, потребитель'
+        zh: 'B类媒体，消费型'
+        hu: 'B típusú adathordozó, fogyasztó'
+        pt: 'Media do tipo B, consumidor'
 
   DEST_VTH:
     bits: '3.5'
-    alt_names: ['MEDIA3']
     comment:
-      en: 'VTH should display the message'
-      fr: 'Le destinataire VTH doit afficher le message'
+      en: 'Pointer to be consumed by a type-C media (e.g. HUD)'
+      fr: 'Pointeur à consommer par un média de type C (ex : HUD)'
+      es: 'Puntero a consumir por un medio de tipo C (ej.: HUD)'
+      de: 'Zeiger, der von einem Medium des Typs C (z. B. HUD) verarbeitet werden soll'
+      it: 'Puntatore da elaborare da parte di un media di tipo C (es.: HUD)'
+      pl: 'Wskaźnik do przetworzenia przez medium typu C (np. HUD)'
+      ru: 'Указатель для обработки медиа типа C (например, HUD)'
+      zh: '供C类媒体(如VTH)使用的指针'
+      hu: 'C típusú médiának (pl. HUD) szánt mutató'
+      pt: 'Ponteiro a consumir por um suporte de tipo C (ex.: HUD)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'No'
-        fr: 'Non'
+        en: 'Type-C media not consuming'
+        fr: 'Média de type C non consommateur'
+        es: 'Medio de tipo C no consumidor'
+        de: 'Medium Typ C nicht abnehmend'
+        it: 'Media di tipo C non consumatore'
+        pl: 'Medium typu C nie odbiera'
+        ru: 'Медиа типа C не потребляет'
+        zh: 'C类媒体非消费方'
+        hu: 'C típusú médium nem fogyasztó'
+        pt: 'Suporte tipo C sem consumo'
       0x01:
-        en: 'Yes'
-        fr: 'Oui'
+        en: 'Media type C, consuming'
+        fr: 'Média type C consommateur'
+        es: 'Medio tipo C con consumo'
+        de: 'Medientyp C, verbrauchend'
+        it: 'Supporto tipo C, in uso'
+        pl: 'Nośnik typu C, używany'
+        ru: 'Носитель типа C, используется'
+        zh: 'C类媒体,使用中'
+        hu: 'C típusú médium, fogyasztó'
+        pt: 'Tipo de suporte C, com consumo'
 
-  CHECK_IN_PROGRESS: # CHECK_COURS and PRIORITE are here, maybe INTERD_PHASE_DEM also
+  CHECK_IN_PROGRESS:
     bits: '3.4'
-    alt_names: ['CHECK_COURS']
     comment:
       en: 'Check in progress'
-      fr: 'Check en cours'
+      fr: 'Vérification en cours'
+      es: 'Comprobación en curso'
+      de: 'Prüfung läuft'
+      it: 'Controllo in corso'
+      pl: 'Trwa sprawdzanie'
+      ru: 'Проверка выполняется'
+      zh: '检查进行中'
+      hu: 'Ellenőrzés folyamatban'
+      pt: 'Verificação em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No check in progress'
+        fr: 'Pas de contrôle en cours'
+        es: 'Sin comprobación en curso'
+        de: 'Keine laufende Prüfung'
+        it: 'Nessun controllo in corso'
+        pl: 'Brak trwającej kontroli'
+        ru: 'Проверка не выполняется'
+        zh: '无正在进行的检查'
+        hu: 'Nincs folyamatban ellenőrzés'
+        pt: 'Sem verificação em curso'
+      0x01:
+        en: 'Checking in progress'
+        fr: 'Vérification en cours'
+        es: 'Comprobación en curso'
+        de: 'Prüfung läuft'
+        it: 'Controllo in corso'
+        pl: 'Trwa sprawdzanie'
+        ru: 'Выполняется проверка'
+        zh: '检查中'
+        hu: 'Ellenőrzés folyamatban'
+        pt: 'Verificação em curso'
 
   PRIORITY:
     bits: '3.3-3.0'
-    alt_names: ['PRIORITE']
     comment:
-      en: 'Message priority'
-      fr: 'Priorite du message'
-    type: 'uint'
-    offset: 0
-    min: 0
-    max: 14
-    resolution: 1
-    invalid:
-    units:
+      en: 'Priority level of the message pointer'
+      fr: 'Niveau de priorité du pointeur de message'
+      es: 'Nivel de prioridad del puntero de mensaje'
+      de: 'Prioritätsstufe des Nachrichtenzeigers'
+      it: 'Livello di priorità del puntatore del messaggio'
+      pl: 'Poziom priorytetu wskaźnika komunikatu'
+      ru: 'Уровень приоритета указателя сообщения'
+      zh: '消息指针的优先级'
+      hu: 'Az üzenetmutató prioritási szintje'
+      pt: 'Nível de prioridade do ponteiro de mensagem'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Priority 0'
+        fr: 'Priorité 0'
+        es: 'Prioridad 0'
+        de: 'Priorität 0'
+        it: 'Priorità 0'
+        pl: 'Priorytet 0'
+        ru: 'Приоритет 0'
+        zh: '优先级0'
+        hu: '0. prioritás'
+        pt: 'Prioridade 0'
+      0x0F:
+        en: 'Undetermined priority'
+        fr: 'Priorité indéterminée'
+        es: 'Prioridad indeterminada'
+        de: 'Priorität unbestimmt'
+        it: 'Priorità indeterminata'
+        pl: 'Nieokreślony priorytet'
+        ru: 'Неопределённый приоритет'
+        zh: '优先级未确定'
+        hu: 'Meghatározatlan prioritás'
+        pt: 'Prioridade indeterminada'
 
   MESSAGE_ARGS:
     bits: '4.7-8.0'
-    alt_names: ['PARAM_PTR']
     comment:
-      en: 'Message arguments'
-      fr: 'Parametres du message'
+      en: 'Parameters related to the pointer'
+      fr: 'Paramètres liés au pointeur'
+      es: 'Parámetros relacionados con el puntero'
+      de: 'Parameter im Zusammenhang mit dem Zeiger'
+      it: 'Parametri relativi al puntatore'
+      pl: 'Parametry związane ze wskaźnikiem'
+      ru: 'Параметры, связанные с указателем'
+      zh: '与指针相关的参数'
+      hu: 'A mutatóhoz kapcsolódó paraméterek'
+      pt: 'Parâmetros relacionados com o ponteiro'
+    type: 'uint'
+    default: 0xFFFFFFFFFF

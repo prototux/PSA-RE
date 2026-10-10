@@ -1,0 +1,220 @@
+id: 0x57C
+name: 'DMTR_CONVERTER_DATA'
+type: 'can'
+length: 6
+comment:
+  en: 'DMTR converter data: capacity, state, input/output current and input/output voltage.'
+  fr: 'Données du convertisseur DMTR : capacité, état, courant et tension d''entrée/sortie.'
+  es: 'Datos del convertidor DMTR: capacidad, estado, corriente y tensión de entrada/salida.'
+  de: 'DMTR-Wandlerdaten: Kapazität, Zustand, Ein-/Ausgangsstrom und Ein-/Ausgangsspannung.'
+  it: 'Dati del convertitore DMTR: capacità, stato, corrente e tensione di ingresso/uscita.'
+  pl: 'Dane przetwornicy DMTR: pojemność, stan, prąd i napięcie wejścia/wyjścia.'
+  ru: 'Данные преобразователя DMTR: ёмкость, состояние, входной/выходной ток и напряжение.'
+  zh: 'DMTR转换器数据:容量、状态、输入/输出电流和输入/输出电压。'
+  hu: 'A DMTR átalakító adatai: kapacitás, állapot, be- és kimeneti áram, valamint be- és kimeneti feszültség.'
+  pt: 'Dados do conversor DMTR: capacidade, estado, corrente de entrada/saída e tensão de entrada/saída.'
+periodicity: ['100ms']
+senders: ['DMTR']
+receivers: ['BSI', 'CMM']
+
+signals:
+  DMTR_CAPACITY:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Remaining capacity of the DMTR backup power module (%)'
+      fr: 'Capacité restante du module d''alimentation de secours DMTR (%)'
+      es: 'Capacidad restante del módulo de alimentación de reserva DMTR (%)'
+      de: 'Verbleibende Kapazität des DMTR-Notstrommoduls (%)'
+      it: 'Capacità residua del modulo di alimentazione di riserva DMTR (%)'
+      pl: 'Pozostała pojemność modułu zasilania awaryjnego DMTR (%)'
+      ru: 'Остаточная ёмкость резервного модуля питания DMTR (%)'
+      zh: 'DMTR备用电源模块剩余容量(%)'
+      hu: 'A DMTR tartalék áramellátó modul fennmaradó kapacitása (%)'
+      pt: 'Capacidade restante do módulo de alimentação de reserva DMTR (%)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 150
+    units: '%'
+    invalid: 0xFE
+    default: 0x64
+
+  DMTR_STATE:
+    bits: '2.7-2.5'
+    comment:
+      en: 'DMTR backup power module operating state'
+      fr: 'État de fonctionnement du module d''alimentation de secours DMTR'
+      es: 'Estado de funcionamiento del módulo de alimentación de reserva DMTR'
+      de: 'Betriebszustand des DMTR-Notstrommoduls'
+      it: 'Stato di funzionamento del modulo di alimentazione di riserva DMTR'
+      pl: 'Stan pracy modułu zasilania awaryjnego DMTR'
+      ru: 'Рабочее состояние резервного модуля питания DMTR'
+      zh: 'DMTR备用电源模块运行状态'
+      hu: 'A DMTR tartalék áramellátó modul üzemi állapota'
+      pt: 'Estado de funcionamento do módulo de alimentação de reserva DMTR'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Active support state'
+        fr: 'État soutien actif'
+        es: 'Estado de apoyo activo'
+        de: 'Zustand aktive Unterstützung'
+        it: 'Stato di supporto attivo'
+        pl: 'Stan aktywnego wspomagania'
+        ru: 'Состояние активной поддержки'
+        zh: '主动支持状态'
+        hu: 'Aktív támogatási állapot'
+        pt: 'Estado de apoio ativo'
+      0x01:
+        en: 'Nominal state'
+        fr: 'État nominal'
+        es: 'Estado nominal'
+        de: 'Normalzustand'
+        it: 'Stato nominale'
+        pl: 'Stan nominalny'
+        ru: 'Номинальное состояние'
+        zh: '标称状态'
+        hu: 'Névleges állapot'
+        pt: 'Estado nominal'
+      0x02:
+        en: 'Long-inhibition degraded-mode state'
+        fr: 'État dégradé d''inhibition longue'
+        es: 'Estado de modo degradado de inhibición larga'
+        de: 'Notlaufzustand der langen Sperre'
+        it: 'Stato di modalità degradata di inibizione lunga'
+        pl: 'Stan trybu awaryjnego długiej blokady'
+        ru: 'Аварийный режим длительной блокировки'
+        zh: '长时抑制降级模式状态'
+        hu: 'Hosszú letiltás korlátozott üzemmód állapota'
+        pt: 'Estado de modo degradado de inibição longa'
+      0x03:
+        en: 'Degraded state, short inhibition'
+        fr: 'État dégradé, inhibition courte'
+        es: 'Estado degradado, inhibición corta'
+        de: 'Beeinträchtigter Zustand, kurze Sperrung'
+        it: 'Stato degradato, inibizione breve'
+        pl: 'Stan zdegradowany, krótka blokada'
+        ru: 'Ухудшенное состояние, короткая блокировка'
+        zh: '降级状态,短时抑制'
+        hu: 'Sérült állapot, rövid letiltás'
+        pt: 'Estado degradado, inibição curta'
+      0x04:
+        en: 'Immobiliser 2 degraded-mode state'
+        fr: 'État dégradé de l''immobilisation 2'
+        es: 'Estado de modo degradado del inmovilizador 2'
+        de: 'Notlaufzustand der Wegfahrsperre 2'
+        it: 'Stato di modalità degradata dell''immobilizer 2'
+        pl: 'Stan trybu awaryjnego immobilisera 2'
+        ru: 'Аварийный режим иммобилайзера 2'
+        zh: '防盗锁止2降级模式状态'
+        hu: 'A 2. indításgátló korlátozott üzemmód állapota'
+        pt: 'Estado de modo degradado 2 do imobilizador'
+      0x05:
+        en: 'Immobilizer 3 degraded mode state'
+        fr: 'État de mode dégradé de l''immobilisation 3'
+        es: 'Estado de modo degradado de la inmovilización 3'
+        de: 'Notlaufzustand der Wegfahrsperre 3'
+        it: 'Stato di modalità degradata dell''immobilizzatore 3'
+        pl: 'Stan trybu awaryjnego immobilizera 3'
+        ru: 'Аварийное состояние иммобилайзера 3'
+        zh: '3号防盗锁止降级模式状态'
+        hu: 'A 3. indításgátló vészüzemi állapota'
+        pt: 'Estado de modo degradado 3 do imobilizador'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  DMTR_INPUT_CURRENT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'DMTR module input current, measured by the module itself (A)'
+      fr: 'Courant d''entrée du module DMTR, mesuré par le module lui-même (A)'
+      es: 'Corriente de entrada del módulo DMTR, medida por el propio módulo (A)'
+      de: 'Eingangsstrom des DMTR-Moduls, vom Modul selbst gemessen (A)'
+      it: 'Corrente in ingresso del modulo DMTR, misurata dal modulo stesso (A)'
+      pl: 'Prąd wejściowy modułu DMTR, mierzony przez sam moduł (A)'
+      ru: 'Входной ток модуля DMTR, измеренный самим модулем (А)'
+      zh: 'DMTR模块自身测量的输入电流(A)'
+      hu: 'A DMTR modul bemeneti árama, a modul saját mérése szerint (A)'
+      pt: 'Corrente de entrada do módulo DMTR, medida pelo próprio módulo (A)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'A'
+    invalid: 0xFF
+    default: 0xFB
+
+  DMTR_OUTPUT_CURRENT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'DMTR module output current, measured by the module itself (A)'
+      fr: 'Courant de sortie du module DMTR, mesuré par le module lui-même (A)'
+      es: 'Corriente de salida del módulo DMTR, medida por el propio módulo (A)'
+      de: 'Ausgangsstrom des DMTR-Moduls, vom Modul selbst gemessen (A)'
+      it: 'Corrente in uscita del modulo DMTR, misurata dal modulo stesso (A)'
+      pl: 'Prąd wyjściowy modułu DMTR, mierzony przez sam moduł (A)'
+      ru: 'Выходной ток модуля DMTR, измеренный самим модулем (А)'
+      zh: 'DMTR模块自身测量的输出电流(A)'
+      hu: 'A DMTR modul kimeneti árama, a modul saját mérése szerint (A)'
+      pt: 'Corrente de saída do módulo DMTR, medida pelo próprio módulo (A)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 250
+    units: 'A'
+    invalid: 0xFF
+    default: 0xFB
+
+  DMTR_INPUT_VOLTAGE:
+    bits: '5.7-5.0'
+    comment:
+      en: 'DMTR module input voltage, measured by the module itself (V)'
+      fr: 'Tension d''entrée du module DMTR, mesurée par le module lui-même (V)'
+      es: 'Tensión de entrada del módulo DMTR, medida por el propio módulo (V)'
+      de: 'Eingangsspannung des DMTR-Moduls, vom Modul selbst gemessen (V)'
+      it: 'Tensione in ingresso del modulo DMTR, misurata dal modulo stesso (V)'
+      pl: 'Napięcie wejściowe modułu DMTR, mierzone przez sam moduł (V)'
+      ru: 'Входное напряжение модуля DMTR, измеренное самим модулем (В)'
+      zh: 'DMTR模块自身测量的输入电压(V)'
+      hu: 'A DMTR modul bemeneti feszültsége, a modul saját mérése szerint (V)'
+      pt: 'Tensão de entrada do módulo DMTR, medida pelo próprio módulo (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 16
+    units: 'V'
+    invalid: 0xFF
+    default: 0xA1
+
+  DMTR_OUTPUT_VOLTAGE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'DMTR module output voltage, measured by the module itself (V)'
+      fr: 'Tension de sortie du module DMTR, mesurée par le module lui-même (V)'
+      es: 'Tensión de salida del módulo DMTR, medida por el propio módulo (V)'
+      de: 'Ausgangsspannung des DMTR-Moduls, vom Modul selbst gemessen (V)'
+      it: 'Tensione in uscita del modulo DMTR, misurata dal modulo stesso (V)'
+      pl: 'Napięcie wyjściowe modułu DMTR, mierzone przez sam moduł (V)'
+      ru: 'Выходное напряжение модуля DMTR, измеренное самим модулем (В)'
+      zh: 'DMTR模块自身测量的输出电压(V)'
+      hu: 'A DMTR modul kimeneti feszültsége, a modul saját mérése szerint (V)'
+      pt: 'Tensão de saída do módulo DMTR, medida pelo próprio módulo (V)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 16
+    units: 'V'
+    invalid: 0xFF
+    default: 0xA1

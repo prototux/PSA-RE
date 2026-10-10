@@ -1,93 +1,184 @@
 id: 0x297
 name: 'HUD_STATUS'
-alt_names: ['ETAT_VTH']
-length: 2
 type: 'can'
+length: 2
+comment:
+  en: 'Head-up display status: memory and recall, mirror movement, displayed speed.'
+  fr: 'État de l''affichage tête haute : mémoire et rappel, mouvement du miroir, vitesse affichée.'
+  es: 'Estado de la pantalla head-up: memoria y recuperación, movimiento del espejo, velocidad mostrada.'
+  de: 'Status des Head-up-Displays: Memory und Abruf, Spiegelbewegung, angezeigte Geschwindigkeit.'
+  it: 'Stato del display head-up: memoria e richiamo, movimento dello specchio, velocità visualizzata.'
+  pl: 'Stan wyświetlacza przezierowego: pamięć i przywołanie, ruch lusterka, wyświetlana prędkość.'
+  ru: 'Статус проекционного дисплея: память и вызов, движение зеркала, отображаемая скорость.'
+  zh: '平视显示器状态:记忆及调用、反射镜移动、显示速度。'
+  hu: 'A head-up kijelző állapota: memória és visszahívás, tükörmozgás, kijelzett sebesség.'
+  pt: 'Estado do head-up display: memória e recuperação, movimento do espelho, velocidade apresentada.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
 periodicity: ['200ms', 'trigger']
-senders:
-  - 'VTH'
-receivers:
-  - 'BSI'
-  - 'MATT'
+senders: ['VTH']
+receivers: ['BSI', 'MATT']
 
 signals:
   UNUSED_1:
     bits: '1.7-1.5'
-    alt_names: ['LIBRE_1']
     unused: true
 
-  HUD_ACTIVATION_STATUS:
+  UNUSED_2:
     bits: '1.4-1.3'
-    alt_names: ['ACTIV_VTH']
-    comment:
-      fr: 'État d''activation de la VTH'
-      en: 'HUD activation status'
-    values:
-      0x00:
-        fr: 'VTH non activée'
-        en: 'HUD not activated'
-      0x01:
-        fr: 'VTH activée'
-        en: 'HUD activated'
-      0x02:
-        fr: 'Indisponible'
-        en: 'Unavailable'
-      0x03:
-        fr: 'Invalide'
-        en: 'Invalid'
+    unused: true
 
   HUD_MEMORY_STATUS:
     bits: '1.2'
-    alt_names: ['MEMO_VTH']
     comment:
-      fr: 'Mémorisation en cours'
       en: 'Storing in progress'
+      fr: 'Mémorisation en cours'
+      es: 'Memorización en curso'
+      de: 'Speichervorgang läuft'
+      it: 'Memorizzazione in corso'
+      pl: 'Trwa zapis do pamięci'
+      ru: 'Выполняется сохранение'
+      zh: '记忆存储进行中'
+      hu: 'Tárolás folyamatban'
+      pt: 'Memorização em curso'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
+        en: 'No memorisation in progress'
         fr: 'Pas de mémorisation en cours'
-        en: 'No storing in progress'
+        es: 'Sin memorización en curso'
+        de: 'Keine Speicherung im Gange'
+        it: 'Nessuna memorizzazione in corso'
+        pl: 'Brak trwającego zapamiętywania'
+        ru: 'Нет выполняемого запоминания'
+        zh: '无正在进行的记忆保存'
+        hu: 'Nincs folyamatban lévő mentés'
+        pt: 'Sem memorização em curso'
       0x01:
+        en: 'Memorization in progress'
         fr: 'Mémorisation en cours'
-        en: 'Storing in progress'
+        es: 'Memorización en curso'
+        de: 'Speicherung läuft'
+        it: 'Memorizzazione in corso'
+        pl: 'Trwa zapamiętywanie'
+        ru: 'Выполняется запоминание'
+        zh: '正在存储'
+        hu: 'Mentés folyamatban'
+        pt: 'Memorização em curso'
 
   HUD_MEMORY_RECALL:
     bits: '1.1'
-    alt_names: ['MEMO_RAPPEL_VTH']
     comment:
-      fr: 'Rappel mémorisation VTH'
       en: 'HUD memory recall'
+      fr: 'Rappel mémorisation HUD'
+      es: 'Recuperación de memoria de la HUD'
+      de: 'Speicherabruf des Head-up-Displays'
+      it: 'Richiamo memoria dell''HUD'
+      pl: 'Przywołanie pamięci wyświetlacza przezierowego'
+      ru: 'Вызов из памяти проекционного дисплея'
+      zh: '抬头显示器记忆调用'
+      hu: 'A head-up kijelző memóriájának előhívása'
+      pt: 'Recuperação de memória da HUD'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
+        en: 'No storage recall'
         fr: 'Pas de rappel de mémorisation'
-        en: 'No memory recall'
+        es: 'Sin recuperación de almacenamiento'
+        de: 'Kein Speicherabruf'
+        it: 'Nessun richiamo di memorizzazione'
+        pl: 'Brak przywołania zapisu'
+        ru: 'Нет вызова из памяти'
+        zh: '无存储召回'
+        hu: 'Nincs mentésfelidézés'
+        pt: 'Sem recuperação de memorização'
       0x01:
+        en: 'Storage reminder'
         fr: 'Rappel de mémorisation'
-        en: 'Memory recall'
+        es: 'Recordatorio de memorización'
+        de: 'Speicher-Erinnerung'
+        it: 'Promemoria di memorizzazione'
+        pl: 'Przypomnienie zapisu'
+        ru: 'Напоминание о сохранении'
+        zh: '存储提醒'
+        hu: 'Emlékeztető a memorizálásra'
+        pt: 'Lembrete de memorização'
 
   HUD_SCREEN_MANUAL_MOVEMENT:
     bits: '1.0'
-    alt_names: ['MOUV_MIROIR_VTH']
     comment:
-      fr: 'Miroir en mouvement manuel'
       en: 'Mirror in manual movement'
+      fr: 'Miroir en mouvement manuel'
+      es: 'Espejo en movimiento manual'
+      de: 'Spiegel in manueller Bewegung'
+      it: 'Specchio in movimento manuale'
+      pl: 'Lusterko w ruchu ręcznym'
+      ru: 'Зеркало в ручном перемещении'
+      zh: '反射镜手动移动中'
+      hu: 'A tükör kézi mozgatás alatt'
+      pt: 'Espelho em movimento manual'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        fr: 'Pas de mouvement manuel du miroir'
         en: 'No manual mirror movement'
+        fr: 'Pas de mouvement manuel du rétroviseur'
+        es: 'Sin movimiento manual del espejo'
+        de: 'Keine manuelle Spiegelbewegung'
+        it: 'Nessun movimento manuale dello specchietto'
+        pl: 'Brak ręcznego ruchu lusterka'
+        ru: 'Нет ручного перемещения зеркала'
+        zh: '无手动后视镜调节动作'
+        hu: 'Nincs kézi tükörmozgatás'
+        pt: 'Sem movimento manual do retrovisor'
       0x01:
-        fr: 'Mouvement manuel du miroir'
-        en: 'Manual mirror movement'
+        en: 'Manual movement of the mirror'
+        fr: 'Mouvement manuel du rétroviseur'
+        es: 'Movimiento manual del retrovisor'
+        de: 'Manuelle Bewegung des Spiegels'
+        it: 'Movimento manuale dello specchietto'
+        pl: 'Ręczny ruch lusterka'
+        ru: 'Ручное перемещение зеркала'
+        zh: '手动调整后视镜'
+        hu: 'A tükör kézi mozgatása'
+        pt: 'Movimento manual do espelho retrovisor'
 
   SPEED_DISPLAYED_ON_HUD:
     bits: '2.7-2.0'
-    alt_names: ['VITESSE_AFF_VTH']
     comment:
-      fr: 'Vitesse affichée à la VTH'
-      en: 'Speed displayed on the HUD'
-    type: 'uint8'
-    resolution: 1
-    offset: 0
-    min: 0
-    max: 254
+      en: 'Speed displayed in the HUD'
+      fr: 'Vitesse affichée à la HUD'
+      es: 'Velocidad mostrada en la HUD'
+      de: 'In der HUD angezeigte Geschwindigkeit'
+      it: 'Velocità visualizzata sull''HUD'
+      pl: 'Prędkość wyświetlana na wyświetlaczu przezierowym'
+      ru: 'Скорость, отображаемая на проекционном дисплее'
+      zh: '抬头显示器上显示的车速'
+      hu: 'A head-up kijelzőn megjelenített sebesség'
+      pt: 'Velocidade apresentada na HUD'
+    type: 'enum'
     invalid: 0xFF
-    units: 'from GESTION_VITESSE frame'
+    default: 0xFF
+    values:
+      0xFF:
+        en: 'Head-up display switched off by user'
+        fr: 'Affichage tête haute éteint par l''utilisateur'
+        es: 'Visualizador frontal (HUD) apagado por el usuario'
+        de: 'Head-up-Display vom Benutzer ausgeschaltet'
+        it: 'Display a proiezione (HUD) spento dall''utente'
+        pl: 'Wyświetlacz przezierny (HUD) wyłączony przez użytkownika'
+        ru: 'Дисплей на лобовом стекле (HUD) выключен пользователем'
+        zh: '用户已关闭抬头显示器(HUD)'
+        hu: 'A head-up kijelzőt (HUD) a felhasználó kikapcsolta'
+        pt: 'Ecrã head-up desligado pelo utilizador'

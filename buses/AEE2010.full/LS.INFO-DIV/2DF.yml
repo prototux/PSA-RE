@@ -1,0 +1,1007 @@
+id: 0x2DF
+name: 'EMF_PHONE'
+type: 'can-tp'
+comment:
+  en: 'Family of frames sharing this ID: the content depends on PEERING_CODE_ENTRY_MODE'
+  fr: 'Famille de trames partageant cet identifiant : le contenu dépend de PEERING_CODE_ENTRY_MODE'
+  es: 'Familia de tramas que comparten este identificador: el contenido depende de PEERING_CODE_ENTRY_MODE'
+  de: 'Familie von Botschaften mit dieser ID: der Inhalt hängt von PEERING_CODE_ENTRY_MODE ab'
+  it: 'Famiglia di frame che condividono questo ID: il contenuto dipende da PEERING_CODE_ENTRY_MODE'
+  pl: 'Rodzina ramek o tym samym identyfikatorze: zawartość zależy od PEERING_CODE_ENTRY_MODE'
+  ru: 'Семейство кадров с этим идентификатором: содержимое зависит от PEERING_CODE_ENTRY_MODE'
+  zh: '共用此ID的一组帧：内容取决于PEERING_CODE_ENTRY_MODE'
+  hu: 'Ezt az azonosítót megosztó keretcsalád: a tartalom a(z) PEERING_CODE_ENTRY_MODE értékétől függ'
+  pt: 'Família de tramas que partilham este identificador: o conteúdo depende de PEERING_CODE_ENTRY_MODE'
+periodicity: ['trigger']
+senders: ['EMF', 'ICSV']
+receivers: ['RAD']
+isotp:
+  flow_control_id: 0x263
+
+signals:
+  PEERING_CODE_ENTRY_MODE:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Peering code entry mode.'
+      fr: 'Mode de saisie du code d''appairage.'
+      es: 'Modo de introducción del código de emparejamiento.'
+      de: 'Eingabemodus des Kopplungscodes.'
+      it: 'Modalità di inserimento del codice di associazione.'
+      pl: 'Tryb wprowadzania kodu parowania.'
+      ru: 'Режим ввода кода сопряжения.'
+      zh: '配对代码输入模式。'
+      hu: 'A párosítási kód megadási módja.'
+      pt: 'Modo de introdução do código de emparelhamento.'
+    type: 'enum'
+    mux_selector: true
+    values:
+      0x00:
+        en: 'Phone call'
+        fr: 'Communication téléphonique'
+        es: 'Llamada telefónica'
+        de: 'Telefongespräch'
+        it: 'Chiamata telefonica'
+        pl: 'Rozmowa telefoniczna'
+        ru: 'Телефонный разговор'
+        zh: '电话通话'
+        hu: 'Telefonhívás'
+        pt: 'Chamada telefónica'
+      0x01:
+        en: 'Phone directory'
+        fr: 'Répertoire téléphonique'
+        es: 'Directorio telefónico'
+        de: 'Telefonverzeichnis'
+        it: 'Rubrica telefonica'
+        pl: 'Książka telefoniczna'
+        ru: 'Телефонная книга'
+        zh: '电话簿'
+        hu: 'Telefonkönyv'
+        pt: 'Lista telefónica'
+      0x02:
+        en: 'Wireless device pairing'
+        fr: 'Appairage d''appareil sans fil'
+        es: 'Emparejamiento de dispositivo inalámbrico'
+        de: 'Kopplung eines drahtlosen Geräts'
+        it: 'Associazione dispositivo wireless'
+        pl: 'Parowanie urządzenia bezprzewodowego'
+        ru: 'Сопряжение беспроводного устройства'
+        zh: '无线设备配对'
+        hu: 'Vezeték nélküli eszköz párosítása'
+        pt: 'Emparelhamento de dispositivo sem fios'
+      0x03:
+        en: 'Telephony settings'
+        fr: 'Configuration de la téléphonie'
+        es: 'Configuración de telefonía'
+        de: 'Telefonie-Einstellungen'
+        it: 'Impostazioni di telefonia'
+        pl: 'Ustawienia telefonii'
+        ru: 'Настройки телефонии'
+        zh: '电话功能设置'
+        hu: 'Telefónia beállítások'
+        pt: 'Definições de telefonia'
+
+  CURRENT_CALL_ACTION:
+    bits: '1.3-1.2'
+    comment:
+      en: 'Command to manage the state of the ongoing call (hang up, swap)'
+      fr: 'Commande de gestion de l''état de l''appel en cours (raccrocher, permuter)'
+      es: 'Comando para gestionar el estado de la llamada en curso (colgar, alternar)'
+      de: 'Befehl zur Steuerung des laufenden Anrufs (auflegen, wechseln)'
+      it: 'Comando per gestire lo stato della chiamata in corso (riagganciare, scambiare)'
+      pl: 'Polecenie zarządzania stanem trwającego połączenia (zakończ, przełącz)'
+      ru: 'Команда управления состоянием текущего вызова (завершить, переключить)'
+      zh: '管理当前通话状态的命令(挂断、切换)'
+      hu: 'A folyamatban lévő hívás állapotának kezelésére szolgáló parancs (lezárás, váltás)'
+      pt: 'Comando para gerir o estado da chamada em curso (desligar, alternar)'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Hang up the ongoing call'
+        fr: 'Raccrocher l''appel en cours'
+        es: 'Colgar la llamada en curso'
+        de: 'Laufenden Anruf beenden'
+        it: 'Riagganciare la chiamata in corso'
+        pl: 'Zakończ trwające połączenie'
+        ru: 'Завершить текущий вызов'
+        zh: '挂断当前通话'
+        hu: 'Folyamatban lévő hívás befejezése'
+        pt: 'Desligar a chamada em curso'
+      0x02:
+        en: 'Swap'
+        fr: 'Permuter'
+        es: 'Permutar'
+        de: 'Vertauschen'
+        it: 'Scambiare'
+        pl: 'Zamień'
+        ru: 'Поменять местами'
+        zh: '切换'
+        hu: 'Csere'
+        pt: 'Trocar'
+      0x03:
+        en: 'Swap hold/resume call'
+        fr: 'Permuter mise en attente / reprendre la communication'
+        es: 'Alternar retención/reanudar llamada'
+        de: 'Halten/Anruf fortsetzen umschalten'
+        it: 'Alterna attesa/ripristina chiamata'
+        pl: 'Przełącz wstrzymanie/wznów połączenie'
+        ru: 'Переключить удержание/возобновить вызов'
+        zh: '切换保持/恢复通话'
+        hu: 'Tartás/hívás folytatása váltás'
+        pt: 'Alternar retenção / retomar a chamada'
+
+  INBOUND_CALL_ACTION:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Command to answer an incoming call'
+      fr: 'Commande de réponse à un appel entrant'
+      es: 'Comando para responder a una llamada entrante'
+      de: 'Befehl zur Annahme eines eingehenden Anrufs'
+      it: 'Comando per rispondere a una chiamata in arrivo'
+      pl: 'Polecenie odebrania połączenia przychodzącego'
+      ru: 'Команда ответа на входящий вызов'
+      zh: '接听来电的命令'
+      hu: 'A bejövő hívás fogadására szolgáló parancs'
+      pt: 'Comando de resposta a uma chamada recebida'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Accept the incoming call'
+        fr: 'Accepter l''appel entrant'
+        es: 'Aceptar la llamada entrante'
+        de: 'Eingehenden Anruf annehmen'
+        it: 'Accetta la chiamata in arrivo'
+        pl: 'Odbierz połączenie przychodzące'
+        ru: 'Принять входящий вызов'
+        zh: '接听来电'
+        hu: 'Bejövő hívás fogadása'
+        pt: 'Aceitar a chamada recebida'
+      0x02:
+        en: 'Reject the incoming call'
+        fr: 'Refuser l''appel entrant'
+        es: 'Rechazar la llamada entrante'
+        de: 'Eingehenden Anruf ablehnen'
+        it: 'Rifiuta la chiamata in arrivo'
+        pl: 'Odrzuć połączenie przychodzące'
+        ru: 'Отклонить входящий вызов'
+        zh: '拒接来电'
+        hu: 'Bejövő hívás elutasítása'
+        pt: 'Rejeitar a chamada recebida'
+      0x03:
+        en: 'Put on hold'
+        fr: 'Mettre en attente'
+        es: 'Poner en espera'
+        de: 'In die Warteschleife legen'
+        it: 'Metti in attesa'
+        pl: 'Wstrzymaj połączenie'
+        ru: 'Поставить на удержание'
+        zh: '保持通话'
+        hu: 'Tartásba helyezés'
+        pt: 'Pôr em espera'
+
+  SECRET_MODE_ACTIVATION:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Request to activate secret (private) mode'
+      fr: 'Demande d''activation du mode secret (privé)'
+      es: 'Solicitud de activación del modo secreto (privado)'
+      de: 'Anforderung zur Aktivierung des geheimen (privaten) Modus'
+      it: 'Richiesta di attivazione della modalità segreta (privata)'
+      pl: 'Żądanie aktywacji trybu tajnego (prywatnego)'
+      ru: 'Запрос на активацию секретного (приватного) режима'
+      zh: '请求激活隐私(私密)模式'
+      hu: 'A titkos (privát) mód aktiválásának kérése'
+      pt: 'Pedido de ativação do modo secreto (privado)'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Activate private mode'
+        fr: 'Activer le mode secret'
+        es: 'Activar el modo privado'
+        de: 'Privatmodus aktivieren'
+        it: 'Attiva la modalità privata'
+        pl: 'Aktywuj tryb prywatny'
+        ru: 'Активировать приватный режим'
+        zh: '激活隐私模式'
+        hu: 'Privát mód aktiválása'
+        pt: 'Ativar o modo privado'
+      0x02:
+        en: 'Deactivate private mode'
+        fr: 'Désactiver le mode secret'
+        es: 'Desactivar el modo privado'
+        de: 'Privatmodus deaktivieren'
+        it: 'Disattiva la modalità privata'
+        pl: 'Wyłącz tryb prywatny'
+        ru: 'Отключить приватный режим'
+        zh: '停用隐私模式'
+        hu: 'Privát mód kikapcsolása'
+        pt: 'Desativar o modo privado'
+      0x03:
+        unused: true
+
+  COMBINED_MODE_REQUEST:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Combined mode request.'
+      fr: 'Demande de mode combiné.'
+      es: 'Solicitud de modo combinado.'
+      de: 'Anforderung des Kombimodus.'
+      it: 'Richiesta di modalità combinata.'
+      pl: 'Żądanie trybu połączonego.'
+      ru: 'Запрос комбинированного режима.'
+      zh: '组合模式请求。'
+      hu: 'Kombinált üzemmód kérése.'
+      pt: 'Pedido de modo combinado.'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Activate the handset mode'
+        fr: 'Activer le mode combiné'
+        es: 'Activar el modo auricular'
+        de: 'Freisprechmodus aktivieren'
+        it: 'Attiva la modalità auricolare'
+        pl: 'Włącz tryb słuchawki'
+        ru: 'Активировать режим трубки'
+        zh: '启用听筒模式'
+        hu: 'Kihangosító mód bekapcsolása'
+        pt: 'Ativar o modo auscultador'
+      0x02:
+        en: 'Deactivate the handset mode'
+        fr: 'Désactiver le mode combiné'
+        es: 'Desactivar el modo auricular'
+        de: 'Freisprechmodus deaktivieren'
+        it: 'Disattiva la modalità auricolare'
+        pl: 'Wyłącz tryb słuchawki'
+        ru: 'Отключить режим трубки'
+        zh: '停用听筒模式'
+        hu: 'Kihangosító mód kikapcsolása'
+        pt: 'Desativar o modo auscultador'
+      0x03:
+        unused: true
+
+  NUMBER_TO_CALL_STATUS:
+    bits: '2.3'
+    comment:
+      en: 'Number to call.'
+      fr: 'Numéro à composer.'
+      es: 'Número a marcar.'
+      de: 'Zu wählende Nummer.'
+      it: 'Numero da comporre.'
+      pl: 'Numer do wybrania.'
+      ru: 'Набираемый номер.'
+      zh: '待拨打号码。'
+      hu: 'A tárcsázandó szám.'
+      pt: 'Número a marcar.'
+    type: 'bool'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'Not sent'
+        fr: 'Non envoyé'
+        es: 'No enviado'
+        de: 'Nicht gesendet'
+        it: 'Non inviato'
+        pl: 'Nie wysłano'
+        ru: 'Не отправлено'
+        zh: '未发送'
+        hu: 'Nincs elküldve'
+        pt: 'Não enviado'
+      0x01:
+        en: 'Sent'
+        fr: 'Envoyé'
+        es: 'Enviado'
+        de: 'Gesendet'
+        it: 'Inviato'
+        pl: 'Wysłano'
+        ru: 'Отправлено'
+        zh: '已发送'
+        hu: 'Elküldve'
+        pt: 'Enviado'
+
+  VOICEMAIL_ACCESS_REQUEST:
+    bits: '2.2'
+    comment:
+      en: 'Voicemail access request.'
+      fr: 'Demande d''accès à la boîte vocale.'
+      es: 'Solicitud de acceso al buzón de voz.'
+      de: 'Zugriffsanforderung auf die Mailbox.'
+      it: 'Richiesta di accesso alla segreteria telefonica.'
+      pl: 'Żądanie dostępu do poczty głosowej.'
+      ru: 'Запрос доступа к голосовой почте.'
+      zh: '语音信箱访问请求。'
+      hu: 'Hangposta-hozzáférési kérés.'
+      pt: 'Pedido de acesso ao correio de voz.'
+    type: 'bool'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nie żądano'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitado'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  DTMF_SEND_STATUS:
+    bits: '2.1'
+    comment:
+      en: 'DTMF tone sent.'
+      fr: 'Envoi DTMF.'
+      es: 'Envío de tono DTMF.'
+      de: 'DTMF-Ton gesendet.'
+      it: 'Invio del tono DTMF.'
+      pl: 'Wysłanie tonu DTMF.'
+      ru: 'Отправка тона DTMF.'
+      zh: 'DTMF音发送。'
+      hu: 'DTMF-hang elküldve.'
+      pt: 'Envio de tom DTMF.'
+    type: 'bool'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+    values:
+      0x00:
+        en: 'Not sent'
+        fr: 'Non envoyé'
+        es: 'No enviado'
+        de: 'Nicht gesendet'
+        it: 'Non inviato'
+        pl: 'Nie wysłano'
+        ru: 'Не отправлено'
+        zh: '未发送'
+        hu: 'Nincs elküldve'
+        pt: 'Não enviado'
+      0x01:
+        en: 'Sent'
+        fr: 'Envoyé'
+        es: 'Enviado'
+        de: 'Gesendet'
+        it: 'Inviato'
+        pl: 'Wysłano'
+        ru: 'Отправлено'
+        zh: '已发送'
+        hu: 'Elküldve'
+        pt: 'Enviado'
+
+  UNUSED_1_0:
+    bits: '2.0'
+    unused: true
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+
+  UNUSED_1_2:
+    bits: '2.1-2.0'
+    unused: true
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x02]
+
+  UNUSED_1_1:
+    bits: '1.1-1.0'
+    unused: true
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x01]
+
+  PHONE_NUMBER_ENTRY:
+    bits: '3.7-27.0'
+    comment:
+      en: 'Telephone number entry.'
+      fr: 'Saisie du numéro de téléphone.'
+      es: 'Introducción del número de teléfono.'
+      de: 'Eingabe der Telefonnummer.'
+      it: 'Inserimento del numero di telefono.'
+      pl: 'Wprowadzanie numeru telefonu.'
+      ru: 'Ввод номера телефона.'
+      zh: '电话号码输入。'
+      hu: 'Telefonszám megadása.'
+      pt: 'Introdução do número de telefone.'
+    type: 'str'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x00]
+
+  AUTO_HOLD_REQUEST:
+    bits: '1.3-1.2'
+    comment:
+      en: 'Automatic call-hold mode request.'
+      fr: 'Demande de mode mise en attente automatique.'
+      es: 'Solicitud de modo de espera automática.'
+      de: 'Anforderung des automatischen Halten-Modus.'
+      it: 'Richiesta di modalità di attesa automatica.'
+      pl: 'Żądanie trybu automatycznego zawieszania połączenia.'
+      ru: 'Запрос режима автоматического удержания вызова.'
+      zh: '自动保持模式请求。'
+      hu: 'Automatikus hívástartás mód kérése.'
+      pt: 'Pedido de modo de espera automática.'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x03]
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Aucune demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Activate automatic hold'
+        fr: 'Activer la mise en attente automatique'
+        es: 'Activar la retención automática'
+        de: 'Automatisches Halten aktivieren'
+        it: 'Attiva l''attesa automatica'
+        pl: 'Aktywuj automatyczne przytrzymanie'
+        ru: 'Активировать автоматическое удержание'
+        zh: '激活自动保持通话'
+        hu: 'Automatikus tartás aktiválása'
+        pt: 'Ativar retenção automática'
+      0x02:
+        en: 'Deactivate automatic hold'
+        fr: 'Désactiver la mise en attente automatique'
+        es: 'Desactivar la retención automática'
+        de: 'Automatisches Halten deaktivieren'
+        it: 'Disattiva l''attesa automatica'
+        pl: 'Wyłącz automatyczne przytrzymanie'
+        ru: 'Отключить автоматическое удержание'
+        zh: '停用自动保持通话'
+        hu: 'Automatikus tartás kikapcsolása'
+        pt: 'Desativar a retenção automática'
+      0x03:
+        unused: true
+
+  AUTO_ANSWER_REQUEST:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Automatic answer mode request.'
+      fr: 'Demande de mode répondeur automatique.'
+      es: 'Solicitud de modo de respuesta automática.'
+      de: 'Anforderung des automatischen Antwortmodus.'
+      it: 'Richiesta di modalità di risposta automatica.'
+      pl: 'Żądanie trybu automatycznego odbierania połączeń.'
+      ru: 'Запрос режима автоматического ответа.'
+      zh: '自动应答模式请求。'
+      hu: 'Automatikus hívásfogadás mód kérése.'
+      pt: 'Pedido de modo de atendimento automático.'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x03]
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Aucune demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Activate automatic answering'
+        fr: 'Activer le répondeur automatique'
+        es: 'Activar contestador automático'
+        de: 'Automatischen Anrufbeantworter aktivieren'
+        it: 'Attiva segreteria automatica'
+        pl: 'Aktywuj automatyczną sekretarkę'
+        ru: 'Активировать автоответчик'
+        zh: '激活自动应答'
+        hu: 'Automata üzenetrögzítő aktiválása'
+        pt: 'Ativar atendimento automático'
+      0x02:
+        en: 'Deactivate automatic answering'
+        fr: 'Désactiver le répondeur automatique'
+        es: 'Desactivar contestador automático'
+        de: 'Automatischen Anrufbeantworter deaktivieren'
+        it: 'Disattiva segreteria automatica'
+        pl: 'Wyłącz automatyczną sekretarkę'
+        ru: 'Отключить автоответчик'
+        zh: '停用自动应答'
+        hu: 'Automata üzenetrögzítő kikapcsolása'
+        pt: 'Desativar atendimento automático'
+      0x03:
+        unused: true
+
+  PHONE_MENU:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Phone menu.'
+      fr: 'Menu téléphone.'
+      es: 'Menú del teléfono.'
+      de: 'Telefonmenü.'
+      it: 'Menu telefono.'
+      pl: 'Menu telefonu.'
+      ru: 'Меню телефона.'
+      zh: '电话菜单。'
+      hu: 'Telefonmenü.'
+      pt: 'Menu do telefone.'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x02]
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'Connect phone'
+        fr: 'Connecter le téléphone'
+        es: 'Conectar teléfono'
+        de: 'Telefon verbinden'
+        it: 'Connetti telefono'
+        pl: 'Połącz telefon'
+        ru: 'Подключить телефон'
+        zh: '连接电话'
+        hu: 'Telefon csatlakoztatása'
+        pt: 'Ligar telefone'
+      0x02:
+        en: 'Disconnect phone'
+        fr: 'Déconnecter le téléphone'
+        es: 'Desconectar teléfono'
+        de: 'Telefon trennen'
+        it: 'Disconnetti telefono'
+        pl: 'Rozłącz telefon'
+        ru: 'Отключить телефон'
+        zh: '断开电话'
+        hu: 'Telefon leválasztása'
+        pt: 'Desligar o telefone'
+      0x03:
+        en: 'Connect audio'
+        fr: 'Connecter l''audio'
+        es: 'Conectar audio'
+        de: 'Audio verbinden'
+        it: 'Connetti audio'
+        pl: 'Połącz audio'
+        ru: 'Подключить аудио'
+        zh: '连接音频'
+        hu: 'Audio csatlakoztatása'
+        pt: 'Ligar áudio'
+      0x04:
+        en: 'Disconnect audio'
+        fr: 'Déconnecter l''audio'
+        es: 'Desconectar audio'
+        de: 'Audio trennen'
+        it: 'Disconnetti audio'
+        pl: 'Rozłącz audio'
+        ru: 'Отключить аудио'
+        zh: '断开音频'
+        hu: 'Audio leválasztása'
+        pt: 'Desligar áudio'
+      0x05:
+        en: 'Connect phone and audio'
+        fr: 'Connecter téléphone et audio'
+        es: 'Conectar teléfono y audio'
+        de: 'Telefon und Audio verbinden'
+        it: 'Connetti telefono e audio'
+        pl: 'Połącz telefon i audio'
+        ru: 'Подключить телефон и аудио'
+        zh: '连接电话与音频'
+        hu: 'Telefon és audio csatlakoztatása'
+        pt: 'Ligar telefone e áudio'
+      0x06:
+        en: 'Disconnect phone and audio'
+        fr: 'Déconnecter téléphone et audio'
+        es: 'Desconectar teléfono y audio'
+        de: 'Telefon und Audio trennen'
+        it: 'Disconnetti telefono e audio'
+        pl: 'Rozłącz telefon i audio'
+        ru: 'Отключить телефон и аудио'
+        zh: '断开电话与音频连接'
+        hu: 'Telefon és audio leválasztása'
+        pt: 'Desligar telefone e áudio'
+      0x07:
+        en: 'Remove pairing'
+        fr: 'Supprimer l''appairage'
+        es: 'Eliminar emparejamiento'
+        de: 'Kopplung entfernen'
+        it: 'Rimuovi associazione'
+        pl: 'Usuń parowanie'
+        ru: 'Удалить сопряжение'
+        zh: '移除配对'
+        hu: 'Párosítás eltávolítása'
+        pt: 'Remover emparelhamento'
+      0x08:
+        en: 'Return (cancel and close the list)'
+        fr: 'Retour (annuler et fermer la liste)'
+        es: 'Volver (cancelar y cerrar la lista)'
+        de: 'Zurück (abbrechen und Liste schließen)'
+        it: 'Indietro (annulla e chiudi l''elenco)'
+        pl: 'Powrót (anuluj i zamknij listę)'
+        ru: 'Назад (отмена и закрытие списка)'
+        zh: '返回(取消并关闭列表)'
+        hu: 'Vissza (mégse és a lista bezárása)'
+        pt: 'Voltar (cancelar e fechar a lista)'
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  BLUETOOTH_SCAN:
+    bits: '2.7'
+    comment:
+      en: 'Request to scan for Bluetooth devices'
+      fr: 'Demande de recherche de périphériques Bluetooth'
+      es: 'Solicitud de búsqueda de dispositivos Bluetooth'
+      de: 'Anforderung zur Suche nach Bluetooth-Geräten'
+      it: 'Richiesta di ricerca dei dispositivi Bluetooth'
+      pl: 'Żądanie wyszukiwania urządzeń Bluetooth'
+      ru: 'Запрос поиска устройств Bluetooth'
+      zh: '请求搜索蓝牙设备'
+      hu: 'Bluetooth-eszközök keresésének kérése'
+      pt: 'Pedido de procura de dispositivos Bluetooth'
+    type: 'bool'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x02]
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'Scan requested'
+        fr: 'Scan demandé'
+        es: 'Escaneo solicitado'
+        de: 'Scan angefordert'
+        it: 'Scansione richiesta'
+        pl: 'Zażądano skanowania'
+        ru: 'Запрошено сканирование'
+        zh: '已请求扫描'
+        hu: 'Pásztázás kérve'
+        pt: 'Procura pedida'
+
+  PAIRING_CODE_AVAILABILITY:
+    bits: '2.6'
+    comment:
+      en: 'Pairing code availability.'
+      fr: 'Disponibilité du code d''appairage.'
+      es: 'Disponibilidad del código de emparejamiento.'
+      de: 'Verfügbarkeit des Kopplungscodes.'
+      it: 'Disponibilità del codice di associazione.'
+      pl: 'Dostępność kodu parowania.'
+      ru: 'Доступность кода сопряжения.'
+      zh: '配对代码可用性。'
+      hu: 'A párosítási kód elérhetősége.'
+      pt: 'Disponibilidade do código de emparelhamento'
+    type: 'bool'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x02]
+    values:
+      0x00:
+        en: 'Not sent'
+        fr: 'Non envoyé'
+        es: 'No enviado'
+        de: 'Nicht gesendet'
+        it: 'Non inviato'
+        pl: 'Nie wysłano'
+        ru: 'Не отправлено'
+        zh: '未发送'
+        hu: 'Nincs elküldve'
+        pt: 'Não enviado'
+      0x01:
+        en: 'Sent'
+        fr: 'Envoyé'
+        es: 'Enviado'
+        de: 'Gesendet'
+        it: 'Inviato'
+        pl: 'Wysłano'
+        ru: 'Отправлено'
+        zh: '已发送'
+        hu: 'Elküldve'
+        pt: 'Enviado'
+
+  PAIRING_REQUEST_ACCEPTANCE:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Acceptance of the current pairing request.'
+      fr: 'Acceptation de la demande de jumelage en cours.'
+      es: 'Aceptación de la solicitud de emparejamiento en curso.'
+      de: 'Annahme der laufenden Kopplungsanforderung.'
+      it: 'Accettazione della richiesta di associazione in corso.'
+      pl: 'Akceptacja bieżącego żądania parowania.'
+      ru: 'Принятие текущего запроса на сопряжение.'
+      zh: '接受当前配对请求。'
+      hu: 'A folyamatban lévő párosítási kérés elfogadása.'
+      pt: 'Aceitação do pedido de emparelhamento em curso.'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x02]
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x02:
+        en: 'Yes'
+        fr: 'oui'
+        es: 'sí'
+        de: 'ja'
+        it: 'sì'
+        pl: 'tak'
+        ru: 'да'
+        zh: '是'
+        hu: 'igen'
+        pt: 'Sim'
+      0x03:
+        unused: true
+
+  OVERWRITE_DATA:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Request to overwrite a previously paired phone'
+      fr: 'Demande d''écrasement d''un téléphone précédemment jumelé'
+      es: 'Solicitud de sobrescritura de un teléfono previamente emparejado'
+      de: 'Anforderung zum Überschreiben eines zuvor gekoppelten Telefons'
+      it: 'Richiesta di sovrascrittura di un telefono precedentemente associato'
+      pl: 'Żądanie nadpisania wcześniej sparowanego telefonu'
+      ru: 'Запрос на перезапись ранее сопряжённого телефона'
+      zh: '请求覆盖先前配对的电话'
+      hu: 'Egy korábban párosított telefon felülírásának kérése'
+      pt: 'Pedido de substituição de um telefone anteriormente emparelhado'
+    type: 'enum'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x02]
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Aucune action'
+        es: 'Ninguna acción'
+        de: 'Keine Aktion'
+        it: 'Nessuna azione'
+        pl: 'Brak działania'
+        ru: 'Нет действия'
+        zh: '无操作'
+        hu: 'Nincs művelet'
+        pt: 'Nenhuma ação'
+      0x01:
+        en: 'No'
+        fr: 'Non'
+        es: 'No'
+        de: 'Nein'
+        it: 'No'
+        pl: 'Nie'
+        ru: 'Нет'
+        zh: '否'
+        hu: 'Nem'
+        pt: 'Não'
+      0x02:
+        en: 'Yes'
+        fr: 'oui'
+        es: 'sí'
+        de: 'ja'
+        it: 'sì'
+        pl: 'tak'
+        ru: 'да'
+        zh: '是'
+        hu: 'igen'
+        pt: 'Sim'
+      0x03:
+        unused: true
+
+  PAIRING_CODE_INFO:
+    bits: '3.7-27.0'
+    comment:
+      en: 'Pairing code.'
+      fr: 'Code d''appairage.'
+      es: 'Código de emparejamiento.'
+      de: 'Kopplungscode.'
+      it: 'Codice di associazione.'
+      pl: 'Kod parowania.'
+      ru: 'Код сопряжения.'
+      zh: '配对代码。'
+      hu: 'Párosítási kód.'
+      pt: 'Código de emparelhamento.'
+    type: 'str'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x02]
+
+  IMPORT_FULL_DELETE_REQUEST:
+    bits: '1.3'
+    comment:
+      en: 'Full deletion of the imported directory requested.'
+      fr: 'Suppression totale de l''import demandée.'
+      es: 'Eliminación total de la importación solicitada.'
+      de: 'Vollständige Löschung des Imports angefordert.'
+      it: 'Eliminazione totale dell''importazione richiesta.'
+      pl: 'Żądanie całkowitego usunięcia importu.'
+      ru: 'Запрошено полное удаление импорта.'
+      zh: '请求完全删除导入内容。'
+      hu: 'A teljes importált tartalom törlésének kérése.'
+      pt: 'Eliminação total da importação pedida'
+    type: 'bool'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x01]
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nie żądano'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitado'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  IMPORT_SINGLE_DELETE_REQUEST:
+    bits: '1.2'
+    comment:
+      en: 'Single-entry deletion of the imported directory requested.'
+      fr: 'Suppression unitaire de l''import demandée.'
+      es: 'Eliminación individual de la importación solicitada.'
+      de: 'Löschung eines einzelnen Import-Eintrags angefordert.'
+      it: 'Eliminazione singola dell''importazione richiesta.'
+      pl: 'Żądanie usunięcia pojedynczego wpisu importu.'
+      ru: 'Запрошено удаление отдельной записи импорта.'
+      zh: '请求删除单条导入记录。'
+      hu: 'Egyetlen importált bejegyzés törlésének kérése.'
+      pt: 'Eliminação individual da importação pedida'
+    type: 'bool'
+    mux:
+      selector: 'PEERING_CODE_ENTRY_MODE'
+      values: [0x01]
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nie żądano'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitado'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'

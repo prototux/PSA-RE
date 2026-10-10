@@ -1,0 +1,538 @@
+id: 0x513
+name: 'ELECTRIC_PARKING_BRAKE_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Electric (secondary) parking brake data: red warning-lamp alert, fault, button state, brake state, display and EasyMove function wake-up.'
+  fr: 'Données du frein de parking électrique (secondaire) : alerte voyant rouge, défaut, état du bouton, état du frein, réveil affichage et fonction EasyMove.'
+  es: 'Datos del freno de estacionamiento eléctrico (secundario): alerta de testigo rojo, fallo, estado del botón, estado del freno, activación de pantalla y función EasyMove.'
+  de: 'Daten der elektrischen (sekundären) Feststellbremse: Warnung der roten Kontrollleuchte, Fehler, Tasterzustand, Bremszustand, Displayweckung und EasyMove-Funktion.'
+  it: 'Dati del freno di stazionamento elettrico (secondario): allarme spia rossa, guasto, stato pulsante, stato freno, risveglio display e funzione EasyMove.'
+  pl: 'Dane elektrycznego (wtórnego) hamulca postojowego: alarm czerwonej kontrolki, usterka, stan przycisku, stan hamulca, wybudzenie wyświetlacza i funkcja EasyMove.'
+  ru: 'Данные электрического (вторичного) стояночного тормоза: сигнал красного индикатора, неисправность, состояние кнопки, состояние тормоза, пробуждение дисплея и функция EasyMove.'
+  zh: '电子(辅助)驻车制动数据:红色警示灯警报、故障、按钮状态、制动状态、显示屏唤醒和EasyMove功能。'
+  hu: 'Az elektromos (másodlagos) rögzítőfék adatai: piros jelzőlámpa riasztás, hiba, gombállapot, fékállapot, kijelző-ébresztés és EasyMove funkció.'
+  pt: 'Dados do travão de estacionamento elétrico (secundário): alerta da luz avisadora vermelha, avaria, estado do botão, estado do travão, apresentação e ativação da função EasyMove.'
+periodicity: ['50ms']
+senders: ['FSE']
+receivers:
+  - 'ABS'
+  - 'CAAR'
+  - 'BSI'
+  - 'HCU1'
+  - 'ACC'
+  - 'AMVAR'
+  - 'AR2S'
+  - 'BVA'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'CMM'
+  - 'CSS'
+  - 'DSG'
+  - 'DIAG_TOOL'
+  - 'BCP'
+  - 'SBW'
+  - 'SCDT'
+  - 'BHI'
+  - 'TBMU'
+  - 'DAE'
+
+signals:
+  EPB_FAULT:
+    bits: '1.7'
+    comment:
+      en: 'EPB (electric parking brake) malfunction'
+      fr: 'Défaillance du frein de stationnement électrique (EPB)'
+      es: 'Fallo del freno de estacionamiento eléctrico (EPB)'
+      de: 'Störung der elektrischen Feststellbremse (EPB)'
+      it: 'Malfunzionamento del freno di stazionamento elettrico (EPB)'
+      pl: 'Usterka elektrycznego hamulca postojowego (EPB)'
+      ru: 'Неисправность электрического стояночного тормоза (EPB)'
+      zh: '电子驻车制动(EPB)故障'
+      hu: 'Az elektromos rögzítőfék (EPB) hibája'
+      pt: 'Falha do travão de estacionamento elétrico (EPB)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'EPB faulty'
+        fr: 'EPB en défaut'
+        es: 'EPB con fallo'
+        de: 'EPB fehlerhaft'
+        it: 'EPB in guasto'
+        pl: 'Usterka EPB'
+        ru: 'Неисправность EPB'
+        zh: 'EPB故障'
+        hu: 'EPB hibás'
+        pt: 'EPB avariado'
+
+  UNUSED_1:
+    bits: '1.6'
+    unused: true
+
+  EPB_SWITCH_STATE:
+    bits: '1.5-1.3'
+    comment:
+      en: 'EPB switch state'
+      fr: 'État du bouton du frein de stationnement électrique (EPB)'
+      es: 'Estado del botón del freno de estacionamiento eléctrico (EPB)'
+      de: 'Zustand des Tasters der elektrischen Feststellbremse (EPB)'
+      it: 'Stato del pulsante del freno di stazionamento elettrico (EPB)'
+      pl: 'Stan przycisku elektrycznego hamulca postojowego (EPB)'
+      ru: 'Состояние кнопки электрического стояночного тормоза (EPB)'
+      zh: '电子驻车制动(EPB)按钮状态'
+      hu: 'Az elektromos rögzítőfék kapcsolójának állapota'
+      pt: 'Estado do botão do travão de estacionamento elétrico (EPB)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Button released'
+        fr: 'Bouton relâché'
+        es: 'Botón soltado'
+        de: 'Taste losgelassen'
+        it: 'Pulsante rilasciato'
+        pl: 'Zwolniony przycisk'
+        ru: 'Кнопка отпущена'
+        zh: '按钮已释放'
+        hu: 'Gomb elengedve'
+        pt: 'Botão libertado'
+      0x01:
+        en: 'Switch pressed'
+        fr: 'Bouton poussé'
+        es: 'Botón pulsado'
+        de: 'Taster gedrückt'
+        it: 'Pulsante premuto'
+        pl: 'Wciśnięty przycisk'
+        ru: 'Кнопка нажата'
+        zh: '按钮已按下'
+        hu: 'A gomb megnyomva'
+        pt: 'Botão premido'
+      0x02:
+        en: 'Switch faulty and pressed'
+        fr: 'Bouton défaillant et enfoncé'
+        es: 'Botón defectuoso y pulsado'
+        de: 'Taster defekt und gedrückt'
+        it: 'Pulsante guasto e premuto'
+        pl: 'Przycisk uszkodzony i wciśnięty'
+        ru: 'Кнопка неисправна и нажата'
+        zh: '按钮故障且被按下'
+        hu: 'A gomb hibás és lenyomva van'
+        pt: 'Botão avariado e premido'
+      0x03:
+        en: 'Switch faulty and released'
+        fr: 'Bouton défaillant et relâché'
+        es: 'Botón defectuoso y liberado'
+        de: 'Taste defekt und losgelassen'
+        it: 'Pulsante guasto e rilasciato'
+        pl: 'Przycisk uszkodzony i zwolniony'
+        ru: 'Кнопка неисправна и отпущена'
+        zh: '按钮故障且已松开'
+        hu: 'Gomb hibás és elengedve'
+        pt: 'Botão avariado e libertado'
+      0x04:
+        en: 'Switch pulled'
+        fr: 'Bouton tiré'
+        es: 'Botón tirado'
+        de: 'Taste gezogen'
+        it: 'Pulsante tirato'
+        pl: 'Przycisk wyciągnięty'
+        ru: 'Кнопка вытянута'
+        zh: '按钮拉出'
+        hu: 'Gomb kihúzva'
+        pt: 'Comutador puxado'
+      0x05:
+        en: 'Switch faulty and pulled'
+        fr: 'Bouton défaillant et tiré'
+        es: 'Botón defectuoso y tirado'
+        de: 'Taster defekt und gezogen'
+        it: 'Pulsante guasto e tirato'
+        pl: 'Przycisk uszkodzony i pociągnięty'
+        ru: 'Кнопка неисправна и вытянута'
+        zh: '按钮故障且被拉起'
+        hu: 'A gomb hibás és meghúzva'
+        pt: 'Botão avariado e puxado'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  EPB_EASY_MOVE_WAKEUP_REQUEST:
+    bits: '1.2'
+    comment:
+      en: 'Partial network wake-up request for the EPB Easy Move function need'
+      fr: 'Demande de réveil réseau partiel pour le besoin de la fonction Easy Move de l''EPB'
+      es: 'Solicitud de activación de red parcial para la necesidad de la función Easy Move del EPB'
+      de: 'Teilweise Netzwerk-Aufwachanforderung für den Bedarf der Easy-Move-Funktion der EPB'
+      it: 'Richiesta di risveglio rete parziale per l''esigenza della funzione Easy Move dell''EPB'
+      pl: 'Żądanie częściowego wybudzenia sieci na potrzeby funkcji Easy Move EPB'
+      ru: 'Частичный запрос пробуждения сети для потребности функции Easy Move EPB'
+      zh: 'EPB Easy Move功能需求的部分网络唤醒请求'
+      hu: 'Részleges hálózati ébresztési kérés az EPB Easy Move funkciójának igényéhez'
+      pt: 'Pedido de ativação de rede parcial para a necessidade da função Easy Move do EPB'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No partial wake-up request'
+        fr: 'Pas de demande de réveil partiel'
+        es: 'Sin solicitud de activación parcial'
+        de: 'Keine Anforderung eines Teilaufwachens'
+        it: 'Nessuna richiesta di risveglio parziale'
+        pl: 'Brak żądania częściowego wybudzenia'
+        ru: 'Нет запроса частичного пробуждения'
+        zh: '无部分唤醒请求'
+        hu: 'Nincs részleges ébresztési kérés'
+        pt: 'Sem pedido de ativação parcial'
+      0x01:
+        en: 'Partial wake-up requested'
+        fr: 'Réveil partiel demandé'
+        es: 'Activación parcial solicitada'
+        de: 'Teilaufwachen angefordert'
+        it: 'Riattivazione parziale richiesta'
+        pl: 'Żądanie częściowego wybudzenia'
+        ru: 'Запрошено частичное пробуждение'
+        zh: '请求部分唤醒'
+        hu: 'Részleges ébresztés kérve'
+        pt: 'Despertar parcial pedido'
+
+  EPB_HIGH_STATE_WAKEUP_REQUEST:
+    bits: '1.1'
+    comment:
+      en: 'Partial network wake-up request for the EPB high-state display need'
+      fr: 'Demande de réveil réseau partiel pour le besoin d''état haut d''affichage de l''EPB'
+      es: 'Solicitud de activación de red parcial para la necesidad de estado alto de visualización del EPB'
+      de: 'Teilweise Netzwerk-Aufwachanforderung für den High-State-Anzeigebedarf der EPB'
+      it: 'Richiesta di risveglio rete parziale per l''esigenza di stato alto di visualizzazione dell''EPB'
+      pl: 'Żądanie częściowego wybudzenia sieci na potrzeby stanu wysokiego wyświetlania EPB'
+      ru: 'Частичный запрос пробуждения сети для потребности в высоком состоянии отображения EPB'
+      zh: 'EPB高状态显示需求的部分网络唤醒请求'
+      hu: 'Részleges hálózati ébresztési kérés az EPB magas állapotú kijelzési igényéhez'
+      pt: 'Pedido de ativação de rede parcial para a necessidade de estado alto de visualização do EPB'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No partial wake-up request'
+        fr: 'Pas de demande de réveil partiel'
+        es: 'Sin solicitud de activación parcial'
+        de: 'Keine Anforderung eines Teilaufwachens'
+        it: 'Nessuna richiesta di risveglio parziale'
+        pl: 'Brak żądania częściowego wybudzenia'
+        ru: 'Нет запроса частичного пробуждения'
+        zh: '无部分唤醒请求'
+        hu: 'Nincs részleges ébresztési kérés'
+        pt: 'Sem pedido de ativação parcial'
+      0x01:
+        en: 'Partial wake-up requested'
+        fr: 'Réveil partiel demandé'
+        es: 'Activación parcial solicitada'
+        de: 'Teilaufwachen angefordert'
+        it: 'Riattivazione parziale richiesta'
+        pl: 'Żądanie częściowego wybudzenia'
+        ru: 'Запрошено частичное пробуждение'
+        zh: '请求部分唤醒'
+        hu: 'Részleges ébresztés kérve'
+        pt: 'Despertar parcial pedido'
+
+  EPB_DISPLAY_WAKEUP_REQUEST:
+    bits: '1.0'
+    comment:
+      en: 'Network wake-up request (RCD) for EPB display needs'
+      fr: 'Demande de réveil réseau (RCD) pour les besoins d''affichage de l''EPB'
+      es: 'Solicitud de activación de red (RCD) para las necesidades de visualización del EPB'
+      de: 'Netzwerk-Aufwachanforderung (RCD) für die Anzeigebedürfnisse der EPB'
+      it: 'Richiesta di risveglio rete (RCD) per le esigenze di visualizzazione dell''EPB'
+      pl: 'Żądanie wybudzenia sieci (RCD) na potrzeby wyświetlania EPB'
+      ru: 'Запрос пробуждения сети (RCD) для нужд отображения EPB'
+      zh: 'EPB显示需求的网络唤醒请求(RCD)'
+      hu: 'Hálózati ébresztési kérés (RCD) az EPB kijelzési igényeihez'
+      pt: 'Pedido de ativação de rede (RCD) para as necessidades de visualização do EPB'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Wake-up not requested'
+        fr: 'Pas de demande de réveil'
+        es: 'Sin solicitud de activación'
+        de: 'Keine Weckanforderung'
+        it: 'Nessuna richiesta di risveglio'
+        pl: 'Brak żądania wybudzenia'
+        ru: 'Пробуждение не запрошено'
+        zh: '未请求唤醒'
+        hu: 'Ébresztés nincs kérve'
+        pt: 'Sem pedido de ativação'
+      0x01:
+        en: 'Wake-up requested'
+        fr: 'Demande de réveil'
+        es: 'Solicitud de despertar'
+        de: 'Weckanforderung'
+        it: 'Richiesta di risveglio'
+        pl: 'Żądanie wybudzenia'
+        ru: 'Запрошено пробуждение'
+        zh: '已请求唤醒'
+        hu: 'Ébresztés kérve'
+        pt: 'Pedido de despertar'
+
+  EPB_STATUS:
+    bits: '2.7-2.5'
+    comment:
+      en: 'Electric parking brake (EPB) status'
+      fr: 'État du frein de stationnement électrique (EPB)'
+      es: 'Estado del freno de estacionamiento eléctrico (EPB)'
+      de: 'Status der elektrischen Feststellbremse (EPB)'
+      it: 'Stato del freno di stazionamento elettrico (EPB)'
+      pl: 'Stan elektrycznego hamulca postojowego (EPB)'
+      ru: 'Состояние электрического стояночного тормоза (EPB)'
+      zh: '电子驻车制动(EPB)状态'
+      hu: 'Az elektromos rögzítőfék (EPB) állapota'
+      pt: 'Estado do travão de estacionamento elétrico (EPB)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Parking brake released'
+        fr: 'Frein de stationnement desserré'
+        es: 'Freno de estacionamiento liberado'
+        de: 'Feststellbremse gelöst'
+        it: 'Freno di stazionamento rilasciato'
+        pl: 'Hamulec postojowy zwolniony'
+        ru: 'Стояночный тормоз отпущен'
+        zh: '驻车制动已释放'
+        hu: 'Rögzítőfék kiengedve'
+        pt: 'Travão de estacionamento libertado'
+      0x01:
+        en: 'Parking brake applied'
+        fr: 'Frein de stationnement serré'
+        es: 'Freno de estacionamiento aplicado'
+        de: 'Feststellbremse angezogen'
+        it: 'Freno di stazionamento inserito'
+        pl: 'Zaciągnięty hamulec postojowy'
+        ru: 'Стояночный тормоз затянут'
+        zh: '驻车制动已拉起'
+        hu: 'A rögzítőfék behúzva'
+        pt: 'Travão de estacionamento aplicado'
+      0x02:
+        en: 'EPB static locking in progress'
+        fr: 'Frein de stationnement en cours de serrage statique'
+        es: 'Freno de estacionamiento en proceso de apriete estático'
+        de: 'Feststellbremse wird statisch angezogen'
+        it: 'Freno di stazionamento in fase di serraggio statico'
+        pl: 'Hamulec postojowy w trakcie statycznego zaciskania'
+        ru: 'Стояночный тормоз выполняет статическое затягивание'
+        zh: '驻车制动正在进行静态拉紧'
+        hu: 'A rögzítőfék statikus behúzása folyamatban'
+        pt: 'Travão de estacionamento em processo de aperto estático'
+      0x03:
+        en: 'Parking brake in static release'
+        fr: 'Frein de stationnement en cours de desserrage statique'
+        es: 'Freno de estacionamiento en liberación estática en curso'
+        de: 'Feststellbremse im statischen Lösevorgang'
+        it: 'Freno di stazionamento in fase di rilascio statico'
+        pl: 'Hamulec postojowy w trakcie statycznego zwalniania'
+        ru: 'Стояночный тормоз в процессе статического растормаживания'
+        zh: '驻车制动静态释放中'
+        hu: 'A rögzítőfék statikus felengedés alatt'
+        pt: 'Travão de estacionamento em desaperto estático em curso'
+      0x04:
+        en: 'Dynamic braking in progress'
+        fr: 'Freinage dynamique en cours'
+        es: 'Frenado dinámico en curso'
+        de: 'Dynamisches Bremsen läuft'
+        it: 'Frenata dinamica in corso'
+        pl: 'Trwa hamowanie dynamiczne'
+        ru: 'Динамическое торможение выполняется'
+        zh: '动态制动进行中'
+        hu: 'Dinamikus fékezés folyamatban'
+        pt: 'Travagem dinâmica em curso'
+      0x05:
+        en: 'Parking brake applied at maximum force (long press on EPB button) (default when fault)'
+        fr: 'Frein de stationnement serré à l''effort maximum (appui long sur le bouton FSE) (imposé par défaut)'
+        es: 'Freno de estacionamiento aplicado con fuerza máxima (pulsación larga del botón EPB) (impuesto por defecto)'
+        de: 'Feststellbremse mit maximaler Kraft angezogen (langer Tastendruck EPB) (Standardvorgabe bei Fehler)'
+        it: 'Freno di stazionamento serrato alla forza massima (pressione lunga sul pulsante EPB) (impostato di default)'
+        pl: 'Hamulec postojowy zaciśnięty z maksymalną siłą (długie naciśnięcie przycisku EPB) (wymuszone domyślnie)'
+        ru: 'Стояночный тормоз затянут с максимальным усилием (долгое нажатие кнопки EPB) (по умолчанию при неисправности)'
+        zh: '驻车制动以最大力矩夹紧（长按EPB按钮）（故障时默认设置）'
+        hu: 'A rögzítőfék maximális erővel meghúzva (hosszú EPB gombnyomás) (hiba esetén alapértelmezett)'
+        pt: 'Travão de estacionamento aplicado com força máxima (pressão longa no botão EPB) (imposto por defeito)'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Undefined state'
+        fr: 'État indéterminé'
+        es: 'Estado indeterminado'
+        de: 'Unbestimmter Zustand'
+        it: 'Stato indeterminato'
+        pl: 'Stan nieokreślony'
+        ru: 'Неопределённое состояние'
+        zh: '未确定状态'
+        hu: 'Meghatározatlan állapot'
+        pt: 'Estado indeterminado'
+
+  EPB_RED_LAMP_ALERT:
+    bits: '2.3'
+    comment:
+      en: 'EPB red warning lamp alert'
+      fr: 'Alerte du témoin rouge du frein de stationnement électrique (EPB)'
+      es: 'Alerta del testigo rojo del freno de estacionamiento eléctrico (EPB)'
+      de: 'Warnung der roten Kontrollleuchte der elektrischen Feststellbremse (EPB)'
+      it: 'Avviso della spia rossa del freno di stazionamento elettrico (EPB)'
+      pl: 'Ostrzeżenie czerwonej kontrolki elektrycznego hamulca postojowego (EPB)'
+      ru: 'Предупреждение красной лампы электрического стояночного тормоза (EPB)'
+      zh: '电子驻车制动(EPB)红色警告灯警报'
+      hu: 'Az elektromos rögzítőfék (EPB) piros jelzőlámpájának riasztása'
+      pt: 'Alerta da luz avisadora vermelha do travão de estacionamento elétrico (EPB)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
+
+  UNUSED_2:
+    bits: '2.2-2.1'
+    unused: true
+
+  UNUSED_3:
+    bits: '3.7-3.0'
+    unused: true
+
+  DRAG_REDUCTION_REQUEST:
+    bits: '4.5-4.4'
+    comment:
+      en: 'Drag reduction request'
+      fr: 'Demande de réduction de traînée'
+      es: 'Solicitud de reducción de resistencia aerodinámica'
+      de: 'Anforderung zur Luftwiderstandsreduzierung'
+      it: 'Richiesta di riduzione della resistenza aerodinamica'
+      pl: 'Żądanie redukcji oporu aerodynamicznego'
+      ru: 'Запрос снижения аэродинамического сопротивления'
+      zh: '阻力降低请求'
+      hu: 'Légellenállás-csökkentési kérés'
+      pt: 'Pedido de redução da resistência aerodinâmica'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Drag reduction requested'
+        fr: 'Demande de réduction de traînée'
+        es: 'Solicitud de reducción de resistencia aerodinámica'
+        de: 'Anforderung zur Luftwiderstandsreduzierung'
+        it: 'Richiesta di riduzione della resistenza aerodinamica'
+        pl: 'Żądanie zmniejszenia oporu aerodynamicznego'
+        ru: 'Запрос снижения аэродинамического сопротивления'
+        zh: '减阻请求'
+        hu: 'Légellenállás-csökkentési kérés'
+        pt: 'Pedido de redução de resistência aerodinâmica'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  EPB_CABLE_APPLIED_FORCE:
+    bits: '6.7-7.0'
+    comment:
+      en: 'Force applied to the EPB cable (daN)'
+      fr: 'Effort appliqué au câble du frein de stationnement électrique (daN)'
+      es: 'Fuerza aplicada al cable del freno de estacionamiento eléctrico (daN)'
+      de: 'Auf das Kabel der elektrischen Feststellbremse ausgeübte Kraft (daN)'
+      it: 'Forza applicata al cavo del freno di stazionamento elettrico (daN)'
+      pl: 'Siła przyłożona do linki elektrycznego hamulca postojowego (daN)'
+      ru: 'Усилие, прикладываемое к тросу электрического стояночного тормоза (даН)'
+      zh: '施加于电子驻车制动缆索的力(daN)'
+      hu: 'Az elektromos rögzítőfék bowdenkábelére kifejtett erő (daN)'
+      pt: 'Força aplicada ao cabo do travão de estacionamento elétrico (daN)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 400
+    units: 'daN'
+    invalid: 0xFFFF
+    default: 0x00
+
+  PROCESS_COUNTER_4B_EPB:
+    bits: '8.7-8.4'
+    comment:
+      en: 'Free-running counter (0 to 15) confirming that a new calculation was performed'
+      fr: 'Compteur libre (0 à 15) confirmant qu''un nouveau calcul a été effectué'
+      es: 'Contador libre (0 a 15) que confirma que se ha realizado un nuevo cálculo'
+      de: 'Freilaufender Zähler (0 bis 15), der bestätigt, dass eine neue Berechnung durchgeführt wurde'
+      it: 'Contatore libero (da 0 a 15) che conferma che è stato eseguito un nuovo calcolo'
+      pl: 'Licznik swobodny (0–15) potwierdzający wykonanie nowego obliczenia'
+      ru: 'Свободно работающий счётчик (0–15), подтверждающий выполнение нового расчёта'
+      zh: '确认已进行新一次计算的自由计数器(0至15)'
+      hu: 'Szabadon futó számláló (0–15), amely megerősíti, hogy új számítás történt'
+      pt: 'Contador livre (0 a 15) que confirma que foi realizado um novo cálculo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 15
+    default: 0x00
+
+  CHECKSUM_FRAME_EPB:
+    bits: '8.3-8.0'
+    comment:
+      en: 'EPB data frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame de données EPB'
+      es: 'Suma de comprobación (checksum) de la trama de datos EPB'
+      de: 'Prüfsumme (Checksum) des EPB-Datenrahmens'
+      it: 'Checksum del frame dati EPB'
+      pl: 'Suma kontrolna (checksum) ramki danych EPB'
+      ru: 'Контрольная сумма кадра данных EPB'
+      zh: 'EPB数据帧校验和'
+      hu: 'Az EPB adatkeret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama de dados EPB'
+    type: 'uint'

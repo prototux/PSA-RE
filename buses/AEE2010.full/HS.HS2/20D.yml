@@ -1,0 +1,329 @@
+id: 0x20D
+name: 'ESC_EXTERNAL_TARGET_REQUEST_2'
+type: 'can'
+length: 8
+comment:
+  en: 'External stability control target request (e.g. from a driving assistance system), with frame counter and checksum.'
+  fr: 'Requête externe de consigne pour le contrôle de stabilité (ex. aide à la conduite), avec compteur de trame et somme de contrôle.'
+  es: 'Solicitud externa de consigna para el control de estabilidad (p. ej. desde un sistema de asistencia a la conducción), con contador de trama y suma de comprobación.'
+  de: 'Externe Sollwertanforderung für die Stabilitätskontrolle (z. B. von einem Fahrassistenzsystem), mit Rahmenzähler und Prüfsumme.'
+  it: 'Richiesta esterna di setpoint per il controllo di stabilità (ad es. da un sistema di assistenza alla guida), con contatore di trama e checksum.'
+  pl: 'Zewnętrzne żądanie wartości zadanej dla kontroli stabilności (np. z systemu wspomagania jazdy), z licznikiem ramek i sumą kontrolną.'
+  ru: 'Внешний запрос уставки для системы контроля устойчивости (например, от системы помощи водителю), со счётчиком кадров и контрольной суммой.'
+  zh: '来自(例如驾驶辅助系统的)车身稳定控制外部目标请求,含帧计数器和校验和。'
+  hu: 'Külső célérték-kérés a menetstabilizáló rendszer számára (pl. vezetéstámogató rendszertől), keretszámlálóval és ellenőrző összeggel.'
+  pt: 'Pedido de alvo do controlo de estabilidade externo (por exemplo, de um sistema de assistência à condução), com contador de trama e soma de verificação.'
+periodicity: ['10ms']
+senders: ['ABS']
+receivers: ['EBB', 'CMM', 'VCU', 'E_VCU']
+
+signals:
+  PROCESS_COUNTER:
+    bits: '1.7-1.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process sur 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRAME_CHECKSUM:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit frame checksum (init value 0xD)'
+      fr: 'Somme de contrôle de trame sur 4 bits (valeur initiale 0xD)'
+      es: 'Suma de comprobación de trama de 4 bits (valor inicial 0xD)'
+      de: '4-Bit-Frame-Prüfsumme (Anfangswert 0xD)'
+      it: 'Checksum del frame a 4 bit (valore iniziale 0xD)'
+      pl: '4-bitowa suma kontrolna ramki (wartość początkowa 0xD)'
+      ru: '4-битная контрольная сумма кадра (начальное значение 0xD)'
+      zh: '4位帧校验和(初始值0xD)'
+      hu: '4 bites keret-ellenőrzőösszeg (kezdőérték 0xD)'
+      pt: 'Soma de verificação de trama de 4 bits (valor inicial 0xD)'
+    type: 'uint'
+
+  REGEN_BRAKING_TORQUE_REQUEST:
+    bits: '2.7-3.7'
+    comment:
+      en: 'Regenerative braking torque setpoint'
+      fr: 'Consigne de couple de freinage récupératif'
+      es: 'Consigna de par de frenado regenerativo'
+      de: 'Sollwert für das Rekuperationsbrems-Drehmoment'
+      it: 'Valore di riferimento della coppia di frenata rigenerativa'
+      pl: 'Wartość zadana momentu hamowania odzyskowego'
+      ru: 'Заданный момент рекуперативного торможения'
+      zh: '再生制动扭矩设定值'
+      hu: 'Regeneratív fékezés nyomatékának alapjele'
+      pt: 'Consigna de binário de travagem regenerativa'
+    type: 'uint'
+    factor: 1
+    offset: -2500
+    min: -2500
+    max: 0
+    units: 'Nm'
+    default: 0x1F4
+
+  FRONT_EMOTOR_COUPLING_REQUEST:
+    bits: '3.6'
+    comment:
+      en: 'Front electric motor coupling request'
+      fr: 'Demande de couplage de la machine électrique avant'
+      es: 'Solicitud de acoplamiento de la máquina eléctrica delantera'
+      de: 'Kupplungsanforderung der vorderen Elektromaschine'
+      it: 'Richiesta di accoppiamento della macchina elettrica anteriore'
+      pl: 'Żądanie sprzęgnięcia przedniej maszyny elektrycznej'
+      ru: 'Запрос сцепления переднего электродвигателя'
+      zh: '前电机联接请求'
+      hu: 'Az első elektromos gép tengelykapcsolási kérése'
+      pt: 'Pedido de acoplamento da máquina elétrica dianteira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No coupling request'
+        fr: 'Pas de demande de couplage'
+        es: 'Sin solicitud de acoplamiento'
+        de: 'Keine Kopplungsanforderung'
+        it: 'Nessuna richiesta di accoppiamento'
+        pl: 'Brak żądania sprzężenia'
+        ru: 'Нет запроса сцепления'
+        zh: '无耦合请求'
+        hu: 'Nincs kapcsolási kérés'
+        pt: 'Sem pedido de acoplamento'
+      0x01:
+        en: 'Coupling request'
+        fr: 'Demande de couplage'
+        es: 'Solicitud de acoplamiento'
+        de: 'Kopplungsanforderung'
+        it: 'Richiesta di accoppiamento'
+        pl: 'Żądanie sprzężenia'
+        ru: 'Запрос сопряжения'
+        zh: '耦合请求'
+        hu: 'Csatolási kérés'
+        pt: 'Pedido de acoplamento'
+
+  REAR_MOTOR_PRECONTROL_DEACTIVATION_FLAG:
+    bits: '3.5'
+    comment:
+      en: 'Deactivation flag for the rear electric motor speed pre-control'
+      fr: 'Indicateur de désactivation du précontrôle en régime de la machine électrique arrière'
+      es: 'Indicador de desactivación del precontrol de régimen de la máquina eléctrica trasera'
+      de: 'Deaktivierungskennzeichen für die Drehzahl-Vorsteuerung der hinteren Elektromaschine'
+      it: 'Flag di disattivazione del precontrollo di regime della macchina elettrica posteriore'
+      pl: 'Flaga dezaktywacji sterowania wyprzedzającego prędkością tylnej maszyny elektrycznej'
+      ru: 'Флаг деактивации предварительного управления скоростью заднего электродвигателя'
+      zh: '后电机转速预控制的停用标志'
+      hu: 'A hátsó elektromos gép fordulatszám-előszabályozásának kikapcsolási jelzője'
+      pt: 'Indicador de desativação do pré-controlo de regime da máquina elétrica traseira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No deactivation request'
+        fr: 'Pas de demande de désactivation'
+        es: 'Sin solicitud de desactivación'
+        de: 'Keine Deaktivierungsanforderung'
+        it: 'Nessuna richiesta di disattivazione'
+        pl: 'Brak żądania dezaktywacji'
+        ru: 'Нет запроса деактивации'
+        zh: '无停用请求'
+        hu: 'Nincs kikapcsolási kérés'
+        pt: 'Sem pedido de desativação'
+      0x01:
+        en: 'Deactivation request'
+        fr: 'Demande de désactivation'
+        es: 'Solicitud de desactivación'
+        de: 'Deaktivierungsanforderung'
+        it: 'Richiesta di disattivazione'
+        pl: 'Żądanie dezaktywacji'
+        ru: 'Запрос деактивации'
+        zh: '停用请求'
+        hu: 'Kikapcsolási kérés'
+        pt: 'Pedido de desativação'
+
+  UNUSED_1:
+    bits: '3.4'
+    unused: true
+
+  REAR_MOTOR_SPEED_REQUEST:
+    bits: '3.3-4.1'
+    comment:
+      en: 'Rear electric motor speed requested by the ESC'
+      fr: 'Régime de la machine électrique arrière demandé par l''ESC'
+      es: 'Régimen de la máquina eléctrica trasera solicitado por el ESC'
+      de: 'Vom ESC angeforderte Drehzahl der hinteren Elektromaschine'
+      it: 'Regime della macchina elettrica posteriore richiesto dall''ESC'
+      pl: 'Prędkość obrotowa tylnej maszyny elektrycznej żądana przez ESC'
+      ru: 'Скорость заднего электродвигателя, запрошенная ESC'
+      zh: 'ESC请求的后电机转速'
+      hu: 'Az ESC által kért hátsó elektromos gép fordulatszáma'
+      pt: 'Regime da máquina elétrica traseira solicitado pelo ESC'
+    type: 'uint'
+    factor: 1
+    offset: 10
+    min: 0
+    max: 18000
+    units: 'rpm'
+    invalid: 0x7FF
+    default: 0x00
+
+  ABS_IN_PROGRESS:
+    bits: '4.0'
+    comment:
+      en: 'ABS regulation in progress'
+      fr: 'Régulation ABS en cours'
+      es: 'Regulación ABS en curso'
+      de: 'ABS-Regelung aktiv'
+      it: 'Regolazione ABS in corso'
+      pl: 'Regulacja ABS w toku'
+      ru: 'Идёт регулирование ABS'
+      zh: 'ABS调节进行中'
+      hu: 'ABS-szabályozás folyamatban'
+      pt: 'Regulação ABS em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  MASTER_CYLINDER_PRESSURE_RAW:
+    bits: '5.7-6.6'
+    comment:
+      en: 'Raw master cylinder pressure'
+      fr: 'Pression brute du maître-cylindre'
+      es: 'Presión bruta del cilindro maestro'
+      de: 'Rohwert des Hauptzylinderdrucks'
+      it: 'Pressione grezza del cilindro maestro'
+      pl: 'Surowe ciśnienie pompy hamulcowej'
+      ru: 'Необработанное давление главного тормозного цилиндра'
+      zh: '主缸原始压力'
+      hu: 'A főfékhenger nyers nyomásértéke'
+      pt: 'Pressão bruta do cilindro mestre'
+    type: 'uint'
+    factor: 0.3
+    offset: -30
+    min: -30
+    max: 276.3
+    units: 'bar'
+    invalid: 0x3FF
+
+  BRAKE_FORCE_DISTRIBUTION_STRATEGY:
+    bits: '6.5-6.4'
+    comment:
+      en: 'Brake force distribution strategy requested by the ESP to the EBB (inactive, hold, active)'
+      fr: 'Stratégie de répartition de freinage demandée par l''ESP à l''EBB (inactive, maintien, active)'
+      es: 'Estrategia de reparto de frenado solicitada por el ESP al EBB (inactiva, mantenida, activa)'
+      de: 'Vom ESP an das EBB angeforderte Bremskraftverteilungsstrategie (inaktiv, halten, aktiv)'
+      it: 'Strategia di ripartizione della frenata richiesta dall''ESP all''EBB (inattiva, mantenuta, attiva)'
+      pl: 'Strategia rozdziału siły hamowania żądana przez ESP od EBB (nieaktywna, wstrzymana, aktywna)'
+      ru: 'Стратегия распределения тормозных усилий, запрашиваемая ESP у EBB (неактивна, удержание, активна)'
+      zh: 'ESP向EBB请求的制动力分配策略(未激活、保持、激活)'
+      hu: 'Az ESP által az EBB-től kért fékerő-elosztási stratégia (inaktív, tartás, aktív)'
+      pt: 'Estratégia de repartição de travagem solicitada pelo ESP ao EBB (inativa, mantida, ativa)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'PFC_inactive'
+        fr: 'PFC_inactive'
+        es: 'PFC_inactive'
+        de: 'PFC_inactive'
+        it: 'PFC_inactive'
+        pl: 'PFC_inactive'
+        ru: 'PFC_inactive'
+        zh: 'PFC_inactive'
+        hu: 'PFC_inactive'
+        pt: 'PFC_inactive'
+      0x01:
+        en: 'PFC hold'
+        fr: 'PFC en maintien'
+        es: 'PFC en espera'
+        de: 'PFC gehalten'
+        it: 'PFC in mantenimento'
+        pl: 'PFC wstrzymane'
+        ru: 'PFC удержание'
+        zh: 'PFC保持'
+        hu: 'PFC tartás'
+        pt: 'PFC em espera'
+      0x02:
+        en: 'PFC active'
+        fr: 'PFC actif'
+        es: 'PFC activo'
+        de: 'PFC aktiv'
+        it: 'PFC attivo'
+        pl: 'PFC aktywny'
+        ru: 'PFC активен'
+        zh: 'PFC激活'
+        hu: 'PFC aktív'
+        pt: 'PFC ativo'
+      0x03:
+        unused: true
+
+  VIRTUAL_MASTER_CYLINDER_PRESSURE:
+    bits: '6.3-7.2'
+    comment:
+      en: 'Virtual master cylinder pressure calculated by the ESP from the brake pedal position'
+      fr: 'Pression virtuelle du maître-cylindre calculée par l''ESP à partir de la position de la pédale de frein'
+      es: 'Presión virtual del cilindro maestro calculada por el ESP a partir de la posición del pedal de freno'
+      de: 'Virtueller Hauptzylinderdruck, vom ESP anhand der Bremspedalstellung berechnet'
+      it: 'Pressione virtuale del cilindro maestro calcolata dall''ESP in base alla posizione del pedale del freno'
+      pl: 'Wirtualne ciśnienie pompy hamulcowej obliczane przez ESP na podstawie położenia pedału hamulca'
+      ru: 'Виртуальное давление главного тормозного цилиндра, рассчитанное ESP по положению педали тормоза'
+      zh: '由ESP根据制动踏板位置计算出的虚拟主缸压力'
+      hu: 'Az ESP által a fékpedál helyzetéből számított virtuális főfékhenger-nyomás'
+      pt: 'Pressão virtual do cilindro mestre calculada pelo ESP a partir da posição do pedal de travão'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 250
+    units: 'bar'
+    invalid: 0x3FF
+
+  MASTER_CYLINDER_PRESSURE_TARGET:
+    bits: '7.1-8.0'
+    comment:
+      en: 'Master cylinder pressure target for the electric regenerative and brake assist function'
+      fr: 'Consigne de pression du maître-cylindre pour la fonction de récupération électrique et d''assistance au freinage'
+      es: 'Consigna de presión del cilindro maestro para la función de regeneración eléctrica y asistencia al frenado'
+      de: 'Sollwert des Hauptzylinderdrucks für die elektrische Rekuperations- und Bremsassistenzfunktion'
+      it: 'Consegna di pressione del cilindro maestro per la funzione di recupero elettrico e assistenza alla frenata'
+      pl: 'Wartość zadana ciśnienia pompy hamulcowej dla funkcji rekuperacji elektrycznej i wspomagania hamowania'
+      ru: 'Заданное давление главного тормозного цилиндра для функции электрической рекуперации и помощи при торможении'
+      zh: '用于电动再生制动和制动辅助功能的主缸压力目标值'
+      hu: 'A főfékhenger nyomáscélértéke az elektromos rekuperációs és fékrásegítő funkcióhoz'
+      pt: 'Consigna de pressão do cilindro mestre para a função de regeneração elétrica e assistência à travagem'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 250
+    units: 'bar'
+    invalid: 0x3FF

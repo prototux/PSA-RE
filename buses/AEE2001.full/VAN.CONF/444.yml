@@ -1,0 +1,305 @@
+id: 0x444
+name: 'AIRBAG_DEPLOYMENT'
+type: 'van'
+length: 3
+comment:
+  en: 'Airbag pyrotechnic deployment information relayed by the BSI; event transmission on change of the crash information received from the airbag unit. Handled with priority by the BSI.'
+  fr: 'Information sur le déclenchement des éléments pyrotechniques de l''airbag, relayée par la BSI ; envoi événementiel sur changement d''état de la trame reçue de l''airbag. Traitée en priorité par la BSI.'
+  es: 'Información sobre el disparo de los elementos pirotécnicos del airbag, retransmitida por la BSI; envío por evento al cambiar el estado de la trama recibida del airbag. Tratada con prioridad por la BSI.'
+  de: 'Information über die Auslösung der pyrotechnischen Airbag-Elemente, von der BSI weitergeleitet; ereignisgesteuerte Übertragung bei Zustandsänderung des vom Airbag-Steuergerät empfangenen Rahmens. Von der BSI vorrangig behandelt.'
+  it: 'Informazioni sull''attivazione degli elementi pirotecnici dell''airbag, inoltrate dalla BSI; trasmissione a evento al cambio di stato della trama ricevuta dall''airbag. Gestita con priorità dalla BSI.'
+  pl: 'Informacje o zadziałaniu elementów pirotechnicznych poduszki powietrznej, przekazywane przez BSI; wysyłanie zdarzeniowe przy zmianie stanu ramki otrzymanej od poduszki powietrznej. Obsługiwane priorytetowo przez BSI.'
+  ru: 'Информация о срабатывании пиротехнических элементов подушки безопасности, ретранслируемая BSI; событийная передача при изменении состояния кадра, полученного от блока подушек безопасности. Обрабатывается BSI в приоритетном порядке.'
+  zh: '由BSI转发的安全气囊烟火元件触发信息；在收到安全气囊单元帧状态变化时事件触发发送，由BSI优先处理。'
+  hu: 'A légzsák pirotechnikai elemeinek kioldására vonatkozó információ, a BSI továbbítja; eseményalapú küldés a légzsákegységtől kapott keret állapotváltozásakor. A BSI kiemelt prioritással kezeli.'
+  pt: 'Informação de disparo pirotécnico do airbag retransmitida pela BSI; transmissão por evento na mudança da informação de colisão recebida da unidade do airbag. Tratada com prioridade pela BSI.'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['BTEL']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  PASSENGER_AIRBAG_INHIBIT_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Actual passenger airbag inhibition state'
+      fr: 'État réel d''inhibition de l''airbag passager'
+      es: 'Estado real de inhibición del airbag del pasajero'
+      de: 'Tatsächlicher Deaktivierungszustand des Beifahrerairbags'
+      it: 'Stato effettivo di inibizione dell''airbag passeggero'
+      pl: 'Rzeczywisty stan wyłączenia poduszki pasażera'
+      ru: 'Фактическое состояние отключения подушки безопасности пассажира'
+      zh: '乘客安全气囊实际抑制状态'
+      hu: 'Az utasoldali légzsák tényleges letiltási állapota'
+      pt: 'Estado real de inibição do airbag do passageiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Passenger airbag inhibited'
+        fr: 'Airbag passager inhibé'
+        es: 'Airbag del pasajero inhibido'
+        de: 'Beifahrerairbag deaktiviert'
+        it: 'Airbag passeggero disattivato'
+        pl: 'Poduszka powietrzna pasażera wyłączona'
+        ru: 'Подушка безопасности пассажира отключена'
+        zh: '乘客安全气囊已禁用'
+        hu: 'Utas légzsák letiltva'
+        pt: 'Airbag do passageiro inibido'
+      0x01:
+        en: 'Passenger airbag enabled'
+        fr: 'Airbag passager activé'
+        es: 'Airbag del pasajero activado'
+        de: 'Beifahrerairbag aktiviert'
+        it: 'Airbag passeggero attivato'
+        pl: 'Włączona poduszka powietrzna pasażera'
+        ru: 'Подушка безопасности пассажира включена'
+        zh: '乘客安全气囊已启用'
+        hu: 'Utasoldali légzsák bekapcsolva'
+        pt: 'Airbag do passageiro ativado'
+
+  UNUSED_1:
+    bits: '1.6'
+    unused: true
+
+  REAR_IMPACT_DETECTED:
+    bits: '1.5'
+    comment:
+      en: 'Rear impact detected'
+      fr: 'Choc arrière détecté'
+      es: 'Impacto trasero detectado'
+      de: 'Heckaufprall erkannt'
+      it: 'Urto posteriore rilevato'
+      pl: 'Wykryto uderzenie z tyłu'
+      ru: 'Обнаружен удар сзади'
+      zh: '检测到后部碰撞'
+      hu: 'Hátsó ütközés észlelve'
+      pt: 'Impacto traseiro detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not detected'
+        fr: 'Non détecté'
+        es: 'No detectado'
+        de: 'Nicht erkannt'
+        it: 'Non rilevato'
+        pl: 'Nie wykryto'
+        ru: 'Не обнаружено'
+        zh: '未检测到'
+        hu: 'Nem észlelt'
+        pt: 'Não detetado'
+      0x01:
+        en: 'Detected'
+        fr: 'Détecté'
+        es: 'Detectado'
+        de: 'Erkannt'
+        it: 'Rilevato'
+        pl: 'Wykryto'
+        ru: 'Обнаружено'
+        zh: '已检测到'
+        hu: 'Észlelve'
+        pt: 'Detetado'
+
+  RIGHT_SIDE_AIRBAG_DEPLOYED:
+    bits: '1.4'
+    comment:
+      en: 'Right side airbag squib state'
+      fr: 'État de l''allumeur pyrotechnique de l''airbag latéral droit'
+      es: 'Estado del iniciador pirotécnico del airbag lateral derecho'
+      de: 'Zustand des Zünders des rechten Seitenairbags'
+      it: 'Stato dell''innesco pirotecnico dell''airbag laterale destro'
+      pl: 'Stan zapalnika pirotechnicznego prawej poduszki bocznej'
+      ru: 'Состояние пиропатрона правой боковой подушки безопасности'
+      zh: '右侧安全气囊点火器状态'
+      hu: 'A jobb oldali légzsák pirotechnikai gyújtójának állapota'
+      pt: 'Estado do detonador do airbag lateral direito'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  LEFT_SIDE_AIRBAG_DEPLOYED:
+    bits: '1.3'
+    comment:
+      en: 'Left side airbag squib state'
+      fr: 'État de l''allumeur pyrotechnique de l''airbag latéral gauche'
+      es: 'Estado del iniciador pirotécnico del airbag lateral izquierdo'
+      de: 'Zustand des Zünders des linken Seitenairbags'
+      it: 'Stato dell''innesco pirotecnico dell''airbag laterale sinistro'
+      pl: 'Stan zapalnika pirotechnicznego lewej poduszki bocznej'
+      ru: 'Состояние пиропатрона левой боковой подушки безопасности'
+      zh: '左侧安全气囊点火器状态'
+      hu: 'A bal oldali légzsák pirotechnikai gyújtójának állapota'
+      pt: 'Estado do detonador do airbag lateral esquerdo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  FRONT_AIRBAG_DEPLOYED:
+    bits: '1.2'
+    comment:
+      en: 'Front airbag squib state'
+      fr: 'État de l''allumeur pyrotechnique de l''airbag frontal'
+      es: 'Estado del iniciador pirotécnico del airbag frontal'
+      de: 'Zustand des Zünders des Frontairbags'
+      it: 'Stato dell''innesco pirotecnico dell''airbag frontale'
+      pl: 'Stan zapalnika pirotechnicznego poduszki czołowej'
+      ru: 'Состояние пиропатрона фронтальной подушки безопасности'
+      zh: '前部安全气囊点火器状态'
+      hu: 'Az első légzsák pirotechnikai gyújtójának állapota'
+      pt: 'Estado do detonador do airbag dianteiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  PRETENSIONER_DEPLOYED:
+    bits: '1.1'
+    comment:
+      en: 'Seat belt pretensioner squib state'
+      fr: 'État de l''allumeur pyrotechnique des prétensionneurs'
+      es: 'Estado del iniciador pirotécnico de los pretensores'
+      de: 'Zustand des Zünders der Gurtstraffer'
+      it: 'Stato dell''innesco pirotecnico dei pretensionatori'
+      pl: 'Stan zapalnika pirotechnicznego napinaczy pasów'
+      ru: 'Состояние пиропатрона преднатяжителей ремней'
+      zh: '预紧器点火器状态'
+      hu: 'Az övfeszítők pirotechnikai gyújtójának állapota'
+      pt: 'Estado do detonador do pré-tensor do cinto de segurança'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  CRASH_DETECTED:
+    bits: '1.0'
+    comment:
+      en: 'Crash detected that caused deployment of one or more pyrotechnic elements'
+      fr: 'Crash détecté ayant provoqué le déclenchement d''un ou plusieurs éléments pyrotechniques'
+      es: 'Colisión detectada que provocó el disparo de uno o más elementos pirotécnicos'
+      de: 'Erkannter Unfall, der die Auslösung eines oder mehrerer pyrotechnischer Elemente verursachte'
+      it: 'Urto rilevato che ha causato l''attivazione di uno o più elementi pirotecnici'
+      pl: 'Wykryto kolizję, która spowodowała zadziałanie co najmniej jednego elementu pirotechnicznego'
+      ru: 'Обнаружено ДТП, вызвавшее срабатывание одного или нескольких пиротехнических элементов'
+      zh: '检测到导致一个或多个火工装置起爆的碰撞'
+      hu: 'Olyan ütközés észlelve, amely egy vagy több pirotechnikai elem működésbe lépését okozta'
+      pt: 'Colisão detetada que causou o disparo de um ou mais elementos pirotécnicos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No crash'
+        fr: 'Pas de choc'
+        es: 'Sin choque'
+        de: 'Kein Crash'
+        it: 'Nessun urto'
+        pl: 'Brak zderzenia'
+        ru: 'Нет столкновения'
+        zh: '无碰撞'
+        hu: 'Nincs ütközés'
+        pt: 'Sem impacto'
+      0x01:
+        en: 'Crash detected'
+        fr: 'Choc détecté'
+        es: 'Impacto detectado'
+        de: 'Aufprall erkannt'
+        it: 'Urto rilevato'
+        pl: 'Wykryto zderzenie'
+        ru: 'Обнаружено столкновение'
+        zh: '检测到碰撞'
+        hu: 'Ütközés észlelve'
+        pt: 'Colisão detetada'
+
+  UNUSED_2:
+    bits: '2.7-3.0'
+    unused: true

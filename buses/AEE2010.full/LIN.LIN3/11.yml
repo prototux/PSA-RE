@@ -1,0 +1,229 @@
+id: 0x11
+name: 'ELECTRIC_COMPRESSOR_HEATER_COMMAND'
+type: 'lin'
+length: 4
+comment:
+  en: 'Commands sent over LIN to the electric AC compressor and PTC heater: activation, power limit and speed setpoints, fault erase and consumption cutoff.'
+  fr: 'Commandes envoyées sur le bus LIN au compresseur électrique de climatisation et au chauffage PTC : activation, consignes de puissance limite et de régime, effacement défaut et coupure de consommation.'
+  es: 'Órdenes enviadas por el bus LIN al compresor eléctrico de climatización y a la calefacción PTC: activación, consignas de límite de potencia y de régimen, borrado de fallo y corte de consumo.'
+  de: 'Über den LIN-Bus an den elektrischen Klimakompressor und die PTC-Heizung gesendete Befehle: Aktivierung, Leistungsgrenz- und Drehzahlsollwerte, Fehlerlöschung und Verbrauchsabschaltung.'
+  it: 'Comandi inviati sul bus LIN al compressore elettrico del climatizzatore e al riscaldatore PTC: attivazione, setpoint di potenza limite e di regime, cancellazione guasto e interruzione del consumo.'
+  pl: 'Polecenia wysyłane po magistrali LIN do elektrycznej sprężarki klimatyzacji i grzałki PTC: aktywacja, zadana moc graniczna i obroty, kasowanie usterki i odcięcie poboru mocy.'
+  ru: 'Команды, отправляемые по шине LIN на электрический компрессор кондиционера и PTC-нагреватель: активация, заданные значения предельной мощности и оборотов, стирание неисправности и отключение потребления.'
+  zh: '通过LIN总线发送给电动空调压缩机和PTC加热器的命令：激活、功率限值和转速设定值、故障清除及耗电切断。'
+  hu: 'A LIN buszon az elektromos klímakompresszornak és a PTC-fűtésnek küldött parancsok: aktiválás, teljesítményhatár- és fordulatszám-alapjelek, hibatörlés és fogyasztás-lekapcsolás.'
+  pt: 'Comandos enviados via LIN ao compressor elétrico de ar condicionado e ao aquecedor PTC: ativação, limite de potência e pontos de ajuste de velocidade, apagamento de avarias e corte de consumo.'
+periodicity: ['trigger']
+senders: ['BSI']
+receivers: ['CTPA']
+lin:
+  master: 'BSI'
+
+signals:
+  AIR_PTC_POWER_ACTIVATION_COMMAND:
+    bits: '1.7'
+    comment:
+      en: 'Power activation command for the air PTC heater'
+      fr: 'Commande d''activation de puissance de la CTP air'
+      es: 'Comando de activación de potencia del calefactor PTC de aire'
+      de: 'Leistungsaktivierungsbefehl des Luft-PTC-Heizelements'
+      it: 'Comando di attivazione della potenza della CTP aria'
+      pl: 'Polecenie aktywacji mocy grzałki PTC powietrza'
+      ru: 'Команда активации мощности воздушного PTC-нагревателя'
+      zh: '空气PTC加热器功率激活指令'
+      hu: 'A légfűtő PTC-elem teljesítmény-aktiválási parancsa'
+      pt: 'Comando de ativação de potência do CTP de ar'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No action'
+        fr: 'Pas de pilotage'
+        es: 'Sin acción'
+        de: 'Keine Ansteuerung'
+        it: 'Nessuna azione'
+        pl: 'Brak sterowania'
+        ru: 'Нет управления'
+        zh: '无操作'
+        hu: 'Nincs vezérlés'
+        pt: 'Sem controlo'
+      0x01:
+        en: 'Control'
+        fr: 'Pilotage'
+        es: 'Control'
+        de: 'Ansteuerung'
+        it: 'Comando'
+        pl: 'Sterowanie'
+        ru: 'Управление'
+        zh: '控制'
+        hu: 'Vezérlés'
+        pt: 'Controlo'
+
+  AIR_PTC_POWER_LIMITATION_REQUEST:
+    bits: '1.6-1.0'
+    comment:
+      en: 'Power limitation request for the electric compressor / air PTC heater'
+      fr: 'Demande de limitation de puissance du compresseur électrique / CTP air'
+      es: 'Solicitud de limitación de potencia del compresor eléctrico / calefactor PTC de aire'
+      de: 'Leistungsbegrenzungsanforderung des elektrischen Kompressors / Luft-PTC-Heizelements'
+      it: 'Richiesta di limitazione della potenza del compressore elettrico / CTP aria'
+      pl: 'Żądanie ograniczenia mocy sprężarki elektrycznej / grzałki PTC powietrza'
+      ru: 'Запрос ограничения мощности электрического компрессора / воздушного PTC-нагревателя'
+      zh: '电动压缩机/空气PTC加热器的功率限制请求'
+      hu: 'Az elektromos kompresszor / légfűtő PTC-elem teljesítménykorlátozási kérése'
+      pt: 'Pedido de limitação de potência do compressor elétrico / CTP de ar'
+    type: 'uint'
+    min: 0
+    max: 100
+    invalid: 0x7F
+
+  ELECTRIC_COMPRESSOR_POWER_LIMITATION_REQUEST:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Electrical compressor power limitation request'
+      fr: 'Demande de limitation de puissance du compresseur électrique'
+      es: 'Solicitud de limitación de potencia del compresor eléctrico'
+      de: 'Leistungsbegrenzungsanforderung des elektrischen Kompressors'
+      it: 'Richiesta di limitazione della potenza del compressore elettrico'
+      pl: 'Żądanie ograniczenia mocy sprężarki elektrycznej'
+      ru: 'Запрос ограничения мощности электрического компрессора'
+      zh: '电动压缩机功率限制请求'
+      hu: 'Az elektromos kompresszor teljesítménykorlátozási kérése'
+      pt: 'Pedido de limitação de potência do compressor elétrico'
+    type: 'uint'
+    factor: 40
+    min: 0
+    max: 406400
+    invalid: 0xFF
+
+  ELECTRIC_COMPRESSOR_SPEED_REQUEST:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Rotational speed request for the electric compressor'
+      fr: 'Demande de vitesse de rotation du compresseur électrique'
+      es: 'Solicitud de velocidad de rotación del compresor eléctrico'
+      de: 'Drehzahlanforderung des elektrischen Kompressors'
+      it: 'Richiesta di velocità di rotazione del compressore elettrico'
+      pl: 'Żądanie prędkości obrotowej sprężarki elektrycznej'
+      ru: 'Запрос частоты вращения электрического компрессора'
+      zh: '电动压缩机转速请求'
+      hu: 'Az elektromos kompresszor fordulatszám-kérése'
+      pt: 'Pedido de velocidade de rotação do compressor elétrico'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 635000
+    invalid: 0xFF
+
+  CLEAR_FAULTS:
+    bits: '4.2'
+    comment:
+      en: 'Global fault memory erase request'
+      fr: 'Demande d''effacement global des défauts'
+      es: 'Solicitud de borrado global de fallos'
+      de: 'Anforderung zum globalen Löschen der Fehlerspeicher'
+      it: 'Richiesta di cancellazione globale dei guasti'
+      pl: 'Żądanie globalnego kasowania usterek'
+      ru: 'Запрос глобального стирания неисправностей'
+      zh: '全局故障清除请求'
+      hu: 'Globális hibatörlési kérés'
+      pt: 'Pedido de apagamento global das falhas'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  LOG_FAULTS:
+    bits: '4.1'
+    comment:
+      en: 'Fault storage locking (fault memory logging disabled)'
+      fr: 'Verrouillage de la mémorisation des défauts'
+      es: 'Bloqueo del almacenamiento de fallos'
+      de: 'Sperrung der Fehlerspeicherung'
+      it: 'Blocco della memorizzazione dei guasti'
+      pl: 'Blokada zapisu usterek'
+      ru: 'Блокировка записи неисправностей в память'
+      zh: '故障存储锁定'
+      hu: 'A hibatárolás letiltása'
+      pt: 'Bloqueio do armazenamento de avarias (registo na memória de avarias desativado)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Deactivation'
+        fr: 'Désactivation'
+        es: 'Desactivación'
+        de: 'Deaktivierung'
+        it: 'Disattivazione'
+        pl: 'Dezaktywacja'
+        ru: 'Деактивация'
+        zh: '停用'
+        hu: 'Kikapcsolás'
+        pt: 'Desativação'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  LOW_VOLTAGE_CONSUMPTION_CUTOFF_REQUEST:
+    bits: '4.0'
+    comment:
+      en: 'Low-voltage consumption cut-off request'
+      fr: 'Demande de coupure de la consommation basse tension'
+      es: 'Solicitud de corte del consumo de baja tensión'
+      de: 'Anforderung zur Abschaltung des Niederspannungsverbrauchs'
+      it: 'Richiesta di interruzione del consumo a bassa tensione'
+      pl: 'Żądanie odcięcia poboru niskiego napięcia'
+      ru: 'Запрос отключения потребления низкого напряжения'
+      zh: '低压用电切断请求'
+      hu: 'Kisfeszültségű fogyasztás lekapcsolási kérés'
+      pt: 'Pedido de corte do consumo de baixa tensão'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'

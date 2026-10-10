@@ -1,67 +1,143 @@
 id: 0x1A5
 name: 'RADIO_STATUS_VOLUME'
-alt_names: ['ETAT_RADIO_GEN_VOL']
+type: 'can'
 length: 1
 comment:
-  en: 'Radio volume'
-  fr: 'Volume de la radio'
-type: 'can'
-periodicity: ['500ms']
-senders:
-  - 'RADIO'
-  - 'RAD, BTEL'
-  - 'NG4'
-  - 'RNEG'
-  - 'PASS_ICSV'
-receivers:
-  - 'EMF' # To display volume changes
-  - 'AMPLI'
-  - 'CMB_EMF'
-  - 'PASS_ICSV'
+  en: 'Radio volume level and its origin (source that set it).'
+  fr: 'Niveau de volume de l''autoradio et son origine (source l''ayant réglé).'
+  es: 'Nivel de volumen de la radio y su origen (fuente que lo ajustó).'
+  de: 'Lautstärkepegel des Radios und dessen Ursprung (Quelle, die ihn eingestellt hat).'
+  it: 'Livello del volume della radio e la sua origine (sorgente che lo ha impostato).'
+  pl: 'Poziom głośności radia i jego źródło (źródło, które go ustawiło).'
+  ru: 'Уровень громкости радио и его источник (источник, установивший его).'
+  zh: '收音机音量级别及其来源(设置该音量的信源)。'
+  hu: 'A rádió hangerőszintje és annak eredete (a beállító forrás).'
+  pt: 'Nível de volume da rádio e a sua origem (fonte que o definiu).'
+periodicity: ['500ms', 'trigger']
+senders: ['RAD', 'BTEL', 'ICSV']
+receivers: ['EMF', 'AMPLI', 'CMB', 'ICSV']
 
 signals:
   VOLUME_CHANGING:
     bits: '1.7-1.5'
-    alt_names: ['ORIGINE_VOL']
     comment:
-      en: 'Volume is changing'
-      fr: 'Le volume est en cours de changement'
+      en: 'origin of sound adjustment'
+      fr: 'origine du réglage sonore'
+      es: 'Origen del ajuste de sonido'
+      de: 'Ursprung der Lautstärkeeinstellung'
+      it: 'Origine della regolazione del suono'
+      pl: 'Źródło regulacji dźwięku'
+      ru: 'Источник изменения громкости'
+      zh: '音量调节来源'
+      hu: 'A hangerő-beállítás forrása'
+      pt: 'Origem do ajuste de som'
+    type: 'enum'
+    default: 0x07
     values:
       0x00:
-        fr: 'Réglage utilisateur'
         en: 'User setting'
+        fr: 'Réglage utilisateur'
+        es: 'Ajuste de usuario'
+        de: 'Benutzereinstellung'
+        it: 'Impostazione utente'
+        pl: 'Ustawienie użytkownika'
+        ru: 'Пользовательская настройка'
+        zh: '用户设置'
+        hu: 'Felhasználói beállítás'
+        pt: 'Ajuste do utilizador'
       0x01:
+        en: 'Source change'
         fr: 'Changement de source'
-        en: 'Source changing'
+        es: 'Cambio de fuente'
+        de: 'Quellenwechsel'
+        it: 'Cambio sorgente'
+        pl: 'Zmiana źródła'
+        ru: 'Смена источника'
+        zh: '切换音源'
+        hu: 'Forrásváltás'
+        pt: 'Mudança de fonte'
       0x02:
-        fr: 'Asservissement volume/vitesse'
         en: 'Volume/speed control'
+        fr: 'Asservissement volume/vitesse'
+        es: 'Control de volumen/velocidad'
+        de: 'Lautstärke-/Geschwindigkeitsregelung'
+        it: 'Controllo volume/velocità'
+        pl: 'Sterowanie głośnością/prędkością'
+        ru: 'Регулирование громкости/скорости'
+        zh: '音量/车速联动控制'
+        hu: 'Hangerő-/sebességszabályozás'
+        pt: 'Controlo volume/velocidade'
       0x03:
-        fr: 'Mixing de source pour AAS'
         en: 'Source mixing for AAS'
+        fr: 'Mixage de source pour AAS'
+        es: 'Mezcla de fuentes para AAS'
+        de: 'Quellenmischung für AAS'
+        it: 'Miscelazione sorgente per AAS'
+        pl: 'Mieszanie źródeł dla AAS'
+        ru: 'Микширование источников для AAS'
+        zh: 'AAS音源混合'
+        hu: 'Forráskeverés az AAS-hez'
+        pt: 'Mistura de fontes para o AAS'
       0x04:
-        fr: 'Protection thermique'
         en: 'Thermal protection'
+        fr: 'Protection thermique'
+        es: 'Protección térmica'
+        de: 'Thermoschutz'
+        it: 'Protezione termica'
+        pl: 'Zabezpieczenie termiczne'
+        ru: 'Тепловая защита'
+        zh: '热保护'
+        hu: 'Hővédelem'
+        pt: 'Proteção térmica'
       0x05:
-        fr: 'Depassement'
-        en: 'Overrun'
+        en: 'Overtaking'
+        fr: 'Dépassement'
+        es: 'Adelantamiento'
+        de: 'Überholen'
+        it: 'Sorpasso'
+        pl: 'Wyprzedzanie'
+        ru: 'Обгон'
+        zh: '超车'
+        hu: 'Előzés'
+        pt: 'Ultrapassagem'
       0x06:
-        fr: 'Réglage utilisateur téléphone'
         en: 'Phone user setting'
+        fr: 'Réglage utilisateur du téléphone'
+        es: 'Configuración de usuario del teléfono'
+        de: 'Benutzereinstellung des Telefons'
+        it: 'Impostazione utente del telefono'
+        pl: 'Ustawienie użytkownika telefonu'
+        ru: 'Пользовательская настройка телефона'
+        zh: '电话用户设置'
+        hu: 'Telefon felhasználói beállítás'
+        pt: 'Definição do utilizador do telefone'
       0x07:
-        fr: 'Autre ou repos'
         en: 'Other or idle'
+        fr: 'Autre ou repos'
+        es: 'Otro o reposo'
+        de: 'Sonstiges oder Ruhe'
+        it: 'Altro o riposo'
+        pl: 'Inne lub spoczynek'
+        ru: 'Другое или покой'
+        zh: '其他或空闲'
+        hu: 'Egyéb vagy nyugalmi állapot'
+        pt: 'Outro ou repouso'
 
   VOLUME:
     bits: '1.4-1.0'
-    alt_names: ['NIV_VOL']
     comment:
-      en: 'Current volume'
-      fr: 'Volume'
+      en: 'Current level of sound volume'
+      fr: 'Niveau courant du volume sonore'
+      es: 'Nivel actual del volumen sonoro'
+      de: 'Aktueller Lautstärkepegel'
+      it: 'Livello attuale del volume sonoro'
+      pl: 'Bieżący poziom głośności dźwięku'
+      ru: 'Текущий уровень громкости звука'
+      zh: '当前音量等级'
+      hu: 'Az aktuális hangerőszint'
+      pt: 'Nível atual do volume sonoro'
     type: 'uint'
-    offset: 0
     min: 0
     max: 30
-    resolution: 1
     invalid: 0x1F
-    units:
+    default: 0x00

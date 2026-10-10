@@ -1,0 +1,211 @@
+id: 0x42D
+name: 'YAW_LATERAL_SENSOR_REQUEST'
+type: 'can'
+length: 2
+comment:
+  en: 'Periodic request frame for the Bosch dual yaw-rate/lateral-acceleration sensor: calibration, test mode and fault bits.'
+  fr: 'Trame de requête périodique pour le bicapteur Bosch vitesse de lacet/accélération latérale : bits de calibration, de mode test et de défaut.'
+  es: 'Trama de solicitud periódica para el bicapteur Bosch de velocidad de guiñada/aceleración lateral: bits de calibración, modo de prueba y fallo.'
+  de: 'Periodischer Anfragerahmen für den Bosch-Doppelsensor Gierrate/Querbeschleunigung: Kalibrierungs-, Testmodus- und Fehlerbits.'
+  it: 'Trama di richiesta periodica per il doppio sensore Bosch di velocità di imbardata/accelerazione laterale: bit di calibrazione, modalità test e guasto.'
+  pl: 'Ramka okresowego żądania dla podwójnego czujnika Bosch prędkości odchylania/przyspieszenia bocznego: bity kalibracji, trybu testowego i usterki.'
+  ru: 'Периодический кадр запроса для сдвоенного датчика Bosch скорости рыскания/бокового ускорения: биты калибровки, тестового режима и неисправности.'
+  zh: '针对博世(Bosch)横摆角速度/横向加速度双传感器的周期性请求帧:校准位、测试模式位及故障位。'
+  hu: 'Periodikus lekérdező keret a Bosch kettős legyezési szögsebesség-/keresztirányú gyorsulásérzékelőhöz: kalibrációs, tesztüzemmód és hibabitek.'
+  pt: 'Trama de pedido periódico para o sensor duplo Bosch de velocidade de guinada/aceleração lateral: calibração, modo de teste e bits de avaria.'
+periodicity: ['20ms']
+senders: ['ABS']
+receivers: ['ACCEL_SENSOR']
+
+signals:
+  ACCEL_SENSOR_CALIBRATION_BIT:
+    bits: '1.7'
+    comment:
+      en: 'Calibration status bit of the acceleration/yaw sensor'
+      fr: 'Bit d''état de calibration du capteur d''accélération/lacet'
+      es: 'Bit de estado de calibración del sensor de aceleración/guiñada'
+      de: 'Kalibrierstatusbit des Beschleunigungs-/Gierratensensors'
+      it: 'Bit di stato di calibrazione del sensore di accelerazione/imbardata'
+      pl: 'Bit stanu kalibracji czujnika przyspieszenia/odchylenia'
+      ru: 'Бит статуса калибровки датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的校准状态位'
+      hu: 'A gyorsulás-/legyezési érzékelő kalibrációs állapotbitje'
+      pt: 'Bit de estado de calibração do sensor de aceleração/guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No calibration in progress'
+        fr: 'Pas de calibration en cours'
+        es: 'Sin calibración en curso'
+        de: 'Keine Kalibrierung im Gange'
+        it: 'Nessuna calibrazione in corso'
+        pl: 'Brak trwającej kalibracji'
+        ru: 'Калибровка не выполняется'
+        zh: '无正在进行的校准'
+        hu: 'Nincs folyamatban lévő kalibráció'
+        pt: 'Sem calibração em curso'
+      0x01:
+        en: 'Calibration in progress'
+        fr: 'Étalonnage en cours'
+        es: 'Calibración en curso'
+        de: 'Kalibrierung läuft'
+        it: 'Calibrazione in corso'
+        pl: 'Trwa kalibracja'
+        ru: 'Идёт калибровка'
+        zh: '校准进行中'
+        hu: 'Kalibrálás folyamatban'
+        pt: 'Calibração em curso'
+
+  ACCEL_SENSOR_INTERNAL_INFO:
+    bits: '1.6-1.5'
+    comment:
+      en: 'Internal diagnostic information of the acceleration/yaw sensor'
+      fr: 'Informations de diagnostic interne du capteur d''accélération/lacet'
+      es: 'Información de diagnóstico interno del sensor de aceleración/guiñada'
+      de: 'Interne Diagnoseinformationen des Beschleunigungs-/Gierratensensors'
+      it: 'Informazioni diagnostiche interne del sensore di accelerazione/imbardata'
+      pl: 'Wewnętrzne informacje diagnostyczne czujnika przyspieszenia/odchylenia'
+      ru: 'Внутренняя диагностическая информация датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的内部诊断信息'
+      hu: 'A gyorsulás-/legyezési érzékelő belső diagnosztikai adatai'
+      pt: 'Informação de diagnóstico interno do sensor de aceleração/guinada'
+    type: 'uint'
+    min: 0
+    max: 3
+    default: 0x00
+
+  LATERAL_ACCEL_SENSOR_FAULT:
+    bits: '1.3'
+    comment:
+      en: 'Lateral acceleration sensor fault'
+      fr: 'Défaut du capteur d''accélération latérale'
+      es: 'Fallo del sensor de aceleración lateral'
+      de: 'Fehler des Querbeschleunigungssensors'
+      it: 'Guasto del sensore di accelerazione laterale'
+      pl: 'Usterka czujnika przyspieszenia poprzecznego'
+      ru: 'Неисправность датчика поперечного ускорения'
+      zh: '横向加速度传感器故障'
+      hu: 'A keresztirányú gyorsulásérzékelő hibája'
+      pt: 'Falha do sensor de aceleração lateral'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Lateral acceleration sensor fault'
+        fr: 'Défaut du capteur d''accélération latérale'
+        es: 'Fallo del sensor de aceleración lateral'
+        de: 'Fehler des Querbeschleunigungssensors'
+        it: 'Guasto del sensore di accelerazione laterale'
+        pl: 'Usterka czujnika przyspieszenia bocznego'
+        ru: 'Неисправность датчика бокового ускорения'
+        zh: '横向加速度传感器故障'
+        hu: 'Keresztirányú gyorsulásérzékelő hiba'
+        pt: 'Avaria do sensor de aceleração lateral'
+
+  YAW_RATE_SENSOR_FAULT:
+    bits: '1.2'
+    comment:
+      en: 'Yaw rate sensor fault'
+      fr: 'Défaut du capteur de vitesse de lacet'
+      es: 'Fallo del sensor de velocidad de guiñada'
+      de: 'Fehler des Gierratensensors'
+      it: 'Guasto del sensore di velocità di imbardata'
+      pl: 'Usterka czujnika prędkości odchylania'
+      ru: 'Неисправность датчика скорости рыскания'
+      zh: '横摆角速度传感器故障'
+      hu: 'A legyezőmozgás-sebesség érzékelőjének hibája'
+      pt: 'Falha do sensor de velocidade de guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Yaw rate sensor fault'
+        fr: 'Défaut du capteur de vitesse de lacet'
+        es: 'Fallo del sensor de velocidad de guiñada'
+        de: 'Fehler des Gierratensensors'
+        it: 'Guasto del sensore di velocità di imbardata'
+        pl: 'Błąd czujnika prędkości odchylania (yaw)'
+        ru: 'Неисправность датчика угловой скорости рыскания'
+        zh: '横摆角速度传感器故障'
+        hu: 'Legyezőszög-sebesség érzékelő hibája'
+        pt: 'Avaria do sensor de velocidade de guinada'
+
+  TEST_MODE_SWITCH_BIT:
+    bits: '1.0'
+    comment:
+      en: 'Switch to test mode bit'
+      fr: 'Bit de passage en mode test'
+      es: 'Bit de cambio a modo de prueba'
+      de: 'Bit zum Umschalten in den Testmodus'
+      it: 'Bit di passaggio alla modalità test'
+      pl: 'Bit przejścia w tryb testowy'
+      ru: 'Бит перехода в тестовый режим'
+      zh: '切换至测试模式位'
+      hu: 'Tesztmódba váltás bitje'
+      pt: 'Bit de mudança para modo de teste'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Switch to test mode'
+        fr: 'Passage en mode test'
+        es: 'Cambio a modo de prueba'
+        de: 'Wechsel in den Testmodus'
+        it: 'Passaggio alla modalità test'
+        pl: 'Przełączenie w tryb testowy'
+        ru: 'Переход в тестовый режим'
+        zh: '切换至测试模式'
+        hu: 'Váltás tesztüzemmódra'
+        pt: 'Mudar para modo de teste'
+
+  ACCEL_SENSOR_IDENTIFICATION_BYTE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Identification byte of the acceleration/yaw sensor'
+      fr: 'Octet d''identification du capteur d''accélération/lacet'
+      es: 'Byte de identificación del sensor de aceleración/guiñada'
+      de: 'Identifikationsbyte des Beschleunigungs-/Gierratensensors'
+      it: 'Byte di identificazione del sensore di accelerazione/imbardata'
+      pl: 'Bajt identyfikacyjny czujnika przyspieszenia/odchylenia'
+      ru: 'Байт идентификации датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的识别字节'
+      hu: 'A gyorsulás-/legyezési érzékelő azonosító bájtja'
+      pt: 'Byte de identificação do sensor de aceleração/guinada'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00

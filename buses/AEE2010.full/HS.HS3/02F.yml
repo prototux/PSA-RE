@@ -1,0 +1,340 @@
+id: 0x02F
+name: 'BSRF_COMMAND'
+type: 'can'
+length: 8
+comment:
+  en: 'Electric/hybrid powertrain data sent by the BSI to the telematics gateway: DC/DC converter state, maximum HV battery temperature, inverter working state, charge in progress and charging plug state.'
+  fr: 'Données de la chaîne de traction électrique/hybride envoyées par la BSI à la passerelle télématique : état du convertisseur DC/DC, température maximale de la batterie HT, état de fonctionnement de l''onduleur, recharge en cours et état de la prise de recharge.'
+  es: 'Datos de la cadena de tracción eléctrica/híbrida enviados por la BSI a la pasarela telemática: estado del convertidor DC/DC, temperatura máxima de la batería de alta tensión, estado de funcionamiento del inversor, recarga en curso y estado de la toma de recarga.'
+  de: 'Von der BSI an das Telematik-Gateway gesendete Daten des Elektro-/Hybridantriebs: DC/DC-Wandlerzustand, maximale HV-Batterietemperatur, Wechselrichter-Betriebszustand, laufender Ladevorgang und Ladesteckerzustand.'
+  it: 'Dati della catena di trazione elettrica/ibrida inviati dalla BSI al gateway telematico: stato del convertitore DC/DC, temperatura massima della batteria AT, stato di funzionamento dell''inverter, ricarica in corso e stato della presa di ricarica.'
+  pl: 'Dane układu napędowego elektrycznego/hybrydowego wysyłane przez BSI do bramki telematycznej: stan przetwornicy DC/DC, maksymalna temperatura akumulatora WN, stan pracy falownika, trwające ładowanie i stan wtyczki ładowania.'
+  ru: 'Данные электрической/гибридной силовой установки, отправляемые BSI в телематический шлюз: состояние DC/DC преобразователя, максимальная температура высоковольтной батареи, рабочее состояние инвертора, идёт зарядка и состояние зарядного разъёма.'
+  zh: '由BSI发送给远程信息处理网关的电动/混合动力传动系统数据：DC/DC变换器状态、高压电池最高温度、逆变器工作状态、正在充电及充电插头状态。'
+  hu: 'A BSI által a telematikai átjárónak küldött elektromos/hibrid hajtáslánc-adatok: DC/DC átalakító állapota, a nagyfeszültségű akkumulátor legmagasabb hőmérséklete, inverter üzemállapota, folyamatban lévő töltés és a töltőcsatlakozó állapota.'
+  pt: 'Dados do grupo motopropulsor elétrico/híbrido enviados pela BSI ao gateway telemático: estado do conversor DC/DC, temperatura máxima da bateria de alta tensão, estado de funcionamento do inversor, carregamento em curso e estado da ficha de carregamento.'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  HV_BATTERY_MAX_TEMPERATURE:
+    bits: '1.7-1.1'
+    comment:
+      en: 'Maximum temperature among the high-voltage battery probes'
+      fr: 'Température maximale parmi les sondes de la batterie haute tension'
+      es: 'Temperatura máxima entre las sondas de la batería de alta tensión'
+      de: 'Maximaltemperatur der Hochvoltbatterie-Sensoren'
+      it: 'Temperatura massima tra le sonde della batteria ad alta tensione'
+      pl: 'Maksymalna temperatura spośród czujników akumulatora wysokiego napięcia'
+      ru: 'Максимальная температура среди датчиков высоковольтной батареи'
+      zh: '高压电池探头中的最高温度'
+      hu: 'A nagyfeszültségű akkumulátor érzékelői közül a legmagasabb hőmérséklet'
+      pt: 'Temperatura máxima entre as sondas da bateria de alta tensão'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 85
+    units: '°C'
+    invalid: 0x7F
+
+  OBC_DCDC_STATE:
+    bits: '1.0-2.6'
+    comment:
+      en: 'On-board charger DC/DC converter state'
+      fr: 'État du convertisseur DC/DC du chargeur embarqué'
+      es: 'Estado del convertidor DC/DC del cargador embarcado'
+      de: 'Status des DC/DC-Wandlers des Onboard-Laders'
+      it: 'Stato del convertitore DC/DC del caricabatterie di bordo'
+      pl: 'Stan przetwornicy DC/DC ładowarki pokładowej'
+      ru: 'Состояние DC/DC преобразователя бортового зарядного устройства'
+      zh: '车载充电机DC/DC转换器状态'
+      hu: 'A fedélzeti töltő DC/DC átalakítójának állapota'
+      pt: 'Estado do conversor DC/DC do carregador de bordo'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Off mode'
+        fr: 'Coupé'
+        es: 'Modo apagado'
+        de: 'Aus-Modus'
+        it: 'Modalità spenta'
+        pl: 'Tryb wyłączony'
+        ru: 'Режим выключено'
+        zh: '关闭模式'
+        hu: 'Kikapcsolt mód'
+        pt: 'Modo desligado'
+      0x01:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x02:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Czuwanie'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x03:
+        en: 'Conversion'
+        fr: 'Conversion'
+        es: 'Conversión'
+        de: 'Umwandlung'
+        it: 'Conversione'
+        pl: 'Konwersja'
+        ru: 'Преобразование'
+        zh: '转换'
+        hu: 'Átalakítás'
+        pt: 'Conversão'
+      0x04:
+        en: 'Derating'
+        fr: 'Réduction de puissance'
+        es: 'Reducción de potencia'
+        de: 'Leistungsreduzierung'
+        it: 'Riduzione di potenza'
+        pl: 'Ograniczenie mocy'
+        ru: 'Снижение мощности'
+        zh: '降额'
+        hu: 'Teljesítménycsökkentés'
+        pt: 'Redução de potência'
+      0x05:
+        en: 'Protection'
+        fr: 'Protection'
+        es: 'Protección'
+        de: 'Schutz'
+        it: 'Protezione'
+        pl: 'Ochrona'
+        ru: 'Защита'
+        zh: '保护'
+        hu: 'Védelem'
+        pt: 'Proteção'
+      0x06:
+        en: 'Active discharge'
+        fr: 'Décharge active'
+        es: 'Descarga activa'
+        de: 'Aktive Entladung'
+        it: 'Scarica attiva'
+        pl: 'Aktywne rozładowanie'
+        ru: 'Активный разряд'
+        zh: '主动放电'
+        hu: 'Aktív kisütés'
+        pt: 'Descarga ativa'
+      0x07:
+        unused: true
+
+  INVERTER_WORKING_STATE:
+    bits: '2.5-2.3'
+    comment:
+      en: 'Traction inverter working state'
+      fr: 'État de fonctionnement de l''onduleur de traction'
+      es: 'Estado de funcionamiento del inversor de tracción'
+      de: 'Betriebszustand des Traktionswechselrichters'
+      it: 'Stato di funzionamento dell''inverter di trazione'
+      pl: 'Stan pracy falownika trakcyjnego'
+      ru: 'Рабочее состояние тягового инвертора'
+      zh: '牵引逆变器工作状态'
+      hu: 'A vontatási inverter üzemi állapota'
+      pt: 'Estado de funcionamento do inversor de tração'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Power off / wake-up'
+        fr: 'Extinction / réveil'
+        es: 'Apagado / activación'
+        de: 'Ausschalten / Aufwecken'
+        it: 'Spegnimento / risveglio'
+        pl: 'Wyłączenie / wybudzenie'
+        ru: 'Выключение / пробуждение'
+        zh: '关闭/唤醒'
+        hu: 'Kikapcsolás / ébresztés'
+        pt: 'Desligar / despertar'
+      0x01:
+        unused: true
+      0x02:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Tryb czuwania'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x03:
+        en: 'Operational'
+        fr: 'Opérationnel'
+        es: 'Operativo'
+        de: 'Betriebsbereit'
+        it: 'Operativo'
+        pl: 'Sprawny'
+        ru: 'Работоспособно'
+        zh: '运行正常'
+        hu: 'Üzemképes'
+        pt: 'Operacional'
+      0x04:
+        en: 'Post-use cooling'
+        fr: 'Refroidissement post-utilisation'
+        es: 'Refrigeración posterior al uso'
+        de: 'Nachlaufkühlung'
+        it: 'Raffreddamento post-utilizzo'
+        pl: 'Chłodzenie po użyciu'
+        ru: 'Охлаждение после использования'
+        zh: '使用后冷却'
+        hu: 'Használat utáni hűtés'
+        pt: 'Arrefecimento pós-utilização'
+      0x05:
+        en: 'Deactivated'
+        fr: 'Désactivé'
+        es: 'Desactivado'
+        de: 'Deaktiviert'
+        it: 'Disattivato'
+        pl: 'Wyłączone'
+        ru: 'Отключено'
+        zh: '已停用'
+        hu: 'Kikapcsolva'
+        pt: 'Desativado'
+      0x06:
+        en: 'Safe state'
+        fr: 'État sécurisé'
+        es: 'Estado seguro'
+        de: 'Sicherer Zustand'
+        it: 'Stato sicuro'
+        pl: 'Stan bezpieczny'
+        ru: 'Безопасное состояние'
+        zh: '安全状态'
+        hu: 'Biztonságos állapot'
+        pt: 'Estado seguro'
+      0x07:
+        en: 'Unavailable value'
+        fr: 'Valeur non disponible'
+        es: 'Valor no disponible'
+        de: 'Wert nicht verfügbar'
+        it: 'Valore non disponibile'
+        pl: 'Wartość niedostępna'
+        ru: 'Значение недоступно'
+        zh: '值不可用'
+        hu: 'Nem elérhető érték'
+        pt: 'Valor indisponível'
+
+  CHARGE_MODE_IN_PROGRESS:
+    bits: '2.2-2.0'
+    comment:
+      en: 'Current battery charging mode (slow AC, fast DC, no charging)'
+      fr: 'Mode de recharge en cours de la batterie (lente AC, rapide DC, pas de charge)'
+      es: 'Modo de recarga en curso de la batería (lenta AC, rápida DC, sin carga)'
+      de: 'Aktueller Ladevorgangsmodus der Batterie (langsam AC, schnell DC, kein Laden)'
+      it: 'Modalità di ricarica in corso della batteria (lenta AC, rapida DC, nessuna ricarica)'
+      pl: 'Bieżący tryb ładowania akumulatora (wolne AC, szybkie DC, brak ładowania)'
+      ru: 'Текущий режим зарядки батареи (медленная AC, быстрая DC, без зарядки)'
+      zh: '当前电池充电模式(慢充AC、快充DC、未充电)'
+      hu: 'Az akkumulátor aktuális töltési módja (lassú AC, gyors DC, nincs töltés)'
+      pt: 'Modo de carregamento atual da bateria (lento AC, rápido DC, sem carga)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Slow (AC)'
+        fr: 'Lent (climatisation)'
+        es: 'Lento (climatizador)'
+        de: 'Langsam (Klimaanlage)'
+        it: 'Lento (climatizzatore)'
+        pl: 'Wolno (klimatyzacja)'
+        ru: 'Медленно (кондиционер)'
+        zh: '慢速(空调)'
+        hu: 'Lassú (klíma)'
+        pt: 'Lento (AC)'
+      0x01:
+        en: 'Fast (DC)'
+        fr: 'Rapide (DC)'
+        es: 'Rápida (DC)'
+        de: 'Schnell (DC)'
+        it: 'Rapida (DC)'
+        pl: 'Szybkie (DC)'
+        ru: 'Быстрая (DC)'
+        zh: '快速(直流)'
+        hu: 'Gyors (DC)'
+        pt: 'Rápido (DC)'
+      0x02:
+        en: 'No load'
+        fr: 'Pas de charge'
+        es: 'Sin carga'
+        de: 'Keine Last'
+        it: 'Nessun carico'
+        pl: 'Brak obciążenia'
+        ru: 'Нагрузки нет'
+        zh: '无负载'
+        hu: 'Nincs terhelés'
+        pt: 'Sem carga'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  CHARGING_PLUG_STATE:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Charging plug connection state'
+      fr: 'État de connexion de la prise de charge'
+      es: 'Estado de conexión de la toma de carga'
+      de: 'Verbindungsstatus des Ladesteckers'
+      it: 'Stato di connessione della presa di ricarica'
+      pl: 'Stan podłączenia wtyczki ładowania'
+      ru: 'Статус подключения зарядного разъёма'
+      zh: '充电插头连接状态'
+      hu: 'A töltőcsatlakozó kapcsolódási állapota'
+      pt: 'Estado de ligação da tomada de carregamento'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Plugged in'
+        fr: 'Branché'
+        es: 'Enchufado'
+        de: 'Eingesteckt'
+        it: 'Collegato'
+        pl: 'Podłączony'
+        ru: 'Подключено'
+        zh: '已插入'
+        hu: 'Csatlakoztatva'
+        pt: 'Ligado à tomada'
+      0x01:
+        en: 'Unplugged'
+        fr: 'Débranché'
+        es: 'Desconectado'
+        de: 'Ausgesteckt'
+        it: 'Scollegato'
+        pl: 'Odłączony'
+        ru: 'Отключено'
+        zh: '已拔出'
+        hu: 'Kihúzva'
+        pt: 'Desligado'
+      0x02:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x03:
+        unused: true

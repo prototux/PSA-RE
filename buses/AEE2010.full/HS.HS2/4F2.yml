@@ -1,0 +1,638 @@
+id: 0x4F2
+name: 'HYBRID_BATTERY_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Battery management data 3: estimated internal resistance and voltage, water-heater climate demand, over/under-voltage severity, supercapacitor recharge current, actuator position and state of charge.'
+  fr: 'Données de gestion batterie 3 : résistance interne et tension estimées, demande de chauffage eau climatisation, gravité de sur/sous-tension, courant de recharge supercondensateur, position d''actionneur et état de charge.'
+  es: 'Datos de gestión de batería 3: resistencia interna y tensión estimadas, demanda de calefacción de agua para climatización, gravedad de sobre/subtensión, corriente de recarga del supercondensador, posición del actuador y estado de carga.'
+  de: 'Batteriemanagementdaten 3: geschätzter Innenwiderstand und geschätzte Spannung, Anforderung der Wasserheizung für die Klimaanlage, Schwere von Über-/Unterspannung, Superkondensator-Ladestrom, Aktuatorposition und Ladezustand.'
+  it: 'Dati di gestione batteria 3: resistenza interna e tensione stimate, richiesta riscaldamento acqua climatizzazione, gravità sovra/sottotensione, corrente di ricarica supercondensatore, posizione attuatore e stato di carica.'
+  pl: 'Dane zarządzania akumulatorem 3: szacowana rezystancja wewnętrzna i napięcie, żądanie podgrzewania wody klimatyzacji, waga przepięcia/niedomiaru napięcia, prąd ładowania superkondensatora, pozycja siłownika i stan naładowania.'
+  ru: 'Данные управления батареей 3: расчётное внутреннее сопротивление и напряжение, запрос подогрева воды для климата, степень тяжести пере-/понижения напряжения, ток подзарядки суперконденсатора, положение привода и уровень заряда.'
+  zh: '电池管理数据3:估计内阻和电压、空调水加热需求、过压/欠压严重程度、超级电容充电电流、执行器位置和充电状态。'
+  hu: 'Akkumulátor-kezelési adatok 3: becsült belső ellenállás és feszültség, klíma vízmelegítési igény, túl-/alulfeszültség súlyossága, szuperkondenzátor töltőáram, aktuátor pozíció és töltöttségi állapot.'
+  pt: 'Dados 3 de gestão da bateria: resistência interna e tensão estimadas, pedido de climatização do aquecedor de água, gravidade de sobretensão/subtensão, corrente de recarga do supercondensador, posição do atuador e estado de carga.'
+periodicity: ['100ms']
+senders: ['BSI']
+receivers: ['HCU2', 'CMM']
+
+signals:
+  BATTERY_SOC_HIGH_RESOLUTION:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Battery state of charge, high-resolution value'
+      fr: 'État de charge de la batterie, valeur à résolution élevée'
+      es: 'Estado de carga de la batería, valor de alta resolución'
+      de: 'Batterieladezustand, hochauflösender Wert'
+      it: 'Stato di carica della batteria, valore ad alta risoluzione'
+      pl: 'Stan naładowania akumulatora, wartość o wysokiej rozdzielczości'
+      ru: 'Уровень заряда батареи, значение высокого разрешения'
+      zh: '电池荷电状态,高分辨率数值'
+      hu: 'Az akkumulátor töltöttségi állapota, nagy felbontású érték'
+      pt: 'Estado de carga da bateria, valor de alta resolução'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x3FF
+    default: 0x3FE
+
+  BATTERY_ESTIMATOR_TYPE:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Type of battery state estimator in use'
+      fr: 'Type d''estimateur d''état de la batterie utilisé'
+      es: 'Tipo de estimador de estado de batería utilizado'
+      de: 'Verwendeter Batteriezustandsschätzer-Typ'
+      it: 'Tipo di stimatore dello stato della batteria utilizzato'
+      pl: 'Rodzaj używanego estymatora stanu akumulatora'
+      ru: 'Используемый тип оценщика состояния батареи'
+      zh: '所用电池状态估算器的类型'
+      hu: 'A használt akkumulátorállapot-becslő típusa'
+      pt: 'Tipo de estimador de estado da bateria utilizado'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None'
+        fr: 'Aucun'
+        es: 'Ninguno'
+        de: 'Keine'
+        it: 'Nessuno'
+        pl: 'Brak'
+        ru: 'Нет'
+        zh: '无'
+        hu: 'Nincs'
+        pt: 'Nenhum'
+      0x01:
+        en: 'Battery state estimator on wake-up'
+        fr: 'Estimateur d''état de batterie au réveil'
+        es: 'Estimador de estado de la batería al despertar'
+        de: 'Batteriezustandsschätzer beim Aufwachen'
+        it: 'Stimatore dello stato della batteria al risveglio'
+        pl: 'Estymator stanu akumulatora przy wybudzeniu'
+        ru: 'Оценка состояния батареи при пробуждении'
+        zh: '唤醒时电池状态估计器'
+        hu: 'Akkumulátor állapotbecslő ébredéskor'
+        pt: 'Estimador do estado da bateria na ativação'
+      0x02:
+        en: 'BECB'
+        fr: 'BECB'
+        es: 'BECB'
+        de: 'BECB'
+        it: 'BECB'
+        pl: 'BECB'
+        ru: 'BECB'
+        zh: 'BECB'
+        hu: 'BECB'
+        pt: 'BECB'
+      0x03:
+        unused: true
+
+  UCAP_RECHARGE_CURRENT_AUTHORIZED:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Authorized recharge current for the ultracapacitor (UCAP)'
+      fr: 'Courant de recharge autorisé pour l''ultracondensateur (UCAP)'
+      es: 'Corriente de recarga autorizada para el ultracondensador (UCAP)'
+      de: 'Zulässiger Ladestrom für den Ultrakondensator (UCAP)'
+      it: 'Corrente di ricarica autorizzata per l''ultracondensatore (UCAP)'
+      pl: 'Dopuszczalny prąd ładowania ultrakondensatora (UCAP)'
+      ru: 'Разрешённый ток заряда ультраконденсатора (UCAP)'
+      zh: '超级电容器(UCAP)的允许充电电流'
+      hu: 'Az ultrakondenzátor (UCAP) engedélyezett töltőárama'
+      pt: 'Corrente de recarga autorizada para o ultracondensador (UCAP)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: '0 A request'
+        fr: 'Consigne à 0 A'
+        es: 'Consigna a 0 A'
+        de: 'Sollwert 0 A'
+        it: 'Valore richiesto 0 A'
+        pl: 'Zadana wartość 0 A'
+        ru: 'Заданное значение 0 А'
+        zh: '0A设定值'
+        hu: '0 A alapjel'
+        pt: 'Consigna a 0 A'
+      0x01:
+        en: '10 A request'
+        fr: 'Consigne de 10 A'
+        es: 'Consigna de 10 A'
+        de: 'Sollwert 10 A'
+        it: 'Setpoint 10 A'
+        pl: 'Wartość zadana 10 A'
+        ru: 'Уставка 10 А'
+        zh: '10A设定请求'
+        hu: '10 A alapérték kérése'
+        pt: 'Pedido de 10 A'
+      0x02:
+        en: '28 A setpoint'
+        fr: 'Consigne à 28 A'
+        es: 'Consigna de 28 A'
+        de: 'Sollwert 28 A'
+        it: 'Setpoint 28 A'
+        pl: 'Wartość zadana 28 A'
+        ru: 'Уставка 28 А'
+        zh: '28A设定值'
+        hu: '28 A alapérték'
+        pt: 'Ponto de ajuste de 28 A'
+      0x03:
+        unused: true
+
+  SOC_STATUS:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Validity status of the state-of-charge (SOC) estimate'
+      fr: 'État de validité de l''estimation de l''état de charge (SOC)'
+      es: 'Estado de validez de la estimación del estado de carga (SOC)'
+      de: 'Gültigkeitsstatus der Ladezustandsschätzung (SOC)'
+      it: 'Stato di validità della stima dello stato di carica (SOC)'
+      pl: 'Stan ważności oszacowania stanu naładowania (SOC)'
+      ru: 'Статус достоверности оценки уровня заряда (SOC)'
+      zh: '荷电状态(SOC)估算的有效性状态'
+      hu: 'A töltöttségi állapot (SOC) becslésének érvényességi állapota'
+      pt: 'Estado de validade da estimativa do estado de carga (SOC)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Nominal SOC (state of charge) estimation'
+        fr: 'Estimation nominale du SOC (état de charge)'
+        es: 'Estimación nominal del SOC (estado de carga)'
+        de: 'Nominale SOC-Schätzung (Ladezustand)'
+        it: 'Stima nominale del SOC (stato di carica)'
+        pl: 'Nominalne oszacowanie SOC (stanu naładowania)'
+        ru: 'Номинальная оценка SOC (уровня заряда)'
+        zh: '标称 SOC(荷电状态)估算'
+        hu: 'Névleges SOC (töltöttségi állapot) becslés'
+        pt: 'Estimativa nominal do SOC (estado de carga)'
+      0x01:
+        en: 'Degraded SOC estimation'
+        fr: 'Estimation du SOC dégradée'
+        es: 'Estimación del SOC degradada'
+        de: 'Eingeschränkte SOC-Schätzung'
+        it: 'Stima del SOC degradata'
+        pl: 'Zdegradowane oszacowanie SOC'
+        ru: 'Деградированная оценка SOC'
+        zh: 'SOC估算降级'
+        hu: 'Romlott SOC-becslés'
+        pt: 'Estimativa do SOC degradada'
+      0x02:
+        en: 'Faulty'
+        fr: 'En défaut'
+        es: 'En fallo'
+        de: 'Fehlerhaft'
+        it: 'In guasto'
+        pl: 'Usterka'
+        ru: 'Неисправно'
+        zh: '故障'
+        hu: 'Hibás'
+        pt: 'Em falha'
+      0x03:
+        en: 'SOC estimate not relevant'
+        fr: 'Estimation du SOC non pertinente'
+        es: 'Estimación del SOC no pertinente'
+        de: 'SOC-Schätzung nicht relevant'
+        it: 'Stima SOC non pertinente'
+        pl: 'Oszacowanie SOC nieistotne'
+        ru: 'Оценка SOC нерелевантна'
+        zh: 'SOC估算无效'
+        hu: 'SOC becslés nem releváns'
+        pt: 'Estimativa do SOC não pertinente'
+
+  BATTERY_INTERNAL_RESISTANCE:
+    bits: '3.7-4.6'
+    comment:
+      en: 'Estimated battery internal resistance'
+      fr: 'Résistance interne estimée de la batterie'
+      es: 'Resistencia interna estimada de la batería'
+      de: 'Geschätzter Innenwiderstand der Batterie'
+      it: 'Resistenza interna stimata della batteria'
+      pl: 'Szacowana rezystancja wewnętrzna akumulatora'
+      ru: 'Оценочное внутреннее сопротивление батареи'
+      zh: '估算的电池内阻'
+      hu: 'Az akkumulátor becsült belső ellenállása'
+      pt: 'Resistência interna estimada da bateria'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 10
+    units: 'mOhm'
+    invalid: 0x3FF
+    default: 0x3FE
+
+  MEAP_POSITION:
+    bits: '4.5-4.4'
+    comment:
+      en: 'Active grille shutter (MEAP) position'
+      fr: 'Position du volet d''air actif (MEAP)'
+      es: 'Posición de la persiana de aire activa (MEAP)'
+      de: 'Position der aktiven Kühlerjalousie (MEAP)'
+      it: 'Posizione della serranda attiva del radiatore (MEAP)'
+      pl: 'Pozycja aktywnej żaluzji chłodnicy (MEAP)'
+      ru: 'Положение активных жалюзи радиатора (MEAP)'
+      zh: '主动进气格栅(MEAP)位置'
+      hu: 'Az aktív hűtőrács-zsalu (MEAP) helyzete'
+      pt: 'Posição da grelha de ar ativa (MEAP)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'MEAP blocked open'
+        fr: 'MEAP bloqué ouvert'
+        es: 'MEAP bloqueado abierto'
+        de: 'MEAP blockiert offen'
+        it: 'MEAP bloccato aperto'
+        pl: 'MEAP zablokowany w pozycji otwartej'
+        ru: 'MEAP заблокирован в открытом состоянии'
+        zh: 'MEAP锁定于打开状态'
+        hu: 'A MEAP nyitva blokkolva'
+        pt: 'MEAP bloqueado aberto'
+      0x01:
+        en: 'MEAP open'
+        fr: 'MEAP ouvert'
+        es: 'MEAP abierto'
+        de: 'MEAP offen'
+        it: 'MEAP aperto'
+        pl: 'MEAP otwarty'
+        ru: 'MEAP открыт'
+        zh: 'MEAP打开'
+        hu: 'MEAP nyitva'
+        pt: 'MEAP aberto'
+      0x02:
+        en: 'MEAP closed'
+        fr: 'MEAP fermé'
+        es: 'MEAP cerrado'
+        de: 'MEAP geschlossen'
+        it: 'MEAP chiuso'
+        pl: 'MEAP zamknięty'
+        ru: 'MEAP закрыт'
+        zh: 'MEAP关闭'
+        hu: 'MEAP zárva'
+        pt: 'MEAP fechado'
+      0x03:
+        en: 'MEAP failure'
+        fr: 'Défaillance MEAP'
+        es: 'Fallo MEAP'
+        de: 'MEAP-Störung'
+        it: 'Guasto MEAP'
+        pl: 'Awaria MEAP'
+        ru: 'Отказ MEAP'
+        zh: 'MEAP 故障'
+        hu: 'MEAP-hiba'
+        pt: 'Falha do MEAP'
+
+  MEAP_POSITION_UPDATE_BIT:
+    bits: '4.3'
+    comment:
+      en: 'Update bit for the active grille shutter (MEAP) position signal'
+      fr: 'Bit de mise à jour du signal de position du volet d''air actif (MEAP)'
+      es: 'Bit de actualización de la señal de posición de la persiana de aire activa (MEAP)'
+      de: 'Aktualisierungsbit des Positionssignals der aktiven Kühlerjalousie (MEAP)'
+      it: 'Bit di aggiornamento del segnale di posizione della serranda attiva (MEAP)'
+      pl: 'Bit aktualizacji sygnału pozycji aktywnej żaluzji chłodnicy (MEAP)'
+      ru: 'Бит обновления сигнала положения активных жалюзи радиатора (MEAP)'
+      zh: '主动进气格栅(MEAP)位置信号的更新位'
+      hu: 'Az aktív hűtőrács-zsalu (MEAP) helyzetjelének frissítési bitje'
+      pt: 'Bit de atualização do sinal de posição da grelha de ar ativa (MEAP)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Signal not refreshed'
+        fr: 'Signal non rafraîchi'
+        es: 'Señal no actualizada'
+        de: 'Signal nicht aktualisiert'
+        it: 'Segnale non aggiornato'
+        pl: 'Sygnał nieodświeżony'
+        ru: 'Сигнал не обновлён'
+        zh: '信号未刷新'
+        hu: 'A jel nincs frissítve'
+        pt: 'Sinal não atualizado'
+      0x01:
+        en: 'Signal refreshed'
+        fr: 'Signal rafraîchi'
+        es: 'Señal actualizada'
+        de: 'Signal aktualisiert'
+        it: 'Segnale aggiornato'
+        pl: 'Sygnał odświeżony'
+        ru: 'Сигнал обновлён'
+        zh: '信号已刷新'
+        hu: 'Jel frissítve'
+        pt: 'Sinal atualizado'
+
+  UNUSED_1:
+    bits: '4.2'
+    unused: true
+
+  IDLE_SPEED_INCREASE_REQUEST:
+    bits: '4.1'
+    comment:
+      en: 'Engine idle speed increase request'
+      fr: 'Demande d''augmentation du régime de ralenti moteur'
+      es: 'Solicitud de aumento del ralentí del motor'
+      de: 'Anforderung zur Erhöhung der Motorleerlaufdrehzahl'
+      it: 'Richiesta di aumento del regime minimo motore'
+      pl: 'Żądanie zwiększenia obrotów biegu jałowego silnika'
+      ru: 'Запрос на повышение оборотов холостого хода двигателя'
+      zh: '发动机怠速提升请求'
+      hu: 'Motor alapjárati fordulatszám növelési kérés'
+      pt: 'Pedido de aumento do ralenti do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Increase request'
+        fr: 'Demande d''augmentation'
+        es: 'Solicitud de aumento'
+        de: 'Erhöhungsanforderung'
+        it: 'Richiesta di aumento'
+        pl: 'Żądanie zwiększenia'
+        ru: 'Запрос увеличения'
+        zh: '增加请求'
+        hu: 'Növelési kérés'
+        pt: 'Pedido de aumento'
+
+  BATTERY_OPEN_CIRCUIT_VOLTAGE:
+    bits: '4.0-5.0'
+    comment:
+      en: 'Estimated battery open-circuit voltage'
+      fr: 'Tension en circuit ouvert estimée de la batterie'
+      es: 'Tensión en circuito abierto estimada de la batería'
+      de: 'Geschätzte Leerlaufspannung der Batterie'
+      it: 'Tensione a circuito aperto stimata della batteria'
+      pl: 'Szacowane napięcie akumulatora w obwodzie otwartym'
+      ru: 'Оценочное напряжение батареи без нагрузки'
+      zh: '估算的电池开路电压'
+      hu: 'Az akkumulátor becsült nyitott áramköri feszültsége'
+      pt: 'Tensão em circuito aberto estimada da bateria'
+    type: 'uint'
+    factor: 0.01
+    offset: 11
+    min: 11
+    max: 14
+    units: 'V'
+    invalid: 0x1FF
+    default: 0x1FE
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 0.0111)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 0.0111)'
+          es: 'También observado con otro escalado (factor 0.0111)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 0.0111)'
+          it: 'Osservato anche con un''altra scala (factor 0.0111)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 0.0111)'
+          ru: 'Также наблюдался с другим масштабом (factor 0.0111)'
+          zh: '也观察到使用另一种缩放（factor 0.0111）'
+          hu: 'Megfigyelve más skálázással is (factor 0.0111)'
+          pt: 'Também observado com outra escala (factor 0.0111)'
+        factor: 0.0111
+
+  EE_PRODUCTION_MIN_VOLTAGE_SETPOINT:
+    bits: '6.7-6.2'
+    comment:
+      en: 'Minimum voltage to be guaranteed by the electrical power generation (alternator)'
+      fr: 'Tension minimale à garantir par la production électrique (alternateur)'
+      es: 'Tensión mínima que debe garantizar la generación eléctrica (alternador)'
+      de: 'Vom Generator zu gewährleistende Mindestspannung'
+      it: 'Tensione minima da garantire dalla produzione elettrica (alternatore)'
+      pl: 'Minimalne napięcie gwarantowane przez wytwarzanie energii elektrycznej (alternator)'
+      ru: 'Минимальное напряжение, гарантируемое системой выработки электроэнергии (генератором)'
+      zh: '发电系统(交流发电机)应保证的最低电压'
+      hu: 'A generátor által biztosítandó minimális feszültség'
+      pt: 'Tensão mínima a garantir pela produção elétrica (alternador)'
+    type: 'uint'
+    factor: 0.1
+    offset: 10.6
+    min: 10.6
+    max: 16
+    units: 'V'
+    invalid: 0x3F
+    default: 0x00
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 0.11)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 0.11)'
+          es: 'También observado con otro escalado (factor 0.11)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 0.11)'
+          it: 'Osservato anche con un''altra scala (factor 0.11)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 0.11)'
+          ru: 'Также наблюдался с другим масштабом (factor 0.11)'
+          zh: '也观察到使用另一种缩放（factor 0.11）'
+          hu: 'Megfigyelve más skálázással is (factor 0.11)'
+          pt: 'Também observado com outra escala (factor 0.11)'
+        factor: 0.11
+
+  MIN_VOLTAGE_FAULT_SEVERITY:
+    bits: '6.1-6.0'
+    comment:
+      en: 'Severity level of the fault event linked to minimum voltage'
+      fr: 'Niveau de gravité de l''événement redouté lié à la tension minimale'
+      es: 'Nivel de gravedad del evento de fallo relacionado con la tensión mínima'
+      de: 'Schweregrad des Fehlerereignisses in Bezug auf die Mindestspannung'
+      it: 'Livello di gravità dell''evento di guasto legato alla tensione minima'
+      pl: 'Poziom istotności zdarzenia awaryjnego związanego z napięciem minimalnym'
+      ru: 'Уровень серьёзности события неисправности, связанного с минимальным напряжением'
+      zh: '与最低电压相关的故障事件严重等级'
+      hu: 'A minimális feszültséghez kapcsolódó hibaesemény súlyossági szintje'
+      pt: 'Nível de gravidade do evento de avaria associado à tensão mínima'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Severity 2'
+        fr: 'Gravité 2'
+        es: 'Gravedad 2'
+        de: 'Schweregrad 2'
+        it: 'Gravità 2'
+        pl: 'Waga 2'
+        ru: 'Степень тяжести 2'
+        zh: '严重程度2'
+        hu: '2. súlyossági fok'
+        pt: 'Gravidade 2'
+      0x01:
+        en: 'Severity 3'
+        fr: 'Gravité 3'
+        es: 'Gravedad 3'
+        de: 'Schweregrad 3'
+        it: 'Gravità 3'
+        pl: 'Ważność 3'
+        ru: 'Степень тяжести 3'
+        zh: '严重程度3'
+        hu: '3. súlyossági fok'
+        pt: 'Gravidade 3'
+      0x02:
+        en: 'Severity 4'
+        fr: 'Gravité 4'
+        es: 'Gravedad 4'
+        de: 'Schweregrad 4'
+        it: 'Gravità 4'
+        pl: 'Poziom ważności 4'
+        ru: 'Степень тяжести 4'
+        zh: '严重程度4'
+        hu: '4. súlyossági szint'
+        pt: 'Gravidade 4'
+      0x03:
+        unused: true
+
+  EE_PRODUCTION_MAX_VOLTAGE_SETPOINT:
+    bits: '7.7-7.2'
+    comment:
+      en: 'Maximum voltage to be guaranteed by the electrical power generation (alternator)'
+      fr: 'Tension maximale à garantir par la production électrique (alternateur)'
+      es: 'Tensión máxima que debe garantizar la generación eléctrica (alternador)'
+      de: 'Vom Generator zu gewährleistende Höchstspannung'
+      it: 'Tensione massima da garantire dalla produzione elettrica (alternatore)'
+      pl: 'Maksymalne napięcie gwarantowane przez wytwarzanie energii elektrycznej (alternator)'
+      ru: 'Максимальное напряжение, гарантируемое системой выработки электроэнергии (генератором)'
+      zh: '发电系统(交流发电机)应保证的最高电压'
+      hu: 'A generátor által biztosítandó maximális feszültség'
+      pt: 'Tensão máxima a garantir pela produção elétrica (alternador)'
+    type: 'uint'
+    factor: 0.1
+    offset: 10.6
+    min: 10.6
+    max: 16
+    units: 'V'
+    invalid: 0x3F
+    default: 0x2C
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 0.11)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 0.11)'
+          es: 'También observado con otro escalado (factor 0.11)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 0.11)'
+          it: 'Osservato anche con un''altra scala (factor 0.11)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 0.11)'
+          ru: 'Также наблюдался с другим масштабом (factor 0.11)'
+          zh: '也观察到使用另一种缩放（factor 0.11）'
+          hu: 'Megfigyelve más skálázással is (factor 0.11)'
+          pt: 'Também observado com outra escala (factor 0.11)'
+        factor: 0.11
+
+  MAX_VOLTAGE_FAULT_SEVERITY:
+    bits: '7.1-7.0'
+    comment:
+      en: 'Severity level of the fault event linked to maximum voltage'
+      fr: 'Niveau de gravité de l''événement redouté lié à la tension maximale'
+      es: 'Nivel de gravedad del evento de fallo relacionado con la tensión máxima'
+      de: 'Schweregrad des Fehlerereignisses in Bezug auf die Höchstspannung'
+      it: 'Livello di gravità dell''evento di guasto legato alla tensione massima'
+      pl: 'Poziom istotności zdarzenia awaryjnego związanego z napięciem maksymalnym'
+      ru: 'Уровень серьёзности события неисправности, связанного с максимальным напряжением'
+      zh: '与最高电压相关的故障事件严重等级'
+      hu: 'A maximális feszültséghez kapcsolódó hibaesemény súlyossági szintje'
+      pt: 'Nível de gravidade do evento de avaria associado à tensão máxima'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Severity 2'
+        fr: 'Gravité 2'
+        es: 'Gravedad 2'
+        de: 'Schweregrad 2'
+        it: 'Gravità 2'
+        pl: 'Waga 2'
+        ru: 'Степень тяжести 2'
+        zh: '严重程度2'
+        hu: '2. súlyossági fok'
+        pt: 'Gravidade 2'
+      0x01:
+        en: 'Severity 3'
+        fr: 'Gravité 3'
+        es: 'Gravedad 3'
+        de: 'Schweregrad 3'
+        it: 'Gravità 3'
+        pl: 'Ważność 3'
+        ru: 'Степень тяжести 3'
+        zh: '严重程度3'
+        hu: '3. súlyossági fok'
+        pt: 'Gravidade 3'
+      0x02:
+        en: 'Severity 4'
+        fr: 'Gravité 4'
+        es: 'Gravedad 4'
+        de: 'Schweregrad 4'
+        it: 'Gravità 4'
+        pl: 'Poziom ważności 4'
+        ru: 'Степень тяжести 4'
+        zh: '严重程度4'
+        hu: '4. súlyossági szint'
+        pt: 'Gravidade 4'
+      0x03:
+        unused: true
+
+  EE_PRODUCTION_MAX_VOLTAGE_SLEW_RATE:
+    bits: '8.7-8.1'
+    comment:
+      en: 'Maximum voltage variation rate to be applied by the electrical power generation (alternator)'
+      fr: 'Vitesse de variation de tension maximale à appliquer par la production électrique (alternateur)'
+      es: 'Velocidad máxima de variación de tensión que debe aplicar la generación eléctrica (alternador)'
+      de: 'Maximale vom Generator anzuwendende Spannungsänderungsrate'
+      it: 'Velocità massima di variazione della tensione da applicare dalla produzione elettrica (alternatore)'
+      pl: 'Maksymalna szybkość zmiany napięcia stosowana przez wytwarzanie energii elektrycznej (alternator)'
+      ru: 'Максимальная скорость изменения напряжения, применяемая системой выработки электроэнергии'
+      zh: '发电系统(交流发电机)应采用的最大电压变化率'
+      hu: 'A generátor által alkalmazandó maximális feszültségváltozási sebesség'
+      pt: 'Velocidade máxima de variação de tensão a aplicar pela produção elétrica (alternador)'
+    type: 'uint'
+    factor: 0.1
+    min: 0.1
+    max: 10
+    units: 'V/s'
+    invalid: 0x7F
+    default: 0x05
+
+  MEAP_OPENING_REQUEST_AC:
+    bits: '8.0'
+    comment:
+      en: 'Active grille shutter (MEAP) opening request for air conditioning'
+      fr: 'Demande d''ouverture du volet d''air actif (MEAP) pour la climatisation'
+      es: 'Solicitud de apertura de la persiana de aire activa (MEAP) para el aire acondicionado'
+      de: 'Anforderung zum Öffnen der aktiven Kühlerjalousie (MEAP) für die Klimaanlage'
+      it: 'Richiesta di apertura della serranda attiva del radiatore (MEAP) per il climatizzatore'
+      pl: 'Żądanie otwarcia aktywnej żaluzji chłodnicy (MEAP) na potrzeby klimatyzacji'
+      ru: 'Запрос на открытие активных жалюзи радиатора (MEAP) для кондиционера'
+      zh: '为空调开启主动进气格栅(MEAP)的请求'
+      hu: 'Az aktív hűtőrács-zsalu (MEAP) nyitási kérése a klíma számára'
+      pt: 'Pedido de abertura da persiana de ar ativa (MEAP) para o ar condicionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'

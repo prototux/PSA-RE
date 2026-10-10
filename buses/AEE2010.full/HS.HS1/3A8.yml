@@ -1,0 +1,97 @@
+id: 0x3A8
+name: 'ENGINE_ECU_DATA_2'
+type: 'can'
+length: 6
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['500ms']
+senders: ['CMM', 'E_VCU']
+receivers: ['BSI']
+
+signals:
+  CONSUMED_ENERGY:
+    bits: '1.7-1.1'
+    comment:
+      en: 'Energy consumed by the electric motor and electronic components (ECU, climate control...) (Wh)'
+      fr: 'Quantité d''énergie consommée par le moteur électrique et les composants électroniques (calculateurs, climatisation...) (Wh)'
+      es: 'Cantidad de energía consumida por el motor eléctrico y los componentes electrónicos (calculadores, climatización...) (Wh)'
+      de: 'Vom Elektromotor und den elektronischen Komponenten (Steuergeräte, Klimaanlage...) verbrauchte Energiemenge (Wh)'
+      it: 'Quantità di energia consumata dal motore elettrico e dai componenti elettronici (centraline, climatizzatore...) (Wh)'
+      pl: 'Ilość energii zużytej przez silnik elektryczny i podzespoły elektroniczne (sterowniki, klimatyzacja...) (Wh)'
+      ru: 'Количество энергии, потреблённой электродвигателем и электронными компонентами (блоки управления, кондиционер...) (Вт·ч)'
+      zh: '电动机及电子部件(ECU、空调等)消耗的能量(Wh)'
+      hu: 'Az elektromos motor és az elektronikus alkatrészek (vezérlőegységek, klíma...) által felhasznált energia (Wh)'
+      pt: 'Quantidade de energia consumida pelo motor elétrico e pelos componentes eletrónicos (unidades de controlo, climatização...) (Wh)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 254
+    units: 'Wh'
+
+  BATTERY_ENERGY_BALANCE:
+    bits: '2.7-2.1'
+    comment:
+      en: 'Battery balance of all energy produced and/or consumed (Wh)'
+      fr: 'Bilan batterie de toute l''énergie produite et/ou consommée (Wh)'
+      es: 'Balance de la batería de toda la energía producida y/o consumida (Wh)'
+      de: 'Batteriebilanz der gesamten erzeugten und/oder verbrauchten Energie (Wh)'
+      it: 'Bilancio batteria di tutta l''energia prodotta e/o consumata (Wh)'
+      pl: 'Bilans akumulatora całej wyprodukowanej i/lub zużytej energii (Wh)'
+      ru: 'Баланс батареи по всей произведённой и/или потреблённой энергии (Вт·ч)'
+      zh: '电池产生和/或消耗的总能量平衡(Wh)'
+      hu: 'Az akkumulátor összes termelt és/vagy felhasznált energiájának mérlege (Wh)'
+      pt: 'Balanço da bateria de toda a energia produzida e/ou consumida (Wh)'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 254
+    units: 'Wh'
+
+  REGENERATED_ENERGY:
+    bits: '3.7-3.1'
+    comment:
+      en: 'Energy recovered through braking and lift-off regeneration (Wh)'
+      fr: 'Quantité d''énergie récupérée par freinage et lever de pied (Wh)'
+      es: 'Cantidad de energía recuperada por frenado y al soltar el acelerador (Wh)'
+      de: 'Durch Bremsen und Gaswegnahme zurückgewonnene Energiemenge (Wh)'
+      it: 'Quantità di energia recuperata mediante frenata e rilascio dell''acceleratore (Wh)'
+      pl: 'Ilość energii odzyskanej podczas hamowania i zdejmowania nogi z pedału gazu (Wh)'
+      ru: 'Количество энергии, рекуперированной при торможении и снятии ноги с педали газа (Вт·ч)'
+      zh: '通过制动和松油门回收的能量(Wh)'
+      hu: 'Fékezéssel és gázelvétellel visszanyert energia mennyisége (Wh)'
+      pt: 'Quantidade de energia recuperada por travagem e alívio do acelerador (Wh)'
+    type: 'uint'
+    factor: 2
+    offset: -254
+    min: -254
+    max: 0
+    units: 'Wh'
+
+  RELATIVE_STATE_OF_ENERGY:
+    bits: '5.7-6.6'
+    comment:
+      en: 'Ratio of available energy within the battery energy range that allows ZEV (electric-only) modes (Wh)'
+      fr: 'Ratio d''énergie disponible dans la plage d''énergie de la batterie autorisant les modes tout électrique (ZEV) (Wh)'
+      es: 'Relación de energía disponible dentro del rango de energía de la batería que permite los modos totalmente eléctricos (ZEV) (Wh)'
+      de: 'Verhältnis der verfügbaren Energie innerhalb des Batterieenergiebereichs, der Nullemissionsmodi (ZEV) erlaubt (Wh)'
+      it: 'Rapporto di energia disponibile nell''intervallo di energia della batteria che consente le modalità a zero emissioni (ZEV) (Wh)'
+      pl: 'Stosunek dostępnej energii w zakresie energii akumulatora umożliwiającym tryby bezemisyjne (ZEV) (Wh)'
+      ru: 'Доля доступной энергии в диапазоне энергии батареи, допускающем электрические (ZEV) режимы (Вт·ч)'
+      zh: '电池能量范围内可用于纯电动(ZEV)模式的相对能量比例(Wh)'
+      hu: 'A ZEV (tisztán elektromos) üzemmódokat lehetővé tevő akkumulátor-energiatartományon belüli elérhető energia aránya (Wh)'
+      pt: 'Relação de energia disponível dentro do intervalo de energia da bateria que permite os modos totalmente elétricos (ZEV) (Wh)'
+    type: 'uint'
+    factor: 0.125
+    min: 0
+    max: 100
+    units: 'Wh'
+    invalid: 0x3FF

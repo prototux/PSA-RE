@@ -1,0 +1,444 @@
+id: 0x4E2
+name: 'VCU_DRIVE_MODE_CAPABILITIES_2'
+type: 'can'
+length: 4
+comment:
+  en: 'Vehicle control unit data: available driving modes (normal, sport, eco, snow...), energy modes (hybrid, zero-emission, fuel) and drive-axle modes (auto, front, rear), plus cooling wake-up requests.'
+  fr: 'Données de l''unité de contrôle du véhicule : modes de conduite disponibles (normal, sport, éco, neige...), modes d''énergie (hybride, zéro émission, carburant) et modes d''essieu moteur (auto, avant, arrière), ainsi que les demandes de réveil pour le refroidissement.'
+  es: 'Datos de la unidad de control del vehículo: modos de conducción disponibles (normal, deportivo, eco, nieve...), modos de energía (híbrido, cero emisiones, combustible) y modos de eje motriz (automático, delantero, trasero), además de las solicitudes de activación para refrigeración.'
+  de: 'Daten der Fahrzeugsteuereinheit: verfügbare Fahrmodi (normal, sport, eco, schnee...), Energiemodi (hybrid, emissionsfrei, Kraftstoff) und Antriebsachsenmodi (auto, vorne, hinten), sowie Kühlungs-Weckanforderungen.'
+  it: 'Dati dell''unità di controllo veicolo: modalità di guida disponibili (normale, sport, eco, neve...), modalità energia (ibrida, zero emissioni, carburante) e modalità asse motore (auto, anteriore, posteriore), oltre alle richieste di risveglio per il raffreddamento.'
+  pl: 'Dane jednostki sterującej pojazdem: dostępne tryby jazdy (normalny, sportowy, eco, śnieg...), tryby energii (hybrydowy, zero emisji, paliwo) i tryby osi napędowej (auto, przednia, tylna), a także żądania wybudzenia do chłodzenia.'
+  ru: 'Данные блока управления автомобилем: доступные режимы движения (обычный, спорт, эко, снег...), энергетические режимы (гибрид, нулевые выбросы, топливо) и режимы ведущего моста (авто, передний, задний), а также запросы пробуждения для охлаждения.'
+  zh: '车辆控制单元数据:可用驾驶模式(普通、运动、经济、雪地……)、能量模式(混动、零排放、燃油)和驱动桥模式(自动、前、后),以及冷却唤醒请求。'
+  hu: 'A jármű vezérlőegység adatai: elérhető vezetési módok (normál, sport, eco, hó...), energiamódok (hibrid, nulla emissziós, üzemanyag) és hajtott tengely módok (automata, első, hátsó), valamint hűtési ébresztési kérések.'
+  pt: 'Dados da unidade de controlo do veículo: modos de condução disponíveis (normal, desportivo, eco, neve...), modos de energia (híbrido, emissões zero, combustível) e modos de eixo motor (automático, dianteiro, traseiro), além de pedidos de ativação do arrefecimento.'
+observations:
+  en: 'On state change of: EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+  fr: 'Sur changement d''état de : EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+  es: 'Al cambiar el estado de: EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+  de: 'Bei Statusänderung von: EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+  it: 'Al cambiamento di stato di: EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+  pl: 'Wysyłane przy zmianie stanu: EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+  ru: 'При изменении состояния: EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+  zh: '当MODE_EPS_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, PLUGIN_CHARGE_TYPE_SYNTH状态变化时'
+  hu: 'A(z) EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS állapotváltozásakor'
+  pt: 'Na mudança de estado de: EPS_MODE_REQUEST, THERMAL_SYSTEM_USE_CASE, HYBRID_DRIVER_PRESENCE, CHARGE_MODE_SYNTHESIS'
+periodicity: ['100ms', 'trigger']
+senders: ['VCU']
+receivers: ['OBC', 'CMEL', 'CMM', 'TBMU', 'ERAD']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrzőösszege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process (rolling) counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  EPS_MODE_REQUEST:
+    bits: '2.7-2.5'
+    comment:
+      en: 'Electric powertrain system (EPS) mode request (off, drive active, discharge, PI charge, PI balance)'
+      fr: 'Demande de mode du système de propulsion électrique (EPS) (arrêt, conduite active, décharge, charge PI, équilibrage PI)'
+      es: 'Solicitud de modo del sistema de propulsión eléctrica (EPS) (apagado, conducción activa, descarga, carga PI, equilibrado PI)'
+      de: 'Modusanforderung des elektrischen Antriebssystems (EPS) (Aus, Fahrbetrieb aktiv, Entladung, PI-Ladung, PI-Balance)'
+      it: 'Richiesta di modalità del sistema di propulsione elettrica (EPS) (off, guida attiva, scarica, carica PI, bilanciamento PI)'
+      pl: 'Żądanie trybu elektrycznego układu napędowego (EPS) (wyłączony, jazda aktywna, rozładowanie, ładowanie PI, balansowanie PI)'
+      ru: 'Запрос режима электрической силовой установки (EPS) (выкл, движение активно, разряд, зарядка PI, балансировка PI)'
+      zh: '电力驱动系统(EPS)模式请求(关闭、驱动激活、放电、PI充电、PI均衡)'
+      hu: 'Az elektromos hajtásrendszer (EPS) üzemmódkérése (kikapcsolva, aktív vezetés, kisütés, PI töltés, PI kiegyenlítés)'
+      pt: 'Pedido de modo do sistema de propulsão elétrica (EPS) (desligado, condução ativa, descarga, carga PI, equilíbrio PI)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Drive active'
+        fr: 'Drive actif'
+        es: 'Drive activo'
+        de: 'Drive aktiv'
+        it: 'Drive attivo'
+        pl: 'Aktywny bieg Drive'
+        ru: 'Активен режим Drive'
+        zh: '行驶挡激活'
+        hu: 'Drive aktív'
+        pt: 'Drive ativo'
+      0x02:
+        en: 'discharge'
+        fr: 'Décharge'
+        es: 'Descarga'
+        de: 'Entladung'
+        it: 'Scarica'
+        pl: 'Rozładowanie'
+        ru: 'Разряд'
+        zh: '放电'
+        hu: 'Kisütés'
+        pt: 'Descarga'
+      0x03:
+        en: 'PI charge'
+        fr: 'Charge PI'
+        es: 'Carga PI'
+        de: 'PI-Ladung'
+        it: 'Carica PI'
+        pl: 'Ładunek PI'
+        ru: 'Заряд PI'
+        zh: 'PI充电'
+        hu: 'PI töltés'
+        pt: 'Carga PI'
+      0x04:
+        en: 'PI balance'
+        fr: 'Balance PI'
+        es: 'Balance PI'
+        de: 'PI-Abgleich'
+        it: 'Bilanciamento PI'
+        pl: 'Bilans PI'
+        ru: 'Баланс ПИ'
+        zh: 'PI平衡'
+        hu: 'PI kiegyenlítés'
+        pt: 'Balanço PI'
+      0x05:
+        en: 'PI discharge'
+        fr: 'Décharge PI'
+        es: 'Descarga PI'
+        de: 'PI-Entladung'
+        it: 'Scarica PI'
+        pl: 'Rozładowanie PI'
+        ru: 'Разряд PI'
+        zh: 'PI放电'
+        hu: 'PI kisütés'
+        pt: 'Descarga PI'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  CHARGE_STATE:
+    bits: '2.4-2.3'
+    comment:
+      en: 'Charging state'
+      fr: 'État de la recharge'
+      es: 'Estado de la carga'
+      de: 'Ladezustand'
+      it: 'Stato della ricarica'
+      pl: 'Stan ładowania'
+      ru: 'Статус зарядки'
+      zh: '充电状态'
+      hu: 'A töltés állapota'
+      pt: 'Estado do carregamento'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+      0x01:
+        en: 'OFF not completed'
+        fr: 'OFF non achevé'
+        es: 'OFF no completado'
+        de: 'OFF nicht abgeschlossen'
+        it: 'OFF non completato'
+        pl: 'OFF niezakończone'
+        ru: 'OFF не завершено'
+        zh: 'OFF未完成'
+        hu: 'OFF nincs befejezve'
+        pt: 'OFF não concluído'
+      0x02:
+        en: 'OFF completed'
+        fr: 'OFF achevé'
+        es: 'OFF completado'
+        de: 'OFF abgeschlossen'
+        it: 'OFF completato'
+        pl: 'OFF zakończone'
+        ru: 'OFF завершено'
+        zh: 'OFF已完成'
+        hu: 'OFF befejezve'
+        pt: 'OFF concluído'
+      0x03:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+
+  THERMAL_SYSTEM_USE_CASE:
+    bits: '2.2-2.0'
+    comment:
+      en: 'Thermal management system use case'
+      fr: 'Cas d''usage du système de gestion thermique'
+      es: 'Caso de uso del sistema de gestión térmica'
+      de: 'Anwendungsfall des Thermomanagementsystems'
+      it: 'Caso d''uso del sistema di gestione termica'
+      pl: 'Przypadek użycia systemu zarządzania termicznego'
+      ru: 'Сценарий использования системы терморегулирования'
+      zh: '热管理系统使用场景'
+      hu: 'A hőgazdálkodási rendszer használati esete'
+      pt: 'Caso de utilização do sistema de gestão térmica'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Drive active'
+        fr: 'Drive actif'
+        es: 'Drive activo'
+        de: 'Drive aktiv'
+        it: 'Drive attivo'
+        pl: 'Aktywny bieg Drive'
+        ru: 'Активен режим Drive'
+        zh: '行驶挡激活'
+        hu: 'Drive aktív'
+        pt: 'Drive ativo'
+      0x02:
+        en: 'PME post-cooling'
+        fr: 'Post-refroidissement PME'
+        es: 'Postenfriamiento PME'
+        de: 'PME-Nachkühlung'
+        it: 'Post-raffreddamento PME'
+        pl: 'Chłodzenie końcowe PME'
+        ru: 'Дополнительное охлаждение PME'
+        zh: 'PME后冷却'
+        hu: 'PME utóhűtés'
+        pt: 'Pós-arrefecimento PME'
+      0x03:
+        en: 'PME (electric machine power unit) cooling'
+        fr: 'Refroidissement PME'
+        es: 'Refrigeración PME'
+        de: 'PME-Kühlung'
+        it: 'Raffreddamento PME'
+        pl: 'Chłodzenie PME'
+        ru: 'Охлаждение PME'
+        zh: 'PME 冷却'
+        hu: 'PME hűtés'
+        pt: 'Refrigeração PME'
+      0x04:
+        en: 'Cabin preheating'
+        fr: 'Préchauffage de l''habitacle'
+        es: 'Precalentamiento del habitáculo'
+        de: 'Innenraumvorheizung'
+        it: 'Preriscaldamento dell''abitacolo'
+        pl: 'Wstępne ogrzewanie kabiny'
+        ru: 'Предварительный подогрев салона'
+        zh: '座舱预热'
+        hu: 'Utastér előfűtés'
+        pt: 'Pré-aquecimento do habitáculo'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  AC_ELECTRIC_POWER_CONSUMPTION:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Power consumed by the air conditioning components (electric compressor and high-voltage water heater)'
+      fr: 'Puissance consommée par les organes de climatisation (compresseur électrique et chauffage électrique de l''eau haute tension)'
+      es: 'Potencia consumida por los componentes de climatización (compresor eléctrico y calentador de agua de alta tensión)'
+      de: 'Von den Klimakomponenten verbrauchte Leistung (elektrischer Kompressor und Hochvolt-Wasserheizer)'
+      it: 'Potenza consumata dai componenti di climatizzazione (compressore elettrico e riscaldatore d''acqua ad alta tensione)'
+      pl: 'Moc pobierana przez elementy klimatyzacji (sprężarka elektryczna i grzałka wody wysokiego napięcia)'
+      ru: 'Мощность, потребляемая компонентами кондиционера (электрический компрессор и высоковольтный водяной нагреватель)'
+      zh: '空调部件(电动压缩机和高压水加热器)消耗的功率'
+      hu: 'A klímaberendezés elemei (elektromos kompresszor és nagyfeszültségű vízmelegítő) által fogyasztott teljesítmény'
+      pt: 'Potência consumida pelos componentes de climatização (compressor elétrico e aquecedor elétrico de água de alta tensão)'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 12000
+    units: 'W'
+    invalid: 0xFF
+    default: 0xFE
+
+  HYBRID_DRIVER_PRESENCE:
+    bits: '4.7'
+    comment:
+      en: 'Driver presence for the hybrid powertrain'
+      fr: 'Présence du conducteur pour le groupe motopropulseur hybride'
+      es: 'Presencia del conductor para el grupo motopropulsor híbrido'
+      de: 'Fahreranwesenheit für den Hybridantrieb'
+      it: 'Presenza del conducente per il gruppo propulsore ibrido'
+      pl: 'Obecność kierowcy dla hybrydowego układu napędowego'
+      ru: 'Присутствие водителя для гибридного силового агрегата'
+      zh: '混合动力总成的驾驶员存在状态'
+      hu: 'A vezető jelenléte a hibrid hajtáslánc számára'
+      pt: 'Presença do condutor para o grupo motopropulsor híbrido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Driver away'
+        fr: 'Conducteur absent'
+        es: 'Conductor ausente'
+        de: 'Fahrer nicht anwesend'
+        it: 'Conducente assente'
+        pl: 'Kierowca nieobecny'
+        ru: 'Водитель отсутствует'
+        zh: '驾驶员离开'
+        hu: 'Vezető távol'
+        pt: 'Condutor ausente'
+      0x01:
+        en: 'Driver present'
+        fr: 'Conducteur présent'
+        es: 'Conductor presente'
+        de: 'Fahrer anwesend'
+        it: 'Conducente presente'
+        pl: 'Kierowca obecny'
+        ru: 'Водитель присутствует'
+        zh: '驾驶员在场'
+        hu: 'Vezető jelen'
+        pt: 'Condutor presente'
+
+  CHARGE_MODE_SYNTHESIS:
+    bits: '4.6-4.5'
+    comment:
+      en: 'Summary of the charging mode (waiting, deferred, immediate)'
+      fr: 'Synthèse du mode de recharge (attente, différé, immédiat)'
+      es: 'Resumen del modo de carga (espera, diferido, inmediato)'
+      de: 'Zusammenfassung des Lademodus (Warten, verzögert, sofort)'
+      it: 'Sintesi della modalità di ricarica (attesa, differita, immediata)'
+      pl: 'Podsumowanie trybu ładowania (oczekiwanie, opóźnione, natychmiastowe)'
+      ru: 'Сводка режима зарядки (ожидание, отложенная, немедленная)'
+      zh: '充电模式汇总(等待、延迟、立即)'
+      hu: 'A töltési mód összefoglalása (várakozás, késleltetett, azonnali)'
+      pt: 'Resumo do modo de carregamento (espera, diferido, imediato)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Waiting'
+        fr: 'En attente'
+        es: 'En espera'
+        de: 'Wartend'
+        it: 'In attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Em espera'
+      0x01:
+        en: 'Delayed'
+        fr: 'Différé'
+        es: 'Diferido'
+        de: 'Verzögert'
+        it: 'Differito'
+        pl: 'Opóźniony'
+        ru: 'Отложено'
+        zh: '延迟'
+        hu: 'Késleltetve'
+        pt: 'Diferido'
+      0x02:
+        en: 'Immediat'
+        fr: 'Immediat'
+        es: 'Inmediato'
+        de: 'Sofort'
+        it: 'Immediato'
+        pl: 'Natychmiastowy'
+        ru: 'Немедленно'
+        zh: '立即'
+        hu: 'Azonnali'
+        pt: 'Imediato'
+      0x03:
+        unused: true
+
+  STOP_SERVICE_LAMP_BLINK_REQUEST:
+    bits: '4.4'
+    comment:
+      en: 'Request to blink the stop/service warning lamp on the display'
+      fr: 'Demande de clignotement du témoin d''arrêt et de service sur l''afficheur'
+      es: 'Solicitud de parpadeo del testigo de parada y servicio en la pantalla'
+      de: 'Anforderung zum Blinken der Stopp-/Service-Kontrollleuchte im Display'
+      it: 'Richiesta di lampeggio della spia di stop e servizio sul display'
+      pl: 'Żądanie migania lampki zatrzymania i serwisu na wyświetlaczu'
+      ru: 'Запрос на мигание индикатора остановки и обслуживания на дисплее'
+      zh: '请求显示屏上的停止/维修警示灯闪烁'
+      hu: 'A leállás/szerviz jelzőlámpa villogtatásának kérése a kijelzőn'
+      pt: 'Pedido de intermitência da luz avisadora de paragem e serviço no visor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  UNUSED_1:
+    bits: '4.3-4.0'
+    unused: true

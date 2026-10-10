@@ -1,49 +1,258 @@
 id: 0x495
-name: 'POWER_STEERING_STATISTICS'
-length: 2
-comment:
-  en: 'Frame for power steering statistics'
-  fr: 'Cadre pour les statistiques de direction assistée'
-  de: 'Frame für Statistiken der elektronischen Servolenkung'
+name: 'POWER_STEERING_STATUS'
+alt_names: ['POWER_STEERING_STATISTICS']
 type: 'can'
-periodicity: 100 # calculated 101.6 ms based on 0x208
-senders:
-  - 'DAE'
-receivers: 
+length: 3
+comment:
+  en: 'Power steering status.'
+  fr: 'État de la direction assistée.'
+  es: 'Estado de la dirección asistida.'
+  de: 'Status der Servolenkung.'
+  it: 'Stato del servosterzo.'
+  pl: 'Stan wspomagania kierownicy.'
+  ru: 'Статус усилителя руля.'
+  zh: '动力转向状态。'
+  hu: 'A szervokormány állapota.'
+  pt: 'Estado da direção assistida.'
+periodicity: ['100ms']
+senders: ['DAE']
+receivers:
+  - 'SCDT'
+  - 'AR2S'
   - 'BSI'
+  - 'CMM'
+  - 'ACC'
+  - 'AMVAR'
+  - 'BVA'
+  - 'CAAR'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'CSS'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'BCP'
+  - 'SBW'
+  - 'BHI'
+  - 'TBMU'
+  - 'ABS'
 
 signals:
-  STEERING_TORQUE:
+  STEERING_WHEEL_TORQUE:
     bits: '1.7-1.0'
-    type: 'int'
+    alt_names: ['STEERING_TORQUE']
+    comment:
+      en: 'Torque applied by the driver on the steering wheel; a negative value acts in the counterclockwise direction (N.m)'
+      fr: 'Couple appliqué par le conducteur sur le volant ; une valeur négative agit dans le sens antihoraire (N.m)'
+      es: 'Par aplicado por el conductor sobre el volante; un valor negativo actúa en sentido antihorario (N.m)'
+      de: 'Vom Fahrer auf das Lenkrad ausgeübtes Drehmoment; ein negativer Wert wirkt gegen den Uhrzeigersinn (N.m)'
+      it: 'Coppia applicata dal conducente sul volante; un valore negativo agisce in senso antiorario (N.m)'
+      pl: 'Moment obrotowy przykładany przez kierowcę do kierownicy; wartość ujemna działa w kierunku przeciwnym do ruchu wskazówek zegara (N.m)'
+      ru: 'Крутящий момент, прикладываемый водителем к рулевому колесу; отрицательное значение действует против часовой стрелки (Н·м)'
+      zh: '驾驶员施加在方向盘上的扭矩;负值表示逆时针方向(N.m)'
+      hu: 'A vezető által a kormánykerékre kifejtett nyomaték; a negatív érték az óramutató járásával ellentétes irányban hat (N.m)'
+      pt: 'Binário aplicado pelo condutor no volante; um valor negativo atua no sentido anti-horário (N.m)'
+    type: 'sint'
     factor: 0.25
     min: -32
-    max: 32
-    values:
-      0x7fff:
-        en: 'Error'
-        fr: 'erreur'
-        de: 'Fehler'
+    max: 31.5
+    units: 'Nm'
+    invalid: 0x7F
+    default: 0x7F
 
   UNKNOWN_1:
     bits: '2.7-2.2'
 
-  POWER_STEERING_WARNING_LIGHTS:
+  EPS_WARNING_LAMP_STATE:
     bits: '2.1-2.0'
+    alt_names: ['POWER_STEERING_WARNING_LIGHTS']
+    comment:
+      en: 'Power steering warning lamp state'
+      fr: 'État du témoin de la direction assistée'
+      es: 'Estado del testigo de la dirección asistida'
+      de: 'Zustand der Servolenkungs-Kontrollleuchte'
+      it: 'Stato della spia dello sterzo assistito'
+      pl: 'Stan kontrolki wspomagania kierownicy'
+      ru: 'Состояние индикатора усилителя руля'
+      zh: '电动助力转向警告灯状态'
+      hu: 'A szervokormány jelzőlámpájának állapota'
+      pt: 'Estado da luz avisadora da direção assistida'
+    type: 'enum'
+    default: 0x00
     values:
-      0x00: # 0b00
-        en: 'Nothing to report'
-        fr: 'Rien à signaler'
-        de: 'Keine Fehler'
-      0x01: # 0b01
-        en: 'Light up red warning light.'
-        fr: "Allumer le voyant d'avertissement rouge."
-        de: 'Erleuchte die rote Warnanzeige'
-      0x02: # 0b10
-        en: 'Light up yellow warning light'
-        fr: "Allumer le voyant d'avertissement jaune"
-        de: 'Erleuchte die gelbe Warnanzeige'
-      0x03: # 0b11 - Not tested
+      0x00:
+        en: 'No request to light the warning lamp'
+        fr: 'Pas de demande d''allumage du témoin'
+        es: 'Sin solicitud de encendido del testigo'
+        de: 'Keine Anforderung zum Einschalten der Kontrollleuchte'
+        it: 'Nessuna richiesta di accensione della spia'
+        pl: 'Brak żądania włączenia lampki'
+        ru: 'Нет запроса включения индикатора'
+        zh: '无指示灯点亮请求'
+        hu: 'Nincs jelzőlámpa-bekapcsolási kérés'
+        pt: 'Sem pedido de acendimento da luz avisadora'
+      0x01:
+        en: 'Request to light the red warning lamp'
+        fr: 'Demande d''allumage du témoin rouge'
+        es: 'Solicitud de encendido del testigo rojo'
+        de: 'Anforderung zum Einschalten der roten Kontrollleuchte'
+        it: 'Richiesta di accensione della spia rossa'
+        pl: 'Żądanie zapalenia czerwonej kontrolki'
+        ru: 'Запрос на включение красной лампы'
+        zh: '请求点亮红色警告灯'
+        hu: 'A piros jelzőlámpa bekapcsolási kérése'
+        pt: 'Pedido de acendimento do avisador vermelho'
+      0x02:
+        en: 'Request to light orange lamp'
+        fr: 'Demande allumage voyant orange'
+        es: 'Solicitud de encendido del testigo naranja'
+        de: 'Anforderung Einschalten orangene Kontrollleuchte'
+        it: 'Richiesta di accensione della spia arancione'
+        pl: 'Żądanie zapalenia pomarańczowej kontrolki'
+        ru: 'Запрос включения оранжевого индикатора'
+        zh: '请求点亮橙色指示灯'
+        hu: 'Narancssárga jelzőlámpa bekapcsolási kérése'
+        pt: 'Pedido de acendimento da luz avisadora laranja'
+      0x03:
         en: 'Light up yellow and red warning light'
-        fr: "Témoin d'avertissement jaune et rouge allumé"
+        fr: 'Témoin d''avertissement jaune et rouge allumé'
+        es: 'Testigo de advertencia amarillo y rojo encendido'
         de: 'Erleuchte die rote und gelbe Warnanzeige'
+        it: 'Spia di avvertimento gialla e rossa accesa'
+        pl: 'Żółta i czerwona kontrolka ostrzegawcza świeci'
+        ru: 'Жёлтый и красный предупреждающий индикатор горит'
+        zh: '黄色和红色警告灯点亮'
+        hu: 'Sárga és piros figyelmeztető lámpa világít'
+        pt: 'Luz avisadora amarela e vermelha acesa'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.7-2.0'
+          fr: 'Aussi observé aux bits 2.7-2.0'
+          es: 'También observado en los bits 2.7-2.0'
+          de: 'Auch an den Bits 2.7-2.0 beobachtet'
+          it: 'Osservato anche ai bit 2.7-2.0'
+          pl: 'Obserwowany także na bitach 2.7-2.0'
+          ru: 'Также наблюдался в битах 2.7-2.0'
+          zh: '也观察到位于位2.7-2.0'
+          hu: 'Megfigyelve a(z) 2.7-2.0 biteken is'
+          pt: 'Também observado nos bits 2.7-2.0'
+        bits: '2.7-2.0'
+
+  ENGINE_RESTART_REQUEST_BY_EPS:
+    bits: '3.7'
+    comment:
+      en: 'Engine restart request from the power steering subsystem'
+      fr: 'Demande de redémarrage moteur par le sous-système de direction assistée'
+      es: 'Solicitud de reinicio del motor por el subsistema de dirección asistida'
+      de: 'Motorneustartanforderung durch das Servolenkungs-Subsystem'
+      it: 'Richiesta di riavvio motore da parte del sottosistema dello sterzo assistito'
+      pl: 'Żądanie ponownego uruchomienia silnika z podsystemu wspomagania kierownicy'
+      ru: 'Запрос повторного пуска двигателя от подсистемы усилителя руля'
+      zh: '电动助力转向子系统的发动机重启请求'
+      hu: 'Motor-újraindítási kérés a szervokormány alrendszertől'
+      pt: 'Pedido de reinício do motor pelo subsistema de direção assistida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No need for restart'
+        fr: 'Pas de besoin de redémarrage'
+        es: 'Sin necesidad de reinicio'
+        de: 'Kein Neustart erforderlich'
+        it: 'Nessuna necessità di riavvio'
+        pl: 'Brak potrzeby ponownego uruchomienia'
+        ru: 'Нет необходимости перезапуска'
+        zh: '无需重新启动'
+        hu: 'Nincs szükség újraindításra'
+        pt: 'Sem necessidade de reinício'
+      0x01:
+        en: 'Restart needed'
+        fr: 'Demande de redémarrage'
+        es: 'Necesidad de reinicio'
+        de: 'Neustart erforderlich'
+        it: 'Necessità di riavvio'
+        pl: 'Wymagany ponowny rozruch'
+        ru: 'Требуется перезапуск'
+        zh: '需要重启'
+        hu: 'Újraindítás szükséges'
+        pt: 'Necessidade de reinício'
+
+  ENGINE_RESTART_INHIBIT_BY_EPS:
+    bits: '3.6'
+    comment:
+      en: 'Engine restart inhibit request from the power steering subsystem'
+      fr: 'Interdiction de redémarrage moteur par le sous-système de direction assistée'
+      es: 'Prohibición de reinicio del motor por el subsistema de dirección asistida'
+      de: 'Motorneustartsperre durch das Servolenkungs-Subsystem'
+      it: 'Divieto di riavvio motore da parte del sottosistema dello sterzo assistito'
+      pl: 'Zablokowanie ponownego uruchomienia silnika z podsystemu wspomagania kierownicy'
+      ru: 'Запрет повторного пуска двигателя от подсистемы усилителя руля'
+      zh: '电动助力转向子系统的发动机重启禁止请求'
+      hu: 'Motor-újraindítási tiltás a szervokormány alrendszertől'
+      pt: 'Pedido de inibição do rearranque do motor pelo subsistema de direção assistida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition of restart'
+        fr: 'Pas d''interdiction de redémarrage'
+        es: 'Sin inhibición de reinicio'
+        de: 'Keine Neustartsperre'
+        it: 'Nessuna inibizione del riavvio'
+        pl: 'Brak zablokowania ponownego uruchomienia'
+        ru: 'Нет блокировки перезапуска'
+        zh: '无重启禁止'
+        hu: 'Nincs újraindítás-tiltás'
+        pt: 'Sem inibição de reinício'
+      0x01:
+        en: 'Restart inhibition'
+        fr: 'Interdiction de redémarrage'
+        es: 'Prohibición de reinicio'
+        de: 'Neustartverbot'
+        it: 'Divieto di riavvio'
+        pl: 'Zakaz ponownego uruchomienia'
+        ru: 'Запрет перезапуска'
+        zh: '禁止重启'
+        hu: 'Újraindítás tiltása'
+        pt: 'Proibição de reinício'
+
+  ENGINE_STOP_AUTHORIZATION_BY_EPS:
+    bits: '3.5'
+    comment:
+      en: 'Engine stop authorization from the power steering subsystem'
+      fr: 'Autorisation d''arrêt moteur par le sous-système de direction assistée'
+      es: 'Autorización de parada del motor por el subsistema de dirección asistida'
+      de: 'Motorabschaltfreigabe durch das Servolenkungs-Subsystem'
+      it: 'Autorizzazione di arresto motore da parte del sottosistema dello sterzo assistito'
+      pl: 'Zezwolenie na zatrzymanie silnika z podsystemu wspomagania kierownicy'
+      ru: 'Разрешение на остановку двигателя от подсистемы усилителя руля'
+      zh: '电动助力转向子系统的发动机停机许可'
+      hu: 'Motorleállítási engedély a szervokormány alrendszertől'
+      pt: 'Autorização de paragem do motor pelo subsistema de direção assistida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Stop not allowed'
+        fr: 'Stop non autorisé'
+        es: 'Stop no permitido'
+        de: 'Stopp nicht erlaubt'
+        it: 'Stop non consentito'
+        pl: 'Zatrzymanie niedozwolone'
+        ru: 'Остановка не разрешена'
+        zh: '不允许停机'
+        hu: 'A stop nem engedélyezett'
+        pt: 'Stop não permitido'
+      0x01:
+        en: 'Stop authorization'
+        fr: 'Autorisation d''arrêt'
+        es: 'Autorización de parada'
+        de: 'Abschaltfreigabe'
+        it: 'Autorizzazione di arresto'
+        pl: 'Zezwolenie na zatrzymanie'
+        ru: 'Разрешение остановки'
+        zh: '停止授权'
+        hu: 'Leállás engedélyezése'
+        pt: 'Autorização de paragem'

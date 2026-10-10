@@ -1,0 +1,745 @@
+id: 0x2E0
+name: 'CLIMATE_PRECONDITIONING_SCHEDULE'
+type: 'can'
+length: 7
+comment:
+  en: 'Preconditioning (cabin climate scheduling) profile information, defined by the profile message structure.'
+  fr: 'Informations de profil de préconditionnement (programmation climatique), définies par la structure du message profils.'
+  es: 'Información de perfil de preacondicionamiento (programación climática), definida por la estructura del mensaje de perfiles.'
+  de: 'Profilinformationen zur Vorklimatisierung (Klimaprogrammierung), definiert durch die Struktur der Profilnachricht.'
+  it: 'Informazioni di profilo di precondizionamento (programmazione climatica), definite dalla struttura del messaggio profili.'
+  pl: 'Informacje profilu wstępnej klimatyzacji (harmonogram klimatyzacji), zdefiniowane przez strukturę komunikatu profili.'
+  ru: 'Информация профиля предварительного кондиционирования (расписание климата), определяемая структурой сообщения профилей.'
+  zh: '预调节（座舱空调排程）配置文件信息，由配置文件消息结构定义。'
+  hu: 'Az előkondicionálás (klímaütemezés) profiladatai, a profilüzenet szerkezete határozza meg.'
+  pt: 'Informação de perfil de pré-condicionamento (programação da climatização do habitáculo), definida pela estrutura da mensagem de perfil.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['MDS', 'BTEL', 'OVIP']
+
+signals:
+  AC_PRECOND_STATUS_AVAILABILITY:
+    bits: '1.7'
+    comment:
+      en: 'Availability of the climate preconditioning schedule status information'
+      fr: 'Disponibilité de l''information d''état du programme de préconditionnement climatique'
+      es: 'Disponibilidad de la información de estado del programa de preacondicionamiento climático'
+      de: 'Verfügbarkeit der Statusinformation des Klimavorkonditionierungsprogramms'
+      it: 'Disponibilità dell''informazione di stato del programma di preclimatizzazione'
+      pl: 'Dostępność informacji o stanie programu klimatyzacji wstępnej'
+      ru: 'Доступность информации о состоянии программы предварительного кондиционирования'
+      zh: '空调预处理程序状态信息的可用性'
+      hu: 'A klíma-előkondicionálási program állapotinformációjának elérhetősége'
+      pt: 'Disponibilidade da informação de estado do programa de pré-condicionamento climático'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Available'
+        fr: 'Disponible'
+        es: 'Disponible'
+        de: 'Verfügbar'
+        it: 'Disponibile'
+        pl: 'Dostępne'
+        ru: 'Доступно'
+        zh: '可用'
+        hu: 'Elérhető'
+        pt: 'Disponível'
+
+  UNUSED_1:
+    bits: '1.6-1.0'
+    unused: true
+
+  AC_PRECOND_SCHEDULE_1_ENABLED:
+    bits: '2.7'
+    comment:
+      en: 'Memorized global activation status of climate preconditioning schedule 1'
+      fr: 'État mémorisé d''activation générale du programme 1 de préconditionnement climatique'
+      es: 'Estado memorizado de activación general del programa 1 de preacondicionamiento climático'
+      de: 'Gespeicherter globaler Aktivierungsstatus von Klimavorkonditionierungsprogramm 1'
+      it: 'Stato memorizzato di attivazione generale del programma 1 di preclimatizzazione'
+      pl: 'Zapamiętany ogólny stan aktywacji programu 1 klimatyzacji wstępnej'
+      ru: 'Сохранённое общее состояние активации программы 1 предварительного кондиционирования'
+      zh: '空调预处理程序1的已存储总激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt globális aktiválási állapota'
+      pt: 'Estado memorizado de ativação geral do programa 1 de pré-condicionamento climático'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_MONDAY_SCHEDULE_1_ACTIVE:
+    bits: '2.6'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 1 for Monday'
+      fr: 'État mémorisé d''activation du programme 1 de préconditionnement climatique du lundi'
+      es: 'Estado memorizado de activación del programa 1 de preacondicionamiento climático del lunes'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 1 für Montag'
+      it: 'Stato memorizzato di attivazione del programma 1 di preclimatizzazione per lunedì'
+      pl: 'Zapamiętany stan aktywacji programu 1 klimatyzacji wstępnej na poniedziałek'
+      ru: 'Сохранённое состояние активации программы 1 предварительного кондиционирования на понедельник'
+      zh: '周一空调预处理程序1的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt aktiválási állapota (hétfő)'
+      pt: 'Estado memorizado de ativação do programa 1 de pré-condicionamento climático de segunda-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_TUESDAY_SCHEDULE_1_ACTIVE:
+    bits: '2.5'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 1 for Tuesday'
+      fr: 'État mémorisé d''activation du programme 1 de préconditionnement climatique du mardi'
+      es: 'Estado memorizado de activación del programa 1 de preacondicionamiento climático del martes'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 1 für Dienstag'
+      it: 'Stato memorizzato di attivazione del programma 1 di preclimatizzazione per martedì'
+      pl: 'Zapamiętany stan aktywacji programu 1 klimatyzacji wstępnej na wtorek'
+      ru: 'Сохранённое состояние активации программы 1 предварительного кондиционирования на вторник'
+      zh: '周二空调预处理程序1的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt aktiválási állapota (kedd)'
+      pt: 'Estado memorizado de ativação do programa 1 de pré-condicionamento climático de terça-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_WEDNESDAY_SCHEDULE_1_ACTIVE:
+    bits: '2.4'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 1 for Wednesday'
+      fr: 'État mémorisé d''activation du programme 1 de préconditionnement climatique du mercredi'
+      es: 'Estado memorizado de activación del programa 1 de preacondicionamiento climático del miércoles'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 1 für Mittwoch'
+      it: 'Stato memorizzato di attivazione del programma 1 di preclimatizzazione per mercoledì'
+      pl: 'Zapamiętany stan aktywacji programu 1 klimatyzacji wstępnej na środa'
+      ru: 'Сохранённое состояние активации программы 1 предварительного кондиционирования на среда'
+      zh: '周三空调预处理程序1的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt aktiválási állapota (szerda)'
+      pt: 'Estado memorizado de ativação do programa 1 de pré-condicionamento climático de quarta-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_THURSDAY_SCHEDULE_1_ACTIVE:
+    bits: '2.3'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 1 for Thursday'
+      fr: 'État mémorisé d''activation du programme 1 de préconditionnement climatique du jeudi'
+      es: 'Estado memorizado de activación del programa 1 de preacondicionamiento climático del jueves'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 1 für Donnerstag'
+      it: 'Stato memorizzato di attivazione del programma 1 di preclimatizzazione per giovedì'
+      pl: 'Zapamiętany stan aktywacji programu 1 klimatyzacji wstępnej na czwartek'
+      ru: 'Сохранённое состояние активации программы 1 предварительного кондиционирования на четверг'
+      zh: '周四空调预处理程序1的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt aktiválási állapota (csütörtök)'
+      pt: 'Estado memorizado de ativação do programa 1 de pré-condicionamento climático de quinta-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_FRIDAY_SCHEDULE_1_ACTIVE:
+    bits: '2.2'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 1 for Friday'
+      fr: 'État mémorisé d''activation du programme 1 de préconditionnement climatique du vendredi'
+      es: 'Estado memorizado de activación del programa 1 de preacondicionamiento climático del viernes'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 1 für Freitag'
+      it: 'Stato memorizzato di attivazione del programma 1 di preclimatizzazione per venerdì'
+      pl: 'Zapamiętany stan aktywacji programu 1 klimatyzacji wstępnej na piątek'
+      ru: 'Сохранённое состояние активации программы 1 предварительного кондиционирования на пятница'
+      zh: '周五空调预处理程序1的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt aktiválási állapota (péntek)'
+      pt: 'Estado memorizado de ativação do programa 1 de pré-condicionamento climático de sexta-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_SATURDAY_SCHEDULE_1_ACTIVE:
+    bits: '2.1'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 1 for Saturday'
+      fr: 'État mémorisé d''activation du programme 1 de préconditionnement climatique du samedi'
+      es: 'Estado memorizado de activación del programa 1 de preacondicionamiento climático del sábado'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 1 für Samstag'
+      it: 'Stato memorizzato di attivazione del programma 1 di preclimatizzazione per sabato'
+      pl: 'Zapamiętany stan aktywacji programu 1 klimatyzacji wstępnej na sobota'
+      ru: 'Сохранённое состояние активации программы 1 предварительного кондиционирования на суббота'
+      zh: '周六空调预处理程序1的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt aktiválási állapota (szombat)'
+      pt: 'Estado memorizado de ativação do programa 1 de pré-condicionamento climático de sábado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_SUNDAY_SCHEDULE_1_ACTIVE:
+    bits: '2.0'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 1 for Sunday'
+      fr: 'État mémorisé d''activation du programme 1 de préconditionnement climatique du dimanche'
+      es: 'Estado memorizado de activación del programa 1 de preacondicionamiento climático del domingo'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 1 für Sonntag'
+      it: 'Stato memorizzato di attivazione del programma 1 di preclimatizzazione per domenica'
+      pl: 'Zapamiętany stan aktywacji programu 1 klimatyzacji wstępnej na niedziela'
+      ru: 'Сохранённое состояние активации программы 1 предварительного кондиционирования на воскресенье'
+      zh: '周日空调预处理程序1的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt aktiválási állapota (vasárnap)'
+      pt: 'Estado memorizado de ativação do programa 1 de pré-condicionamento climático de domingo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  UNUSED_2:
+    bits: '3.7-3.3'
+    unused: true
+
+  AC_PRECOND_SCHEDULE_1_START_TIME:
+    bits: '3.2-4.0'
+    comment:
+      en: 'Memorized start time of climate preconditioning schedule 1, in minutes since midnight'
+      fr: 'Heure de départ mémorisée du programme 1 de préconditionnement climatique, en minutes depuis minuit'
+      es: 'Hora de inicio memorizada del programa 1 de preacondicionamiento climático, en minutos desde medianoche'
+      de: 'Gespeicherte Startzeit von Klimavorkonditionierungsprogramm 1, in Minuten seit Mitternacht'
+      it: 'Ora di avvio memorizzata del programma 1 di preclimatizzazione, in minuti dalla mezzanotte'
+      pl: 'Zapamiętana godzina rozpoczęcia programu 1 klimatyzacji wstępnej, w minutach od północy'
+      ru: 'Сохранённое время начала программы 1 предварительного кондиционирования, в минутах от полуночи'
+      zh: '空调预处理程序1的已存储起始时间（自午夜起的分钟数）'
+      hu: 'A klíma-előkondicionálás 1. programjának tárolt indítási ideje, éjféltől számított percben'
+      pt: 'Hora de início memorizada do programa 1, de pré-condicionamento climático, em minutos desde a meia-noite'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 1440
+    units: 'min'
+    default: 0x00
+
+  AC_PRECOND_SCHEDULE_2_ENABLED:
+    bits: '5.7'
+    comment:
+      en: 'Memorized global activation status of climate preconditioning schedule 2'
+      fr: 'État mémorisé d''activation générale du programme 2 de préconditionnement climatique'
+      es: 'Estado memorizado de activación general del programa 2 de preacondicionamiento climático'
+      de: 'Gespeicherter globaler Aktivierungsstatus von Klimavorkonditionierungsprogramm 2'
+      it: 'Stato memorizzato di attivazione generale del programma 2 di preclimatizzazione'
+      pl: 'Zapamiętany ogólny stan aktywacji programu 2 klimatyzacji wstępnej'
+      ru: 'Сохранённое общее состояние активации программы 2 предварительного кондиционирования'
+      zh: '空调预处理程序2的已存储总激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt globális aktiválási állapota'
+      pt: 'Estado memorizado de ativação geral do programa 2 de pré-condicionamento climático'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_MONDAY_SCHEDULE_2_ACTIVE:
+    bits: '5.6'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 2 for Monday'
+      fr: 'État mémorisé d''activation du programme 2 de préconditionnement climatique du lundi'
+      es: 'Estado memorizado de activación del programa 2 de preacondicionamiento climático del lunes'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 2 für Montag'
+      it: 'Stato memorizzato di attivazione del programma 2 di preclimatizzazione per lunedì'
+      pl: 'Zapamiętany stan aktywacji programu 2 klimatyzacji wstępnej na poniedziałek'
+      ru: 'Сохранённое состояние активации программы 2 предварительного кондиционирования на понедельник'
+      zh: '周一空调预处理程序2的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt aktiválási állapota (hétfő)'
+      pt: 'Estado memorizado de ativação do programa 2 de pré-condicionamento climático de segunda-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_TUESDAY_SCHEDULE_2_ACTIVE:
+    bits: '5.5'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 2 for Tuesday'
+      fr: 'État mémorisé d''activation du programme 2 de préconditionnement climatique du mardi'
+      es: 'Estado memorizado de activación del programa 2 de preacondicionamiento climático del martes'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 2 für Dienstag'
+      it: 'Stato memorizzato di attivazione del programma 2 di preclimatizzazione per martedì'
+      pl: 'Zapamiętany stan aktywacji programu 2 klimatyzacji wstępnej na wtorek'
+      ru: 'Сохранённое состояние активации программы 2 предварительного кондиционирования на вторник'
+      zh: '周二空调预处理程序2的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt aktiválási állapota (kedd)'
+      pt: 'Estado memorizado de ativação do programa 2 de pré-condicionamento climático de terça-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_WEDNESDAY_SCHEDULE_2_ACTIVE:
+    bits: '5.4'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 2 for Wednesday'
+      fr: 'État mémorisé d''activation du programme 2 de préconditionnement climatique du mercredi'
+      es: 'Estado memorizado de activación del programa 2 de preacondicionamiento climático del miércoles'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 2 für Mittwoch'
+      it: 'Stato memorizzato di attivazione del programma 2 di preclimatizzazione per mercoledì'
+      pl: 'Zapamiętany stan aktywacji programu 2 klimatyzacji wstępnej na środa'
+      ru: 'Сохранённое состояние активации программы 2 предварительного кондиционирования на среда'
+      zh: '周三空调预处理程序2的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt aktiválási állapota (szerda)'
+      pt: 'Estado memorizado de ativação do programa 2 de pré-condicionamento climático de quarta-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_THURSDAY_SCHEDULE_2_ACTIVE:
+    bits: '5.3'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 2 for Thursday'
+      fr: 'État mémorisé d''activation du programme 2 de préconditionnement climatique du jeudi'
+      es: 'Estado memorizado de activación del programa 2 de preacondicionamiento climático del jueves'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 2 für Donnerstag'
+      it: 'Stato memorizzato di attivazione del programma 2 di preclimatizzazione per giovedì'
+      pl: 'Zapamiętany stan aktywacji programu 2 klimatyzacji wstępnej na czwartek'
+      ru: 'Сохранённое состояние активации программы 2 предварительного кондиционирования на четверг'
+      zh: '周四空调预处理程序2的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt aktiválási állapota (csütörtök)'
+      pt: 'Estado memorizado de ativação do programa 2 de pré-condicionamento climático de quinta-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_FRIDAY_SCHEDULE_2_ACTIVE:
+    bits: '5.2'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 2 for Friday'
+      fr: 'État mémorisé d''activation du programme 2 de préconditionnement climatique du vendredi'
+      es: 'Estado memorizado de activación del programa 2 de preacondicionamiento climático del viernes'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 2 für Freitag'
+      it: 'Stato memorizzato di attivazione del programma 2 di preclimatizzazione per venerdì'
+      pl: 'Zapamiętany stan aktywacji programu 2 klimatyzacji wstępnej na piątek'
+      ru: 'Сохранённое состояние активации программы 2 предварительного кондиционирования на пятница'
+      zh: '周五空调预处理程序2的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt aktiválási állapota (péntek)'
+      pt: 'Estado memorizado de ativação do programa 2 de pré-condicionamento climático de sexta-feira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_SATURDAY_SCHEDULE_2_ACTIVE:
+    bits: '5.1'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 2 for Saturday'
+      fr: 'État mémorisé d''activation du programme 2 de préconditionnement climatique du samedi'
+      es: 'Estado memorizado de activación del programa 2 de preacondicionamiento climático del sábado'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 2 für Samstag'
+      it: 'Stato memorizzato di attivazione del programma 2 di preclimatizzazione per sabato'
+      pl: 'Zapamiętany stan aktywacji programu 2 klimatyzacji wstępnej na sobota'
+      ru: 'Сохранённое состояние активации программы 2 предварительного кондиционирования на суббота'
+      zh: '周六空调预处理程序2的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt aktiválási állapota (szombat)'
+      pt: 'Estado memorizado de ativação do programa 2 de pré-condicionamento climático de sábado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  AC_PRECOND_SUNDAY_SCHEDULE_2_ACTIVE:
+    bits: '5.0'
+    comment:
+      en: 'Memorized activation status of climate preconditioning schedule 2 for Sunday'
+      fr: 'État mémorisé d''activation du programme 2 de préconditionnement climatique du dimanche'
+      es: 'Estado memorizado de activación del programa 2 de preacondicionamiento climático del domingo'
+      de: 'Gespeicherter Aktivierungsstatus von Klimavorkonditionierungsprogramm 2 für Sonntag'
+      it: 'Stato memorizzato di attivazione del programma 2 di preclimatizzazione per domenica'
+      pl: 'Zapamiętany stan aktywacji programu 2 klimatyzacji wstępnej na niedziela'
+      ru: 'Сохранённое состояние активации программы 2 предварительного кондиционирования на воскресенье'
+      zh: '周日空调预处理程序2的已存储激活状态'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt aktiválási állapota (vasárnap)'
+      pt: 'Estado memorizado de ativação do programa 2 de pré-condicionamento climático de domingo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Function off'
+        fr: 'Fonction inactive'
+        es: 'Función inactiva'
+        de: 'Funktion inaktiv'
+        it: 'Funzione inattiva'
+        pl: 'Funkcja nieaktywna'
+        ru: 'Функция неактивна'
+        zh: '功能关闭'
+        hu: 'Funkció inaktív'
+        pt: 'Função inativa'
+      0x01:
+        en: 'Function active'
+        fr: 'Fonction active'
+        es: 'Función activa'
+        de: 'Funktion aktiv'
+        it: 'Funzione attiva'
+        pl: 'Funkcja aktywna'
+        ru: 'Функция активна'
+        zh: '功能激活'
+        hu: 'Funkció aktív'
+        pt: 'Função ativa'
+
+  UNUSED_3:
+    bits: '6.7-6.3'
+    unused: true
+
+  AC_PRECOND_SCHEDULE_2_START_TIME:
+    bits: '6.2-7.0'
+    comment:
+      en: 'Memorized start time of climate preconditioning schedule 2, in minutes since midnight'
+      fr: 'Heure de départ mémorisée du programme 2 de préconditionnement climatique, en minutes depuis minuit'
+      es: 'Hora de inicio memorizada del programa 2 de preacondicionamiento climático, en minutos desde medianoche'
+      de: 'Gespeicherte Startzeit von Klimavorkonditionierungsprogramm 2, in Minuten seit Mitternacht'
+      it: 'Ora di avvio memorizzata del programma 2 di preclimatizzazione, in minuti dalla mezzanotte'
+      pl: 'Zapamiętana godzina rozpoczęcia programu 2 klimatyzacji wstępnej, w minutach od północy'
+      ru: 'Сохранённое время начала программы 2 предварительного кондиционирования, в минутах от полуночи'
+      zh: '空调预处理程序2的已存储起始时间（自午夜起的分钟数）'
+      hu: 'A klíma-előkondicionálás 2. programjának tárolt indítási ideje, éjféltől számított percben'
+      pt: 'Hora de início memorizada do programa 2, de pré-condicionamento climático, em minutos desde a meia-noite'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 1440
+    units: 'min'
+    default: 0x00

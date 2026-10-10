@@ -1,0 +1,92 @@
+id: 0x26
+name: 'BSI_SLOW_COMMAND'
+type: 'lin'
+length: 2
+comment:
+  en: 'Cabin fine particles sensor status: measurement, fault and response error'
+  fr: 'État du capteur de particules fines habitacle : mesure, défaut et erreur de réponse'
+  es: 'Estado del sensor de partículas finas del habitáculo: medición, fallo y error de respuesta'
+  de: 'Status des Feinstaubsensors im Innenraum: Messwert, Fehler und Antwortfehler'
+  it: 'Stato del sensore di particolato fine abitacolo: misura, guasto ed errore di risposta'
+  pl: 'Stan czujnika pyłu zawieszonego w kabinie: pomiar, usterka i błąd odpowiedzi'
+  ru: 'Состояние датчика мелкодисперсных частиц в салоне: измерение, неисправность и ошибка ответа'
+  zh: '车厢细颗粒物传感器状态:测量值、故障及响应错误'
+  hu: 'A utastér finomrészecske-érzékelőjének állapota: mérés, hiba és válaszhiba'
+  pt: 'Estado do sensor de partículas finas do habitáculo: medição, avaria e erro de resposta.'
+periodicity: ['trigger']
+senders: ['CFPS']
+receivers: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  CABIN_PM_LEVEL:
+    bits: '1.0-2.1'
+    comment:
+      en: 'PM2.5 fine particle level measured in the cabin.'
+      fr: 'Niveau de particules fines PM2.5 mesuré dans l''habitacle.'
+      es: 'Nivel de partículas finas PM2.5 medido en el habitáculo.'
+      de: 'Im Innenraum gemessener PM2,5-Feinstaubwert.'
+      it: 'Livello di particolato fine PM2.5 misurato nell''abitacolo.'
+      pl: 'Poziom pyłu zawieszonego PM2,5 zmierzony w kabinie.'
+      ru: 'Уровень мелкодисперсных частиц PM2.5, измеренный в салоне.'
+      zh: '座舱内测得的PM2.5细颗粒物浓度。'
+      hu: 'A kabinban mért PM2,5 finomrészecske-szint.'
+      pt: 'Nível de partículas finas PM2.5 medido no habitáculo.'
+    type: 'uint'
+    factor: 2
+    min: 0
+    max: 500
+    units: 'µg/m3'
+    invalid: 0xFF
+
+alternatives:
+  - note:
+      en: 'The content of this frame changes (multiplexed, selector not identified): other layout seen'
+      fr: 'Le contenu de cette trame varie (multiplexée, sélecteur non identifié) : autre disposition observée'
+      es: 'El contenido de esta trama varía (multiplexada, selector no identificado): otra disposición observada'
+      de: 'Der Inhalt dieser Botschaft variiert (gemultiplext, Selektor nicht ermittelt): weitere beobachtete Belegung'
+      it: 'Il contenuto di questo frame varia (multiplexato, selettore non identificato): altra disposizione osservata'
+      pl: 'Zawartość tej ramki się zmienia (multipleksowana, selektor nieznany): inny zaobserwowany układ'
+      ru: 'Содержимое этого кадра меняется (мультиплексирование, селектор не определён): другая наблюдаемая раскладка'
+      zh: '此帧内容会变化（多路复用，未识别选择器）：观察到的另一种布局'
+      hu: 'A keret tartalma változik (multiplexelt, a választó nem azonosított): másik megfigyelt elrendezés'
+      pt: 'O conteúdo desta trama varia (multiplexada, seletor não identificado): outra disposição observada'
+    signals:
+      CABIN_PM_SENSOR_RESPONSE_ERROR:
+        bits: '2.2'
+        comment:
+          en: 'Response to a service request from the cabin fine particle sensor.'
+          fr: 'Réponse à une requête de service du capteur de particules fines habitacle.'
+          es: 'Respuesta a una solicitud de servicio del sensor de partículas finas del habitáculo.'
+          de: 'Antwort auf eine Serviceanfrage des Kabinen-Feinstaubsensors.'
+          it: 'Risposta a una richiesta di servizio del sensore di particolato fine dell''abitacolo.'
+          pl: 'Odpowiedź na żądanie serwisowe czujnika pyłu zawieszonego w kabinie.'
+          ru: 'Ответ на сервисный запрос салонного датчика мелкодисперсных частиц.'
+          zh: '座舱细颗粒物传感器对服务请求的响应。'
+          hu: 'A kabin finomrészecske-érzékelőjének válasza egy szervizkérésre.'
+          pt: 'Resposta a um pedido de serviço do sensor de partículas finas do habitáculo.'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'No error detected'
+            fr: 'Aucune erreur détectée'
+            es: 'No se ha detectado ningún error'
+            de: 'Kein Fehler erkannt'
+            it: 'Nessun errore rilevato'
+            pl: 'Nie wykryto błędu'
+            ru: 'Ошибок не обнаружено'
+            zh: '未检测到错误'
+            hu: 'Nincs hiba észlelve'
+            pt: 'Nenhum erro detetado'
+          0x01:
+            en: 'Error detected'
+            fr: 'Erreur détectée'
+            es: 'Error detectado'
+            de: 'Fehler erkannt'
+            it: 'Errore rilevato'
+            pl: 'Wykryto błąd'
+            ru: 'Обнаружена ошибка'
+            zh: '检测到错误'
+            hu: 'Hiba érzékelve'
+            pt: 'Erro detetado'

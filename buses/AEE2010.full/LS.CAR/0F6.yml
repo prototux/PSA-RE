@@ -1,0 +1,642 @@
+id: 0x0F6
+name: 'BSI_SLOW_DATA_2'
+type: 'can'
+length: 8
+comment:
+  en: 'Vehicle state broadcast by the body controller: lighting/dimming, power supply state and key position, coolant temperature, odometer, outside temperature.'
+  fr: 'État du véhicule diffusé par la BSI : éclairage/atténuation, état d''alimentation et position de la clé, température liquide de refroidissement, kilométrage, température extérieure.'
+  es: 'Estado del vehículo difundido por la BSI: iluminación/atenuación, estado de alimentación y posición de la llave, temperatura del refrigerante, kilometraje, temperatura exterior.'
+  de: 'Vom BSI gesendeter Fahrzeugstatus: Beleuchtung/Dimmung, Versorgungsstatus und Schlüsselposition, Kühlmitteltemperatur, Kilometerstand, Außentemperatur.'
+  it: 'Stato del veicolo trasmesso dalla BSI: illuminazione/attenuazione, stato di alimentazione e posizione chiave, temperatura del liquido di raffreddamento, chilometraggio, temperatura esterna.'
+  pl: 'Stan pojazdu nadawany przez BSI: oświetlenie/przyciemnianie, stan zasilania i pozycja kluczyka, temperatura płynu chłodzącego, przebieg, temperatura zewnętrzna.'
+  ru: 'Статус автомобиля, транслируемый BSI: освещение/затемнение, состояние питания и положение ключа, температура охлаждающей жидкости, пробег, температура наружного воздуха.'
+  zh: '由BSI广播的车辆状态:照明/调光、供电状态和钥匙位置、冷却液温度、里程、车外温度。'
+  hu: 'A BSI által sugárzott jármű állapot: világítás/fényerő-szabályozás, tápellátás állapota és kulcshelyzet, hűtőfolyadék hőmérséklet, km-óraállás, külső hőmérséklet.'
+  pt: 'Estado do veículo difundido pelo computador de servidão: iluminação/regulação, estado de alimentação e posição da chave, temperatura do líquido de arrefecimento, conta-quilómetros, temperatura exterior.'
+observations:
+  en: 'On state change of: MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+  fr: 'Sur changement d''état de : MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+  es: 'Al cambiar el estado de: MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+  de: 'Bei Statusänderung von: MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+  it: 'Al cambiamento di stato di: MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+  pl: 'Wysyłane przy zmianie stanu: MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+  ru: 'При изменении состояния: MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+  zh: '当ETAT_PRINCIP_SEV, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, TEST_VOY_CMB状态变化时'
+  hu: 'A(z) MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST állapotváltozásakor'
+  pt: 'Na mudança de estado de: MAIN_STATUS, GEN_STATUS, POWERTRAIN_STATUS, REVERSE_STATUS, BLINKERS_STATUS, CONFIG_MODE, CLUSTER_INDICATORS_TEST'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers:
+  - 'IVC_D'
+  - 'LCE'
+  - 'AVE'
+  - 'BSTL'
+  - 'BSM'
+  - 'BCM'
+  - 'BDCP'
+  - 'BSG'
+  - 'CAFR'
+  - 'HDC'
+  - 'BML'
+  - 'CVM'
+  - 'BSE'
+  - 'BTE'
+  - 'MDPLC'
+
+signals:
+  CONFIG_MODE:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Configuration mode'
+      fr: 'Mode de configuration'
+      es: 'Modo de configuración'
+      de: 'Konfigurationsmodus'
+      it: 'Modalità di configurazione'
+      pl: 'Tryb konfiguracji'
+      ru: 'Режим конфигурации'
+      zh: '配置模式'
+      hu: 'Konfigurációs üzemmód'
+      pt: 'Modo de configuração'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Factory'
+        fr: 'Usine'
+        es: 'Fábrica'
+        de: 'Werk'
+        it: 'Fabbrica'
+        pl: 'Fabryka'
+        ru: 'Завод'
+        zh: '工厂'
+        hu: 'Gyár'
+        pt: 'Fábrica'
+      0x01:
+        unused: true
+      0x02:
+        en: 'Customer (normal)'
+        fr: 'Client (normal)'
+        es: 'Cliente (normal)'
+        de: 'Kunde (normal)'
+        it: 'Cliente (normale)'
+        pl: 'Klient (normalny)'
+        ru: 'Клиент (обычный)'
+        zh: '客户（正常）'
+        hu: 'Ügyfél (normál)'
+        pt: 'Cliente (normal)'
+      0x03:
+        unused: true
+
+  FACTORY_PARK:
+    bits: '1.5'
+    comment:
+      en: 'Factory park (storage) configuration'
+      fr: 'Configuration parc usine'
+      es: 'Configuración de parque de fábrica'
+      de: 'Werksparkplatz-Konfiguration'
+      it: 'Configurazione parco fabbrica'
+      pl: 'Konfiguracja parkingu fabrycznego'
+      ru: 'Конфигурация заводской стоянки'
+      zh: '工厂停放配置'
+      hu: 'Gyári tárolási konfiguráció'
+      pt: 'Configuração de parque de fábrica'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not parked'
+        fr: 'Pas en position parc'
+        es: 'No en posición de estacionamiento'
+        de: 'Nicht in Parkstellung'
+        it: 'Non in posizione parcheggio'
+        pl: 'Nie w pozycji parkowania'
+        ru: 'Не в положении парковки'
+        zh: '未处于驻车位置'
+        hu: 'Nincs parkolás módban'
+        pt: 'Não em posição de estacionamento'
+      0x01:
+        en: 'Parked'
+        fr: 'En stationnement (Parc)'
+        es: 'Aparcado'
+        de: 'Geparkt'
+        it: 'Parcheggiato'
+        pl: 'Zaparkowany'
+        ru: 'Припарковано'
+        zh: '已驻车'
+        hu: 'Parkolva'
+        pt: 'Estacionado'
+
+  MAIN_STATUS:
+    bits: '1.4-1.3'
+    comment:
+      en: 'Vehicle electrical system main state'
+      fr: 'État principal du système électrique véhicule (SEV)'
+      es: 'Estado principal del sistema eléctrico del vehículo (SEV)'
+      de: 'Hauptzustand des Fahrzeugbordnetzes (SEV)'
+      it: 'Stato principale del sistema elettrico veicolo (SEV)'
+      pl: 'Główny stan systemu elektrycznego pojazdu (SEV)'
+      ru: 'Основное состояние электрической системы автомобиля (SEV)'
+      zh: '车辆电气系统主状态 (SEV)'
+      hu: 'A jármű elektromos rendszerének fő állapota (SEV)'
+      pt: 'Estado principal do sistema elétrico do veículo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Stop'
+        fr: 'Arrêt'
+        es: 'Parada'
+        de: 'Stopp'
+        it: 'Arresto'
+        pl: 'Stop'
+        ru: 'Стоп'
+        zh: '停止'
+        hu: 'Leállás'
+        pt: 'Paragem'
+      0x01:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+      0x02:
+        en: 'DEM (starter)'
+        fr: 'DEM (démarreur)'
+        es: 'DEM (motor de arranque)'
+        de: 'DEM (Anlasser)'
+        it: 'DEM (motorino di avviamento)'
+        pl: 'DEM (rozrusznik)'
+        ru: 'DEM (стартер)'
+        zh: 'DEM(起动机)'
+        hu: 'DEM (önindító)'
+        pt: 'DEM (motor de arranque)'
+      0x03:
+        unused: true
+
+  GEN_STATUS:
+    bits: '1.2'
+    comment:
+      en: 'Generator state'
+      fr: 'État du générateur'
+      es: 'Estado del generador'
+      de: 'Generatorzustand'
+      it: 'Stato del generatore'
+      pl: 'Stan alternatora'
+      ru: 'Состояние генератора'
+      zh: '发电机状态'
+      hu: 'Generátor állapota'
+      pt: 'Estado do gerador'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Generator not operational (GNO)'
+        fr: 'Générateur non opérationnel (GNO)'
+        es: 'Generador no operativo (GNO)'
+        de: 'Generator nicht betriebsbereit (GNO)'
+        it: 'Generatore non operativo (GNO)'
+        pl: 'Generator niesprawny (GNO)'
+        ru: 'Генератор не в рабочем состоянии (GNO)'
+        zh: '发电机未运行(GNO)'
+        hu: 'A generátor nem üzemképes (GNO)'
+        pt: 'Gerador não operacional (GNO)'
+      0x01:
+        en: 'Generator operational (GO)'
+        fr: 'Générateur opérationnel (GO)'
+        es: 'Generador operativo (GO)'
+        de: 'Generator betriebsbereit (GO)'
+        it: 'Generatore operativo (GO)'
+        pl: 'Generator sprawny (GO)'
+        ru: 'Генератор в рабочем состоянии (GO)'
+        zh: '发电机运行正常(GO)'
+        hu: 'A generátor üzemképes (GO)'
+        pt: 'Gerador operacional (GO)'
+
+  POWERTRAIN_STATUS:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Powertrain operating status (off, stopped, starting, restarting, running)'
+      fr: 'État de fonctionnement du groupe motopropulseur (coupé, arrêté, en démarrage, en redémarrage, en marche)'
+      es: 'Estado de funcionamiento del grupo motopropulsor (apagado, parado, arrancando, reiniciando, en marcha)'
+      de: 'Betriebsstatus des Antriebsstrangs (aus, gestoppt, startend, neustartend, laufend)'
+      it: 'Stato di funzionamento del gruppo motopropulsore (spento, fermo, in avviamento, in riavvio, in funzione)'
+      pl: 'Stan pracy zespołu napędowego (wyłączony, zatrzymany, uruchamianie, ponowne uruchamianie, pracujący)'
+      ru: 'Рабочее состояние силового агрегата (выключен, остановлен, запуск, перезапуск, работает)'
+      zh: '动力总成运行状态(关闭、停止、启动中、重启中、运转中)'
+      hu: 'A hajtáslánc üzemállapota (kikapcsolva, leállítva, indul, újraindul, üzemel)'
+      pt: 'Estado de funcionamento do grupo motopropulsor (desligado, parado, a arrancar, a reiniciar, em marcha)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Engine not running'
+        fr: 'Moteur non tournant'
+        es: 'Motor no en marcha'
+        de: 'Motor läuft nicht'
+        it: 'Motore non in funzione'
+        pl: 'Silnik niepracujący'
+        ru: 'Двигатель не работает'
+        zh: '发动机未运转'
+        hu: 'Motor nem jár'
+        pt: 'Motor sem rotação'
+      0x01:
+        en: 'Starting in progress'
+        fr: 'Démarrage en cours'
+        es: 'Arranque en curso'
+        de: 'Start läuft'
+        it: 'Avviamento in corso'
+        pl: 'Rozruch w toku'
+        ru: 'Запуск выполняется'
+        zh: '启动中'
+        hu: 'Indítás folyamatban'
+        pt: 'Arranque em curso'
+      0x02:
+        en: 'Engine running'
+        fr: 'Moteur tournant'
+        es: 'Motor en marcha'
+        de: 'Motor läuft'
+        it: 'Motore in funzione'
+        pl: 'Silnik pracujący'
+        ru: 'Двигатель работает'
+        zh: '发动机运转中'
+        hu: 'A motor jár'
+        pt: 'Motor em funcionamento'
+      0x03:
+        en: 'Engine stopped in stop phase'
+        fr: 'Moteur arrêté en phase d''arrêt'
+        es: 'Motor detenido en fase de parada'
+        de: 'Motor gestoppt in der Stoppphase'
+        it: 'Motore fermo in fase di arresto'
+        pl: 'Silnik zatrzymany w fazie zatrzymania'
+        ru: 'Двигатель остановлен в фазе остановки'
+        zh: '发动机在停止阶段已停机'
+        hu: 'A motor leállt a leállási fázisban'
+        pt: 'Motor parado em fase de paragem'
+
+  COOLANT_TEMPERATURE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Coolant temperature'
+      fr: 'Température d''eau'
+      es: 'Temperatura del refrigerante'
+      de: 'Kühlmitteltemperatur'
+      it: 'Temperatura del liquido di raffreddamento'
+      pl: 'Temperatura płynu chłodzącego'
+      ru: 'Температура охлаждающей жидкости'
+      zh: '冷却液温度'
+      hu: 'Hűtőfolyadék hőmérséklete'
+      pt: 'Temperatura do líquido de refrigeração'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  TOTAL_MILEAGE:
+    bits: '3.7-5.0'
+    comment:
+      en: 'Vehicle odometer, 0.1 km per bit; invalid when all bits set'
+      fr: 'Totalisateur kilométrique du véhicule, résolution 0,1 km ; invalide si tous les bits sont à 1'
+      es: 'Cuentakilómetros total del vehículo, resolución 0,1 km; inválido si todos los bits están a 1'
+      de: 'Fahrzeug-Kilometerzähler, Auflösung 0,1 km; ungültig bei allen Bits gesetzt'
+      it: 'Totalizzatore chilometrico del veicolo, risoluzione 0,1 km; non valido se tutti i bit sono a 1'
+      pl: 'Licznik przebiegu pojazdu, rozdzielczość 0,1 km; nieprawidłowy, gdy wszystkie bity ustawione'
+      ru: 'Общий пробег автомобиля, разрешение 0,1 км; недействительно, если все биты установлены'
+      zh: '车辆总里程表,分辨率 0.1 公里;所有位为 1 时无效'
+      hu: 'Jármű összkilométer-számláló, felbontás 0,1 km; érvénytelen, ha minden bit be van állítva'
+      pt: 'Conta-quilómetros do veículo, 0,1 km por bit; inválido quando todos os bits estão definidos'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 1677721.4
+    units: 'km'
+    invalid: 0xFFFFFF
+    default: 0xFFFFFF
+
+  EXTERNAL_TEMPERATURE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Outside temperature, T = N/2 - 40 °C; specific codes indicate sensor absent or unmanaged'
+      fr: 'Température extérieure, T = N/2 - 40 °C ; codes spécifiques pour capteur absent ou code non géré'
+      es: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente o código no gestionado'
+      de: 'Außentemperatur, T = N/2 - 40 °C; spezielle Codes für fehlenden Sensor oder nicht verwalteten Code'
+      it: 'Temperatura esterna, T = N/2 - 40 °C; codici specifici per sensore assente o codice non gestito'
+      pl: 'Temperatura zewnętrzna, T = N/2 - 40 °C; specjalne kody dla braku czujnika lub nieobsługiwanego kodu'
+      ru: 'Наружная температура, T = N/2 - 40 °C; специальные коды для отсутствующего датчика или необработанного кода'
+      zh: '车外温度,T = N/2 - 40°C;特定代码表示传感器缺失或代码未处理'
+      hu: 'Külső hőmérséklet, T = N/2 - 40 °C; külön kódok jelzik a hiányzó érzékelőt vagy a nem kezelt kódot'
+      pt: 'Temperatura exterior, T = N/2 - 40 °C; códigos específicos para sensor ausente ou código não gerido'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 85
+    invalid: 0xFF
+    default: 0xFC
+
+  EXTERNAL_FILTERED_TEMPERATURE:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Filtered outside temperature'
+      fr: 'Température extérieure filtrée'
+      es: 'Temperatura exterior filtrada'
+      de: 'Gefilterte Außentemperatur'
+      it: 'Temperatura esterna filtrata'
+      pl: 'Filtrowana temperatura zewnętrzna'
+      ru: 'Отфильтрованная наружная температура'
+      zh: '滤波后的车外温度'
+      hu: 'Szűrt külső hőmérséklet'
+      pt: 'Temperatura exterior filtrada'
+    type: 'uint'
+    factor: 0.5
+    offset: -40
+    min: -40
+    max: 85
+    invalid: 0xFF
+    default: 0xFF
+
+  REVERSE_STATUS:
+    bits: '8.7'
+    comment:
+      en: 'Reverse gear state'
+      fr: 'État de la marche arrière'
+      es: 'Estado de la marcha atrás'
+      de: 'Zustand des Rückwärtsgangs'
+      it: 'Stato della retromarcia'
+      pl: 'Stan biegu wstecznego'
+      ru: 'Состояние задней передачи'
+      zh: '倒挡状态'
+      hu: 'Hátrameneti fokozat állapota'
+      pt: 'Estado da marcha-atrás'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Reverse not engaged'
+        fr: 'Marche arrière non enclenchée'
+        es: 'Marcha atrás no engranada'
+        de: 'Rückwärtsgang nicht eingelegt'
+        it: 'Retromarcia non innestata'
+        pl: 'Bieg wsteczny niewłączony'
+        ru: 'Задняя передача не включена'
+        zh: '倒挡未挂入'
+        hu: 'Hátrameneti fokozat nincs bekapcsolva'
+        pt: 'Marcha-atrás não engrenada'
+      0x01:
+        en: 'Reverse engaged'
+        fr: 'Marche arrière enclenchée'
+        es: 'Marcha atrás engranada'
+        de: 'Rückwärtsgang eingelegt'
+        it: 'Retromarcia innestata'
+        pl: 'Włączony bieg wsteczny'
+        ru: 'Задний ход включён'
+        zh: '已挂倒挡'
+        hu: 'Hátramenet bekapcsolva'
+        pt: 'Marcha-atrás engrenada'
+
+  FRONT_WIPERS_STATUS:
+    bits: '8.6'
+    comment:
+      en: 'Confirmed front wiping'
+      fr: 'Essuyage avant confirmé'
+      es: 'Barrido delantero confirmado'
+      de: 'Bestätigtes Wischen vorne'
+      it: 'Tergicristallo anteriore confermato'
+      pl: 'Potwierdzone wycieranie przednie'
+      ru: 'Подтверждённое стеклоочищение спереди'
+      zh: '已确认前雨刮动作'
+      hu: 'Megerősített első ablaktörlés'
+      pt: 'Limpeza dianteira confirmada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wiping confirmed'
+        fr: 'Pas d''essuyage confirmé'
+        es: 'Ningún barrido confirmado'
+        de: 'Kein Wischvorgang bestätigt'
+        it: 'Nessuna tersitura confermata'
+        pl: 'Brak potwierdzonego wycierania'
+        ru: 'Не подтверждено протирание'
+        zh: '未确认刮水动作'
+        hu: 'Nincs megerősített törlés'
+        pt: 'Nenhuma limpeza confirmada'
+      0x01:
+        en: 'Wiping confirmed'
+        fr: 'Essuyage confirmé'
+        es: 'Limpieza confirmada'
+        de: 'Wischen bestätigt'
+        it: 'Tergitura confermata'
+        pl: 'Wycieranie potwierdzone'
+        ru: 'Работа стеклоочистителя подтверждена'
+        zh: '雨刷已确认'
+        hu: 'Törlés megerősítve'
+        pt: 'Limpeza confirmada'
+
+  WHEEL_POSITION:
+    bits: '8.5-8.4'
+    comment:
+      en: 'Type of vehicle steering (left-hand / right-hand drive)'
+      fr: 'Type de conduite du véhicule (gauche/droite)'
+      es: 'Tipo de conducción del vehículo (izquierda/derecha)'
+      de: 'Lenkungsart des Fahrzeugs (Links-/Rechtslenker)'
+      it: 'Tipo di guida del veicolo (sinistra/destra)'
+      pl: 'Typ układu kierowniczego pojazdu (lewostronny/prawostronny)'
+      ru: 'Тип рулевого управления автомобиля (левый/правый руль)'
+      zh: '车辆驾驶方向类型(左舵/右舵)'
+      hu: 'A jármű kormányzási típusa (bal/jobb kormányos)'
+      pt: 'Tipo de condução do veículo (esquerda/direita)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Steering right'
+        fr: 'Direction a droite'
+        es: 'Dirección a la derecha'
+        de: 'Richtung rechts'
+        it: 'Direzione a destra'
+        pl: 'Kierunek w prawo'
+        ru: 'Направление вправо'
+        zh: '向右方向'
+        hu: 'Jobbra irány'
+        pt: 'Direção à direita'
+      0x02:
+        en: 'Steering left'
+        fr: 'Direction à gauche'
+        es: 'Dirección a la izquierda'
+        de: 'Lenkung nach links'
+        it: 'Sterzata a sinistra'
+        pl: 'Skręt w lewo'
+        ru: 'Поворот руля влево'
+        zh: '方向盘左转'
+        hu: 'Kormányzás balra'
+        pt: 'Direção à esquerda'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CLUSTER_INDICATORS_TEST:
+    bits: '8.3'
+    comment:
+      en: 'Instrument cluster telltale lamps test'
+      fr: 'Test des témoins du combiné d''instruments'
+      es: 'Prueba de los testigos del cuadro de instrumentos'
+      de: 'Test der Kontrollleuchten des Kombiinstruments'
+      it: 'Test delle spie del quadro strumenti'
+      pl: 'Test kontrolek zestawu wskaźników'
+      ru: 'Проверка индикаторов приборной панели'
+      zh: '仪表盘指示灯测试'
+      hu: 'Műszerfal jelzőlámpáinak tesztje'
+      pt: 'Teste dos testemunhos do quadro de instrumentos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No warning lamp test'
+        fr: 'Pas de test des voyants'
+        es: 'Sin prueba de testigos'
+        de: 'Kein Kontrollleuchtentest'
+        it: 'Nessun test delle spie'
+        pl: 'Brak testu kontrolek'
+        ru: 'Нет теста контрольных ламп'
+        zh: '无警示灯测试'
+        hu: 'Nincs jelzőlámpa-teszt'
+        pt: 'Sem teste da luz avisadora'
+      0x01:
+        en: 'Telltale test'
+        fr: 'Test des témoins'
+        es: 'Prueba de los testigos'
+        de: 'Kontrollleuchtentest'
+        it: 'Test delle spie'
+        pl: 'Test kontrolek'
+        ru: 'Тест контрольных ламп'
+        zh: '指示灯测试'
+        hu: 'Jelzőlámpa-teszt'
+        pt: 'Teste dos testemunhos'
+
+  CONNECTOR_AREA_LIGHT_COMMAND:
+    bits: '8.2'
+    comment:
+      en: 'Interface/connector area lighting command'
+      fr: 'Commande d''éclairage de la zone de connectique'
+      es: 'Mando de iluminación de la zona de conectores'
+      de: 'Beleuchtungsbefehl des Anschlussbereichs'
+      it: 'Comando di illuminazione della zona connettori'
+      pl: 'Sterowanie oświetleniem strefy złączy'
+      ru: 'Управление подсветкой зоны разъёмов'
+      zh: '接口区域照明控制'
+      hu: 'Csatlakozó terület világításának vezérlése'
+      pt: 'Comando de iluminação da zona de conectores'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  BLINKERS_STATUS:
+    bits: '8.1-8.0'
+    comment:
+      en: 'Turn indicator state'
+      fr: 'État des clignotants'
+      es: 'Estado de los intermitentes'
+      de: 'Zustand der Blinker'
+      it: 'Stato degli indicatori di direzione'
+      pl: 'Stan kierunkowskazów'
+      ru: 'Состояние указателей поворота'
+      zh: '转向灯状态'
+      hu: 'Irányjelzők állapota'
+      pt: 'Estado dos piscas'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Indicator not active'
+        fr: 'Clignotant inactif'
+        es: 'Intermitente inactivo'
+        de: 'Blinker inaktiv'
+        it: 'Indicatore di direzione inattivo'
+        pl: 'Kierunkowskaz nieaktywny'
+        ru: 'Указатель поворота неактивен'
+        zh: '转向灯未激活'
+        hu: 'Index nem aktív'
+        pt: 'Indicador não ativo'
+      0x01:
+        en: 'Right indicator active'
+        fr: 'Clignotant droit actif'
+        es: 'Intermitente derecho activo'
+        de: 'Rechter Blinker aktiv'
+        it: 'Indicatore di direzione destro attivo'
+        pl: 'Aktywny prawy kierunkowskaz'
+        ru: 'Правый указатель поворота активен'
+        zh: '右转向灯激活'
+        hu: 'A jobb irányjelző aktív'
+        pt: 'Pisca direito ativo'
+      0x02:
+        en: 'Left indicator active'
+        fr: 'Clignotant gauche actif'
+        es: 'Intermitente izquierdo activo'
+        de: 'Blinker links aktiv'
+        it: 'Indicatore sinistro attivo'
+        pl: 'Lewy kierunkowskaz aktywny'
+        ru: 'Левый указатель поворота активен'
+        zh: '左转向灯激活'
+        hu: 'Bal index aktív'
+        pt: 'Pisca esquerdo ativo'
+      0x03:
+        en: 'Left and right indicators both active'
+        fr: 'Clignotants gauche et droit actifs'
+        es: 'Intermitentes izquierdo y derecho activos'
+        de: 'Linker und rechter Blinker aktiv'
+        it: 'Indicatori sinistro e destro attivi'
+        pl: 'Aktywne oba kierunkowskazy, lewy i prawy'
+        ru: 'Активны левый и правый указатели поворота'
+        zh: '左右转向灯同时激活'
+        hu: 'A bal és a jobb irányjelző is aktív'
+        pt: 'Piscas esquerdo e direito ambos ativos'

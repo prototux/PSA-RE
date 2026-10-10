@@ -1,0 +1,167 @@
+id: 0x4D0
+name: 'RF_REMOTE_MESSAGE'
+type: 'van'
+length: 19
+comment:
+  en: 'Remote control RF receiver state and the two last raw RF messages received from the key fob.'
+  fr: 'État du récepteur RF de la télécommande et les deux derniers messages RF bruts reçus de la clé.'
+  es: 'Estado del receptor RF del mando a distancia y los dos últimos mensajes RF en bruto recibidos del mando.'
+  de: 'Status des HF-Empfängers der Fernbedienung und die beiden letzten rohen HF-Nachrichten vom Schlüssel.'
+  it: 'Stato del ricevitore RF del telecomando e gli ultimi due messaggi RF grezzi ricevuti dalla chiave.'
+  pl: 'Stan odbiornika RF pilota oraz dwie ostatnie surowe wiadomości RF odebrane z kluczyka.'
+  ru: 'Статус радиоприёмника пульта ДУ и два последних необработанных радиосообщения, полученных от брелока.'
+  zh: '遥控器射频接收机状态及从钥匙接收到的最后两条原始射频消息。'
+  hu: 'A távirányító RF-vevőjének állapota és a kulcstól kapott utolsó két nyers RF-üzenet.'
+  pt: 'Estado do recetor RF do comando à distância e as duas últimas mensagens RF em bruto recebidas do comando.'
+periodicity: ['1000ms', 'trigger']
+senders: ['HDC']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  RF_MESSAGE_TYPE:
+    bits: '2.7'
+    comment:
+      en: 'Type of RF message received'
+      fr: 'Type de réception HF'
+      es: 'Tipo de mensaje RF recibido'
+      de: 'Typ der empfangenen HF-Nachricht'
+      it: 'Tipo di messaggio RF ricevuto'
+      pl: 'Typ odebranego komunikatu RF'
+      ru: 'Тип принятого радиосообщения'
+      zh: '接收到的射频消息类型'
+      hu: 'A fogadott HF-üzenet típusa'
+      pt: 'Tipo de mensagem RF recebida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Other message'
+        fr: 'Autre message'
+        es: 'Otro mensaje'
+        de: 'Andere Meldung'
+        it: 'Altro messaggio'
+        pl: 'Inny komunikat'
+        ru: 'Другое сообщение'
+        zh: '其他消息'
+        hu: 'Egyéb üzenet'
+        pt: 'Outra mensagem'
+      0x01:
+        en: 'Location message'
+        fr: 'Message de localisation'
+        es: 'Mensaje de localización'
+        de: 'Standortmeldung'
+        it: 'Messaggio di localizzazione'
+        pl: 'Komunikat lokalizacyjny'
+        ru: 'Сообщение о местоположении'
+        zh: '定位消息'
+        hu: 'Helymeghatározási üzenet'
+        pt: 'Mensagem de localização'
+
+  RF_RECEPTION_IN_PROGRESS:
+    bits: '2.6'
+    comment:
+      en: 'RF reception state'
+      fr: 'État de la réception HF'
+      es: 'Estado de la recepción RF'
+      de: 'HF-Empfangsstatus'
+      it: 'Stato della ricezione RF'
+      pl: 'Stan odbioru RF'
+      ru: 'Статус радиоприёма'
+      zh: '射频接收状态'
+      hu: 'HF-vétel állapota'
+      pt: 'Estado de receção RF'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Reception in progress'
+        fr: 'Réception en cours'
+        es: 'Recepción en curso'
+        de: 'Empfang läuft'
+        it: 'Ricezione in corso'
+        pl: 'Odbiór w toku'
+        ru: 'Приём выполняется'
+        zh: '接收进行中'
+        hu: 'Vétel folyamatban'
+        pt: 'Receção em curso'
+
+  UNUSED_1:
+    bits: '2.5-2.0'
+    unused: true
+
+  RF_MESSAGE1:
+    bits: '3.7-10.0'
+    comment:
+      en: 'Remote control RF message 1 (8 bytes, raw, in reception bit order)'
+      fr: 'Message 1 récepteur HF, octets 1 à 8, ordre de réception des bits'
+      es: 'Mensaje 1 RF del mando a distancia (8 bytes, en bruto, en orden de recepción de bits)'
+      de: 'Funkfernbedienung Nachricht 1 (8 Byte, roh, in Empfangsbitreihenfolge)'
+      it: 'Messaggio 1 RF del telecomando (8 byte, grezzo, in ordine di ricezione dei bit)'
+      pl: 'Komunikat RF 1 pilota (8 bajtów, surowy, w kolejności odbioru bitów)'
+      ru: 'Радиосообщение 1 пульта ДУ (8 байт, необработанное, в порядке приёма битов)'
+      zh: '遥控射频消息1(8字节,原始数据,按接收比特顺序)'
+      hu: '1. távirányító RF-üzenet (8 bájt, nyers, vételi bitsorrendben)'
+      pt: 'Mensagem 1 RF do comando à distância (8 bytes, em bruto, na ordem de receção dos bits)'
+    type: 'bytes'
+
+  RF_MESSAGE2:
+    bits: '11.7-18.0'
+    comment:
+      en: 'Remote control RF message 2 (8 bytes, raw, in reception bit order)'
+      fr: 'Message 2 récepteur HF, octets 1 à 8, ordre de réception des bits'
+      es: 'Mensaje 2 RF del mando a distancia (8 bytes, en bruto, en orden de recepción de bits)'
+      de: 'Funkfernbedienung Nachricht 2 (8 Byte, roh, in Empfangsbitreihenfolge)'
+      it: 'Messaggio 2 RF del telecomando (8 byte, grezzo, in ordine di ricezione dei bit)'
+      pl: 'Komunikat RF 2 pilota (8 bajtów, surowy, w kolejności odbioru bitów)'
+      ru: 'Радиосообщение 2 пульта ДУ (8 байт, необработанное, в порядке приёма битов)'
+      zh: '遥控射频消息2(8字节,原始数据,按接收比特顺序)'
+      hu: '2. távirányító RF-üzenet (8 bájt, nyers, vételi bitsorrendben)'
+      pt: 'Mensagem 2 RF do comando à distância (8 bytes, em bruto, na ordem de receção dos bits)'
+    type: 'bytes'
+
+  FOOTER:
+    bits: '19.7-19.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

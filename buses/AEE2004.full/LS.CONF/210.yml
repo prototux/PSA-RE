@@ -1,0 +1,540 @@
+id: 0x210
+name: 'CLIMATE_REQUEST'
+type: 'can'
+length: 6
+comment:
+  en: 'Air conditioning requests sent by the front climate control unit: compressor displacement demand, PTC/blower enable, air distribution and intake flap position, hot/cold mix position, electric power and refrigerant demand.'
+  fr: 'Demandes de climatisation envoyées par l''unité de climatisation avant : demande de cylindrée compresseur, activation PTC/pulseur, position des volets de distribution et d''entrée d''air, position de mixage chaud/froid, puissance électrique et demande de réfrigérant.'
+  es: 'Solicitudes de climatización enviadas por la unidad de climatización delantera: solicitud de cilindrada del compresor, activación de PTC/ventilador, posición de las trampillas de distribución y entrada de aire, posición de mezcla caliente/fría, potencia eléctrica y solicitud de refrigerante.'
+  de: 'Von der vorderen Klimaeinheit gesendete Klimaanforderungen: Kompressorhubvolumenanforderung, PTC-/Gebläseaktivierung, Position der Verteil- und Lufteinlassklappen, Warm-/Kaltmischposition, elektrische Leistung und Kältemittelanforderung.'
+  it: 'Richieste di climatizzazione inviate dall''unità di climatizzazione anteriore: richiesta di cilindrata compressore, attivazione PTC/ventola, posizione delle valvole di distribuzione e presa d''aria, posizione di miscelazione caldo/freddo, potenza elettrica e richiesta di refrigerante.'
+  pl: 'Żądania klimatyzacji wysyłane przez przednią jednostkę klimatyzacji: żądanie pojemności skokowej sprężarki, aktywacja PTC/dmuchawy, pozycja przepustnic rozdziału i wlotu powietrza, pozycja mieszania ciepłego/zimnego, moc elektryczna i żądanie czynnika chłodniczego.'
+  ru: 'Запросы кондиционирования, отправляемые передним блоком климат-контроля: запрос рабочего объёма компрессора, включение PTC/вентилятора, положение заслонок распределения и забора воздуха, положение смешивания горячего/холодного, электрическая мощность и запрос хладагента.'
+  zh: '由前置空调单元发送的空调请求：压缩机排量需求、PTC/鼓风机启用、配风与进气风门位置、冷热混合位置、电功率及制冷剂需求。'
+  hu: 'Az elülső klímaegység által küldött klímakérések: kompresszor-lökettérfogat igény, PTC/fúvóka engedélyezése, az elosztó- és beömlőnyílások helyzete, meleg/hideg keverési helyzet, elektromos teljesítmény és hűtőközeg-igény.'
+  pt: 'Pedidos de ar condicionado enviados pela unidade de climatização dianteira: pedido de cilindrada do compressor, ativação do PTC/ventilador, posição das comportas de distribuição de ar e de entrada de ar, posição de mistura quente/frio, potência elétrica e pedido de refrigerante.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['100ms', 'trigger']
+senders: ['CLIM_AV']
+receivers: ['BSI']
+
+signals:
+  AC_REQUEST_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'Air conditioning requested (A/C button)'
+      fr: 'Climatisation demandée (bouton A/C)'
+      es: 'Aire acondicionado solicitado (botón A/C)'
+      de: 'Klimaanlage angefordert (A/C-Taste)'
+      it: 'Climatizzatore richiesto (pulsante A/C)'
+      pl: 'Zażądano klimatyzacji (przycisk A/C)'
+      ru: 'Запрошено кондиционирование (кнопка A/C)'
+      zh: '请求空调(A/C按钮)'
+      hu: 'A klíma kérése (A/C gomb)'
+      pt: 'Ar condicionado solicitado (botão A/C)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
+
+  LUCH_ENGAGEMENT_REQUEST:
+    bits: '1.6'
+    comment:
+      en: 'Request to engage the LUCH heating stage'
+      fr: 'Demande d''enclenchement de l''étage de chauffage LUCH'
+      es: 'Solicitud de activación de la etapa de calefacción LUCH'
+      de: 'Anforderung zum Einschalten der LUCH-Heizstufe'
+      it: 'Richiesta di attivazione dello stadio di riscaldamento LUCH'
+      pl: 'Żądanie włączenia stopnia grzewczego LUCH'
+      ru: 'Запрос включения ступени отопления LUCH'
+      zh: '请求启动LUCH加热级'
+      hu: 'A LUCH fűtési fokozat bekapcsolásának kérése'
+      pt: 'Pedido de ativação do estágio de aquecimento LUCH'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
+
+  PTC_ENGAGEMENT_STATUS:
+    bits: '1.5'
+    comment:
+      en: 'PTC electric heater engagement authorized'
+      fr: 'Enclenchement du réchauffeur électrique CTP autorisé'
+      es: 'Activación del calefactor eléctrico CTP autorizada'
+      de: 'Einschalten der elektrischen PTC-Zuheizung freigegeben'
+      it: 'Inserimento del riscaldatore elettrico CTP autorizzato'
+      pl: 'Autoryzowane załączenie nagrzewnicy elektrycznej CTP'
+      ru: 'Разрешено включение электрического PTC-нагревателя'
+      zh: '允许接通PTC电加热器'
+      hu: 'A CTP elektromos fűtés bekapcsolása engedélyezve'
+      pt: 'Ativação do aquecedor elétrico CTP autorizada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
+
+  STOP_START_STATUS:
+    bits: '1.4'
+    comment:
+      en: 'Stop & Start engine stop authorization from the climate control'
+      fr: 'Autorisation d''arrêt moteur Stop & Start par la climatisation'
+      es: 'Autorización de parada del motor Stop & Start por el aire acondicionado'
+      de: 'Freigabe des Motorstopps (Stop & Start) durch die Klimaanlage'
+      it: 'Autorizzazione allo spegnimento del motore Stop & Start da parte del climatizzatore'
+      pl: 'Autoryzacja zatrzymania silnika Stop & Start przez klimatyzację'
+      ru: 'Разрешение остановки двигателя Stop & Start от системы климат-контроля'
+      zh: '空调对Stop & Start发动机停机的授权'
+      hu: 'A motorleállítás (Stop & Start) engedélyezése a klímaberendezés által'
+      pt: 'Autorização de paragem do motor Stop & Start pelo ar condicionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Engine stop allowed'
+        fr: 'Arrêt moteur autorisé'
+        es: 'Parada del motor permitida'
+        de: 'Motorstopp erlaubt'
+        it: 'Arresto motore consentito'
+        pl: 'Zatrzymanie silnika dozwolone'
+        ru: 'Остановка двигателя разрешена'
+        zh: '允许发动机停机'
+        hu: 'A motorleállás engedélyezett'
+        pt: 'Paragem do motor permitida'
+      0x01:
+        en: 'Stop prohibition or start request'
+        fr: 'Interdiction du stop ou demande de start'
+        es: 'Prohibición de parada o solicitud de arranque'
+        de: 'Stoppverbot oder Startanforderung'
+        it: 'Divieto di stop o richiesta di start'
+        pl: 'Zakaz zatrzymania lub żądanie rozruchu'
+        ru: 'Запрет остановки или запрос запуска'
+        zh: '停机禁止或启动请求'
+        hu: 'Leállási tilalom vagy indítási kérés'
+        pt: 'Proibição de stop ou pedido de start'
+
+  UNUSED_1:
+    bits: '1.3-1.0'
+    unused: true
+
+  ELECTRIC_POWER_CONSUMED:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Electric power consumed by the climate control system'
+      fr: 'Puissance électrique consommée par le système de climatisation'
+      es: 'Potencia eléctrica consumida por el sistema de climatización'
+      de: 'Elektrische Leistungsaufnahme des Klimasystems'
+      it: 'Potenza elettrica assorbita dal sistema di climatizzazione'
+      pl: 'Moc elektryczna pobierana przez układ klimatyzacji'
+      ru: 'Электрическая мощность, потребляемая системой климат-контроля'
+      zh: '空调系统消耗的电功率'
+      hu: 'A klímarendszer elektromos teljesítményfelvétele'
+      pt: 'Potência elétrica consumida pelo sistema de climatização'
+    type: 'uint'
+    factor: 25
+    min: 0
+    max: 6350
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00
+
+  EVAPORATOR_TEMPERATURE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Evaporator temperature; invalid value sent when the climate unit acquires this sensor itself'
+      fr: 'Température évaporateur ; valeur invalide envoyée lorsque la climatisation acquiert elle-même ce capteur'
+      es: 'Temperatura del evaporador; se envía un valor no válido cuando el climatizador adquiere él mismo este sensor'
+      de: 'Verdampfertemperatur; ungültiger Wert wird gesendet, wenn die Klimaanlage diesen Sensor selbst erfasst'
+      it: 'Temperatura evaporatore; viene inviato un valore non valido quando il climatizzatore acquisisce autonomamente questo sensore'
+      pl: 'Temperatura parownika; nieprawidłowa wartość wysyłana, gdy klimatyzacja sama odczytuje ten czujnik'
+      ru: 'Температура испарителя; недействительное значение отправляется, когда климат-система сама считывает этот датчик'
+      zh: '蒸发器温度;当空调自行采集该传感器时发送无效值'
+      hu: 'Párologtató hőmérséklete; érvénytelen érték kerül elküldésre, ha a klíma maga olvassa ki ezt az érzékelőt'
+      pt: 'Temperatura do evaporador; valor inválido enviado quando o climatizador adquire ele próprio este sensor'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 80
+    units: '°C'
+    default: 0xFFFF
+
+  AC_COMPRESSOR_MAX_CAPACITY_REQUEST:
+    bits: '5.7'
+    comment:
+      en: 'Request for the air conditioning compressor to run at maximum capacity'
+      fr: 'Demande de fonctionnement du compresseur de climatisation à cylindrée maximale'
+      es: 'Solicitud de funcionamiento del compresor de aire acondicionado a cilindrada máxima'
+      de: 'Anforderung des Klimakompressors zum Betrieb mit maximalem Hubvolumen'
+      it: 'Richiesta di funzionamento del compressore del climatizzatore a cilindrata massima'
+      pl: 'Żądanie pracy sprężarki klimatyzacji z maksymalną wydajnością'
+      ru: 'Запрос работы компрессора кондиционера на максимальной производительности'
+      zh: '请求空调压缩机以最大排量运行'
+      hu: 'A klímakompresszor maximális teljesítményű működésének kérése'
+      pt: 'Pedido de funcionamento do compressor de ar condicionado à cilindrada máxima'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandé'
+        es: 'No solicitado'
+        de: 'Nicht angefordert'
+        it: 'Non richiesto'
+        pl: 'Nieżądane'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitado'
+
+  AC_MIX_DOOR_HOT_POSITION:
+    bits: '5.6'
+    comment:
+      en: '"Full hot" position of the air mixing flap control'
+      fr: 'Position "tout chaud" de la commande du volet de mixage d''air'
+      es: 'Posición "todo caliente" del mando de la trampilla de mezcla de aire'
+      de: 'Position "ganz warm" der Luftmischklappensteuerung'
+      it: 'Posizione "tutto caldo" del comando della paratia di miscelazione dell''aria'
+      pl: 'Pozycja "pełne ciepło" sterowania klapą mieszania powietrza'
+      ru: 'Положение "полностью тепло" регулятора заслонки смешивания воздуха'
+      zh: '空气混合风门控制的"全热"位置'
+      hu: 'A levegőkeverő lapát vezérlésének "teljesen meleg" állása'
+      pt: 'Posição «todo quente» do comando da comporta de mistura de ar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Position other than ''All hot'''
+        fr: 'Position différente de « Tout chaud »'
+        es: 'Posición distinta de «Todo caliente»'
+        de: 'Position ungleich „Alles warm“'
+        it: 'Posizione diversa da «Tutto caldo»'
+        pl: 'Pozycja inna niż „Cała ciepła”'
+        ru: 'Положение, отличное от «Всё горячо»'
+        zh: '非“全热”位置'
+        hu: '„Teljesen meleg”-től eltérő pozíció'
+        pt: 'Posição diferente de ''totalmente quente'''
+      0x01:
+        en: '"Full hot" position'
+        fr: 'Position « Tout chaud »'
+        es: 'Posición "Todo caliente"'
+        de: 'Stellung „Ganz warm“'
+        it: 'Posizione "Tutto caldo"'
+        pl: 'Pozycja „Całkowicie ciepłe”'
+        ru: 'Положение «Полностью тепло»'
+        zh: '“全暖”位置'
+        hu: '„Teljesen meleg” állás'
+        pt: 'Posição "Todo quente"'
+
+  AC_MIX_DOOR_COLD_POSITION:
+    bits: '5.5'
+    comment:
+      en: '"Full cold" position of the air mixing flap control'
+      fr: 'Position "tout froid" de la commande du volet de mixage d''air'
+      es: 'Posición "todo frío" del mando de la trampilla de mezcla de aire'
+      de: 'Position "ganz kalt" der Luftmischklappensteuerung'
+      it: 'Posizione "tutto freddo" del comando della paratia di miscelazione dell''aria'
+      pl: 'Pozycja "pełne zimno" sterowania klapą mieszania powietrza'
+      ru: 'Положение "полностью холодно" регулятора заслонки смешивания воздуха'
+      zh: '空气混合风门控制的"全冷"位置'
+      hu: 'A levegőkeverő lapát vezérlésének "teljesen hideg" állása'
+      pt: 'Posição «todo frio» do comando da comporta de mistura de ar'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Position other than "Full cold"'
+        fr: 'Position différente de « Tout froid »'
+        es: 'Posición distinta de "Todo frío"'
+        de: 'Position ungleich „Ganz kalt"'
+        it: 'Posizione diversa da "Tutto freddo"'
+        pl: 'Pozycja inna niż "Cały zimny"'
+        ru: 'Положение, отличное от «Полный холод»'
+        zh: '非"全冷"位置'
+        hu: 'Nem "teljesen hideg" pozíció'
+        pt: 'Posição diferente de «Todo frio»'
+      0x01:
+        en: 'Full cold position'
+        fr: 'Position tout froid'
+        es: 'Posición todo frío'
+        de: 'Position ganz kalt'
+        it: 'Posizione tutto freddo'
+        pl: 'Pozycja maksymalnego zimna'
+        ru: 'Положение «полностью холодно»'
+        zh: '全冷位置'
+        hu: 'Teljesen hideg pozíció'
+        pt: 'Posição totalmente fria'
+
+  BLOWER_SPEED:
+    bits: '5.4-5.2'
+    comment:
+      en: 'Blower (heater fan) speed'
+      fr: 'Vitesse du pulseur de chauffage/ventilation'
+      es: 'Velocidad del ventilador del habitáculo'
+      de: 'Gebläsedrehzahl'
+      it: 'Velocità del ventilatore dell''abitacolo'
+      pl: 'Prędkość dmuchawy nawiewu'
+      ru: 'Скорость вентилятора отопителя'
+      zh: '鼓风机(暖风机)转速'
+      hu: 'A fűtőventilátor sebessége'
+      pt: 'Velocidade do ventilador de aquecimento/ventilação'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Speed 0'
+        fr: 'Vitesse 0'
+        es: 'Velocidad 0'
+        de: 'Geschwindigkeit 0'
+        it: 'Velocità 0'
+        pl: 'Prędkość 0'
+        ru: 'Скорость 0'
+        zh: '车速0'
+        hu: '0 sebesség'
+        pt: 'Velocidade 0'
+      0x01:
+        en: 'Speed 1'
+        fr: 'Vitesse 1'
+        es: 'Velocidad 1'
+        de: 'Geschwindigkeit 1'
+        it: 'Velocità 1'
+        pl: 'Prędkość 1'
+        ru: 'Скорость 1'
+        zh: '速度1'
+        hu: '1. sebesség'
+        pt: 'Velocidade 1'
+      0x02:
+        en: 'Speed 2'
+        fr: 'Vitesse 2'
+        es: 'Velocidad 2'
+        de: 'Geschwindigkeit 2'
+        it: 'Velocità 2'
+        pl: 'Prędkość 2'
+        ru: 'Скорость 2'
+        zh: '速度2'
+        hu: '2. sebesség'
+        pt: 'Velocidade 2'
+      0x03:
+        en: 'Speed 3'
+        fr: 'Vitesse 3'
+        es: 'Velocidad 3'
+        de: 'Geschwindigkeit 3'
+        it: 'Velocità 3'
+        pl: 'Prędkość 3'
+        ru: 'Скорость 3'
+        zh: '速度3'
+        hu: '3. sebesség'
+        pt: 'Velocidade 3'
+      0x04:
+        en: 'Speed 4'
+        fr: 'Vitesse 4'
+        es: 'Velocidad 4'
+        de: 'Geschwindigkeit 4'
+        it: 'Velocità 4'
+        pl: 'Prędkość 4'
+        ru: 'Скорость 4'
+        zh: '车速4'
+        hu: '4 sebesség'
+        pt: 'Velocidade 4'
+      0x05:
+        en: 'Speed 5'
+        fr: 'Vitesse 5'
+        es: 'Velocidad 5'
+        de: 'Geschwindigkeit 5'
+        it: 'Velocità 5'
+        pl: 'Prędkość 5'
+        ru: 'Скорость 5'
+        zh: '速度5'
+        hu: '5. sebesség'
+        pt: 'Velocidade 5'
+      0x06:
+        en: 'Speed 6'
+        fr: 'Vitesse 6'
+        es: 'Velocidad 6'
+        de: 'Geschwindigkeit 6'
+        it: 'Velocità 6'
+        pl: 'Prędkość 6'
+        ru: 'Скорость 6'
+        zh: '速度6'
+        hu: '6. sebesség'
+        pt: 'Velocidade 6'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  AC_AIR_INLET_POSITION:
+    bits: '5.1'
+    comment:
+      en: 'Air inlet position (fresh air or recirculation)'
+      fr: 'Position de l''entrée d''air (air extérieur ou recyclage)'
+      es: 'Posición de la entrada de aire (aire exterior o recirculación)'
+      de: 'Position des Lufteinlasses (Frischluft oder Umluft)'
+      it: 'Posizione della presa d''aria (aria esterna o ricircolo)'
+      pl: 'Pozycja wlotu powietrza (powietrze zewnętrzne lub recyrkulacja)'
+      ru: 'Положение заслонки забора воздуха (наружный воздух или рециркуляция)'
+      zh: '进气位置(外循环或内循环)'
+      hu: 'A levegőbeömlő helyzete (friss levegő vagy recirkuláció)'
+      pt: 'Posição da entrada de ar (ar exterior ou recirculação)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Fresh air or partial recirculation'
+        fr: 'Air extérieur ou recyclage partiel'
+        es: 'Aire exterior o recirculación parcial'
+        de: 'Frischluft oder teilweise Umluft'
+        it: 'Aria esterna o ricircolo parziale'
+        pl: 'Powietrze zewnętrzne lub częściowa recyrkulacja'
+        ru: 'Наружный воздух или частичная рециркуляция'
+        zh: '外部空气或部分内循环'
+        hu: 'Friss levegő vagy részleges recirkuláció'
+        pt: 'Ar exterior ou recirculação parcial'
+      0x01:
+        en: 'Recirculation'
+        fr: 'Recirculation'
+        es: 'Recirculación'
+        de: 'Umluft'
+        it: 'Ricircolo'
+        pl: 'Recyrkulacja'
+        ru: 'Рециркуляция'
+        zh: '内循环'
+        hu: 'Recirkuláció'
+        pt: 'Recirculação'
+
+  AC_DISTRIBUTION_POSITION:
+    bits: '5.0'
+    comment:
+      en: 'Position of the air distribution control (defrost position or not)'
+      fr: 'Position de la commande de distribution d''air (position dégivrage ou non)'
+      es: 'Posición del mando de distribución de aire (posición de desempañado o no)'
+      de: 'Position der Luftverteilungssteuerung (Enteisungsstellung oder nicht)'
+      it: 'Posizione del comando di distribuzione dell''aria (posizione sbrinamento o no)'
+      pl: 'Pozycja sterowania rozdziałem powietrza (pozycja odszraniania lub inna)'
+      ru: 'Положение регулятора распределения воздуха (положение обдува стекла или иное)'
+      zh: '空气分配控制的位置(除霜位置与否)'
+      hu: 'A légelosztás vezérlésének helyzete (párátlanító állás vagy sem)'
+      pt: 'Posição do comando de distribuição de ar (posição de descongelação ou não)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Position other than defrost'
+        fr: 'Position différente de ''dégi'''
+        es: 'Posición distinta de "desempañado"'
+        de: 'Position ungleich "Entfrosten"'
+        it: 'Posizione diversa da "sbrinamento"'
+        pl: 'Pozycja inna niż "odszranianie"'
+        ru: 'Положение отличается от "разморозка"'
+        zh: '位置不同于"除霜"'
+        hu: 'A pozíció eltér a "párátlanítás"-tól'
+        pt: 'Posição diferente de "desembaciamento"'
+      0x01:
+        en: 'Defrost position'
+        fr: 'Position dégivrage'
+        es: 'Posición desescarchado'
+        de: 'Enteisungsstellung'
+        it: 'Posizione sbrinamento'
+        pl: 'Pozycja odszraniania'
+        ru: 'Положение разморозки'
+        zh: '除霜位置'
+        hu: 'Jégmentesítő állás'
+        pt: 'Posição descongelação'
+
+  UNUSED_2:
+    bits: '6.7-6.5'
+    unused: true
+
+  UNUSED_3:
+    bits: '6.4-6.0'
+    unused: true

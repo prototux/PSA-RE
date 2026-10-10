@@ -1,0 +1,107 @@
+id: 0x1A2
+name: 'CD_CHANGER_DISK_STATUS'
+type: 'can'
+length: 5
+comment:
+  en: 'CD changer disk status: elapsed time (minutes/seconds), disk count and current MP3 folder.'
+  fr: 'État du disque du changeur CD : temps écoulé (minutes/secondes), nombre de disques et dossier MP3 courant.'
+  es: 'Estado del disco del cambiador de CD: tiempo transcurrido (minutos/segundos), número de discos y carpeta MP3 actual.'
+  de: 'CD-Wechsler-Datenträgerstatus: verstrichene Zeit (Minuten/Sekunden), Anzahl der CDs und aktueller MP3-Ordner.'
+  it: 'Stato del disco del caricatore CD: tempo trascorso (minuti/secondi), numero di dischi e cartella MP3 corrente.'
+  pl: 'Stan płyty zmieniarki CD: czas, który upłynął (minuty/sekundy), liczba płyt i bieżący folder MP3.'
+  ru: 'Статус диска CD-чейнджера: прошедшее время (минуты/секунды), количество дисков и текущая папка MP3.'
+  zh: 'CD换碟机光盘状态:已用时间(分/秒)、光盘数量及当前MP3文件夹。'
+  hu: 'A CD-váltó lemezállapota: eltelt idő (perc/másodperc), lemezek száma és az aktuális MP3 mappa.'
+  pt: 'Estado do disco no leitor de CD: tempo decorrido (minutos/segundos), número de discos e pasta MP3 atual.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['500ms', 'trigger']
+senders: ['ICSV', 'CDC']
+receivers: ['RAD', 'BTEL', 'OVIP', 'EMF']
+
+signals:
+  TRACKS:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Number of tracks on the disc/directory being played'
+      fr: 'Nombre de plages du disque/répertoire en cours de lecture'
+      es: 'Número de pistas del disco/directorio en reproducción'
+      de: 'Anzahl der Titel auf der abgespielten Disc/im Verzeichnis'
+      it: 'Numero di tracce del disco/cartella in riproduzione'
+      pl: 'Liczba ścieżek na odtwarzanej płycie/w katalogu'
+      ru: 'Число дорожек на воспроизводимом диске/в каталоге'
+      zh: '正在播放的光盘/目录中的曲目数'
+      hu: 'A lejátszott lemez/könyvtár számainak száma'
+      pt: 'Número de faixas do disco/diretório em reprodução'
+    type: 'uint'
+    min: 0
+    max: 254
+    default: 0xFF
+
+  TOTAL_DURATION_MINUTES:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Total duration of the CD/directory, minutes'
+      fr: 'Durée totale du CD/répertoire, en minutes'
+      es: 'Duración total del CD/directorio, en minutos'
+      de: 'Gesamtdauer der CD/des Verzeichnisses, in Minuten'
+      it: 'Durata totale del CD/cartella, in minuti'
+      pl: 'Całkowity czas trwania CD/katalogu, w minutach'
+      ru: 'Общая продолжительность CD/каталога, в минутах'
+      zh: 'CD/目录总时长(分钟)'
+      hu: 'A CD/könyvtár teljes időtartama percben'
+      pt: 'Duração total do CD/diretório, em minutos'
+    type: 'uint'
+    min: 0
+    max: 254
+    default: 0xFF
+
+  TOTAL_DURATION_SECONDS:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Total duration of the CD/directory, seconds'
+      fr: 'Durée totale du CD/répertoire, en secondes'
+      es: 'Duración total del CD/directorio, en segundos'
+      de: 'Gesamtdauer der CD/des Verzeichnisses, in Sekunden'
+      it: 'Durata totale del CD/cartella, in secondi'
+      pl: 'Całkowity czas trwania CD/katalogu, w sekundach'
+      ru: 'Общая продолжительность CD/каталога, в секундах'
+      zh: 'CD/目录总时长(秒)'
+      hu: 'A CD/könyvtár teljes időtartama másodpercben'
+      pt: 'Duração total do CD/diretório, em segundos'
+    type: 'uint'
+    min: 0
+    max: 254
+    default: 0xFF
+
+  CDC_MP3_DIRECTORY_NUMBER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Current MP3 directory number'
+      fr: 'Numéro du répertoire MP3 courant'
+      es: 'Número del directorio MP3 actual'
+      de: 'Nummer des aktuellen MP3-Verzeichnisses'
+      it: 'Numero della cartella MP3 corrente'
+      pl: 'Numer bieżącego katalogu MP3'
+      ru: 'Номер текущего каталога MP3'
+      zh: '当前MP3目录编号'
+      hu: 'Az aktuális MP3 könyvtár száma'
+      pt: 'Número do diretório MP3 atual'
+    type: 'uint'
+    min: 0
+    max: 254
+    invalid: 0xFF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '5.7-5.0'
+    unused: true

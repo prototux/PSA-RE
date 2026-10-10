@@ -1,0 +1,198 @@
+id: 0x532
+name: 'HYBRID_BATTERY_DATA_2'
+type: 'can'
+length: 5
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+periodicity: ['100ms']
+senders: ['BSI']
+receivers: ['HCU2', 'CMM', 'BVN']
+
+signals:
+  BATTERY_MIN_VOLTAGE:
+    bits: '1.7-2.6'
+    comment:
+      en: 'Minimum battery voltage'
+      fr: 'Tension minimale de la batterie'
+      es: 'Tensión mínima de la batería'
+      de: 'Mindestspannung der Batterie'
+      it: 'Tensione minima della batteria'
+      pl: 'Minimalne napięcie akumulatora'
+      ru: 'Минимальное напряжение батареи'
+      zh: '电池最低电压'
+      hu: 'Az akkumulátor minimális feszültsége'
+      pt: 'Tensão mínima da bateria'
+    type: 'uint'
+    factor: 0.01
+    offset: 3
+    min: 3
+    max: 13
+    units: 'V'
+    invalid: 0x3FF
+    default: 0x3F9
+    alternatives:
+      - note:
+          en: 'Also observed with another scaling (factor 0.013)'
+          fr: 'Aussi observé avec une autre mise à l''échelle (factor 0.013)'
+          es: 'También observado con otro escalado (factor 0.013)'
+          de: 'Auch mit anderer Skalierung beobachtet (factor 0.013)'
+          it: 'Osservato anche con un''altra scala (factor 0.013)'
+          pl: 'Obserwowany także z innym skalowaniem (factor 0.013)'
+          ru: 'Также наблюдался с другим масштабом (factor 0.013)'
+          zh: '也观察到使用另一种缩放（factor 0.013）'
+          hu: 'Megfigyelve más skálázással is (factor 0.013)'
+          pt: 'Também observado com outra escala (factor 0.013)'
+        factor: 0.013
+
+  BATTERY_MAX_DISCHARGE_CURRENT:
+    bits: '2.5-2.0'
+    comment:
+      en: 'Maximum battery discharge current'
+      fr: 'Courant maximal de décharge de la batterie'
+      es: 'Corriente máxima de descarga de la batería'
+      de: 'Maximaler Entladestrom der Batterie'
+      it: 'Corrente massima di scarica della batteria'
+      pl: 'Maksymalny prąd rozładowania akumulatora'
+      ru: 'Максимальный ток разряда батареи'
+      zh: '电池最大放电电流'
+      hu: 'Az akkumulátor maximális kisütési árama'
+      pt: 'Corrente máxima de descarga da bateria'
+    type: 'uint'
+    factor: 20
+    offset: -1500
+    min: -1500
+    max: -300
+    units: 'A'
+    invalid: 0x3F
+    default: 0x3E
+
+  BATTERY_NORMALIZED_INTERNAL_RESISTANCE:
+    bits: '3.7-3.1'
+    comment:
+      en: 'Normalized battery internal resistance'
+      fr: 'Résistance interne normalisée de la batterie'
+      es: 'Resistencia interna normalizada de la batería'
+      de: 'Normierter Innenwiderstand der Batterie'
+      it: 'Resistenza interna normalizzata della batteria'
+      pl: 'Znormalizowana rezystancja wewnętrzna akumulatora'
+      ru: 'Нормированное внутреннее сопротивление батареи'
+      zh: '标准化的电池内阻'
+      hu: 'Az akkumulátor normalizált belső ellenállása'
+      pt: 'Resistência interna normalizada da bateria'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 10
+    units: 'mOhm'
+    invalid: 0x7F
+    default: 0x7E
+
+  FUNCTION_ACTIVATION:
+    bits: '3.0'
+    comment:
+      en: 'Function activation state (on/off)'
+      fr: 'État d''activation de la fonction (marche/arrêt)'
+      es: 'Estado de activación de la función (encendido/apagado)'
+      de: 'Aktivierungszustand der Funktion (Ein/Aus)'
+      it: 'Stato di attivazione della funzione (acceso/spento)'
+      pl: 'Stan aktywacji funkcji (włączona/wyłączona)'
+      ru: 'Статус активации функции (вкл/выкл)'
+      zh: '功能激活状态(开/关)'
+      hu: 'A funkció aktiválási állapota (be/ki)'
+      pt: 'Estado de ativação da função (ligado/desligado)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  PEDESTRIAN_DETECTION_ENABLE:
+    bits: '4.7'
+    comment:
+      en: 'Pedestrian detection function enable/disable'
+      fr: 'Activation/désactivation de la détection des piétons'
+      es: 'Activación/desactivación de la detección de peatones'
+      de: 'Aktivierung/Deaktivierung der Fußgängererkennung'
+      it: 'Attivazione/disattivazione del rilevamento dei pedoni'
+      pl: 'Włączenie/wyłączenie wykrywania pieszych'
+      ru: 'Включение/отключение функции обнаружения пешеходов'
+      zh: '行人检测功能的启用/禁用'
+      hu: 'A gyalogosészlelés funkció be-/kikapcsolása'
+      pt: 'Ativação/desativação da deteção de peões'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Detection off'
+        fr: 'Détection désactivée'
+        es: 'Detección desactivada'
+        de: 'Erkennung deaktiviert'
+        it: 'Rilevamento disattivato'
+        pl: 'Detekcja wyłączona'
+        ru: 'Обнаружение отключено'
+        zh: '检测关闭'
+        hu: 'Az észlelés kikapcsolva'
+        pt: 'Deteção desativada'
+      0x01:
+        en: 'Detect on'
+        fr: 'Detect on'
+        es: 'Detect on'
+        de: 'Detect on'
+        it: 'Detect on'
+        pl: 'Detect on'
+        ru: 'Detect on'
+        zh: 'Detect on'
+        hu: 'Detect on'
+        pt: 'Detect on'
+
+  AMBIENT_LIGHT_LEVEL:
+    bits: '4.6-5.7'
+    comment:
+      en: 'Ambient light level'
+      fr: 'Niveau de lumière ambiante'
+      es: 'Nivel de luz ambiental'
+      de: 'Umgebungslichtstärke'
+      it: 'Livello di luce ambientale'
+      pl: 'Poziom światła otoczenia'
+      ru: 'Уровень окружающей освещённости'
+      zh: '环境光水平'
+      hu: 'A környezeti fény szintje'
+      pt: 'Nível de luz ambiente'
+    type: 'uint'
+    min: 0
+    max: 254
+    invalid: 0xFF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '5.6-5.0'
+    unused: true

@@ -1,0 +1,248 @@
+id: 0x2D8
+name: 'ENGINE_HYBRID_DYNAMIC_DATA_12'
+type: 'can'
+length: 7
+comment:
+  en: 'Engine dynamic data for hybrid variants: hybrid motor torque, resistant torque, pre-processed driver torque request, engine-restart and particulate-filter regeneration requests, raw powertrain state.'
+  fr: 'Données dynamiques moteur pour variantes hybrides : couple moteur hybride, couple résistant, demande de couple conducteur avant traitement, demandes de redémarrage moteur et de régénération FAP, état brut du groupe motopropulseur.'
+  es: 'Datos dinámicos del motor para variantes híbridas: par del motor híbrido, par resistente, solicitud de par del conductor antes de procesar, solicitudes de reinicio del motor y de regeneración del filtro de partículas, estado bruto del grupo motopropulsor.'
+  de: 'Motor-Dynamikdaten für Hybridvarianten: Hybridmotor-Drehmoment, Widerstandsmoment, unverarbeitete Fahrer-Drehmomentanforderung, Motorneustart- und Partikelfilter-Regenerationsanforderungen, roher Antriebsstrangzustand.'
+  it: 'Dati dinamici motore per varianti ibride: coppia motore ibrido, coppia resistente, richiesta di coppia guidatore prima dell''elaborazione, richieste di riavvio motore e rigenerazione FAP, stato grezzo del gruppo propulsore.'
+  pl: 'Dane dynamiczne silnika dla wariantów hybrydowych: moment silnika hybrydowego, moment oporowy, nieprzetworzone żądanie momentu kierowcy, żądania ponownego uruchomienia silnika i regeneracji filtra cząstek stałych, surowy stan układu napędowego.'
+  ru: 'Динамические данные двигателя для гибридных вариантов: крутящий момент гибридного двигателя, момент сопротивления, необработанный запрос крутящего момента водителя, запросы перезапуска двигателя и регенерации сажевого фильтра, необработанное состояние силового агрегата.'
+  zh: '混合动力变体的发动机动态数据:混动电机扭矩、阻力扭矩、处理前的驾驶员扭矩请求、发动机重启和颗粒过滤器再生请求、动力总成原始状态。'
+  hu: 'Motor dinamikus adatok hibrid változatokhoz: hibrid motornyomaték, ellenálló nyomaték, feldolgozás előtti vezetői nyomatékkérés, motor-újraindítási és részecskeszűrő-regenerálási kérések, a hajtáslánc nyers állapota.'
+  pt: 'Dados dinâmicos do motor para variantes híbridas: binário do motor elétrico híbrido, binário resistente, pedido de binário do condutor pré-processado, pedidos de reinício do motor e de regeneração do filtro de partículas, estado em bruto do grupo motopropulsor.'
+periodicity: ['20ms']
+senders: ['CMM', 'E_VCU', 'HCU2']
+receivers: ['BSI', 'CVM', 'ARTIV', 'ABS']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.0'
+    unused: true
+
+  CRUISE_CONTROL_POTENTIAL_TORQUE_SETPOINT:
+    bits: '2.7-3.3'
+    comment:
+      en: 'Powertrain potential wheel torque setpoint for cruise/speed control (XVV)'
+      fr: 'Consigne de couple roue potentiel du groupe motopropulseur pour le régulateur/limiteur de vitesse (XVV)'
+      es: 'Consigna de par en rueda potencial del grupo motopropulsor para el regulador/limitador de velocidad (XVV)'
+      de: 'Potenzieller Radmoment-Sollwert des Antriebsstrangs für Tempomat/-begrenzer (XVV)'
+      it: 'Consegna di coppia ruota potenziale del gruppo motopropulsore per regolatore/limitatore di velocità (XVV)'
+      pl: 'Potencjalna zadana wartość momentu na kole zespołu napędowego dla tempomatu/ogranicznika prędkości (XVV)'
+      ru: 'Потенциальный заданный момент на колесе силового агрегата для круиз-контроля/ограничителя скорости (XVV)'
+      zh: '巡航/限速功能(XVV)动力总成车轮潜在扭矩设定值'
+      hu: 'Az erőátviteli rendszer potenciális kerék-nyomatékalapjele a sebességtartó/korlátozó (XVV) számára'
+      pt: 'Consigna de binário potencial na roda do grupo motopropulsor para o regulador/limitador de velocidade (XVV)'
+    type: 'uint'
+    factor: 2
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    default: 0x00
+
+  ACC_STATUS_ENGINE_ECU:
+    bits: '3.2-3.0'
+    comment:
+      en: 'Adaptive cruise control (ACC) function status, in the engine ECU'
+      fr: 'État de la fonction de régulation adaptative de vitesse (ACC), dans le calculateur moteur'
+      es: 'Estado de la función de control de crucero adaptativo (ACC), en la ECU del motor'
+      de: 'Status der adaptiven Tempomat-Funktion (ACC), im Motorsteuergerät'
+      it: 'Stato della funzione cruise control adattivo (ACC), nella centralina motore'
+      pl: 'Stan funkcji adaptacyjnego tempomatu (ACC), w sterowniku silnika'
+      ru: 'Статус функции адаптивного круиз-контроля (ACC) в блоке управления двигателем'
+      zh: '发动机控制单元中的自适应巡航(ACC)功能状态'
+      hu: 'Az adaptív sebességtartó (ACC) funkció állapota a motorvezérlőben'
+      pt: 'Estado da função de regulação adaptativa de velocidade (ACC), na unidade de controlo do motor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Initialisation'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x02:
+        en: 'Inhibited'
+        fr: 'Inhibé'
+        es: 'Inhibido'
+        de: 'Gesperrt'
+        it: 'Inibito'
+        pl: 'Zablokowany'
+        ru: 'Заблокировано'
+        zh: '已抑制'
+        hu: 'Letiltva'
+        pt: 'Inibido'
+      0x03:
+        en: 'Waiting'
+        fr: 'Attente'
+        es: 'Espera'
+        de: 'Warten'
+        it: 'Attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Espera'
+      0x04:
+        en: 'Active but not effective'
+        fr: 'Actif non effectif'
+        es: 'Activo no efectivo'
+        de: 'Aktiv, nicht wirksam'
+        it: 'Attivo non effettivo'
+        pl: 'Aktywny, nieskuteczny'
+        ru: 'Активно, но не эффективно'
+        zh: '激活但未生效'
+        hu: 'Aktív, de nem hatásos'
+        pt: 'Ativo mas sem efeito'
+      0x05:
+        en: 'Actually active'
+        fr: 'Actif effectif'
+        es: 'Activo efectivo'
+        de: 'Tatsächlich aktiv'
+        it: 'Effettivamente attivo'
+        pl: 'Rzeczywiście aktywne'
+        ru: 'Фактически активно'
+        zh: '实际激活'
+        hu: 'Ténylegesen aktív'
+        pt: 'Efetivamente ativo'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  POWERTRAIN_WHEEL_TORQUE_POTENTIAL_MAX:
+    bits: '4.7-5.5'
+    comment:
+      en: 'Maximum potential powertrain wheel torque'
+      fr: 'Potentiel de couple roue maximal du groupe motopropulseur'
+      es: 'Potencial de par en rueda máximo del grupo motopropulsor'
+      de: 'Maximales potenzielles Radmoment des Antriebsstrangs'
+      it: 'Potenziale di coppia ruota massimo del gruppo motopropulsore'
+      pl: 'Maksymalny potencjalny moment na kole zespołu napędowego'
+      ru: 'Максимальный потенциальный момент на колесе силового агрегата'
+      zh: '动力总成最大潜在车轮扭矩'
+      hu: 'Az erőátviteli rendszer maximális potenciális kerék-nyomatéka'
+      pt: 'Potencial máximo de binário na roda do grupo motopropulsor'
+    type: 'uint'
+    factor: 8
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x753
+
+  REAR_TORQUE_DISTRIBUTION_RATE_CRUISE:
+    bits: '5.4-5.0'
+    comment:
+      en: 'Rear axle powertrain wheel torque distribution rate, for cruise/speed control'
+      fr: 'Taux de répartition du couple roue du groupe motopropulseur sur l''essieu arrière, pour le régulateur/limiteur de vitesse'
+      es: 'Tasa de reparto del par en rueda del grupo motopropulsor en el eje trasero, para el regulador/limitador de velocidad'
+      de: 'Verteilungsrate des Radmoments des Antriebsstrangs an der Hinterachse, für Tempomat/-begrenzer'
+      it: 'Tasso di ripartizione della coppia ruota del gruppo motopropulsore sull''assale posteriore, per regolatore/limitatore di velocità'
+      pl: 'Wskaźnik rozdziału momentu na kole zespołu napędowego na osi tylnej, dla tempomatu/ogranicznika prędkości'
+      ru: 'Доля распределения момента на колесе силового агрегата на заднюю ось для круиз-контроля/ограничителя скорости'
+      zh: '巡航/限速功能中动力总成车轮扭矩在后轴的分配比例'
+      hu: 'Az erőátviteli rendszer kerék-nyomatékának hátsó tengelyre eső elosztási aránya, a sebességtartó/korlátozó számára'
+      pt: 'Taxa de repartição do binário na roda do grupo motopropulsor no eixo traseiro, para o regulador/limitador de velocidade'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x1F
+    default: 0x00
+
+  POWERTRAIN_WHEEL_TORQUE_POTENTIAL_MIN:
+    bits: '6.7-7.5'
+    comment:
+      en: 'Minimum potential powertrain wheel torque'
+      fr: 'Potentiel de couple roue minimal du groupe motopropulseur'
+      es: 'Potencial de par en rueda mínimo del grupo motopropulsor'
+      de: 'Minimales potenzielles Radmoment des Antriebsstrangs'
+      it: 'Potenziale di coppia ruota minimo del gruppo motopropulsore'
+      pl: 'Minimalny potencjalny moment na kole zespołu napędowego'
+      ru: 'Минимальный потенциальный момент на колесе силового агрегата'
+      zh: '动力总成最小潜在车轮扭矩'
+      hu: 'Az erőátviteli rendszer minimális potenciális kerék-nyomatéka'
+      pt: 'Potencial mínimo de binário na roda do grupo motopropulsor'
+    type: 'uint'
+    factor: 8
+    offset: -4000
+    min: -4000
+    max: 11000
+    units: 'Nm'
+    invalid: 0x7FF
+    default: 0x00
+
+  ACC_INHIBIT_ENGINE_SPEED:
+    bits: '7.4'
+    comment:
+      en: 'Adaptive cruise control (ACC) deactivation due to engine speed conditions'
+      fr: 'Désactivation du régulateur de vitesse adaptatif (ACC) liée aux conditions de régime moteur'
+      es: 'Desactivación del control de crucero adaptativo (ACC) por condiciones de régimen del motor'
+      de: 'Deaktivierung des adaptiven Tempomaten (ACC) aufgrund von Motordrehzahlbedingungen'
+      it: 'Disattivazione del cruise control adattivo (ACC) per condizioni di regime motore'
+      pl: 'Dezaktywacja adaptacyjnego tempomatu (ACC) z powodu warunków obrotów silnika'
+      ru: 'Деактивация адаптивного круиз-контроля (ACC) из-за условий по оборотам двигателя'
+      zh: '因发动机转速条件导致的自适应巡航(ACC)停用'
+      hu: 'Az adaptív sebességtartó (ACC) kikapcsolása a motorfordulatszám-feltételek miatt'
+      pt: 'Desativação do regulador de velocidade adaptativo (ACC) devido às condições de regime do motor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition'
+        fr: 'Pas d''inhibition'
+        es: 'Sin inhibición'
+        de: 'Keine Sperrung'
+        it: 'Nessuna inibizione'
+        pl: 'Brak blokady'
+        ru: 'Нет блокировки'
+        zh: '无禁止'
+        hu: 'Nincs tiltás'
+        pt: 'Sem inibição'
+      0x01:
+        en: 'Inhibition requested'
+        fr: 'Inhibition demandée'
+        es: 'Inhibición solicitada'
+        de: 'Sperrung angefordert'
+        it: 'Inibizione richiesta'
+        pl: 'Żądana blokada'
+        ru: 'Запрошена блокировка'
+        zh: '请求禁止'
+        hu: 'Tiltás kérve'
+        pt: 'Inibição pedida'
+
+  UNUSED_2:
+    bits: '7.3-7.0'
+    unused: true

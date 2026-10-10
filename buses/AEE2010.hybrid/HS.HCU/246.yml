@@ -1,0 +1,300 @@
+id: 0x246
+name: 'HCU2_DYNAMIC_DATA_3'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor current and fault states (short circuit, mode, performance), from the hybrid control unit.'
+  fr: 'Courant et états de défaut (court-circuit, mode, performance) du moteur électrique avant, issus du calculateur hybride.'
+  es: 'Corriente y estados de fallo (cortocircuito, modo, rendimiento) del motor eléctrico delantero, procedentes de la centralita híbrida.'
+  de: 'Strom und Fehlerzustände (Kurzschluss, Modus, Leistung) des vorderen Elektromotors vom Hybridsteuergerät.'
+  it: 'Corrente e stati di guasto (cortocircuito, modalità, prestazioni) del motore elettrico anteriore, dalla centralina ibrida.'
+  pl: 'Prąd i stany usterek (zwarcie, tryb, wydajność) przedniego silnika elektrycznego z hybrydowego sterownika.'
+  ru: 'Ток и статусы неисправностей (короткое замыкание, режим, производительность) переднего электродвигателя от гибридного блока управления.'
+  zh: '前置电动机的电流及故障状态(短路、模式、性能),来自混合动力控制单元。'
+  hu: 'Az első elektromos motor árama és hibaállapotai (rövidzárlat, üzemmód, teljesítmény) a hibrid vezérlőegységtől.'
+  pt: 'Corrente e estados de avaria (curto-circuito, modo, desempenho) do motor elétrico dianteiro, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU2']
+receivers: ['HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  FRONT_EMOTOR_MIN_PEAK_TORQUE:
+    bits: '2.7-3.3'
+    comment:
+      en: 'Front electric machine lowest raw peak torque'
+      fr: 'Couple crête minimal brut de la machine électrique avant'
+      es: 'Par de pico mínimo bruto de la máquina eléctrica delantera'
+      de: 'Minimales rohes Spitzendrehmoment der vorderen E-Maschine'
+      it: 'Coppia di picco minima grezza della macchina elettrica anteriore'
+      pl: 'Minimalny surowy moment szczytowy przedniej maszyny elektrycznej'
+      ru: 'Минимальный необработанный пиковый момент передней электромашины'
+      zh: '前电机最小原始峰值扭矩'
+      hu: 'Az első elektromos gép legkisebb nyers csúcsnyomatéka'
+      pt: 'Binário de pico mínimo bruto da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 0.0625
+    offset: -500
+    min: -500
+    max: 0
+    units: 'Nm'
+    invalid: 0x1FFF
+    default: 0x1F40
+
+  FRONT_EMOTOR_MAX_PEAK_TORQUE:
+    bits: '3.2-5.6'
+    comment:
+      en: 'Front electric machine highest raw peak torque'
+      fr: 'Couple crête maximal brut de la machine électrique avant'
+      es: 'Par de pico máximo bruto de la máquina eléctrica delantera'
+      de: 'Maximales rohes Spitzendrehmoment der vorderen E-Maschine'
+      it: 'Coppia di picco massima grezza della macchina elettrica anteriore'
+      pl: 'Maksymalny surowy moment szczytowy przedniej maszyny elektrycznej'
+      ru: 'Максимальный необработанный пиковый момент передней электромашины'
+      zh: '前电机最大原始峰值扭矩'
+      hu: 'Az első elektromos gép legnagyobb nyers csúcsnyomatéka'
+      pt: 'Binário de pico máximo bruto da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 0.0625
+    min: 0
+    max: 500
+    units: 'Nm'
+    invalid: 0x1FFF
+    default: 0x00
+
+  BASI_COOLANT_TEMPERATURE_ESTIMATED:
+    bits: '5.5-7.6'
+    comment:
+      en: 'Estimated coolant temperature of the BASI'
+      fr: 'Température estimée du liquide de refroidissement du BASI'
+      es: 'Temperatura estimada del líquido refrigerante del BASI'
+      de: 'Geschätzte Kühlmitteltemperatur des BASI'
+      it: 'Temperatura stimata del liquido di raffreddamento del BASI'
+      pl: 'Szacowana temperatura płynu chłodzącego BASI'
+      ru: 'Оценочная температура охлаждающей жидкости BASI'
+      zh: 'BASI冷却液估算温度'
+      hu: 'A BASI becsült hűtőfolyadék-hőmérséklete'
+      pt: 'Temperatura estimada do líquido de refrigeração do BASI'
+    type: 'uint'
+    factor: 0.015625
+    offset: -511.984375
+    min: -511.984375
+    max: 511.984375
+
+  HV_BATTERY_MAX_CURRENT:
+    bits: '7.4-8.4'
+    comment:
+      en: 'Maximum current accepted by the high-voltage battery'
+      fr: 'Courant maximum admissible par la batterie haute tension'
+      es: 'Corriente máxima admisible por la batería de alta tensión'
+      de: 'Maximal zulässiger Strom der Hochvoltbatterie'
+      it: 'Corrente massima ammissibile dalla batteria ad alta tensione'
+      pl: 'Maksymalny prąd dopuszczalny dla akumulatora wysokiego napięcia'
+      ru: 'Максимально допустимый ток высоковольтной батареи'
+      zh: '高压电池允许的最大电流'
+      hu: 'A nagyfeszültségű akkumulátor által megengedett maximális áram'
+      pt: 'Corrente máxima admissível pela bateria de alta tensão'
+    type: 'uint'
+    factor: 0.125
+    min: 0
+    max: 50
+    units: 'A'
+    default: 0x00
+
+  FRONT_INVERTER_STATUS:
+    bits: '8.3-8.0'
+    comment:
+      en: 'Front inverter state'
+      fr: 'Etat de l''onduleur avant'
+      es: 'Estado del inversor delantero'
+      de: 'Status des vorderen Wechselrichters'
+      it: 'Stato dell''inverter anteriore'
+      pl: 'Stan falownika przedniego'
+      ru: 'Состояние переднего инвертора'
+      zh: '前逆变器状态'
+      hu: 'Az első inverter állapota'
+      pt: 'Estado do inversor dianteiro'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Init'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x01:
+        en: 'Preload'
+        fr: 'Précharge'
+        es: 'Precarga'
+        de: 'Vorlast'
+        it: 'Precarico'
+        pl: 'Wstępne obciążenie'
+        ru: 'Предзаряд'
+        zh: '预加载'
+        hu: 'Előterhelés'
+        pt: 'Pré-carga'
+      0x02:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Tryb czuwania'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x03:
+        en: 'Pre-failure'
+        fr: 'Pré-défaut'
+        es: 'Prefallo'
+        de: 'Vorfehler'
+        it: 'Pre-guasto'
+        pl: 'Stan przedawaryjny'
+        ru: 'Предотказное состояние'
+        zh: '故障前状态'
+        hu: 'Hiba előtti állapot'
+        pt: 'Pré-falha'
+      0x04:
+        unused: true
+      0x05:
+        en: 'Torque control'
+        fr: 'Régulation de couple'
+        es: 'Regulación de par'
+        de: 'Drehmomentregelung'
+        it: 'Regolazione di coppia'
+        pl: 'Regulacja momentu obrotowego'
+        ru: 'Регулирование крутящего момента'
+        zh: '扭矩调节'
+        hu: 'Nyomatékszabályozás'
+        pt: 'Regulação de binário'
+      0x06:
+        en: 'Internal speed control'
+        fr: 'Régulation interne de régime'
+        es: 'Regulación interna de régimen'
+        de: 'Interne Drehzahlregelung'
+        it: 'Regolazione interna del regime'
+        pl: 'Wewnętrzna regulacja obrotów'
+        ru: 'Внутреннее регулирование оборотов'
+        zh: '内部转速调节'
+        hu: 'Belső fordulatszám-szabályozás'
+        pt: 'Regulação interna de regime'
+      0x07:
+        en: 'External speed control'
+        fr: 'Régulation externe de régime'
+        es: 'Regulación externa de régimen'
+        de: 'Externe Drehzahlregelung'
+        it: 'Regolazione esterna del regime'
+        pl: 'Zewnętrzna regulacja obrotów'
+        ru: 'Внешнее регулирование оборотов'
+        zh: '外部转速调节'
+        hu: 'Külső fordulatszám-szabályozás'
+        pt: 'Regulação externa do regime'
+      0x08:
+        en: 'Voltage control'
+        fr: 'Régulation de tension'
+        es: 'Control de tensión'
+        de: 'Spannungsregelung'
+        it: 'Regolazione di tensione'
+        pl: 'Regulacja napięcia'
+        ru: 'Регулирование напряжения'
+        zh: '电压调节'
+        hu: 'Feszültségszabályozás'
+        pt: 'Controlo de tensão'
+      0x09:
+        en: 'Calibration offset'
+        fr: 'Décalage d''étalonnage'
+        es: 'Desfase de calibración'
+        de: 'Kalibrierungs-Offset'
+        it: 'Offset di calibrazione'
+        pl: 'Przesunięcie kalibracji'
+        ru: 'Смещение калибровки'
+        zh: '校准偏移量'
+        hu: 'Kalibrációs eltolás'
+        pt: 'Desvio de calibração'
+      0x0A:
+        en: 'Open-circuit failsafe mode'
+        fr: 'Mode de secours circuit ouvert'
+        es: 'Modo seguro por circuito abierto'
+        de: 'Notlaufmodus bei Unterbrechung'
+        it: 'Modalità di emergenza per circuito aperto'
+        pl: 'Tryb awaryjny obwodu otwartego'
+        ru: 'Аварийный режим при обрыве цепи'
+        zh: '开路故障保护模式'
+        hu: 'Szakadás miatti vészüzemmód'
+        pt: 'Modo de segurança por circuito aberto'
+      0x0B:
+        en: 'Short-circuit safe mode active'
+        fr: 'Mode dégradé court-circuit actif'
+        es: 'Modo degradado de cortocircuito activo'
+        de: 'Kurzschluss-Sicherheitsmodus aktiv'
+        it: 'Modalità di sicurezza cortocircuito attiva'
+        pl: 'Aktywny tryb awaryjny zwarcia'
+        ru: 'Активен аварийный режим короткого замыкания'
+        zh: '短路安全模式已激活'
+        hu: 'Rövidzárlati biztonsági üzemmód aktív'
+        pt: 'Modo seguro de curto-circuito ativo'
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Exiting'
+        fr: 'Sortie en cours'
+        es: 'Saliendo'
+        de: 'Verlassen'
+        it: 'In uscita'
+        pl: 'Wyjście'
+        ru: 'Выход'
+        zh: '正在退出'
+        hu: 'Kilépés'
+        pt: 'A sair'
+      0x0F:
+        en: 'Exit finished'
+        fr: 'Sortie terminée'
+        es: 'Salida finalizada'
+        de: 'Ausgang abgeschlossen'
+        it: 'Uscita terminata'
+        pl: 'Wyjście zakończone'
+        ru: 'Выход завершён'
+        zh: '退出完成'
+        hu: 'Kilépés befejezve'
+        pt: 'Saída terminada'

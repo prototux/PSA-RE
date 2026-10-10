@@ -1,0 +1,98 @@
+id: 0x5CD
+name: 'WHEEL_PULSE_COUNTER_DATA_3'
+type: 'can'
+length: 4
+comment:
+  en: 'Wheel-speed sensor pulse counters and fault flags for each wheel.'
+  fr: 'Compteurs d''impulsions des capteurs de vitesse de roue et indicateurs de défaut pour chaque roue.'
+  es: 'Contadores de impulsos de los sensores de velocidad de rueda e indicadores de fallo de cada rueda.'
+  de: 'Impulszähler der Raddrehzahlsensoren und Fehlerkennungen für jedes Rad.'
+  it: 'Contatori di impulsi dei sensori di velocità ruota e indicatori di guasto per ciascuna ruota.'
+  pl: 'Liczniki impulsów czujników prędkości koła oraz flagi usterek dla każdego koła.'
+  ru: 'Счётчики импульсов датчиков скорости колёс и флаги неисправности для каждого колеса.'
+  zh: '各车轮轮速传感器脉冲计数及故障标志。'
+  hu: 'A kerékfordulatszám-érzékelők impulzusszámlálói és hibajelzői kerekenként.'
+  pt: 'Contadores de impulsos e indicadores de avaria dos sensores de velocidade das rodas, para cada roda.'
+periodicity: ['1000ms']
+senders: ['ABS']
+receivers: ['DAE']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  STEERING_WHEEL_ANGLE_OFFSET:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Offset used to compute the steering wheel angle from the column angle'
+      fr: 'Offset permettant de calculer l''angle volant à partir de l''angle colonne'
+      es: 'Offset utilizado para calcular el ángulo del volante a partir del ángulo de la columna'
+      de: 'Offset zur Berechnung des Lenkradwinkels aus dem Lenksäulenwinkel'
+      it: 'Offset utilizzato per calcolare l''angolo del volante a partire dall''angolo del piantone'
+      pl: 'Przesunięcie (offset) do obliczenia kąta kierownicy na podstawie kąta kolumny kierowniczej'
+      ru: 'Смещение (offset) для расчёта угла поворота руля по углу рулевой колонки'
+      zh: '用于根据转向柱角度计算方向盘角度的偏移量'
+      hu: 'A kormánykerék szögének a kormányoszlop szögéből történő számításához használt eltolás (offset)'
+      pt: 'Offset utilizado para calcular o ângulo do volante a partir do ângulo da coluna'
+    type: 'sint'
+    factor: 0.1
+    min: -1630
+    max: 1630
+    units: '°'
+    invalid: 0x7FFF
+    default: 0x00
+
+  STEERING_WHEEL_ANGLE_OFFSET_ACCURACY:
+    bits: '4.7-4.2'
+    comment:
+      en: 'Accuracy of the steering wheel angle offset calculation'
+      fr: 'Précision du calcul de l''offset de l''angle volant'
+      es: 'Precisión del cálculo del offset del ángulo del volante'
+      de: 'Genauigkeit der Berechnung des Lenkradwinkel-Offsets'
+      it: 'Precisione del calcolo dell''offset dell''angolo del volante'
+      pl: 'Dokładność obliczenia przesunięcia (offset) kąta kierownicy'
+      ru: 'Точность расчёта смещения угла поворота руля'
+      zh: '方向盘角度偏移量计算的精度'
+      hu: 'A kormánykerékszög-eltolás számításának pontossága'
+      pt: 'Precisão do cálculo do offset do ângulo do volante'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 61
+    units: '°'
+    invalid: 0x3F
+    default: 0x3E
+
+  UNUSED_1:
+    bits: '4.1-4.0'
+    unused: true

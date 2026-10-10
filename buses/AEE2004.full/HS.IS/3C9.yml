@@ -1,0 +1,703 @@
+id: 0x3C9
+name: 'AMT_DYNAMIC_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Automated manual gearbox dynamic data 2: maximum transmissible clutch torque, clutch-open and torque-reserve requests, kickdown release, stop-shift inhibition, target ratio.'
+  fr: 'Données dynamiques 2 de la boîte pilotée : couple max transmissible par l''embrayage, demandes d''ouverture d''embrayage et de réserve de couple, décollage kickdown, inhibition de passage au stop, rapport cible.'
+  es: 'Datos dinámicos 2 de la caja pilotada: par máximo transmisible por el embrague, solicitudes de apertura de embrague y de reserva de par, liberación kickdown, inhibición de cambio en parada, marcha objetivo.'
+  de: 'Dynamikdaten 2 des automatisierten Schaltgetriebes: maximal übertragbares Kupplungsmoment, Kupplungsöffnungs- und Drehmomentreserveanforderungen, Kickdown-Freigabe, Stopp-Schaltsperre, Zielübersetzung.'
+  it: 'Dati dinamici 2 del cambio robotizzato: coppia massima trasmissibile dalla frizione, richieste di apertura frizione e riserva di coppia, rilascio kickdown, inibizione cambio all''arresto, marcia obiettivo.'
+  pl: 'Dane dynamiczne 2 skrzyni zautomatyzowanej: maksymalny moment przenoszony przez sprzęgło, żądania rozłączenia sprzęgła i rezerwy momentu, zwolnienie kickdown, blokada zmiany biegu przy zatrzymaniu, bieg docelowy.'
+  ru: 'Динамические данные 2 роботизированной коробки: максимальный передаваемый момент сцепления, запросы отключения сцепления и резерва момента, отпускание кикдауна, блокировка переключения при остановке, целевая передача.'
+  zh: '自动手动变速箱动态数据2:离合器最大可传递扭矩、离合器分离和扭矩储备请求、强制降挡释放、停车换挡抑制、目标挡位。'
+  hu: 'Az automatizált manuális váltó dinamikus adatai 2: a kuplung által átvihető maximális nyomaték, kuplungnyitási és nyomatéktartalék kérések, kickdown felengedés, megállásnál váltás tiltása, célfokozat.'
+  pt: 'Dados dinâmicos 2 da caixa de velocidades pilotada: binário máximo transmissível pela embraiagem, pedidos de abertura da embraiagem e de reserva de binário, libertação de kickdown, inibição de mudança em paragem, relação-alvo.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['10ms']
+senders: ['BVA']
+receivers: ['ABS', 'CMM']
+
+signals:
+  MAX_CLUTCH_TORQUE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Maximum torque transmissible by the clutch'
+      fr: 'Couple maximum transmissible par l''embrayage'
+      es: 'Par máximo transmisible por el embrague'
+      de: 'Maximal übertragbares Drehmoment der Kupplung'
+      it: 'Coppia massima trasmissibile dalla frizione'
+      pl: 'Maksymalny moment obrotowy przenoszony przez sprzęgło'
+      ru: 'Максимальный момент, передаваемый сцеплением'
+      zh: '离合器可传递的最大扭矩'
+      hu: 'A kuplung által átvihető maximális nyomaték'
+      pt: 'Binário máximo transmissível pela embraiagem'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 408
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x32
+
+  UNUSED_1:
+    bits: '2.7'
+    unused: true
+
+  UNUSED_2:
+    bits: '2.6'
+    unused: true
+
+  UNUSED_3:
+    bits: '2.5-2.4'
+    unused: true
+
+  UNUSED_4:
+    bits: '2.0'
+    unused: true
+
+  GEARBOX_TARGET_RATIO:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Target gear ratio of the automated manual gearbox (BVMP)'
+      fr: 'Rapport cible de la boîte de vitesses mécanique pilotée (BVMP)'
+      es: 'Relación objetivo de la caja de cambios mecánica pilotada (BVMP)'
+      de: 'Zielgangstufe des automatisierten Schaltgetriebes (BVMP)'
+      it: 'Rapporto obiettivo del cambio manuale automatizzato (BVMP)'
+      pl: 'Docelowe przełożenie zautomatyzowanej skrzyni manualnej (BVMP)'
+      ru: 'Целевое передаточное отношение роботизированной коробки передач (BVMP)'
+      zh: '自动化手动变速箱(BVMP)的目标档位'
+      hu: 'Az automatizált manuális váltó (BVMP) célfokozata'
+      pt: 'Relação-alvo da caixa de velocidades mecânica pilotada (BVMP)'
+    type: 'enum'
+    default: 0x0F
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'R'
+        fr: 'R'
+        es: 'R'
+        de: 'R'
+        it: 'R'
+        pl: 'R'
+        ru: 'R'
+        zh: 'R'
+        hu: 'R'
+        pt: 'R'
+      0x02:
+        en: 'N'
+        fr: 'N'
+        es: 'N'
+        de: 'N'
+        it: 'N'
+        pl: 'N'
+        ru: 'N'
+        zh: 'N'
+        hu: 'N'
+        pt: 'N'
+      0x03:
+        unused: true
+      0x04:
+        en: '4'
+        fr: '4'
+        es: '4'
+        de: '4'
+        it: '4'
+        pl: '4'
+        ru: '4'
+        zh: '4'
+        hu: '4'
+        pt: '4'
+      0x05:
+        en: '3'
+        fr: '3'
+        es: '3'
+        de: '3'
+        it: '3'
+        pl: '3'
+        ru: '3'
+        zh: '3'
+        hu: '3'
+        pt: '3'
+      0x06:
+        en: '2'
+        fr: '2'
+        es: '2'
+        de: '2'
+        it: '2'
+        pl: '2'
+        ru: '2'
+        zh: '2'
+        hu: '2'
+        pt: '2'
+      0x07:
+        en: '1'
+        fr: '1'
+        es: '1'
+        de: '1'
+        it: '1'
+        pl: '1'
+        ru: '1'
+        zh: '1'
+        hu: '1'
+        pt: '1'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        en: '6'
+        fr: '6'
+        es: '6'
+        de: '6'
+        it: '6'
+        pl: '6'
+        ru: '6'
+        zh: '6'
+        hu: '6'
+        pt: '6'
+      0x0D:
+        unused: true
+      0x0E:
+        en: '5'
+        fr: '5'
+        es: '5'
+        de: '5'
+        it: '5'
+        pl: '5'
+        ru: '5'
+        zh: '5'
+        hu: '5'
+        pt: '5'
+      0x0F:
+        en: 'Gear position unknown'
+        fr: 'Rapport incertain'
+        es: 'Marcha indeterminada'
+        de: 'Gangposition unbekannt'
+        it: 'Rapporto incerto'
+        pl: 'Nieznana pozycja biegu'
+        ru: 'Передача не определена'
+        zh: '挡位未知'
+        hu: 'Bizonytalan fokozat'
+        pt: 'Mudança indeterminada'
+
+  BVMP_FRAME_CHECKSUM:
+    bits: '4.7-4.4'
+    comment:
+      en: 'BVMP dynamic 2 frame checksum'
+      fr: 'Somme de contrôle de la trame dynamique 2 du BVMP'
+      es: 'Suma de comprobación de la trama dinámica 2 del BVMP'
+      de: 'Prüfsumme der BVMP-Dynamikbotschaft 2'
+      it: 'Checksum del messaggio dinamico 2 del BVMP'
+      pl: 'Suma kontrolna ramki dynamicznej 2 BVMP'
+      ru: 'Контрольная сумма динамического кадра 2 BVMP'
+      zh: 'BVMP 动态报文2校验和'
+      hu: 'BVMP dinamikus 2 üzenet ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica 2 do BVMP'
+    type: 'uint'
+
+  BVMP_PROCESS_COUNTER:
+    bits: '4.3-4.0'
+    comment:
+      en: 'Free-running counter (0 to 15) checking that a new BVMP calculation has been done'
+      fr: 'Compteur libre (0 à 15) vérifiant qu''un nouveau calcul BVMP a été effectué'
+      es: 'Contador libre (0 a 15) que verifica que se ha realizado un nuevo cálculo BVMP'
+      de: 'Freilaufender Zähler (0 bis 15) zur Prüfung, dass eine neue BVMP-Berechnung erfolgt ist'
+      it: 'Contatore libero (da 0 a 15) che verifica l''esecuzione di un nuovo calcolo BVMP'
+      pl: 'Licznik swobodny (0 do 15) potwierdzający wykonanie nowego obliczenia BVMP'
+      ru: 'Свободный счётчик (0-15), подтверждающий выполнение нового расчёта BVMP'
+      zh: '自由计数器(0 到 15),用于确认 BVMP 已完成新的计算'
+      hu: 'Szabadon futó számláló (0-15), amely igazolja, hogy új BVMP-számítás történt'
+      pt: 'Contador livre (0 a 15) que verifica que foi realizado um novo cálculo BVMP'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['BVA']
+    receivers: ['CMM', 'ABS']
+    signals:
+      MAX_CLUTCH_TORQUE:
+        bits: '1.7-1.0'
+        comment:
+          en: 'Maximum torque transmissible by the clutch'
+          fr: 'Couple maximum transmissible par l''embrayage'
+          es: 'Par máximo transmisible por el embrague'
+          de: 'Maximal übertragbares Drehmoment der Kupplung'
+          it: 'Coppia massima trasmissibile dalla frizione'
+          pl: 'Maksymalny moment obrotowy przenoszony przez sprzęgło'
+          ru: 'Максимальный момент, передаваемый сцеплением'
+          zh: '离合器可传递的最大扭矩'
+          hu: 'A kuplung által átvihető maximális nyomaték'
+          pt: 'Binário máximo transmissível pela embraiagem'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      C2000_TORQUE:
+        bits: '2.7-2.0'
+        comment:
+          en: 'C2000 torque value'
+          fr: 'Valeur de couple C2000'
+          es: 'Valor de par C2000'
+          de: 'C2000-Drehmomentwert'
+          it: 'Valore di coppia C2000'
+          pl: 'Wartość momentu obrotowego C2000'
+          ru: 'Значение крутящего момента C2000'
+          zh: 'C2000 扭矩值'
+          hu: 'C2000 nyomatékérték'
+          pt: 'Valor de binário C2000'
+        type: 'uint'
+        factor: 2
+        offset: -100
+        min: -100
+        max: 408
+        units: 'Nm'
+        invalid: 0xFF
+        default: 0x32
+      GEARBOX_TARGET_RATIO:
+        bits: '3.7-3.4'
+        comment:
+          en: 'Target gear ratio of the automated manual gearbox (BVMP)'
+          fr: 'Rapport cible de la boîte de vitesses mécanique pilotée (BVMP)'
+          es: 'Relación objetivo de la caja de cambios mecánica pilotada (BVMP)'
+          de: 'Zielgangstufe des automatisierten Schaltgetriebes (BVMP)'
+          it: 'Rapporto obiettivo del cambio manuale automatizzato (BVMP)'
+          pl: 'Docelowe przełożenie zautomatyzowanej skrzyni manualnej (BVMP)'
+          ru: 'Целевое передаточное отношение роботизированной коробки передач (BVMP)'
+          zh: '自动化手动变速箱(BVMP)的目标档位'
+          hu: 'Az automatizált manuális váltó (BVMP) célfokozata'
+          pt: 'Relação-alvo da caixa de velocidades mecânica pilotada (BVMP)'
+        type: 'enum'
+        default: 0x0F
+        values:
+          0x00:
+            unused: true
+          0x01:
+            en: 'R'
+            fr: 'R'
+            es: 'R'
+            de: 'R'
+            it: 'R'
+            pl: 'R'
+            ru: 'R'
+            zh: 'R'
+            hu: 'R'
+            pt: 'R'
+          0x02:
+            en: 'N'
+            fr: 'N'
+            es: 'N'
+            de: 'N'
+            it: 'N'
+            pl: 'N'
+            ru: 'N'
+            zh: 'N'
+            hu: 'N'
+            pt: 'N'
+          0x03:
+            unused: true
+          0x04:
+            en: '4'
+            fr: '4'
+            es: '4'
+            de: '4'
+            it: '4'
+            pl: '4'
+            ru: '4'
+            zh: '4'
+            hu: '4'
+            pt: '4'
+          0x05:
+            en: '3'
+            fr: '3'
+            es: '3'
+            de: '3'
+            it: '3'
+            pl: '3'
+            ru: '3'
+            zh: '3'
+            hu: '3'
+            pt: '3'
+          0x06:
+            en: '2'
+            fr: '2'
+            es: '2'
+            de: '2'
+            it: '2'
+            pl: '2'
+            ru: '2'
+            zh: '2'
+            hu: '2'
+            pt: '2'
+          0x07:
+            en: '1'
+            fr: '1'
+            es: '1'
+            de: '1'
+            it: '1'
+            pl: '1'
+            ru: '1'
+            zh: '1'
+            hu: '1'
+            pt: '1'
+          0x08:
+            unused: true
+          0x09:
+            unused: true
+          0x0A:
+            unused: true
+          0x0B:
+            unused: true
+          0x0C:
+            en: '6'
+            fr: '6'
+            es: '6'
+            de: '6'
+            it: '6'
+            pl: '6'
+            ru: '6'
+            zh: '6'
+            hu: '6'
+            pt: '6'
+          0x0D:
+            unused: true
+          0x0E:
+            en: '5'
+            fr: '5'
+            es: '5'
+            de: '5'
+            it: '5'
+            pl: '5'
+            ru: '5'
+            zh: '5'
+            hu: '5'
+            pt: '5'
+          0x0F:
+            en: 'Gear position unknown'
+            fr: 'Rapport incertain'
+            es: 'Marcha indeterminada'
+            de: 'Gangposition unbekannt'
+            it: 'Rapporto incerto'
+            pl: 'Nieznana pozycja biegu'
+            ru: 'Передача не определена'
+            zh: '挡位未知'
+            hu: 'Bizonytalan fokozat'
+            pt: 'Mudança indeterminada'
+      POWERTRAIN_TRANSMISSION_STATUS:
+        bits: '3.3-3.1'
+        comment:
+          en: 'Powertrain transmission status'
+          fr: 'État de la transmission du groupe motopropulseur'
+          es: 'Estado de la transmisión del grupo motopropulsor'
+          de: 'Status des Antriebsstrang-Getriebes'
+          it: 'Stato della trasmissione del gruppo motopropulsore'
+          pl: 'Stan przeniesienia napędu zespołu napędowego'
+          ru: 'Статус трансмиссии силового агрегата'
+          zh: '动力总成变速状态'
+          hu: 'Az erőátviteli rendszer állapota'
+          pt: 'Estado da transmissão do grupo motopropulsor'
+        type: 'enum'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Inhibited (xVV activation not possible)'
+            fr: 'Inhibée (activation du xVV impossible)'
+            es: 'Inhibida (activación del xVV imposible)'
+            de: 'Gesperrt (xVV-Aktivierung nicht möglich)'
+            it: 'Inibita (attivazione xVV non possibile)'
+            pl: 'Zablokowana (aktywacja xVV niemożliwa)'
+            ru: 'Заблокировано (активация xVV невозможна)'
+            zh: '已禁用（无法激活xVV）'
+            hu: 'Letiltva (az xVV aktiválása nem lehetséges)'
+            pt: 'Inibida (ativação do xVV impossível)'
+          0x01:
+            en: 'Standby (automatic gearbox available for powertrain-controlled shift)'
+            fr: 'Attente (boîte automatique disponible pour commande par le GMP)'
+            es: 'Espera (caja automática disponible para mando del grupo motopropulsor)'
+            de: 'Standby (Automatikgetriebe für Antriebsstrangsteuerung verfügbar)'
+            it: 'Attesa (cambio automatico disponibile per comando del gruppo motopropulsore)'
+            pl: 'Oczekiwanie (skrzynia automatyczna dostępna do sterowania przez zespół napędowy)'
+            ru: 'Ожидание (АКПП доступна для управления от силового агрегата)'
+            zh: '待机(自动变速箱可供动力总成控制换挡)'
+            hu: 'Készenlét (az automata váltó elérhető a hajtáslánc-vezérelt váltáshoz)'
+            pt: 'Standby (caixa automática disponível para mudança controlada pelo grupo motopropulsor)'
+          0x02:
+            en: 'Active (control request recorded by the automatic gearbox)'
+            fr: 'Active (demande de pilotage enregistrée par la boîte de vitesses automatique)'
+            es: 'Activa (solicitud de control registrada por la caja de cambios automática)'
+            de: 'Aktiv (Steueranforderung vom Automatikgetriebe erfasst)'
+            it: 'Attiva (richiesta di controllo registrata dal cambio automatico)'
+            pl: 'Aktywna (żądanie sterowania zarejestrowane przez automatyczną skrzynię biegów)'
+            ru: 'Активно (запрос управления зарегистрирован автоматической коробкой передач)'
+            zh: '激活(自动变速箱已记录控制请求)'
+            hu: 'Aktív (a vezérlési kérést az automata váltó rögzítette)'
+            pt: 'Ativo (pedido de controlo registado pela caixa automática)'
+          0x03:
+            en: 'Fault'
+            fr: 'Défaut'
+            es: 'Fallo'
+            de: 'Fehler'
+            it: 'Guasto'
+            pl: 'Usterka'
+            ru: 'Неисправность'
+            zh: '故障'
+            hu: 'Hiba'
+            pt: 'Falha'
+          0x04:
+            unused: true
+          0x05:
+            unused: true
+          0x06:
+            unused: true
+          0x07:
+            unused: true
+      CHECKSUM:
+        bits: '4.7-4.4'
+        comment:
+          en: 'Gearbox (BV) dynamic frame checksum'
+          fr: 'Somme de contrôle dynamique de la trame boîte de vitesses (BV)'
+          es: 'Suma de comprobación dinámica de la trama de la caja de cambios (BV)'
+          de: 'Dynamische Prüfsumme des Getriebe-(BV-)Frames'
+          it: 'Checksum dinamico del frame del cambio (BV)'
+          pl: 'Dynamiczna suma kontrolna ramki skrzyni biegów (BV)'
+          ru: 'Динамическая контрольная сумма кадра коробки передач (BV)'
+          zh: '变速箱(BV)动态帧校验和'
+          hu: 'A sebességváltó (BV) dinamikus keretének ellenőrző összege'
+          pt: 'Soma de verificação dinâmica da trama da caixa de velocidades (BV)'
+        type: 'uint'
+      PROCESS_COUNTER:
+        bits: '4.3-4.0'
+        comment:
+          en: 'Free-running counter (0 to 15), incremented on each new calculation'
+          fr: 'Compteur cyclique (0 à 15), incrémenté à chaque nouveau calcul'
+          es: 'Contador cíclico (0 a 15), incrementado en cada nuevo cálculo'
+          de: 'Umlaufender Zähler (0 bis 15), bei jeder neuen Berechnung erhöht'
+          it: 'Contatore ciclico (0-15), incrementato a ogni nuovo calcolo'
+          pl: 'Licznik cykliczny (0-15), zwiększany przy każdym nowym obliczeniu'
+          ru: 'Циклический счётчик (0-15), увеличивается при каждом новом расчёте'
+          zh: '循环计数器(0至15),每次新计算时递增'
+          hu: 'Körforgó számláló (0–15), minden új számításkor nő'
+          pt: 'Contador cíclico (0 a 15), incrementado a cada novo cálculo'
+        type: 'uint'
+        min: 0
+        max: 15
+        default: 0x00
+      EMITTED_TORQUE_RESOLUTION:
+        bits: '5.7'
+        comment:
+          en: 'Resolution of the transmitted torque value'
+          fr: 'Résolution de la valeur de couple transmise'
+          es: 'Resolución del valor de par transmitido'
+          de: 'Auflösung des übertragenen Drehmomentwerts'
+          it: 'Risoluzione del valore di coppia trasmesso'
+          pl: 'Rozdzielczość przesyłanej wartości momentu obrotowego'
+          ru: 'Разрешение передаваемого значения крутящего момента'
+          zh: '传输扭矩值的分辨率'
+          hu: 'Az átküldött nyomatékérték felbontása'
+          pt: 'Resolução do valor de binário transmitido'
+        type: 'bool'
+        default: 0x00
+        values:
+          0x00:
+            en: 'Resolution = 2'
+            fr: 'Résolution = 2'
+            es: 'Resolución = 2'
+            de: 'Auflösung = 2'
+            it: 'Risoluzione = 2'
+            pl: 'Rozdzielczość = 2'
+            ru: 'Разрешение = 2'
+            zh: '分辨率=2'
+            hu: 'Felbontás = 2'
+            pt: 'Resolução = 2'
+          0x01:
+            en: 'Resolution = 3'
+            fr: 'Résolution = 3'
+            es: 'Resolución = 3'
+            de: 'Auflösung = 3'
+            it: 'Risoluzione = 3'
+            pl: 'Rozdzielczość = 3'
+            ru: 'Разрешение = 3'
+            zh: '分辨率 = 3'
+            hu: 'Felbontás = 3'
+            pt: 'Resolução = 3'
+      GEARBOX_EMERGENCY_ENGINE_STOP_REQUEST:
+        bits: '5.6-5.5'
+        comment:
+          en: 'Emergency engine stop request from the gearbox'
+          fr: 'Demande d''arrêt d''urgence moteur par la boîte de vitesses'
+          es: 'Solicitud de parada de emergencia del motor por la caja de cambios'
+          de: 'Motornotstoppanforderung durch das Getriebe'
+          it: 'Richiesta di arresto motore di emergenza dal cambio'
+          pl: 'Żądanie awaryjnego zatrzymania silnika przez skrzynię biegów'
+          ru: 'Запрос экстренной остановки двигателя от коробки передач'
+          zh: '变速箱请求紧急停机'
+          hu: 'A váltó vészleállítási kérése a motor felé'
+          pt: 'Pedido de paragem de emergência do motor pela caixa de velocidades'
+        type: 'enum'
+        default: 0x01
+        values:
+          0x00:
+            unused: true
+          0x01:
+            en: 'No engine emergency stop request from the gearbox'
+            fr: 'Pas de demande d''arrêt d''urgence moteur par la boîte de vitesses'
+            es: 'Sin solicitud de parada de emergencia del motor por la caja de cambios'
+            de: 'Keine Motornotstoppanforderung vom Getriebe'
+            it: 'Nessuna richiesta di arresto di emergenza motore dal cambio'
+            pl: 'Brak żądania awaryjnego zatrzymania silnika ze skrzyni biegów'
+            ru: 'Нет запроса аварийной остановки двигателя от коробки передач'
+            zh: '变速箱未发出发动机紧急停机请求'
+            hu: 'Nincs motor-vészleállítási kérés a váltótól'
+            pt: 'Sem pedido de paragem de emergência do motor pela caixa de velocidades'
+          0x02:
+            en: 'Engine emergency stop request from the gearbox'
+            fr: 'Demande d''arrêt d''urgence moteur par la boîte de vitesses'
+            es: 'Solicitud de parada de emergencia del motor por la caja de cambios'
+            de: 'Motornotstoppanforderung vom Getriebe'
+            it: 'Richiesta di arresto di emergenza motore dal cambio'
+            pl: 'Żądanie awaryjnego zatrzymania silnika ze skrzyni biegów'
+            ru: 'Запрос аварийной остановки двигателя от коробки передач'
+            zh: '变速箱发出的发动机紧急停机请求'
+            hu: 'Motor-vészleállítási kérés a váltótól'
+            pt: 'Pedido de paragem de emergência do motor pela caixa de velocidades'
+          0x03:
+            unused: true
+      UNUSED_1:
+        bits: '5.4'
+        unused: true
+      GEARBOX_INPUT_SHAFT_SPEED_EXTENDED:
+        bits: '5.3-6.0'
+        comment:
+          en: 'Gearbox input shaft speed, extended range'
+          fr: 'Régime d''entrée de boîte de vitesses, plage étendue'
+          es: 'Régimen de entrada de la caja de cambios, rango extendido'
+          de: 'Getriebeeingangsdrehzahl, erweiterter Bereich'
+          it: 'Regime di ingresso del cambio, campo esteso'
+          pl: 'Prędkość obrotowa wejścia skrzyni biegów, zakres rozszerzony'
+          ru: 'Обороты первичного вала коробки передач, расширенный диапазон'
+          zh: '变速箱输入轴转速(扩展范围)'
+          hu: 'Váltó bemeneti tengelyének fordulatszáma, kibővített tartomány'
+          pt: 'Regime de entrada da caixa de velocidades, gama estendida'
+        type: 'uint'
+        factor: 2
+        min: 0
+        max: 8000
+        units: 'rpm'
+        invalid: 0xFFF
+        default: 0x00
+      AUTOMATIC_GEARBOX_TORQUE_LOSS:
+        bits: '7.7-7.2'
+        comment:
+          en: 'Automatic gearbox torque loss'
+          fr: 'Perte de couple de la boîte de vitesses automatique'
+          es: 'Pérdida de par de la caja de cambios automática'
+          de: 'Drehmomentverlust des Automatikgetriebes'
+          it: 'Perdita di coppia del cambio automatico'
+          pl: 'Strata momentu obrotowego automatycznej skrzyni biegów'
+          ru: 'Потеря крутящего момента в автоматической коробке передач'
+          zh: '自动变速箱扭矩损失'
+          hu: 'Az automata váltó nyomatékvesztesége'
+          pt: 'Perda de binário da caixa de velocidades automática'
+        type: 'enum'
+        factor: 2
+        units: 'Nm'
+        invalid: 0x3F
+        default: 0x00
+        values:
+          0x00:
+            en: 'Unused value (000000)'
+            fr: 'Valeur non utilisée (000000)'
+            es: 'Valor no utilizado (000000)'
+            de: 'Nicht verwendeter Wert (000000)'
+            it: 'Valore non utilizzato (000000)'
+            pl: 'Nieużywana wartość (000000)'
+            ru: 'Неиспользуемое значение (000000)'
+            zh: '未使用的值 (000000)'
+            hu: 'Nem használt érték (000000)'
+            pt: 'Valor não utilizado (000000)'
+          0x01:
+            en: 'Unused value (000001)'
+            fr: 'Valeur non utilisée (000001)'
+            es: 'Valor no utilizado (000001)'
+            de: 'Nicht verwendeter Wert (000001)'
+            it: 'Valore non utilizzato (000001)'
+            pl: 'Nieużywana wartość (000001)'
+            ru: 'Неиспользуемое значение (000001)'
+            zh: '未使用的值(000001)'
+            hu: 'Nem használt érték (000001)'
+            pt: 'Valor não utilizado (000001)'
+          0x0A:
+            en: 'Unused value (000010)'
+            fr: 'Valeur non utilisée (000010)'
+            es: 'Valor no utilizado (000010)'
+            de: 'Nicht verwendeter Wert (000010)'
+            it: 'Valore non utilizzato (000010)'
+            pl: 'Nieużywana wartość (000010)'
+            ru: 'Неиспользуемое значение (000010)'
+            zh: '未使用的值(000010)'
+            hu: 'Nem használt érték (000010)'
+            pt: 'Valor não utilizado (000010)'
+          0x0B:
+            en: 'Unused value (000011)'
+            fr: 'Valeur non utilisée (000011)'
+            es: 'Valor no utilizado (000011)'
+            de: 'Nicht verwendeter Wert (000011)'
+            it: 'Valore non utilizzato (000011)'
+            pl: 'Nieużywana wartość (000011)'
+            ru: 'Неиспользуемое значение (000011)'
+            zh: '未使用值 (000011)'
+            hu: 'Nem használt érték (000011)'
+            pt: 'Valor não utilizado (000011)'
+      POWERTRAIN_TORQUE_CONVERSION_RATIO:
+        bits: '7.1-8.0'
+        comment:
+          en: 'Powertrain torque conversion ratio'
+          fr: 'Taux de conversion de couple du groupe motopropulseur'
+          es: 'Tasa de conversión de par del grupo motopropulsor'
+          de: 'Drehmomentwandlungsfaktor des Antriebsstrangs'
+          it: 'Rapporto di conversione della coppia del gruppo motopropulsore'
+          pl: 'Współczynnik konwersji momentu obrotowego zespołu napędowego'
+          ru: 'Коэффициент преобразования крутящего момента силового агрегата'
+          zh: '动力总成扭矩转换率'
+          hu: 'Az erőátviteli rendszer nyomatékátalakítási aránya'
+          pt: 'Taxa de conversão de binário do grupo motopropulsor'
+        type: 'uint'
+        factor: 0.03
+        min: 0
+        max: 30
+        invalid: 0x3FF
+        default: 0x00

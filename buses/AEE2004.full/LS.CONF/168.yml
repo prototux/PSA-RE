@@ -1,728 +1,1340 @@
 id: 0x168
 name: 'COMBINE_ALERTS_INDICATORS'
-alt_names: ['CDE_COMBINE_TEMOINS']
-length: 8
 type: 'can'
-periodicity: ['200ms']
-senders:
-  - 'BSI'
-receivers:
-  - 'CMB'
-  - 'VTH'
-  - 'BCD'
-  - 'CMB_EMF'
-  - 'MATT'
-  - 'BGP'
+length: 8
+comment:
+  en: 'Instrument cluster telltale lamp commands sent on change: ABS, ASR, steering assist, parking brake and service/system faults.'
+  fr: 'Commandes des témoins du combiné envoyées sur changement : ABS, ASR, assistance de direction, frein de parking et défauts service/système.'
+  es: 'Órdenes de los testigos del cuadro enviadas al cambiar: ABS, ASR, asistencia de dirección, freno de estacionamiento y fallos de servicio/sistema.'
+  de: 'Kontrollleuchtenbefehle des Kombiinstruments, gesendet bei Änderung: ABS, ASR, Lenkhilfe, Feststellbremse und Service-/Systemfehler.'
+  it: 'Comandi delle spie del quadro strumenti inviati al cambio: ABS, ASR, servosterzo, freno di stazionamento e guasti servizio/sistema.'
+  pl: 'Polecenia kontrolek zestawu wskaźników wysyłane przy zmianie: ABS, ASR, wspomaganie kierownicy, hamulec postojowy i usterki serwisowe/systemowe.'
+  ru: 'Команды контрольных ламп приборной панели, отправляемые при изменении: ABS, ASR, усилитель руля, стояночный тормоз и неисправности обслуживания/системы.'
+  zh: '仪表组指示灯命令，状态变化时发送：ABS、ASR、转向助力、驻车制动及维修/系统故障。'
+  hu: 'A műszerfal jelzőlámpa-parancsai, változáskor küldve: ABS, ASR, kormányszervó, rögzítőfék és szerviz-/rendszerhibák.'
+  pt: 'Comandos das luzes avisadoras do quadrante de instrumentos enviados na mudança: ABS, ASR, assistência de direção, travão de estacionamento e avarias de serviço/sistema.'
+observations:
+  en: 'On state change of: PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur changement d''état de : PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al cambiar el estado de: PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Statusänderung von: PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Al cambiamento di stato di: PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Wysyłane przy zmianie stanu: PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении состояния: PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '当FSE_SER_DEF, PARKING_BRAKE_FAULT, DMD_ALLUM_STT状态变化时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A(z) PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR állapotváltozásakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança de estado de: PARKING_BRAKE_TIGHT_FAULT, PARKING_BRAKE_FAULT, STT_INDICATOR. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['200ms', 'trigger']
+senders: ['BSI']
+receivers: ['CMB', 'VTH', 'BCD', 'MATT', 'BGP']
 
 signals:
   COOLANT_TEMPERATURE_ALERT:
-    alt_names: ['ALERTE_T_EAU']
     bits: '1.7'
     comment:
       en: 'Coolant temperature alert'
-      fr: 'Alerte temperature eau'
+      fr: 'Alerte de température d''eau'
+      es: 'Alerta de temperatura del líquido refrigerante'
+      de: 'Warnung Kühlmitteltemperatur'
+      it: 'Avviso temperatura del liquido di raffreddamento'
+      pl: 'Ostrzeżenie o temperaturze płynu chłodzącego'
+      ru: 'Предупреждение о температуре охлаждающей жидкости'
+      zh: '冷却液温度警示'
+      hu: 'Hűtőfolyadék hőmérséklet figyelmeztetés'
+      pt: 'Alerta de temperatura do líquido de refrigeração'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   OIL_TEMPERATURE_ALERT:
-    alt_names: ['ALERTE_T_HUIL']
     bits: '1.6'
     comment:
       en: 'Oil temperature alert'
-      fr: 'Alerte temperature huile'
+      fr: 'Alerte de température d''huile'
+      es: 'Alerta de temperatura del aceite'
+      de: 'Warnung Öltemperatur'
+      it: 'Avviso temperatura olio'
+      pl: 'Ostrzeżenie o temperaturze oleju'
+      ru: 'Предупреждение о температуре масла'
+      zh: '机油温度警示'
+      hu: 'Olajhőmérséklet figyelmeztetés'
+      pt: 'Alerta de temperatura do óleo'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   COOLANT_LEVEL_ALERT:
-    alt_names: ['NIVE_AL']
     bits: '1.5'
     comment:
       en: 'Coolant level alert'
-      fr: 'Alerte niveau eau'
+      fr: 'Alerte de niveau de liquide de refroidissement'
+      es: 'Alerta de nivel del líquido refrigerante'
+      de: 'Warnung Kühlmittelstand'
+      it: 'Avviso livello del liquido di raffreddamento'
+      pl: 'Ostrzeżenie o poziomie płynu chłodzącego'
+      ru: 'Предупреждение об уровне охлаждающей жидкости'
+      zh: '冷却液液位警示'
+      hu: 'Hűtőfolyadék-szint figyelmeztetés'
+      pt: 'Alerta de nível do líquido de refrigeração'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   OIL_LEVEL_ALERT:
-    alt_names: ['NIVH_AL']
     bits: '1.4'
     comment:
       en: 'Oil level alert'
-      fr: 'Alerte niveau huile'
+      fr: 'Alerte de niveau d''huile'
+      es: 'Alerta de nivel de aceite'
+      de: 'Warnung Ölstand'
+      it: 'Avviso livello olio'
+      pl: 'Ostrzeżenie o poziomie oleju'
+      ru: 'Предупреждение об уровне масла'
+      zh: '机油液位警示'
+      hu: 'Olajszint figyelmeztetés'
+      pt: 'Alerta de nível de óleo'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   OIL_PRESSURE_ALERT:
-    alt_names: ['PHUI_AL']
     bits: '1.3'
     comment:
       en: 'Oil pressure alert'
-      fr: 'Alerte pression huile'
+      fr: 'Alerte de pression d''huile'
+      es: 'Alerta de presión de aceite'
+      de: 'Warnung Öldruck'
+      it: 'Avviso pressione olio'
+      pl: 'Ostrzeżenie o ciśnieniu oleju'
+      ru: 'Предупреждение о давлении масла'
+      zh: '机油压力警示'
+      hu: 'Olajnyomás figyelmeztetés'
+      pt: 'Alerta de pressão de óleo'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   BRAKE_LEVEL_ALERT:
-    alt_names: ['NIVL_AL']
     bits: '1.2'
     comment:
-      en: 'Brake liquid level alert'
-      fr: 'Alerte niveau liquide de frein'
+      en: 'Brake fluid level alert'
+      fr: 'Alerte de niveau de liquide de frein'
+      es: 'Alerta de nivel del líquido de frenos'
+      de: 'Warnung Bremsflüssigkeitsstand'
+      it: 'Avviso livello del liquido dei freni'
+      pl: 'Ostrzeżenie o poziomie płynu hamulcowego'
+      ru: 'Предупреждение об уровне тормозной жидкости'
+      zh: '制动液液位警示'
+      hu: 'Fékfolyadék-szint figyelmeztetés'
+      pt: 'Alerta de nível do líquido de travões'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   COLD_ENGINE_ALERT:
-    alt_names: ['ALERTE_MOT_FROID ']
     bits: '1.1'
     comment:
       en: 'Cold engine alert'
       fr: 'Alerte moteur froid'
+      es: 'Alerta de motor frío'
+      de: 'Warnung kalter Motor'
+      it: 'Avviso motore freddo'
+      pl: 'Ostrzeżenie o zimnym silniku'
+      ru: 'Предупреждение о холодном двигателе'
+      zh: '冷机警示'
+      hu: 'Hideg motor figyelmeztetés'
+      pt: 'Alerta de motor frio'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
 
   DSG_FAULT:
-    alt_names: ['DEFAUT_DSG']
     bits: '1.0'
     comment:
-      en: 'DSG fault alert'
-      fr: 'Alerte defaut DSG'
+      en: 'DSG (tyre pressure monitoring) fault alert'
+      fr: 'Alerte de défaut DSG (surveillance de la pression des pneus)'
+      es: 'Alerta de fallo DSG (control de presión de neumáticos)'
+      de: 'Warnung DSG-Fehler (Reifendrucküberwachung)'
+      it: 'Avviso guasto DSG (controllo pressione pneumatici)'
+      pl: 'Ostrzeżenie o usterce DSG (kontrola ciśnienia w oponach)'
+      ru: 'Предупреждение о неисправности DSG (контроль давления в шинах)'
+      zh: 'DSG(胎压监测)故障警示'
+      hu: 'DSG (abroncsnyomás-felügyelet) hiba figyelmeztetés'
+      pt: 'Alerta de falha DSG (controlo de pressão dos pneus)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert'
+        fr: 'Alerte'
+        es: 'Alerta'
+        de: 'Warnung'
+        it: 'Allarme'
+        pl: 'Alarm'
+        ru: 'Предупреждение'
+        zh: '警报'
+        hu: 'Riasztás'
+        pt: 'Alerta'
 
   UNDERINFLATION_ALERT:
-    alt_names: ['SOUG_AL']
     bits: '2.7'
     comment:
-      en: 'Underinflation alert'
-      fr: 'Alerte sous gonflage'
+      en: 'Tyre underinflation alert'
+      fr: 'Alerte de sous-gonflage des pneus'
+      es: 'Alerta de baja presión de neumáticos'
+      de: 'Warnung Reifenunterdruck'
+      it: 'Avviso di sottogonfiaggio pneumatici'
+      pl: 'Ostrzeżenie o zbyt niskim ciśnieniu w oponach'
+      ru: 'Предупреждение о недостаточном давлении в шинах'
+      zh: '轮胎气压不足警示'
+      hu: 'Abroncs alacsony nyomás figyelmeztetés'
+      pt: 'Alerta de subenchimento dos pneus'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   PUNCTURE_ALERT:
-    alt_names: ['CREV_AL']
     bits: '2.6'
     comment:
-      en: 'Tire puncture alert'
-      fr: 'Alerte crevaison'
+      en: 'Puncture alert'
+      fr: 'Alerte de crevaison'
+      es: 'Alerta de pinchazo'
+      de: 'Warnung Reifenpanne'
+      it: 'Avviso foratura'
+      pl: 'Ostrzeżenie o przebiciu opony'
+      ru: 'Предупреждение о проколе шины'
+      zh: '爆胎警示'
+      hu: 'Defekt figyelmeztetés'
+      pt: 'Alerta de furo'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Alert present'
+        fr: 'Alerte présente'
+        es: 'Alerta presente'
+        de: 'Warnung vorhanden'
+        it: 'Allerta presente'
+        pl: 'Obecny alarm'
+        ru: 'Присутствует предупреждение'
+        zh: '存在警报'
+        hu: 'Figyelmeztetés jelen van'
+        pt: 'Alerta presente'
 
   AUTO_STOP_ALERT:
-    alt_names: ['AUTO_STOP']
     bits: '2.5'
     comment:
-      en: 'Auto stop alert'
-      fr: 'Alerte arret automatique'
+      en: 'AUTO STOP indicator lighting'
+      fr: 'Allumage du voyant AUTO STOP'
+      es: 'Encendido del testigo AUTO STOP'
+      de: 'Aufleuchten der AUTO-STOP-Kontrollleuchte'
+      it: 'Accensione della spia AUTO STOP'
+      pl: 'Zapalenie kontrolki AUTO STOP'
+      ru: 'Включение индикатора AUTO STOP'
+      zh: 'AUTO STOP 指示灯点亮'
+      hu: 'AUTO STOP jelzőlámpa kigyulladása'
+      pt: 'Acendimento da luz avisadora AUTO STOP'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
 
   PARTICLE_FILTER_FAULT:
-    alt_names: ['DMD_ALLUM_FAP']
     bits: '2.4'
     comment:
-      en: 'Particle filter fault alert'
-      fr: 'Alerte defaut FAP'
+      en: 'Particulate filter indicator light request'
+      fr: 'Demande d''allumage du témoin de filtre à particules'
+      es: 'Solicitud de encendido del testigo del filtro de partículas'
+      de: 'Anforderung der Partikelfilter-Kontrollleuchte'
+      it: 'Richiesta di accensione della spia del filtro antiparticolato'
+      pl: 'Żądanie zapalenia kontrolki filtra cząstek stałych'
+      ru: 'Запрос включения индикатора сажевого фильтра'
+      zh: '颗粒物过滤器指示灯点亮请求'
+      hu: 'Részecskeszűrő jelzőlámpa bekapcsolási kérés'
+      pt: 'Pedido de acendimento da luz avisadora do filtro de partículas'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Off'
-        fr: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Steady on'
+        fr: 'Allumé fixe'
+        es: 'Encendido fijo'
+        de: 'Dauerleuchten ein'
+        it: 'Acceso fisso'
+        pl: 'Świecenie ciągłe'
+        ru: 'Горит постоянно'
+        zh: '持续点亮'
+        hu: 'Folyamatosan világít'
+        pt: 'Aceso fixo'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.5-2.4'
+          fr: 'Aussi observé aux bits 2.5-2.4'
+          es: 'También observado en los bits 2.5-2.4'
+          de: 'Auch an den Bits 2.5-2.4 beobachtet'
+          it: 'Osservato anche ai bit 2.5-2.4'
+          pl: 'Obserwowany także na bitach 2.5-2.4'
+          ru: 'Также наблюдался в битах 2.5-2.4'
+          zh: '也观察到位于位2.5-2.4'
+          hu: 'Megfigyelve a(z) 2.5-2.4 biteken is'
+          pt: 'Também observado nos bits 2.5-2.4'
+        bits: '2.5-2.4'
 
   AUTO_WIPE_STATUS:
-    alt_names: ['ESSUI_AUTO']
     bits: '2.3'
     comment:
-      en: 'Auto wipe feature status'
-      fr: 'Etat fonction essuyage auto'
+      en: 'Automatic wiping function status'
+      fr: 'État de la fonction d''essuyage automatique'
+      es: 'Estado de la función de limpiaparabrisas automático'
+      de: 'Status der automatischen Wischfunktion'
+      it: 'Stato della funzione di tergitura automatica'
+      pl: 'Stan funkcji automatycznego wycierania'
+      ru: 'Состояние функции автоматической работы стеклоочистителя'
+      zh: '自动雨刷功能状态'
+      hu: 'Automatikus ablaktörlés állapota'
+      pt: 'Estado da função de limpeza automática'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
       0x01:
-        en: 'On'
-        fr: 'On'
-
-  MAX_RPM_LVL1:
-    alt_names: ['ALLUM_REGIME_MAX1']
-    bits: '2.2'
-    comment:
-      en: 'Max RPM indicator (level 1)'
-      fr: 'Indicateur regime maxi (niveau 1)'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  LOW_FUEL_BLINK:
-    alt_names: ['MINC_CLIG']
-    bits: '2.1'
-    comment:
-      en: 'Low fuel blinking indicator'
-      fr: 'Indicateur clignotant essence en reserve'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  MAX_RPM_LVL2:
-    alt_names: ['ALLUM_REGIME_MAX2']
-    bits: '2.0'
-    comment:
-      en: 'Max RPM indicator (level 2)'
-      fr: 'Indicateur regime maxi (niveau 2)'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  REAR_REAR_LEFT_SEATBELT:
-    alt_names: ['OUCARG2']
-    bits: '3.7'
-    comment:
-      en: 'Rear rear left seatbelt indicator'
-      fr: 'Indicateur ceinture arriere arriere gauche'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  REAR_REAR_LEFT_SEATBELT_BLINK:
-    alt_names: ['OUCARG2_CLIG']
-    bits: '3.6'
-    comment:
-      en: 'Rear rear left seatbelt blinking indicator'
-      fr: 'Indicateur clignotant ceinture arriere arriere gauche'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  REAR_REAR_MIDDLE_SEATBELT:
-    alt_names: ['OUCARM2']
-    bits: '3.5'
-    comment:
-      en: 'Rear rear middle seatbelt indicator'
-      fr: 'Indicateur ceinture arriere arriere millieu'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  REAR_REAR_MIDDLE_SEATBELT_BLINK:
-    alt_names: ['OUCARM2_CLIG']
-    bits: '3.4'
-    comment:
-      en: 'Rear rear middle seatbelt blinking indicator'
-      fr: 'Indicateur clignotant ceinture arriere arriere millieu'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  REAR_REAR_RIGHT_SEATBELT:
-    alt_names: ['OUCARD2']
-    bits: '3.3'
-    comment:
-      en: 'Rear rear right seatbelt indicator'
-      fr: 'Indicateur ceinture arriere arriere droit'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  REAR_REAR_RIGHT_SEATBELT_BLINK:
-    alt_names: ['OUCARD2_CLIG']
-    bits: '3.2'
-    comment:
-      en: 'Rear rear right seatbelt blinking indicator'
-      fr: 'Indicateur clignotant ceinture arriere arriere droit'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  CLUTCH_PEDAL:
-    alt_names: ['PIED_EMBR']
-    bits: '3.1-3.0'
-    comment:
-      en: 'Clutch pedal indicator'
-      fr: 'Indicateur pedale embrayage'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-      0x02:
-        en: 'Blinking'
-        fr: 'Clignotant'
-
-  REF_EHB_FAULT:
-    alt_names: ['REF_DEF']
-    bits: '4.7'
-    comment:
-      en: 'REF/EHB fault alert'
-      fr: 'Alerte defaut REF/EHB'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  SUSPENSION_FAULT:
-    alt_names: ['DSUSP_DEF']
-    bits: '4.6'
-    comment:
-      en: 'Suspension fault alert'
-      fr: 'Alerte defaut suspension'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  ABS_FAULT:
-    alt_names: ['ABS_DEF']
-    bits: '4.5'
-    comment:
-      en: 'ABS fault alert'
-      fr: 'Alerte defaut ABS'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  ASR_FAULT:
-    alt_names: ['ASR_DEF']
-    bits: '4.4'
-    comment:
-      en: 'ASR/ESP fault alert'
-      fr: 'Alerte defaut ASR/ESP'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  GEARBOX_FAULT:
-    alt_names: ['BV_DEF']
-    bits: '4.3'
-    comment:
-      en: 'Gearbox fault alert'
-      fr: 'Alerte defaut BV'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  BRAKES_FAULT:
-    alt_names: ['PLAQ_DEF']
-    bits: '4.2'
-    comment:
-      en: 'Brake pad fault alert'
-      fr: 'Alerte defaut plaquettes de frein'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  EOBD_FAULT:
-    alt_names: ['EOBD_DEF']
-    bits: '4.1'
-    comment:
-      en: 'EOBD fault alert (MIL)'
-      fr: 'Alerte defaut EOBD (MIL)'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  DIESEL_WATER_FAULT:
-    alt_names: ['EAUG_DEF']
-    bits: '4.0'
-    comment:
-      en: 'Alert water in diesel filter'
-      fr: 'Alerte eau dans filtre gazole'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  REQUEST_PILOT_LIGTH_SCR:
-    alt_names: ['DMD_ALLUM_SCR']
-    bits: '5.7-5.6'
-    comment:
-      en: 'Request pilot light for SCR system'
-      fr: 'Demande allumage voyant pour systeme SCR'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  SAFETY_FAULT:
-    alt_names: ['SEC_PASS_DEF']
-    bits: '5.5'
-    comment:
-      en: 'Safety fault alert'
-      fr: 'Alerte defaut securite'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  POLLUTION_FAULT:
-    alt_names: ['POLL_DEF']
-    bits: '5.4'
-    comment:
-      en: 'Anti-pollution fault alert'
-      fr: 'Alerte defaut systeme anti-pollution'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  BATTERY_FAULT:
-    alt_names: ['CBAT_DEF']
-    bits: '5.2'
-    comment:
-      en: 'Battery fault alert'
-      fr: 'Alerte defaut batterie'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  ALTERNATOR_FAULT:
-    alt_names: ['GENE_DEF']
-    bits: '5.1'
-    comment:
-      en: 'Alternator fault alert'
-      fr: 'Alerte defaut alternateur'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-
-  CURRENT_GEAR_DRIVE:
-    alt_names: ['RAP_AFF_DRIVE_2']
-    bits: '5.0-6.5'
-    comment:
-      en: 'Current gear (drive)'
-      fr: 'Rapport (drive)'
-    values:
-      0x00:
-        en: 'Unclutch'
-        fr: 'Debraye'
-      0x01:
-        en: '1'
-        fr: '1'
-      0x02:
-        en: '2'
-        fr: '2'
-      0x03:
-        en: '3'
-        fr: '3'
-      0x04:
-        en: '4'
-        fr: 'Rapport 4'
-      0x05:
-        en: '5'
-        fr: '5'
-      0x06:
-        en: '6'
-        fr: '6'
-
-  CAAR:
-    alt_names: ['DMD_ALLUM_CAAR']
-    bits: '6.4-6.3'
-    comment:
-      en: 'CAAR (suspension) indicator'
-      fr: 'Indicateur CAAR (suspension)'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-      0x02:
-        en: 'Blinking'
-        fr: 'Blinking'
-
-  TURN_LIGHTS_FAULT:
-    alt_names: ['CODE_VIR_DEF']
-    bits: '6.2'
-    comment:
-      en: 'Turn lights fault'
-      fr: 'Defaut lumieres aide au virage'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
 
   UNUSED_1:
+    bits: '2.2'
+    unused: true
+
+  UNUSED_2:
+    bits: '2.1'
+    unused: true
+
+  UNUSED_3:
+    bits: '2.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '3.7'
+    unused: true
+
+  UNUSED_5:
+    bits: '3.6'
+    unused: true
+
+  UNUSED_6:
+    bits: '3.5'
+    unused: true
+
+  UNUSED_7:
+    bits: '3.4'
+    unused: true
+
+  UNUSED_8:
+    bits: '3.3'
+    unused: true
+
+  UNUSED_9:
+    bits: '3.2'
+    unused: true
+
+  UNUSED_10:
+    bits: '3.1-3.0'
+    unused: true
+
+  REF_EHB_FAULT:
+    bits: '4.7'
+    comment:
+      en: 'Serious REF/EHB fault'
+      fr: 'Défaut grave REF/EHB'
+      es: 'Fallo grave REF/EHB'
+      de: 'Schwerwiegender REF/EHB-Fehler'
+      it: 'Guasto grave REF/EHB'
+      pl: 'Poważna usterka REF/EHB'
+      ru: 'Серьёзная неисправность REF/EHB'
+      zh: '严重 REF/EHB 故障'
+      hu: 'Súlyos REF/EHB hiba'
+      pt: 'Falha grave REF/EHB'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  SUSPENSION_FAULT:
+    bits: '4.6'
+    comment:
+      en: 'Serious suspension fault'
+      fr: 'Défaut grave de suspension'
+      es: 'Fallo grave de suspensión'
+      de: 'Schwerwiegender Fahrwerksfehler'
+      it: 'Guasto grave della sospensione'
+      pl: 'Poważna usterka zawieszenia'
+      ru: 'Серьёзная неисправность подвески'
+      zh: '严重悬挂故障'
+      hu: 'Súlyos futómű hiba'
+      pt: 'Falha grave de suspensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  ABS_FAULT:
+    bits: '4.5'
+    comment:
+      en: 'ABS/EHB fault'
+      fr: 'Défaut ABS/EHB'
+      es: 'Fallo ABS/EHB'
+      de: 'ABS/EHB-Fehler'
+      it: 'Guasto ABS/EHB'
+      pl: 'Usterka ABS/EHB'
+      ru: 'Неисправность ABS/EHB'
+      zh: 'ABS/EHB 故障'
+      hu: 'ABS/EHB hiba'
+      pt: 'Falha ABS/EHB'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  ASR_FAULT:
+    bits: '4.4'
+    comment:
+      en: 'ESP/ASR (traction control) fault'
+      fr: 'Défaut ESP/ASR'
+      es: 'Fallo ESP/ASR (control de tracción)'
+      de: 'ESP/ASR-Fehler (Antriebsschlupfregelung)'
+      it: 'Guasto ESP/ASR (controllo di trazione)'
+      pl: 'Usterka ESP/ASR (kontroli trakcji)'
+      ru: 'Неисправность ESP/ASR (противобуксовочная система)'
+      zh: 'ESP/ASR(牵引力控制)故障'
+      hu: 'ESP/ASR (kipörgésgátló) hiba'
+      pt: 'Falha ESP/ASR'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  GEARBOX_FAULT:
+    bits: '4.3'
+    comment:
+      en: 'Gearbox fault'
+      fr: 'Défaut de boîte de vitesses'
+      es: 'Fallo de la caja de cambios'
+      de: 'Getriebefehler'
+      it: 'Guasto del cambio'
+      pl: 'Usterka skrzyni biegów'
+      ru: 'Неисправность коробки передач'
+      zh: '变速箱故障'
+      hu: 'Váltó hiba'
+      pt: 'Falha da caixa de velocidades'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  BRAKES_FAULT:
+    bits: '4.2'
+    comment:
+      en: 'Brake pad wear fault'
+      fr: 'Défaut d''usure des plaquettes de frein'
+      es: 'Fallo de desgaste de las pastillas de freno'
+      de: 'Fehler Bremsbelagverschleiß'
+      it: 'Guasto usura delle pastiglie dei freni'
+      pl: 'Usterka zużycia klocków hamulcowych'
+      ru: 'Неисправность износа тормозных колодок'
+      zh: '刹车片磨损故障'
+      hu: 'Fékbetét kopás hiba'
+      pt: 'Falha de desgaste das pastilhas de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  EOBD_FAULT:
+    bits: '4.1'
+    comment:
+      en: 'EOBD fault (MIL)'
+      fr: 'Défaut EOBD (témoin MIL)'
+      es: 'Fallo EOBD (testigo MIL)'
+      de: 'EOBD-Fehler (MIL-Kontrollleuchte)'
+      it: 'Guasto EOBD (spia MIL)'
+      pl: 'Usterka EOBD (kontrolka MIL)'
+      ru: 'Неисправность EOBD (индикатор MIL)'
+      zh: 'EOBD 故障(MIL 指示灯)'
+      hu: 'EOBD hiba (MIL jelzőlámpa)'
+      pt: 'Falha EOBD (luz avisadora MIL)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  DIESEL_WATER_FAULT:
+    bits: '4.0'
+    comment:
+      en: 'Water in diesel fuel filter fault'
+      fr: 'Défaut d''eau dans le filtre à gazole'
+      es: 'Fallo de agua en el filtro de gasóleo'
+      de: 'Fehler Wasser im Dieselfilter'
+      it: 'Guasto acqua nel filtro del gasolio'
+      pl: 'Usterka wody w filtrze paliwa diesla'
+      ru: 'Неисправность из-за воды в дизельном топливном фильтре'
+      zh: '柴油滤清器进水故障'
+      hu: 'Víz a dízelszűrőben hiba'
+      pt: 'Falha de água no filtro de gasóleo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  UNUSED_11:
+    bits: '5.7-5.6'
+    unused: true
+
+  SAFETY_FAULT:
+    bits: '5.5'
+    comment:
+      en: 'Passive safety fault'
+      fr: 'Défaut de sécurité passive'
+      es: 'Fallo de seguridad pasiva'
+      de: 'Fehler der passiven Sicherheit'
+      it: 'Guasto della sicurezza passiva'
+      pl: 'Usterka bezpieczeństwa biernego'
+      ru: 'Неисправность пассивной безопасности'
+      zh: '被动安全故障'
+      hu: 'Passzív biztonsági hiba'
+      pt: 'Falha de segurança passiva'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  POLLUTION_FAULT:
+    bits: '5.4'
+    comment:
+      en: 'Serious pollution fault (catalyst risk)'
+      fr: 'Défaut grave de pollution (risque pour le catalyseur)'
+      es: 'Fallo grave de contaminación (riesgo para el catalizador)'
+      de: 'Schwerwiegender Abgasfehler (Risiko für den Katalysator)'
+      it: 'Guasto grave di inquinamento (rischio per il catalizzatore)'
+      pl: 'Poważna usterka emisji zanieczyszczeń (ryzyko dla katalizatora)'
+      ru: 'Серьёзная неисправность по выбросам (риск для катализатора)'
+      zh: '严重排放故障(催化器风险)'
+      hu: 'Súlyos kibocsátási hiba (katalizátor kockázat)'
+      pt: 'Falha grave de poluição (risco para o catalisador)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  UNUSED_12:
+    bits: '5.3'
+    unused: true
+
+  BATTERY_FAULT:
+    bits: '5.2'
+    comment:
+      en: 'Battery charge fault'
+      fr: 'Défaut de charge de la batterie'
+      es: 'Fallo de carga de la batería'
+      de: 'Fehler der Batterieladung'
+      it: 'Guasto di carica della batteria'
+      pl: 'Usterka ładowania akumulatora'
+      ru: 'Неисправность зарядки аккумулятора'
+      zh: '电池充电故障'
+      hu: 'Akkumulátor töltési hiba'
+      pt: 'Falha de carga da bateria'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  ALTERNATOR_FAULT:
+    bits: '5.1'
+    comment:
+      en: 'Alternator fault'
+      fr: 'Défaut d''alternateur'
+      es: 'Fallo del alternador'
+      de: 'Lichtmaschinenfehler'
+      it: 'Guasto dell''alternatore'
+      pl: 'Usterka alternatora'
+      ru: 'Неисправность генератора'
+      zh: '发电机故障'
+      hu: 'Generátor hiba'
+      pt: 'Avaria do alternador'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  UNUSED_13:
+    bits: '5.0-6.5'
+    unused: true
+
+  UNUSED_14:
+    bits: '6.4-6.3'
+    unused: true
+
+  TURN_LIGHTS_FAULT:
+    bits: '6.2'
+    comment:
+      en: 'Cornering light fault'
+      fr: 'Défaut d''éclairage directionnel (code virage)'
+      es: 'Fallo de la luz de curva'
+      de: 'Fehler des Kurvenlichts'
+      it: 'Guasto della luce di svolta'
+      pl: 'Usterka oświetlenia doświetlającego zakręt'
+      ru: 'Неисправность поворотного освещения'
+      zh: '转弯照明故障'
+      hu: 'Kanyarfény hiba'
+      pt: 'Falha da iluminação direcional (luz de curva)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
+
+  UNUSED_15:
     bits: '6.1'
     unused: true
 
   ENGINE_FAULT:
-    alt_names: ['MOT_DEF']
     bits: '6.0'
     comment:
-      en: 'Engine fault alert'
-      fr: 'Alerte defaut moteur'
+      en: 'Engine control fault (ECM)'
+      fr: 'Défaut de contrôle moteur (ECM)'
+      es: 'Fallo de control del motor (ECM)'
+      de: 'Motorsteuerungsfehler (ECM)'
+      it: 'Guasto di controllo motore (ECM)'
+      pl: 'Usterka sterowania silnikiem (ECM)'
+      ru: 'Неисправность управления двигателем (ECM)'
+      zh: '发动机控制故障(ECM)'
+      hu: 'Motorvezérlési hiba (ECM)'
+      pt: 'Falha de controlo do motor (ECM)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
 
-  UNUSED_2:
+  UNUSED_16:
     bits: '7.7-7.6'
     unused: true
 
   POWER_STEERING_FAULT:
-    alt_names: ['ASS_DIR_DEF']
     bits: '7.5'
     comment:
-      en: 'Power steering fault alert'
-      fr: 'Alerte defaut direction assiste'
+      en: 'Power steering fault'
+      fr: 'Défaut d''assistance de direction'
+      es: 'Fallo de la dirección asistida'
+      de: 'Fehler der Servolenkung'
+      it: 'Guasto del servosterzo'
+      pl: 'Usterka wspomagania kierownicy'
+      ru: 'Неисправность усилителя рулевого управления'
+      zh: '转向助力故障'
+      hu: 'Szervokormány hiba'
+      pt: 'Falha da direção assistida'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
 
   PARKING_BRAKE_FAULT:
-    alt_names: ['FSE_SYST_DEF']
     bits: '7.4'
     comment:
-      en: 'Parking brake fault alert'
-      fr: 'Alerte defaut frein de parking'
+      en: 'Electric parking brake system fault'
+      fr: 'Défaut du système de frein de stationnement électrique'
+      es: 'Fallo del sistema del freno de estacionamiento eléctrico'
+      de: 'Fehler des elektrischen Feststellbremssystems'
+      it: 'Guasto del sistema del freno di stazionamento elettrico'
+      pl: 'Usterka systemu elektrycznego hamulca postojowego'
+      ru: 'Неисправность системы электрического стояночного тормоза'
+      zh: '电子驻车制动系统故障'
+      hu: 'Elektromos rögzítőfék rendszer hiba'
+      pt: 'Avaria do sistema do travão de estacionamento elétrico'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
 
   PARKING_BRAKE_TIGHT_FAULT:
-    alt_names: ['FSE_SER_DEF']
     bits: '7.3'
     comment:
-      en: 'Parking brake tightening fault alert'
-      fr: 'Alerte defaut serrage frein de parking'
+      en: 'Electric parking brake application fault'
+      fr: 'Défaut de serrage du frein de stationnement électrique'
+      es: 'Fallo de accionamiento del freno de estacionamiento eléctrico'
+      de: 'Fehler beim Anziehen der elektrischen Feststellbremse'
+      it: 'Guasto di azionamento del freno di stazionamento elettrico'
+      pl: 'Usterka zaciągania elektrycznego hamulca postojowego'
+      ru: 'Неисправность включения электрического стояночного тормоза'
+      zh: '电子驻车制动夹紧故障'
+      hu: 'Elektromos rögzítőfék behúzási hiba'
+      pt: 'Avaria de aplicação do travão de estacionamento elétrico'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
       0x01:
-        en: 'On'
-        fr: 'On'
+        en: 'Fault present'
+        fr: 'Défaut présent'
+        es: 'Fallo presente'
+        de: 'Fehler vorhanden'
+        it: 'Guasto presente'
+        pl: 'Obecna usterka'
+        ru: 'Неисправность присутствует'
+        zh: '存在故障'
+        hu: 'Hiba jelen van'
+        pt: 'Falha presente'
 
   ENGINE_FAULT_BLINK:
-    alt_names: ['MOT_CLIG']
     bits: '7.2'
     comment:
-      en: 'Engine fault blinking alert'
-      fr: 'Alerte clignotante defaut moteur'
+      en: 'Engine control (ECM) indicator blinking request'
+      fr: 'Demande de clignotement du témoin de contrôle moteur (ECM)'
+      es: 'Solicitud de parpadeo del testigo de control del motor (ECM)'
+      de: 'Blinkanforderung der Motorsteuerungs-Kontrollleuchte (ECM)'
+      it: 'Richiesta di lampeggio della spia di controllo motore (ECM)'
+      pl: 'Żądanie migania kontrolki sterowania silnikiem (ECM)'
+      ru: 'Запрос мигания индикатора управления двигателем (ECM)'
+      zh: '发动机控制(ECM)指示灯闪烁请求'
+      hu: 'Motorvezérlés (ECM) jelzőlámpa villogtatási kérés'
+      pt: 'Pedido de intermitência do avisador de controlo do motor (ECM)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Off'
-        fr: 'Off'
+        en: 'Steady'
+        fr: 'Voyant fixe'
+        es: 'Fijo'
+        de: 'Dauerleuchten'
+        it: 'Fisso'
+        pl: 'Światło ciągłe'
+        ru: 'Постоянно горит'
+        zh: '常亮'
+        hu: 'Folyamatos fény'
+        pt: 'Fixo'
       0x01:
-        en: ''
-        fr: 'Voyant clignotant'
+        en: 'Flashing lamp'
+        fr: 'Témoin clignotant'
+        es: 'Testigo parpadeante'
+        de: 'Blinkende Kontrollleuchte'
+        it: 'Spia lampeggiante'
+        pl: 'Migająca kontrolka'
+        ru: 'Мигающая лампа'
+        zh: '指示灯闪烁'
+        hu: 'Villogó jelzőlámpa'
+        pt: 'Avisador intermitente'
 
-  STT_INDICATOR:
-    alt_names: ['DMD_ALLUM_STT']
+  UNUSED_17:
     bits: '7.1-7.0'
-    comment:
-      en: 'Stop and start indicator'
-      fr: 'Indicateur stop and start'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
-      0x02:
-        en: 'Blinking'
-        fr: 'Blinking'
+    unused: true
 
-  FUSE_FAULT:
-    alt_names: ['PARE_DEF']
+  UNUSED_18:
     bits: '8.7'
-    comment:
-      en: 'Fuse fault alert'
-      fr: 'Alerte defaut fusibles'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
+    unused: true
 
-  ODB_CODE_READINESS:
-    alt_names: ['READINESS_STATUT']
+  UNUSED_19:
     bits: '8.6'
-    comment:
-      en: 'OBD code readiness'
-      fr: 'Readiness code OBD'
-    values:
-      0x00:
-        en: 'Readiness codes done'
-        fr: 'Readiness codes fait'
-      0x01:
-        en: 'Readiness codes not done'
-        fr: 'Readiness codes non fait'
+    unused: true
 
-  UNUSED_3:
+  UNUSED_20:
     bits: '8.5-8.4'
     unused: true
 
-  HYBRID_ZEV:
-    alt_names: ['P_TEM_GIMH_ZEV']
+  UNUSED_21:
     bits: '8.3-8.2'
-    comment:
-      en: 'Hybrid indicator light ZEV'
-      fr: 'Temoin hybride ZEV'
-    values:
-      0x00:
-        en: 'Off'
-        fr: 'Off'
-      0x01:
-        en: 'On'
-        fr: 'On'
+    unused: true
 
-  UNUSED_4:
+  UNUSED_22:
     bits: '8.1-8.0'
     unused: true

@@ -1,0 +1,478 @@
+id: 0x3A5
+name: 'RADIO_TRACK_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'Radio current track status: shuffle and repeat modes, text data availability, elapsed time, track number/total, change origin and source.'
+  fr: 'État de la piste courante de l''autoradio : modes aléatoire et répétition, disponibilité des données texte, temps écoulé, numéro de piste/total, origine du changement et source.'
+  es: 'Estado de la pista actual de la radio: modos aleatorio y repetición, disponibilidad de datos de texto, tiempo transcurrido, número de pista/total, origen del cambio y fuente.'
+  de: 'Status des aktuellen Radiotitels: Zufalls- und Wiederholmodi, Verfügbarkeit von Textdaten, verstrichene Zeit, Titelnummer/-gesamtzahl, Änderungsursprung und Quelle.'
+  it: 'Stato della traccia corrente della radio: modalità casuale e ripetizione, disponibilità dati testo, tempo trascorso, numero di traccia/totale, origine del cambio e sorgente.'
+  pl: 'Stan bieżącego utworu radia: tryby losowy i powtarzania, dostępność danych tekstowych, czas, który upłynął, numer utworu/łączna liczba, źródło zmiany i źródło.'
+  ru: 'Статус текущего трека радио: режимы перемешивания и повтора, доступность текстовых данных, прошедшее время, номер трека/всего, источник смены и источник.'
+  zh: '收音机当前曲目状态:随机和重复模式、文本数据可用性、已用时间、曲目编号/总数、更改来源及信源。'
+  hu: 'A rádió aktuális számának állapota: véletlen és ismétlés módok, szövegadat elérhetősége, eltelt idő, számsorszám/összes, a váltás forrása és a forrás.'
+  pt: 'Estado da faixa atual da rádio: modos aleatório e repetição, disponibilidade de dados de texto, tempo decorrido, número de faixa/total, origem da mudança e fonte.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['500ms', 'trigger']
+senders: ['RAD', 'ICSV']
+receivers: ['CRT', 'FMUX', 'EMF']
+
+signals:
+  CURRENT_TRACK_NUMBER:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Number of the track listened'
+      fr: 'Numéro de la plage écoutée'
+      es: 'Número de la pista escuchada'
+      de: 'Nummer des gehörten Titels'
+      it: 'Numero del brano ascoltato'
+      pl: 'Numer odtwarzanego utworu'
+      ru: 'Номер прослушиваемой дорожки'
+      zh: '正在播放曲目编号'
+      hu: 'A hallgatott szám sorszáma'
+      pt: 'Número da faixa escutada'
+    type: 'uint'
+    min: 1
+    max: 65533
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  FILE_ELAPSED_MINUTES:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Minutes elapsed since the start of the file'
+      fr: 'Nombre de minutes écoulées depuis le début du fichier'
+      es: 'Minutos transcurridos desde el inicio del archivo'
+      de: 'Verstrichene Minuten seit Dateibeginn'
+      it: 'Minuti trascorsi dall''inizio del file'
+      pl: 'Liczba minut od początku pliku'
+      ru: 'Минуты, прошедшие с начала файла'
+      zh: '自文件开始已过去的分钟数'
+      hu: 'A fájl kezdete óta eltelt percek'
+      pt: 'Minutos decorridos desde o início do ficheiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 253
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+
+  TRACK_CHANGE_ORIGIN:
+    bits: '4.7-4.6'
+    comment:
+      en: 'Origin of the change of track on audio CD'
+      fr: 'Origine du changement de plage audio CD'
+      es: 'Origen del cambio de pista en el CD de audio'
+      de: 'Ursprung des Titelwechsels auf der Audio-CD'
+      it: 'Origine del cambio di brano sul CD audio'
+      pl: 'Źródło zmiany utworu na płycie CD audio'
+      ru: 'Источник смены дорожки на аудио CD'
+      zh: '音频 CD 曲目切换来源'
+      hu: 'A hangszám váltásának forrása az audio CD-n'
+      pt: 'Origem da mudança de faixa de áudio do CD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No track change'
+        fr: 'Pas de changement de plage'
+        es: 'Sin cambio de pista'
+        de: 'Kein Titelwechsel'
+        it: 'Nessun cambio di traccia'
+        pl: 'Brak zmiany utworu'
+        ru: 'Без смены дорожки'
+        zh: '无曲目切换'
+        hu: 'Nincs számváltás'
+        pt: 'Sem mudança de faixa'
+      0x01:
+        en: 'Automatic change'
+        fr: 'Changement automatique'
+        es: 'Cambio automático'
+        de: 'Automatischer Wechsel'
+        it: 'Cambio automatico'
+        pl: 'Zmiana automatyczna'
+        ru: 'Автоматическое переключение'
+        zh: '自动切换'
+        hu: 'Automatikus váltás'
+        pt: 'Mudança automática'
+      0x02:
+        en: 'Manual change'
+        fr: 'Changement manuel'
+        es: 'Cambio manual'
+        de: 'Manueller Wechsel'
+        it: 'Cambio manuale'
+        pl: 'Zmiana ręczna'
+        ru: 'Ручное переключение'
+        zh: '手动更改'
+        hu: 'Kézi váltás'
+        pt: 'Mudança manual'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  FILE_ELAPSED_SECONDS:
+    bits: '4.5-4.0'
+    comment:
+      en: 'Seconds elapsed since the start of the file'
+      fr: 'Nombre de secondes écoulées depuis le début du fichier'
+      es: 'Segundos transcurridos desde el inicio del archivo'
+      de: 'Verstrichene Sekunden seit Dateibeginn'
+      it: 'Secondi trascorsi dall''inizio del file'
+      pl: 'Liczba sekund od początku pliku'
+      ru: 'Секунды, прошедшие с начала файла'
+      zh: '自文件开始已过去的秒数'
+      hu: 'A fájl kezdete óta eltelt másodpercek'
+      pt: 'Segundos decorridos desde o início do ficheiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 59
+    units: 's'
+    invalid: 0x3F
+    default: 0x3F
+
+  SOURCE:
+    bits: '5.7-5.5'
+    comment:
+      en: 'Source'
+      fr: 'Source'
+      es: 'Fuente'
+      de: 'Quelle'
+      it: 'Sorgente'
+      pl: 'Źródło'
+      ru: 'Источник'
+      zh: '音源'
+      hu: 'Forrás'
+      pt: 'Fonte'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'None (no longitudinal control)'
+        fr: 'Aucune (pas de régulation longitudinale)'
+        es: 'Ninguna (sin regulación longitudinal)'
+        de: 'Keine (keine Längsregelung)'
+        it: 'Nessuna (nessuna regolazione longitudinale)'
+        pl: 'Brak (brak regulacji podłużnej)'
+        ru: 'Нет (нет продольного регулирования)'
+        zh: '无(无纵向调节)'
+        hu: 'Nincs (nincs hosszirányú szabályozás)'
+        pt: 'Nenhum (sem controlo longitudinal)'
+      0x01:
+        en: 'Internal CD'
+        fr: 'CD interne'
+        es: 'CD interno'
+        de: 'Interne CD'
+        it: 'CD interno'
+        pl: 'Wewnętrzna płyta CD'
+        ru: 'Внутренний CD'
+        zh: '内部CD'
+        hu: 'Belső CD'
+        pt: 'CD interno'
+      0x02:
+        en: 'USB'
+        fr: 'USB'
+        es: 'USB'
+        de: 'USB'
+        it: 'USB'
+        pl: 'USB'
+        ru: 'USB'
+        zh: 'USB'
+        hu: 'USB'
+        pt: 'USB'
+      0x03:
+        en: 'Streaming'
+        fr: 'Streaming'
+        es: 'Streaming'
+        de: 'Streaming'
+        it: 'Streaming'
+        pl: 'Strumieniowanie'
+        ru: 'Потоковое воспроизведение'
+        zh: '流媒体'
+        hu: 'Streamelés'
+        pt: 'Streaming'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  SELECTED_LIST_TYPE:
+    bits: '5.4-5.2'
+    comment:
+      en: 'Type of the list currently played'
+      fr: 'Type de la liste sélectionnée en cours de lecture'
+      es: 'Tipo de la lista actualmente reproducida'
+      de: 'Typ der aktuell abgespielten Liste'
+      it: 'Tipo dell''elenco attualmente in riproduzione'
+      pl: 'Typ aktualnie odtwarzanej listy'
+      ru: 'Тип воспроизводимого в данный момент списка'
+      zh: '当前播放列表的类型'
+      hu: 'Az éppen lejátszott lista típusa'
+      pt: 'Tipo da lista atualmente em reprodução'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'Directory'
+        fr: 'Répertoire'
+        es: 'Directorio'
+        de: 'Verzeichnis'
+        it: 'Cartella'
+        pl: 'Katalog'
+        ru: 'Каталог'
+        zh: '目录'
+        hu: 'Könyvtár'
+        pt: 'Diretório'
+      0x01:
+        en: 'Artist'
+        fr: 'Artiste'
+        es: 'Artista'
+        de: 'Interpret'
+        it: 'Artista'
+        pl: 'Wykonawca'
+        ru: 'Исполнитель'
+        zh: '艺术家'
+        hu: 'Előadó'
+        pt: 'Artista'
+      0x02:
+        en: 'Genre'
+        fr: 'Genre'
+        es: 'Género'
+        de: 'Genre'
+        it: 'Genere'
+        pl: 'Gatunek'
+        ru: 'Жанр'
+        zh: '流派'
+        hu: 'Műfaj'
+        pt: 'Género'
+      0x03:
+        en: 'Playlist'
+        fr: 'Playlist'
+        es: 'Lista de reproducción'
+        de: 'Playlist'
+        it: 'Playlist'
+        pl: 'Playlista'
+        ru: 'Плейлист'
+        zh: '播放列表'
+        hu: 'Lejátszási lista'
+        pt: 'Lista de reprodução'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  TEXT_DATA_AVAILABLE:
+    bits: '5.1-5.0'
+    comment:
+      en: 'Text data available'
+      fr: 'Données texte disponibles'
+      es: 'Datos de texto disponibles'
+      de: 'Textdaten verfügbar'
+      it: 'Dati testuali disponibili'
+      pl: 'Dostępne dane tekstowe'
+      ru: 'Текстовые данные доступны'
+      zh: '文本数据可用'
+      hu: 'Szöveges adatok elérhetők'
+      pt: 'Dados de texto disponíveis'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No data available'
+        fr: 'Aucune donnée disponible'
+        es: 'Ningún dato disponible'
+        de: 'Keine Daten verfügbar'
+        it: 'Nessun dato disponibile'
+        pl: 'Brak dostępnych danych'
+        ru: 'Нет доступных данных'
+        zh: '无可用数据'
+        hu: 'Nincs elérhető adat'
+        pt: 'Nenhum dado disponível'
+      0x01:
+        en: 'Data available'
+        fr: 'Données disponibles'
+        es: 'Datos disponibles'
+        de: 'Daten verfügbar'
+        it: 'Dati disponibili'
+        pl: 'Dostępne dane'
+        ru: 'Данные доступны'
+        zh: '数据可用'
+        hu: 'Adatok elérhetők'
+        pt: 'Dados disponíveis'
+      0x02:
+        en: 'Decoding in progress'
+        fr: 'Décodage en cours'
+        es: 'Decodificación en curso'
+        de: 'Dekodierung läuft'
+        it: 'Decodifica in corso'
+        pl: 'Trwa dekodowanie'
+        ru: 'Выполняется декодирование'
+        zh: '解码中'
+        hu: 'Dekódolás folyamatban'
+        pt: 'Descodificação em curso'
+      0x03:
+        unused: true
+
+  TRACK_COUNT:
+    bits: '6.7-7.0'
+    comment:
+      en: 'Number of tracks'
+      fr: 'Nombre de plages'
+      es: 'Número de pistas'
+      de: 'Anzahl der Titel'
+      it: 'Numero di brani'
+      pl: 'Liczba utworów'
+      ru: 'Количество дорожек'
+      zh: '曲目数量'
+      hu: 'Számok száma'
+      pt: 'Número de faixas'
+    type: 'uint'
+    min: 0
+    max: 65533
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  REPEAT_MODE_STATUS:
+    bits: '8.7-8.6'
+    comment:
+      en: 'Repetition soundtrack / compact disk (car audio) state'
+      fr: 'État répétition plage / disque (auto-radio)'
+      es: 'Estado de repetición de pista/disco (audio del vehículo)'
+      de: 'Status der Titel-/Disc-Wiederholung (Fahrzeugaudio)'
+      it: 'Stato di ripetizione brano/disco (audio veicolo)'
+      pl: 'Stan powtarzania utworu/płyty (audio pojazdu)'
+      ru: 'Состояние повтора дорожки/диска (аудиосистема автомобиля)'
+      zh: '曲目／光盘重复播放状态（车载音响）'
+      hu: 'Szám/lemez ismétlésének állapota (jármű hangrendszer)'
+      pt: 'Estado de repetição de faixa/disco (autorrádio)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+      0x01:
+        unused: true
+      0x02:
+        en: 'Disc repeat'
+        fr: 'Répétition du disque'
+        es: 'Repetición del disco'
+        de: 'Wiederholung der CD'
+        it: 'Ripetizione del disco'
+        pl: 'Powtarzanie płyty'
+        ru: 'Повтор диска'
+        zh: '光盘重复播放'
+        hu: 'Lemez ismétlése'
+        pt: 'Repetição do disco'
+      0x03:
+        unused: true
+
+  CD_PLAYBACK_MODE_STATUS:
+    bits: '8.5-8.4'
+    comment:
+      en: 'State of the mode of reading of CD (car radio)'
+      fr: 'État du mode de lecture du CD (auto-radio)'
+      es: 'Estado del modo de reproducción del CD (autorradio)'
+      de: 'Status des CD-Wiedergabemodus (Autoradio)'
+      it: 'Stato della modalità di riproduzione del CD (autoradio)'
+      pl: 'Stan trybu odtwarzania CD (radio samochodowe)'
+      ru: 'Состояние режима воспроизведения CD (автомагнитола)'
+      zh: 'CD 播放模式状态（车载收音机）'
+      hu: 'A CD lejátszási módjának állapota (autórádió)'
+      pt: 'Estado do modo de leitura do CD (autorrádio)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal mode'
+        fr: 'Mode normal'
+        es: 'Modo normal'
+        de: 'Normalmodus'
+        it: 'Modalità normale'
+        pl: 'Tryb normalny'
+        ru: 'Обычный режим'
+        zh: '正常模式'
+        hu: 'Normál üzemmód'
+        pt: 'Modo normal'
+      0x01:
+        en: 'Random track playback'
+        fr: 'Lecture aléatoire des plages'
+        es: 'Reproducción aleatoria de pistas'
+        de: 'Zufallswiedergabe der Titel'
+        it: 'Riproduzione casuale delle tracce'
+        pl: 'Losowe odtwarzanie ścieżek'
+        ru: 'Случайное воспроизведение дорожек'
+        zh: '曲目随机播放'
+        hu: 'Véletlenszerű számlejátszás'
+        pt: 'Reprodução aleatória das faixas'
+      0x02:
+        en: 'Random playback of all tracks'
+        fr: 'Lecture aléatoire de toutes les plages'
+        es: 'Reproducción aleatoria de todas las pistas'
+        de: 'Zufallswiedergabe aller Titel'
+        it: 'Riproduzione casuale di tutte le tracce'
+        pl: 'Losowe odtwarzanie wszystkich utworów'
+        ru: 'Случайное воспроизведение всех дорожек'
+        zh: '所有曲目随机播放'
+        hu: 'Az összes szám véletlenszerű lejátszása'
+        pt: 'Reprodução aleatória de todas as faixas'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '8.3-8.0'
+    unused: true

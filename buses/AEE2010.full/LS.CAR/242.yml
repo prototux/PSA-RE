@@ -1,0 +1,164 @@
+id: 0x242
+name: 'RFID_KEY_LEARNING_COMMAND'
+type: 'can'
+length: 4
+comment:
+  en: 'RFID key learning command sent by the BSI: authentication storage data, learning state and key identifier/number.'
+  fr: 'Commande d''apprentissage de clé RFID envoyée par la BSI : données de stockage d''authentification, état d''apprentissage et identifiant/numéro de clé.'
+  es: 'Comando de aprendizaje de llave RFID enviado por la BSI: datos de almacenamiento de autenticación, estado de aprendizaje e identificador/número de llave.'
+  de: 'Von der BSI gesendeter RFID-Schlüssellernbefehl: Authentifizierungsspeicherdaten, Lernzustand und Schlüsselkennung/-nummer.'
+  it: 'Comando di apprendimento chiave RFID inviato dalla BSI: dati di memorizzazione dell''autenticazione, stato di apprendimento e identificativo/numero della chiave.'
+  pl: 'Polecenie uczenia klucza RFID wysyłane przez BSI: dane przechowywania uwierzytelnienia, stan uczenia i identyfikator/numer klucza.'
+  ru: 'Команда обучения RFID-ключа, отправляемая BSI: данные хранения аутентификации, состояние обучения и идентификатор/номер ключа.'
+  zh: '由BSI发送的RFID钥匙学习命令：认证存储数据、学习状态及钥匙标识/编号。'
+  hu: 'A BSI által küldött RFID kulcstanítási parancs: hitelesítési tárolási adatok, tanítási állapot és kulcsazonosító/szám.'
+  pt: 'Comando de aprendizagem de chave RFID enviado pela BSI: dados de memorização de autenticação, estado de aprendizagem e identificador/número da chave.'
+periodicity: ['500ms']
+senders: ['BSI']
+receivers: ['LCE']
+
+signals:
+  RFID_KEY_NUMBER:
+    bits: '1.7-1.5'
+    comment:
+      en: 'RFID key number'
+      fr: 'Numéro de la clé RFID'
+      es: 'Número de la llave RFID'
+      de: 'Nummer des RFID-Schlüssels'
+      it: 'Numero della chiave RFID'
+      pl: 'Numer klucza RFID'
+      ru: 'Номер RFID-ключа'
+      zh: 'RFID钥匙编号'
+      hu: 'Az RFID-kulcs sorszáma'
+      pt: 'Número da chave RFID'
+    type: 'uint'
+    factor: 1
+    offset: 1
+    min: 1
+    max: 5
+    default: 0x00
+
+  UNUSED_1:
+    bits: '1.4-1.0'
+    unused: true
+
+  RFID_IDENTIFICATION_CODE:
+    bits: '2.7-2.1'
+    comment:
+      en: 'RFID key identification code'
+      fr: 'Code d''identification de la clé RFID'
+      es: 'Código de identificación de la llave RFID'
+      de: 'Identifikationscode des RFID-Schlüssels'
+      it: 'Codice di identificazione della chiave RFID'
+      pl: 'Kod identyfikacyjny klucza RFID'
+      ru: 'Идентификационный код RFID-ключа'
+      zh: 'RFID钥匙识别代码'
+      hu: 'Az RFID-kulcs azonosító kódja'
+      pt: 'Código de identificação da chave RFID'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  VIRTUAL_KEY_LEARNING_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Virtual key learning request status'
+      fr: 'État de la demande d''apprentissage de la clé virtuelle'
+      es: 'Estado de la solicitud de aprendizaje de la llave virtual'
+      de: 'Status der Anlernanforderung des virtuellen Schlüssels'
+      it: 'Stato della richiesta di apprendimento della chiave virtuale'
+      pl: 'Stan żądania uczenia klucza wirtualnego'
+      ru: 'Состояние запроса на обучение виртуального ключа'
+      zh: '虚拟钥匙学习请求的状态'
+      hu: 'A virtuális kulcs betanítási kérésének állapota'
+      pt: 'Estado do pedido de aprendizagem da chave virtual'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  VIRTUAL_KEY_AUTHENTICATION:
+    bits: '3.7'
+    comment:
+      en: 'Virtual key authentication status'
+      fr: 'État d''authentification de la clé virtuelle'
+      es: 'Estado de autenticación de la llave virtual'
+      de: 'Authentifizierungsstatus des virtuellen Schlüssels'
+      it: 'Stato di autenticazione della chiave virtuale'
+      pl: 'Stan uwierzytelnienia klucza wirtualnego'
+      ru: 'Состояние аутентификации виртуального ключа'
+      zh: '虚拟钥匙的身份验证状态'
+      hu: 'A virtuális kulcs hitelesítési állapota'
+      pt: 'Estado de autenticação da chave virtual'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'True'
+        fr: 'Vrai'
+        es: 'Verdadero'
+        de: 'Wahr'
+        it: 'Vero'
+        pl: 'Prawda'
+        ru: 'Истина'
+        zh: '真'
+        hu: 'Igaz'
+        pt: 'Verdadeiro'
+
+  UNUSED_2:
+    bits: '3.6-4.0'
+    unused: true

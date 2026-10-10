@@ -1,0 +1,257 @@
+id: 0x3C1
+name: 'WIRELESS_CHARGER_RX_FLOW_CONTROL'
+type: 'can'
+length: 1
+comment:
+  en: 'On-board charger / DC-DC converter wake-up requests: cabin cooling, blower, disconnector hold, HV battery recharge and MEAP cooling.'
+  fr: 'Demandes de réveil du chargeur embarqué / convertisseur DC-DC : refroidissement habitacle, pulseur, maintien du disjoncteur, recharge batterie HT et refroidissement MEAP.'
+  es: 'Solicitudes de activación del cargador embarcado / convertidor DC-DC: refrigeración del habitáculo, ventilador, mantenimiento del seccionador, recarga de batería de alta tensión y refrigeración MEAP.'
+  de: 'Weckanforderungen des Onboard-Ladegeräts / DC-DC-Wandlers: Innenraumkühlung, Gebläse, Halten des Trennschalters, Hochvoltbatterie-Nachladung und MEAP-Kühlung.'
+  it: 'Richieste di risveglio del caricabatterie di bordo / convertitore DC-DC: raffreddamento abitacolo, ventola, mantenimento del sezionatore, ricarica batteria AT e raffreddamento MEAP.'
+  pl: 'Żądania wybudzenia ładowarki pokładowej / przetwornicy DC-DC: chłodzenie kabiny, dmuchawa, podtrzymanie rozłącznika, doładowanie akumulatora WN i chłodzenie MEAP.'
+  ru: 'Запросы пробуждения бортового зарядного устройства / преобразователя DC-DC: охлаждение салона, вентилятор, удержание разъединителя, подзарядка высоковольтной батареи и охлаждение MEAP.'
+  zh: '车载充电器/DC-DC转换器唤醒请求:座舱冷却、鼓风机、断路器保持、高压电池补充充电和MEAP冷却。'
+  hu: 'A fedélzeti töltő / DC-DC átalakító ébresztési kérései: utastér hűtés, fűtőventilátor, megszakító tartása, nagyfeszültségű akkumulátor újratöltése és MEAP hűtés.'
+  pt: 'Pedidos de ativação do carregador de bordo / conversor DC-DC: arrefecimento do habitáculo, ventilador, manutenção do disjuntor, recarga da bateria de alta tensão e arrefecimento MEAP.'
+periodicity: ['50ms']
+senders: ['OBC']
+receivers: ['CMM', 'VCU', 'TBMU']
+
+signals:
+  GMV_COOLING_WAKEUP:
+    bits: '1.7'
+    comment:
+      en: 'Partial wake-up status for cooling fan operation.'
+      fr: 'État du réveil partiel pour le fonctionnement du groupe motoventilateur.'
+      es: 'Estado del despertar parcial para el funcionamiento del electroventilador de refrigeración.'
+      de: 'Status des Teil-Weckens für den Betrieb des Kühlerlüfters.'
+      it: 'Stato del risveglio parziale per il funzionamento dell''elettroventola di raffreddamento.'
+      pl: 'Stan częściowego wybudzenia dla pracę wentylatora chłodnicy.'
+      ru: 'Статус частичного пробуждения для работу вентилятора охлаждения.'
+      zh: '冷却风扇运行的部分唤醒状态。'
+      hu: 'Részleges felébresztési állapot: a hűtőventilátor működését.'
+      pt: 'Estado de despertar parcial para o funcionamento do ventilador de arrefecimento.'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  MEAP_COOLING_PARTIAL_WAKEUP_REQUEST:
+    bits: '1.6'
+    comment:
+      en: 'Partial network wake-up request for MEAP cooling needs'
+      fr: 'Demande de réveil partiel du réseau pour besoin de refroidissement MEAP'
+      es: 'Solicitud de despertar parcial de la red por necesidad de refrigeración MEAP'
+      de: 'Anforderung eines Teil-Wakeups des Netzwerks für den MEAP-Kühlbedarf'
+      it: 'Richiesta di risveglio parziale della rete per esigenze di raffreddamento MEAP'
+      pl: 'Żądanie częściowego wybudzenia sieci z powodu zapotrzebowania na chłodzenie MEAP'
+      ru: 'Запрос частичного пробуждения сети для потребности в охлаждении MEAP'
+      zh: '因MEAP冷却需求而请求的部分网络唤醒'
+      hu: 'A hálózat részleges ébresztésének kérése MEAP hűtési igény miatt'
+      pt: 'Pedido de despertar parcial da rede por necessidade de arrefecimento do MEAP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  COOLING_PARTIAL_WAKEUP_REQUEST:
+    bits: '1.5'
+    comment:
+      en: 'Partial network wake-up request for cooling needs'
+      fr: 'Demande de réveil partiel du réseau pour besoin de refroidissement'
+      es: 'Solicitud de despertar parcial de la red por necesidad de refrigeración'
+      de: 'Anforderung eines Teil-Wakeups des Netzwerks für den Kühlbedarf'
+      it: 'Richiesta di risveglio parziale della rete per esigenze di raffreddamento'
+      pl: 'Żądanie częściowego wybudzenia sieci z powodu zapotrzebowania na chłodzenie'
+      ru: 'Запрос частичного пробуждения сети для потребности в охлаждении'
+      zh: '因冷却需求而请求的部分网络唤醒'
+      hu: 'A hálózat részleges ébresztésének kérése hűtési igény miatt'
+      pt: 'Pedido de ativação parcial da rede por necessidade de arrefecimento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  HV_BATTERY_RECHARGE_WAKEUP:
+    bits: '1.4'
+    comment:
+      en: 'HV battery recharge wake-up request'
+      fr: 'Demande de réveil pour la recharge de la batterie HV'
+      es: 'Solicitud de activación para la recarga de la batería de alta tensión'
+      de: 'Aufwachanforderung für das Laden der Hochvoltbatterie'
+      it: 'Richiesta di risveglio per la ricarica della batteria HV'
+      pl: 'Żądanie wybudzenia do ładowania akumulatora wysokiego napięcia'
+      ru: 'Запрос пробуждения для зарядки высоковольтной батареи'
+      zh: '高压电池充电唤醒请求'
+      hu: 'Nagyfeszültségű akkumulátor töltési ébresztési kérés'
+      pt: 'Pedido de despertar para recarga da bateria de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  CHARGE_STATE_INFO_WAKEUP_REQUEST:
+    bits: '1.3'
+    comment:
+      en: 'Wake-up request to report charge state information to the BSI'
+      fr: 'Demande de réveil pour remonter les informations d''état de charge au BSI'
+      es: 'Solicitud de despertar para transmitir la información de estado de carga al BSI'
+      de: 'Wakeup-Anforderung zur Übermittlung der Ladezustandsinformationen an das BSI'
+      it: 'Richiesta di risveglio per trasmettere le informazioni sullo stato di carica al BSI'
+      pl: 'Żądanie wybudzenia w celu przekazania informacji o stanie ładowania do BSI'
+      ru: 'Запрос пробуждения для передачи информации о состоянии зарядки в BSI'
+      zh: '向BSI报告充电状态信息的唤醒请求'
+      hu: 'Ébresztési kérés a töltési állapot információinak továbbítására a BSI felé'
+      pt: 'Pedido de ativação para transmitir a informação de estado de carga à BSI'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  CONTACTOR_WAKEUP_HOLD_REQUEST:
+    bits: '1.2'
+    comment:
+      en: 'Request to keep ECUs awake to allow time to plug in the charging cable'
+      fr: 'Demande de maintien en éveil des calculateurs pour laisser le temps de brancher le câble de charge'
+      es: 'Solicitud de mantener activos los calculadores para dar tiempo a conectar el cable de carga'
+      de: 'Anforderung, die Steuergeräte wach zu halten, um Zeit zum Anschließen des Ladekabels zu geben'
+      it: 'Richiesta di mantenere attive le centraline per dare il tempo di collegare il cavo di ricarica'
+      pl: 'Żądanie utrzymania sterowników w stanie czuwania, aby dać czas na podłączenie kabla ładowania'
+      ru: 'Запрос на поддержание блоков управления в активном состоянии, чтобы дать время подключить зарядный кабель'
+      zh: '请求保持控制单元唤醒以留出插入充电线缆的时间'
+      hu: 'Az vezérlőegységek ébren tartásának kérése, hogy legyen idő a töltőkábel csatlakoztatására'
+      pt: 'Pedido para manter as ECU ativas de modo a dar tempo para ligar o cabo de carregamento'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No wakeup'
+        fr: 'Pas de réveil'
+        es: 'Sin activación'
+        de: 'Kein Aufwecken'
+        it: 'Nessun risveglio'
+        pl: 'Brak wybudzenia'
+        ru: 'Нет пробуждения'
+        zh: '无唤醒'
+        hu: 'Nincs ébresztés'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Clock'
+        fr: 'Réveil'
+        es: 'Reloj despertador'
+        de: 'Wecker'
+        it: 'Sveglia'
+        pl: 'Budzik'
+        ru: 'Будильник'
+        zh: '闹钟'
+        hu: 'Ébresztőóra'
+        pt: 'Relógio'
+
+  UNUSED_1:
+    bits: '1.1-1.0'
+    unused: true

@@ -1,0 +1,116 @@
+id: 0x462
+name: 'EV_CHARGE_STATUS'
+type: 'can'
+length: 4
+comment:
+  en: 'Electric vehicle charge status: charging station stop-charge request and charge-in-progress mode.'
+  fr: 'État de charge du véhicule électrique : demande d''arrêt de charge de la borne et mode charge en cours.'
+  es: 'Estado de carga del vehículo eléctrico: solicitud de parada de carga del punto de carga y modo de carga en curso.'
+  de: 'Ladestatus des Elektrofahrzeugs: Ladestopp-Anforderung der Ladestation und Modus „Ladevorgang läuft“.'
+  it: 'Stato di ricarica del veicolo elettrico: richiesta di arresto ricarica dalla colonnina e modalità ricarica in corso.'
+  pl: 'Stan ładowania pojazdu elektrycznego: żądanie zatrzymania ładowania ze stacji ładowania i tryb trwającego ładowania.'
+  ru: 'Статус зарядки электромобиля: запрос остановки зарядки от зарядной станции и режим выполняющейся зарядки.'
+  zh: '电动车充电状态:充电桩停止充电请求和充电进行中模式。'
+  hu: 'Az elektromos jármű töltési állapota: a töltőállomás töltésleállítási kérése és a folyamatban lévő töltés módja.'
+  pt: 'Estado de carga do veículo elétrico: pedido de paragem de carga do posto de carregamento e modo de carregamento em curso.'
+periodicity: ['100ms', 'trigger']
+senders: ['E_VCU']
+receivers: ['BSI']
+
+signals:
+  CHARGE_MODE_IN_PROGRESS:
+    bits: '1.7-1.5'
+    comment:
+      en: 'Current battery charging mode (slow AC, fast DC, no charging)'
+      fr: 'Mode de recharge en cours de la batterie (lente AC, rapide DC, pas de charge)'
+      es: 'Modo de recarga en curso de la batería (lenta AC, rápida DC, sin carga)'
+      de: 'Aktueller Ladevorgangsmodus der Batterie (langsam AC, schnell DC, kein Laden)'
+      it: 'Modalità di ricarica in corso della batteria (lenta AC, rapida DC, nessuna ricarica)'
+      pl: 'Bieżący tryb ładowania akumulatora (wolne AC, szybkie DC, brak ładowania)'
+      ru: 'Текущий режим зарядки батареи (медленная AC, быстрая DC, без зарядки)'
+      zh: '当前电池充电模式(慢充AC、快充DC、未充电)'
+      hu: 'Az akkumulátor aktuális töltési módja (lassú AC, gyors DC, nincs töltés)'
+      pt: 'Modo de carregamento atual da bateria (lento AC, rápido DC, sem carga)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Slow (AC)'
+        fr: 'Lent (climatisation)'
+        es: 'Lento (climatizador)'
+        de: 'Langsam (Klimaanlage)'
+        it: 'Lento (climatizzatore)'
+        pl: 'Wolno (klimatyzacja)'
+        ru: 'Медленно (кондиционер)'
+        zh: '慢速(空调)'
+        hu: 'Lassú (klíma)'
+        pt: 'Lento (AC)'
+      0x01:
+        en: 'Fast (DC)'
+        fr: 'Rapide (DC)'
+        es: 'Rápida (DC)'
+        de: 'Schnell (DC)'
+        it: 'Rapida (DC)'
+        pl: 'Szybkie (DC)'
+        ru: 'Быстрая (DC)'
+        zh: '快速(直流)'
+        hu: 'Gyors (DC)'
+        pt: 'Rápido (DC)'
+      0x02:
+        en: 'No load'
+        fr: 'Pas de charge'
+        es: 'Sin carga'
+        de: 'Keine Last'
+        it: 'Nessun carico'
+        pl: 'Brak obciążenia'
+        ru: 'Нагрузки нет'
+        zh: '无负载'
+        hu: 'Nincs terhelés'
+        pt: 'Sem carga'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  FAST_CHARGE_STOP_REQUEST:
+    bits: '1.4'
+    comment:
+      en: 'Request to stop fast charging (DC charging station, EVSE)'
+      fr: 'Demande d''arrêt de la charge rapide par la borne de recharge (EVSE)'
+      es: 'Solicitud de parada de la carga rápida por el punto de recarga (EVSE)'
+      de: 'Anforderung zum Stoppen des Schnellladevorgangs durch die Ladestation (EVSE)'
+      it: 'Richiesta di arresto della ricarica rapida da parte della colonnina (EVSE)'
+      pl: 'Żądanie zatrzymania szybkiego ładowania ze stacji ładowania (EVSE)'
+      ru: 'Запрос на остановку быстрой зарядки от зарядной станции (EVSE)'
+      zh: '来自充电桩(EVSE)的快充停止请求'
+      hu: 'A gyorstöltés leállítási kérése a töltőállomástól (EVSE)'
+      pt: 'Pedido de paragem do carregamento rápido (posto de carregamento DC, EVSE)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'

@@ -1,0 +1,340 @@
+id: 0x386
+name: 'VEHICLE_DYNAMICS_REGULATION_STATUS'
+type: 'can'
+length: 3
+comment:
+  en: 'Vehicle dynamics regulation status from the radar/ESP node: ABS/ASR/ESP regulation flags, travel direction and raw yaw rate.'
+  fr: 'État de régulation dynamique du véhicule depuis le module radar/ESP : indicateurs de régulation ABS/ASR/ESP, sens de déplacement et vitesse de lacet brute.'
+  es: 'Estado de regulación dinámica del vehículo desde el módulo radar/ESP: indicadores de regulación ABS/ASR/ESP, sentido de marcha y velocidad de guiñada bruta.'
+  de: 'Fahrdynamik-Regelstatus vom Radar-/ESP-Modul: ABS-/ASR-/ESP-Regelkennzeichen, Fahrtrichtung und rohe Gierrate.'
+  it: 'Stato di regolazione dinamica del veicolo dal modulo radar/ESP: indicatori di regolazione ABS/ASR/ESP, senso di marcia e velocità di imbardata grezza.'
+  pl: 'Stan regulacji dynamiki pojazdu z modułu radaru/ESP: flagi regulacji ABS/ASR/ESP, kierunek jazdy i surowa prędkość odchylenia.'
+  ru: 'Статус регулирования динамики автомобиля от модуля радара/ESP: флаги регулирования ABS/ASR/ESP, направление движения и необработанная скорость рыскания.'
+  zh: '来自雷达/ESP模块的车辆动态调节状态:ABS/ASR/ESP调节标志、行驶方向和原始横摆角速度。'
+  hu: 'Jármű dinamikai szabályozási állapot a radar-/ESP modultól: ABS/ASR/ESP szabályozási jelzők, haladási irány és nyers legyezőszög-sebesség.'
+  pt: 'Estado de regulação da dinâmica do veículo do nó radar/ESP: indicadores de regulação ABS/ASR/ESP, sentido de marcha e velocidade de guinada em bruto.'
+periodicity: ['40ms']
+senders: ['ARTIV']
+receivers: ['CVM']
+
+signals:
+  RAW_YAW_RATE:
+    bits: '1.7-2.4'
+    comment:
+      en: 'Raw yaw rate (12-bit)'
+      fr: 'Vitesse de lacet brute (12 bits)'
+      es: 'Velocidad de guiñada bruta (12 bits)'
+      de: 'Roher Gierratenwert (12 Bit)'
+      it: 'Velocità di imbardata grezza (12 bit)'
+      pl: 'Surowa prędkość odchylania (12 bitów)'
+      ru: 'Необработанная скорость рыскания (12 бит)'
+      zh: '原始横摆角速度(12位)'
+      hu: 'Nyers legyezési szögsebesség (12 bit)'
+      pt: 'Velocidade de guinada bruta (12 bits)'
+    type: 'uint'
+    factor: 0.08
+    offset: -163.84
+    min: -163.84
+    max: 163.68
+    units: '°/s'
+    invalid: 0xFFF
+    default: 0x800
+
+  VEHICLE_DIRECTION:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Vehicle direction of travel'
+      fr: 'Sens de roulage du véhicule'
+      es: 'Sentido de marcha del vehículo'
+      de: 'Fahrtrichtung des Fahrzeugs'
+      it: 'Senso di marcia del veicolo'
+      pl: 'Kierunek jazdy pojazdu'
+      ru: 'Направление движения автомобиля'
+      zh: '车辆行驶方向'
+      hu: 'Jármű haladási iránya'
+      pt: 'Sentido de marcha do veículo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x01:
+        en: 'Toward the front'
+        fr: 'Vers l''avant'
+        es: 'Hacia delante'
+        de: 'Nach vorne'
+        it: 'In avanti'
+        pl: 'Do przodu'
+        ru: 'Вперёд'
+        zh: '朝向前方'
+        hu: 'Előrefelé'
+        pt: 'Para a frente'
+      0x02:
+        en: 'Toward the rear'
+        fr: 'Vers l''arrière'
+        es: 'Hacia atrás'
+        de: 'Nach hinten'
+        it: 'Verso il retro'
+        pl: 'Do tyłu'
+        ru: 'Назад'
+        zh: '朝向后方'
+        hu: 'Hátrafelé'
+        pt: 'Para trás'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  BRAKE_PEDAL_SWITCH_3_FAULT:
+    bits: '2.1'
+    comment:
+      en: 'Main brake pedal switch disabled, brake ECU'
+      fr: 'Contact principal de la pédale de frein hors service, calculateur frein'
+      es: 'Contacto principal del pedal de freno fuera de servicio, ECU de freno'
+      de: 'Hauptschalter Bremspedal außer Betrieb, Bremssteuergerät'
+      it: 'Interruttore principale pedale freno fuori servizio, centralina freni'
+      pl: 'Główny wyłącznik pedału hamulca uszkodzony, sterownik hamulców'
+      ru: 'Основной выключатель педали тормоза неисправен, блок управления тормозами'
+      zh: '制动踏板主开关失效,制动控制单元'
+      hu: 'Fékpedál fő kapcsolója üzemen kívül, fékvezérlő'
+      pt: 'Contacto principal do pedal de travão fora de serviço, unidade de controlo de travão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Main brake switch OK'
+        fr: 'Contact principal de la pédale de frein OK'
+        es: 'Interruptor principal del pedal de freno OK'
+        de: 'Haupt-Bremspedalschalter OK'
+        it: 'Interruttore principale del pedale del freno OK'
+        pl: 'Główny styk pedału hamulca OK'
+        ru: 'Основной выключатель педали тормоза в норме'
+        zh: '制动踏板主开关正常'
+        hu: 'A fékpedál fő kapcsolója rendben'
+        pt: 'Contacto principal do pedal de travão OK'
+      0x01:
+        en: 'Main brake switch faulty'
+        fr: 'Contact principal pédale de frein hors service'
+        es: 'Interruptor principal del pedal de freno defectuoso'
+        de: 'Hauptbremslichtschalter fehlerhaft'
+        it: 'Interruttore principale del pedale del freno guasto'
+        pl: 'Uszkodzony główny wyłącznik pedału hamulca'
+        ru: 'Основной выключатель педали тормоза неисправен'
+        zh: '刹车踏板主开关故障'
+        hu: 'A fékpedál fő kapcsolója hibás'
+        pt: 'Contacto principal do pedal de travão fora de serviço'
+
+  ASR_ESP_DISCONNECT_STATUS:
+    bits: '2.0'
+    comment:
+      en: 'ASR-ESP connection status, as set by the driver'
+      fr: 'État de connexion de l''ASR-ESP, tel que réglé par le conducteur'
+      es: 'Estado de conexión del ASR-ESP, según lo ajustado por el conductor'
+      de: 'ASR-ESP-Verbindungsstatus, vom Fahrer eingestellt'
+      it: 'Stato di connessione dell''ASR-ESP, impostato dal conducente'
+      pl: 'Stan połączenia ASR-ESP, ustawiony przez kierowcę'
+      ru: 'Статус подключения ASR-ESP, установленный водителем'
+      zh: '由驾驶员设置的 ASR-ESP 连接状态'
+      hu: 'Az ASR-ESP csatlakozási állapota, a vezető beállítása szerint'
+      pt: 'Estado de ligação do ASR-ESP, tal como ajustado pelo condutor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Connected by the driver'
+        fr: 'Connecté par le conducteur'
+        es: 'Conectado por el conductor'
+        de: 'Vom Fahrer verbunden'
+        it: 'Connesso dal conducente'
+        pl: 'Podłączone przez kierowcę'
+        ru: 'Подключено водителем'
+        zh: '由驾驶员连接'
+        hu: 'A vezető által csatlakoztatva'
+        pt: 'Ligado pelo condutor'
+      0x01:
+        en: 'Disconnected by the driver'
+        fr: 'Déconnecté par le conducteur'
+        es: 'Desconectado por el conductor'
+        de: 'Vom Fahrer getrennt'
+        it: 'Disconnesso dal conducente'
+        pl: 'Rozłączone przez kierowcę'
+        ru: 'Отключено водителем'
+        zh: '由驾驶员断开连接'
+        hu: 'A vezető által lecsatlakoztatva'
+        pt: 'Desligado pelo condutor'
+
+  ESP_REGULATION_ACTIVE:
+    bits: '3.7'
+    comment:
+      en: 'ESP regulation active'
+      fr: 'Régulation de l''ESP active'
+      es: 'Regulación del ESP activa'
+      de: 'ESP-Regelung aktiv'
+      it: 'Regolazione ESP attiva'
+      pl: 'Aktywna regulacja ESP'
+      ru: 'Активно регулирование ESP'
+      zh: 'ESP 调节激活'
+      hu: 'Az ESP szabályozása aktív'
+      pt: 'Regulação do ESP ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  MSR_REGULATION_ACTIVE:
+    bits: '3.6'
+    comment:
+      en: 'MSR (engine drag torque control) regulation active'
+      fr: 'Régulation MSR (frein moteur) active'
+      es: 'Regulación MSR (freno motor) activa'
+      de: 'MSR-Regelung (Motorschleppmomentregelung) aktiv'
+      it: 'Regolazione MSR (freno motore) attiva'
+      pl: 'Aktywna regulacja MSR (hamowanie silnikiem)'
+      ru: 'Активно регулирование MSR (тормозной момент двигателя)'
+      zh: 'MSR(发动机拖曳扭矩控制)调节激活'
+      hu: 'Az MSR (motorfékező-nyomaték szabályozás) aktív'
+      pt: 'Regulação MSR (travão motor) ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  ASR_REGULATION_ACTIVE:
+    bits: '3.5'
+    comment:
+      en: 'ASR (traction control) regulation active'
+      fr: 'Régulation de l''ASR (antipatinage) active'
+      es: 'Regulación del ASR (control de tracción) activa'
+      de: 'ASR-Regelung (Antriebsschlupfregelung) aktiv'
+      it: 'Regolazione ASR (controllo trazione) attiva'
+      pl: 'Aktywna regulacja ASR (kontrola trakcji)'
+      ru: 'Активно регулирование ASR (противобуксовочная система)'
+      zh: 'ASR(牵引力控制)调节激活'
+      hu: 'Az ASR (kipörgésgátló) szabályozása aktív'
+      pt: 'Regulação do ASR (controlo de tração) ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  ABS_IN_PROGRESS:
+    bits: '3.4'
+    comment:
+      en: 'ABS regulation in progress'
+      fr: 'Régulation ABS en cours'
+      es: 'Regulación ABS en curso'
+      de: 'ABS-Regelung aktiv'
+      it: 'Regolazione ABS in corso'
+      pl: 'Regulacja ABS w toku'
+      ru: 'Идёт регулирование ABS'
+      zh: 'ABS调节进行中'
+      hu: 'ABS-szabályozás folyamatban'
+      pt: 'Regulação ABS em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  UNUSED_1:
+    bits: '3.3-3.0'
+    unused: true

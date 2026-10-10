@@ -1,0 +1,176 @@
+id: 0x4FD
+name: 'ROTARY_SELECTOR_DATA'
+type: 'can'
+length: 2
+comment:
+  en: 'Rotary selector (gear dial) data: position counter, fault and overflow (up/down) flags.'
+  fr: 'Données du sélecteur à molette : compteur de position, défaut et indicateurs de débordement (haut/bas).'
+  es: 'Datos del selector giratorio: contador de posición, fallo e indicadores de desbordamiento (arriba/abajo).'
+  de: 'Daten des Drehwählers: Positionszähler, Fehler und Überlaufkennzeichen (auf/ab).'
+  it: 'Dati del selettore a rotella: contatore di posizione, guasto e indicatori di overflow (su/giù).'
+  pl: 'Dane selektora obrotowego: licznik pozycji, usterka i flagi przepełnienia (góra/dół).'
+  ru: 'Данные поворотного селектора: счётчик положения, неисправность и флаги переполнения (вверх/вниз).'
+  zh: '旋钮选择器数据:位置计数器、故障和溢出(上/下)标志。'
+  hu: 'A forgatógombos választó adatai: pozíciószámláló, hiba és túlcsordulási jelzők (fel/le).'
+  pt: 'Dados do seletor rotativo (roda de mudanças): contador de posição, indicadores de avaria e de saturação (para cima/para baixo).'
+periodicity: ['100ms']
+senders: ['ASR']
+receivers: ['ABS']
+
+signals:
+  COUNTER_6BIT:
+    bits: '1.7-1.2'
+    comment:
+      en: '6-bit rolling counter'
+      fr: 'Compteur cyclique 6 bits'
+      es: 'Contador cíclico de 6 bits'
+      de: '6-Bit-Zähler (umlaufend)'
+      it: 'Contatore ciclico a 6 bit'
+      pl: '6-bitowy licznik cykliczny'
+      ru: '6-битный циклический счётчик'
+      zh: '6位循环计数器'
+      hu: '6 bites körforgó számláló'
+      pt: 'Contador cíclico de 6 bits'
+    type: 'sint'
+    min: -32
+    max: 31
+    default: 0x00
+
+  OVERFLOW_UP:
+    bits: '2.7'
+    comment:
+      en: 'Upward counter overflow flag'
+      fr: 'Indicateur de dépassement de compteur vers le haut'
+      es: 'Indicador de desbordamiento de contador hacia arriba'
+      de: 'Überlauf-Kennzeichen des Zählers (Aufwärtsüberlauf)'
+      it: 'Indicatore di overflow del contatore verso l''alto'
+      pl: 'Flaga nadmiaru licznika (przepełnienie w górę)'
+      ru: 'Флаг переполнения счётчика при увеличении'
+      zh: '计数器向上溢出标志'
+      hu: 'Számláló túlcsordulás jelzés (felfelé)'
+      pt: 'Indicador de estouro de contador para cima'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Positive overflow inactive'
+        fr: 'Débordement positif inactif'
+        es: 'Desbordamiento positivo inactivo'
+        de: 'Positiver Überlauf inaktiv'
+        it: 'Overflow positivo inattivo'
+        pl: 'Nieaktywne przepełnienie dodatnie'
+        ru: 'Положительное переполнение неактивно'
+        zh: '正向溢出未激活'
+        hu: 'Pozitív túlcsordulás inaktív'
+        pt: 'Saturação positiva inativa'
+      0x01:
+        en: 'Overflow up active'
+        fr: 'Débordement haut actif'
+        es: 'Desbordamiento alto activo'
+        de: 'Überlauf aktiv'
+        it: 'Overflow alto attivo'
+        pl: 'Aktywne przepełnienie w górę'
+        ru: 'Активно переполнение вверх'
+        zh: '上溢激活'
+        hu: 'Felülcsordulás aktív'
+        pt: 'Transbordo por cima ativo'
+
+  OVERFLOW_DOWN:
+    bits: '2.6'
+    comment:
+      en: 'Downward counter overflow flag'
+      fr: 'Indicateur de dépassement de compteur vers le bas'
+      es: 'Indicador de desbordamiento de contador hacia abajo'
+      de: 'Unterlauf-Kennzeichen des Zählers (Abwärtsüberlauf)'
+      it: 'Indicatore di overflow del contatore verso il basso'
+      pl: 'Flaga niedomiaru licznika (przepełnienie w dół)'
+      ru: 'Флаг переполнения счётчика при уменьшении'
+      zh: '计数器向下溢出标志'
+      hu: 'Számláló alulcsordulás jelzés (lefelé)'
+      pt: 'Indicador de estouro de contador para baixo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Overflow down inactive'
+        fr: 'Débordement bas inactif'
+        es: 'Desbordamiento inferior inactivo'
+        de: 'Unterlauf inaktiv'
+        it: 'Underflow inattivo'
+        pl: 'Niedomiar nieaktywny'
+        ru: 'Нижнее переполнение неактивно'
+        zh: '下溢出未激活'
+        hu: 'Alsó túlcsordulás inaktív'
+        pt: 'Saturação para baixo inativa'
+      0x01:
+        en: 'Overflow down active'
+        fr: 'Débordement bas actif'
+        es: 'Desbordamiento bajo activo'
+        de: 'Unterlauf aktiv'
+        it: 'Overflow basso attivo'
+        pl: 'Aktywne niedopełnienie w dół'
+        ru: 'Активно переполнение вниз'
+        zh: '下溢激活'
+        hu: 'Alulcsordulás aktív'
+        pt: 'Transbordo por baixo ativo'
+
+  CONTROL_WHEEL_FAULT:
+    bits: '2.5-2.4'
+    comment:
+      en: 'Control wheel (rotary knob) fault status'
+      fr: 'État de défaut de la molette de commande'
+      es: 'Estado de fallo de la rueda de mando (mando giratorio)'
+      de: 'Fehlerstatus des Bedienrädchens (Drehregler)'
+      it: 'Stato di guasto della manopola di comando'
+      pl: 'Stan usterki pokrętła sterującego'
+      ru: 'Статус неисправности регулировочного колеса (поворотной рукоятки)'
+      zh: '控制旋钮故障状态'
+      hu: 'Kezelőgomb (forgatógomb) hibaállapota'
+      pt: 'Estado de falha da roda de comando (botão giratório)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Coherence not diagnosed'
+        fr: 'Cohérence non diagnostiquée'
+        es: 'Coherencia no diagnosticada'
+        de: 'Kohärenz nicht diagnostiziert'
+        it: 'Coerenza non diagnosticata'
+        pl: 'Spójność niezdiagnozowana'
+        ru: 'Согласованность не диагностирована'
+        zh: '一致性未诊断'
+        hu: 'Koherencia nincs diagnosztizálva'
+        pt: 'Coerência não diagnosticada'
+      0x02:
+        en: 'Reserved value'
+        fr: 'Valeur réservée'
+        es: 'Valor reservado'
+        de: 'Reservierter Wert'
+        it: 'Valore riservato'
+        pl: 'Wartość zarezerwowana'
+        ru: 'Зарезервированное значение'
+        zh: '保留值'
+        hu: 'Fenntartott érték'
+        pt: 'Valor reservado'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'

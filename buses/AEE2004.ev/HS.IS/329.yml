@@ -1,0 +1,342 @@
+id: 0x329
+name: 'GEARBOX_STOP_START_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Stop & start data from the gearbox: engine-stop/restart authorisations and requests, predicted resistive torque and lever P/N position.'
+  fr: 'Données stop & start de la boîte de vitesses : autorisations et demandes d''arrêt/redémarrage moteur, couple résistant prédit et position du levier P/N.'
+  es: 'Datos stop & start de la caja de cambios: autorizaciones y solicitudes de parada/reinicio del motor, par resistente previsto y posición de la palanca P/N.'
+  de: 'Stopp-Start-Daten des Getriebes: Freigaben und Anforderungen zum Motorstopp/-neustart, vorhergesagtes Widerstandsdrehmoment und Hebelposition P/N.'
+  it: 'Dati stop & start del cambio: autorizzazioni e richieste di arresto/riavvio motore, coppia resistente prevista e posizione della leva P/N.'
+  pl: 'Dane funkcji stop & start ze skrzyni biegów: autoryzacje i żądania zatrzymania/ponownego uruchomienia silnika, przewidywany moment oporowy oraz pozycja dźwigni P/N.'
+  ru: 'Данные функции старт-стоп от коробки передач: разрешения и запросы на остановку/перезапуск двигателя, прогнозируемый момент сопротивления и положение рычага P/N.'
+  zh: '变速箱的启停(Stop&Start)数据:发动机停止/重启的授权与请求、预测阻力扭矩及P/N挡位。'
+  hu: 'A váltó start-stop adatai: a motorleállítás/-újraindítás engedélyei és kérései, a becsült ellenállási nyomaték, valamint a kar P/N helyzete.'
+  pt: 'Dados de stop & start da caixa de velocidades: autorizações e pedidos de paragem/reinício do motor, binário resistivo previsto e posição P/N da alavanca.'
+periodicity: ['20ms']
+senders: ['BVA']
+receivers: ['CMM']
+
+signals:
+  CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Gearbox (BV) dynamic frame checksum'
+      fr: 'Somme de contrôle dynamique de la trame boîte de vitesses (BV)'
+      es: 'Suma de comprobación dinámica de la trama de la caja de cambios (BV)'
+      de: 'Dynamische Prüfsumme des Getriebe-(BV-)Frames'
+      it: 'Checksum dinamico del frame del cambio (BV)'
+      pl: 'Dynamiczna suma kontrolna ramki skrzyni biegów (BV)'
+      ru: 'Динамическая контрольная сумма кадра коробки передач (BV)'
+      zh: '变速箱(BV)动态帧校验和'
+      hu: 'A sebességváltó (BV) dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação dinâmica da trama da caixa de velocidades (BV)'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Free-running counter (0 to 15), incremented on each new calculation'
+      fr: 'Compteur cyclique (0 à 15), incrémenté à chaque nouveau calcul'
+      es: 'Contador cíclico (0 a 15), incrementado en cada nuevo cálculo'
+      de: 'Umlaufender Zähler (0 bis 15), bei jeder neuen Berechnung erhöht'
+      it: 'Contatore ciclico (0-15), incrementato a ogni nuovo calcolo'
+      pl: 'Licznik cykliczny (0-15), zwiększany przy każdym nowym obliczeniu'
+      ru: 'Циклический счётчик (0-15), увеличивается при каждом новом расчёте'
+      zh: '循环计数器(0至15),每次新计算时递增'
+      hu: 'Körforgó számláló (0–15), minden új számításkor nő'
+      pt: 'Contador cíclico (0 a 15), incrementado a cada novo cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  GEARBOX_STOP_AUTHORIZATION:
+    bits: '2.7'
+    comment:
+      en: 'Stop&start engine stop authorization from the gearbox'
+      fr: 'Autorisation d''arrêt moteur Stop&Start donnée par la boîte de vitesses'
+      es: 'Autorización de parada del motor Stop&Start dada por la caja de cambios'
+      de: 'Stop&Start-Motorstopp-Freigabe durch das Getriebe'
+      it: 'Autorizzazione allo spegnimento motore Stop&Start data dal cambio'
+      pl: 'Autoryzacja zatrzymania silnika Stop&Start ze skrzyni biegów'
+      ru: 'Разрешение остановки двигателя Stop&Start от коробки передач'
+      zh: '变速箱给出的启停(Stop&Start)发动机停机授权'
+      hu: 'A Stop&Start motorleállítás engedélye a sebességváltótól'
+      pt: 'Autorização de paragem do motor Stop&Start dada pela caixa de velocidades'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Stop not allowed'
+        fr: 'Stop non autorisé'
+        es: 'Stop no permitido'
+        de: 'Stopp nicht erlaubt'
+        it: 'Stop non consentito'
+        pl: 'Zatrzymanie niedozwolone'
+        ru: 'Остановка не разрешена'
+        zh: '不允许停机'
+        hu: 'A stop nem engedélyezett'
+        pt: 'Stop não permitido'
+      0x01:
+        en: 'Stop authorization'
+        fr: 'Autorisation d''arrêt'
+        es: 'Autorización de parada'
+        de: 'Abschaltfreigabe'
+        it: 'Autorizzazione di arresto'
+        pl: 'Zezwolenie na zatrzymanie'
+        ru: 'Разрешение остановки'
+        zh: '停止授权'
+        hu: 'Leállás engedélyezése'
+        pt: 'Autorização de paragem'
+
+  GEARBOX_RESTART_REQUEST:
+    bits: '2.6'
+    comment:
+      en: 'Engine restart request from the gearbox (Stop & Start)'
+      fr: 'Demande de redémarrage moteur par la boîte de vitesses (Stop & Start)'
+      es: 'Solicitud de reinicio del motor por la caja de cambios (Stop & Start)'
+      de: 'Motorneustartanforderung durch das Getriebe (Stop & Start)'
+      it: 'Richiesta di riavvio motore dal cambio (Stop & Start)'
+      pl: 'Żądanie ponownego uruchomienia silnika przez skrzynię biegów (Stop & Start)'
+      ru: 'Запрос перезапуска двигателя от коробки передач (Стоп-Старт)'
+      zh: '变速箱请求发动机重启(启停)'
+      hu: 'A váltó motor-újraindítási kérése (Stop & Start)'
+      pt: 'Pedido de reinício do motor pela caixa de velocidades (Stop & Start)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No need for restart'
+        fr: 'Pas de besoin de redémarrage'
+        es: 'Sin necesidad de reinicio'
+        de: 'Kein Neustart erforderlich'
+        it: 'Nessuna necessità di riavvio'
+        pl: 'Brak potrzeby ponownego uruchomienia'
+        ru: 'Нет необходимости перезапуска'
+        zh: '无需重新启动'
+        hu: 'Nincs szükség újraindításra'
+        pt: 'Sem necessidade de reinício'
+      0x01:
+        en: 'Restart needed'
+        fr: 'Demande de redémarrage'
+        es: 'Necesidad de reinicio'
+        de: 'Neustart erforderlich'
+        it: 'Necessità di riavvio'
+        pl: 'Wymagany ponowny rozruch'
+        ru: 'Требуется перезапуск'
+        zh: '需要重启'
+        hu: 'Újraindítás szükséges'
+        pt: 'Necessidade de reinício'
+
+  GEARBOX_STT_FAULT:
+    bits: '2.5'
+    comment:
+      en: 'Gearbox fault affecting the Stop & Start function'
+      fr: 'Défaut de la boîte de vitesses identifié par la fonction Stop & Start'
+      es: 'Fallo de la caja de cambios identificado por la función Stop & Start'
+      de: 'Vom Stop-&-Start-System erkannter Getriebefehler'
+      it: 'Guasto del cambio rilevato dalla funzione Stop & Start'
+      pl: 'Usterka skrzyni biegów wykryta przez funkcję Stop & Start'
+      ru: 'Неисправность коробки передач, выявленная функцией Stop & Start'
+      zh: '启停(Stop&Start)功能识别的变速箱故障'
+      hu: 'A Stop & Start funkció által azonosított váltóhiba'
+      pt: 'Falha da caixa de velocidades identificada pela função Stop & Start'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Nominal'
+        fr: 'Nominal'
+        es: 'Nominal'
+        de: 'Nominal'
+        it: 'Nominale'
+        pl: 'Nominalny'
+        ru: 'Номинальный'
+        zh: '标称'
+        hu: 'Névleges'
+        pt: 'Nominal'
+      0x01:
+        en: 'Gearbox fault identified by Stop & Start'
+        fr: 'Défaut de boîte de vitesses identifié par le Stop & Start'
+        es: 'Fallo de la caja de cambios identificado por Stop & Start'
+        de: 'Vom Start-Stopp-System erkannter Getriebefehler'
+        it: 'Guasto del cambio identificato dallo Stop & Start'
+        pl: 'Usterka skrzyni biegów zidentyfikowana przez Stop & Start'
+        ru: 'Неисправность коробки передач, выявленная функцией Стоп-старт'
+        zh: '由启停系统识别的变速箱故障'
+        hu: 'Váltóhiba a Stop & Start rendszer által azonosítva'
+        pt: 'Falha da caixa de velocidades identificada pelo Stop & Start'
+
+  GEARBOX_RESTART_AUTHORIZATION:
+    bits: '2.4'
+    comment:
+      en: 'Gearbox restart authorization'
+      fr: 'Autorisation de redémarrage donnée par la boîte de vitesses'
+      es: 'Autorización de reinicio dada por la caja de cambios'
+      de: 'Neustart-Freigabe durch das Getriebe'
+      it: 'Autorizzazione al riavvio data dal cambio'
+      pl: 'Autoryzacja ponownego uruchomienia z skrzyni biegów'
+      ru: 'Разрешение перезапуска от коробки передач'
+      zh: '变速箱重新起动授权'
+      hu: 'A sebességváltó újraindítási engedélye'
+      pt: 'Autorização de reinício dada pela caixa de velocidades'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Restart forbidden'
+        fr: 'Redémarrage interdit'
+        es: 'Reinicio prohibido'
+        de: 'Neustart verboten'
+        it: 'Riavvio vietato'
+        pl: 'Ponowne uruchomienie zabronione'
+        ru: 'Перезапуск запрещён'
+        zh: '禁止重启'
+        hu: 'Újraindítás tiltva'
+        pt: 'Reinício proibido'
+      0x01:
+        en: 'Restarting authorized'
+        fr: 'Redemarrage autorisé'
+        es: 'Reinicio autorizado'
+        de: 'Neustart zugelassen'
+        it: 'Riavvio autorizzato'
+        pl: 'Ponowne uruchomienie autoryzowane'
+        ru: 'Перезапуск разрешён'
+        zh: '重启已授权'
+        hu: 'Újraindítás engedélyezve'
+        pt: 'Reinício autorizado'
+
+  GEARBOX_EXTENDED_STOP_AUTHORIZATION:
+    bits: '2.2-2.1'
+    comment:
+      en: 'Gearbox authorization of engine stop, extended (indeterminate/medium/long prohibition or authorization)'
+      fr: 'Autorisation d''arrêt moteur par la boîte de vitesses, étendue (interdiction indéterminée/moyenne/longue ou autorisation)'
+      es: 'Autorización de parada del motor por la caja de cambios, extendida (prohibición indeterminada/media/larga o autorización)'
+      de: 'Erweiterte Motorstopp-Freigabe durch das Getriebe (unbestimmtes/mittleres/langes Verbot oder Freigabe)'
+      it: 'Autorizzazione allo spegnimento motore da parte del cambio, estesa (divieto indeterminato/medio/lungo o autorizzazione)'
+      pl: 'Rozszerzona autoryzacja zatrzymania silnika przez skrzynię biegów (zakaz nieokreślony/średni/długi lub zezwolenie)'
+      ru: 'Расширенное разрешение остановки двигателя от коробки передач (запрет неопределённый/средний/длительный или разрешение)'
+      zh: '变速箱给出的扩展发动机停机授权(不确定/中等/长时间禁止或授权)'
+      hu: 'A sebességváltó kiterjesztett motorleállítási engedélye (meghatározatlan/közepes/hosszú tiltás vagy engedély)'
+      pt: 'Autorização de paragem do motor pela caixa de velocidades, estendida (proibição indeterminada/média/longa ou autorização)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Prohibition, unspecified duration'
+        fr: 'Interdiction durée indéterminée'
+        es: 'Prohibición de duración indefinida'
+        de: 'Verbot, unbestimmte Dauer'
+        it: 'Divieto di durata indeterminata'
+        pl: 'Zakaz na czas nieokreślony'
+        ru: 'Запрет неопределённой длительности'
+        zh: '禁止,持续时间不定'
+        hu: 'Tiltás, meghatározatlan időtartam'
+        pt: 'Proibição, duração não especificada'
+      0x01:
+        en: 'Authorization'
+        fr: 'Autorisation'
+        es: 'Autorización'
+        de: 'Freigabe'
+        it: 'Autorizzazione'
+        pl: 'Zezwolenie'
+        ru: 'Разрешение'
+        zh: '授权'
+        hu: 'Engedély'
+        pt: 'Autorização'
+      0x02:
+        en: 'Medium-duration prohibition'
+        fr: 'Interdiction de durée moyenne'
+        es: 'Prohibición de duración media'
+        de: 'Verbot mittlerer Dauer'
+        it: 'Divieto di durata media'
+        pl: 'Zakaz o średnim czasie trwania'
+        ru: 'Запрет средней продолжительности'
+        zh: '中等时长禁止'
+        hu: 'Közepes időtartamú tiltás'
+        pt: 'Proibição de duração média'
+      0x03:
+        en: 'Long-duration prohibition'
+        fr: 'Interdiction de longue durée'
+        es: 'Prohibición de larga duración'
+        de: 'Verbot über längere Dauer'
+        it: 'Divieto di lunga durata'
+        pl: 'Zakaz długoterminowy'
+        ru: 'Длительный запрет'
+        zh: '长期禁止'
+        hu: 'Hosszú idejű tiltás'
+        pt: 'Proibição de longa duração'
+
+  PREDICTED_RESISTIVE_TORQUE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Predicted resistive torque'
+      fr: 'Couple résistant prédit'
+      es: 'Par resistente previsto'
+      de: 'Vorhergesagtes Widerstandsmoment'
+      it: 'Coppia resistente prevista'
+      pl: 'Przewidywany moment oporowy'
+      ru: 'Прогнозируемый момент сопротивления'
+      zh: '预测的阻力矩'
+      hu: 'Előre jelzett ellenállási nyomaték'
+      pt: 'Binário resistente previsto'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 200
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0xC8
+
+  LEVER_POSITION_PN:
+    bits: '4.7-4.6'
+    comment:
+      en: 'Gear lever P/N (Park/Neutral) position'
+      fr: 'Position du levier P/N (Park/Neutre)'
+      es: 'Posición de la palanca P/N (Park/Neutro)'
+      de: 'Wählhebelposition P/N (Park/Neutral)'
+      it: 'Posizione della leva P/N (Park/Folle)'
+      pl: 'Pozycja dźwigni P/N (Park/Neutralny)'
+      ru: 'Положение рычага P/N (Park/Нейтраль)'
+      zh: '换挡杆P/N(驻车/空挡)位置'
+      hu: 'A váltókar P/N (Park/Neutral) helyzete'
+      pt: 'Posição da alavanca P/N (Park/Neutro)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'N (Neutral) or P (Park) position'
+        fr: 'Position N (neutre) ou P (parking)'
+        es: 'Posición N (neutro) o P (aparcamiento)'
+        de: 'Position N (Neutral) oder P (Parken)'
+        it: 'Posizione N (folle) o P (parcheggio)'
+        pl: 'Pozycja N (neutralna) lub P (parkowanie)'
+        ru: 'Положение N (нейтраль) или P (парковка)'
+        zh: 'N(空挡)或P(驻车)位置'
+        hu: 'N (üres) vagy P (Park) pozíció'
+        pt: 'Posição N (ponto morto) ou P (estacionamento)'
+      0x02:
+        en: 'Outside N (neutral) or P (park) position'
+        fr: 'Hors position N (point mort) ou P (parking)'
+        es: 'Fuera de la posición N (punto muerto) o P (estacionamiento)'
+        de: 'Außerhalb der Position N (Neutral) oder P (Parken)'
+        it: 'Fuori dalla posizione N (folle) o P (parcheggio)'
+        pl: 'Poza pozycją N (luz) lub P (parkowanie)'
+        ru: 'Вне положения N (нейтраль) или P (парковка)'
+        zh: '不在N(空挡)或P(驻车)位置'
+        hu: 'Az N (üres) vagy P (parkolás) állásán kívül'
+        pt: 'Fora da posição N (ponto morto) ou P (estacionamento)'
+      0x03:
+        en: 'Gear lever position sensor out of service or unavailable'
+        fr: 'Capteur de position du levier hors service ou indisponible'
+        es: 'Sensor de posición de la palanca fuera de servicio o no disponible'
+        de: 'Positionssensor des Schalthebels außer Betrieb oder nicht verfügbar'
+        it: 'Sensore di posizione della leva fuori servizio o non disponibile'
+        pl: 'Czujnik położenia dźwigni niesprawny lub niedostępny'
+        ru: 'Датчик положения рычага неисправен или недоступен'
+        zh: '换挡杆位置传感器失效或不可用'
+        hu: 'Váltókar helyzetérzékelője üzemen kívül vagy nem elérhető'
+        pt: 'Sensor de posição da alavanca fora de serviço ou indisponível'

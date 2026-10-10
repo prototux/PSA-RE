@@ -1,0 +1,785 @@
+id: 0x527
+name: 'BTE_SUPERVISION'
+type: 'can'
+length: 7
+comment:
+  en: 'Hybrid powertrain status from the hybrid control unit (HCU1): operating mode, performance mode, mileage and starter status.'
+  fr: 'État de la chaîne de traction hybride issu du calculateur hybride (HCU1) : mode de fonctionnement, mode performance, kilométrage et état du démarreur.'
+  es: 'Estado de la cadena de tracción híbrida de la unidad de control híbrida (HCU1): modo de funcionamiento, modo rendimiento, kilometraje y estado del motor de arranque.'
+  de: 'Status des Hybridantriebs vom Hybridsteuergerät (HCU1): Betriebsmodus, Performance-Modus, Kilometerstand und Anlasserstatus.'
+  it: 'Stato della trasmissione ibrida dalla centralina ibrida (HCU1): modalità di funzionamento, modalità performance, chilometraggio e stato del motorino di avviamento.'
+  pl: 'Stan hybrydowego układu napędowego ze sterownika hybrydowego (HCU1): tryb pracy, tryb sportowy, przebieg i stan rozrusznika.'
+  ru: 'Статус гибридной трансмиссии от гибридного блока управления (HCU1): режим работы, спортивный режим, пробег и статус стартера.'
+  zh: '混合动力总成状态,来自混合动力控制单元(HCU1):运行模式、性能模式、里程和起动机状态。'
+  hu: 'A hibrid hajtáslánc állapota a hibrid vezérlőegységtől (HCU1): üzemmód, teljesítménymód, kilométeróra-állás és indítómotor állapota.'
+  pt: 'Estado do grupo motopropulsor híbrido da unidade de controlo híbrida (HCU1): modo de funcionamento, modo de desempenho, quilometragem e estado do motor de arranque.'
+observations:
+  en: 'On state change of: HYBRID_OPERATING_MODE, STARTUP_TYPE'
+  fr: 'Sur changement d''état de : HYBRID_OPERATING_MODE, STARTUP_TYPE'
+  es: 'Al cambiar el estado de: HYBRID_OPERATING_MODE, STARTUP_TYPE'
+  de: 'Bei Statusänderung von: HYBRID_OPERATING_MODE, STARTUP_TYPE'
+  it: 'Al cambiamento di stato di: HYBRID_OPERATING_MODE, STARTUP_TYPE'
+  pl: 'Wysyłane przy zmianie stanu: HYBRID_OPERATING_MODE, STARTUP_TYPE'
+  ru: 'При изменении состояния: HYBRID_OPERATING_MODE, STARTUP_TYPE'
+  zh: '当MODE_FONCTION_HYB, TYPE_DE_DEMARRAGE_3状态变化时'
+  hu: 'A(z) HYBRID_OPERATING_MODE, STARTUP_TYPE állapotváltozásakor'
+  pt: 'Na mudança de estado de: HYBRID_OPERATING_MODE, STARTUP_TYPE'
+periodicity: ['100ms', 'trigger']
+senders: ['HCU1']
+receivers: ['HCU2', 'TBMU', 'CMM']
+
+signals:
+  ODOMETER:
+    bits: '1.7-3.0'
+    comment:
+      en: 'Absolute distance travelled by the vehicle (matching the value shown to the driver) (km)'
+      fr: 'Kilométrage absolu parcouru par le véhicule (cohérent avec la valeur affichée au conducteur) (km)'
+      es: 'Kilometraje absoluto recorrido por el vehículo (coherente con el valor mostrado al conductor) (km)'
+      de: 'Absolute vom Fahrzeug zurückgelegte Strecke (übereinstimmend mit der dem Fahrer angezeigten Angabe) (km)'
+      it: 'Chilometraggio assoluto percorso dal veicolo (coerente con il valore mostrato al conducente) (km)'
+      pl: 'Bezwzględny przebieg pojazdu (zgodny z wartością wyświetlaną kierowcy) (km)'
+      ru: 'Абсолютный пробег автомобиля (соответствующий значению, показываемому водителю) (км)'
+      zh: '车辆行驶的绝对里程(与显示给驾驶员的数值一致)(km)'
+      hu: 'A jármű által megtett abszolút távolság (megegyezik a vezetőnek kijelzett értékkel) (km)'
+      pt: 'Distância absoluta percorrida pelo veículo (correspondente ao valor apresentado ao condutor) (km)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 16777214
+    units: 'km'
+    invalid: 0xFFFFFF
+    default: 0x00
+
+  HYBRID_CAN_LIFE_STATE:
+    bits: '4.7-4.6'
+    comment:
+      en: 'CAN network life state (supply situation)'
+      fr: 'État de vie du réseau CAN (situation d''alimentation)'
+      es: 'Estado de vida de la red CAN (situación de alimentación)'
+      de: 'Lebenszustand des CAN-Netzwerks (Versorgungssituation)'
+      it: 'Stato di vita della rete CAN (situazione di alimentazione)'
+      pl: 'Stan życia sieci CAN (sytuacja zasilania)'
+      ru: 'Состояние жизненного цикла сети CAN (ситуация питания)'
+      zh: 'CAN网络生命周期状态(供电情况)'
+      hu: 'A CAN hálózat élet-állapota (tápellátási helyzet)'
+      pt: 'Estado de vida da rede CAN (situação de alimentação)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Absent or invalid'
+        fr: 'Absent ou invalide'
+        es: 'Ausente o inválido'
+        de: 'Nicht vorhanden oder ungültig'
+        it: 'Assente o non valido'
+        pl: 'Nieobecne lub nieprawidłowe'
+        ru: 'Отсутствует или недействительно'
+        zh: '缺失或无效'
+        hu: 'Hiányzik vagy érvénytelen'
+        pt: 'Ausente ou inválido'
+      0x01:
+        en: 'Main wake-up'
+        fr: 'Réveil principal'
+        es: 'Activación principal'
+        de: 'Hauptaufwachen'
+        it: 'Risveglio principale'
+        pl: 'Główne wybudzenie'
+        ru: 'Основное пробуждение'
+        zh: '主唤醒'
+        hu: 'Fő ébresztés'
+        pt: 'Ativação principal'
+      0x02:
+        en: 'Power latch'
+        fr: 'Maintien d''alimentation'
+        es: 'Retención de alimentación'
+        de: 'Selbsthaltung der Versorgung'
+        it: 'Autoalimentazione (power latch)'
+        pl: 'Podtrzymanie zasilania'
+        ru: 'Самоблокировка питания'
+        zh: '电源自锁'
+        hu: 'Tápellátás önfenntartás'
+        pt: 'Retenção de potência'
+      0x03:
+        en: 'Standby mode'
+        fr: 'Mise en veille'
+        es: 'Modo en espera'
+        de: 'Standby-Modus'
+        it: 'Modalità standby'
+        pl: 'Tryb czuwania'
+        ru: 'Режим ожидания'
+        zh: '待机模式'
+        hu: 'Készenléti üzemmód'
+        pt: 'Colocação em repouso'
+
+  DIAG_STATUS:
+    bits: '4.5'
+    comment:
+      en: 'Multiplexed communication diagnostic status'
+      fr: 'État du diagnostic de communication multiplexée'
+      es: 'Estado del diagnóstico de comunicación multiplexada'
+      de: 'Status der Diagnose der multiplexierten Kommunikation'
+      it: 'Stato della diagnosi di comunicazione multiplata'
+      pl: 'Stan diagnostyki komunikacji multipleksowanej'
+      ru: 'Статус диагностики мультиплексной связи'
+      zh: '多路复用通信诊断状态'
+      hu: 'A multiplex kommunikáció diagnosztikai állapota'
+      pt: 'Estado do diagnóstico de comunicação multiplexada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No communication diagnostic'
+        fr: 'Pas de diagnostic de communication'
+        es: 'Sin diagnóstico de comunicación'
+        de: 'Keine Kommunikationsdiagnose'
+        it: 'Nessuna diagnostica di comunicazione'
+        pl: 'Brak diagnostyki komunikacji'
+        ru: 'Нет диагностики связи'
+        zh: '无通信诊断'
+        hu: 'Nincs kommunikációs diagnosztika'
+        pt: 'Sem diagnóstico de comunicação'
+      0x01:
+        en: 'Communication diagnostic on'
+        fr: 'Diagnostic de communication actif'
+        es: 'Diagnóstico de comunicación activo'
+        de: 'Kommunikationsdiagnose aktiv'
+        it: 'Diagnosi di comunicazione attiva'
+        pl: 'Aktywna diagnostyka komunikacji'
+        ru: 'Активна диагностика связи'
+        zh: '通信诊断已开启'
+        hu: 'Kommunikációs diagnosztika aktív'
+        pt: 'Diagnóstico de comunicação ativo'
+
+  GEAR_ENGAGEMENT_APPROACH_TYPE:
+    bits: '4.4'
+    comment:
+      en: 'Gear engagement approach type (from below or from above)'
+      fr: 'Type d''approche pour l''engagement du rapport (par le bas ou par le haut)'
+      es: 'Tipo de aproximación para el engranaje de la marcha (por abajo o por arriba)'
+      de: 'Anfahrtstyp zum Einlegen des Gangs (von unten oder von oben)'
+      it: 'Tipo di approccio per l''innesto della marcia (dal basso o dall''alto)'
+      pl: 'Rodzaj podejścia do włączenia biegu (od dołu lub od góry)'
+      ru: 'Тип подхода к включению передачи (снизу или сверху)'
+      zh: '挂挡方式(自下方或自上方)'
+      hu: 'A fokozat bekapcsolásának megközelítési típusa (alulról vagy felülről)'
+      pt: 'Tipo de aproximação para o engate da mudança (por baixo ou por cima)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Low docking'
+        fr: 'Accostage par le bas'
+        es: 'Acoplamiento por abajo'
+        de: 'Andocken von unten'
+        it: 'Aggancio dal basso'
+        pl: 'Dokowanie od dołu'
+        ru: 'Стыковка снизу'
+        zh: '下部对接'
+        hu: 'Alsó dokkolás'
+        pt: 'Acoplamento por baixo'
+      0x01:
+        en: 'Docking from above'
+        fr: 'Accostage par le haut'
+        es: 'Acoplamiento por arriba'
+        de: 'Andocken von oben'
+        it: 'Aggancio dall''alto'
+        pl: 'Dokowanie od góry'
+        ru: 'Стыковка сверху'
+        zh: '从上方对接'
+        hu: 'Felülről történő dokkolás'
+        pt: 'Acoplamento por cima'
+
+  PERFORMANCE_MODE_STATUS:
+    bits: '4.3'
+    comment:
+      en: 'Performance mode status'
+      fr: 'Etat du mode performance'
+      es: 'Estado del modo de rendimiento'
+      de: 'Status des Performance-Modus'
+      it: 'Stato della modalità prestazioni'
+      pl: 'Stan trybu wydajności'
+      ru: 'Состояние спортивного режима'
+      zh: '性能模式状态'
+      hu: 'A teljesítménymód állapota'
+      pt: 'Estado do modo de desempenho'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Performance mode disabled'
+        fr: 'Mode performance désactivé'
+        es: 'Modo de rendimiento desactivado'
+        de: 'Performance-Modus deaktiviert'
+        it: 'Modalità prestazioni disattivata'
+        pl: 'Tryb osiągów wyłączony'
+        ru: 'Спортивный режим отключён'
+        zh: '性能模式已禁用'
+        hu: 'Teljesítménymód letiltva'
+        pt: 'Modo de desempenho desativado'
+      0x01:
+        en: 'Performance mode activated'
+        fr: 'Mode performance activé'
+        es: 'Modo rendimiento activado'
+        de: 'Leistungsmodus aktiviert'
+        it: 'Modalità prestazioni attivata'
+        pl: 'Tryb wydajności aktywowany'
+        ru: 'Режим производительности активирован'
+        zh: '性能模式已激活'
+        hu: 'Teljesítmény üzemmód aktiválva'
+        pt: 'Modo de desempenho ativado'
+
+  HYBRID_OPERATING_MODE:
+    bits: '4.2-4.0'
+    comment:
+      en: 'Hybrid powertrain operating mode (4x4, Sport, Hybrid, ZEV)'
+      fr: 'Mode d''utilisation du GMP hybride (4x4, Sport, Hybride, ZEV)'
+      es: 'Modo de uso de la cadena cinemática híbrida (4x4, Sport, Híbrido, ZEV)'
+      de: 'Nutzungsmodus des Hybridantriebsstrangs (4x4, Sport, Hybrid, ZEV)'
+      it: 'Modalità di utilizzo del powertrain ibrido (4x4, Sport, Ibrido, ZEV)'
+      pl: 'Tryb użytkowania hybrydowego układu napędowego (4x4, Sport, Hybryda, ZEV)'
+      ru: 'Режим использования гибридного силового агрегата (4x4, Спорт, Гибрид, ZEV)'
+      zh: '混合动力总成使用模式(4x4、运动、混合动力、纯电动)'
+      hu: 'A hibrid hajtáslánc használati módja (4x4, Sport, Hibrid, ZEV)'
+      pt: 'Modo de utilização do GMP híbrido (4x4, Sport, Hybrid, ZEV)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: '4x4'
+        fr: '4x4'
+        es: '4x4'
+        de: '4x4'
+        it: '4x4'
+        pl: '4x4'
+        ru: '4x4'
+        zh: '4x4'
+        hu: '4x4'
+        pt: '4x4'
+      0x01:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x02:
+        en: 'HY'
+        fr: 'HY'
+        es: 'HY'
+        de: 'HY'
+        it: 'HY'
+        pl: 'HY'
+        ru: 'HY'
+        zh: 'HY'
+        hu: 'HY'
+        pt: 'HY'
+      0x03:
+        en: 'ZEV'
+        fr: 'ZEV'
+        es: 'ZEV'
+        de: 'ZEV'
+        it: 'ZEV'
+        pl: 'ZEV'
+        ru: 'ZEV'
+        zh: 'ZEV'
+        hu: 'ZEV'
+        pt: 'ZEV'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  BATTERY_SOC_EXTENDED:
+    bits: '5.7-5.6'
+    comment:
+      en: 'Extended state of charge (SOC) of the battery'
+      fr: 'Etat de charge (SOC) étendu de la batterie'
+      es: 'Estado de carga (SOC) extendido de la batería'
+      de: 'Erweiterter Ladezustand (SOC) der Batterie'
+      it: 'Stato di carica (SOC) esteso della batteria'
+      pl: 'Rozszerzony stan naładowania (SOC) akumulatora'
+      ru: 'Расширенное значение заряда (SOC) батареи'
+      zh: '电池扩展荷电状态(SOC)'
+      hu: 'Az akkumulátor kiterjesztett töltöttségi szintje (SOC)'
+      pt: 'Estado de carga (SOC) alargado da bateria'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Normal value (WH)'
+        fr: 'Valeur normale (WH)'
+        es: 'Valor normal (WH)'
+        de: 'Normalwert (WH)'
+        it: 'Valore normale (WH)'
+        pl: 'Wartość normalna (WH)'
+        ru: 'Нормальное значение (WH)'
+        zh: '正常值（WH）'
+        hu: 'Normál érték (WH)'
+        pt: 'Valor normal (WH)'
+      0x02:
+        en: 'Extended value (WH)'
+        fr: 'Valeur élargie (WH)'
+        es: 'Valor ampliado (WH)'
+        de: 'Erweiterter Wert (WH)'
+        it: 'Valore esteso (WH)'
+        pl: 'Wartość rozszerzona (WH)'
+        ru: 'Расширенное значение (WH)'
+        zh: '扩展值(WH)'
+        hu: 'Kiterjesztett érték (WH)'
+        pt: 'Valor ampliado (Wh)'
+      0x03:
+        unused: true
+
+  STARTUP_TYPE:
+    bits: '5.5-5.4'
+    comment:
+      en: 'Startup type'
+      fr: 'Type de démarrage'
+      es: 'Tipo de arranque'
+      de: 'Starttyp'
+      it: 'Tipo di avviamento'
+      pl: 'Typ uruchomienia'
+      ru: 'Тип запуска'
+      zh: '启动类型'
+      hu: 'Indítás típusa'
+      pt: 'Tipo de arranque'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Dynamic'
+        fr: 'Dynamique'
+        es: 'Dinámico'
+        de: 'Dynamisch'
+        it: 'Dinamico'
+        pl: 'Dynamiczny'
+        ru: 'Динамический'
+        zh: '动态'
+        hu: 'Dinamikus'
+        pt: 'Dinâmico'
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+
+  STARTER_DEVICE_TYPE:
+    bits: '5.3-5.2'
+    comment:
+      en: 'Type of starting device used'
+      fr: 'Type de dispositif de démarrage utilisé'
+      es: 'Tipo de dispositivo de arranque utilizado'
+      de: 'Verwendete Startvorrichtung'
+      it: 'Tipo di dispositivo di avviamento utilizzato'
+      pl: 'Rodzaj zastosowanego urządzenia rozruchowego'
+      ru: 'Тип используемого пускового устройства'
+      zh: '所使用的起动装置类型'
+      hu: 'A használt indítóeszköz típusa'
+      pt: 'Tipo de dispositivo de arranque utilizado'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x01:
+        en: 'Start by front electric motor'
+        fr: 'Démarrage par le moteur électrique avant'
+        es: 'Arranque por el motor eléctrico delantero'
+        de: 'Start über den vorderen Elektromotor'
+        it: 'Avviamento tramite il motore elettrico anteriore'
+        pl: 'Rozruch za pomocą przedniego silnika elektrycznego'
+        ru: 'Запуск передним электродвигателем'
+        zh: '由前电动机启动'
+        hu: 'Indítás az elülső elektromos motorral'
+        pt: 'Arranque pelo motor elétrico dianteiro'
+      0x02:
+        en: 'Starting via starter motor'
+        fr: 'Démarrage au démarreur'
+        es: 'Arranque con motor de arranque'
+        de: 'Start über Anlasser'
+        it: 'Avviamento tramite motorino di avviamento'
+        pl: 'Rozruch rozrusznikiem'
+        ru: 'Запуск стартером'
+        zh: '通过起动机启动'
+        hu: 'Indítás indítómotorral'
+        pt: 'Arranque via motor de arranque'
+      0x03:
+        unused: true
+
+  UH_SUPPORT_ACTIVATION:
+    bits: '5.1'
+    comment:
+      en: 'Activation of the UH (hybrid unit) support function'
+      fr: 'Activation du soutien de l''unité hybride (UH)'
+      es: 'Activación del soporte de la unidad híbrida (UH)'
+      de: 'Aktivierung der Unterstützung der Hybrideinheit (UH)'
+      it: 'Attivazione del supporto dell''unità ibrida (UH)'
+      pl: 'Aktywacja wsparcia jednostki hybrydowej (UH)'
+      ru: 'Активация поддержки гибридного блока (UH)'
+      zh: '混合动力单元(UH)支援激活'
+      hu: 'A hibrid egység (UH) támogatásának aktiválása'
+      pt: 'Ativação da função de suporte da unidade híbrida (UH)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No UH support activation'
+        fr: 'Pas d''activation du soutien UH'
+        es: 'Sin activación del soporte UH'
+        de: 'Keine Aktivierung der UH-Unterstützung'
+        it: 'Nessuna attivazione del supporto UH'
+        pl: 'Brak aktywacji wsparcia UH'
+        ru: 'Нет активации поддержки UH'
+        zh: 'UH支持未激活'
+        hu: 'Nincs UH-támogatás aktiválva'
+        pt: 'Sem ativação do apoio UH'
+      0x01:
+        en: 'UH support activation'
+        fr: 'Activation du soutien UH'
+        es: 'Activación del soporte UH'
+        de: 'Aktivierung der UH-Unterstützung'
+        it: 'Attivazione del supporto UH'
+        pl: 'Aktywacja wsparcia UH'
+        ru: 'Активация поддержки UH'
+        zh: 'UH支持激活'
+        hu: 'UH-támogatás aktiválása'
+        pt: 'Ativação do suporte UH'
+
+  REVERSE_GEAR_DETECTION_VALIDITY:
+    bits: '5.0'
+    comment:
+      en: 'Validity of the CAN reverse gear detection'
+      fr: 'Validité de la détection de la marche arrière sur le bus CAN'
+      es: 'Validez de la detección de marcha atrás en el bus CAN'
+      de: 'Gültigkeit der Rückwärtsgang-Erkennung auf dem CAN-Bus'
+      it: 'Validità del rilevamento della retromarcia sul bus CAN'
+      pl: 'Ważność wykrycia biegu wstecznego na magistrali CAN'
+      ru: 'Достоверность обнаружения задней передачи по шине CAN'
+      zh: 'CAN总线倒挡检测有效性'
+      hu: 'A hátrameneti fokozat CAN-buszon történő érzékelésének érvényessége'
+      pt: 'Validade da deteção de marcha-atrás no barramento CAN'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+
+  GEARBOX_ENGAGED_RATIO:
+    bits: '6.7-6.4'
+    comment:
+      en: 'Gear ratio mechanically engaged (validated value)'
+      fr: 'Rapport de boîte de vitesses effectivement engagé mécaniquement'
+      es: 'Relación de la caja de cambios efectivamente engranada mecánicamente'
+      de: 'Mechanisch tatsächlich eingelegte Gangstufe (gesicherter Wert)'
+      it: 'Rapporto del cambio effettivamente innestato meccanicamente'
+      pl: 'Przełożenie skrzyni biegów rzeczywiście włączone mechanicznie'
+      ru: 'Фактически механически включённая передача (проверенное значение)'
+      zh: '机械实际啮合的档位(已验证值)'
+      hu: 'A ténylegesen mechanikusan bekapcsolt fokozat (validált érték)'
+      pt: 'Relação da caixa de velocidades mecanicamente engrenada (valor validado)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Neutral or declutched'
+        fr: 'Neutre ou débrayé'
+        es: 'Punto muerto o desembragado'
+        de: 'Neutral oder ausgekuppelt'
+        it: 'Folle o disinnestato'
+        pl: 'Luz lub rozłączone sprzęgło'
+        ru: 'Нейтраль или расцеплено'
+        zh: '空挡或已分离'
+        hu: 'Üres vagy kikuplungozva'
+        pt: 'Ponto morto ou desembraiado'
+      0x01:
+        en: 'Gear: 1'
+        fr: 'Rapport : 1'
+        es: 'Marcha: 1'
+        de: 'Gang: 1'
+        it: 'Rapporto: 1'
+        pl: 'Bieg: 1'
+        ru: 'Передача: 1'
+        zh: '挡位:1'
+        hu: 'Fokozat: 1'
+        pt: 'Mudança: 1'
+      0x02:
+        en: 'Gear: 2'
+        fr: 'Rapport : 2'
+        es: 'Marcha: 2'
+        de: 'Gang: 2'
+        it: 'Marcia: 2'
+        pl: 'Bieg: 2'
+        ru: 'Передача: 2'
+        zh: '挡位:2'
+        hu: 'Fokozat: 2'
+        pt: 'Mudança: 2'
+      0x03:
+        en: 'Gear: 3'
+        fr: 'Rapport : 3'
+        es: 'Marcha: 3'
+        de: 'Gang: 3'
+        it: 'Rapporto: 3'
+        pl: 'Bieg: 3'
+        ru: 'Передача: 3'
+        zh: '挡位:3'
+        hu: 'Fokozat: 3'
+        pt: 'Mudança: 3'
+      0x04:
+        en: 'Transmission range: 4'
+        fr: 'Rapport : 4'
+        es: 'Gama de transmisión: 4'
+        de: 'Getriebebereich: 4'
+        it: 'Gamma di trasmissione: 4'
+        pl: 'Zakres przekładni: 4'
+        ru: 'Диапазон трансмиссии: 4'
+        zh: '变速器挡位范围:4'
+        hu: 'Sebességtartomány: 4'
+        pt: 'Gama de transmissão: 4'
+      0x05:
+        en: 'Gear: 5'
+        fr: 'Rapport : 5'
+        es: 'Marcha: 5'
+        de: 'Gang: 5'
+        it: 'Marcia: 5'
+        pl: 'Bieg: 5'
+        ru: 'Передача: 5'
+        zh: '挡位：5'
+        hu: 'Fokozat: 5'
+        pt: 'Mudança: 5'
+      0x06:
+        en: 'Gear: 6'
+        fr: 'Rapport : 6'
+        es: 'Marcha: 6'
+        de: 'Gang: 6'
+        it: 'Marcia: 6'
+        pl: 'Bieg: 6'
+        ru: 'Передача: 6'
+        zh: '挡位:6'
+        hu: 'Fokozat: 6'
+        pt: 'Mudança: 6'
+      0x07:
+        en: 'Reverse gear'
+        fr: 'Marche arrière'
+        es: 'Marcha atrás'
+        de: 'Rückwärtsgang'
+        it: 'Retromarcia'
+        pl: 'Bieg wsteczny'
+        ru: 'Задний ход'
+        zh: '倒挡'
+        hu: 'Hátrameneti fokozat'
+        pt: 'Marcha-atrás'
+      0x08:
+        en: 'Gear: 7'
+        fr: 'Rapport : 7'
+        es: 'Marcha: 7'
+        de: 'Gang: 7'
+        it: 'Rapporto: 7'
+        pl: 'Bieg: 7'
+        ru: 'Передача: 7'
+        zh: '挡位:7'
+        hu: 'Fokozat: 7'
+        pt: 'Mudança: 7'
+      0x09:
+        en: 'Gear: 8'
+        fr: 'Rapport : 8'
+        es: 'Marcha: 8'
+        de: 'Gang: 8'
+        it: 'Marcia: 8'
+        pl: 'Bieg: 8'
+        ru: 'Передача: 8'
+        zh: '挡位:8'
+        hu: 'Fokozat: 8'
+        pt: 'Velocidade: 8'
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  GEAR_SHIFT_TYPE:
+    bits: '6.3-6.2'
+    comment:
+      en: 'Gear shift type'
+      fr: 'Type de changement de rapport'
+      es: 'Tipo de cambio de marcha'
+      de: 'Art des Gangwechsels'
+      it: 'Tipo di cambio marcia'
+      pl: 'Rodzaj zmiany biegu'
+      ru: 'Тип переключения передачи'
+      zh: '换挡类型'
+      hu: 'A fokozatváltás típusa'
+      pt: 'Tipo de mudança de velocidade'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Upshift'
+        fr: 'Montant (passage de rapport supérieur)'
+        es: 'Cambio ascendente'
+        de: 'Hochschalten'
+        it: 'Cambio in salita'
+        pl: 'Zmiana na wyższy bieg'
+        ru: 'Повышение передачи'
+        zh: '升挡'
+        hu: 'Felfelé váltás'
+        pt: 'Mudança para cima'
+      0x01:
+        en: 'Downshift'
+        fr: 'Rétrogradage'
+        es: 'Reducción de marcha'
+        de: 'Herunterschalten'
+        it: 'Scalata di marcia'
+        pl: 'Redukcja biegu'
+        ru: 'Понижение передачи'
+        zh: '降挡'
+        hu: 'Visszaváltás'
+        pt: 'Mudança para baixo'
+      0x02:
+        en: 'Declutching'
+        fr: 'Décollage (débrayage)'
+        es: 'Desembrague'
+        de: 'Auskuppeln'
+        it: 'Disinnesto'
+        pl: 'Rozłączanie sprzęgła'
+        ru: 'Расцепление сцепления'
+        zh: '离合分离'
+        hu: 'Kuplung kioldása'
+        pt: 'A desengatar'
+      0x03:
+        en: 'No intervention'
+        fr: 'Hors intervention'
+        es: 'Sin intervención'
+        de: 'Kein Eingriff'
+        it: 'Nessun intervento'
+        pl: 'Brak interwencji'
+        ru: 'Без вмешательства'
+        zh: '无干预'
+        hu: 'Nincs beavatkozás'
+        pt: 'Sem intervenção'
+
+  UT_APV_FAULT_HCU1:
+    bits: '6.1'
+    comment:
+      en: 'Detection of a "UT" or "APV" type fault by the HCU1'
+      fr: 'Détection d''un défaut de type « UT » ou « APV » par le HCU1'
+      es: 'Detección de un fallo de tipo "UT" o "APV" por el HCU1'
+      de: 'Erkennung eines Fehlers vom Typ "UT" oder "APV" durch das HCU1'
+      it: 'Rilevamento di un guasto di tipo "UT" o "APV" da parte dell''HCU1'
+      pl: 'Wykrycie usterki typu "UT" lub "APV" przez HCU1'
+      ru: 'Обнаружение неисправности типа "UT" или "APV" блоком HCU1'
+      zh: 'HCU1检测到"UT"或"APV"类型故障'
+      hu: '"UT" vagy "APV" típusú hiba észlelése a HCU1 által'
+      pt: 'Deteção de uma falha do tipo «UT» ou «APV» pelo HCU1'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  AC_BLOWER_SPEED:
+    bits: '6.0-7.2'
+    comment:
+      en: 'Current air conditioning blower speed'
+      fr: 'Vitesse actuelle du pulseur de climatisation'
+      es: 'Velocidad actual del ventilador de climatización'
+      de: 'Aktuelle Drehzahl des Klimaanlagengebläses'
+      it: 'Velocità attuale del ventilatore del climatizzatore'
+      pl: 'Aktualna prędkość dmuchawy klimatyzacji'
+      ru: 'Текущая скорость вентилятора кондиционера'
+      zh: '空调鼓风机当前转速'
+      hu: 'A klíma fúvómotorjának aktuális sebessége'
+      pt: 'Velocidade atual do ventilador de climatização'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  UNUSED_1:
+    bits: '7.1-7.0'
+    unused: true

@@ -1,233 +1,685 @@
 id: 0x3F6
 name: 'CONFIG_DISPLAY'
-alt_names: ['DATE_CONFIG']
-length: 7
 type: 'can'
-periodicity: ['1000ms']
-senders:
-  - 'EMF'
-  - 'BTEL'
-  - 'CMB_EMF'
-  - 'NG4'
-  - 'RNEG'
-
-receivers:
-  - 'BSI'
-  - 'CMB'
-  - 'VTH'
-  - 'PASS_BSI'
-  - 'KML'
-  - 'MDS'
-  - 'MATT'
-  - 'CDC'
-  - 'BGP'
+length: 7
+comment:
+  en: 'Display language and unit configuration: date, time format, preferred units for consumption, distance, pressure and temperature.'
+  fr: 'Configuration de langue et d''unités de l''afficheur : date, format de l''heure, unités préférées pour la consommation, la distance, la pression et la température.'
+  es: 'Configuración de idioma y unidades de la pantalla: fecha, formato de hora, unidades preferidas para consumo, distancia, presión y temperatura.'
+  de: 'Sprach- und Einheitenkonfiguration des Displays: Datum, Uhrzeitformat, bevorzugte Einheiten für Verbrauch, Strecke, Druck und Temperatur.'
+  it: 'Configurazione di lingua e unità del display: data, formato ora, unità preferite per consumo, distanza, pressione e temperatura.'
+  pl: 'Konfiguracja języka i jednostek wyświetlacza: data, format godziny, preferowane jednostki zużycia, dystansu, ciśnienia i temperatury.'
+  ru: 'Настройка языка и единиц измерения дисплея: дата, формат времени, предпочитаемые единицы расхода, расстояния, давления и температуры.'
+  zh: '显示屏语言和单位配置:日期、时间格式、油耗、距离、压力和温度的首选单位。'
+  hu: 'A kijelző nyelvi és mértékegység-beállítása: dátum, óraformátum, a fogyasztás, távolság, nyomás és hőmérséklet preferált mértékegységei.'
+  pt: 'Configuração de idioma e unidades do visor: data, formato de hora, unidades preferidas de consumo, distância, pressão e temperatura.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['1000ms', 'trigger']
+senders: ['EMF', 'BTEL', 'CMB']
+receivers: ['BSI', 'VTH', 'KML', 'MDS', 'MATT', 'CDC', 'BGP', 'BCD', 'CMB']
 
 signals:
   TIMESTAMP_SECS:
     bits: '1.7-3.4'
-    alt_names: ['SECONDE']
     comment:
-      en: 'Number of seconds elapsed since the last power on of + PERM of the EMF - Binary counter modulo 86400 (24h*3600s)'
-      fr: 'Secondes écoulées depuis le dernier allumage de + PERM de l''EMF'
+      en: 'Number of seconds elapsed since the last power-on of the display unit''s permanent supply.'
+      fr: 'Nombre de secondes écoulées depuis la dernière mise sous tension permanente de l''afficheur.'
+      es: 'Número de segundos transcurridos desde la última puesta bajo tensión permanente de la pantalla.'
+      de: 'Anzahl der Sekunden seit der letzten Daueranschaltung des Displays.'
+      it: 'Numero di secondi trascorsi dall''ultima messa sotto tensione permanente del display.'
+      pl: 'Liczba sekund, które upłynęły od ostatniego stałego zasilenia wyświetlacza.'
+      ru: 'Количество секунд, прошедших с последнего включения постоянного питания дисплея.'
+      zh: '自显示单元常电最后一次上电以来经过的秒数。'
+      hu: 'A kijelző állandó tápellátásának legutóbbi bekapcsolása óta eltelt másodpercek száma.'
+      pt: 'Número de segundos decorridos desde a última colocação sob tensão permanente do visor.'
     type: 'uint'
-    offset: 0
+    factor: 1
     min: 0
-    max: 86339
-    resolution: 1
-    invalid:  0xFFFFF
+    max: 86399
     units: 's'
+    invalid: 0xFFFFF
+    default: 0x00
 
   TIMESTAMP_DAYS:
     bits: '3.3-4.0'
-    alt_names: ['JOUR']
     comment:
-      en: 'Number of days elapsed since the last power on of + PERM of the EMF - Binary counter modulo 365'
-      fr: 'Jours écoulés depuis le dernier allumage de + PERM de l''EMF'
+      en: 'Day value counted since the last power-on of the display unit''s permanent supply.'
+      fr: 'Valeur du jour comptée depuis la dernière mise sous tension permanente de l''afficheur.'
+      es: 'Valor del día contado desde la última puesta bajo tensión permanente de la pantalla.'
+      de: 'Tageswert, gezählt seit der letzten Daueranschaltung des Displays.'
+      it: 'Valore del giorno contato dall''ultima messa sotto tensione permanente del display.'
+      pl: 'Wartość dnia liczona od ostatniego stałego zasilenia wyświetlacza.'
+      ru: 'Значение дня, отсчитываемое с последнего включения постоянного питания дисплея.'
+      zh: '自显示单元常电最后一次上电以来计数的天数值。'
+      hu: 'A nap értéke, a kijelző állandó tápellátásának legutóbbi bekapcsolása óta számolva.'
+      pt: 'Valor do dia contado desde a última ativação da alimentação permanente da unidade de visualização.'
     type: 'uint'
-    offset: 0
+    factor: 1
     min: 0
     max: 364
-    resolution: 1
-    invalid:  0xFFF
-    units: 'days'
+    units: 'day'
+    invalid: 0xFFF
+    default: 0x00
+    alternatives:
+      - note:
+          en: 'Also observed at bits 1.7-2.0'
+          fr: 'Aussi observé aux bits 1.7-2.0'
+          es: 'También observado en los bits 1.7-2.0'
+          de: 'Auch an den Bits 1.7-2.0 beobachtet'
+          it: 'Osservato anche ai bit 1.7-2.0'
+          pl: 'Obserwowany także na bitach 1.7-2.0'
+          ru: 'Также наблюдался в битах 1.7-2.0'
+          zh: '也观察到位于位1.7-2.0'
+          hu: 'Megfigyelve a(z) 1.7-2.0 biteken is'
+          pt: 'Também observado nos bits 1.7-2.0'
+        bits: '1.7-2.0'
 
   TIMESTAMP_YEARS:
     bits: '5.7-5.0'
-    alt_names: ['ANNEE']
     comment:
-      en: 'Number of years elapsed since the last power on of + PERM of the EMF - Binary counter modulo 100'
-      fr: 'Annees écoulées depuis le dernier allumage de + PERM de l''EMF'
-    type: 'uint8'
-    offset: 0
+      en: 'Year value counted since the last power-on of the display unit''s permanent supply.'
+      fr: 'Valeur de l''année comptée depuis la dernière mise sous tension permanente de l''afficheur.'
+      es: 'Valor del año contado desde la última puesta bajo tensión permanente de la pantalla.'
+      de: 'Jahreswert, gezählt seit der letzten Daueranschaltung des Displays.'
+      it: 'Valore dell''anno contato dall''ultima messa sotto tensione permanente del display.'
+      pl: 'Wartość roku liczona od ostatniego stałego zasilenia wyświetlacza.'
+      ru: 'Значение года, отсчитываемое с последнего включения постоянного питания дисплея.'
+      zh: '自显示单元常电最后一次上电以来计数的年份值。'
+      hu: 'Az év értéke, a kijelző állandó tápellátásának legutóbbi bekapcsolása óta számolva.'
+      pt: 'Valor do ano contado desde a última ligação permanente do ecrã.'
+    type: 'uint'
+    factor: 1
     min: 0
     max: 100
-    resolution: 1
-    invalid:  0xFF
-    units: 'years'
+    units: 'year'
+    invalid: 0xFF
+    default: 0x00
+    alternatives:
+      - note:
+          en: 'Also observed at bits 3.7-3.0'
+          fr: 'Aussi observé aux bits 3.7-3.0'
+          es: 'También observado en los bits 3.7-3.0'
+          de: 'Auch an den Bits 3.7-3.0 beobachtet'
+          it: 'Osservato anche ai bit 3.7-3.0'
+          pl: 'Obserwowany także na bitach 3.7-3.0'
+          ru: 'Также наблюдался в битах 3.7-3.0'
+          zh: '也观察到位于位3.7-3.0'
+          hu: 'Megfigyelve a(z) 3.7-3.0 biteken is'
+          pt: 'Também observado nos bits 3.7-3.0'
+        bits: '3.7-3.0'
 
   CONFIG_DISPLAY_TIME:
     bits: '6.7'
-    alt_names: ['MODE_HEURE_CLIENT']
     comment:
-      en: 'Time display mode'
-      fr: 'Mode affichage horaire'
+      en: 'Time display format configured by the customer (12h/24h)'
+      fr: 'Format d''affichage de l''heure configuré par le client (12h/24h)'
+      es: 'Formato de visualización de la hora configurado por el cliente (12h/24h)'
+      de: 'Vom Kunden eingestelltes Uhrzeitformat (12/24 Std.)'
+      it: 'Formato dell''ora configurato dal cliente (12h/24h)'
+      pl: 'Format wyświetlania godziny ustawiony przez klienta (12h/24h)'
+      ru: 'Формат отображения времени, настроенный клиентом (12/24 ч)'
+      zh: '客户设置的时间显示格式(12小时/24小时)'
+      hu: 'Az ügyfél által beállított óraformátum (12/24 óra)'
+      pt: 'Formato de visualização da hora configurado pelo cliente (12h/24h)'
+    type: 'bool'
+    default: 0x01
     values:
       0x00:
-        en: '12h'
-        fr: '12h'
+        en: 'Time displayed in 12-hour mode'
+        fr: 'Heure affichée en mode 12 h'
+        es: 'Hora mostrada en modo de 12 h'
+        de: 'Uhrzeit im 12-Stunden-Format angezeigt'
+        it: 'Ora visualizzata in modalità 12 ore'
+        pl: 'Godzina wyświetlana w trybie 12-godzinnym'
+        ru: 'Время отображается в 12-часовом формате'
+        zh: '以12小时制显示时间'
+        hu: 'Az idő 12 órás módban jelenik meg'
+        pt: 'Hora apresentada em modo de 12 horas'
       0x01:
-        en: '24h'
-        fr: '24h'
+        en: 'Time displayed in 24-hour mode'
+        fr: 'Heure affichée en mode 24 heures'
+        es: 'Hora mostrada en modo 24 horas'
+        de: 'Uhrzeit im 24-Stunden-Format angezeigt'
+        it: 'Ora visualizzata in modalità 24 ore'
+        pl: 'Godzina wyświetlana w trybie 24-godzinnym'
+        ru: 'Время отображается в 24-часовом формате'
+        zh: '时间以24小时制显示'
+        hu: 'Az idő 24 órás formátumban jelenik meg'
+        pt: 'Hora apresentada em modo 24 horas'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.7'
+          fr: 'Aussi observé aux bits 4.7'
+          es: 'También observado en los bits 4.7'
+          de: 'Auch an den Bits 4.7 beobachtet'
+          it: 'Osservato anche ai bit 4.7'
+          pl: 'Obserwowany także na bitach 4.7'
+          ru: 'Также наблюдался в битах 4.7'
+          zh: '也观察到位于位4.7'
+          hu: 'Megfigyelve a(z) 4.7 biteken is'
+          pt: 'Também observado nos bits 4.7'
+        bits: '4.7'
 
   CONFIG_DISPLAY_MODE:
     bits: '6.6'
-    alt_names: ['POS_NEG_CONF_CLIENT']
     comment:
-      en: 'Display mode'
-      fr: 'Mode affichage'
+      en: 'Display contrast type configured by the customer (negative/positive)'
+      fr: 'Type d''affichage configuré par le client (négatif/positif)'
+      es: 'Tipo de visualización configurado por el cliente (negativo/positivo)'
+      de: 'Vom Kunden eingestellter Anzeigekontrasttyp (negativ/positiv)'
+      it: 'Tipo di visualizzazione configurato dal cliente (negativo/positivo)'
+      pl: 'Typ wyświetlania ustawiony przez klienta (negatyw/pozytyw)'
+      ru: 'Тип отображения, настроенный клиентом (негативный/позитивный)'
+      zh: '客户设置的显示类型(负显示/正显示)'
+      hu: 'Az ügyfél által beállított megjelenítési típus (negatív/pozitív)'
+      pt: 'Tipo de contraste do visor configurado pelo cliente (negativo/positivo)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Negative'
-        fr: 'Negatif'
+        en: 'Negative display type'
+        fr: 'Affichage de type négatif'
+        es: 'Visualización de tipo negativo'
+        de: 'Negativer Anzeigetyp'
+        it: 'Visualizzazione di tipo negativo'
+        pl: 'Wyświetlanie typu negatywowego'
+        ru: 'Отображение негативного типа'
+        zh: '负显示类型'
+        hu: 'Negatív megjelenítési típus'
+        pt: 'Visualização de tipo negativo'
       0x01:
-        en: 'Positive'
-        fr: 'Positif'
+        en: 'Positive display type'
+        fr: 'Affichage de type positif'
+        es: 'Pantalla de tipo positivo'
+        de: 'Positiver Anzeigetyp'
+        it: 'Display di tipo positivo'
+        pl: 'Wyświetlacz typu pozytywowego'
+        ru: 'Позитивный тип дисплея'
+        zh: '正显示类型'
+        hu: 'Pozitív kijelzőtípus'
+        pt: 'Visor de tipo positivo'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.6'
+          fr: 'Aussi observé aux bits 4.6'
+          es: 'También observado en los bits 4.6'
+          de: 'Auch an den Bits 4.6 beobachtet'
+          it: 'Osservato anche ai bit 4.6'
+          pl: 'Obserwowany także na bitach 4.6'
+          ru: 'Также наблюдался в битах 4.6'
+          zh: '也观察到位于位4.6'
+          hu: 'Megfigyelve a(z) 4.6 biteken is'
+          pt: 'Também observado nos bits 4.6'
+        bits: '4.6'
 
   CONFIG_TEMP_UNIT:
     bits: '6.5'
-    alt_names: ['UNITE_TEMP_CLIENT']
     comment:
-      en: 'Temperature unit'
-      fr: 'Unite temperature'
+      en: 'Temperature unit chosen by the customer (Celsius or Fahrenheit)'
+      fr: 'Unité de température choisie par le client (Celsius ou Fahrenheit)'
+      es: 'Unidad de temperatura elegida por el cliente (Celsius o Fahrenheit)'
+      de: 'Vom Kunden gewählte Temperatureinheit (Celsius oder Fahrenheit)'
+      it: 'Unità di temperatura scelta dal cliente (Celsius o Fahrenheit)'
+      pl: 'Jednostka temperatury wybrana przez klienta (Celsjusz lub Fahrenheit)'
+      ru: 'Единица измерения температуры, выбранная клиентом (Цельсий или Фаренгейт)'
+      zh: '客户选择的温度单位(摄氏度或华氏度)'
+      hu: 'Az ügyfél által választott hőmérsékleti egység (Celsius vagy Fahrenheit)'
+      pt: 'Unidade de temperatura escolhida pelo cliente (Celsius ou Fahrenheit)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Celsius'
-        fr: 'Celsius'
+        en: 'Degree Celsius'
+        fr: 'Degré Celsius'
+        es: 'Grado Celsius'
+        de: 'Grad Celsius'
+        it: 'Grado Celsius'
+        pl: 'Stopień Celsjusza'
+        ru: 'Градус Цельсия'
+        zh: '摄氏度'
+        hu: 'Celsius-fok'
+        pt: 'Grau Celsius'
       0x01:
-        en: 'Fahrenheit'
-        fr: 'Fahrenheit'
+        en: 'Degrees Fahrenheit'
+        fr: 'Degré Fahrenheit'
+        es: 'Grados Fahrenheit'
+        de: 'Grad Fahrenheit'
+        it: 'Gradi Fahrenheit'
+        pl: 'Stopnie Fahrenheita'
+        ru: 'Градусы Фаренгейта'
+        zh: '华氏度'
+        hu: 'Fahrenheit-fok'
+        pt: 'Graus Fahrenheit'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.5'
+          fr: 'Aussi observé aux bits 4.5'
+          es: 'También observado en los bits 4.5'
+          de: 'Auch an den Bits 4.5 beobachtet'
+          it: 'Osservato anche ai bit 4.5'
+          pl: 'Obserwowany także na bitach 4.5'
+          ru: 'Также наблюдался в битах 4.5'
+          zh: '也观察到位于位4.5'
+          hu: 'Megfigyelve a(z) 4.5 biteken is'
+          pt: 'Também observado nos bits 4.5'
+        bits: '4.5'
 
-  CHARACTERSET_CONFIG:
+  UNUSED_1:
     bits: '6.4'
-    alt_names: ['CARACT_MAUD']
-    comment:
-      en: 'Configured character set'
-      fr: 'Jeu de caracteres configure'
-    values:
-      0x00:
-        en: 'ASCII'
-        fr: 'ASCII'
-      0x01:
-        en: 'UTF-8'
-        fr: 'UTF-8'
+    unused: true
 
   CONFIG_PRESSURE_UNIT:
     bits: '6.3'
-    alt_names: ['UNITE_PRESS']
     comment:
-      en: 'Pressure unit'
-      fr: 'Unite pression'
+      en: 'Pressure unit configured for display (bar/PSI)'
+      fr: 'Unité de pression configurée pour l''affichage (bar/PSI)'
+      es: 'Unidad de presión configurada para la visualización (bar/PSI)'
+      de: 'Für die Anzeige eingestellte Druckeinheit (bar/PSI)'
+      it: 'Unità di pressione configurata per la visualizzazione (bar/PSI)'
+      pl: 'Jednostka ciśnienia ustawiona do wyświetlania (bar/PSI)'
+      ru: 'Единица измерения давления, настроенная для отображения (бар/psi)'
+      zh: '显示所用的压力单位(巴/PSI)'
+      hu: 'A megjelenítéshez beállított nyomásmértékegység (bar/PSI)'
+      pt: 'Unidade de pressão configurada para a visualização (bar/PSI)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Bar'
         fr: 'Bar'
+        es: 'Bar'
+        de: 'Bar'
+        it: 'Bar'
+        pl: 'Bar'
+        ru: 'Бар'
+        zh: '巴(bar)'
+        hu: 'Bar'
+        pt: 'Bar'
       0x01:
         en: 'PSI'
         fr: 'PSI'
+        es: 'PSI'
+        de: 'PSI'
+        it: 'PSI'
+        pl: 'PSI'
+        ru: 'PSI (фунт/дюйм²)'
+        zh: 'PSI'
+        hu: 'PSI'
+        pt: 'PSI'
 
   CONFIG_CONSUMPTION_UNIT:
     bits: '6.2'
-    alt_names: ['UNITE_CONSO']
     comment:
-      en: 'Consuption unit type'
-      fr: 'Type unite consommation'
+      en: 'Fuel consumption unit (volume per 100 distance units, or distance per volume unit)'
+      fr: 'Unité de consommation de carburant (volume aux 100 unités de distance, ou distance par unité de volume)'
+      es: 'Unidad de consumo de combustible (volumen por 100 unidades de distancia, o distancia por unidad de volumen)'
+      de: 'Kraftstoffverbrauchseinheit (Volumen pro 100 Streckeneinheiten oder Strecke pro Volumeneinheit)'
+      it: 'Unità di consumo carburante (volume per 100 unità di distanza, o distanza per unità di volume)'
+      pl: 'Jednostka zużycia paliwa (objętość na 100 jednostek odległości lub odległość na jednostkę objętości)'
+      ru: 'Единица расхода топлива (объём на 100 единиц расстояния или расстояние на единицу объёма)'
+      zh: '燃油消耗单位(每100距离单位的体积,或每体积单位的距离)'
+      hu: 'Üzemanyag-fogyasztási egység (térfogat 100 távolságegységenként, vagy távolság térfogategységenként)'
+      pt: 'Unidade de consumo de combustível (volume por 100 unidades de distância, ou distância por unidade de volume)'
+    type: 'bool'
+    default: 0x00
     values:
-      0x00: # Eg. liters/kilometers
-        en: 'Volume per distance'
-        fr: 'Volume pour une distance'
-      0x01: # Eg. miles/gallon
-        en: 'Distance per volume'
-        fr: 'Distance pour un volume'
+      0x00:
+        en: 'Volume per 100 distance units (e.g. 1/100 km)'
+        fr: 'Volume pour 100 unités de distance (ex. 1/100 km)'
+        es: 'Volumen por 100 unidades de distancia (ej. 1/100 km)'
+        de: 'Volumen pro 100 Streckeneinheiten (z. B. 1/100 km)'
+        it: 'Volume per 100 unità di distanza (es. 1/100 km)'
+        pl: 'Objętość na 100 jednostek odległości (np. 1/100 km)'
+        ru: 'Объём на 100 единиц расстояния (напр. 1/100 км)'
+        zh: '每100个距离单位的容积（例如每1/100公里）'
+        hu: 'Térfogat 100 távolságegységenként (pl. 1/100 km)'
+        pt: 'Volume por 100 unidades de distância (ex. 1/100 km)'
+      0x01:
+        en: 'Distance per unit of volume (e.g. mpg, km/l)'
+        fr: 'Distance par unité de volume (ex. : mpg, km/l)'
+        es: 'Distancia por unidad de volumen (p. ej. mpg, km/l)'
+        de: 'Strecke pro Volumeneinheit (z. B. mpg, km/l)'
+        it: 'Distanza per unità di volume (es. mpg, km/l)'
+        pl: 'Dystans na jednostkę objętości (np. mpg, km/l)'
+        ru: 'Расстояние на единицу объёма (например, миль/галлон, км/л)'
+        zh: '每单位体积的距离(例如mpg、km/l)'
+        hu: 'Táv térfogategységenként (pl. mpg, km/l)'
+        pt: 'Distância por unidade de volume (por exemplo, mpg, km/l)'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.2'
+          fr: 'Aussi observé aux bits 4.2'
+          es: 'También observado en los bits 4.2'
+          de: 'Auch an den Bits 4.2 beobachtet'
+          it: 'Osservato anche ai bit 4.2'
+          pl: 'Obserwowany także na bitach 4.2'
+          ru: 'Также наблюдался в битах 4.2'
+          zh: '也观察到位于位4.2'
+          hu: 'Megfigyelve a(z) 4.2 biteken is'
+          pt: 'Também observado nos bits 4.2'
+        bits: '4.2'
 
   CONFIG_VOLUME_UNIT:
     bits: '6.1'
-    alt_names: ['UNITE_VOLUME']
     comment:
-      en: 'Volume unit'
-      fr: 'Unite volume'
+      en: 'Volume unit configuration (litre or gallon)'
+      fr: 'Configuration de l''unité de volume (litre ou gallon)'
+      es: 'Configuración de la unidad de volumen (litro o galón)'
+      de: 'Konfiguration der Volumeneinheit (Liter oder Gallone)'
+      it: 'Configurazione dell''unità di volume (litro o gallone)'
+      pl: 'Konfiguracja jednostki objętości (litr lub galon)'
+      ru: 'Настройка единицы измерения объёма (литр или галлон)'
+      zh: '体积单位配置(升或加仑)'
+      hu: 'A térfogategység beállítása (liter vagy gallon)'
+      pt: 'Configuração da unidade de volume (litro ou galão)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Liter'
-        fr: 'Litre'
+        en: 'litre'
+        fr: 'litre'
+        es: 'litro'
+        de: 'Liter'
+        it: 'litro'
+        pl: 'litr'
+        ru: 'литр'
+        zh: '升'
+        hu: 'liter'
+        pt: 'litro'
       0x01:
         en: 'Gallon'
         fr: 'Gallon'
+        es: 'Galón'
+        de: 'Gallone'
+        it: 'Gallone'
+        pl: 'Galon'
+        ru: 'Галлон'
+        zh: '加仑'
+        hu: 'Gallon'
+        pt: 'Galão'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.1'
+          fr: 'Aussi observé aux bits 4.1'
+          es: 'También observado en los bits 4.1'
+          de: 'Auch an den Bits 4.1 beobachtet'
+          it: 'Osservato anche ai bit 4.1'
+          pl: 'Obserwowany także na bitach 4.1'
+          ru: 'Также наблюдался в битах 4.1'
+          zh: '也观察到位于位4.1'
+          hu: 'Megfigyelve a(z) 4.1 biteken is'
+          pt: 'Também observado nos bits 4.1'
+        bits: '4.1'
 
   CONFIG_DISTANCE_UNIT:
     bits: '6.0'
-    alt_names: ['UNITE_DIST']
     comment:
-      en: 'Distance unit'
-      fr: 'Unite distance'
+      en: 'Distance unit configuration (km or miles)'
+      fr: 'Configuration de l''unité de distance (km ou miles)'
+      es: 'Configuración de la unidad de distancia (km o millas)'
+      de: 'Konfiguration der Entfernungseinheit (km oder Meilen)'
+      it: 'Configurazione dell''unità di distanza (km o miglia)'
+      pl: 'Konfiguracja jednostki odległości (km lub mile)'
+      ru: 'Настройка единицы измерения расстояния (км или мили)'
+      zh: '距离单位配置(公里或英里)'
+      hu: 'A távolságegység beállítása (km vagy mérföld)'
+      pt: 'Configuração da unidade de distância (km ou milhas)'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Kilometer'
-        fr: 'Kilometre'
+        en: 'km'
+        fr: 'km'
+        es: 'km'
+        de: 'km'
+        it: 'km'
+        pl: 'km'
+        ru: 'км'
+        zh: '公里'
+        hu: 'km'
+        pt: 'km'
       0x01:
-        en: 'Mile'
-        fr: 'Mile'
+        en: 'miles'
+        fr: 'Miles'
+        es: 'millas'
+        de: 'Meilen'
+        it: 'miglia'
+        pl: 'mile'
+        ru: 'мили'
+        zh: '英里'
+        hu: 'mérföld'
+        pt: 'milhas'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 4.0'
+          fr: 'Aussi observé aux bits 4.0'
+          es: 'También observado en los bits 4.0'
+          de: 'Auch an den Bits 4.0 beobachtet'
+          it: 'Osservato anche ai bit 4.0'
+          pl: 'Obserwowany także na bitach 4.0'
+          ru: 'Также наблюдался в битах 4.0'
+          zh: '也观察到位于位4.0'
+          hu: 'Megfigyelve a(z) 4.0 biteken is'
+          pt: 'Também observado nos bits 4.0'
+        bits: '4.0'
 
-  UNUSED_1:
+  UNUSED_2:
     bits: '7.7-7.4'
     unused: true
 
   CONFIG_LANGUAGE:
     bits: '7.3-7.0'
-    alt_names: ['LANGUE']
     comment:
-      en: 'Language'
-      fr: 'Langue'
+      en: 'Display language setting'
+      fr: 'Langue d''affichage sélectionnée'
+      es: 'Idioma de visualización seleccionado'
+      de: 'Eingestellte Anzeigesprache'
+      it: 'Lingua di visualizzazione impostata'
+      pl: 'Ustawiony język wyświetlacza'
+      ru: 'Выбранный язык отображения'
+      zh: '显示语言设置'
+      hu: 'A kijelző beállított nyelve'
+      pt: 'Definição do idioma do ecrã'
+    type: 'enum'
+    default: 0x01
     values:
       0x00:
         en: 'French'
-        fr: 'Francais'
+        fr: 'Français'
+        es: 'Francés'
+        de: 'Französisch'
+        it: 'Francese'
+        pl: 'Francuski'
+        ru: 'Французский'
+        zh: '法语'
+        hu: 'Francia'
+        pt: 'Francês'
       0x01:
         en: 'English'
         fr: 'Anglais'
+        es: 'Inglés'
+        de: 'Englisch'
+        it: 'Inglese'
+        pl: 'Angielski'
+        ru: 'Английский'
+        zh: '英语'
+        hu: 'Angol'
+        pt: 'Inglês'
       0x02:
         en: 'German'
         fr: 'Allemand'
+        es: 'Alemán'
+        de: 'Deutsch'
+        it: 'Tedesco'
+        pl: 'Niemiecki'
+        ru: 'Немецкий'
+        zh: '德语'
+        hu: 'Német'
+        pt: 'Alemão'
       0x03:
         en: 'Spanish'
         fr: 'Espagnol'
+        es: 'Español'
+        de: 'Spanisch'
+        it: 'Spagnolo'
+        pl: 'Hiszpański'
+        ru: 'Испанский'
+        zh: '西班牙语'
+        hu: 'Spanyol'
+        pt: 'Espanhol'
       0x04:
         en: 'Italian'
         fr: 'Italien'
+        es: 'Italiano'
+        de: 'Italienisch'
+        it: 'Italiano'
+        pl: 'Włoski'
+        ru: 'Итальянский'
+        zh: '意大利语'
+        hu: 'Olasz'
+        pt: 'Italiano'
       0x05:
-        en: 'Portugese'
+        en: 'Portuguese'
         fr: 'Portugais'
+        es: 'Portugués'
+        de: 'Portugiesisch'
+        it: 'Portoghese'
+        pl: 'Portugalski'
+        ru: 'Португальский'
+        zh: '葡萄牙语'
+        hu: 'Portugál'
+        pt: 'Português'
       0x06:
         en: 'Dutch'
-        fr: 'Neerlandais'
+        fr: 'Néerlandais'
+        es: 'Neerlandés'
+        de: 'Niederländisch'
+        it: 'Olandese'
+        pl: 'Niderlandzki'
+        ru: 'Нидерландский'
+        zh: '荷兰语'
+        hu: 'Holland'
+        pt: 'Neerlandês'
       0x07:
         en: 'Greek'
         fr: 'Grec'
+        es: 'Griego'
+        de: 'Griechisch'
+        it: 'Greco'
+        pl: 'Grecki'
+        ru: 'Греческий'
+        zh: '希腊语'
+        hu: 'Görög'
+        pt: 'Grego'
       0x08:
-        en: 'Brasilian'
-        fr: 'Bresilien'
+        en: 'Brazilian Portuguese'
+        fr: 'Portugais du Brésil'
+        es: 'Portugués de Brasil'
+        de: 'Brasilianisches Portugiesisch'
+        it: 'Portoghese brasiliano'
+        pl: 'Portugalski brazylijski'
+        ru: 'Бразильский португальский'
+        zh: '巴西葡萄牙语'
+        hu: 'Brazil portugál'
+        pt: 'Português do Brasil'
       0x09:
         en: 'Polish'
         fr: 'Polonais'
+        es: 'Polaco'
+        de: 'Polnisch'
+        it: 'Polacco'
+        pl: 'Polski'
+        ru: 'Польский'
+        zh: '波兰语'
+        hu: 'Lengyel'
+        pt: 'Polaco'
       0x0A:
         en: 'Traditional Chinese'
         fr: 'Chinois traditionnel'
+        es: 'Chino tradicional'
+        de: 'Traditionelles Chinesisch'
+        it: 'Cinese tradizionale'
+        pl: 'Chiński tradycyjny'
+        ru: 'Традиционный китайский'
+        zh: '繁体中文'
+        hu: 'Hagyományos kínai'
+        pt: 'Chinês tradicional'
       0x0B:
         en: 'Simplified Chinese'
-        fr: 'Chinois simplifie'
+        fr: 'Chinois simplifié'
+        es: 'Chino simplificado'
+        de: 'Vereinfachtes Chinesisch'
+        it: 'Cinese semplificato'
+        pl: 'Chiński uproszczony'
+        ru: 'Упрощённый китайский'
+        zh: '简体中文'
+        hu: 'Egyszerűsített kínai'
+        pt: 'Chinês simplificado'
       0x0C:
         en: 'Turkish'
         fr: 'Turc'
+        es: 'Turco'
+        de: 'Türkisch'
+        it: 'Turco'
+        pl: 'Turecki'
+        ru: 'Турецкий'
+        zh: '土耳其语'
+        hu: 'Török'
+        pt: 'Turco'
+      0x0D:
+        en: 'Not specified'
+        fr: 'Non spécifié'
+        es: 'No especificado'
+        de: 'Nicht angegeben'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Nincs megadva'
+        pt: 'Não especificado'
       0x0E:
         en: 'Russian'
         fr: 'Russe'
-      # What is 0x0B?
+        es: 'Ruso'
+        de: 'Russisch'
+        it: 'Russo'
+        pl: 'Rosyjski'
+        ru: 'Русский'
+        zh: '俄语'
+        hu: 'Orosz'
+        pt: 'Russo'
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 500ms'
+      fr: 'Aussi observée avec une période de 500ms'
+      es: 'También observada con un periodo de 500ms'
+      de: 'Auch mit einer Periode von 500ms beobachtet'
+      it: 'Osservata anche con un periodo di 500ms'
+      pl: 'Obserwowana także z okresem 500ms'
+      ru: 'Также наблюдалась с периодом 500ms'
+      zh: '也观察到周期为500ms'
+      hu: 'Megfigyelve 500ms periódussal is'
+      pt: 'Também observada com um período de 500ms'
+    periodicity: ['500ms']

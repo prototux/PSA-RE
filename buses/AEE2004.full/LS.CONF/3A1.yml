@@ -1,0 +1,237 @@
+id: 0x3A1
+name: 'TPMS_PRESSURE_DATA_LS'
+type: 'can'
+length: 8
+comment:
+  en: 'Tyre pressure monitoring: measured pressure and pressure deviation for each wheel (front/rear, left/right) plus the spare.'
+  fr: 'Surveillance de pression des pneus : pression mesurée et écart de pression pour chaque roue (avant/arrière, gauche/droite) plus la roue de secours.'
+  es: 'Control de presión de neumáticos: presión medida y desviación de presión de cada rueda (delantera/trasera, izquierda/derecha) más la de repuesto.'
+  de: 'Reifendrucküberwachung: gemessener Druck und Druckabweichung für jedes Rad (vorne/hinten, links/rechts) sowie das Reserverad.'
+  it: 'Controllo pressione pneumatici: pressione misurata e scostamento di pressione per ogni ruota (anteriore/posteriore, sinistra/destra) più la ruota di scorta.'
+  pl: 'Monitorowanie ciśnienia w oponach: zmierzone ciśnienie i odchylenie ciśnienia dla każdego koła (przód/tył, lewe/prawe) oraz koła zapasowego.'
+  ru: 'Контроль давления в шинах: измеренное давление и отклонение давления для каждого колеса (переднее/заднее, левое/правое), а также запасного.'
+  zh: '胎压监测:每个车轮(前/后,左/右)及备胎的测量压力和压力偏差。'
+  hu: 'Abroncsnyomás-ellenőrzés: mért nyomás és nyomáseltérés minden keréknél (első/hátsó, bal/jobb), valamint a pótkeréknél.'
+  pt: 'Monitorização da pressão dos pneus: pressão medida e desvio de pressão de cada roda (dianteira/traseira, esquerda/direita) além do sobresselente.'
+periodicity: ['500ms']
+senders: []  # TODO: find the sender(s)
+receivers: ['BCD', 'BTEL', 'CMB', 'EMF']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.6'
+    unused: true
+
+  FRONT_LEFT_TYRE_PRESSURE:
+    bits: '1.5-1.0'
+    comment:
+      en: 'Front left tyre pressure (bar)'
+      fr: 'Pression du pneu avant gauche (bar)'
+      es: 'Presión del neumático delantero izquierdo (bar)'
+      de: 'Reifendruck vorne links (bar)'
+      it: 'Pressione del pneumatico anteriore sinistro (bar)'
+      pl: 'Ciśnienie w oponie przedniej lewej (bar)'
+      ru: 'Давление в переднем левом колесе (бар)'
+      zh: '左前轮胎压力(bar)'
+      hu: 'Az első bal gumiabroncs nyomása (bar)'
+      pt: 'Pressão do pneu dianteiro esquerdo (bar)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  FRONT_RIGHT_TYRE_PRESSURE:
+    bits: '2.7-2.2'
+    comment:
+      en: 'Front right tyre pressure (bar)'
+      fr: 'Pression du pneu avant droit (bar)'
+      es: 'Presión del neumático delantero derecho (bar)'
+      de: 'Reifendruck vorne rechts (bar)'
+      it: 'Pressione del pneumatico anteriore destro (bar)'
+      pl: 'Ciśnienie w oponie przedniej prawej (bar)'
+      ru: 'Давление в переднем правом колесе (бар)'
+      zh: '右前轮胎压力(bar)'
+      hu: 'Az első jobb gumiabroncs nyomása (bar)'
+      pt: 'Pressão do pneu dianteiro direito (bar)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  REAR_LEFT_TYRE_PRESSURE:
+    bits: '2.1-3.4'
+    comment:
+      en: 'Rear left tyre pressure (bar)'
+      fr: 'Pression du pneu arrière gauche (bar)'
+      es: 'Presión del neumático trasero izquierdo (bar)'
+      de: 'Reifendruck hinten links (bar)'
+      it: 'Pressione del pneumatico posteriore sinistro (bar)'
+      pl: 'Ciśnienie w oponie tylnej lewej (bar)'
+      ru: 'Давление в заднем левом колесе (бар)'
+      zh: '左后轮胎压力(bar)'
+      hu: 'A hátsó bal gumiabroncs nyomása (bar)'
+      pt: 'Pressão do pneu traseiro esquerdo (bar)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  REAR_RIGHT_TYRE_PRESSURE:
+    bits: '3.3-4.6'
+    comment:
+      en: 'Rear right tyre pressure (bar)'
+      fr: 'Pression du pneu arrière droit (bar)'
+      es: 'Presión del neumático trasero derecho (bar)'
+      de: 'Reifendruck hinten rechts (bar)'
+      it: 'Pressione del pneumatico posteriore destro (bar)'
+      pl: 'Ciśnienie w oponie tylnej prawej (bar)'
+      ru: 'Давление в заднем правом колесе (бар)'
+      zh: '右后轮胎压力(bar)'
+      hu: 'A hátsó jobb gumiabroncs nyomása (bar)'
+      pt: 'Pressão do pneu traseiro direito (bar)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  SPARE_WHEEL_PRESSURE:
+    bits: '4.5-4.0'
+    comment:
+      en: 'Spare wheel pressure'
+      fr: 'Pression de la roue de secours'
+      es: 'Presión de la rueda de repuesto'
+      de: 'Reserveraddruck'
+      it: 'Pressione della ruota di scorta'
+      pl: 'Ciśnienie koła zapasowego'
+      ru: 'Давление в запасном колесе'
+      zh: '备胎压力'
+      hu: 'Pótkerék nyomása'
+      pt: 'Pressão da roda sobresselente'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  UNUSED_2:
+    bits: '5.7-5.6'
+    unused: true
+
+  FRONT_LEFT_WHEEL_DELTA_PRESSURE:
+    bits: '5.5-5.0'
+    comment:
+      en: 'Front left wheel pressure deviation'
+      fr: 'Écart de pression du pneu avant gauche'
+      es: 'Desviación de presión del neumático delantero izquierdo'
+      de: 'Druckabweichung des linken Vorderradreifens'
+      it: 'Scarto di pressione del pneumatico anteriore sinistro'
+      pl: 'Odchylenie ciśnienia opony przedniej lewej'
+      ru: 'Отклонение давления в шине переднего левого колеса'
+      zh: '左前轮胎压偏差'
+      hu: 'Az első bal kerék nyomáseltérése'
+      pt: 'Desvio de pressão do pneu dianteiro esquerdo'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  FRONT_RIGHT_WHEEL_DELTA_PRESSURE:
+    bits: '6.7-6.2'
+    comment:
+      en: 'Front right wheel pressure deviation'
+      fr: 'Écart de pression du pneu avant droit'
+      es: 'Desviación de presión del neumático delantero derecho'
+      de: 'Druckabweichung des rechten Vorderradreifens'
+      it: 'Scarto di pressione del pneumatico anteriore destro'
+      pl: 'Odchylenie ciśnienia opony przedniej prawej'
+      ru: 'Отклонение давления в шине переднего правого колеса'
+      zh: '右前轮胎压偏差'
+      hu: 'Az első jobb kerék nyomáseltérése'
+      pt: 'Desvio de pressão do pneu dianteiro direito'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  REAR_LEFT_WHEEL_DELTA_PRESSURE:
+    bits: '6.1-7.4'
+    comment:
+      en: 'Rear left wheel pressure deviation'
+      fr: 'Écart de pression du pneu arrière gauche'
+      es: 'Desviación de presión del neumático trasero izquierdo'
+      de: 'Druckabweichung des linken Hinterradreifens'
+      it: 'Scarto di pressione del pneumatico posteriore sinistro'
+      pl: 'Odchylenie ciśnienia opony tylnej lewej'
+      ru: 'Отклонение давления в шине заднего левого колеса'
+      zh: '左后轮胎压偏差'
+      hu: 'A hátsó bal kerék nyomáseltérése'
+      pt: 'Desvio de pressão do pneu traseiro esquerdo'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  REAR_RIGHT_WHEEL_DELTA_PRESSURE:
+    bits: '7.3-8.6'
+    comment:
+      en: 'Rear right wheel pressure deviation'
+      fr: 'Écart de pression du pneu arrière droit'
+      es: 'Desviación de presión del neumático trasero derecho'
+      de: 'Druckabweichung des rechten Hinterradreifens'
+      it: 'Scarto di pressione del pneumatico posteriore destro'
+      pl: 'Odchylenie ciśnienia opony tylnej prawej'
+      ru: 'Отклонение давления в шине заднего правого колеса'
+      zh: '右后轮胎压偏差'
+      hu: 'A hátsó jobb kerék nyomáseltérése'
+      pt: 'Desvio de pressão do pneu traseiro direito'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00
+
+  SPARE_WHEEL_PRESSURE_DELTA:
+    bits: '8.5-8.0'
+    comment:
+      en: 'Spare wheel pressure delta'
+      fr: 'Écart de pression de la roue de secours'
+      es: 'Diferencia de presión de la rueda de repuesto'
+      de: 'Druckdifferenz des Reserverads'
+      it: 'Delta di pressione della ruota di scorta'
+      pl: 'Różnica ciśnienia koła zapasowego'
+      ru: 'Отклонение давления в запасном колесе'
+      zh: '备胎压力差'
+      hu: 'Pótkerék nyomáskülönbsége'
+      pt: 'Diferença de pressão da roda sobresselente'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6.2
+    units: 'bar'
+    invalid: 0x3F
+    default: 0x00

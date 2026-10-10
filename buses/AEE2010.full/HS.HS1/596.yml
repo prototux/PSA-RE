@@ -1,0 +1,493 @@
+id: 0x596
+name: 'CAMERA_LANE_TRACKING_DATA_5'
+type: 'can'
+length: 4
+comment:
+  en: 'Camera lane-tracking data: lead-vehicle lane-crossing flags, cluster angle/distance left and right, minimum cluster distance/angle and perception status.'
+  fr: 'Données de suivi de voie de la caméra : indicateurs de franchissement de voie du véhicule leader, angle/distance de cluster gauche et droite, distance/angle minimal du cluster et état de perception.'
+  es: 'Datos de seguimiento de carril de la cámara: indicadores de cruce de carril del vehículo líder, ángulo/distancia del clúster izquierdo y derecho, distancia/ángulo mínimo del clúster y estado de percepción.'
+  de: 'Spurführungsdaten der Kamera: Fahrspurüberquerungskennzeichen des vorausfahrenden Fahrzeugs, Cluster-Winkel/-Abstand links und rechts, minimaler Cluster-Abstand/-Winkel und Wahrnehmungsstatus.'
+  it: 'Dati di tracciamento corsia della telecamera: indicatori di attraversamento corsia del veicolo che precede, angolo/distanza del cluster sinistro e destro, distanza/angolo minimo del cluster e stato di percezione.'
+  pl: 'Dane śledzenia pasa ruchu z kamery: flagi przekroczenia pasa przez pojazd poprzedzający, kąt/odległość klastra lewego i prawego, minimalna odległość/kąt klastra i stan percepcji.'
+  ru: 'Данные слежения за полосой от камеры: флаги пересечения полосы ведущим автомобилем, угол/расстояние кластера слева и справа, минимальное расстояние/угол кластера и статус восприятия.'
+  zh: '摄像头车道追踪数据:前车压线标志、左右聚类角度/距离、最小聚类距离/角度和感知状态。'
+  hu: 'A kamera sávkövetési adatai: az előttünk haladó jármű sávelhagyási jelzői, bal és jobb oldali klaszterszög/-távolság, minimális klasztertávolság/-szög és érzékelési állapot.'
+  pt: 'Dados de seguimento de faixa da câmara: indicadores de cruzamento de faixa do veículo da frente, ângulo/distância do agrupamento à esquerda e à direita, distância/ângulo mínimo do agrupamento e estado de perceção.'
+observations:
+  en: 'On state change of: CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+  fr: 'Sur changement d''état de : CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+  es: 'Al cambiar el estado de: CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+  de: 'Bei Statusänderung von: CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+  it: 'Al cambiamento di stato di: CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+  pl: 'Wysyłane przy zmianie stanu: CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+  ru: 'При изменении состояния: CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+  zh: '当VITESSE_ILV_C, TYPE_PANNEAU_ILV_C状态变化时'
+  hu: 'A(z) CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE állapotváltozásakor'
+  pt: 'Na mudança de estado de: CONDITIONAL_SPEED_LIMIT_CAMERA, CONDITIONAL_SPEED_SIGN_TYPE'
+periodicity: ['300ms', 'trigger']
+senders: ['CVM']
+receivers: ['BSI']
+
+signals:
+  CONDITIONAL_SPEED_LIMIT_CAMERA:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Conditional speed limit read by the camera (km/h)'
+      fr: 'Vitesse conditionnelle lue par la caméra (km/h)'
+      es: 'Velocidad condicional leída por la cámara (km/h)'
+      de: 'Von der Kamera gelesene bedingte Geschwindigkeitsbegrenzung (km/h)'
+      it: 'Velocità condizionale letta dalla telecamera (km/h)'
+      pl: 'Warunkowe ograniczenie prędkości odczytane przez kamerę (km/h)'
+      ru: 'Условное ограничение скорости, считанное камерой (км/ч)'
+      zh: '摄像头读取的条件限速值(km/h)'
+      hu: 'A kamera által leolvasott feltételes sebességkorlátozás (km/h)'
+      pt: 'Limite de velocidade condicional lido pela câmara (km/h)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 255
+    units: 'km/h'
+    default: 0xFE
+
+  CAMERA_CONDITIONAL_SPEED_ROBUSTNESS_DISTANCE:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Distance travelled used to assess robustness of the conditional speed limit read by the camera (m)'
+      fr: 'Distance parcourue utilisée pour évaluer la robustesse de la vitesse conditionnelle lue par la caméra (m)'
+      es: 'Distancia recorrida utilizada para evaluar la robustez de la velocidad condicional leída por la cámara (m)'
+      de: 'Zurückgelegte Strecke zur Bewertung der Robustheit der von der Kamera gelesenen bedingten Geschwindigkeit (m)'
+      it: 'Distanza percorsa utilizzata per valutare la robustezza della velocità condizionale letta dalla telecamera (m)'
+      pl: 'Przebyty dystans wykorzystywany do oceny wiarygodności warunkowego ograniczenia prędkości odczytanego przez kamerę (m)'
+      ru: 'Пройденное расстояние, используемое для оценки достоверности условного ограничения скорости, считанного камерой (м)'
+      zh: '用于评估摄像头读取的条件限速稳健性的行驶距离(m)'
+      hu: 'A kamera által leolvasott feltételes sebességkorlátozás megbízhatóságának értékeléséhez megtett távolság (m)'
+      pt: 'Distância percorrida utilizada para avaliar a robustez da velocidade condicional lida pela câmara (m)'
+    type: 'uint'
+    factor: 20
+    min: 0
+    max: 260
+    units: 'm'
+    default: 0x0E
+
+  CONDITIONAL_SPEED_LIMIT_CONTEXT:
+    bits: '2.3-2.0'
+    comment:
+      en: 'Context of the conditional speed limit read by the camera (trailer, rain, snow, school zone...)'
+      fr: 'Contexte de la vitesse conditionnelle lue par la caméra (remorque, pluie, neige, zone scolaire...)'
+      es: 'Contexto de la velocidad condicional leída por la cámara (remolque, lluvia, nieve, zona escolar...)'
+      de: 'Kontext der von der Kamera gelesenen bedingten Geschwindigkeitsbegrenzung (Anhänger, Regen, Schnee, Schulzone...)'
+      it: 'Contesto della velocità condizionale letta dalla telecamera (rimorchio, pioggia, neve, zona scolastica...)'
+      pl: 'Kontekst warunkowego ograniczenia prędkości odczytanego przez kamerę (przyczepa, deszcz, śnieg, strefa szkolna...)'
+      ru: 'Контекст условного ограничения скорости, считанного камерой (прицеп, дождь, снег, школьная зона...)'
+      zh: '摄像头读取的条件限速情境(拖车、雨天、雪天、学校区域等)'
+      hu: 'A kamera által leolvasott feltételes sebességkorlátozás összefüggése (utánfutó, eső, hó, iskolai övezet...)'
+      pt: 'Contexto da velocidade condicional lida pela câmara (reboque, chuva, neve, zona escolar...)'
+    type: 'enum'
+    default: 0x0F
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Trailer or caravan'
+        fr: 'Remorque ou caravane'
+        es: 'Remolque o caravana'
+        de: 'Anhänger oder Wohnwagen'
+        it: 'Rimorchio o roulotte'
+        pl: 'Przyczepa lub przyczepa kempingowa'
+        ru: 'Прицеп или дом на колёсах'
+        zh: '拖车或房车'
+        hu: 'Pótkocsi vagy lakókocsi'
+        pt: 'Reboque ou caravana'
+      0x02:
+        en: 'Rain'
+        fr: 'Pluie'
+        es: 'Lluvia'
+        de: 'Regen'
+        it: 'Pioggia'
+        pl: 'Deszcz'
+        ru: 'Дождь'
+        zh: '雨'
+        hu: 'Eső'
+        pt: 'Chuva'
+      0x03:
+        en: 'Snow'
+        fr: 'Neige'
+        es: 'Nieve'
+        de: 'Schnee'
+        it: 'Neve'
+        pl: 'Śnieg'
+        ru: 'Снег'
+        zh: '雪'
+        hu: 'Hó'
+        pt: 'Neve'
+      0x04:
+        en: 'School'
+        fr: 'École'
+        es: 'Escuela'
+        de: 'Schule'
+        it: 'Scuola'
+        pl: 'Szkoła'
+        ru: 'Школа'
+        zh: '学校'
+        hu: 'Iskola'
+        pt: 'Escola'
+      0x05:
+        en: 'Hours'
+        fr: 'Heures'
+        es: 'Horas'
+        de: 'Stunden'
+        it: 'Ore'
+        pl: 'Godziny'
+        ru: 'Часы'
+        zh: '小时'
+        hu: 'Óra'
+        pt: 'Horas'
+      0x06:
+        en: 'Noise'
+        fr: 'Bruit'
+        es: 'Ruido'
+        de: 'Geräusch'
+        it: 'Rumore'
+        pl: 'Hałas'
+        ru: 'Шум'
+        zh: '噪声'
+        hu: 'Zaj'
+        pt: 'Ruído'
+      0x07:
+        en: 'Length'
+        fr: 'Longueur'
+        es: 'Longitud'
+        de: 'Länge'
+        it: 'Lunghezza'
+        pl: 'Długość'
+        ru: 'Длина'
+        zh: '长度'
+        hu: 'Hossz'
+        pt: 'Comprimento'
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CAMERA_IMPLICIT_SPEED_ROBUSTNESS_DISTANCE:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Distance travelled used to assess robustness of the implicit speed limit read by the camera (m)'
+      fr: 'Distance parcourue utilisée pour évaluer la robustesse de la vitesse implicite lue par la caméra (m)'
+      es: 'Distancia recorrida utilizada para evaluar la robustez de la velocidad implícita leída por la cámara (m)'
+      de: 'Zurückgelegte Strecke zur Bewertung der Robustheit der von der Kamera gelesenen impliziten Geschwindigkeit (m)'
+      it: 'Distanza percorsa utilizzata per valutare la robustezza della velocità implicita letta dalla telecamera (m)'
+      pl: 'Przebyty dystans wykorzystywany do oceny wiarygodności dorozumianego ograniczenia prędkości odczytanego przez kamerę (m)'
+      ru: 'Пройденное расстояние, используемое для оценки достоверности подразумеваемого ограничения скорости, считанного камерой (м)'
+      zh: '用于评估摄像头读取的隐含限速稳健性的行驶距离(m)'
+      hu: 'A kamera által leolvasott vélelmezett sebességkorlátozás megbízhatóságának értékeléséhez megtett távolság (m)'
+      pt: 'Distância percorrida utilizada para avaliar a robustez da velocidade implícita lida pela câmara (m)'
+    type: 'uint'
+    factor: 20
+    min: 0
+    max: 260
+    units: 'm'
+    default: 0x0E
+
+  IMPLICIT_SPEED_LIMIT_TYPE:
+    bits: '3.3-3.0'
+    comment:
+      en: 'Type of implicit speed limit event (entering/leaving a meeting zone, entering/leaving a built-up area)'
+      fr: 'Type d''événement de vitesse implicite (entrée/sortie de zone de rencontre, entrée/sortie d''agglomération)'
+      es: 'Tipo de evento de velocidad implícita (entrada/salida de zona de encuentro, entrada/salida de área urbana)'
+      de: 'Art des impliziten Geschwindigkeitsereignisses (Ein-/Ausfahrt Begegnungszone, Ein-/Ausfahrt Ortschaft)'
+      it: 'Tipo di evento di velocità implicita (ingresso/uscita zona di incontro, ingresso/uscita centro abitato)'
+      pl: 'Rodzaj zdarzenia dorozumianego ograniczenia prędkości (wjazd/wyjazd strefy spotkań, wjazd/wyjazd obszaru zabudowanego)'
+      ru: 'Тип события подразумеваемого ограничения скорости (въезд/выезд зоны встречи, въезд/выезд населённого пункта)'
+      zh: '隐含限速事件类型(进入/离开会车区、进入/离开建成区)'
+      hu: 'A vélelmezett sebességkorlátozási esemény típusa (találkozási zóna be-/kilépés, lakott terület be-/kilépés)'
+      pt: 'Tipo de evento de velocidade implícita (entrada/saída de zona de encontro, entrada/saída de aglomerado)'
+    type: 'enum'
+    default: 0x0F
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Entering a shared (traffic-calmed) zone'
+        fr: 'Entrée dans une zone de rencontre'
+        es: 'Entrada en una zona de encuentro'
+        de: 'Einfahrt in eine Begegnungszone'
+        it: 'Ingresso in una zona d''incontro'
+        pl: 'Wjazd do strefy zamieszkania (woonerf)'
+        ru: 'Въезд в зону совместного использования'
+        zh: '进入共享(会车)区域'
+        hu: 'Belépés találkozási (osztott) zónába'
+        pt: 'Entrada numa zona de encontro (tráfego partilhado)'
+      0x02:
+        en: 'Exiting a meeting/encounter area'
+        fr: 'Sortie de zone de rencontre'
+        es: 'Salida de zona de encuentro'
+        de: 'Verlassen der Begegnungszone'
+        it: 'Uscita dalla zona d''incontro'
+        pl: 'Wyjście ze strefy spotkania'
+        ru: 'Выезд из зоны совместного использования'
+        zh: '驶出会车区'
+        hu: 'Kilépés a találkozási zónából'
+        pt: 'Saída de zona de encontro'
+      0x03:
+        en: 'Entering built-up area'
+        fr: 'Entrée d''agglomération'
+        es: 'Entrada en zona urbana'
+        de: 'Einfahrt in geschlossene Ortschaft'
+        it: 'Ingresso in area urbana'
+        pl: 'Wjazd do obszaru zabudowanego'
+        ru: 'Въезд в населённый пункт'
+        zh: '进入城区'
+        hu: 'Belterület kezdete'
+        pt: 'A entrar em zona urbana'
+      0x04:
+        en: 'Town exit'
+        fr: 'Sortie d''agglomération'
+        es: 'Salida de núcleo urbano'
+        de: 'Ortsausfahrt'
+        it: 'Uscita dal centro abitato'
+        pl: 'Wyjazd z terenu zabudowanego'
+        ru: 'Выезд из населённого пункта'
+        zh: '驶出市区'
+        hu: 'Település kihajtó'
+        pt: 'Saída de aglomerado urbano'
+      0x05:
+        en: 'Motorway entrance'
+        fr: 'Entrée d''autoroute'
+        es: 'Entrada de autopista'
+        de: 'Autobahnauffahrt'
+        it: 'Ingresso autostrada'
+        pl: 'Wjazd na autostradę'
+        ru: 'Въезд на автомагистраль'
+        zh: '高速公路入口'
+        hu: 'Autópálya-felhajtó'
+        pt: 'Entrada de autoestrada'
+      0x06:
+        en: 'Motorway exit'
+        fr: 'Sortie d''autoroute'
+        es: 'Salida de autopista'
+        de: 'Autobahnausfahrt'
+        it: 'Uscita autostradale'
+        pl: 'Zjazd z autostrady'
+        ru: 'Съезд с автомагистрали'
+        zh: '高速公路出口'
+        hu: 'Autópálya-kihajtó'
+        pt: 'Saída de autoestrada'
+      0x07:
+        en: 'Motorway entry'
+        fr: 'Entrée de voie rapide'
+        es: 'Entrada a autovía'
+        de: 'Auffahrt auf Schnellstraße'
+        it: 'Ingresso in superstrada'
+        pl: 'Wjazd na drogę szybkiego ruchu'
+        ru: 'Въезд на скоростную дорогу'
+        zh: '快速路入口'
+        hu: 'Gyorsforgalmi út felhajtó'
+        pt: 'Entrada de autoestrada'
+      0x08:
+        en: 'Motorway exit'
+        fr: 'Sortie de voie rapide'
+        es: 'Salida de autovía'
+        de: 'Ausfahrt Schnellstraße'
+        it: 'Uscita superstrada'
+        pl: 'Zjazd z drogi szybkiego ruchu'
+        ru: 'Съезд со скоростной дороги'
+        zh: '快速路出口'
+        hu: 'Gyorsforgalmi út lehajtó'
+        pt: 'Saída de autoestrada'
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CAMERA_CONDITIONAL_SPEED_ROBUST_FLAG:
+    bits: '4.7'
+    comment:
+      en: 'Robustness flag for the conditional speed limit read by the camera'
+      fr: 'Indicateur de robustesse de la vitesse conditionnelle lue par la caméra'
+      es: 'Indicador de robustez de la velocidad condicional leída por la cámara'
+      de: 'Robustheitskennzeichen der von der Kamera gelesenen bedingten Geschwindigkeit'
+      it: 'Indicatore di robustezza della velocità condizionale letta dalla telecamera'
+      pl: 'Flaga wiarygodności warunkowego ograniczenia prędkości odczytanego przez kamerę'
+      ru: 'Флаг достоверности условного ограничения скорости, считанного камерой'
+      zh: '摄像头读取的条件限速稳健性标志'
+      hu: 'A kamera által leolvasott feltételes sebességkorlátozás megbízhatósági jelzője'
+      pt: 'Indicador de robustez do limite de velocidade condicional lido pela câmara'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not robust'
+        fr: 'Non robuste'
+        es: 'No robusto'
+        de: 'Nicht robust'
+        it: 'Non robusto'
+        pl: 'Niestabilne'
+        ru: 'Ненадёжно'
+        zh: '不稳健'
+        hu: 'Nem robusztus'
+        pt: 'Não robusto'
+      0x01:
+        en: 'Robust'
+        fr: 'Robuste'
+        es: 'Robusto'
+        de: 'Robust'
+        it: 'Robusto'
+        pl: 'Solidny'
+        ru: 'Надёжный'
+        zh: '稳健'
+        hu: 'Robusztus'
+        pt: 'Robusto'
+
+  CAMERA_IMPLICIT_SPEED_ROBUST_FLAG:
+    bits: '4.6'
+    comment:
+      en: 'Robustness flag for the implicit speed limit read by the camera'
+      fr: 'Indicateur de robustesse de la vitesse implicite lue par la caméra'
+      es: 'Indicador de robustez de la velocidad implícita leída por la cámara'
+      de: 'Robustheitskennzeichen der von der Kamera gelesenen impliziten Geschwindigkeit'
+      it: 'Indicatore di robustezza della velocità implicita letta dalla telecamera'
+      pl: 'Flaga wiarygodności dorozumianego ograniczenia prędkości odczytanego przez kamerę'
+      ru: 'Флаг достоверности подразумеваемого ограничения скорости, считанного камерой'
+      zh: '摄像头读取的隐含限速稳健性标志'
+      hu: 'A kamera által leolvasott vélelmezett sebességkorlátozás megbízhatósági jelzője'
+      pt: 'Indicador de robustez do limite de velocidade implícito lido pela câmara'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not robust'
+        fr: 'Non robuste'
+        es: 'No robusto'
+        de: 'Nicht robust'
+        it: 'Non robusto'
+        pl: 'Niestabilne'
+        ru: 'Ненадёжно'
+        zh: '不稳健'
+        hu: 'Nem robusztus'
+        pt: 'Não robusto'
+      0x01:
+        en: 'Robust'
+        fr: 'Robuste'
+        es: 'Robusto'
+        de: 'Robust'
+        it: 'Robusto'
+        pl: 'Solidny'
+        ru: 'Надёжный'
+        zh: '稳健'
+        hu: 'Robusztus'
+        pt: 'Robusto'
+
+  CONDITIONAL_SPEED_SIGN_TYPE:
+    bits: '4.5-4.4'
+    comment:
+      en: 'Type of conditional speed limit sign read by the camera (start/end of section, invalid, undefined)'
+      fr: 'Type de panneau de vitesse conditionnelle lu par la caméra (début/fin de section, invalide, indéfini)'
+      es: 'Tipo de señal de velocidad condicional leída por la cámara (inicio/fin de sección, no válida, indefinida)'
+      de: 'Art des von der Kamera gelesenen bedingten Geschwindigkeitsschilds (Beginn/Ende des Abschnitts, ungültig, undefiniert)'
+      it: 'Tipo di cartello di velocità condizionale letto dalla telecamera (inizio/fine sezione, non valido, indefinito)'
+      pl: 'Rodzaj znaku warunkowego ograniczenia prędkości odczytanego przez kamerę (początek/koniec odcinka, nieprawidłowy, nieokreślony)'
+      ru: 'Тип знака условного ограничения скорости, считанного камерой (начало/конец участка, недействителен, не определён)'
+      zh: '摄像头读取的条件限速标志类型(路段起点/终点、无效、未定义)'
+      hu: 'A kamera által leolvasott feltételes sebességkorlátozó tábla típusa (szakasz eleje/vége, érvénytelen, meghatározatlan)'
+      pt: 'Tipo de sinal de velocidade condicional lido pela câmara (início/fim de secção, inválido, indefinido)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Speed limit area'
+        fr: 'Zone de limitation de vitesse'
+        es: 'Zona de limitación de velocidad'
+        de: 'Geschwindigkeitsbegrenzungsbereich'
+        it: 'Zona di limitazione della velocità'
+        pl: 'Strefa ograniczenia prędkości'
+        ru: 'Зона ограничения скорости'
+        zh: '限速区域'
+        hu: 'Sebességkorlátozási terület'
+        pt: 'Zona de limite de velocidade'
+      0x01:
+        en: 'End of speed limit area'
+        fr: 'Fin de zone de limitation de vitesse'
+        es: 'Fin de la zona de limitación de velocidad'
+        de: 'Ende des Geschwindigkeitsbegrenzungsbereichs'
+        it: 'Fine della zona di limitazione della velocità'
+        pl: 'Koniec strefy ograniczenia prędkości'
+        ru: 'Конец зоны ограничения скорости'
+        zh: '限速区域结束'
+        hu: 'Sebességkorlátozási terület vége'
+        pt: 'Fim da zona de limite de velocidade'
+      0x02:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x03:
+        en: 'Not defined'
+        fr: 'Non défini'
+        es: 'No definido'
+        de: 'Nicht definiert'
+        it: 'Non definito'
+        pl: 'Niezdefiniowane'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Nincs meghatározva'
+        pt: 'Não definido'
+
+  UNUSED_1:
+    bits: '4.3-4.0'
+    unused: true

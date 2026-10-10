@@ -1,0 +1,407 @@
+id: 0x215
+name: 'SLIDING_DOOR_STATUS_MONITOR'
+type: 'can'
+length: 5
+comment:
+  en: 'Status of both powered sliding doors (left, right): fault, obstacle detection, movement and position. Used by the BSI to monitor equipment connected to the body network.'
+  fr: 'État des deux portes latérales coulissantes (gauche, droite) : défaut, détection d''obstacle, mouvement et position. Utilisée par la BSI pour surveiller les équipements du réseau carrosserie.'
+  es: 'Estado de ambas puertas correderas laterales (izquierda, derecha): fallo, deteccion de obstáculo, movimiento y posición. Utilizada por la BSI para supervisar los equipos de la red de carrocería.'
+  de: 'Status beider elektrischen Schiebetüren (links, rechts): Fehler, Hinderniserkennung, Bewegung und Position. Wird von der BSI zur Überwachung der Karosserie-Netzwerkgeräte verwendet.'
+  it: 'Stato di entrambe le porte scorrevoli laterali (sinistra, destra): guasto, rilevamento ostacolo, movimento e posizione. Utilizzata dalla BSI per monitorare le apparecchiature collegate alla rete carrozzeria.'
+  pl: 'Stan obu drzwi przesuwnych (lewych, prawych): usterka, wykrywanie przeszkody, ruch i pozycja. Wykorzystywana przez BSI do nadzoru urządzeń sieci nadwozia.'
+  ru: 'Статус обеих сдвижных дверей (левой, правой): неисправность, обнаружение препятствия, движение и положение. Используется блоком BSI для контроля оборудования кузовной сети.'
+  zh: '左右两侧滑门状态:故障、障碍物检测、运动及位置。由BSI用于监控车身网络设备。'
+  hu: 'Mindkét (bal és jobb) tolóajtó állapota: hiba, akadályérzékelés, mozgás és pozíció. A BSI ezzel felügyeli a karosszériahálózat eszközeit.'
+  pt: 'Estado das duas portas corrediças laterais (esquerda, direita): avaria, deteção de obstáculo, movimento e posição. Utilizada pela BSI para supervisionar os equipamentos da rede de carroçaria.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['200ms', 'trigger']
+senders: ['MDPLC']
+receivers: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.6'
+    unused: true
+
+  LEFT_DOOR_MOVEMENT:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Left door movement (closing, opening, none)'
+      fr: 'Mouvement de la porte gauche (fermeture, ouverture, aucun)'
+      es: 'Movimiento de la puerta izquierda (cierre, apertura, ninguno)'
+      de: 'Bewegung der linken Tür (Schließen, Öffnen, keine)'
+      it: 'Movimento della porta sinistra (chiusura, apertura, nessuno)'
+      pl: 'Ruch lewych drzwi (zamykanie, otwieranie, brak)'
+      ru: 'Движение левой двери (закрытие, открытие, отсутствует)'
+      zh: '左车门运动(关闭、打开、无)'
+      hu: 'A bal oldali ajtó mozgása (zárás, nyitás, nincs)'
+      pt: 'Movimento da porta esquerda (fecho, abertura, nenhum)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No movement'
+        fr: 'Pas de mouvement'
+        es: 'Sin movimiento'
+        de: 'Keine Bewegung'
+        it: 'Nessun movimento'
+        pl: 'Brak ruchu'
+        ru: 'Нет движения'
+        zh: '无运动'
+        hu: 'Nincs mozgás'
+        pt: 'Sem movimento'
+      0x01:
+        en: 'Closing movement'
+        fr: 'Mouvement de fermeture'
+        es: 'Movimiento de cierre'
+        de: 'Schließbewegung'
+        it: 'Movimento di chiusura'
+        pl: 'Ruch zamykania'
+        ru: 'Движение закрытия'
+        zh: '关闭动作'
+        hu: 'Záró mozgás'
+        pt: 'Movimento de fecho'
+      0x02:
+        en: 'Opening movement'
+        fr: 'Mouvement d''ouverture'
+        es: 'Movimiento de apertura'
+        de: 'Öffnungsbewegung'
+        it: 'Movimento di apertura'
+        pl: 'Ruch otwierania'
+        ru: 'Движение открытия'
+        zh: '打开动作'
+        hu: 'Nyitási mozgás'
+        pt: 'Movimento de abertura'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  LEFT_PSD_COMMAND_REJECTED:
+    bits: '1.3'
+    comment:
+      en: 'Command rejected by the left power sliding door module'
+      fr: 'Commande rejetée par le module de porte coulissante électrique gauche'
+      es: 'Mando rechazado por el módulo de la puerta corredera eléctrica izquierda'
+      de: 'Vom linken elektrischen Schiebetürmodul abgelehnter Befehl'
+      it: 'Comando rifiutato dal modulo porta scorrevole elettrica sinistra'
+      pl: 'Polecenie odrzucone przez moduł lewych elektrycznych drzwi przesuwnych'
+      ru: 'Команда, отклонённая модулем левой электрической сдвижной двери'
+      zh: '左侧电动滑动门模块拒绝指令'
+      hu: 'A bal oldali elektromos tolóajtó modulja által elutasított parancs'
+      pt: 'Comando rejeitado pelo módulo da porta corrediça elétrica esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No command refused'
+        fr: 'Aucune commande refusée'
+        es: 'Ningún comando rechazado'
+        de: 'Kein Befehl abgelehnt'
+        it: 'Nessun comando rifiutato'
+        pl: 'Brak odrzuconego polecenia'
+        ru: 'Ни одна команда не отклонена'
+        zh: '无被拒绝的指令'
+        hu: 'Nincs elutasított parancs'
+        pt: 'Nenhum comando recusado'
+      0x01:
+        en: 'Command refused'
+        fr: 'Commande refusée'
+        es: 'Orden rechazada'
+        de: 'Befehl abgelehnt'
+        it: 'Comando rifiutato'
+        pl: 'Polecenie odrzucone'
+        ru: 'Команда отклонена'
+        zh: '指令被拒绝'
+        hu: 'Parancs elutasítva'
+        pt: 'Comando recusado'
+
+  PSD_NETWORK_MAINTAIN_REQUEST:
+    bits: '1.2'
+    comment:
+      en: 'Request from the power sliding door module to keep the network awake'
+      fr: 'Demande de maintien du réseau émise par le module de porte coulissante électrique'
+      es: 'Solicitud de mantenimiento de la red emitida por el módulo de la puerta corredera eléctrica'
+      de: 'Anforderung des Netzwerk-Wachhaltens durch das Modul der elektrischen Schiebetür'
+      it: 'Richiesta di mantenimento della rete emessa dal modulo porta scorrevole elettrica'
+      pl: 'Żądanie utrzymania sieci wysyłane przez moduł elektrycznych drzwi przesuwnych'
+      ru: 'Запрос поддержания активности сети от модуля электрической сдвижной двери'
+      zh: '电动滑动门模块发出的网络保持请求'
+      hu: 'Az elektromos tolóajtó modul kérése a hálózat ébren tartására'
+      pt: 'Pedido de manutenção da rede emitido pelo módulo da porta corrediça elétrica'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  LEFT_DOOR_POSITION:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Left door position (closed, open, open end-stop, undetermined)'
+      fr: 'Position de la porte gauche (fermée, ouverte, en butée d''ouverture, indéterminée)'
+      es: 'Posición de la puerta izquierda (cerrada, abierta, en tope de apertura, indeterminada)'
+      de: 'Position der linken Tür (geschlossen, offen, Öffnungsanschlag, unbestimmt)'
+      it: 'Posizione della porta sinistra (chiusa, aperta, in battuta di apertura, indeterminata)'
+      pl: 'Pozycja lewych drzwi (zamknięte, otwarte, w oporze otwarcia, nieokreślona)'
+      ru: 'Положение левой двери (закрыта, открыта, в упоре открытия, не определено)'
+      zh: '左车门位置(关闭、打开、开启限位、未确定)'
+      hu: 'A bal oldali ajtó helyzete (zárva, nyitva, nyitási véghelyzet, meghatározatlan)'
+      pt: 'Posição da porta esquerda (fechada, aberta, em batente de abertura, indeterminada)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Undetermined position'
+        fr: 'Position indéterminée'
+        es: 'Posición indeterminada'
+        de: 'Unbestimmte Position'
+        it: 'Posizione indeterminata'
+        pl: 'Nieokreślona pozycja'
+        ru: 'Неопределённое положение'
+        zh: '位置未确定'
+        hu: 'Meghatározatlan pozíció'
+        pt: 'Posição indeterminada'
+      0x01:
+        en: 'Door closed'
+        fr: 'Porte fermée'
+        es: 'Puerta cerrada'
+        de: 'Tür geschlossen'
+        it: 'Portiera chiusa'
+        pl: 'Drzwi zamknięte'
+        ru: 'Дверь закрыта'
+        zh: '车门已关闭'
+        hu: 'Ajtó zárva'
+        pt: 'Porta fechada'
+      0x02:
+        en: 'Door open'
+        fr: 'Porte ouverte'
+        es: 'Puerta abierta'
+        de: 'Tür offen'
+        it: 'Portiera aperta'
+        pl: 'Drzwi otwarte'
+        ru: 'Дверь открыта'
+        zh: '车门打开'
+        hu: 'Ajtó nyitva'
+        pt: 'Porta aberta'
+      0x03:
+        en: 'Door at opening stop'
+        fr: 'Porte en butée d''ouverture'
+        es: 'Puerta en tope de apertura'
+        de: 'Tür am Öffnungsanschlag'
+        it: 'Porta al fermo di apertura'
+        pl: 'Drzwi w skrajnym otwartym położeniu'
+        ru: 'Дверь в крайнем открытом положении'
+        zh: '车门开至限位'
+        hu: 'Ajtó a nyitási véghelyzetben'
+        pt: 'Porta no batente de abertura'
+
+  LEFT_DOOR_OBSTACLE_DETECTION:
+    bits: '2.7'
+    comment:
+      en: 'Obstacle detected on the left door'
+      fr: 'Détection d''un obstacle sur la porte gauche'
+      es: 'Detección de un obstáculo en la puerta izquierda'
+      de: 'Hinderniserkennung an der linken Tür'
+      it: 'Rilevamento di un ostacolo sulla porta sinistra'
+      pl: 'Wykrycie przeszkody przy lewych drzwiach'
+      ru: 'Обнаружено препятствие на левой двери'
+      zh: '检测到左车门有障碍物'
+      hu: 'Akadály észlelése a bal oldali ajtónál'
+      pt: 'Deteção de um obstáculo na porta esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Obstacle detected'
+        fr: 'Obstacle détecté'
+        es: 'Obstáculo detectado'
+        de: 'Hindernis erkannt'
+        it: 'Ostacolo rilevato'
+        pl: 'Wykryto przeszkodę'
+        ru: 'Обнаружено препятствие'
+        zh: '检测到障碍物'
+        hu: 'Akadály észlelve'
+        pt: 'Obstáculo detetado'
+
+  LEFT_PSD_UNLOCK_REQUEST:
+    bits: '2.6'
+    comment:
+      en: 'Unlocking request for the left power sliding door'
+      fr: 'Demande de décondamnation de la porte coulissante électrique gauche'
+      es: 'Solicitud de desbloqueo de la puerta corredera eléctrica izquierda'
+      de: 'Entriegelungsanforderung für die linke elektrische Schiebetür'
+      it: 'Richiesta di sblocco della porta scorrevole elettrica sinistra'
+      pl: 'Żądanie odblokowania lewych elektrycznych drzwi przesuwnych'
+      ru: 'Запрос разблокировки левой электрической сдвижной двери'
+      zh: '左侧电动滑动门解锁请求'
+      hu: 'A bal oldali elektromos tolóajtó nyitási kérése'
+      pt: 'Pedido de desbloqueio da porta corrediça elétrica esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Unlock requested'
+        fr: 'Décondamnation demandée'
+        es: 'Desbloqueo solicitado'
+        de: 'Entriegelung angefordert'
+        it: 'Sblocco richiesto'
+        pl: 'Żądanie odblokowania'
+        ru: 'Запрошена разблокировка'
+        zh: '已请求解锁'
+        hu: 'Kioldás kérve'
+        pt: 'Destrancagem pedida'
+
+  UNUSED_2:
+    bits: '2.5-2.4'
+    unused: true
+
+  LEFT_PSD_FAULT:
+    bits: '2.3'
+    comment:
+      en: 'Left power sliding door fault'
+      fr: 'Défaut de la porte coulissante électrique gauche'
+      es: 'Fallo de la puerta corredera eléctrica izquierda'
+      de: 'Fehler der linken elektrischen Schiebetür'
+      it: 'Guasto della porta scorrevole elettrica sinistra'
+      pl: 'Usterka lewych elektrycznych drzwi przesuwnych'
+      ru: 'Неисправность левой электрической сдвижной двери'
+      zh: '左侧电动滑动门故障'
+      hu: 'A bal oldali elektromos tolóajtó hibája'
+      pt: 'Falha da porta corrediça elétrica esquerda'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+      0x01:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNUSED_3:
+    bits: '2.2-2.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '3.7-3.6'
+    unused: true
+
+  UNUSED_5:
+    bits: '3.5-3.4'
+    unused: true
+
+  UNUSED_6:
+    bits: '3.3'
+    unused: true
+
+  UNUSED_7:
+    bits: '3.2'
+    unused: true
+
+  UNUSED_8:
+    bits: '3.1-3.0'
+    unused: true
+
+  UNUSED_9:
+    bits: '4.7'
+    unused: true
+
+  UNUSED_10:
+    bits: '4.6'
+    unused: true
+
+  UNUSED_11:
+    bits: '4.5-4.4'
+    unused: true
+
+  UNUSED_12:
+    bits: '4.3'
+    unused: true
+
+  UNUSED_13:
+    bits: '4.2-4.0'
+    unused: true
+
+  UNUSED_14:
+    bits: '5.7-5.4'
+    unused: true
+
+  UNUSED_15:
+    bits: '5.3-5.0'
+    unused: true

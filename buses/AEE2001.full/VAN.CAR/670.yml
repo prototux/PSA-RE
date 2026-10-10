@@ -1,0 +1,165 @@
+id: 0x670
+name: 'RETRACTABLE_ROOF_SLOW_STATUS'
+type: 'van'
+length: 5
+comment:
+  en: 'Retractable hard-top slow status, read by BSI with in-frame reply: vehicle configuration (coupe/cabriolet) and roof movement cycle.'
+  fr: 'État lent du toit escamotable, lu par la BSI avec réponse dans la trame : configuration du véhicule (coupé/cabriolet) et cycle de mouvement du toit.'
+  es: 'Estado lento del techo retráctil, leído por la BSI con respuesta en la trama: configuración del vehículo (coupé/descapotable) y ciclo de movimiento del techo.'
+  de: 'Langsamstatus des versenkbaren Hardtops, von der BSI mit Antwort im Rahmen gelesen: Fahrzeugkonfiguration (Coupé/Cabrio) und Dachbewegungszyklus.'
+  it: 'Stato lento del tettuccio rigido retrattile, letto dalla BSI con risposta nella trama: configurazione del veicolo (coupé/cabriolet) e ciclo di movimento del tetto.'
+  pl: 'Wolny stan chowanego twardego dachu, odczytywany przez BSI z odpowiedzią w ramce: konfiguracja pojazdu (coupé/kabriolet) i cykl ruchu dachu.'
+  ru: 'Медленный статус складной жёсткой крыши, считываемый BSI с ответом в кадре: конфигурация автомобиля (купе/кабриолет) и цикл движения крыши.'
+  zh: '硬顶敞篷车顶慢速状态,由BSI帧内应答读取:车辆配置(硬顶/敞篷)及车顶运动循环。'
+  hu: 'A behúzható kemény tető lassú állapota, a BSI által keretválasszal olvasva: jármű konfigurációja (kupé/kabrió) és a tető mozgási ciklusa.'
+  pt: 'Estado lento do teto rígido retrátil, lido pela BSI com resposta na trama: configuração do veículo (coupé/cabriolet) e ciclo de movimento do teto.'
+periodicity: ['1000ms']
+senders: ['BTE']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '2.7-2.4'
+    unused: true
+
+  VEHICLE_CONFIGURATION:
+    bits: '2.3-2.2'
+    comment:
+      en: 'Vehicle configuration (roof position); other values unspecified'
+      fr: 'Configuration véhicule ; autres valeurs non spécifiées'
+      es: 'Configuración del vehículo (posición del techo); otros valores no especificados'
+      de: 'Fahrzeugkonfiguration (Dachposition); andere Werte nicht spezifiziert'
+      it: 'Configurazione del veicolo (posizione del tetto); altri valori non specificati'
+      pl: 'Konfiguracja pojazdu (pozycja dachu); pozostałe wartości nieokreślone'
+      ru: 'Конфигурация автомобиля (положение крыши); остальные значения не определены'
+      zh: '车辆配置（车顶位置）；其他值未指定'
+      hu: 'Jármű konfiguráció (tető helyzete); egyéb értékek nincsenek meghatározva'
+      pt: 'Configuração do veículo (posição do teto); outros valores não especificados'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x01:
+        en: 'Coupe configuration (roof closed)'
+        fr: 'Configuration coupé (toit fermé)'
+        es: 'Configuración coupé (techo cerrado)'
+        de: 'Coupé-Konfiguration (Dach geschlossen)'
+        it: 'Configurazione coupé (tetto chiuso)'
+        pl: 'Konfiguracja coupé (dach zamknięty)'
+        ru: 'Конфигурация купе (крыша закрыта)'
+        zh: '轿跑车型配置(车顶关闭)'
+        hu: 'Coupé konfiguráció (tető zárva)'
+        pt: 'Configuração coupé (tejadilho fechado)'
+      0x02:
+        en: 'Cabriolet configuration (roof open)'
+        fr: 'Configuration cabriolet (toit ouvert)'
+        es: 'Configuración cabriolet (techo abierto)'
+        de: 'Cabrio-Konfiguration (Verdeck offen)'
+        it: 'Configurazione cabriolet (tetto aperto)'
+        pl: 'Konfiguracja kabriolet (dach otwarty)'
+        ru: 'Конфигурация кабриолет (крыша открыта)'
+        zh: '敞篷配置(车顶打开)'
+        hu: 'Kabrió konfiguráció (tető nyitva)'
+        pt: 'Configuração cabriolet (teto aberto)'
+    alternatives:
+      - note:
+          en: 'Also observed at bits 2.2-2.0'
+          fr: 'Aussi observé aux bits 2.2-2.0'
+          es: 'También observado en los bits 2.2-2.0'
+          de: 'Auch an den Bits 2.2-2.0 beobachtet'
+          it: 'Osservato anche ai bit 2.2-2.0'
+          pl: 'Obserwowany także na bitach 2.2-2.0'
+          ru: 'Также наблюдался в битах 2.2-2.0'
+          zh: '也观察到位于位2.2-2.0'
+          hu: 'Megfigyelve a(z) 2.2-2.0 biteken is'
+          pt: 'Também observado nos bits 2.2-2.0'
+        bits: '2.2-2.0'
+
+  ROOF_MOVEMENT_CYCLE:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Roof movement cycle in progress; other values invalid'
+      fr: 'Cycle de mouvement du toit en cours ; autres valeurs invalides'
+      es: 'Ciclo de movimiento del techo en curso; otros valores no válidos'
+      de: 'Dachbewegungszyklus läuft; andere Werte ungültig'
+      it: 'Ciclo di movimento del tetto in corso; altri valori non validi'
+      pl: 'Trwa cykl ruchu dachu; pozostałe wartości nieprawidłowe'
+      ru: 'Выполняется цикл движения крыши; остальные значения недействительны'
+      zh: '车顶动作循环进行中；其他值无效'
+      hu: 'Tetőmozgási ciklus folyamatban; egyéb értékek érvénytelenek'
+      pt: 'Ciclo de movimento do teto em curso; outros valores inválidos'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No movement'
+        fr: 'Aucun mouvement'
+        es: 'Sin movimiento'
+        de: 'Keine Bewegung'
+        it: 'Nessun movimento'
+        pl: 'Brak ruchu'
+        ru: 'Нет движения'
+        zh: '无运动'
+        hu: 'Nincs mozgás'
+        pt: 'Sem movimento'
+      0x01:
+        en: 'Closing cycle'
+        fr: 'Cycle de fermeture'
+        es: 'Ciclo de cierre'
+        de: 'Schließzyklus'
+        it: 'Ciclo di chiusura'
+        pl: 'Cykl zamykania'
+        ru: 'Цикл закрытия'
+        zh: '关闭循环'
+        hu: 'Zárási ciklus'
+        pt: 'Ciclo de fecho'
+      0x02:
+        en: 'Opening cycle'
+        fr: 'Cycle d''ouverture'
+        es: 'Ciclo de apertura'
+        de: 'Öffnungszyklus'
+        it: 'Ciclo di apertura'
+        pl: 'Cykl otwierania'
+        ru: 'Цикл открытия'
+        zh: '开启循环'
+        hu: 'Nyitási ciklus'
+        pt: 'Ciclo de abertura'
+
+  UNUSED_2:
+    bits: '3.7-3.0'
+    unused: true
+
+  FOOTER:
+    bits: '4.7-4.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

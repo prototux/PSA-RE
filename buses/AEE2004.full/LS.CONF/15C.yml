@@ -1,0 +1,274 @@
+id: 0x15C
+name: 'WIND_DEFLECTOR_STATUS'
+type: 'can'
+length: 3
+comment:
+  en: 'Wind deflector status: not-initialised flag, movement and position.'
+  fr: 'État du déflecteur : indicateur de non-initialisation, mouvement et position.'
+  es: 'Estado del deflector de viento: indicador de no inicializado, movimiento y posición.'
+  de: 'Status des Windabweisers: Nicht-initialisiert-Kennzeichen, Bewegung und Position.'
+  it: 'Stato del deflettore: indicatore di non inizializzato, movimento e posizione.'
+  pl: 'Stan deflektora powietrza: flaga braku inicjalizacji, ruch i pozycja.'
+  ru: 'Статус ветроотражателя: флаг отсутствия инициализации, движение и положение.'
+  zh: '风罩状态:未初始化标志、运动和位置。'
+  hu: 'A szélterelő állapota: inicializálatlanság jelzője, mozgás és helyzet.'
+  pt: 'Estado do defletor de ar: indicador de não inicializado, movimento e posição.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['100ms']
+senders: ['DEF']
+receivers: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7'
+    unused: true
+
+  DEFLECTOR_UNINITIALIZED:
+    bits: '1.6'
+    comment:
+      en: 'Wind deflector not initialized'
+      fr: 'Déflecteur non initialisé'
+      es: 'Deflector no inicializado'
+      de: 'Windabweiser nicht initialisiert'
+      it: 'Deflettore non inizializzato'
+      pl: 'Deflektor niezainicjowany'
+      ru: 'Дефлектор не инициализирован'
+      zh: '导流板未初始化'
+      hu: 'A szélterelő nincs inicializálva'
+      pt: 'Defletor não inicializado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Deflector initialised'
+        fr: 'Déflecteur initialisé'
+        es: 'Deflector inicializado'
+        de: 'Windabweiser initialisiert'
+        it: 'Deflettore inizializzato'
+        pl: 'Deflektor zainicjalizowany'
+        ru: 'Дефлектор инициализирован'
+        zh: '风罩已初始化'
+        hu: 'A szélterelő inicializálva'
+        pt: 'Defletor inicializado'
+      0x01:
+        en: 'Deflector uninitialised'
+        fr: 'Déflecteur désinitialisé'
+        es: 'Deflector desinicializado'
+        de: 'Nicht initialisierter Deflektor'
+        it: 'Deflettore non inizializzato'
+        pl: 'Niezainicjowany deflektor'
+        ru: 'Неинициализированный дефлектор'
+        zh: '未初始化的导流板'
+        hu: 'Nem inicializált terelőlap'
+        pt: 'Defletor não inicializado'
+
+  UNUSED_2:
+    bits: '1.5-1.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '2.7'
+    unused: true
+
+  DEFLECTOR_MOVEMENT:
+    bits: '2.6-2.4'
+    comment:
+      en: 'Wind deflector movement'
+      fr: 'Mouvement du déflecteur'
+      es: 'Movimiento del deflector'
+      de: 'Bewegung des Windabweisers'
+      it: 'Movimento del deflettore'
+      pl: 'Ruch deflektora'
+      ru: 'Движение дефлектора'
+      zh: '导流板运动状态'
+      hu: 'A szélterelő mozgása'
+      pt: 'Movimento do defletor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Deflector stop'
+        fr: 'Arrêt du déflecteur'
+        es: 'Parada del deflector'
+        de: 'Stopp der Luftleitklappe'
+        it: 'Arresto del deflettore'
+        pl: 'Zatrzymanie deflektora'
+        ru: 'Остановка дефлектора'
+        zh: '导流板停止'
+        hu: 'Terelőlap leállítása'
+        pt: 'Paragem do defletor'
+      0x01:
+        en: 'Deflector closing (from 2 to 1, from 1 to 0)'
+        fr: 'Fermeture déflecteur (de 2 vers 1, de 1 vers 0)'
+        es: 'Cierre del deflector (de 2 a 1, de 1 a 0)'
+        de: 'Schließen des Deflektors (von 2 auf 1, von 1 auf 0)'
+        it: 'Chiusura del deflettore (da 2 a 1, da 1 a 0)'
+        pl: 'Zamykanie deflektora (z 2 na 1, z 1 na 0)'
+        ru: 'Закрытие дефлектора (с 2 на 1, с 1 на 0)'
+        zh: '导流板关闭(从2到1,从1到0)'
+        hu: 'A terelőlemez zárása (2-ről 1-re, 1-ről 0-ra)'
+        pt: 'Fecho do defletor (de 2 para 1, de 1 para 0)'
+      0x02:
+        en: 'Deflector opening (from 0 to 1, from 1 to 2)'
+        fr: 'Ouverture déflecteur (de 0 vers 1, de 1 vers 2)'
+        es: 'Apertura del deflector (de 0 a 1, de 1 a 2)'
+        de: 'Öffnen des Deflektors (von 0 auf 1, von 1 auf 2)'
+        it: 'Apertura del deflettore (da 0 a 1, da 1 a 2)'
+        pl: 'Otwieranie deflektora (z 0 na 1, z 1 na 2)'
+        ru: 'Открытие дефлектора (с 0 на 1, с 1 на 2)'
+        zh: '导流板打开(从0到1,从1到2)'
+        hu: 'A terelőlemez nyitása (0-ról 1-re, 1-ről 2-re)'
+        pt: 'Abertura do defletor (de 0 para 1, de 1 para 2)'
+      0x03:
+        en: 'Blocked'
+        fr: 'Bloqué'
+        es: 'Bloqueado'
+        de: 'Blockiert'
+        it: 'Bloccato'
+        pl: 'Zablokowane'
+        ru: 'Заблокировано'
+        zh: '已阻塞'
+        hu: 'Blokkolva'
+        pt: 'Bloqueado'
+      0x04:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_4:
+    bits: '2.3-2.0'
+    unused: true
+
+  UNUSED_5:
+    bits: '3.7'
+    unused: true
+
+  DEFLECTOR_POSITION:
+    bits: '3.6-3.4'
+    comment:
+      en: 'Wind deflector position'
+      fr: 'Position du déflecteur'
+      es: 'Posición del deflector'
+      de: 'Position des Windabweisers'
+      it: 'Posizione del deflettore'
+      pl: 'Pozycja deflektora'
+      ru: 'Положение дефлектора'
+      zh: '导流板位置'
+      hu: 'A szélterelő helyzete'
+      pt: 'Posição do defletor'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x01:
+        en: 'In position 0 (closed)'
+        fr: 'En position 0 (fermé)'
+        es: 'En posición 0 (cerrado)'
+        de: 'In Position 0 (geschlossen)'
+        it: 'In posizione 0 (chiuso)'
+        pl: 'W pozycji 0 (zamknięte)'
+        ru: 'В положении 0 (закрыто)'
+        zh: '处于位置0(关闭)'
+        hu: '0. pozícióban (zárva)'
+        pt: 'Na posição 0 (fechado)'
+      0x02:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x03:
+        en: 'In position 1'
+        fr: 'En position 1'
+        es: 'En posición 1'
+        de: 'In Stellung 1'
+        it: 'In posizione 1'
+        pl: 'W pozycji 1'
+        ru: 'В положении 1'
+        zh: '处于位置1'
+        hu: '1. helyzetben'
+        pt: 'Em posição 1'
+      0x04:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x05:
+        en: 'In position 2 = maintenance position'
+        fr: 'En position 2 = position de maintenance'
+        es: 'En posición 2 = posición de mantenimiento'
+        de: 'In Position 2 = Wartungsposition'
+        it: 'In posizione 2 = posizione di manutenzione'
+        pl: 'W pozycji 2 = pozycja serwisowa'
+        ru: 'В положении 2 = сервисное положение'
+        zh: '位置2=维护位置'
+        hu: '2. pozícióban = karbantartási pozíció'
+        pt: 'Na posição 2 = posição de manutenção'
+      0x06:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x07:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+
+  UNUSED_6:
+    bits: '3.3'
+    unused: true
+
+  UNUSED_7:
+    bits: '3.2-3.0'
+    unused: true

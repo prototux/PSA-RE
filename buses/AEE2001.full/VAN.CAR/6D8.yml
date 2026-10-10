@@ -1,0 +1,122 @@
+id: 0x6D8
+name: 'RAIN_LIGHT_SENSOR_DATA'
+type: 'van'
+length: 7
+comment:
+  en: 'Light measurements from the rain/light sensor: ambient light level (instrument dimming) and right/left infra-red sunload (climate control).'
+  fr: 'Mesures de luminosité du capteur de pluie et de luminosité : niveau de luminosité ambiante (rhéostat combiné) et ensoleillement infrarouge droit/gauche (climatisation).'
+  es: 'Mediciones de luz del sensor de lluvia y luz: nivel de luz ambiental (regulación del cuadro de instrumentos) y carga solar infrarroja derecha/izquierda (climatización).'
+  de: 'Lichtmessungen des Regen-/Lichtsensors: Umgebungslichtpegel (Instrumentendimmung) und rechte/linke Infrarot-Sonneneinstrahlung (Klimaanlage).'
+  it: 'Misure di luminosità del sensore pioggia/luce: livello di luce ambientale (reostato quadro) e carico solare infrarosso destro/sinistro (climatizzazione).'
+  pl: 'Pomiary światła z czujnika deszczu/światła: poziom światła otoczenia (przyciemnianie wskaźników) oraz prawe/lewe nasłonecznienie w podczerwieni (klimatyzacja).'
+  ru: 'Измерения освещённости датчиком дождя/света: уровень окружающего освещения (регулировка яркости приборов) и правая/левая инфракрасная солнечная нагрузка (климат-контроль).'
+  zh: '雨光传感器的光照测量:环境光水平(仪表调光)及左右红外太阳负荷(空调)。'
+  hu: 'Az eső-/fényérzékelő fénymérései: környezeti fényszint (műszerfény-szabályozás) és a jobb/bal infravörös napterhelés (klíma).'
+  pt: 'Medições de luz do sensor de chuva/luz: nível de luz ambiente (regulação do quadrante) e carga solar por infravermelhos direita/esquerda (climatização).'
+periodicity: ['1000ms']
+senders: ['CDPL']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  AMBIENT_LIGHT:
+    bits: '2.7-3.0'
+    comment:
+      en: 'Ambient light level (saturates around 5000 lux)'
+      fr: 'Niveau de luminosité ambiante (saturation vers 5000 lux)'
+      es: 'Nivel de luz ambiental (satura en torno a 5000 lux)'
+      de: 'Umgebungslichtstärke (Sättigung bei etwa 5000 Lux)'
+      it: 'Livello di luminosità ambientale (saturazione intorno a 5000 lux)'
+      pl: 'Poziom oświetlenia otoczenia (nasycenie ok. 5000 luksów)'
+      ru: 'Уровень окружающего освещения (насыщение около 5000 люкс)'
+      zh: '环境光照度（约5000勒克斯时饱和）'
+      hu: 'Környezeti fényszint (kb. 5000 luxnál telítődik)'
+      pt: 'Nível de luz ambiente (satura por volta dos 5000 lux)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFFFF
+    default: 0x00
+
+  SUNLOAD_RIGHT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Right-hand infrared sunload sensor reading (also used by single-zone sensors)'
+      fr: 'Mesure du capteur d''ensoleillement infrarouge droit (aussi utilisée par les capteurs mono-zone)'
+      es: 'Lectura del sensor de radiación solar infrarroja derecho (también usada por sensores monozona)'
+      de: 'Messwert des rechten Infrarot-Sonnensensors (auch von Einzonen-Sensoren genutzt)'
+      it: 'Lettura del sensore di irraggiamento solare infrarosso destro (usata anche dai sensori monozona)'
+      pl: 'Odczyt prawego czujnika nasłonecznienia w podczerwieni (używany też przez czujniki jednostrefowe)'
+      ru: 'Показание правого инфракрасного датчика солнечной нагрузки (также используется однозонными датчиками)'
+      zh: '右侧红外日照传感器读数（单区传感器也使用此值）'
+      hu: 'A jobb oldali infravörös napterhelés-érzékelő értéke (egyzónás érzékelőknél is ezt használják)'
+      pt: 'Leitura do sensor de infravermelhos de carga solar direito (também utilizado por sensores de zona única)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  SUNLOAD_LEFT:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Left-hand infrared sunload sensor reading'
+      fr: 'Mesure du capteur d''ensoleillement infrarouge gauche'
+      es: 'Lectura del sensor de radiación solar infrarroja izquierdo'
+      de: 'Messwert des linken Infrarot-Sonnensensors'
+      it: 'Lettura del sensore di irraggiamento solare infrarosso sinistro'
+      pl: 'Odczyt lewego czujnika nasłonecznienia w podczerwieni'
+      ru: 'Показание левого инфракрасного датчика солнечной нагрузки'
+      zh: '左侧红外日照传感器读数'
+      hu: 'A bal oldali infravörös napterhelés-érzékelő értéke'
+      pt: 'Leitura do sensor de infravermelhos de carga solar esquerdo'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '6.7-6.0'
+    unused: true
+
+  FOOTER:
+    bits: '7.7-7.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

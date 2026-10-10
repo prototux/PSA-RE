@@ -1,0 +1,152 @@
+id: 0x202
+name: 'TRANSPONDER_AES_KEY_PROGRAMMING'
+type: 'can'
+length: 5
+comment:
+  en: 'Hybrid powertrain state from the vehicle control unit.'
+  fr: 'État du groupe motopropulseur hybride, issu du calculateur de contrôle du véhicule (VCU).'
+  es: 'Estado del grupo motopropulsor híbrido, procedente de la centralita de control del vehículo (VCU).'
+  de: 'Zustand des Hybridantriebsstrangs vom Fahrzeugsteuergerät (VCU).'
+  it: 'Stato del gruppo propulsore ibrido, dalla centralina di controllo del veicolo (VCU).'
+  pl: 'Stan hybrydowego układu napędowego z jednostki sterującej pojazdem (VCU).'
+  ru: 'Состояние гибридного силового агрегата от блока управления автомобилем (VCU).'
+  zh: '来自整车控制单元(VCU)的混合动力总成状态。'
+  hu: 'A hibrid hajtáslánc állapota a jármű vezérlőegységétől (VCU).'
+  pt: 'Estado do grupo motopropulsor híbrido da unidade de controlo do veículo.'
+periodicity: ['10ms']
+senders: ['E_VCU']
+receivers: ['ABS']
+
+signals:
+  FRONT_EMOTOR_SPEED:
+    bits: '1.7-2.4'
+    comment:
+      en: 'Front electric machine speed'
+      fr: 'Régime de la machine électrique avant'
+      es: 'Régimen de la máquina eléctrica delantera'
+      de: 'Drehzahl der vorderen E-Maschine'
+      it: 'Regime della macchina elettrica anteriore'
+      pl: 'Prędkość obrotowa przedniej maszyny elektrycznej'
+      ru: 'Частота вращения передней электромашины'
+      zh: '前电机转速'
+      hu: 'Az első elektromos gép fordulatszáma'
+      pt: 'Regime da máquina elétrica dianteira'
+    type: 'sint'
+    offset: 10
+    min: -16000
+    max: 16000
+    units: 'rpm'
+    invalid: 0x7FF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '2.3-2.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['10ms']
+    senders: ['E_VCU']
+    receivers: ['BSI', 'ABS']
+    signals:
+      FRONT_EMACHINE_PRECONTROL_STATE:
+        bits: '2.3'
+        comment:
+          en: 'Activation feedback of the front electric machine speed precontrol'
+          fr: 'Retour d''activation du précontrôle en régime de la machine électrique avant'
+          es: 'Retorno de activación del precontrol de régimen de la máquina eléctrica delantera'
+          de: 'Aktivierungsrückmeldung der Drehzahl-Vorsteuerung der vorderen E-Maschine'
+          it: 'Riscontro di attivazione del precontrollo di regime della macchina elettrica anteriore'
+          pl: 'Informacja zwrotna o aktywacji wstępnej kontroli obrotów przedniej maszyny elektrycznej'
+          ru: 'Обратная связь активации предварительного контроля частоты вращения передней электромашины'
+          zh: '前电机转速预控制的激活反馈'
+          hu: 'Az első elektromos gép fordulatszám-előszabályozásának aktiválási visszajelzése'
+          pt: 'Retorno de ativação do pré-controlo de regime da máquina elétrica dianteira'
+        type: 'bool'
+        values:
+          0x00:
+            en: 'Pre-control inactive'
+            fr: 'Précommande inactive'
+            es: 'Precontrol inactivo'
+            de: 'Vorsteuerung inaktiv'
+            it: 'Precontrollo inattivo'
+            pl: 'Sterowanie wyprzedzające nieaktywne'
+            ru: 'Предуправление неактивно'
+            zh: '预控制未激活'
+            hu: 'Előszabályozás inaktív'
+            pt: 'Pré-controlo inativo'
+          0x01:
+            en: 'Pre-control active'
+            fr: 'Pré-contrôle actif'
+            es: 'Precontrol activo'
+            de: 'Vorsteuerung aktiv'
+            it: 'Precontrollo attivo'
+            pl: 'Aktywna kontrola wstępna'
+            ru: 'Предварительное управление активно'
+            zh: '预控制激活'
+            hu: 'Előszabályzás aktív'
+            pt: 'Pré-controlo ativo'
+      AC_ELECTRIC_POWER_CONSUMPTION:
+        bits: '3.7-3.0'
+        comment:
+          en: 'Power consumed by the air conditioning components (electric compressor and high-voltage water heater)'
+          fr: 'Puissance consommée par les organes de climatisation (compresseur électrique et chauffage électrique de l''eau haute tension)'
+          es: 'Potencia consumida por los componentes de climatización (compresor eléctrico y calentador de agua de alta tensión)'
+          de: 'Von den Klimakomponenten verbrauchte Leistung (elektrischer Kompressor und Hochvolt-Wasserheizer)'
+          it: 'Potenza consumata dai componenti di climatizzazione (compressore elettrico e riscaldatore d''acqua ad alta tensione)'
+          pl: 'Moc pobierana przez elementy klimatyzacji (sprężarka elektryczna i grzałka wody wysokiego napięcia)'
+          ru: 'Мощность, потребляемая компонентами кондиционера (электрический компрессор и высоковольтный водяной нагреватель)'
+          zh: '空调部件(电动压缩机和高压水加热器)消耗的功率'
+          hu: 'A klímaberendezés elemei (elektromos kompresszor és nagyfeszültségű vízmelegítő) által fogyasztott teljesítmény'
+          pt: 'Potência consumida pelos componentes de climatização (compressor elétrico e aquecedor elétrico de água de alta tensão)'
+        type: 'uint'
+        factor: 50
+        min: 0
+        max: 12000
+        units: 'W'
+        invalid: 0xFF
+      PROCESS_COUNTER:
+        bits: '4.7-4.4'
+        comment:
+          en: '4-bit process counter'
+          fr: 'Compteur de process sur 4 bits'
+          es: 'Contador de proceso de 4 bits'
+          de: '4-Bit-Prozesszähler'
+          it: 'Contatore di processo a 4 bit'
+          pl: '4-bitowy licznik procesu'
+          ru: '4-битный счётчик процесса'
+          zh: '4位处理计数器'
+          hu: '4 bites folyamatszámláló'
+          pt: 'Contador de processo de 4 bits'
+        type: 'uint'
+        min: 0
+        max: 15
+      DCDC_OUTPUT_CURRENT:
+        bits: '5.7-5.0'
+        comment:
+          en: 'DC/DC converter output current'
+          fr: 'Courant de sortie du convertisseur DC/DC'
+          es: 'Corriente de salida del convertidor DC/DC'
+          de: 'Ausgangsstrom des DC/DC-Wandlers'
+          it: 'Corrente di uscita del convertitore DC/DC'
+          pl: 'Prąd wyjściowy przetwornicy DC/DC'
+          ru: 'Выходной ток DC/DC преобразователя'
+          zh: 'DC/DC转换器输出电流'
+          hu: 'A DC/DC átalakító kimeneti árama'
+          pt: 'Corrente de saída do conversor DC/DC'
+        type: 'uint'
+        factor: 1
+        min: 0
+        max: 250
+        units: 'A'
+        invalid: 0xFF

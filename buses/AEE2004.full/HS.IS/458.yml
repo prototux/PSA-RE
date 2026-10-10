@@ -1,0 +1,326 @@
+id: 0x458
+name: 'REAR_SELF_LEVELING_STATUS'
+type: 'can'
+length: 3
+comment:
+  en: 'Rear self-levelling suspension status: target ride height not reached, height correction in progress, ground-clearance alert request, fault and manual wake-up.'
+  fr: 'État de la suspension auto-nivelante arrière : hauteur de roulage cible non atteinte, correction de hauteur en cours, demande d''alerte garde au sol, défaut et réveil manuel.'
+  es: 'Estado de la suspensión autonivelante trasera: altura de marcha objetivo no alcanzada, corrección de altura en curso, solicitud de alerta de altura libre al suelo, fallo y activación manual.'
+  de: 'Status der selbstnivellierenden Hinterachsfederung: Ziel-Fahrhöhe nicht erreicht, laufende Höhenkorrektur, Anforderung Bodenfreiheitswarnung, Fehler und manuelle Weckung.'
+  it: 'Stato della sospensione autolivellante posteriore: altezza di marcia obiettivo non raggiunta, correzione altezza in corso, richiesta allarme altezza da terra, guasto e risveglio manuale.'
+  pl: 'Stan tylnego zawieszenia samopoziomującego: docelowa wysokość jazdy nieosiągnięta, trwająca korekta wysokości, żądanie alarmu prześwitu, usterka i ręczne wybudzenie.'
+  ru: 'Статус задней самовыравнивающейся подвески: целевая высота движения не достигнута, выполняется коррекция высоты, запрос предупреждения о дорожном просвете, неисправность и ручное пробуждение.'
+  zh: '后自动调平悬挂状态:未达到目标行驶高度、高度校正进行中、离地间隙警报请求、故障和手动唤醒。'
+  hu: 'A hátsó önszintező felfüggesztés állapota: a célmagasság nincs elérve, folyamatban lévő magasságkorrekció, talajtávolság-riasztási kérés, hiba és kézi ébresztés.'
+  pt: 'Estado da suspensão autonivelante traseira: altura-alvo não alcançada, correção de altura em curso, pedido de alerta de distância ao solo, avaria e ativação manual.'
+periodicity: ['50ms']
+senders: ['CAAR']
+receivers: ['ABS', 'CMM', 'BSI']
+
+signals:
+  CAAR_FAULT:
+    bits: '1.7-1.6'
+    comment:
+      en: 'CAAR (active ride height control) fault status'
+      fr: 'État de défaut du CAAR (correcteur d''assiette actif)'
+      es: 'Estado de fallo del CAAR (control activo de altura)'
+      de: 'Fehlerstatus des CAAR (aktive Niveauregulierung)'
+      it: 'Stato di guasto del CAAR (controllo attivo dell''assetto)'
+      pl: 'Stan usterki CAAR (aktywnej regulacji wysokości nadwozia)'
+      ru: 'Статус неисправности CAAR (активной регулировки клиренса)'
+      zh: 'CAAR(主动车身高度控制)故障状态'
+      hu: 'A CAAR (aktív magasságszabályozás) hibaállapota'
+      pt: 'Estado de falha do CAAR (corretor de assento ativo)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No CAAR fault'
+        fr: 'Pas de défaut CAAR'
+        es: 'Sin fallo CAAR'
+        de: 'Kein CAAR-Fehler'
+        it: 'Nessun guasto CAAR'
+        pl: 'Brak usterki CAAR'
+        ru: 'Нет неисправности CAAR'
+        zh: '无CAAR故障'
+        hu: 'Nincs CAAR hiba'
+        pt: 'Sem falha CAAR'
+      0x01:
+        en: 'Severity-3 CAAR fault detected'
+        fr: 'Défaut de gravité 3 CAAR détecté'
+        es: 'Fallo CAAR de gravedad 3 detectado'
+        de: 'CAAR-Fehler Schweregrad 3 erkannt'
+        it: 'Guasto CAAR di gravità 3 rilevato'
+        pl: 'Wykryto usterkę CAAR stopnia 3'
+        ru: 'Обнаружена неисправность CAAR степени тяжести 3'
+        zh: '检测到CAAR 3级严重故障'
+        hu: '3. súlyossági fokú CAAR hiba észlelve'
+        pt: 'Avaria CAAR de gravidade 3 detetada'
+      0x02:
+        en: 'Severity-4 CAAR fault detected'
+        fr: 'Défaut de gravité 4 CAAR détecté'
+        es: 'Fallo CAAR de gravedad 4 detectado'
+        de: 'CAAR-Fehler Schweregrad 4 erkannt'
+        it: 'Guasto CAAR di gravità 4 rilevato'
+        pl: 'Wykryto usterkę CAAR stopnia 4'
+        ru: 'Обнаружена неисправность CAAR степени тяжести 4'
+        zh: '检测到CAAR 4级严重故障'
+        hu: '4. súlyossági fokú CAAR hiba észlelve'
+        pt: 'Falha CAAR de gravidade 4 detetada'
+      0x03:
+        unused: true
+
+  HEIGHT_CORRECTION_IN_PROGRESS:
+    bits: '1.5'
+    comment:
+      en: 'Vehicle height adjustment in progress'
+      fr: 'Correction de hauteur du véhicule en cours'
+      es: 'Corrección de altura del vehículo en curso'
+      de: 'Fahrzeughöhenkorrektur läuft'
+      it: 'Correzione dell''altezza del veicolo in corso'
+      pl: 'Trwa korekta wysokości pojazdu'
+      ru: 'Выполняется коррекция клиренса автомобиля'
+      zh: '车辆高度修正进行中'
+      hu: 'A jármű magasságkorrekciója folyamatban'
+      pt: 'Correção de altura do veículo em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Correction not active'
+        fr: 'Pas de correction en cours'
+        es: 'Sin corrección en curso'
+        de: 'Keine Korrektur aktiv'
+        it: 'Nessuna correzione in corso'
+        pl: 'Brak trwającej korekty'
+        ru: 'Коррекция не выполняется'
+        zh: '无校正进行中'
+        hu: 'Nincs folyamatban korrekció'
+        pt: 'Correção não ativa'
+      0x01:
+        en: 'Correction active'
+        fr: 'Correction active'
+        es: 'Corrección activa'
+        de: 'Korrektur aktiv'
+        it: 'Correzione attiva'
+        pl: 'Aktywna korekta'
+        ru: 'Коррекция активна'
+        zh: '校正激活'
+        hu: 'Korrekció aktív'
+        pt: 'Correção ativa'
+
+  CAAR_MANUAL_FUNCTION_WAKEUP:
+    bits: '1.4'
+    comment:
+      en: 'CAAR manual function wake-up request'
+      fr: 'Demande de réveil de la fonction manuelle du CAAR'
+      es: 'Solicitud de activación de la función manual del CAAR'
+      de: 'Weckanforderung der manuellen CAAR-Funktion'
+      it: 'Richiesta di risveglio della funzione manuale del CAAR'
+      pl: 'Żądanie wybudzenia funkcji ręcznej CAAR'
+      ru: 'Запрос пробуждения ручной функции CAAR'
+      zh: 'CAAR手动功能唤醒请求'
+      hu: 'A CAAR manuális funkciójának ébresztési kérése'
+      pt: 'Pedido de ativação da função manual do CAAR'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No partial wake-up request'
+        fr: 'Pas de demande de réveil partiel'
+        es: 'Sin solicitud de activación parcial'
+        de: 'Keine Anforderung eines Teilaufwachens'
+        it: 'Nessuna richiesta di risveglio parziale'
+        pl: 'Brak żądania częściowego wybudzenia'
+        ru: 'Нет запроса частичного пробуждения'
+        zh: '无部分唤醒请求'
+        hu: 'Nincs részleges ébresztési kérés'
+        pt: 'Sem pedido de ativação parcial'
+      0x01:
+        en: 'Partial wake-up requested'
+        fr: 'Réveil partiel demandé'
+        es: 'Activación parcial solicitada'
+        de: 'Teilaufwachen angefordert'
+        it: 'Riattivazione parziale richiesta'
+        pl: 'Żądanie częściowego wybudzenia'
+        ru: 'Запрошено частичное пробуждение'
+        zh: '请求部分唤醒'
+        hu: 'Részleges ébresztés kérve'
+        pt: 'Despertar parcial pedido'
+
+  UNUSED_1:
+    bits: '1.3-1.2'
+    unused: true
+
+  ROLL_TRIM_NOT_REACHED:
+    bits: '1.1'
+    comment:
+      en: 'Roll trim angle target not reached'
+      fr: 'Angle d''assiette de roulis non atteint'
+      es: 'Ángulo de asiento de balanceo no alcanzado'
+      de: 'Wankneigungswinkel nicht erreicht'
+      it: 'Angolo di assetto di rollio non raggiunto'
+      pl: 'Nieosiągnięty docelowy kąt przechyłu'
+      ru: 'Целевой угол крена не достигнут'
+      zh: '侧倾姿态角未达到'
+      hu: 'A dőlésszög célértéke nem érte el'
+      pt: 'Ângulo de assento de rolamento não atingido'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rolling trim angle reached'
+        fr: 'Assiette de roulage atteinte'
+        es: 'Ángulo de asiento de rodadura alcanzado'
+        de: 'Fahrniveau erreicht'
+        it: 'Assetto di marcia raggiunto'
+        pl: 'Osiągnięto przechył jazdy'
+        ru: 'Достигнут угол крена при движении'
+        zh: '已达到行驶姿态'
+        hu: 'Menetdőlésszög elérve'
+        pt: 'Ângulo de assento de rolamento atingido'
+      0x01:
+        en: 'Driving trim (pitch) not reached'
+        fr: 'Assiette de roulage non atteinte'
+        es: 'Actitud de marcha no alcanzada'
+        de: 'Fahrneigung nicht erreicht'
+        it: 'Assetto di marcia non raggiunto'
+        pl: 'Nie osiągnięto przechyłu jazdy'
+        ru: 'Не достигнут угол наклона при движении'
+        zh: '未达到行驶姿态'
+        hu: 'A menetdőlés nem érte el a célértéket'
+        pt: 'Assento (atitude) de marcha não atingido'
+
+  UNUSED_2:
+    bits: '2.7-2.6'
+    unused: true
+
+  CAAR_GROUND_CLEARANCE_ALERT:
+    bits: '2.5-2.3'
+    comment:
+      en: 'CAAR ground clearance alert (too high/too low)'
+      fr: 'Alerte de garde au sol CAAR (trop haute/trop basse)'
+      es: 'Alerta de altura al suelo CAAR (demasiado alta/demasiado baja)'
+      de: 'CAAR-Bodenfreiheitswarnung (zu hoch/zu niedrig)'
+      it: 'Avviso di altezza da terra CAAR (troppo alta/troppo bassa)'
+      pl: 'Ostrzeżenie o prześwicie CAAR (zbyt duży/zbyt mały)'
+      ru: 'Предупреждение о дорожном просвете CAAR (слишком большой/слишком малый)'
+      zh: 'CAAR离地间隙警告(过高/过低)'
+      hu: 'CAAR hasmagasság-figyelmeztetés (túl magas/túl alacsony)'
+      pt: 'Alerta de altura ao solo CAAR (demasiado alta/demasiado baixa)'
+    type: 'enum'
+    default: 0x07
+    values:
+      0x00:
+        en: 'No ground clearance alert'
+        fr: 'Pas d''alerte de garde au sol'
+        es: 'Sin alerta de altura libre al suelo'
+        de: 'Keine Bodenfreiheitswarnung'
+        it: 'Nessun allarme di altezza da terra'
+        pl: 'Brak ostrzeżenia o prześwicie'
+        ru: 'Нет предупреждения о дорожном просвете'
+        zh: '无离地间隙警告'
+        hu: 'Nincs hasmagasság-figyelmeztetés'
+        pt: 'Sem alerta de altura ao solo'
+      0x01:
+        en: 'Ground clearance too high warning'
+        fr: 'Alerte garde au sol trop élevée'
+        es: 'Aviso de altura libre al suelo demasiado alta'
+        de: 'Warnung Bodenfreiheit zu hoch'
+        it: 'Avviso altezza da terra troppo elevata'
+        pl: 'Ostrzeżenie o zbyt dużym prześwicie'
+        ru: 'Предупреждение о слишком большом дорожном просвете'
+        zh: '离地间隙过高警告'
+        hu: 'Figyelmeztetés: túl nagy a hasmagasság'
+        pt: 'Aviso de altura ao solo demasiado elevada'
+      0x02:
+        en: 'Ground clearance too low alert'
+        fr: 'Alerte de garde au sol trop basse'
+        es: 'Alerta de distancia al suelo demasiado baja'
+        de: 'Warnung Bodenfreiheit zu gering'
+        it: 'Avviso di altezza da terra troppo bassa'
+        pl: 'Ostrzeżenie o zbyt niskim prześwicie'
+        ru: 'Предупреждение о слишком малом дорожном просвете'
+        zh: '离地间隙过低警示'
+        hu: 'Túl alacsony hasmagasság figyelmeztetés'
+        pt: 'Alerta de altura ao solo demasiado baixa'
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        en: 'Maximum ride height alert'
+        fr: 'Alerte garde au sol maximale'
+        es: 'Alerta de altura al suelo máxima'
+        de: 'Warnung maximale Bodenfreiheit'
+        it: 'Allarme altezza da terra massima'
+        pl: 'Alarm maksymalnego prześwitu'
+        ru: 'Предупреждение о максимальном клиренсе'
+        zh: '最大离地间隙警报'
+        hu: 'Maximális hasmagasság-riasztás'
+        pt: 'Alerta de altura ao solo máxima'
+      0x06:
+        en: 'Minimum ground clearance alert'
+        fr: 'Alerte garde au sol minimale'
+        es: 'Alerta de altura mínima al suelo'
+        de: 'Warnung Mindestbodenfreiheit'
+        it: 'Avviso altezza minima da terra'
+        pl: 'Alert minimalnego prześwitu'
+        ru: 'Предупреждение о минимальном дорожном просвете'
+        zh: '最小离地间隙警告'
+        hu: 'Minimális hasmagasság-riasztás'
+        pt: 'Alerta de altura mínima ao solo'
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  CAAR_HMI_TYPE:
+    bits: '2.2-2.1'
+    comment:
+      en: 'CAAR HMI type'
+      fr: 'Type d''IHM du CAAR'
+      es: 'Tipo de HMI del CAAR'
+      de: 'HMI-Typ des CAAR'
+      it: 'Tipo di HMI del CAAR'
+      pl: 'Typ HMI CAAR'
+      ru: 'Тип HMI CAAR'
+      zh: 'CAAR人机界面类型'
+      hu: 'A CAAR kezelőfelület típusa'
+      pt: 'Tipo de interface (IHM) do CAAR'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'HMI type 1'
+        fr: 'IHM type 1'
+        es: 'IHM tipo 1'
+        de: 'HMI Typ 1'
+        it: 'HMI tipo 1'
+        pl: 'HMI typu 1'
+        ru: 'HMI тип 1'
+        zh: '人机界面类型1'
+        hu: 'HMI 1. típus'
+        pt: 'IHM tipo 1'
+      0x01:
+        en: 'HMI type 2'
+        fr: 'IHM type 2'
+        es: 'IHM tipo 2'
+        de: 'HMI Typ 2'
+        it: 'HMI tipo 2'
+        pl: 'Interfejs typu 2'
+        ru: 'Интерфейс типа 2'
+        zh: '人机界面类型2'
+        hu: '2. típusú kezelőfelület'
+        pt: 'IHM tipo 2'
+      0x02:
+        unused: true
+      0x03:
+        unused: true

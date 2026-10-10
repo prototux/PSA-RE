@@ -1,0 +1,434 @@
+id: 0x048
+name: 'ENGINE_AR2S_SYNCHRONISATION'
+type: 'can'
+length: 3
+comment:
+  en: 'Commands sent by the BSI to the rear body computer: rear cigarette lighter, boot lighting, sunroof activation, rear dome light, boot opening, rear window opening, fuel flap opening and sun blind.'
+  fr: 'Commandes envoyées par la BSI au calculateur de servitude arrière : allume-cigare arrière, éclairage du coffre, activation du toit ouvrant, plafonnier arrière, ouverture du coffre, ouverture de lunette arrière, ouverture de trappe à carburant et store.'
+  es: 'Órdenes enviadas por la BSI a la centralita de servidumbre trasera: encendedor trasero, iluminación del maletero, activación del techo solar, luz interior trasera, apertura del maletero, apertura de la luneta trasera, apertura de la trampilla de combustible y estor.'
+  de: 'Von der BSI an das hintere Bordnetzsteuergerät gesendete Befehle: hinterer Zigarettenanzünder, Kofferraumbeleuchtung, Schiebedachaktivierung, hintere Innenleuchte, Kofferraumöffnung, Heckscheibenöffnung, Tankklappenöffnung und Sonnenrollo.'
+  it: 'Comandi inviati dalla BSI alla centralina servizi posteriore: accendisigari posteriore, illuminazione bagagliaio, attivazione tettuccio apribile, luce di cortesia posteriore, apertura bagagliaio, apertura lunotto, apertura sportello carburante e tendina.'
+  pl: 'Polecenia wysyłane przez BSI do tylnego sterownika obsługowego: tylna zapalniczka, oświetlenie bagażnika, aktywacja szyberdachu, tylne oświetlenie wnętrza, otwarcie bagażnika, otwarcie tylnej szyby, otwarcie klapki wlewu paliwa i roleta.'
+  ru: 'Команды, отправляемые BSI в задний сервисный блок кузова: задний прикуриватель, освещение багажника, активация люка, задний плафон, открытие багажника, открытие заднего стекла, открытие лючка бака и шторка.'
+  zh: '由BSI发送给后车身服务ECU的命令：后点烟器、后备箱照明、天窗激活、后顶灯、后备箱开启、后窗开启、燃油盖开启及遮阳帘。'
+  hu: 'A BSI parancsai a hátsó karosszéria-vezérlőegység felé: hátsó szivargyújtó, csomagtérvilágítás, napfénytető aktiválása, hátsó belső lámpa, csomagtérnyitás, hátsó ablak nyitása, üzemanyagtöltő-fedél nyitása és napellenző.'
+  pt: 'Comandos enviados pela BSI ao computador de servidão traseiro: isqueiro traseiro, iluminação da bagageira, ativação do teto de abrir, luz de teto traseira, abertura da bagageira, abertura do vidro traseiro, abertura da tampa do depósito e estore.'
+periodicity: ['100ms']
+senders: ['BSI']
+receivers: ['BSC', 'BSR']
+
+signals:
+  REAR_WIPER_OR_FUEL_FLAP_COMMAND:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Rear windscreen wiper or fuel flap control'
+      fr: 'Commande de l''essuie-vitre arrière ou de la trappe à carburant'
+      es: 'Mando del limpiaparabrisas trasero o de la trampilla de combustible'
+      de: 'Steuerung des Heckscheibenwischers oder der Tankklappe'
+      it: 'Comando del tergilunotto posteriore o dello sportello del serbatoio'
+      pl: 'Sterowanie tylną wycieraczką lub klapką wlewu paliwa'
+      ru: 'Управление задним стеклоочистителем или лючком топливного бака'
+      zh: '后雨刷或油箱盖控制'
+      hu: 'A hátsó ablaktörlő vagy az üzemanyag-betöltő nyílás fedelének vezérlése'
+      pt: 'Comando do limpa-para-brisas traseiro ou da tampa de combustível'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Compulsory stop / Not used'
+        fr: 'Arrêt fixe / Non utilisée'
+        es: 'Parada fija / No utilizada'
+        de: 'Feststehender Halt / Nicht verwendet'
+        it: 'Arresto fisso / Non utilizzato'
+        pl: 'Stały przystanek / Nieużywane'
+        ru: 'Обязательная остановка / Не используется'
+        zh: '固定停止 / 未使用'
+        hu: 'Kötelező megállás / Nem használt'
+        pt: 'Paragem fixa / Não utilizada'
+      0x01:
+        en: 'Immediate stop / Sleep'
+        fr: 'Arrêt immédiat / Repos'
+        es: 'Parada inmediata / Reposo'
+        de: 'Sofortiger Stopp / Ruhe'
+        it: 'Arresto immediato / Riposo'
+        pl: 'Natychmiastowe zatrzymanie / Spoczynek'
+        ru: 'Немедленная остановка / Покой'
+        zh: '立即停止/休眠'
+        hu: 'Azonnali leállás / Nyugalmi állapot'
+        pt: 'Paragem imediata / Repouso'
+      0x02:
+        en: 'Running / flap opening'
+        fr: 'Marche / ouverture de la trappe'
+        es: 'Funcionamiento / apertura de la trampilla'
+        de: 'Betrieb / Klappe öffnet'
+        it: 'Funzionamento / apertura dello sportello'
+        pl: 'Praca / otwieranie klapki'
+        ru: 'Работа / открытие лючка'
+        zh: '运行/舱盖打开'
+        hu: 'Működés / fedél nyitása'
+        pt: 'Em funcionamento / abertura da comporta'
+      0x03:
+        unused: true
+
+  REAR_ROOF_LIGHT_COMMAND:
+    bits: '1.5-1.4'
+    comment:
+      en: 'Rear roof (courtesy) light control'
+      fr: 'Commande du plafonnier arrière'
+      es: 'Mando de la luz de techo trasera'
+      de: 'Steuerung der hinteren Dachleuchte'
+      it: 'Comando della luce di cortesia posteriore'
+      pl: 'Sterowanie tylną lampką sufitową'
+      ru: 'Управление задним плафоном освещения салона'
+      zh: '后排车顶灯控制'
+      hu: 'A hátsó tetővilágítás vezérlése'
+      pt: 'Comando da luz de teto traseira'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Immediate stop'
+        fr: 'Arrêt immédiat'
+        es: 'Parada inmediata'
+        de: 'Sofortiger Stopp'
+        it: 'Arresto immediato'
+        pl: 'Natychmiastowe zatrzymanie'
+        ru: 'Немедленная остановка'
+        zh: '立即停止'
+        hu: 'Azonnali leállítás'
+        pt: 'Paragem imediata'
+      0x01:
+        en: 'PWM stop'
+        fr: 'Arrêt PWM'
+        es: 'Parada PWM'
+        de: 'PWM-Stopp'
+        it: 'Arresto PWM'
+        pl: 'Zatrzymanie PWM'
+        ru: 'Остановка ШИМ'
+        zh: 'PWM停止'
+        hu: 'PWM leállítás'
+        pt: 'Paragem PWM'
+      0x02:
+        en: 'PWM speed'
+        fr: 'Marche PWM'
+        es: 'Velocidad PWM'
+        de: 'PWM-Drehzahl'
+        it: 'Velocità PWM'
+        pl: 'Prędkość PWM'
+        ru: 'Скорость PWM'
+        zh: 'PWM转速'
+        hu: 'PWM sebesség'
+        pt: 'Velocidade PWM'
+      0x03:
+        en: 'Immediate speed'
+        fr: 'Marche immédiate'
+        es: 'Marcha inmediata'
+        de: 'Sofortiger Lauf'
+        it: 'Marcia immediata'
+        pl: 'Natychmiastowy bieg'
+        ru: 'Немедленный запуск'
+        zh: '立即运转'
+        hu: 'Azonnali járatás'
+        pt: 'Marcha imediata'
+
+  BOOT_OPENING_COMMAND:
+    bits: '1.3'
+    comment:
+      en: 'Boot (trunk) opening control'
+      fr: 'Commande d''ouverture du coffre'
+      es: 'Mando de apertura del maletero'
+      de: 'Steuerung zum Öffnen des Kofferraums'
+      it: 'Comando di apertura del bagagliaio'
+      pl: 'Sterowanie otwieraniem bagażnika'
+      ru: 'Управление открытием багажника'
+      zh: '后备箱开启控制'
+      hu: 'A csomagtér nyitásának vezérlése'
+      pt: 'Comando de abertura da mala'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rest'
+        fr: 'Repos'
+        es: 'Reposo'
+        de: 'Ruhe'
+        it: 'Riposo'
+        pl: 'Spoczynek'
+        ru: 'Покой'
+        zh: '静止'
+        hu: 'Nyugalmi állapot'
+        pt: 'Repouso'
+      0x01:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+
+  HEATED_REAR_WINDOW_COMMAND:
+    bits: '1.2'
+    comment:
+      en: 'Heated rear window control'
+      fr: 'Commande de la lunette arrière chauffante'
+      es: 'Mando de la luneta térmica trasera'
+      de: 'Steuerung der beheizbaren Heckscheibe'
+      it: 'Comando del lunotto termico posteriore'
+      pl: 'Sterowanie ogrzewaną tylną szybą'
+      ru: 'Управление обогревом заднего стекла'
+      zh: '后风窗加热控制'
+      hu: 'A fűthető hátsó szélvédő vezérlése'
+      pt: 'Comando do vidro traseiro térmico'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rest'
+        fr: 'Repos'
+        es: 'Reposo'
+        de: 'Ruhe'
+        it: 'Riposo'
+        pl: 'Spoczynek'
+        ru: 'Покой'
+        zh: '静止'
+        hu: 'Nyugalmi állapot'
+        pt: 'Repouso'
+      0x01:
+        en: 'Actuate'
+        fr: 'Actionner'
+        es: 'Accionar'
+        de: 'Betätigen'
+        it: 'Azionare'
+        pl: 'Uruchomić'
+        ru: 'Привести в действие'
+        zh: '操作'
+        hu: 'Működtetés'
+        pt: 'Acionar'
+
+  UNUSED_1:
+    bits: '1.1-1.0'
+    unused: true
+
+  FUEL_FLAP_OPENING_COMMAND:
+    bits: '2.7'
+    comment:
+      en: 'Fuel flap opening control'
+      fr: 'Commande d''ouverture de la trappe à carburant'
+      es: 'Mando de apertura de la trampilla de combustible'
+      de: 'Steuerung zum Öffnen der Tankklappe'
+      it: 'Comando di apertura dello sportello del serbatoio'
+      pl: 'Sterowanie otwieraniem klapki wlewu paliwa'
+      ru: 'Управление открытием лючка топливного бака'
+      zh: '油箱盖开启控制'
+      hu: 'Az üzemanyag-betöltő nyílás fedelének nyitásvezérlése'
+      pt: 'Comando de abertura da tampa de combustível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rest'
+        fr: 'Repos'
+        es: 'Reposo'
+        de: 'Ruhe'
+        it: 'Riposo'
+        pl: 'Spoczynek'
+        ru: 'Покой'
+        zh: '静止'
+        hu: 'Nyugalmi állapot'
+        pt: 'Repouso'
+      0x01:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+
+  REAR_WINDOW_OPENING_COMMAND:
+    bits: '2.6'
+    comment:
+      en: 'Rear window opening control'
+      fr: 'Commande d''ouverture de la lunette arrière'
+      es: 'Mando de apertura de la luneta trasera'
+      de: 'Steuerung zum Öffnen der Heckscheibe'
+      it: 'Comando di apertura del lunotto posteriore'
+      pl: 'Sterowanie otwieraniem tylnej szyby'
+      ru: 'Управление открытием заднего стекла'
+      zh: '后风窗开启控制'
+      hu: 'A hátsó szélvédő nyitásának vezérlése'
+      pt: 'Comando de abertura do vidro traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rest'
+        fr: 'Repos'
+        es: 'Reposo'
+        de: 'Ruhe'
+        it: 'Riposo'
+        pl: 'Spoczynek'
+        ru: 'Покой'
+        zh: '静止'
+        hu: 'Nyugalmi állapot'
+        pt: 'Repouso'
+      0x01:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+
+  REAR_CIGAR_LIGHTER_COMMAND:
+    bits: '2.5'
+    comment:
+      en: 'Rear cigarette lighter control'
+      fr: 'Commande de l''allume-cigare arrière'
+      es: 'Mando del encendedor trasero'
+      de: 'Steuerung des hinteren Zigarettenanzünders'
+      it: 'Comando dell''accendisigari posteriore'
+      pl: 'Sterowanie tylną zapalniczką'
+      ru: 'Управление задним прикуривателем'
+      zh: '后排点烟器控制'
+      hu: 'A hátsó szivargyújtó vezérlése'
+      pt: 'Comando do isqueiro traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Accesso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Be'
+        pt: 'Ligado'
+
+  UNUSED_2:
+    bits: '2.4'
+    unused: true
+
+  BOOT_LIGHT_COMMAND:
+    bits: '2.3'
+    comment:
+      en: 'Boot (trunk) light control'
+      fr: 'Commande de l''éclairage du coffre'
+      es: 'Mando de la iluminación del maletero'
+      de: 'Steuerung der Kofferraumbeleuchtung'
+      it: 'Comando dell''illuminazione del bagagliaio'
+      pl: 'Sterowanie oświetleniem bagażnika'
+      ru: 'Управление освещением багажника'
+      zh: '后备箱灯控制'
+      hu: 'A csomagtér-világítás vezérlése'
+      pt: 'Comando da iluminação da mala'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Éteint'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Allumé'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączony'
+        ru: 'Включено'
+        zh: '开'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  REAR_ELECTRIC_BLIND_COMMAND:
+    bits: '2.2-2.1'
+    comment:
+      en: 'Rear electric sun blind control'
+      fr: 'Commande d''ouverture du store électrique arrière'
+      es: 'Mando del estor eléctrico trasero'
+      de: 'Steuerung des elektrischen Heckrollos'
+      it: 'Comando della tendina parasole elettrica posteriore'
+      pl: 'Sterowanie tylną elektryczną roletą przeciwsłoneczną'
+      ru: 'Управление задней электрической шторкой'
+      zh: '后排电动遮阳帘控制'
+      hu: 'A hátsó elektromos napellenző vezérlése'
+      pt: 'Comando de abertura do estore elétrico traseiro'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rest'
+        fr: 'Repos'
+        es: 'Reposo'
+        de: 'Ruhe'
+        it: 'Riposo'
+        pl: 'Spoczynek'
+        ru: 'Покой'
+        zh: '静止'
+        hu: 'Nyugalmi állapot'
+        pt: 'Repouso'
+      0x01:
+        en: 'Opening'
+        fr: 'Ouverture'
+        es: 'Apertura'
+        de: 'Öffnung'
+        it: 'Apertura'
+        pl: 'Otwieranie'
+        ru: 'Открытие'
+        zh: '开启'
+        hu: 'Nyitás'
+        pt: 'Abertura'
+      0x02:
+        en: 'Closing'
+        fr: 'Fermeture'
+        es: 'Cierre'
+        de: 'Schließen'
+        it: 'Chiusura'
+        pl: 'Zamykanie'
+        ru: 'Закрытие'
+        zh: '关闭中'
+        hu: 'Zárás'
+        pt: 'A fechar'
+      0x03:
+        unused: true
+
+  UNUSED_3:
+    bits: '2.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '3.7-3.0'
+    unused: true

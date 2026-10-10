@@ -1,0 +1,461 @@
+id: 0x1C7
+name: 'BRAKE_DYNAMIC_STATUS'
+type: 'can'
+length: 6
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  DCDC_LV_VOLTAGE_SETPOINT:
+    bits: '2.7-3.5'
+    comment:
+      en: 'DC/DC converter voltage setpoint, low-voltage side'
+      fr: 'Consigne de tension du convertisseur DC/DC, côté basse tension'
+      es: 'Consigna de tensión del convertidor DC/DC, lado de baja tensión'
+      de: 'Spannungssollwert des DC/DC-Wandlers, Niedervoltseite'
+      it: 'Valore di tensione richiesto del convertitore DC/DC, lato bassa tensione'
+      pl: 'Zadane napięcie przetwornicy DC/DC, strona niskiego napięcia'
+      ru: 'Заданное напряжение DC/DC-преобразователя, сторона низкого напряжения'
+      zh: 'DC/DC转换器低压侧电压设定值'
+      hu: 'A DC/DC átalakító feszültség-alapjele, kisfeszültségű oldal'
+      pt: 'Consigna de tensão do conversor DC/DC, lado de baixa tensão'
+    type: 'uint'
+    factor: 0.01
+    offset: 5
+    min: 5
+    max: 18
+    units: 'V'
+    default: 0x230
+
+  GEAR_LEVER_REQUEST_SAFETY:
+    bits: '3.4-3.2'
+    comment:
+      en: 'Driver request at the gear lever, validated for the safety level'
+      fr: 'Demande du conducteur au levier, validée pour le niveau de sécurité'
+      es: 'Solicitud del conductor en la palanca, validada para el nivel de seguridad'
+      de: 'Fahreranforderung am Wählhebel, für die Sicherheitsebene freigegeben'
+      it: 'Richiesta del conducente alla leva, convalidata per il livello di sicurezza'
+      pl: 'Żądanie kierowcy z dźwigni, zatwierdzone dla poziomu bezpieczeństwa'
+      ru: 'Запрос водителя на рычаге, подтверждённый для уровня безопасности'
+      zh: '驾驶员换挡杆请求(安全级已验证)'
+      hu: 'A vezető váltókarnál leadott kérése, a biztonsági szint számára hitelesítve'
+      pt: 'Pedido do condutor na alavanca, validado para o nível de segurança'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Reverse gear'
+        fr: 'Marche arrière'
+        es: 'Marcha atrás'
+        de: 'Rückwärtsgang'
+        it: 'Retromarcia'
+        pl: 'Bieg wsteczny'
+        ru: 'Задний ход'
+        zh: '倒挡'
+        hu: 'Hátrameneti fokozat'
+        pt: 'Marcha-atrás'
+      0x02:
+        en: 'Centre (neutral)'
+        fr: 'Neutre'
+        es: 'Centro (neutro)'
+        de: 'Mitte (neutral)'
+        it: 'Centro (neutro)'
+        pl: 'Środek (neutralny)'
+        ru: 'Центр (нейтраль)'
+        zh: '居中（中立）'
+        hu: 'Középső (semleges)'
+        pt: 'Centro (neutro)'
+      0x03:
+        en: 'Automatic'
+        fr: 'Automatique'
+        es: 'Automático'
+        de: 'Automatisch'
+        it: 'Automatico'
+        pl: 'Automatyczny'
+        ru: 'Автоматически'
+        zh: '自动'
+        hu: 'Automatikus'
+        pt: 'Automático'
+      0x04:
+        en: 'Manual'
+        fr: 'Manuel'
+        es: 'Manual'
+        de: 'Manuell'
+        it: 'Manuale'
+        pl: 'Ręczny'
+        ru: 'Ручной'
+        zh: '手动'
+        hu: 'Kézi'
+        pt: 'Manual'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  REAR_MSR_TORQUE_FROM_ESP:
+    bits: '3.1-4.1'
+    comment:
+      en: 'Rear MSR torque from the ESP safety level'
+      fr: 'Couple MSR arrière transmis par l''ESP au niveau de sécurité'
+      es: 'Par MSR trasero procedente del nivel de seguridad del ESP'
+      de: 'Hinteres MSR-Drehmoment von der ESP-Sicherheitsebene'
+      it: 'Coppia MSR posteriore proveniente dal livello di sicurezza ESP'
+      pl: 'Tylny moment obrotowy MSR pochodzący z poziomu bezpieczeństwa ESP'
+      ru: 'Задний момент MSR от уровня безопасности ESP'
+      zh: '来自ESP安全层的后部MSR扭矩'
+      hu: 'A hátsó MSR nyomaték az ESP biztonsági szintjéről'
+      pt: 'Binário MSR traseiro transmitido pelo ESP ao nível de segurança'
+    type: 'uint'
+    factor: 2
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    default: 0xFA
+
+  REAR_EMOTOR_TORQUE_SETPOINT:
+    bits: '4.0-5.0'
+    comment:
+      en: 'Rear electric machine torque setpoint'
+      fr: 'Consigne de couple de la machine électrique arrière'
+      es: 'Consigna de par de la máquina eléctrica trasera'
+      de: 'Solldrehmoment der hinteren E-Maschine'
+      it: 'Valore di coppia richiesto della macchina elettrica posteriore'
+      pl: 'Zadany moment obrotowy tylnej maszyny elektrycznej'
+      ru: 'Заданный момент задней электромашины'
+      zh: '后电机扭矩设定值'
+      hu: 'A hátsó elektromos gép nyomaték-alapjele'
+      pt: 'Consigna de binário da máquina elétrica traseira'
+    type: 'uint'
+    factor: 2
+    offset: -500
+    min: -500
+    max: 500
+    units: 'Nm'
+    default: 0xFA
+
+  DOG_CLUTCH_STATUS_SUPERVISOR:
+    bits: '6.7-6.4'
+    comment:
+      en: 'Dog clutch engagement status, as seen by the supervisor'
+      fr: 'Etat de crabotage vu par le superviseur'
+      es: 'Estado del acoplamiento de garras, según el supervisor'
+      de: 'Klauenkupplungsstatus, gemäß Überwachungssystem'
+      it: 'Stato dell''innesto a denti, secondo il supervisore'
+      pl: 'Stan sprzęgła kłowego według nadzorcy'
+      ru: 'Состояние кулачковой муфты по данным супервизора'
+      zh: '监控器观察到的爪形离合器接合状态'
+      hu: 'A karmos kapcsoló állapota a felügyelő szerint'
+      pt: 'Estado do engate de garras, tal como visto pelo supervisor'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Init'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+      0x01:
+        en: 'Dog clutch engaged'
+        fr: 'Crabotage (accouplement engagé)'
+        es: 'Acoplamiento engranado'
+        de: 'Klauenkupplung eingekuppelt'
+        it: 'Innesto a denti inserito'
+        pl: 'Sprzęgło kłowe załączone'
+        ru: 'Кулачковая муфта включена'
+        zh: '爪形离合器已啮合'
+        hu: 'Karmos tengelykapcsoló bekapcsolva'
+        pt: 'Garra de engate engatada'
+      0x02:
+        en: 'Engagement failed'
+        fr: 'Échec de l''engagement'
+        es: 'Fallo de acoplamiento'
+        de: 'Einlegen fehlgeschlagen'
+        it: 'Innesto fallito'
+        pl: 'Niepowodzenie włączenia'
+        ru: 'Включение не удалось'
+        zh: '挂挡失败'
+        hu: 'A bekapcsolás sikertelen'
+        pt: 'Falha do acoplamento'
+      0x03:
+        en: 'Disengagement'
+        fr: 'Découplage'
+        es: 'Desacoplamiento'
+        de: 'Entkopplung'
+        it: 'Disaccoppiamento'
+        pl: 'Rozłączenie'
+        ru: 'Расцепление'
+        zh: '脱开'
+        hu: 'Leválasztás'
+        pt: 'Desacoplamento'
+      0x04:
+        en: 'Disengagement failed'
+        fr: 'Échec du dégagement'
+        es: 'Fallo de desenganche'
+        de: 'Ausrücken fehlgeschlagen'
+        it: 'Disimpegno non riuscito'
+        pl: 'Niepowodzenie wysprzęglenia'
+        ru: 'Сбой расцепления'
+        zh: '脱开失败'
+        hu: 'A kioldás sikertelen'
+        pt: 'Falha de desengate'
+      0x05:
+        en: 'Retry'
+        fr: 'Reprise'
+        es: 'Reintento'
+        de: 'Wiederholung'
+        it: 'Ripresa'
+        pl: 'Ponowienie'
+        ru: 'Повтор'
+        zh: '重试'
+        hu: 'Újrapróbálás'
+        pt: 'Repetir'
+      0x06:
+        en: 'Established'
+        fr: 'Établi'
+        es: 'Establecido'
+        de: 'Aufgebaut'
+        it: 'Stabilito'
+        pl: 'Nawiązane'
+        ru: 'Установлено'
+        zh: '已建立'
+        hu: 'Létrehozva'
+        pt: 'Estabelecido'
+      0x07:
+        en: 'Cancellation'
+        fr: 'Annulation'
+        es: 'Cancelación'
+        de: 'Abbruch'
+        it: 'Annullamento'
+        pl: 'Anulowanie'
+        ru: 'Отмена'
+        zh: '取消'
+        hu: 'Megszakítás'
+        pt: 'Cancelamento'
+      0x08:
+        en: 'DISENGAGEMENT ERROR'
+        fr: 'ERREUR DEGAGEMENT'
+        es: 'ERROR DE DESENGANCHE'
+        de: 'FEHLER BEIM AUSRÜCKEN'
+        it: 'ERRORE DI DISIMPEGNO'
+        pl: 'BŁĄD ROZŁĄCZENIA'
+        ru: 'ОШИБКА РАСЦЕПЛЕНИЯ'
+        zh: '脱开错误'
+        hu: 'KIOLDÁSI HIBA'
+        pt: 'ERRO DE DESENGATE'
+      0x09:
+        en: 'Engagement error'
+        fr: 'Erreur d''engagement'
+        es: 'Error de acoplamiento'
+        de: 'Einlegefehler'
+        it: 'Errore di innesto'
+        pl: 'Błąd włączenia'
+        ru: 'Ошибка включения'
+        zh: '接合错误'
+        hu: 'Bekapcsolási hiba'
+        pt: 'Erro de engate'
+      0x0A:
+        en: 'Synchronization'
+        fr: 'Synchronisation'
+        es: 'Sincronización'
+        de: 'Synchronisation'
+        it: 'Sincronizzazione'
+        pl: 'Synchronizacja'
+        ru: 'Синхронизация'
+        zh: '同步'
+        hu: 'Szinkronizáció'
+        pt: 'Sincronização'
+      0x0B:
+        en: 'Centre (neutral)'
+        fr: 'Neutre'
+        es: 'Centro (neutro)'
+        de: 'Mitte (neutral)'
+        it: 'Centro (neutro)'
+        pl: 'Środek (neutralny)'
+        ru: 'Центр (нейтраль)'
+        zh: '居中（中立）'
+        hu: 'Középső (semleges)'
+        pt: 'Centro (neutro)'
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  REAR_EMOTOR_REGULATION_TYPE:
+    bits: '6.3-6.2'
+    comment:
+      en: 'Rear electric machine regulation type'
+      fr: 'Type de régulation de la machine électrique arrière'
+      es: 'Tipo de regulación de la máquina eléctrica trasera'
+      de: 'Regelungsart der hinteren E-Maschine'
+      it: 'Tipo di regolazione della macchina elettrica posteriore'
+      pl: 'Rodzaj regulacji tylnej maszyny elektrycznej'
+      ru: 'Тип регулирования задней электромашины'
+      zh: '后电机调节类型'
+      hu: 'A hátsó elektromos gép szabályozási típusa'
+      pt: 'Tipo de regulação da máquina elétrica traseira'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Torque'
+        fr: 'Couple'
+        es: 'Par'
+        de: 'Drehmoment'
+        it: 'Coppia'
+        pl: 'Moment obrotowy'
+        ru: 'Крутящий момент'
+        zh: '扭矩'
+        hu: 'Nyomaték'
+        pt: 'Binário'
+      0x01:
+        en: 'Speed'
+        fr: 'RÉGIME'
+        es: 'Régimen'
+        de: 'Drehzahl'
+        it: 'Regime'
+        pl: 'Obroty'
+        ru: 'Обороты'
+        zh: '转速'
+        hu: 'Fordulatszám'
+        pt: 'Regime'
+      0x02:
+        en: 'INERT'
+        fr: 'INERTE'
+        es: 'INERTE'
+        de: 'INERT'
+        it: 'INERTE'
+        pl: 'INERTNY'
+        ru: 'ИНЕРТНЫЙ'
+        zh: '惰性'
+        hu: 'INERT'
+        pt: 'INERTE'
+      0x03:
+        en: 'Command in position'
+        fr: 'Commande en position'
+        es: 'Comando en posición'
+        de: 'Befehl in Position'
+        it: 'Comando in posizione'
+        pl: 'Polecenie w pozycji'
+        ru: 'Команда в положении'
+        zh: '命令到位'
+        hu: 'A parancs pozícióban'
+        pt: 'Comando em posição'
+
+  REAR_EMOTOR_REGULATION_TYPE_SAFETY:
+    bits: '6.1-6.0'
+    comment:
+      en: 'Rear electric machine regulation type requested in nominal mode by the safety level'
+      fr: 'Type de régulation de la machine électrique arrière demandé en mode nominal par le niveau de sécurité'
+      es: 'Tipo de regulación de la máquina eléctrica trasera solicitado en modo nominal por el nivel de seguridad'
+      de: 'Von der Sicherheitsebene im Nominalmodus angeforderte Regelungsart der hinteren E-Maschine'
+      it: 'Tipo di regolazione della macchina elettrica posteriore richiesto in modalità nominale dal livello di sicurezza'
+      pl: 'Rodzaj regulacji tylnej maszyny elektrycznej żądany w trybie nominalnym przez poziom bezpieczeństwa'
+      ru: 'Тип регулирования задней электромашины, запрошенный в номинальном режиме уровнем безопасности'
+      zh: '安全层在标称模式下请求的后电机调节类型'
+      hu: 'A biztonsági szint által névleges üzemmódban kért hátsó elektromosgép-szabályozási típus'
+      pt: 'Tipo de regulação da máquina elétrica traseira pedido em modo nominal pelo nível de segurança'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Torque'
+        fr: 'Couple'
+        es: 'Par'
+        de: 'Drehmoment'
+        it: 'Coppia'
+        pl: 'Moment obrotowy'
+        ru: 'Крутящий момент'
+        zh: '扭矩'
+        hu: 'Nyomaték'
+        pt: 'Binário'
+      0x01:
+        en: 'Speed'
+        fr: 'RÉGIME'
+        es: 'Régimen'
+        de: 'Drehzahl'
+        it: 'Regime'
+        pl: 'Obroty'
+        ru: 'Обороты'
+        zh: '转速'
+        hu: 'Fordulatszám'
+        pt: 'Regime'
+      0x02:
+        en: 'INERT'
+        fr: 'INERTE'
+        es: 'INERTE'
+        de: 'INERT'
+        it: 'INERTE'
+        pl: 'INERTNY'
+        ru: 'ИНЕРТНЫЙ'
+        zh: '惰性'
+        hu: 'INERT'
+        pt: 'INERTE'
+      0x03:
+        en: 'Position'
+        fr: 'Position'
+        es: 'Posición'
+        de: 'Position'
+        it: 'Posizione'
+        pl: 'Pozycja'
+        ru: 'Положение'
+        zh: '位置'
+        hu: 'Pozíció'
+        pt: 'Posição'

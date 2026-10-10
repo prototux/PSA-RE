@@ -1,0 +1,162 @@
+id: 0x335
+name: 'LPG_TRIP_CONSUMPTION'
+type: 'can'
+length: 5
+comment:
+  en: 'LPG trip-computer data: instant and cumulative range/consumption while running on gas.'
+  fr: 'Données de l''ordinateur de bord GPL : autonomie/consommation instantanée et cumulée en fonctionnement au gaz.'
+  es: 'Datos del ordenador de a bordo de GLP: autonomía/consumo instantáneo y acumulado en funcionamiento a gas.'
+  de: 'Flüssiggas-Bordcomputerdaten: momentane und kumulierte Reichweite/Verbrauch im Gasbetrieb.'
+  it: 'Dati del computer di bordo GPL: autonomia/consumo istantaneo e cumulato in funzionamento a gas.'
+  pl: 'Dane komputera pokładowego LPG: chwilowy i skumulowany zasięg/zużycie podczas pracy na gazie.'
+  ru: 'Данные бортового компьютера ГБО: мгновенный и накопленный запас хода/расход при работе на газе.'
+  zh: 'LPG行车电脑数据:燃气运行模式下的瞬时及累计续航/油耗。'
+  hu: 'Az LPG fedélzeti számítógép adatai: pillanatnyi és halmozott hatótávolság/fogyasztás gázüzemben.'
+  pt: 'Dados do computador de bordo de GPL: autonomia/consumo instantâneo e acumulado em funcionamento a gás.'
+observations:
+  en: 'On state change of: LPG_ENGINE_MODE'
+  fr: 'Sur changement d''état de : LPG_ENGINE_MODE'
+  es: 'Al cambiar el estado de: LPG_ENGINE_MODE'
+  de: 'Bei Statusänderung von: LPG_ENGINE_MODE'
+  it: 'Al cambiamento di stato di: LPG_ENGINE_MODE'
+  pl: 'Wysyłane przy zmianie stanu: LPG_ENGINE_MODE'
+  ru: 'При изменении состояния: LPG_ENGINE_MODE'
+  zh: '当JGCA_GPL_MODE状态变化时'
+  hu: 'A(z) LPG_ENGINE_MODE állapotváltozásakor'
+  pt: 'Na mudança de estado de: LPG_ENGINE_MODE'
+periodicity: ['1000ms', 'trigger']
+senders: ['BSI']
+receivers: ['BTEL', 'CMB', 'MATT']
+
+signals:
+  LPG_RANGE_DISPLAYED:
+    bits: '1.7-2.5'
+    comment:
+      en: 'LPG range displayed to the driver'
+      fr: 'Autonomie GPL affichée au conducteur'
+      es: 'Autonomía de GLP mostrada al conductor'
+      de: 'Dem Fahrer angezeigte LPG-Reichweite'
+      it: 'Autonomia GPL visualizzata al conducente'
+      pl: 'Zasięg LPG wyświetlany kierowcy'
+      ru: 'Запас хода на ГБО, отображаемый водителю'
+      zh: '向驾驶员显示的LPG续航里程'
+      hu: 'A vezetőnek megjelenített LPG-hatótávolság'
+      pt: 'Autonomia de GPL apresentada ao condutor'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2000
+    units: 'km'
+    invalid: 0x7FF
+    default: 0x00
+
+  LPG_INSTANT_CONSUMPTION_2:
+    bits: '2.4-3.4'
+    comment:
+      en: 'Instantaneous LPG consumption'
+      fr: 'Consommation instantanée de GPL'
+      es: 'Consumo instantáneo de GLP'
+      de: 'Momentaner LPG-Verbrauch'
+      it: 'Consumo istantaneo di GPL'
+      pl: 'Chwilowe zużycie LPG'
+      ru: 'Мгновенный расход ГБО'
+      zh: 'LPG瞬时消耗量'
+      hu: 'Pillanatnyi LPG-fogyasztás'
+      pt: 'Consumo instantâneo de GPL'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 30
+    units: 'L/100km'
+    invalid: 0x1FF
+    default: 0x00
+
+  UNUSED_1:
+    bits: '3.3'
+    unused: true
+
+  TOTAL_RANGE_DISPLAYED:
+    bits: '3.2-4.0'
+    comment:
+      en: 'Total range (petrol + LPG) displayed to the driver'
+      fr: 'Autonomie totale (essence + GPL) affichée au conducteur'
+      es: 'Autonomía total (gasolina + GLP) mostrada al conductor'
+      de: 'Dem Fahrer angezeigte Gesamtreichweite (Benzin + LPG)'
+      it: 'Autonomia totale (benzina + GPL) visualizzata al conducente'
+      pl: 'Całkowity zasięg (benzyna + LPG) wyświetlany kierowcy'
+      ru: 'Общий запас хода (бензин + ГБО), отображаемый водителю'
+      zh: '向驾驶员显示的总续航里程(汽油+LPG)'
+      hu: 'A vezetőnek megjelenített teljes hatótávolság (benzin + LPG)'
+      pt: 'Autonomia total (gasolina + GPL) apresentada ao condutor'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2000
+    units: 'km'
+    invalid: 0x7FF
+    default: 0x00
+
+  LPG_ENGINE_MODE:
+    bits: '5.7-5.6'
+    comment:
+      en: 'Engine LPG operating mode'
+      fr: 'Mode de fonctionnement GPL du moteur'
+      es: 'Modo de funcionamiento de GLP del motor'
+      de: 'LPG-Betriebsmodus des Motors'
+      it: 'Modalità di funzionamento GPL del motore'
+      pl: 'Tryb pracy LPG silnika'
+      ru: 'Режим работы двигателя на ГБО'
+      zh: '发动机LPG运行模式'
+      hu: 'A motor LPG üzemmódja'
+      pt: 'Modo de funcionamento do motor a GPL'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Petrol mode'
+        fr: 'Mode essence'
+        es: 'Modo gasolina'
+        de: 'Benzinmodus'
+        it: 'Modalità benzina'
+        pl: 'Tryb benzynowy'
+        ru: 'Бензиновый режим'
+        zh: '汽油模式'
+        hu: 'Benzin üzemmód'
+        pt: 'Modo gasolina'
+      0x01:
+        en: 'LPG mode'
+        fr: 'Mode GPL'
+        es: 'Modo GLP'
+        de: 'Flüssiggasmodus'
+        it: 'Modalità GPL'
+        pl: 'Tryb LPG'
+        ru: 'Режим ГБО'
+        zh: 'LPG模式'
+        hu: 'LPG üzemmód'
+        pt: 'Modo GPL'
+      0x02:
+        en: 'Switchover in progress'
+        fr: 'Basculement en cours'
+        es: 'Conmutación en curso'
+        de: 'Umschaltung läuft'
+        it: 'Commutazione in corso'
+        pl: 'Trwa przełączanie'
+        ru: 'Выполняется переключение'
+        zh: '切换中'
+        hu: 'Átkapcsolás folyamatban'
+        pt: 'Comutação em curso'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_2:
+    bits: '5.5-5.0'
+    unused: true

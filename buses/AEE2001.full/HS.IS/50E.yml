@@ -1,0 +1,169 @@
+id: 0x50E
+name: 'CABIN_DATA_2_AC'
+type: 'can'
+length: 3
+comment:
+  en: 'Body controller data for the engine ECU: A/C compressor request, cooling fan setpoints, clutch pedal, LPG level.'
+  fr: 'Données de la BSI pour le calculateur moteur : demande compresseur clim, consignes ventilateur de refroidissement, pédale d''embrayage, niveau GPL.'
+  es: 'Datos de la BSI para la centralita del motor: solicitud de compresor de A/C, consignas del ventilador de refrigeración, pedal de embrague, nivel de GLP.'
+  de: 'BSI-Daten für das Motorsteuergerät: Klimakompressoranforderung, Kühlgebläse-Sollwerte, Kupplungspedal, Autogasstand.'
+  it: 'Dati della BSI per la centralina motore: richiesta compressore A/C, setpoint ventola di raffreddamento, pedale frizione, livello GPL.'
+  pl: 'Dane BSI dla sterownika silnika: żądanie sprężarki A/C, nastawy wentylatora chłodzenia, pedał sprzęgła, poziom LPG.'
+  ru: 'Данные BSI для ЭБУ двигателя: запрос компрессора кондиционера, уставки вентилятора охлаждения, педаль сцепления, уровень ГБО.'
+  zh: '供发动机ECU使用的BSI数据:空调压缩机请求、冷却风扇设定值、离合器踏板、液化气油位。'
+  hu: 'A BSI adatai a motorvezérlőnek: klímakompresszor kérése, hűtőventilátor alapjelek, kuplungpedál, LPG-szint.'
+  pt: 'Dados do computador de servidão para a unidade de controlo do motor: pedido do compressor de ar condicionado, pontos de ajuste da ventoinha de arrefecimento, pedal da embraiagem, nível de GPL.'
+periodicity: ['100ms', 'trigger']
+senders: ['BSI']
+receivers: ['CMM']
+
+signals:
+  LOW_LPG_LEVEL_DIAG:
+    bits: '1.7-1.6'
+    comment:
+      en: 'Low LPG level sensor diagnosis'
+      fr: 'Diagnostic du capteur de niveau minimum de GPL'
+      es: 'Diagnóstico del sensor de nivel mínimo de GLP'
+      de: 'Diagnose des LPG-Mindeststandsensors'
+      it: 'Diagnosi del sensore di livello minimo GPL'
+      pl: 'Diagnostyka czujnika minimalnego poziomu LPG'
+      ru: 'Диагностика датчика минимального уровня СНГ (LPG)'
+      zh: 'LPG 最低液位传感器诊断'
+      hu: 'Minimális LPG-szint érzékelő diagnosztikája'
+      pt: 'Diagnóstico do sensor de nível mínimo de GPL'
+    type: 'uint'
+
+  AC_REQUEST_STOP_AND_GO:
+    bits: '1.5-1.4'
+    comment:
+      en: 'A/C request for Stop & Go'
+      fr: 'Demande de climatisation pour le Stop & Go'
+      es: 'Solicitud de climatización para el Stop & Go'
+      de: 'Klimaanforderung für Stop&Go'
+      it: 'Richiesta climatizzazione per lo Stop & Go'
+      pl: 'Żądanie klimatyzacji dla układu Stop & Go'
+      ru: 'Запрос кондиционера для системы Стоп-Старт'
+      zh: 'Stop & Go 空调请求'
+      hu: 'Klíma igénylés Stop&Go-hoz'
+      pt: 'Pedido de climatização para o Stop & Go'
+    type: 'uint'
+
+  LOW_LPG_LEVEL:
+    bits: '1.3'
+    comment:
+      en: 'Low LPG level'
+      fr: 'Niveau de GPL minimum'
+      es: 'Nivel mínimo de GLP'
+      de: 'LPG-Mindeststand'
+      it: 'Livello minimo di GPL'
+      pl: 'Minimalny poziom LPG'
+      ru: 'Минимальный уровень СНГ (LPG)'
+      zh: 'LPG 液位过低'
+      hu: 'Minimális LPG-szint'
+      pt: 'Nível mínimo de GPL'
+    type: 'bool'
+
+  AC_COMPRESSOR_ENGAGE_REQUEST:
+    bits: '1.0'
+    comment:
+      en: 'A/C compressor engagement request'
+      fr: 'Demande d''enclenchement du compresseur de climatisation'
+      es: 'Solicitud de embrague del compresor de aire acondicionado'
+      de: 'Anforderung zum Einkuppeln des Klimakompressors'
+      it: 'Richiesta di innesto del compressore del climatizzatore'
+      pl: 'Żądanie załączenia sprężarki klimatyzacji'
+      ru: 'Запрос включения компрессора кондиционера'
+      zh: '空调压缩机接合请求'
+      hu: 'Klímakompresszor bekapcsolási kérés'
+      pt: 'Pedido de engate do compressor de ar condicionado'
+    type: 'bool'
+
+  COOLING_FAN_BINARY_SETPOINT:
+    bits: '2.7-2.6'
+    comment:
+      en: 'Cooling fan "binary" speed setpoint'
+      fr: 'Consigne "binaire" de vitesse du groupe motoventilateur (GMV)'
+      es: 'Consigna "binaria" de velocidad del electroventilador'
+      de: '"Binärer" Drehzahl-Sollwert des Kühlerlüfters'
+      it: 'Consegna "binaria" di velocità dell''elettroventola'
+      pl: 'Nastawa "binarna" prędkości wentylatora chłodnicy'
+      ru: '"Бинарная" уставка скорости вентилятора охлаждения'
+      zh: '冷却风扇"二值"转速设定值'
+      hu: 'Hűtőventilátor "bináris" fordulatszám-alapjele'
+      pt: 'Consigna "binária" de velocidade do grupo moto-ventilador (GMV)'
+    type: 'uint'
+
+  COOLING_FAN_PROPORTIONAL_SETPOINT:
+    bits: '2.5-2.0'
+    comment:
+      en: 'Cooling fan proportional speed setpoint'
+      fr: 'Consigne proportionnelle de vitesse du groupe motoventilateur (GMV)'
+      es: 'Consigna proporcional de velocidad del electroventilador'
+      de: 'Proportionaler Drehzahl-Sollwert des Kühlerlüfters'
+      it: 'Consegna proporzionale di velocità dell''elettroventola'
+      pl: 'Nastawa proporcjonalna prędkości wentylatora chłodnicy'
+      ru: 'Пропорциональная уставка скорости вентилятора охлаждения'
+      zh: '冷却风扇比例转速设定值'
+      hu: 'Hűtőventilátor arányos fordulatszám-alapjele'
+      pt: 'Consigna proporcional de velocidade do grupo moto-ventilador (GMV)'
+    type: 'uint'
+
+  CLUTCH_PEDAL_SWITCH:
+    bits: '3.7-3.6'
+    comment:
+      en: 'Clutch pedal switch'
+      fr: 'Contact de la pédale d''embrayage'
+      es: 'Contacto del pedal de embrague'
+      de: 'Kupplungspedalschalter'
+      it: 'Interruttore del pedale della frizione'
+      pl: 'Wyłącznik pedału sprzęgła'
+      ru: 'Выключатель педали сцепления'
+      zh: '离合器踏板开关'
+      hu: 'Kuplungpedál kapcsoló'
+      pt: 'Contacto do pedal de embraiagem'
+    type: 'uint'
+
+  ALTERNATOR_SATURATION_ACTIVE:
+    bits: '3.2'
+    comment:
+      en: 'Alternator saturation active'
+      fr: 'Saturation de l''alternateur active'
+      es: 'Saturación del alternador activa'
+      de: 'Lichtmaschinensättigung aktiv'
+      it: 'Saturazione dell''alternatore attiva'
+      pl: 'Aktywne nasycenie alternatora'
+      ru: 'Активна насыщенность генератора'
+      zh: '发电机饱和激活'
+      hu: 'Generátor telítettség aktív'
+      pt: 'Saturação do alternador ativa'
+    type: 'bool'
+
+  GLOW_PLUGS_FORCING:
+    bits: '3.1'
+    comment:
+      en: 'Force glow plugs on'
+      fr: 'Forçage de l''enclenchement des bougies de préchauffage'
+      es: 'Forzado del encendido de las bujías de precalentamiento'
+      de: 'Erzwungenes Einschalten der Glühkerzen'
+      it: 'Forzatura dell''inserimento delle candelette di preriscaldo'
+      pl: 'Wymuszenie włączenia świec żarowych'
+      ru: 'Принудительное включение свечей накаливания'
+      zh: '强制开启预热塞'
+      hu: 'Izzítógyertyák kényszerített bekapcsolása'
+      pt: 'Forçar a ativação das velas de pré-aquecimento'
+    type: 'bool'
+
+  COOLING_FAN_LOW_SPEED_FORCING:
+    bits: '3.0'
+    comment:
+      en: 'Force cooling fan low speed'
+      fr: 'Forçage de l''enclenchement du groupe motoventilateur en petite vitesse'
+      es: 'Forzado de la baja velocidad del electroventilador'
+      de: 'Erzwungene niedrige Drehzahl des Kühlerlüfters'
+      it: 'Forzatura della bassa velocità dell''elettroventola'
+      pl: 'Wymuszenie niskiej prędkości wentylatora chłodnicy'
+      ru: 'Принудительное включение низкой скорости вентилятора охлаждения'
+      zh: '强制冷却风扇低速运行'
+      hu: 'Hűtőventilátor kis fordulatszámának kényszerítése'
+      pt: 'Forçar a pequena velocidade do ventilador de arrefecimento'
+    type: 'bool'

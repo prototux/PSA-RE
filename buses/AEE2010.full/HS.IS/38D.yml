@@ -1,0 +1,605 @@
+id: 0x38D
+name: 'VEHICLE_DYNAMICS_WHEELS'
+type: 'can'
+length: 8
+comment:
+  en: 'Vehicle speed, distance and longitudinal acceleration computed from the wheels, plus a warning-lamp request.'
+  fr: 'Vitesse véhicule, distance et accélération longitudinale calculées à partir des roues, ainsi qu''une demande de voyant.'
+  es: 'Velocidad del vehículo, distancia y aceleración longitudinal calculadas a partir de las ruedas, además de una solicitud de testigo.'
+  de: 'Aus den Rädern berechnete Fahrzeuggeschwindigkeit, Strecke und Längsbeschleunigung, sowie eine Kontrollleuchtenanforderung.'
+  it: 'Velocità veicolo, distanza e accelerazione longitudinale calcolate dalle ruote, oltre a una richiesta spia.'
+  pl: 'Prędkość pojazdu, dystans i przyspieszenie wzdłużne obliczone na podstawie kół, oraz żądanie kontrolki.'
+  ru: 'Скорость автомобиля, расстояние и продольное ускорение, рассчитанные по колёсам, а также запрос индикатора.'
+  zh: '根据车轮计算的车速、距离和纵向加速度,以及警示灯请求。'
+  hu: 'A kerekekből számított jármű sebesség, táv és hosszirányú gyorsulás, valamint egy jelzőlámpa-kérés.'
+  pt: 'Velocidade do veículo, distância e aceleração longitudinal calculadas a partir das rodas, além de um pedido da luz avisadora.'
+periodicity: ['40ms']
+senders: ['ABS']
+receivers:
+  - 'SBW'
+  - 'CVM'
+  - 'ESM'
+  - 'BHI'
+  - 'BSI'
+  - 'DAE'
+  - 'SCDT'
+  - 'BCP'
+  - 'FSE'
+  - 'CSS'
+  - 'CMM'
+  - 'CAAR'
+  - 'BVA'
+  - 'AR2S'
+  - 'DSG'
+  - 'BEBA'
+  - 'AAS'
+  - 'HCU1'
+  - 'BSM'
+  - 'ARTIV'
+  - 'CAV'
+
+signals:
+  VEHICLE_SPEED_WHEEL_SENSORS:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Vehicle speed (wheel sensors)'
+      fr: 'Vitesse du véhicule (capteurs de roues)'
+      es: 'Velocidad del vehículo (sensores de rueda)'
+      de: 'Fahrzeuggeschwindigkeit (Raddrehzahlsensoren)'
+      it: 'Velocità del veicolo (sensori ruota)'
+      pl: 'Prędkość pojazdu (czujniki kół)'
+      ru: 'Скорость автомобиля (датчики колёс)'
+      zh: '车速(车轮传感器)'
+      hu: 'Járműsebesség (kerékérzékelők)'
+      pt: 'Velocidade do veículo (sensores de roda)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  ODOMETER_WHEEL_SENSOR:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Odometer distance, from wheel sensors'
+      fr: 'Distance odométrique, mesurée par les capteurs de roue'
+      es: 'Distancia odométrica, medida por los sensores de rueda'
+      de: 'Odometerstrecke, von den Radsensoren gemessen'
+      it: 'Distanza odometrica, misurata dai sensori ruota'
+      pl: 'Odległość odometryczna, mierzona czujnikami koła'
+      ru: 'Одометрическое расстояние, измеренное датчиками колёс'
+      zh: '由轮速传感器测得的里程距离'
+      hu: 'Kilométeróra-távolság, a kerékérzékelők mérése alapján'
+      pt: 'Distância odométrica, medida pelos sensores de roda'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6553.5
+    units: 'm'
+    default: 0x00
+
+  LONGITUDINAL_ACCELERATION_WHEEL_SENSOR:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Longitudinal acceleration, from wheel sensors'
+      fr: 'Accélération longitudinale, mesurée par les capteurs de roue'
+      es: 'Aceleración longitudinal, medida por los sensores de rueda'
+      de: 'Längsbeschleunigung, von den Radsensoren gemessen'
+      it: 'Accelerazione longitudinale, misurata dai sensori ruota'
+      pl: 'Przyspieszenie wzdłużne, mierzone czujnikami koła'
+      ru: 'Продольное ускорение, измеренное датчиками колёс'
+      zh: '由轮速传感器测得的纵向加速度'
+      hu: 'Hosszirányú gyorsulás, a kerékérzékelők mérése alapján'
+      pt: 'Aceleração longitudinal, medida pelos sensores de roda'
+    type: 'uint'
+    factor: 0.08
+    offset: -14
+    min: -14
+    max: 6.32
+    units: 'm/s2'
+    invalid: 0xFF
+    default: 0xAF
+
+  PROCESS_COUNTER_4BIT:
+    bits: '6.7-6.4'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ABR_DYNAMIC_FRAME_CHECKSUM:
+    bits: '6.3-6.0'
+    comment:
+      en: 'ABR dynamic vehicle frame checksum'
+      fr: 'Somme de contrôle de la trame dynamique véhicule ABR'
+      es: 'Suma de comprobación de la trama dinámica de vehículo ABR'
+      de: 'Prüfsumme des dynamischen Fahrzeug-Frames ABR'
+      it: 'Checksum del frame dinamico veicolo ABR'
+      pl: 'Suma kontrolna ramki dynamicznej pojazdu ABR'
+      ru: 'Контрольная сумма динамического кадра автомобиля ABR'
+      zh: 'ABR 车辆动态帧校验和'
+      hu: 'Az ABR jármű dinamikus keretének ellenőrző összege'
+      pt: 'Soma de verificação da trama dinâmica de veículo ABR'
+    type: 'uint'
+
+  HAZARD_LIGHTS_REQUEST:
+    bits: '7.7'
+    comment:
+      en: 'Hazard warning lights request'
+      fr: 'Demande d''allumage des feux de détresse'
+      es: 'Solicitud de encendido de las luces de emergencia'
+      de: 'Anforderung der Warnblinkleuchten'
+      it: 'Richiesta di accensione delle luci di emergenza'
+      pl: 'Żądanie włączenia świateł awaryjnych'
+      ru: 'Запрос включения аварийной сигнализации'
+      zh: '危险警示灯请求'
+      hu: 'Vészvillogó bekapcsolási kérése'
+      pt: 'Pedido de acendimento das luzes de emergência'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  HILL_ASSIST_STOP_AUTHORIZATION_STT:
+    bits: '7.6'
+    comment:
+      en: 'Hill assist stop authorization for Stop & Start'
+      fr: 'Autorisation d''arrêt de l''assistance au démarrage en côte, pour le Stop & Start'
+      es: 'Autorización de parada de la asistencia de arranque en pendiente, para el Stop & Start'
+      de: 'Freigabe zum Stoppen der Berganfahrhilfe für Stop & Start'
+      it: 'Autorizzazione di arresto dell''Hill Assist, per lo Stop & Start'
+      pl: 'Zezwolenie na zatrzymanie asystenta ruszania pod górę dla funkcji Stop & Start'
+      ru: 'Разрешение остановки ассистента старта на подъёме для системы Стоп-Старт'
+      zh: '坡道辅助停止授权,用于启停功能'
+      hu: 'A hegyi indítássegítő leállítási engedélye a Stop & Start számára'
+      pt: 'Autorização de paragem da assistência de arranque em subida, para o Stop & Start'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Hill Assist not ready to hold'
+        fr: 'Hill Assist pas prêt à maintenir l''arrêt'
+        es: 'Hill Assist no listo para mantener la parada'
+        de: 'Hill Assist nicht bereit zum Halten'
+        it: 'Hill Assist non pronto per l''arresto'
+        pl: 'Hill Assist niegotowy do przytrzymania'
+        ru: 'Hill Assist не готов к удержанию'
+        zh: '坡道辅助未准备好驻停'
+        hu: 'A Hill Assist nem áll készen a megtartásra'
+        pt: 'Hill Assist não pronto para reter'
+      0x01:
+        en: 'Hill Assist ready for stop'
+        fr: 'Hill Assist prêt à l''arrêt'
+        es: 'Hill Assist listo para detenerse'
+        de: 'Berganfahrhilfe bereit zum Halt'
+        it: 'Hill Assist pronto per l''arresto'
+        pl: 'Asystent ruszania pod górę gotowy do zatrzymania'
+        ru: 'Система помощи при старте на подъёме готова к остановке'
+        zh: '上坡辅助准备停车'
+        hu: 'Hegymeneti indítássegítő megállásra kész'
+        pt: 'Hill Assist pronto para parar'
+
+  VEHICLE_DIRECTION:
+    bits: '7.5-7.4'
+    comment:
+      en: 'Vehicle direction of travel'
+      fr: 'Sens de roulage du véhicule'
+      es: 'Sentido de marcha del vehículo'
+      de: 'Fahrtrichtung des Fahrzeugs'
+      it: 'Senso di marcia del veicolo'
+      pl: 'Kierunek jazdy pojazdu'
+      ru: 'Направление движения автомобиля'
+      zh: '车辆行驶方向'
+      hu: 'Jármű haladási iránya'
+      pt: 'Sentido de marcha do veículo'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x01:
+        en: 'Toward the front'
+        fr: 'Vers l''avant'
+        es: 'Hacia delante'
+        de: 'Nach vorne'
+        it: 'In avanti'
+        pl: 'Do przodu'
+        ru: 'Вперёд'
+        zh: '朝向前方'
+        hu: 'Előrefelé'
+        pt: 'Para a frente'
+      0x02:
+        en: 'Toward the rear'
+        fr: 'Vers l''arrière'
+        es: 'Hacia atrás'
+        de: 'Nach hinten'
+        it: 'Verso il retro'
+        pl: 'Do tyłu'
+        ru: 'Назад'
+        zh: '朝向后方'
+        hu: 'Hátrafelé'
+        pt: 'Para trás'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  VEHICLE_SPEED_UNAVAILABLE_FLAG:
+    bits: '7.3-7.2'
+    comment:
+      en: 'Vehicle speed unavailability flag'
+      fr: 'Indicateur d''indisponibilité de la vitesse véhicule'
+      es: 'Indicador de no disponibilidad de la velocidad del vehículo'
+      de: 'Kennzeichen für nicht verfügbare Fahrzeuggeschwindigkeit'
+      it: 'Indicatore di non disponibilità della velocità veicolo'
+      pl: 'Flaga niedostępności prędkości pojazdu'
+      ru: 'Флаг недоступности скорости автомобиля'
+      zh: '车速不可用标志'
+      hu: 'Járműsebesség nem elérhető jelző'
+      pt: 'Indicador de indisponibilidade da velocidade do veículo'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Speed information available'
+        fr: 'Informations de vitesse disponibles'
+        es: 'Información de velocidad disponible'
+        de: 'Geschwindigkeitsinformationen verfügbar'
+        it: 'Informazioni di velocità disponibili'
+        pl: 'Dostępne informacje o prędkości'
+        ru: 'Информация о скорости доступна'
+        zh: '车速信息可用'
+        hu: 'Sebességinformáció elérhető'
+        pt: 'Informação de velocidade disponível'
+      0x02:
+        en: 'Speed information unavailable'
+        fr: 'Informations de vitesse indisponibles'
+        es: 'Información de velocidad no disponible'
+        de: 'Geschwindigkeitsinformation nicht verfügbar'
+        it: 'Informazioni di velocità non disponibili'
+        pl: 'Informacje o prędkości niedostępne'
+        ru: 'Информация о скорости недоступна'
+        zh: '车速信息不可用'
+        hu: 'Sebességinformáció nem elérhető'
+        pt: 'Informação de velocidade indisponível'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  VEHICLE_MOVING_STATUS:
+    bits: '7.1-7.0'
+    comment:
+      en: 'Vehicle moving status'
+      fr: 'État de mouvement du véhicule'
+      es: 'Estado de movimiento del vehículo'
+      de: 'Fahrzeugbewegungsstatus'
+      it: 'Stato di movimento del veicolo'
+      pl: 'Stan ruchu pojazdu'
+      ru: 'Статус движения автомобиля'
+      zh: '车辆运动状态'
+      hu: 'Jármű mozgásállapota'
+      pt: 'Estado de movimento do veículo'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Vehicle moving'
+        fr: 'Véhicule roulant'
+        es: 'Vehículo en movimiento'
+        de: 'Fahrzeug in Bewegung'
+        it: 'Veicolo in movimento'
+        pl: 'Pojazd w ruchu'
+        ru: 'Автомобиль в движении'
+        zh: '车辆行驶中'
+        hu: 'Jármű mozgásban'
+        pt: 'Veículo em andamento'
+      0x02:
+        en: 'Vehicle stopped'
+        fr: 'Véhicule à l''arrêt'
+        es: 'Vehículo detenido'
+        de: 'Fahrzeug steht'
+        it: 'Veicolo fermo'
+        pl: 'Pojazd zatrzymany'
+        ru: 'Автомобиль остановлен'
+        zh: '车辆停止'
+        hu: 'Jármű áll'
+        pt: 'Veículo parado'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  HADC_CLUTCH_ACTIVATION_CONDITION:
+    bits: '8.7-8.6'
+    comment:
+      en: 'HADC clutch mode activation condition'
+      fr: 'Condition d''activation du mode embrayage HADC'
+      es: 'Condición de activación del modo embrague HADC'
+      de: 'Aktivierungsbedingung des HADC-Kupplungsmodus'
+      it: 'Condizione di attivazione della modalità frizione HADC'
+      pl: 'Warunek aktywacji trybu sprzęgła HADC'
+      ru: 'Условие активации режима сцепления HADC'
+      zh: 'HADC 离合模式激活条件'
+      hu: 'A HADC kuplungmód aktiválási feltétele'
+      pt: 'Condição de ativação do modo de embraiagem do HADC'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No clutch condition active'
+        fr: 'Pas de condition d''embrayage active'
+        es: 'Sin condición de embrague activa'
+        de: 'Keine Kupplungsbedingung aktiv'
+        it: 'Nessuna condizione di frizione attiva'
+        pl: 'Brak aktywnego warunku sprzęgła'
+        ru: 'Нет активного условия сцепления'
+        zh: '无离合器激活条件'
+        hu: 'Nincs aktív kuplungfeltétel'
+        pt: 'Sem condição de embraiagem ativa'
+      0x01:
+        en: 'Clutch function possible'
+        fr: 'Fonction embrayage possible'
+        es: 'Función de embrague posible'
+        de: 'Kupplungsfunktion möglich'
+        it: 'Funzione frizione possibile'
+        pl: 'Możliwa funkcja sprzęgła'
+        ru: 'Функция сцепления возможна'
+        zh: '离合功能可用'
+        hu: 'Kuplungfunkció lehetséges'
+        pt: 'Função de embraiagem possível'
+      0x02:
+        en: 'Clutch function active'
+        fr: 'Fonction embrayage active'
+        es: 'Función de embrague activa'
+        de: 'Kupplungsfunktion aktiv'
+        it: 'Funzione frizione attiva'
+        pl: 'Funkcja sprzęgła aktywna'
+        ru: 'Функция сцепления активна'
+        zh: '离合器功能激活'
+        hu: 'A kuplungfunkció aktív'
+        pt: 'Função de embraiagem ativa'
+      0x03:
+        unused: true
+
+  HADC_SPEED_CONDITION:
+    bits: '8.5'
+    comment:
+      en: 'HADC speed limit condition met'
+      fr: 'Condition de limite de vitesse HADC satisfaite'
+      es: 'Condición de límite de velocidad HADC cumplida'
+      de: 'HADC-Geschwindigkeitsgrenzbedingung erfüllt'
+      it: 'Condizione di limite di velocità HADC soddisfatta'
+      pl: 'Spełniony warunek limitu prędkości HADC'
+      ru: 'Условие ограничения скорости HADC выполнено'
+      zh: 'HADC 速度限制条件已满足'
+      hu: 'A HADC sebességhatár-feltétele teljesült'
+      pt: 'Condição de limite de velocidade do HADC cumprida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'HADC speed condition not OK'
+        fr: 'Condition de vitesse HADC non OK'
+        es: 'Condición de velocidad HADC no OK'
+        de: 'HADC-Geschwindigkeitsbedingung nicht OK'
+        it: 'Condizione di velocità HADC non OK'
+        pl: 'Warunek prędkości HADC niespełniony'
+        ru: 'Скоростное условие HADC не выполнено'
+        zh: 'HADC车速条件不满足'
+        hu: 'A HADC sebességfeltétele nem teljesül'
+        pt: 'Condição de velocidade HADC não OK'
+      0x01:
+        en: 'HADC speed condition OK'
+        fr: 'Condition de vitesse HADC respectée'
+        es: 'Condición de velocidad HADC cumplida'
+        de: 'HADC-Geschwindigkeitsbedingung erfüllt'
+        it: 'Condizione di velocità HADC soddisfatta'
+        pl: 'Warunek prędkości HADC spełniony'
+        ru: 'Условие скорости HADC выполнено'
+        zh: 'HADC 速度条件满足'
+        hu: 'HADC sebességfeltétel teljesítve'
+        pt: 'Condição de velocidade HADC cumprida'
+
+  HADC_STATUS:
+    bits: '8.4-8.3'
+    comment:
+      en: 'Overall HADC (hill descent control) status'
+      fr: 'État global du régulateur de descente HADC'
+      es: 'Estado global del control de descenso HADC'
+      de: 'Gesamtstatus der Berganfahr-/Bergabfahrhilfe HADC'
+      it: 'Stato globale del controllo di discesa HADC'
+      pl: 'Ogólny stan kontroli zjazdu ze wzgórza HADC'
+      ru: 'Общий статус системы контроля спуска HADC'
+      zh: 'HADC(坡道缓降控制)总体状态'
+      hu: 'A HADC (lejtmenet-szabályozó) általános állapota'
+      pt: 'Estado geral do HADC (controlo de descida em declive)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'HADC not selected'
+        fr: 'HADC non sélectionné'
+        es: 'HADC no seleccionado'
+        de: 'HADC nicht ausgewählt'
+        it: 'HADC non selezionato'
+        pl: 'HADC niewybrane'
+        ru: 'HADC не выбран'
+        zh: '未选择HADC'
+        hu: 'HADC nincs kiválasztva'
+        pt: 'HADC não selecionado'
+      0x01:
+        en: 'HADC on standby'
+        fr: 'HADC en attente'
+        es: 'HADC en espera'
+        de: 'HADC im Standby'
+        it: 'HADC in attesa'
+        pl: 'HADC w trybie oczekiwania'
+        ru: 'HADC в режиме ожидания'
+        zh: 'HADC待机'
+        hu: 'HADC készenlétben'
+        pt: 'HADC em espera'
+      0x02:
+        en: 'HADC active'
+        fr: 'HADC actif'
+        es: 'HADC activo'
+        de: 'HADC aktiv'
+        it: 'HADC attivo'
+        pl: 'HADC aktywne'
+        ru: 'HADC активен'
+        zh: 'HADC已激活'
+        hu: 'HADC aktív'
+        pt: 'HADC ativo'
+      0x03:
+        en: 'HADC regulating hydraulic braking'
+        fr: 'HADC en régulation de freinage hydraulique'
+        es: 'HADC en regulación de frenado hidráulico'
+        de: 'HADC bei hydraulischer Bremsregelung'
+        it: 'HADC in regolazione della frenata idraulica'
+        pl: 'HADC w regulacji hamowania hydraulicznego'
+        ru: 'HADC регулирует гидравлическое торможение'
+        zh: 'HADC正在进行液压制动调节'
+        hu: 'HADC hidraulikus fékszabályozásban'
+        pt: 'HADC em regulação de travagem hidráulica'
+
+  HADC_FAULT_STATUS:
+    bits: '8.2-8.1'
+    comment:
+      en: 'HADC fault severity status'
+      fr: 'État de sévérité du défaut HADC'
+      es: 'Estado de gravedad del fallo HADC'
+      de: 'Schweregrad des HADC-Fehlers'
+      it: 'Stato di gravità del guasto HADC'
+      pl: 'Stan poważności usterki HADC'
+      ru: 'Статус тяжести неисправности HADC'
+      zh: 'HADC 故障严重程度状态'
+      hu: 'A HADC hiba súlyossági állapota'
+      pt: 'Estado de gravidade de avaria do HADC'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Nominal'
+        fr: 'Nominal'
+        es: 'Nominal'
+        de: 'Nominal'
+        it: 'Nominale'
+        pl: 'Nominalny'
+        ru: 'Номинальный'
+        zh: '标称'
+        hu: 'Névleges'
+        pt: 'Nominal'
+      0x01:
+        en: 'Low'
+        fr: 'Peu sévère'
+        es: 'Bajo'
+        de: 'Gering'
+        it: 'Basso'
+        pl: 'Niski'
+        ru: 'Слабый'
+        zh: '轻微'
+        hu: 'Alacsony'
+        pt: 'Pouco severo'
+      0x02:
+        en: 'Serious'
+        fr: 'Sévère'
+        es: 'Grave'
+        de: 'Schwerwiegend'
+        it: 'Grave'
+        pl: 'Poważny'
+        ru: 'Серьёзный'
+        zh: '严重'
+        hu: 'Súlyos'
+        pt: 'Grave'
+      0x03:
+        unused: true
+
+  UNUSED_1:
+    bits: '8.0'
+    unused: true

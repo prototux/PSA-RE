@@ -1,176 +1,151 @@
 id: 0x0B6
-name: 'BSI_FAST_DATA'
-alt_names: ['DONNEES_BSI_RAPIDES']
-length: 8
+name: 'FAST_BSI_DATA'
+alt_names: ['BSI_FAST_DATA']
 type: 'can'
+length: 8
+comment:
+  en: 'Fast vehicle data broadcast by the body controller: engine speed, vehicle speed, distance and fuel consumption counters.'
+  fr: 'Données rapides véhicule diffusées par la BSI : régime moteur, vitesse véhicule, compteurs de distance et de consommation carburant.'
+  es: 'Datos rápidos del vehículo difundidos por la BSI: régimen motor, velocidad del vehículo, contadores de distancia y de consumo de combustible.'
+  de: 'Vom BSI gesendete schnelle Fahrzeugdaten: Motordrehzahl, Fahrzeuggeschwindigkeit, Distanz- und Kraftstoffverbrauchszähler.'
+  it: 'Dati rapidi veicolo trasmessi dalla BSI: regime motore, velocità veicolo, contatori di distanza e consumo carburante.'
+  pl: 'Szybkie dane pojazdu nadawane przez BSI: obroty silnika, prędkość pojazdu, liczniki dystansu i zużycia paliwa.'
+  ru: 'Быстрые данные автомобиля, транслируемые BSI: обороты двигателя, скорость автомобиля, счётчики расстояния и расхода топлива.'
+  zh: '由BSI广播的快速车辆数据:发动机转速、车速、距离和燃油消耗计数器。'
+  hu: 'A BSI által sugárzott gyors jármű adatok: motorfordulatszám, jármű sebessége, táv- és üzemanyag-fogyasztás számlálók.'
+  pt: 'Dados rápidos do veículo difundidos pelo computador de servidão: velocidade do motor, velocidade do veículo, contadores de distância e de consumo de combustível.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
 periodicity: ['50ms']
-senders:
-  - 'BSI'
+senders: ['BSI', 'ICSV']
 receivers:
-  - 'CMB' # for speed and rpms
-  - 'EMF'
-  - 'RAD'
-  - 'CMB'
-  - 'VTH'
-  - 'TO'
-  - 'EDP_AV'
-  - 'BDM'
   - 'AAS'
-  - 'CLV'
-  - 'EDP_AR'
-  - 'BTEL'
-  - 'CLR'
-  - 'DEF'
-  - 'PDS'
-  - 'BCD'
-  - 'TE'
-  - 'STL'
-  - 'CLIM_RFTA'
-  - 'AAD'
-  - 'BNB'
-  - 'PLC'
-  - 'KML'
   - 'AMPLI'
-  - 'CMB_EMF'
-  - 'BDMA'
-  - 'SAM'
-  - 'PDPC'
-  - 'NG4'
-  - 'MDS'
-  - 'RNEG'
+  - 'BCD'
+  - 'BDM_C'
+  - 'BDM_A'
+  - 'TNB'
+  - 'BTEL'
   - 'BTT'
+  - 'CLIM_AV'
+  - 'CLIM_AR'
+  - 'CMB'
+  - 'DEF'
+  - 'EDP_C'
+  - 'EMF'
+  - 'KML'
   - 'MATT'
+  - 'MDS'
+  - 'PDS_C'
+  - 'MDPLC'
+  - 'RAD'
+  - 'SAM'
+  - 'BSTL'
+  - 'BTE'
+  - 'TO1'
+  - 'VTH'
+  - 'CDC'
+  - 'EDP_AR'
+  - 'AAD'
   - 'ICSV'
-  - 'PASS_ICSV'
 
 signals:
-  ENGINE_SPEED:
-    alt_names: ['VITM']
+  RPM:
     bits: '1.7-2.0'
+    alt_names: ['ENGINE_SPEED', 'VITM']
     comment:
-      en: 'Engine speed'
-      fr: 'Regime moteur'
-    type: 'uint8'
-    offset: 0
+      en: 'Engine speed, 0.125 rpm per bit; invalid when all bits set'
+      fr: 'Régime moteur, résolution 0,125 tr/min ; invalide si tous les bits sont à 1'
+      es: 'Régimen del motor, resolución 0,125 rpm; inválido si todos los bits están a 1'
+      de: 'Motordrehzahl, Auflösung 0,125 U/min; ungültig bei allen Bits gesetzt'
+      it: 'Regime motore, risoluzione 0,125 giri/min; non valido se tutti i bit sono a 1'
+      pl: 'Obroty silnika, rozdzielczość 0,125 obr/min; nieprawidłowe, gdy wszystkie bity ustawione'
+      ru: 'Обороты двигателя, разрешение 0,125 об/мин; недействительно, если все биты установлены'
+      zh: '发动机转速,分辨率 0.125 转/分钟;所有位为 1 时无效'
+      hu: 'Motorfordulatszám, felbontás 0,125 ford/perc; érvénytelen, ha minden bit be van állítva'
+      pt: 'Regime do motor, resolução 0,125 rpm; inválido se todos os bits estiverem a 1'
+    type: 'uint'
+    factor: 0.125
     min: 0
     max: 8191.75
-    resolution: 0.125
-    invalid: 0xFFFF
     units: 'rpm'
+    invalid: 0xFFFF
+    default: 0x1F40
 
-  CAR_SPEED:
-    alt_names: ['VITV']
+  SPEED:
     bits: '3.7-4.0'
+    alt_names: ['CAR_SPEED', 'VITV']
     comment:
-      en: 'Car speed'
-      fr: 'Vitesse voiture'
-    type: 'uint8'
-    offset: 0
+      en: 'Instantaneous vehicle speed (average of the driven wheels)'
+      fr: 'Vitesse instantanée du véhicule (moyenne des roues motrices)'
+      es: 'Velocidad instantánea del vehículo (media de las ruedas motrices)'
+      de: 'Momentane Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder)'
+      it: 'Velocità istantanea del veicolo (media delle ruote motrici)'
+      pl: 'Chwilowa prędkość pojazdu (średnia z kół napędowych)'
+      ru: 'Мгновенная скорость автомобиля (среднее по ведущим колёсам)'
+      zh: '车辆瞬时车速(驱动轮平均值)'
+      hu: 'Pillanatnyi jármű sebesség (a hajtott kerekek átlaga)'
+      pt: 'Velocidade instantânea do veículo (média das rodas motrizes)'
+    type: 'uint'
+    factor: 0.01
     min: 0
     max: 655.34
-    resolution: 0.01
-    invalid: 0xFFFF
     units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00
 
-  TRAVEL_DISTANCE:
-    alt_names: ['DIST']
+  DISTANCE_TRAVELLED:
     bits: '5.7-6.0'
+    alt_names: ['TRAVEL_DISTANCE', 'DIST']
     comment:
-      en: 'Current trip distance'
-      fr: 'Distance parcourue'
-    type: 'uint16'
-    offset: 0
+      en: 'Rolling distance counter, 0.1 m per bit, wraps after 0xFFFF (6553.5 m); no invalid value, frozen when unknown'
+      fr: 'Compteur cumulatif de distance, 0,1 m par bit, boucle après 0xFFFF (6553,5 m) ; pas de valeur invalide, figé si inconnu'
+      es: 'Contador acumulativo de distancia, 0,1 m por bit, se reinicia tras 0xFFFF (6553,5 m); sin valor inválido, se congela si es desconocido'
+      de: 'Fortlaufender Streckenzähler, 0,1 m pro Bit, Überlauf nach 0xFFFF (6553,5 m); kein ungültiger Wert, eingefroren bei Unbekannt'
+      it: 'Contatore cumulativo di distanza, 0,1 m per bit, si azzera dopo 0xFFFF (6553,5 m); nessun valore non valido, congelato se sconosciuto'
+      pl: 'Narastający licznik przebytej odległości, 0,1 m na bit, zawija się po 0xFFFF (6553,5 m); brak wartości nieprawidłowej, zamrożony gdy nieznany'
+      ru: 'Накопительный счётчик пройденного расстояния, 0,1 м на бит, переполнение после 0xFFFF (6553,5 м); недействительного значения нет, замораживается при неизвестном значении'
+      zh: '累计行驶距离计数器,每位 0.1 米,在 0xFFFF(6553.5 米)后回绕;无无效值,未知时保持不变'
+      hu: 'Halmozott megtett távolság számláló, 0,1 m/bit, 0xFFFF (6553,5 m) után túlcsordul; nincs érvénytelen érték, ismeretlen esetben befagy'
+      pt: 'Contador acumulativo de distância, 0,1 m por bit, reinicia após 0xFFFF (6553,5 m); sem valor inválido, fica fixo se desconhecido'
+    type: 'uint'
+    factor: 0.1
     min: 0
-    max: 6553.5
-    resolution: 0.1
-    invalid:
+    max: 65535
     units: 'm'
+    default: 0x00
 
   FUEL_CONSUMPTION:
-    alt_names: ['CONSO']
     bits: '7.7-7.0'
     comment:
-      en: 'Current trip total fuel consumption'
-      fr: 'Consommation de carburant'
-    type: 'uint8'
-    offset: 0
-    min: 0
-    max: 20400
-    resolution: 80
-    invalid:
+      en: 'Rolling fuel consumption counter, 80 mm3 per bit, wraps at 20400 mm3; no invalid value, frozen when unknown'
+      fr: 'Compteur cumulatif de consommation de carburant, 80 mm3 par bit, boucle à 20400 mm3 ; pas de valeur invalide, figé si inconnu'
+      es: 'Contador acumulativo de consumo de combustible, 80 mm3 por bit, se reinicia a 20400 mm3; sin valor inválido, se congela si es desconocido'
+      de: 'Fortlaufender Kraftstoffverbrauchszähler, 80 mm3 pro Bit, Überlauf bei 20400 mm3; kein ungültiger Wert, eingefroren bei Unbekannt'
+      it: 'Contatore cumulativo del consumo di carburante, 80 mm3 per bit, si azzera a 20400 mm3; nessun valore non valido, congelato se sconosciuto'
+      pl: 'Narastający licznik zużycia paliwa, 80 mm3 na bit, zawija się przy 20400 mm3; brak wartości nieprawidłowej, zamrożony gdy nieznany'
+      ru: 'Накопительный счётчик расхода топлива, 80 мм3 на бит, переполнение при 20400 мм3; недействительного значения нет, замораживается при неизвестном расходе'
+      zh: '累计燃油消耗计数器,每位 80 mm3,在 20400 mm3 处回绕;无无效值,未知时保持不变'
+      hu: 'Halmozott üzemanyag-fogyasztás számláló, 80 mm3/bit, 20400 mm3-nél túlcsordul; nincs érvénytelen érték, ismeretlen esetben befagy'
+      pt: 'Contador cumulativo de consumo de combustível, 80 mm3 por bit, reinicia aos 20400 mm3; sem valor inválido, congelado se desconhecido'
+    type: 'uint'
+    factor: 80
     units: 'mm3'
-
-  SECURISATION: # This contains SECU_VITV and SECU_VITESSE
-    bits: '8.7'
-    alt_names: ['SECU_VITV']
-    comment:
-      en: 'Speed security'
-      fr: 'Securisation vitesse'
-    values:
-      0x00:
-        en: 'Speed info invalid'
-        fr: 'Information de vitesse invalide'
-      0x01:
-        en: 'Speed info valid'
-        fr: 'Information de vitesse valide'
-
-  SECU_VITESSE:
-    bits: '8.6-8.3'
-    alt_names: ['SECU_VITESSE']
-    comment:
-      en: 'Vehicle speed info security'
-      fr: 'Securisation des informations de vitesse'
-    values:
-      0x00:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x01:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x02:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x03:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x04:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x05:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x06:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x07:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x08:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x09:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x0A:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x0B:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x0C:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x0D:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x0E:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
-      0x0F:
-        en: 'Vehicle speed info invalid'
-        fr: 'Information de vitesse du vehicule invalide'
+    default: 0x00
 
   UNUSED_1:
-    bits: '8.2-8.0'
+    bits: '8.7'
     unused: true
 
+  UNUSED_2:
+    bits: '8.6-8.3'
+    unused: true

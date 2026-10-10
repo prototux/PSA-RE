@@ -1,0 +1,367 @@
+id: 0x4C8
+name: 'CRASH_INFO'
+type: 'van'
+length: 3
+comment:
+  en: 'Airbag system status: passenger airbag inhibition, rollover and rear impact detection, fired pyrotechnic igniters and crash detected flag. Also used by the body computer as the presence-monitoring frame for the airbag ECU.'
+  fr: 'État du système airbag : inhibition airbag passager, détection de retournement et de choc arrière, allumeurs pyrotechniques déclenchés et indicateur de choc détecté. Utilisée aussi par la BSI comme trame de supervision de présence du calculateur airbag.'
+  es: 'Estado del sistema de airbag: inhibición del airbag del pasajero, detección de vuelco y de impacto trasero, iniciadores pirotécnicos disparados e indicador de impacto detectado. Usada también por la BSI como trama de supervisión de presencia de la centralita de airbag.'
+  de: 'Status des Airbagsystems: Beifahrer-Airbag-Deaktivierung, Überschlag- und Heckaufprallerkennung, ausgelöste pyrotechnische Zünder und Crash-erkannt-Kennzeichen. Wird auch von der BSI als Präsenzüberwachungsrahmen des Airbag-Steuergeräts genutzt.'
+  it: 'Stato del sistema airbag: inibizione airbag passeggero, rilevamento ribaltamento e urto posteriore, inneschi pirotecnici attivati e indicatore di urto rilevato. Usata anche dalla BSI come trama di supervisione della presenza della centralina airbag.'
+  pl: 'Stan systemu poduszek powietrznych: wyłączenie poduszki pasażera, wykrycie przewrócenia i uderzenia tylnego, zadziałane zapłonniki pirotechniczne oraz flaga wykrytego zderzenia. Używana także przez BSI jako ramka nadzoru obecności sterownika poduszek powietrznych.'
+  ru: 'Статус системы подушек безопасности: отключение подушки пассажира, обнаружение опрокидывания и заднего удара, сработавшие пиротехнические воспламенители и флаг обнаруженного столкновения. Также используется BSI как кадр контроля присутствия блока подушек безопасности.'
+  zh: '安全气囊系统状态:乘客安全气囊禁用、翻车和后部碰撞检测、已触发的火药式点火器及碰撞检测标志。BSI也将其用作安全气囊控制单元的存在监控帧。'
+  hu: 'A légzsákrendszer állapota: utas légzsák letiltása, borulás- és hátsó ütközésérzékelés, kioldott pirotechnikai gyújtók és ütközésérzékelési jelző. A BSI a légzsák-vezérlőegység jelenlét-felügyeleti kereteként is használja.'
+  pt: 'Estado do sistema de airbags: inibição do airbag do passageiro, deteção de capotamento e de impacto traseiro, ignitores pirotécnicos disparados e indicador de colisão detetada. Também utilizada pelo computador de servidão como trama de supervisão de presença da unidade de controlo do airbag.'
+periodicity: ['50ms']
+senders: ['RBG']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  PASSENGER_AIRBAG_ACTIVE:
+    bits: '2.7'
+    comment:
+      en: 'Actual passenger airbag inhibition state'
+      fr: 'État de l''inhibition réelle de l''airbag passager'
+      es: 'Estado real de inhibición del airbag del pasajero'
+      de: 'Tatsächlicher Deaktivierungsstatus des Beifahrerairbags'
+      it: 'Stato effettivo di inibizione dell''airbag passeggero'
+      pl: 'Rzeczywisty stan wyłączenia poduszki powietrznej pasażera'
+      ru: 'Фактическое состояние отключения подушки безопасности пассажира'
+      zh: '乘客安全气囊实际抑制状态'
+      hu: 'Az utasoldali légzsák tényleges letiltási állapota'
+      pt: 'Estado real de inibição do airbag do passageiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Passenger airbag inhibited'
+        fr: 'Airbag passager inhibé'
+        es: 'Airbag del pasajero inhibido'
+        de: 'Beifahrerairbag deaktiviert'
+        it: 'Airbag passeggero inibito'
+        pl: 'Poduszka powietrzna pasażera wyłączona'
+        ru: 'Подушка безопасности пассажира отключена'
+        zh: '乘客安全气囊已禁用'
+        hu: 'Utasoldali légzsák letiltva'
+        pt: 'Airbag do passageiro inibido'
+      0x01:
+        en: 'Passenger airbag active'
+        fr: 'Airbag passager activé'
+        es: 'Airbag del pasajero activado'
+        de: 'Beifahrer-Airbag aktiv'
+        it: 'Airbag passeggero attivo'
+        pl: 'Aktywna poduszka powietrzna pasażera'
+        ru: 'Подушка безопасности пассажира активна'
+        zh: '乘客安全气囊已激活'
+        hu: 'Az utasoldali légzsák aktív'
+        pt: 'Airbag do passageiro ativado'
+
+  ROLLOVER_DETECTED:
+    bits: '2.6'
+    comment:
+      en: 'Rollover detected'
+      fr: 'État détection retournement'
+      es: 'Vuelco detectado'
+      de: 'Überschlag erkannt'
+      it: 'Ribaltamento rilevato'
+      pl: 'Wykryto przewrócenie pojazdu'
+      ru: 'Обнаружено опрокидывание'
+      zh: '检测到侧翻'
+      hu: 'Borulás észlelve'
+      pt: 'Capotamento detetado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No rollover'
+        fr: 'Pas de retournement'
+        es: 'Sin vuelco'
+        de: 'Kein Überschlag'
+        it: 'Nessun ribaltamento'
+        pl: 'Brak przewrócenia'
+        ru: 'Нет опрокидывания'
+        zh: '无侧翻'
+        hu: 'Nincs felborulás'
+        pt: 'Sem capotamento'
+      0x01:
+        en: 'Rollover detected'
+        fr: 'Retournement détecté'
+        es: 'Vuelco detectado'
+        de: 'Überschlag erkannt'
+        it: 'Ribaltamento rilevato'
+        pl: 'Wykryto przewrócenie'
+        ru: 'Обнаружено опрокидывание'
+        zh: '检测到侧翻'
+        hu: 'Borulás észlelve'
+        pt: 'Capotamento detetado'
+
+  REAR_IMPACT_DETECTED:
+    bits: '2.5'
+    comment:
+      en: 'Rear impact detected'
+      fr: 'État détection choc arrière'
+      es: 'Impacto trasero detectado'
+      de: 'Heckaufprall erkannt'
+      it: 'Urto posteriore rilevato'
+      pl: 'Wykryto uderzenie z tyłu'
+      ru: 'Обнаружен удар сзади'
+      zh: '检测到后部碰撞'
+      hu: 'Hátsó ütközés észlelve'
+      pt: 'Deteção de impacto traseiro'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No rear impact'
+        fr: 'Pas de choc arrière'
+        es: 'Sin impacto trasero'
+        de: 'Kein Heckaufprall'
+        it: 'Nessun urto posteriore'
+        pl: 'Brak uderzenia z tyłu'
+        ru: 'Нет удара сзади'
+        zh: '无后部碰撞'
+        hu: 'Nincs hátsó ütközés'
+        pt: 'Sem impacto traseiro'
+      0x01:
+        en: 'Rear impact detected'
+        fr: 'Choc arrière détecté'
+        es: 'Impacto trasero detectado'
+        de: 'Heckaufprall erkannt'
+        it: 'Urto posteriore rilevato'
+        pl: 'Wykryto uderzenie z tyłu'
+        ru: 'Обнаружен удар сзади'
+        zh: '检测到后方碰撞'
+        hu: 'Hátsó ütközés észlelve'
+        pt: 'Impacto traseiro detetado'
+
+  RIGHT_SIDE_AIRBAG_FIRED:
+    bits: '2.4'
+    comment:
+      en: 'Right side airbag igniter fired'
+      fr: 'État des allumeurs pyrotechniques : latéral droit'
+      es: 'Iniciador pirotécnico del airbag lateral derecho activado'
+      de: 'Zündpatrone des rechten Seitenairbags ausgelöst'
+      it: 'Innesco pirotecnico dell''airbag laterale destro attivato'
+      pl: 'Zapłonnik pirotechniczny prawej poduszki bocznej zadziałał'
+      ru: 'Пиропатрон правой боковой подушки безопасности сработал'
+      zh: '右侧安全气囊点火器已触发'
+      hu: 'A jobb oldali légzsák pirotechnikai gyújtója kioldva'
+      pt: 'Ignitor do airbag lateral direito acionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  LEFT_SIDE_AIRBAG_FIRED:
+    bits: '2.3'
+    comment:
+      en: 'Left side airbag igniter fired'
+      fr: 'État des allumeurs pyrotechniques : latéral gauche'
+      es: 'Iniciador pirotécnico del airbag lateral izquierdo activado'
+      de: 'Zündpatrone des linken Seitenairbags ausgelöst'
+      it: 'Innesco pirotecnico dell''airbag laterale sinistro attivato'
+      pl: 'Zapłonnik pirotechniczny lewej poduszki bocznej zadziałał'
+      ru: 'Пиропатрон левой боковой подушки безопасности сработал'
+      zh: '左侧安全气囊点火器已触发'
+      hu: 'A bal oldali légzsák pirotechnikai gyújtója kioldva'
+      pt: 'Ignitor do airbag lateral esquerdo acionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  FRONT_AIRBAG_FIRED:
+    bits: '2.2'
+    comment:
+      en: 'Front airbag igniter fired'
+      fr: 'État des allumeurs pyrotechniques : sac frontal'
+      es: 'Iniciador pirotécnico del airbag frontal activado'
+      de: 'Zündpatrone des Frontairbags ausgelöst'
+      it: 'Innesco pirotecnico dell''airbag frontale attivato'
+      pl: 'Zapłonnik pirotechniczny poduszki czołowej zadziałał'
+      ru: 'Пиропатрон фронтальной подушки безопасности сработал'
+      zh: '前部安全气囊点火器已触发'
+      hu: 'Az elülső légzsák pirotechnikai gyújtója kioldva'
+      pt: 'Ignitor do airbag dianteiro acionado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  PRETENSIONER_FIRED:
+    bits: '2.1'
+    comment:
+      en: 'Seat belt pretensioner igniters fired'
+      fr: 'État des allumeurs pyrotechniques : prétensionneurs'
+      es: 'Iniciadores pirotécnicos del pretensor activados'
+      de: 'Zündpatronen der Gurtstraffer ausgelöst'
+      it: 'Inneschi pirotecnici dei pretensionatori attivati'
+      pl: 'Zapłonniki pirotechniczne napinaczy pasów zadziałały'
+      ru: 'Пиропатроны преднатяжителей ремней сработали'
+      zh: '安全带预紧器点火器已触发'
+      hu: 'Az övfeszítő pirotechnikai gyújtói kioldva'
+      pt: 'Ignitores do pré-tensor do cinto de segurança acionados'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not triggered'
+        fr: 'Non déclenché'
+        es: 'No activado'
+        de: 'Nicht ausgelöst'
+        it: 'Non attivato'
+        pl: 'Nie wyzwolone'
+        ru: 'Не сработало'
+        zh: '未触发'
+        hu: 'Nincs kioldva'
+        pt: 'Não acionado'
+      0x01:
+        en: 'Fired'
+        fr: 'Déclenché'
+        es: 'Disparado'
+        de: 'Ausgelöst'
+        it: 'Attivato'
+        pl: 'Wyzwolone'
+        ru: 'Сработало'
+        zh: '已触发'
+        hu: 'Kioldva'
+        pt: 'Acionado'
+
+  CRASH_DETECTED:
+    bits: '2.0'
+    comment:
+      en: 'Crash detected since the last ignition-on'
+      fr: 'Crash détecté depuis le dernier contact'
+      es: 'Choque detectado desde el último encendido'
+      de: 'Unfall seit dem letzten Zündungseinschalten erkannt'
+      it: 'Urto rilevato dall''ultimo contatto'
+      pl: 'Wykryto zderzenie od ostatniego włączenia zapłonu'
+      ru: 'Авария обнаружена с момента последнего включения зажигания'
+      zh: '自上次点火以来检测到碰撞'
+      hu: 'Ütközés észlelve az utolsó gyújtáskapcsolás óta'
+      pt: 'Colisão detetada desde a última ligação da ignição'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No crash detected'
+        fr: 'Pas de choc détecté'
+        es: 'Sin choque detectado'
+        de: 'Kein Aufprall erkannt'
+        it: 'Nessun urto rilevato'
+        pl: 'Nie wykryto zderzenia'
+        ru: 'Удар не обнаружен'
+        zh: '未检测到碰撞'
+        hu: 'Nincs érzékelt ütközés'
+        pt: 'Sem choque detetado'
+      0x01:
+        en: 'Crash detected since last ignition on'
+        fr: 'Choc détecté depuis la dernière mise du +APC'
+        es: 'Impacto detectado desde el último encendido'
+        de: 'Aufprall erkannt seit letztem Einschalten der Zündung'
+        it: 'Urto rilevato dall''ultima accensione'
+        pl: 'Wykryto zderzenie od ostatniego włączenia zapłonu'
+        ru: 'Обнаружено столкновение с момента последнего включения зажигания'
+        zh: '自上次点火开启以来检测到碰撞'
+        hu: 'Ütközés érzékelve a legutóbbi gyújtásbekapcsolás óta'
+        pt: 'Colisão detetada desde a última ligação da ignição'
+
+  FOOTER:
+    bits: '3.7-3.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

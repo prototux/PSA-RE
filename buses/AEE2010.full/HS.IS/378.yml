@@ -1,0 +1,100 @@
+id: 0x378
+name: 'WAKEUP_PFHM_FL'
+type: 'can'
+length: 6
+comment:
+  en: 'Injector adaptation data (petrol and gas): learned injector constant and closing-time offset.'
+  fr: 'Données d''adaptation des injecteurs (essence et gaz) : constante injecteur apprise et décalage de temps de fermeture.'
+  es: 'Datos de adaptación de los inyectores (gasolina y gas): constante de inyector aprendida y desfase del tiempo de cierre.'
+  de: 'Adaptionsdaten der Einspritzdüsen (Benzin und Gas): erlernte Injektorkonstante und Offset der Schließzeit.'
+  it: 'Dati di adattamento degli iniettori (benzina e gas): costante iniettore appresa e scostamento del tempo di chiusura.'
+  pl: 'Dane adaptacji wtryskiwaczy (benzyna i gaz): wyuczona stała wtryskiwacza i przesunięcie czasu zamknięcia.'
+  ru: 'Данные адаптации форсунок (бензин и газ): изученная константа форсунки и смещение времени закрытия.'
+  zh: '喷油器自适应数据(汽油及燃气):学习到的喷油器常数及关闭时间偏移量。'
+  hu: 'Az injektorok adaptációs adatai (benzin és gáz): a tanult injektorállandó és a zárási idő eltolása.'
+  pt: 'Dados de adaptação dos injetores (gasolina e gás): constante aprendida do injetor e desvio do tempo de fecho.'
+periodicity: ['20ms']
+senders: ['CMM']
+receivers: ['GAS']
+
+signals:
+  INJECTOR_CONSTANT_2:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Inverse of the injector constant'
+      fr: 'Inverse de la constante de l''injecteur'
+      es: 'Inversa de la constante del inyector'
+      de: 'Kehrwert der Injektorkonstante'
+      it: 'Inverso della costante dell''iniettore'
+      pl: 'Odwrotność stałej wtryskiwacza'
+      ru: 'Обратная величина константы форсунки'
+      zh: '喷油器常数的倒数'
+      hu: 'A befecskendező állandójának reciproka'
+      pt: 'Inverso da constante do injetor'
+    type: 'uint'
+    factor: 0.015625
+    min: 0.015625
+    max: 1024
+    units: 's/kg'
+    default: 0x6400
+
+  INJECTOR_DEAD_TIME:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Injector dead time'
+      fr: 'Temps mort de l''injecteur'
+      es: 'Tiempo muerto del inyector'
+      de: 'Totzeit des Injektors'
+      it: 'Tempo morto dell''iniettore'
+      pl: 'Czas martwy wtryskiwacza'
+      ru: 'Мёртвое время форсунки'
+      zh: '喷油器死区时间'
+      hu: 'A befecskendező holtideje'
+      pt: 'Tempo morto do injetor'
+    type: 'uint'
+    factor: 0.0032
+    min: 0
+    max: 209.712
+    units: 'ms'
+
+  GAS_INJECTOR_CONSTANT_ADAPTATION:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Relative adaptation of the gas injector constant'
+      fr: 'Adaptation relative de la constante de l''injecteur gaz'
+      es: 'Adaptación relativa de la constante del inyector de gas'
+      de: 'Relative Anpassung der Gasinjektorkonstante'
+      it: 'Adattamento relativo della costante dell''iniettore gas'
+      pl: 'Względna adaptacja stałej wtryskiwacza gazu'
+      ru: 'Относительная адаптация константы газового форсунки'
+      zh: '燃气喷油器常数的相对自适应'
+      hu: 'A gázbefecskendező állandójának relatív adaptációja'
+      pt: 'Adaptação relativa da constante do injetor de gás'
+    type: 'uint'
+    factor: 0.1953125
+    offset: -25
+    min: -25
+    max: 24.8046875
+    units: '%'
+    default: 0x00
+
+  GAS_INJECTOR_TIOFF_ADAPTATION:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Relative adaptation of the gas injector dead time constant'
+      fr: 'Adaptation relative de la constante de temps mort de l''injecteur gaz'
+      es: 'Adaptación relativa de la constante de tiempo muerto del inyector de gas'
+      de: 'Relative Anpassung der Totzeitkonstante des Gasinjektors'
+      it: 'Adattamento relativo della costante di tempo morto dell''iniettore gas'
+      pl: 'Względna adaptacja stałej czasu martwego wtryskiwacza gazu'
+      ru: 'Относительная адаптация константы мёртвого времени газовой форсунки'
+      zh: '燃气喷油器死区时间常数的相对自适应'
+      hu: 'A gázbefecskendező holtidő-állandójának relatív adaptációja'
+      pt: 'Adaptação relativa da constante de tempo morto do injetor de gás'
+    type: 'uint'
+    factor: 3.2e-06
+    offset: -0.0004096
+    min: -0.0004096
+    max: 0.0004064
+    units: 's'
+    default: 0x00

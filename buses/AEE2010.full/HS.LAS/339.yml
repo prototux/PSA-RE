@@ -1,0 +1,359 @@
+id: 0x339
+name: 'YAW_LATERAL_SENSOR_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Dual-sensor (yaw/lateral acceleration) data: raw lateral acceleration, calibration and error bits, test mode, internal sensor info and error number.'
+  fr: 'Données du bicapteur (lacet/accélération latérale) : accélération latérale brute, bits de calibration et d''erreur, mode test, info interne capteur et numéro d''erreur.'
+  es: 'Datos del bicaptador (guiñada/aceleración lateral): aceleración lateral bruta, bits de calibración y error, modo de prueba, información interna del sensor y número de error.'
+  de: 'Daten des Doppelsensors (Gierrate/Querbeschleunigung): rohe Querbeschleunigung, Kalibrierungs- und Fehlerbits, Testmodus, interne Sensorinfo und Fehlernummer.'
+  it: 'Dati del bisensore (imbardata/accelerazione laterale): accelerazione laterale grezza, bit di calibrazione ed errore, modalità test, info interna sensore e numero di errore.'
+  pl: 'Dane biczujnika (odchylenie/przyspieszenie boczne): surowe przyspieszenie boczne, bity kalibracji i błędu, tryb testowy, wewnętrzna informacja czujnika i numer błędu.'
+  ru: 'Данные двухдатчика (рыскание/боковое ускорение): необработанное боковое ускорение, биты калибровки и ошибки, тестовый режим, внутренняя информация датчика и номер ошибки.'
+  zh: '双传感器(横摆/横向加速度)数据:原始横向加速度、校准和错误位、测试模式、传感器内部信息和错误编号。'
+  hu: 'A kettős érzékelő (legyezés/oldalirányú gyorsulás) adatai: nyers oldalirányú gyorsulás, kalibrációs és hibabitek, tesztmód, belső érzékelő infó és hibaszám.'
+  pt: 'Dados do sensor duplo (guinada/aceleração lateral): aceleração lateral em bruto, bits de calibração e de erro, modo de teste, informação interna do sensor e número de erro.'
+observations:
+  en: 'Sent on reception of a periodic (20 ms) request frame from the brake ECU'
+  fr: 'Émise sur réception d''une trame requête périodique (20 ms) transmise par le calculateur de freinage'
+  es: 'Enviada al recibir una trama de solicitud periódica (20 ms) del ECU de frenos'
+  de: 'Gesendet beim Empfang eines periodischen (20 ms) Anforderungsrahmens vom Bremssteuergerät'
+  it: 'Inviata alla ricezione di un frame di richiesta periodico (20 ms) dalla centralina freni'
+  pl: 'Wysyłane po odebraniu okresowej (20 ms) ramki żądania od sterownika hamulców'
+  ru: 'Отправляется при получении периодического (20 мс) кадра запроса от блока управления тормозами'
+  zh: '接收到制动ECU发送的周期性(20毫秒)请求帧时发送'
+  hu: 'Küldve a fékrendszer vezérlőegységétől érkező periodikus (20 ms) kérőkeret fogadásakor'
+  pt: 'Enviada na receção de uma trama de pedido periódica (20 ms) da unidade de controlo de travagem'
+periodicity: ['trigger']
+senders: ['ACCEL_SENSOR']
+receivers: ['ABS']
+
+signals:
+  ACCEL_SENSOR_CALIBRATION_BIT:
+    bits: '1.7'
+    comment:
+      en: 'Calibration status bit of the acceleration/yaw sensor'
+      fr: 'Bit d''état de calibration du capteur d''accélération/lacet'
+      es: 'Bit de estado de calibración del sensor de aceleración/guiñada'
+      de: 'Kalibrierstatusbit des Beschleunigungs-/Gierratensensors'
+      it: 'Bit di stato di calibrazione del sensore di accelerazione/imbardata'
+      pl: 'Bit stanu kalibracji czujnika przyspieszenia/odchylenia'
+      ru: 'Бит статуса калибровки датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的校准状态位'
+      hu: 'A gyorsulás-/legyezési érzékelő kalibrációs állapotbitje'
+      pt: 'Bit de estado de calibração do sensor de aceleração/guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No calibration in progress'
+        fr: 'Pas de calibration en cours'
+        es: 'Sin calibración en curso'
+        de: 'Keine Kalibrierung im Gange'
+        it: 'Nessuna calibrazione in corso'
+        pl: 'Brak trwającej kalibracji'
+        ru: 'Калибровка не выполняется'
+        zh: '无正在进行的校准'
+        hu: 'Nincs folyamatban lévő kalibráció'
+        pt: 'Sem calibração em curso'
+      0x01:
+        en: 'Calibration in progress'
+        fr: 'Étalonnage en cours'
+        es: 'Calibración en curso'
+        de: 'Kalibrierung läuft'
+        it: 'Calibrazione in corso'
+        pl: 'Trwa kalibracja'
+        ru: 'Идёт калибровка'
+        zh: '校准进行中'
+        hu: 'Kalibrálás folyamatban'
+        pt: 'Calibração em curso'
+
+  ACCEL_SENSOR_INTERNAL_INFO:
+    bits: '1.6-1.5'
+    comment:
+      en: 'Internal diagnostic information of the acceleration/yaw sensor'
+      fr: 'Informations de diagnostic interne du capteur d''accélération/lacet'
+      es: 'Información de diagnóstico interno del sensor de aceleración/guiñada'
+      de: 'Interne Diagnoseinformationen des Beschleunigungs-/Gierratensensors'
+      it: 'Informazioni diagnostiche interne del sensore di accelerazione/imbardata'
+      pl: 'Wewnętrzne informacje diagnostyczne czujnika przyspieszenia/odchylenia'
+      ru: 'Внутренняя диагностическая информация датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的内部诊断信息'
+      hu: 'A gyorsulás-/legyezési érzékelő belső diagnosztikai adatai'
+      pt: 'Informação de diagnóstico interno do sensor de aceleração/guinada'
+    type: 'uint'
+    min: 0
+    max: 3
+    default: 0x00
+
+  ACCEL_SENSOR_SUSPECTED_ERROR_BIT:
+    bits: '1.4'
+    comment:
+      en: 'Suspected error bit of the acceleration/yaw sensor'
+      fr: 'Bit d''erreur suspectée du capteur d''accélération/lacet'
+      es: 'Bit de error sospechado del sensor de aceleración/guiñada'
+      de: 'Bit für vermuteten Fehler des Beschleunigungs-/Gierratensensors'
+      it: 'Bit di errore sospetto del sensore di accelerazione/imbardata'
+      pl: 'Bit podejrzenia błędu czujnika przyspieszenia/odchylenia'
+      ru: 'Бит предполагаемой ошибки датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的疑似错误位'
+      hu: 'A gyorsulás-/legyezési érzékelő gyanított hibabitje'
+      pt: 'Bit de erro suspeito do sensor de aceleração/guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No suspected error'
+        fr: 'Pas d''erreur suspectée'
+        es: 'Sin error sospechado'
+        de: 'Kein vermuteter Fehler'
+        it: 'Nessun errore sospetto'
+        pl: 'Brak podejrzewanego błędu'
+        ru: 'Подозрений на ошибку нет'
+        zh: '无疑似错误'
+        hu: 'Nincs gyanított hiba'
+        pt: 'Sem erro suspeito'
+      0x01:
+        en: 'Suspected error'
+        fr: 'Erreur suspectée'
+        es: 'Error sospechado'
+        de: 'Vermuteter Fehler'
+        it: 'Errore sospetto'
+        pl: 'Podejrzewany błąd'
+        ru: 'Предполагаемая ошибка'
+        zh: '疑似错误'
+        hu: 'Gyanított hiba'
+        pt: 'Erro suspeito'
+
+  ACCEL_SENSOR_TEMPORARY_ERROR_BIT:
+    bits: '1.3'
+    comment:
+      en: 'Temporary error bit of the acceleration/yaw sensor'
+      fr: 'Bit d''erreur temporaire du capteur d''accélération/lacet'
+      es: 'Bit de error temporal del sensor de aceleración/guiñada'
+      de: 'Bit für vorübergehenden Fehler des Beschleunigungs-/Gierratensensors'
+      it: 'Bit di errore temporaneo del sensore di accelerazione/imbardata'
+      pl: 'Bit chwilowego błędu czujnika przyspieszenia/odchylenia'
+      ru: 'Бит временной ошибки датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的临时错误位'
+      hu: 'A gyorsulás-/legyezési érzékelő átmeneti hibabitje'
+      pt: 'Bit de erro temporário do sensor de aceleração/guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No temporary error'
+        fr: 'Pas d''erreur temporaire'
+        es: 'Sin error temporal'
+        de: 'Kein vorübergehender Fehler'
+        it: 'Nessun errore temporaneo'
+        pl: 'Brak błędu tymczasowego'
+        ru: 'Нет временной ошибки'
+        zh: '无临时错误'
+        hu: 'Nincs átmeneti hiba'
+        pt: 'Sem erro temporário'
+      0x01:
+        en: 'Temporary signal error'
+        fr: 'Erreur temporaire'
+        es: 'Error temporal'
+        de: 'Vorübergehender Fehler'
+        it: 'Errore temporaneo'
+        pl: 'Chwilowy błąd'
+        ru: 'Временная ошибка'
+        zh: '临时信号错误'
+        hu: 'Átmeneti hiba'
+        pt: 'Erro temporário'
+
+  ACCEL_SENSOR_ERROR_BIT:
+    bits: '1.2'
+    comment:
+      en: 'Error bit of the acceleration/yaw sensor'
+      fr: 'Bit d''erreur du capteur d''accélération/lacet'
+      es: 'Bit de error del sensor de aceleración/guiñada'
+      de: 'Fehlerbit des Beschleunigungs-/Gierratensensors'
+      it: 'Bit di errore del sensore di accelerazione/imbardata'
+      pl: 'Bit błędu czujnika przyspieszenia/odchylenia'
+      ru: 'Бит ошибки датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的错误位'
+      hu: 'A gyorsulás-/legyezési érzékelő hibabitje'
+      pt: 'Bit de erro do sensor de aceleração/guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No error'
+        fr: 'Pas d''erreur'
+        es: 'Sin error'
+        de: 'Kein Fehler'
+        it: 'Nessun errore'
+        pl: 'Brak błędu'
+        ru: 'Нет ошибки'
+        zh: '无错误'
+        hu: 'Nincs hiba'
+        pt: 'Sem erro'
+      0x01:
+        en: 'Error'
+        fr: 'Erreur'
+        es: 'Error'
+        de: 'Fehler'
+        it: 'Errore'
+        pl: 'Błąd'
+        ru: 'Ошибка'
+        zh: '错误'
+        hu: 'Hiba'
+        pt: 'Erro'
+
+  ACCEL_SENSOR_POSITIVE_BITE_BIT:
+    bits: '1.1'
+    comment:
+      en: 'Positive built-in test equipment (BITE) bit of the acceleration/yaw sensor'
+      fr: 'Bit de test intégré positif (BITE) du capteur d''accélération/lacet'
+      es: 'Bit de autoprueba integrada positiva (BITE) del sensor de aceleración/guiñada'
+      de: 'Positives eingebautes Testbit (BITE) des Beschleunigungs-/Gierratensensors'
+      it: 'Bit di autotest integrato positivo (BITE) del sensore di accelerazione/imbardata'
+      pl: 'Dodatni bit wbudowanego testu (BITE) czujnika przyspieszenia/odchylenia'
+      ru: 'Бит положительного встроенного теста (BITE) датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的正向内建测试(BITE)位'
+      hu: 'A gyorsulás-/legyezési érzékelő pozitív beépített teszt (BITE) bitje'
+      pt: 'Bit de teste integrado positivo (BITE) do sensor de aceleração/guinada'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'BOSCH definition'
+        fr: 'Définition BOSCH'
+        es: 'Definición BOSCH'
+        de: 'BOSCH-Definition'
+        it: 'Definizione BOSCH'
+        pl: 'Definicja BOSCH'
+        ru: 'Определение BOSCH'
+        zh: '博世（BOSCH）定义'
+        hu: 'BOSCH meghatározás'
+        pt: 'Definição BOSCH'
+      0x01:
+        en: 'BOSCH definition'
+        fr: 'Définition BOSCH'
+        es: 'Definición BOSCH'
+        de: 'BOSCH-Definition'
+        it: 'Definizione BOSCH'
+        pl: 'Definicja BOSCH'
+        ru: 'Определение BOSCH'
+        zh: '博世（BOSCH）定义'
+        hu: 'BOSCH meghatározás'
+        pt: 'Definição BOSCH'
+
+  ACCEL_SENSOR_TEST_MODE_BIT:
+    bits: '1.0'
+    comment:
+      en: 'Test mode bit of the acceleration/yaw sensor'
+      fr: 'Bit de mode test du capteur d''accélération/lacet'
+      es: 'Bit de modo de prueba del sensor de aceleración/guiñada'
+      de: 'Testmodusbit des Beschleunigungs-/Gierratensensors'
+      it: 'Bit di modalità test del sensore di accelerazione/imbardata'
+      pl: 'Bit trybu testowego czujnika przyspieszenia/odchylenia'
+      ru: 'Бит тестового режима датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的测试模式位'
+      hu: 'A gyorsulás-/legyezési érzékelő tesztmódbitje'
+      pt: 'Bit de modo de teste do sensor de aceleração/guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'BOSCH definition'
+        fr: 'Définition BOSCH'
+        es: 'Definición BOSCH'
+        de: 'BOSCH-Definition'
+        it: 'Definizione BOSCH'
+        pl: 'Definicja BOSCH'
+        ru: 'Определение BOSCH'
+        zh: '博世（BOSCH）定义'
+        hu: 'BOSCH meghatározás'
+        pt: 'Definição BOSCH'
+      0x01:
+        en: 'BOSCH definition'
+        fr: 'Définition BOSCH'
+        es: 'Definición BOSCH'
+        de: 'BOSCH-Definition'
+        it: 'Definizione BOSCH'
+        pl: 'Definicja BOSCH'
+        ru: 'Определение BOSCH'
+        zh: '博世（BOSCH）定义'
+        hu: 'BOSCH meghatározás'
+        pt: 'Definição BOSCH'
+
+  ACCEL_SENSOR_IDENTIFICATION_BYTE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Identification byte of the acceleration/yaw sensor'
+      fr: 'Octet d''identification du capteur d''accélération/lacet'
+      es: 'Byte de identificación del sensor de aceleración/guiñada'
+      de: 'Identifikationsbyte des Beschleunigungs-/Gierratensensors'
+      it: 'Byte di identificazione del sensore di accelerazione/imbardata'
+      pl: 'Bajt identyfikacyjny czujnika przyspieszenia/odchylenia'
+      ru: 'Байт идентификации датчика ускорения/рыскания'
+      zh: '加速度/横摆传感器的识别字节'
+      hu: 'A gyorsulás-/legyezési érzékelő azonosító bájtja'
+      pt: 'Byte de identificação do sensor de aceleração/guinada'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00
+
+  YAW_RATE_RAW:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Unfiltered yaw rate signal (Bosch sensor)'
+      fr: 'Signal brut de vitesse de lacet (capteur Bosch)'
+      es: 'Señal bruta de velocidad de guiñada (sensor Bosch)'
+      de: 'Ungefiltertes Gierratensignal (Bosch-Sensor)'
+      it: 'Segnale grezzo di velocità di imbardata (sensore Bosch)'
+      pl: 'Nieprzefiltrowany sygnał prędkości odchylenia (czujnik Bosch)'
+      ru: 'Необработанный сигнал скорости рыскания (датчик Bosch)'
+      zh: '未经滤波的横摆角速度信号(博世传感器)'
+      hu: 'Szűretlen legyezési szögsebesség-jel (Bosch érzékelő)'
+      pt: 'Sinal bruto de velocidade de guinada (sensor Bosch)'
+    type: 'sint'
+    factor: 0.2
+    min: -100.2
+    max: 99.8
+    units: '°/s'
+    invalid: 0x8000
+    default: 0x00
+
+  LATERAL_ACCELERATION_RAW:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Unfiltered lateral acceleration signal (Bosch sensor)'
+      fr: 'Signal brut d''accélération latérale (capteur Bosch)'
+      es: 'Señal bruta de aceleración lateral (sensor Bosch)'
+      de: 'Ungefiltertes Signal der Querbeschleunigung (Bosch-Sensor)'
+      it: 'Segnale grezzo di accelerazione laterale (sensore Bosch)'
+      pl: 'Nieprzefiltrowany sygnał przyspieszenia bocznego (czujnik Bosch)'
+      ru: 'Необработанный сигнал бокового ускорения (датчик Bosch)'
+      zh: '未经滤波的横向加速度信号(博世传感器)'
+      hu: 'Szűretlen oldalirányú gyorsulásjel (Bosch érzékelő)'
+      pt: 'Sinal bruto de aceleração lateral (sensor Bosch)'
+    type: 'sint'
+    factor: 0.004
+    min: -1.804
+    max: 1.804
+    units: 'g'
+    invalid: 0x8000
+    default: 0x00
+
+  ACCEL_SENSOR_ERROR_NUMBER:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Error number reported by the acceleration/yaw sensor'
+      fr: 'Numéro d''erreur signalé par le capteur d''accélération/lacet'
+      es: 'Número de error notificado por el sensor de aceleración/guiñada'
+      de: 'Vom Beschleunigungs-/Gierratensensor gemeldete Fehlernummer'
+      it: 'Numero di errore segnalato dal sensore di accelerazione/imbardata'
+      pl: 'Numer błędu zgłoszony przez czujnik przyspieszenia/odchylenia'
+      ru: 'Номер ошибки, сообщённый датчиком ускорения/рыскания'
+      zh: '加速度/横摆传感器报告的错误编号'
+      hu: 'A gyorsulás-/legyezési érzékelő által jelentett hibaszám'
+      pt: 'Número de erro comunicado pelo sensor de aceleração/guinada'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0x00

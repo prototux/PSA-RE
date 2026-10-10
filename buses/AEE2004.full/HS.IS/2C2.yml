@@ -1,0 +1,378 @@
+id: 0x2C2
+name: 'STARTER_GENERATOR_SUPERVISION_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Starter-generator supervision data: motor stop/cutoff/start states, estimated rear-axle torque, alternator torque draw and communication/electrical/thermal faults.'
+  fr: 'Données de supervision du démarreur-générateur : états d''arrêt/coupure/démarrage moteur, couple arrière estimé, prélèvement de couple alternateur et défauts de communication/électrique/thermique.'
+  es: 'Datos de supervisión del motor de arranque-generador: estados de parada/corte/arranque del motor, par trasero estimado, toma de par del alternador y fallos de comunicación/eléctrico/térmico.'
+  de: 'Überwachungsdaten des Starter-Generators: Motorstopp-/-abschalt-/-startzustände, geschätztes Hinterachsdrehmoment, Lichtmaschinen-Drehmomententnahme sowie Kommunikations-/elektrische/thermische Fehler.'
+  it: 'Dati di supervisione del motorino di avviamento-generatore: stati di arresto/interruzione/avviamento motore, coppia posteriore stimata, prelievo di coppia dell''alternatore e guasti di comunicazione/elettrici/termici.'
+  pl: 'Dane nadzoru rozrusznika-generatora: stany zatrzymania/wyłączenia/uruchomienia silnika, szacowany moment tylnej osi, pobór momentu alternatora oraz usterki komunikacji/elektryczne/termiczne.'
+  ru: 'Данные контроля стартер-генератора: состояния остановки/отключения/запуска двигателя, расчётный момент задней оси, отбор момента генератором и коммуникационные/электрические/тепловые неисправности.'
+  zh: '起动-发电一体机监控数据:发动机停止/切断/启动状态、估算后轴扭矩、发电机扭矩消耗以及通信/电气/热故障。'
+  hu: 'Az indítómotor-generátor felügyeleti adatai: motorleállási/-lekapcsolási/-indítási állapotok, becsült hátsó nyomaték, generátor nyomatékfelvétele, valamint kommunikációs/elektromos/termikus hibák.'
+  pt: 'Dados de supervisão do motor de arranque-gerador: estados de paragem/corte/arranque do motor, estimativa de binário do eixo traseiro, consumo de binário do alternador e avarias de comunicação/elétricas/térmicas.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['10ms']
+senders: ['AR2S', 'SCDT']
+receivers: ['CMM']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.3'
+    unused: true
+
+  MIL_LAMP_REQUEST_AR2S:
+    bits: '1.2'
+    comment:
+      en: 'MIL lamp lighting request (AR2S)'
+      fr: 'Demande d''allumage du témoin MIL via l''AR2S'
+      es: 'Solicitud de encendido del testigo MIL a través del AR2S'
+      de: 'Anforderung zum Einschalten der MIL-Warnleuchte über AR2S'
+      it: 'Richiesta di accensione della spia MIL tramite l''AR2S'
+      pl: 'Żądanie zapalenia kontrolki MIL przez AR2S'
+      ru: 'Запрос включения лампы MIL через AR2S'
+      zh: '通过AR2S请求点亮MIL故障灯'
+      hu: 'A MIL jelzőlámpa bekapcsolási kérése az AR2S-en keresztül'
+      pt: 'Pedido de acendimento do testemunho MIL via AR2S'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No lighting requested'
+        fr: 'Pas d''allumage demandé'
+        es: 'Sin encendido solicitado'
+        de: 'Kein Einschalten angefordert'
+        it: 'Nessuna accensione richiesta'
+        pl: 'Brak żądania włączenia'
+        ru: 'Нет запроса на включение'
+        zh: '未请求点亮'
+        hu: 'Nincs bekapcsolási kérés'
+        pt: 'Sem acendimento pedido'
+      0x01:
+        en: 'Lighting requested'
+        fr: 'Allumage demandé'
+        es: 'Encendido solicitado'
+        de: 'Einschalten angefordert'
+        it: 'Accensione richiesta'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '请求点亮'
+        hu: 'Bekapcsolás kérve'
+        pt: 'Acendimento pedido'
+
+  BRAKE_ASSIST_LOSS:
+    bits: '1.1-1.0'
+    comment:
+      en: 'Brake assistance loss'
+      fr: 'Perte d''assistance de freinage'
+      es: 'Pérdida de asistencia de frenado'
+      de: 'Verlust der Bremskraftunterstützung'
+      it: 'Perdita dell''assistenza alla frenata'
+      pl: 'Utrata wspomagania hamowania'
+      ru: 'Потеря усиления тормозов'
+      zh: '制动助力丧失'
+      hu: 'Fékrásegítés elvesztése'
+      pt: 'Perda de assistência de travagem'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No loss of brake assistance detected'
+        fr: 'Pas de perte d''assistance de freinage détectée'
+        es: 'No se detecta pérdida de asistencia de frenado'
+        de: 'Kein Verlust der Bremsunterstützung erkannt'
+        it: 'Nessuna perdita di assistenza alla frenata rilevata'
+        pl: 'Nie wykryto utraty wspomagania hamowania'
+        ru: 'Потеря усиления тормоза не обнаружена'
+        zh: '未检测到制动辅助丧失'
+        hu: 'Nincs érzékelt fékasszisztencia-kiesés'
+        pt: 'Nenhuma perda de assistência à travagem detetada'
+      0x01:
+        en: 'Losing brake assistance'
+        fr: 'Perte d''assistance au freinage en cours'
+        es: 'Pérdida de asistencia de frenado en curso'
+        de: 'Bremsunterstützung geht verloren'
+        it: 'Perdita dell''assistenza frenante in corso'
+        pl: 'Trwa utrata wspomagania hamowania'
+        ru: 'Происходит потеря усиления тормозов'
+        zh: '制动助力正在失效'
+        hu: 'Fékrásegítés elvesztése folyamatban'
+        pt: 'Perda de assistência à travagem em curso'
+      0x02:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_2:
+    bits: '2.7-2.6'
+    unused: true
+
+  ENGINE_COLD_START_REQUEST:
+    bits: '2.4'
+    comment:
+      en: 'Engine extreme-cold start requested'
+      fr: 'Démarrage grand froid du moteur thermique demandé'
+      es: 'Arranque en frío extremo del motor térmico solicitado'
+      de: 'Kaltstart des Verbrennungsmotors bei extremer Kälte angefordert'
+      it: 'Avviamento a freddo estremo del motore termico richiesto'
+      pl: 'Żądanie rozruchu silnika spalinowego w skrajnie niskiej temperaturze'
+      ru: 'Запрошен запуск двигателя при сильном морозе'
+      zh: '请求严寒冷起动发动机'
+      hu: 'A belső égésű motor extrém hidegindításának kérése'
+      pt: 'Arranque em frio extremo do motor térmico solicitado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No cold start requested'
+        fr: 'Pas de démarrage grands froids demandé'
+        es: 'Arranque en frío extremo no solicitado'
+        de: 'Kein Kaltstart bei extremer Kälte angefordert'
+        it: 'Nessuna richiesta di avviamento a freddo estremo'
+        pl: 'Brak żądania rozruchu w silnym mrozie'
+        ru: 'Холодный пуск при сильном морозе не запрошен'
+        zh: '未请求严寒冷启动'
+        hu: 'Nincs kérve extrém hideg indítás'
+        pt: 'Sem arranque a frio pedido'
+      0x01:
+        en: 'Cold-start requested'
+        fr: 'Démarrage par grand froid demandé'
+        es: 'Arranque en frío extremo solicitado'
+        de: 'Kaltstart bei extremer Kälte angefordert'
+        it: 'Avviamento a freddo intenso richiesto'
+        pl: 'Żądany rozruch w silnym mrozie'
+        ru: 'Запрошен холодный пуск при сильном морозе'
+        zh: '请求严寒启动'
+        hu: 'Erős hidegindítás kérve'
+        pt: 'Arranque a frio extremo pedido'
+
+  ENGINE_CUT_REQUEST:
+    bits: '2.3'
+    comment:
+      en: 'Combustion engine cut request'
+      fr: 'Demande de coupure du moteur thermique'
+      es: 'Solicitud de corte del motor térmico'
+      de: 'Abschaltanforderung des Verbrennungsmotors'
+      it: 'Richiesta di interruzione del motore termico'
+      pl: 'Żądanie odcięcia silnika spalinowego'
+      ru: 'Запрос отключения двигателя внутреннего сгорания'
+      zh: '内燃机切断请求'
+      hu: 'A belső égésű motor megszakítási kérése'
+      pt: 'Pedido de corte do motor térmico'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No engine cut requested'
+        fr: 'Pas de coupure moteur demandée'
+        es: 'Sin corte de motor solicitado'
+        de: 'Keine Motorabschaltung angefordert'
+        it: 'Nessun taglio motore richiesto'
+        pl: 'Brak żądania odcięcia silnika'
+        ru: 'Отключение двигателя не запрошено'
+        zh: '未请求发动机切断'
+        hu: 'Nincs motorleállítás kérve'
+        pt: 'Sem corte do motor pedido'
+      0x01:
+        en: 'Engine cut requested (stall request)'
+        fr: 'Coupure moteur demandée (demande de calage)'
+        es: 'Corte del motor solicitado (solicitud de calado)'
+        de: 'Motorabschaltung angefordert (Abwürgeanforderung)'
+        it: 'Interruzione motore richiesta (richiesta di spegnimento)'
+        pl: 'Żądane wyłączenie silnika (żądanie zgaśnięcia)'
+        ru: 'Запрошено отключение двигателя (запрос заглохания)'
+        zh: '请求发动机熄火(熄火请求)'
+        hu: 'Motorleállítás kérve (lefulladási kérés)'
+        pt: 'Corte do motor pedido (pedido de calagem)'
+
+  ENGINE_STOP_REQUEST:
+    bits: '2.2'
+    comment:
+      en: 'Combustion engine stop (requested by the Stop & Start / hybrid function)'
+      fr: 'Arrêt du moteur thermique (demandé par la fonction Stop & Start / hybride)'
+      es: 'Parada del motor térmico (solicitada por la función Stop & Start / híbrida)'
+      de: 'Verbrennungsmotorstopp (angefordert von der Stop-&-Start-/Hybridfunktion)'
+      it: 'Spegnimento del motore termico (richiesto dalla funzione Stop & Start / ibrida)'
+      pl: 'Zatrzymanie silnika spalinowego (żądane przez funkcję Stop & Start / hybrydową)'
+      ru: 'Остановка двигателя внутреннего сгорания (запрошена функцией Stop & Start / гибридной)'
+      zh: '内燃机停机(由启停/混动功能请求)'
+      hu: 'A belső égésű motor leállítása (a Stop & Start / hibrid funkció kérésére)'
+      pt: 'Paragem do motor térmico (solicitada pela função Stop & Start / híbrida)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No engine stop requested'
+        fr: 'Pas d''arrêt moteur demandé'
+        es: 'Sin parada de motor solicitada'
+        de: 'Kein Motorstopp angefordert'
+        it: 'Nessun arresto motore richiesto'
+        pl: 'Brak żądania zatrzymania silnika'
+        ru: 'Остановка двигателя не запрошена'
+        zh: '未请求发动机停机'
+        hu: 'Nincs motorleállási kérés'
+        pt: 'Sem pedido de paragem do motor'
+      0x01:
+        en: 'Engine stop requested (Stop & Start function)'
+        fr: 'Arrêt moteur demandé (fonction Stop & Start)'
+        es: 'Parada del motor solicitada (función Stop & Start)'
+        de: 'Motorstopp angefordert (Start-Stopp-Funktion)'
+        it: 'Arresto motore richiesto (funzione Stop & Start)'
+        pl: 'Żądanie zatrzymania silnika (funkcja Stop & Start)'
+        ru: 'Запрошена остановка двигателя (функция Стоп-старт)'
+        zh: '请求停止发动机（起停功能）'
+        hu: 'Motorleállítás kérve (Stop & Start funkció)'
+        pt: 'Paragem do motor pedida (função Stop & Start)'
+
+  ENGINE_RESTART_REQUEST:
+    bits: '2.1'
+    comment:
+      en: 'Combustion engine restart requested'
+      fr: 'Redémarrage du moteur thermique demandé'
+      es: 'Reinicio del motor térmico solicitado'
+      de: 'Neustart des Verbrennungsmotors angefordert'
+      it: 'Riavvio del motore termico richiesto'
+      pl: 'Żądanie ponownego uruchomienia silnika spalinowego'
+      ru: 'Запрошен перезапуск двигателя внутреннего сгорания'
+      zh: '请求重新起动内燃机'
+      hu: 'A belső égésű motor újraindításának kérése'
+      pt: 'Reinício do motor térmico solicitado'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No engine restart requested'
+        fr: 'Pas de redémarrage moteur demandé'
+        es: 'Sin reinicio del motor solicitado'
+        de: 'Kein Motorneustart angefordert'
+        it: 'Nessun riavvio motore richiesto'
+        pl: 'Brak żądania ponownego uruchomienia silnika'
+        ru: 'Перезапуск двигателя не запрошен'
+        zh: '未请求发动机重启'
+        hu: 'Nincs motorújraindítás kérve'
+        pt: 'Sem reinício do motor solicitado'
+      0x01:
+        en: 'Engine restart requested'
+        fr: 'Redémarrage moteur demandé'
+        es: 'Reinicio del motor solicitado'
+        de: 'Motorneustart angefordert'
+        it: 'Riavvio motore richiesto'
+        pl: 'Zażądano ponownego uruchomienia silnika'
+        ru: 'Запрошен перезапуск двигателя'
+        zh: '请求发动机重启'
+        hu: 'Motor újraindítás kérve'
+        pt: 'Reinício do motor pedido'
+
+  ENGINE_START_REQUESTED:
+    bits: '2.0'
+    comment:
+      en: 'Combustion engine start requested'
+      fr: 'Démarrage du moteur thermique demandé'
+      es: 'Arranque del motor térmico solicitado'
+      de: 'Start des Verbrennungsmotors angefordert'
+      it: 'Avviamento del motore termico richiesto'
+      pl: 'Żądanie uruchomienia silnika spalinowego'
+      ru: 'Запрошен запуск двигателя внутреннего сгорания'
+      zh: '请求起动内燃机'
+      hu: 'A belső égésű motor indításának kérése'
+      pt: 'Arranque do motor térmico solicitado'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No engine start requested'
+        fr: 'Pas de démarrage moteur demandé'
+        es: 'No se solicita arranque del motor'
+        de: 'Kein Motorstart angefordert'
+        it: 'Nessun avviamento motore richiesto'
+        pl: 'Nie zażądano rozruchu silnika'
+        ru: 'Запуск двигателя не запрошен'
+        zh: '未请求发动机启动'
+        hu: 'Nincs kérve motorindítás'
+        pt: 'Sem pedido de arranque do motor'
+      0x01:
+        en: 'Engine start requested'
+        fr: 'Démarrage moteur demandé'
+        es: 'Arranque del motor solicitado'
+        de: 'Motorstart angefordert'
+        it: 'Avviamento motore richiesto'
+        pl: 'Zażądano rozruchu silnika'
+        ru: 'Запрошен запуск двигателя'
+        zh: '请求发动机启动'
+        hu: 'Motorindítás kérve'
+        pt: 'Arranque do motor pedido'
+
+  ALTERNATOR_DUTY_CYCLE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Alternator duty cycle'
+      fr: 'Rapport cyclique de l''alternateur'
+      es: 'Ciclo de trabajo del alternador'
+      de: 'Tastverhältnis der Lichtmaschine'
+      it: 'Ciclo di lavoro dell''alternatore'
+      pl: 'Współczynnik wypełnienia alternatora'
+      ru: 'Коэффициент заполнения генератора'
+      zh: '发电机占空比'
+      hu: 'A generátor kitöltési tényezője'
+      pt: 'Ciclo de trabalho do alternador'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFE
+
+  UNUSED_3:
+    bits: '4.7-4.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '5.7-5.5'
+    unused: true
+
+  UNUSED_5:
+    bits: '5.4-5.2'
+    unused: true
+
+  UNUSED_6:
+    bits: '5.1'
+    unused: true
+
+  UNUSED_7:
+    bits: '5.0'
+    unused: true
+
+  UNUSED_8:
+    bits: '8.7-8.4'
+    unused: true
+
+  UNUSED_9:
+    bits: '8.3-8.0'
+    unused: true

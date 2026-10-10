@@ -1,0 +1,719 @@
+id: 0x5D0
+name: 'TRANSPONDER_RESPONSE'
+type: 'van'
+length: 13
+comment:
+  en: 'Immobiliser transponder reading from the steering column module: response flags, key presence, attempt number, base-station state machine flags, transponder identifier and encrypted response.'
+  fr: 'Lecture du transpondeur d''antidémarrage par le module de colonne de direction : indicateurs de réponse, présence de clé, numéro d''essai, état de la base station, identifiant transpondeur et réponse chiffrée.'
+  es: 'Lectura del transpondedor del inmovilizador por el módulo de la columna de dirección: indicadores de respuesta, presencia de llave, número de intento, estado de la base station, identificador del transpondedor y respuesta cifrada.'
+  de: 'Wegfahrsperren-Transponderauslesung durch das Lenksäulenmodul: Antwortflags, Schlüsselanwesenheit, Versuchsnummer, Statusflags der Basisstation, Transponderkennung und verschlüsselte Antwort.'
+  it: 'Lettura del transponder dell''immobilizer da parte del modulo del piantone: flag di risposta, presenza chiave, numero di tentativo, flag di stato della base station, identificativo transponder e risposta cifrata.'
+  pl: 'Odczyt transpondera immobilisera przez moduł kolumny kierownicy: flagi odpowiedzi, obecność kluczyka, numer próby, flagi stanu stacji bazowej, identyfikator transpondera i zaszyfrowana odpowiedź.'
+  ru: 'Считывание транспондера иммобилайзера модулем рулевой колонки: флаги ответа, наличие ключа, номер попытки, флаги состояния базовой станции, идентификатор транспондера и зашифрованный ответ.'
+  zh: '转向柱模块读取的防盗锁止应答器信息:响应标志、钥匙存在、尝试次数、基站状态机标志、应答器标识及加密响应。'
+  hu: 'Az indításgátló transzponderének leolvasása a kormányoszlop-modul által: válaszjelzők, kulcs jelenléte, próbaszám, bázisállomás állapotgép-jelzői, transzponderazonosító és titkosított válasz.'
+  pt: 'Leitura do transponder do imobilizador pelo módulo da coluna de direção: indicadores de resposta, presença da chave, número da tentativa, indicadores da máquina de estados da base station, identificador do transponder e resposta encriptada.'
+periodicity: ['1000ms', 'trigger']
+senders: ['HDC']
+receivers: ['BSI']
+van:
+  access: 'read'
+  ack: true
+  rtr: true
+  reply: 'in-frame'
+  requested_by: ['BSI']
+
+signals:
+  HEADER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Start-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de début de trame'
+      es: 'Byte marcador de inicio de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für den Rahmenanfang der In-Frame-Antwort'
+      it: 'Byte marcatore di inizio frame della risposta in-frame'
+      pl: 'Bajt znacznika początku ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер начала кадра ответа в кадре'
+      zh: '帧内应答起始标记字节'
+      hu: 'Az üzeneten belüli válasz kezdő jelölőbájtja'
+      pt: 'Byte marcador de início de trama da resposta em trama'
+    type: 'uint'
+
+  IDENT_RESPONSE_PRESENT:
+    bits: '2.7'
+    comment:
+      en: 'Transponder identifier response available'
+      fr: 'Réponse d''identifiant du transpondeur disponible'
+      es: 'Respuesta de identificador del transpondedor disponible'
+      de: 'Antwort der Transponderkennung verfügbar'
+      it: 'Risposta dell''identificativo del transponder disponibile'
+      pl: 'Dostępna odpowiedź identyfikatora transpondera'
+      ru: 'Доступен ответ идентификатора транспондера'
+      zh: '应答器标识符响应可用'
+      hu: 'A transzponder-azonosító válasza elérhető'
+      pt: 'Resposta de identificador do transponder disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No identifier response'
+        fr: 'Pas de réponse d''identifiant'
+        es: 'Sin respuesta de identificador'
+        de: 'Keine Kennungsantwort'
+        it: 'Nessuna risposta identificativa'
+        pl: 'Brak odpowiedzi identyfikatora'
+        ru: 'Нет ответа с идентификатором'
+        zh: '无标识符响应'
+        hu: 'Nincs azonosítóválasz'
+        pt: 'Sem resposta de identificador'
+      0x01:
+        en: 'Identifier response present'
+        fr: 'Réponse identifiant présente'
+        es: 'Respuesta de identificador presente'
+        de: 'Kennungsantwort vorhanden'
+        it: 'Risposta identificativo presente'
+        pl: 'Obecna odpowiedź identyfikatora'
+        ru: 'Присутствует ответ идентификатора'
+        zh: '标识符响应存在'
+        hu: 'Azonosítóválasz jelen van'
+        pt: 'Resposta de identificador presente'
+
+  CRYPTO_RESPONSE_PRESENT:
+    bits: '2.6'
+    comment:
+      en: 'Encrypted transponder response available'
+      fr: 'Réponse cryptée du transpondeur disponible'
+      es: 'Respuesta cifrada del transpondedor disponible'
+      de: 'Verschlüsselte Transponderantwort verfügbar'
+      it: 'Risposta cifrata del transponder disponibile'
+      pl: 'Dostępna zaszyfrowana odpowiedź transpondera'
+      ru: 'Доступен зашифрованный ответ транспондера'
+      zh: '应答器加密响应可用'
+      hu: 'A titkosított transzponderválasz elérhető'
+      pt: 'Resposta cifrada do transponder disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No encrypted response'
+        fr: 'Pas de réponse cryptée'
+        es: 'Sin respuesta cifrada'
+        de: 'Keine verschlüsselte Antwort'
+        it: 'Nessuna risposta cifrata'
+        pl: 'Brak zaszyfrowanej odpowiedzi'
+        ru: 'Нет зашифрованного ответа'
+        zh: '无加密响应'
+        hu: 'Nincs titkosított válasz'
+        pt: 'Sem resposta cifrada'
+      0x01:
+        en: 'Encrypted response present'
+        fr: 'Réponse cryptée présente'
+        es: 'Respuesta cifrada presente'
+        de: 'Verschlüsselte Antwort vorhanden'
+        it: 'Risposta cifrata presente'
+        pl: 'Obecna zaszyfrowana odpowiedź'
+        ru: 'Присутствует зашифрованный ответ'
+        zh: '加密响应存在'
+        hu: 'Titkosított válasz jelen van'
+        pt: 'Resposta encriptada presente'
+
+  KEY_PRESENT:
+    bits: '2.5'
+    comment:
+      en: 'Key (transponder) present'
+      fr: 'Clé (transpondeur) présente'
+      es: 'Llave (transpondedor) presente'
+      de: 'Schlüssel (Transponder) vorhanden'
+      it: 'Chiave (transponder) presente'
+      pl: 'Obecność kluczyka (transpondera)'
+      ru: 'Ключ (транспондер) присутствует'
+      zh: '钥匙(应答器)存在'
+      hu: 'Kulcs (transzponder) jelen van'
+      pt: 'Chave (transponder) presente'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Key not present'
+        fr: 'Clé non présente'
+        es: 'Llave no presente'
+        de: 'Schlüssel nicht vorhanden'
+        it: 'Chiave non presente'
+        pl: 'Kluczyk nieobecny'
+        ru: 'Ключ отсутствует'
+        zh: '钥匙不存在'
+        hu: 'A kulcs nincs jelen'
+        pt: 'Chave não presente'
+      0x01:
+        en: 'Key present'
+        fr: 'Clé présente'
+        es: 'Llave presente'
+        de: 'Schlüssel vorhanden'
+        it: 'Chiave presente'
+        pl: 'Obecny kluczyk'
+        ru: 'Ключ присутствует'
+        zh: '钥匙存在'
+        hu: 'A kulcs jelen van'
+        pt: 'Chave presente'
+
+  ATTEMPT_NUMBER:
+    bits: '2.4-2.3'
+    comment:
+      en: 'Transponder communication attempt number'
+      fr: 'Numéro de tentative de communication avec le transpondeur'
+      es: 'Número de intento de comunicación con el transpondedor'
+      de: 'Nummer des Kommunikationsversuchs mit dem Transponder'
+      it: 'Numero del tentativo di comunicazione con il transponder'
+      pl: 'Numer próby komunikacji z transponderem'
+      ru: 'Номер попытки связи с транспондером'
+      zh: '与应答器通信的尝试次数'
+      hu: 'A transzponderrel folytatott kommunikációs kísérlet száma'
+      pt: 'Número de tentativa de comunicação com o transponder'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: '1st attempt'
+        fr: '1er essai'
+        es: '1.er intento'
+        de: '1. Versuch'
+        it: '1° tentativo'
+        pl: '1. próba'
+        ru: '1-я попытка'
+        zh: '第1次尝试'
+        hu: '1. próbálkozás'
+        pt: '1.ª tentativa'
+      0x01:
+        en: '2nd attempt'
+        fr: '2e essai'
+        es: '2.º intento'
+        de: '2. Versuch'
+        it: '2° tentativo'
+        pl: '2. próba'
+        ru: '2-я попытка'
+        zh: '第 2 次尝试'
+        hu: '2. próbálkozás'
+        pt: '2.ª tentativa'
+      0x02:
+        en: '3rd attempt'
+        fr: '3e essai'
+        es: '3.er intento'
+        de: '3. Versuch'
+        it: '3° tentativo'
+        pl: '3. próba'
+        ru: '3-я попытка'
+        zh: '第3次尝试'
+        hu: '3. próbálkozás'
+        pt: '3.ª tentativa'
+
+  REMOTE_ID_RESPONSE_PRESENT:
+    bits: '2.2'
+    comment:
+      en: 'Remote control identifier response available'
+      fr: 'Réponse d''identifiant de télécommande disponible'
+      es: 'Respuesta de identificador del mando a distancia disponible'
+      de: 'Antwort der Fernbedienungskennung verfügbar'
+      it: 'Risposta dell''identificativo del telecomando disponibile'
+      pl: 'Dostępna odpowiedź identyfikatora pilota'
+      ru: 'Доступен ответ идентификатора пульта ДУ'
+      zh: '遥控器标识符响应可用'
+      hu: 'A távirányító-azonosító válasza elérhető'
+      pt: 'Resposta de identificador do comando à distância disponível'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No response from HF identifier'
+        fr: 'Pas de réponse de l''identifiant HF'
+        es: 'Sin respuesta del identificador HF'
+        de: 'Keine Antwort der HF-Kennung'
+        it: 'Nessuna risposta dall''identificativo HF'
+        pl: 'Brak odpowiedzi identyfikatora HF'
+        ru: 'Нет ответа от идентификатора HF'
+        zh: '无HF标识符响应'
+        hu: 'Nincs válasz az RF-azonosítótól'
+        pt: 'Sem resposta do identificador HF'
+      0x01:
+        en: 'RF identifier response present'
+        fr: 'Réponse d''identifiant HF présente'
+        es: 'Respuesta de identificador RF presente'
+        de: 'HF-Identifikationsantwort vorhanden'
+        it: 'Risposta identificativo RF presente'
+        pl: 'Obecna odpowiedź identyfikatora RF'
+        ru: 'Присутствует ответ идентификатора RF'
+        zh: '存在射频识别响应'
+        hu: 'Az RF-azonosító válasza jelen van'
+        pt: 'Resposta de identificador RF presente'
+
+  UNUSED_1:
+    bits: '2.1-2.0'
+    unused: true
+
+  BASE_STATION_ON:
+    bits: '3.7'
+    comment:
+      en: 'Transponder base station powered'
+      fr: 'Station de base du transpondeur alimentée'
+      es: 'Estación base del transpondedor alimentada'
+      de: 'Transponder-Basisstation eingeschaltet'
+      it: 'Base transponder alimentata'
+      pl: 'Stacja bazowa transpondera zasilona'
+      ru: 'Базовая станция транспондера включена'
+      zh: '应答器基站已通电'
+      hu: 'A transzponder bázisállomás bekapcsolva'
+      pt: 'Estação base do transponder alimentada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Base station off'
+        fr: 'Station de base éteinte'
+        es: 'Estación base apagada'
+        de: 'Basisstation ausgeschaltet'
+        it: 'Stazione base spenta'
+        pl: 'Stacja bazowa wyłączona'
+        ru: 'Базовая станция выключена'
+        zh: '基站已关闭'
+        hu: 'Bázisállomás kikapcsolva'
+        pt: 'Estação base desligada'
+      0x01:
+        en: 'Base station awake'
+        fr: 'Station de base réveillée'
+        es: 'Estación base activada'
+        de: 'Basisstation aktiv'
+        it: 'Stazione base attiva'
+        pl: 'Stacja bazowa wybudzona'
+        ru: 'Базовая станция активна'
+        zh: '基站已唤醒'
+        hu: 'Bázisállomás ébren'
+        pt: 'Estação base ativa'
+
+  BASE_STATION_CONFIGURED:
+    bits: '3.6'
+    comment:
+      en: 'Transponder base station configuration done'
+      fr: 'Configuration de la station de base effectuée'
+      es: 'Configuración de la estación base realizada'
+      de: 'Konfiguration der Transponder-Basisstation abgeschlossen'
+      it: 'Configurazione della base transponder eseguita'
+      pl: 'Wykonano konfigurację stacji bazowej transpondera'
+      ru: 'Конфигурация базовой станции транспондера выполнена'
+      zh: '应答器基站配置完成'
+      hu: 'A transzponder bázisállomás konfigurálása megtörtént'
+      pt: 'Configuração da estação base do transponder concluída'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not configured'
+        fr: 'Configuration non effectuée'
+        es: 'Configuración no realizada'
+        de: 'Konfiguration nicht durchgeführt'
+        it: 'Configurazione non eseguita'
+        pl: 'Konfiguracja niewykonana'
+        ru: 'Конфигурация не выполнена'
+        zh: '未完成配置'
+        hu: 'Konfiguráció nem történt meg'
+        pt: 'Não configurado'
+      0x01:
+        en: 'Configured'
+        fr: 'Configuré'
+        es: 'Configurado'
+        de: 'Konfiguriert'
+        it: 'Configurato'
+        pl: 'Skonfigurowane'
+        ru: 'Настроено'
+        zh: '已配置'
+        hu: 'Konfigurálva'
+        pt: 'Configurado'
+
+  BASE_STATION_CALIBRATED:
+    bits: '3.5'
+    comment:
+      en: 'Transponder base station calibration done'
+      fr: 'Calibration de la station de base effectuée'
+      es: 'Calibración de la estación base realizada'
+      de: 'Kalibrierung der Transponder-Basisstation abgeschlossen'
+      it: 'Calibrazione della base transponder eseguita'
+      pl: 'Wykonano kalibrację stacji bazowej transpondera'
+      ru: 'Калибровка базовой станции транспондера выполнена'
+      zh: '应答器基站校准完成'
+      hu: 'A transzponder bázisállomás kalibrálása megtörtént'
+      pt: 'Calibração da estação de base efetuada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not calibrated'
+        fr: 'Calibration non effectuée'
+        es: 'No calibrado'
+        de: 'Nicht kalibriert'
+        it: 'Non calibrato'
+        pl: 'Niekalibrowany'
+        ru: 'Не откалибровано'
+        zh: '未校准'
+        hu: 'Nincs kalibrálva'
+        pt: 'Não calibrado'
+      0x01:
+        en: 'Calibrated'
+        fr: 'Calibré'
+        es: 'Calibrado'
+        de: 'Kalibriert'
+        it: 'Calibrato'
+        pl: 'Skalibrowane'
+        ru: 'Откалибровано'
+        zh: '已校准'
+        hu: 'Kalibrálva'
+        pt: 'Calibrado'
+
+  START_AUTH_SENT:
+    bits: '3.4'
+    comment:
+      en: 'Start authorisation command sent to the transponder'
+      fr: 'Commande Start authorisation envoyée au transpondeur'
+      es: 'Comando Start authorisation enviado al transpondedor'
+      de: 'Start authorisation-Befehl an den Transponder gesendet'
+      it: 'Comando Start authorisation inviato al transponder'
+      pl: 'Wysłano polecenie Start authorisation do transpondera'
+      ru: 'Команда Start authorisation отправлена транспондеру'
+      zh: '已向应答器发送START_AUTH指令'
+      hu: 'Start authorisation parancs elküldve a transzpondernek'
+      pt: 'Comando Start authorisation enviado ao transponder'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Start authorisation not sent'
+        fr: 'Start authorisation non envoyé'
+        es: 'Start authorisation no enviado'
+        de: 'Start authorisation nicht gesendet'
+        it: 'Start authorisation non inviato'
+        pl: 'Start authorisation niewysłane'
+        ru: 'Start authorisation не отправлено'
+        zh: 'START_AUTH未发送'
+        hu: 'Start authorisation nincs elküldve'
+        pt: 'Start authorisation não enviado'
+      0x01:
+        en: 'Sent'
+        fr: 'Start authorisation envoyé'
+        es: 'Start authorisation enviado'
+        de: 'Start authorisation gesendet'
+        it: 'Start authorisation inviato'
+        pl: 'Start authorisation wysłane'
+        ru: 'Start authorisation отправлено'
+        zh: 'START_AUTH已发送'
+        hu: 'Start authorisation elküldve'
+        pt: 'Start authorisation enviado'
+
+  READ_ID_SENT:
+    bits: '3.3'
+    comment:
+      en: 'Read-identifier command sent'
+      fr: 'Commande de lecture de l''identifiant envoyée'
+      es: 'Comando de lectura del identificador enviado'
+      de: 'Befehl zum Lesen der Kennung gesendet'
+      it: 'Comando di lettura dell''identificativo inviato'
+      pl: 'Wysłano polecenie odczytu identyfikatora'
+      ru: 'Отправлена команда чтения идентификатора'
+      zh: '已发送标识符读取指令'
+      hu: 'Azonosító olvasási parancs elküldve'
+      pt: 'Comando de leitura do identificador enviado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not sent'
+        fr: 'Commande non envoyée'
+        es: 'Comando no enviado'
+        de: 'Befehl nicht gesendet'
+        it: 'Comando non inviato'
+        pl: 'Polecenie niewysłane'
+        ru: 'Команда не отправлена'
+        zh: '指令未发送'
+        hu: 'A parancs nincs elküldve'
+        pt: 'Comando não enviado'
+      0x01:
+        en: 'Command sent'
+        fr: 'Commande envoyée'
+        es: 'Comando enviado'
+        de: 'Befehl gesendet'
+        it: 'Comando inviato'
+        pl: 'Polecenie wysłane'
+        ru: 'Команда отправлена'
+        zh: '指令已发送'
+        hu: 'A parancs elküldve'
+        pt: 'Comando enviado'
+
+  ID_RECEIVED:
+    bits: '3.2'
+    comment:
+      en: 'Identifier received from the transponder'
+      fr: 'Identifiant reçu du transpondeur'
+      es: 'Identificador recibido del transpondedor'
+      de: 'Kennung vom Transponder empfangen'
+      it: 'Identificativo ricevuto dal transponder'
+      pl: 'Odebrano identyfikator z transpondera'
+      ru: 'Идентификатор получен от транспондера'
+      zh: '已接收到来自应答器的标识符'
+      hu: 'Azonosító érkezett a transzponderről'
+      pt: 'Identificador recebido do transponder'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not received'
+        fr: 'Non reçue'
+        es: 'No recibida'
+        de: 'Nicht empfangen'
+        it: 'Non ricevuta'
+        pl: 'Nieotrzymana'
+        ru: 'Не получено'
+        zh: '未接收'
+        hu: 'Nem érkezett meg'
+        pt: 'Não recebida'
+      0x01:
+        en: 'ID response received'
+        fr: 'Réponse d''identifiant reçue'
+        es: 'Respuesta de ID recibida'
+        de: 'ID-Antwort empfangen'
+        it: 'Risposta ID ricevuta'
+        pl: 'Otrzymano odpowiedź ID'
+        ru: 'Получен ответ с идентификатором'
+        zh: '已接收ID响应'
+        hu: 'Az azonosító válasza megérkezett'
+        pt: 'Resposta de identificador recebida'
+
+  CHALLENGE_SENT:
+    bits: '3.1'
+    comment:
+      en: 'Random number and encrypted password sent'
+      fr: 'Nombre aléatoire et mot de passe crypté envoyés'
+      es: 'Número aleatorio y contraseña cifrada enviados'
+      de: 'Zufallszahl und verschlüsseltes Passwort gesendet'
+      it: 'Numero casuale e password cifrata inviati'
+      pl: 'Wysłano liczbę losową i zaszyfrowane hasło'
+      ru: 'Отправлены случайное число и зашифрованный пароль'
+      zh: '已发送随机数与加密密码'
+      hu: 'Véletlenszám és titkosított jelszó elküldve'
+      pt: 'Número aleatório e palavra-passe encriptada enviados'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'RN and LPCRYPTE not sent'
+        fr: 'RN et LPCRYPTE non envoyés'
+        es: 'RN y LPCRYPTE no enviados'
+        de: 'RN und LPCRYPTE nicht gesendet'
+        it: 'RN e LPCRYPTE non inviati'
+        pl: 'RN i LPCRYPTE niewysłane'
+        ru: 'RN и LPCRYPTE не отправлены'
+        zh: 'RN 和 LPCRYPTE 未发送'
+        hu: 'RN és LPCRYPTE nem küldve'
+        pt: 'RN e LPCRYPTE não enviados'
+      0x01:
+        en: 'RN and LPCRYPTE sent'
+        fr: 'RN et LPCRYPTE envoyés'
+        es: 'RN y LPCRYPTE enviados'
+        de: 'RN und LPCRYPTE gesendet'
+        it: 'RN e LPCRYPTE inviati'
+        pl: 'RN i LPCRYPTE wysłane'
+        ru: 'RN и LPCRYPTE отправлены'
+        zh: '已发送RN和LPCRYPTE'
+        hu: 'RN és LPCRYPTE elküldve'
+        pt: 'RN e LPCRYPTE enviados'
+
+  READ_CRYPTO_SENT:
+    bits: '3.0'
+    comment:
+      en: 'Read-encrypted-response command sent'
+      fr: 'Commande de lecture de la réponse cryptée envoyée'
+      es: 'Comando de lectura de la respuesta cifrada enviado'
+      de: 'Befehl zum Lesen der verschlüsselten Antwort gesendet'
+      it: 'Comando di lettura della risposta cifrata inviato'
+      pl: 'Wysłano polecenie odczytu zaszyfrowanej odpowiedzi'
+      ru: 'Отправлена команда чтения зашифрованного ответа'
+      zh: '已发送加密响应读取指令'
+      hu: 'Titkosított válasz olvasási parancs elküldve'
+      pt: 'Comando de leitura da resposta cifrada enviado'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not sent'
+        fr: 'Commande non envoyée'
+        es: 'Comando no enviado'
+        de: 'Befehl nicht gesendet'
+        it: 'Comando non inviato'
+        pl: 'Polecenie niewysłane'
+        ru: 'Команда не отправлена'
+        zh: '指令未发送'
+        hu: 'A parancs nincs elküldve'
+        pt: 'Comando não enviado'
+      0x01:
+        en: 'Command sent'
+        fr: 'Commande envoyée'
+        es: 'Comando enviado'
+        de: 'Befehl gesendet'
+        it: 'Comando inviato'
+        pl: 'Polecenie wysłane'
+        ru: 'Команда отправлена'
+        zh: '指令已发送'
+        hu: 'A parancs elküldve'
+        pt: 'Comando enviado'
+
+  CRYPTO_RESPONSE_RECEIVED:
+    bits: '4.7'
+    comment:
+      en: 'Encrypted transponder response received'
+      fr: 'Réponse cryptée du transpondeur reçue'
+      es: 'Respuesta cifrada del transpondedor recibida'
+      de: 'Verschlüsselte Transponderantwort empfangen'
+      it: 'Risposta cifrata del transponder ricevuta'
+      pl: 'Odebrano zaszyfrowaną odpowiedź transpondera'
+      ru: 'Получен зашифрованный ответ транспондера'
+      zh: '已接收到应答器加密响应'
+      hu: 'Megérkezett a titkosított transzponderválasz'
+      pt: 'Resposta encriptada do transponder recebida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not received'
+        fr: 'Pas de réponse chiffrée reçue'
+        es: 'No recibido'
+        de: 'Nicht empfangen'
+        it: 'Non ricevuto'
+        pl: 'Nie odebrano'
+        ru: 'Не получено'
+        zh: '未收到'
+        hu: 'Nem érkezett'
+        pt: 'Não recebido'
+      0x01:
+        en: 'Encrypted transponder response received'
+        fr: 'Réponse cryptée du transpondeur reçue'
+        es: 'Respuesta cifrada del transpondedor recibida'
+        de: 'Verschlüsselte Transponderantwort empfangen'
+        it: 'Risposta cifrata del transponder ricevuta'
+        pl: 'Otrzymano zaszyfrowaną odpowiedź transpondera'
+        ru: 'Получен зашифрованный ответ транспондера'
+        zh: '已接收加密应答器响应'
+        hu: 'A transzponder titkosított válasza megérkezett'
+        pt: 'Resposta cifrada do transponder recebida'
+
+  BASE_STATION_OFF:
+    bits: '4.6'
+    comment:
+      en: 'Transponder base station switched off'
+      fr: 'Station de base du transpondeur éteinte'
+      es: 'Estación base del transpondedor apagada'
+      de: 'Transponder-Basisstation ausgeschaltet'
+      it: 'Base transponder spenta'
+      pl: 'Stacja bazowa transpondera wyłączona'
+      ru: 'Базовая станция транспондера выключена'
+      zh: '应答器基站已关闭'
+      hu: 'A transzponder bázisállomás kikapcsolva'
+      pt: 'Estação base do transponder desligada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Base station on'
+        fr: 'Station de base activée'
+        es: 'Estación base activada'
+        de: 'Basisstation ein'
+        it: 'Stazione base attiva'
+        pl: 'Stacja bazowa włączona'
+        ru: 'Базовая станция включена'
+        zh: '基站开启'
+        hu: 'Bázisállomás bekapcsolva'
+        pt: 'Estação de base ativada'
+      0x01:
+        en: 'Base station off'
+        fr: 'Station de base éteinte'
+        es: 'Estación base apagada'
+        de: 'Basisstation ausgeschaltet'
+        it: 'Stazione base spenta'
+        pl: 'Stacja bazowa wyłączona'
+        ru: 'Базовая станция выключена'
+        zh: '基站已关闭'
+        hu: 'Bázisállomás kikapcsolva'
+        pt: 'Estação base desligada'
+
+  USER_PAGE_RF_CODE_RECEIVED:
+    bits: '4.5'
+    comment:
+      en: 'User page (encrypted with RF code) read response received'
+      fr: 'Réponse de lecture de la zone utilisateur (cryptée avec le code HF) reçue'
+      es: 'Respuesta de lectura de la zona de usuario (cifrada con el código RF) recibida'
+      de: 'Antwort auf Lesen der Benutzerseite (mit HF-Code verschlüsselt) empfangen'
+      it: 'Risposta di lettura della pagina utente (cifrata con codice RF) ricevuta'
+      pl: 'Odebrano odpowiedź odczytu strony użytkownika (zaszyfrowanej kodem RF)'
+      ru: 'Получен ответ чтения пользовательской страницы (зашифрованной RF-кодом)'
+      zh: '已接收用户页读取响应(经RF码加密)'
+      hu: 'Megérkezett a felhasználói lap (RF-kóddal titkosított) olvasási válasza'
+      pt: 'Resposta de leitura da zona de utilizador (cifrada com o código RF) recebida'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x01:
+        en: 'Encrypted user page, RF code received'
+        fr: 'Page utilisateur cryptée, code RF reçu'
+        es: 'Página de usuario cifrada, código RF recibido'
+        de: 'Verschlüsselte Benutzerseite, RF-Code empfangen'
+        it: 'Pagina utente crittografata, codice RF ricevuto'
+        pl: 'Zaszyfrowana strona użytkownika, odebrano kod RF'
+        ru: 'Зашифрованная пользовательская страница, получен RF-код'
+        zh: '已加密用户页面,已接收射频代码'
+        hu: 'Titkosított felhasználói oldal, RF-kód fogadva'
+        pt: 'Página de utilizador cifrada, código RF recebido'
+
+  UNUSED_2:
+    bits: '4.4-4.0'
+    unused: true
+
+  TRANSPONDER_ID:
+    bits: '5.7-8.0'
+    comment:
+      en: '32-bit transponder identification code (MSB first, reception bit order)'
+      fr: 'Code d''identification du transpondeur sur 32 bits (bit de poids fort en premier, ordre de réception)'
+      es: 'Código de identificación del transpondedor de 32 bits (bit más significativo primero, orden de recepción)'
+      de: '32-Bit-Transponder-Identifikationscode (MSB zuerst, Empfangsreihenfolge)'
+      it: 'Codice di identificazione del transponder a 32 bit (MSB per primo, ordine di ricezione)'
+      pl: '32-bitowy kod identyfikacyjny transpondera (MSB pierwszy, kolejność odbioru)'
+      ru: '32-битный идентификационный код транспондера (старший бит первым, порядок приёма)'
+      zh: '32位应答器识别码(MSB在前,接收比特顺序)'
+      hu: '32 bites transzponder-azonosító kód (MSB elöl, vételi bitsorrend)'
+      pt: 'Código de identificação do transponder de 32 bits (bit mais significativo primeiro, ordem de receção)'
+    type: 'bytes'
+    default: 0x00
+
+  TRANSPONDER_CRYPTO_RESPONSE:
+    bits: '9.7-12.0'
+    comment:
+      en: '32-bit encrypted transponder response (authentication answer, or remote-control identifier when applicable)'
+      fr: 'Réponse cryptée du transpondeur sur 32 bits (réponse d''authentification, ou identifiant de télécommande le cas échéant)'
+      es: 'Respuesta cifrada del transpondedor de 32 bits (respuesta de autenticación o identificador del mando a distancia según corresponda)'
+      de: '32-Bit-verschlüsselte Transponderantwort (Authentifizierungsantwort oder ggf. Fernbedienungskennung)'
+      it: 'Risposta cifrata del transponder a 32 bit (risposta di autenticazione o identificativo del telecomando, se applicabile)'
+      pl: '32-bitowa zaszyfrowana odpowiedź transpondera (odpowiedź uwierzytelniająca lub identyfikator pilota, jeśli dotyczy)'
+      ru: '32-битный зашифрованный ответ транспондера (ответ аутентификации или идентификатор пульта ДУ, если применимо)'
+      zh: '32位应答器加密响应(认证应答,或适用时的遥控器标识符)'
+      hu: '32 bites titkosított transzponderválasz (hitelesítési válasz, vagy adott esetben távirányító-azonosító)'
+      pt: 'Resposta encriptada de 32 bits do transponder (resposta de autenticação, ou identificador do comando à distância quando aplicável)'
+    type: 'bytes'
+    default: 0x00
+
+  FOOTER:
+    bits: '13.7-13.0'
+    comment:
+      en: 'End-of-frame marker byte of the in-frame reply (usage defined by the VAN network rules)'
+      fr: 'Marqueur de fin de trame'
+      es: 'Byte marcador de fin de trama de la respuesta en trama'
+      de: 'Kennzeichnungsbyte für das Rahmenende der In-Frame-Antwort'
+      it: 'Byte marcatore di fine frame della risposta in-frame'
+      pl: 'Bajt znacznika końca ramki odpowiedzi w ramce'
+      ru: 'Байт-маркер конца кадра ответа в кадре'
+      zh: '帧内应答结束标记字节'
+      hu: 'Az üzeneten belüli válasz záró jelölőbájtja'
+      pt: 'Byte marcador de fim de trama da resposta em trama'
+    type: 'uint'

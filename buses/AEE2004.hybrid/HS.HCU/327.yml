@@ -1,0 +1,151 @@
+id: 0x327
+name: 'HCU1_DYNAMIC_DATA_11'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor torque and voltage setpoints, torque gradient limit and DC/DC converter mode, from the hybrid control unit.'
+  fr: 'Consignes de couple et de tension du moteur électrique avant, limite de gradient de couple et mode du convertisseur DC/DC, issues du calculateur hybride.'
+  es: 'Consignas de par y tensión del motor eléctrico delantero, límite de gradiente de par y modo del convertidor DC/DC, procedentes de la centralita híbrida.'
+  de: 'Drehmoment- und Spannungs-Sollwerte des vorderen Elektromotors, Grenze des Drehmomentgradienten und DC/DC-Wandlermodus vom Hybridsteuergerät.'
+  it: 'Valori richiesti di coppia e tensione del motore elettrico anteriore, limite del gradiente di coppia e modalità del convertitore DC/DC, dalla centralina ibrida.'
+  pl: 'Zadane wartości momentu i napięcia przedniego silnika elektrycznego, ograniczenie gradientu momentu oraz tryb przetwornicy DC/DC z hybrydowego sterownika.'
+  ru: 'Заданные значения крутящего момента и напряжения переднего электродвигателя, ограничение градиента момента и режим преобразователя DC/DC от гибридного блока управления.'
+  zh: '前置电动机的扭矩和电压设定值、扭矩梯度限制及DC/DC变换器模式,来自混合动力控制单元。'
+  hu: 'Az első elektromos motor nyomaték- és feszültség-alapjelei, a nyomatékgradiens határértéke, valamint a DC/DC átalakító üzemmódja a hibrid vezérlőegységtől.'
+  pt: 'Pontos de ajuste de binário e tensão do motor elétrico dianteiro, limite de gradiente de binário e modo do conversor DC/DC, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['HCU2']
+
+signals:
+  PROCESS_COUNTER:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  CHECKSUM:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  HCU1_SKU_CONSISTENCY_NUMBER:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Consistency number for a matching pair of part references (SKU) in HCU1'
+      fr: 'Numéro de cohérence correspondant à une paire de références (SKU) au niveau du HCU1'
+      es: 'Número de coherencia correspondiente a un par de referencias (SKU) en el HCU1'
+      de: 'Konsistenznummer für ein passendes Teilenummernpaar (SKU) im HCU1'
+      it: 'Numero di coerenza corrispondente a una coppia di codici articolo (SKU) nell''HCU1'
+      pl: 'Numer zgodności odpowiadający parze numerów referencyjnych (SKU) w HCU1'
+      ru: 'Номер соответствия для пары артикулов (SKU) в блоке HCU1'
+      zh: 'HCU1中一对物料编号(SKU)的一致性编号'
+      hu: 'A HCU1-ben lévő cikkszám-pár (SKU) egyezési száma'
+      pt: 'Número de coerência correspondente a um par de referências (SKU) no HCU1'
+    type: 'uint'
+    min: 0
+    max: 255
+
+  REAR_EMOTOR_COOLANT_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Calculated coolant temperature of the rear electric machine system'
+      fr: 'Température calculée du système de refroidissement de la machine électrique arrière'
+      es: 'Temperatura calculada del sistema de refrigeración de la máquina eléctrica trasera'
+      de: 'Berechnete Kühlmitteltemperatur des Systems der hinteren E-Maschine'
+      it: 'Temperatura calcolata del sistema di raffreddamento della macchina elettrica posteriore'
+      pl: 'Obliczona temperatura układu chłodzenia tylnej maszyny elektrycznej'
+      ru: 'Расчётная температура охлаждающей жидкости системы задней электромашины'
+      zh: '计算得出的后电机冷却系统温度'
+      hu: 'A hátsó elektromosgép-rendszer számított hűtőfolyadék-hőmérséklete'
+      pt: 'Temperatura calculada do sistema de refrigeração da máquina elétrica traseira'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x28
+
+  REAR_EMOTOR_FID:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Rear electric machine identifier (FID)'
+      fr: 'Identifiant (FID) de la machine électrique arrière'
+      es: 'Identificador (FID) de la máquina eléctrica trasera'
+      de: 'Kennung (FID) der hinteren E-Maschine'
+      it: 'Identificativo (FID) della macchina elettrica posteriore'
+      pl: 'Identyfikator (FID) tylnej maszyny elektrycznej'
+      ru: 'Идентификатор (FID) задней электромашины'
+      zh: '后电机识别码(FID)'
+      hu: 'A hátsó elektromos gép azonosítója (FID)'
+      pt: 'Identificador (FID) da máquina elétrica traseira'
+    type: 'uint'
+    min: 0
+    max: 255
+    default: 0xFF
+
+  REAR_EMOTOR_LOSSES:
+    bits: '5.7-5.1'
+    comment:
+      en: 'Rear electric machine losses'
+      fr: 'Pertes de la machine électrique arrière'
+      es: 'Pérdidas de la máquina eléctrica trasera'
+      de: 'Verluste der hinteren E-Maschine'
+      it: 'Perdite della macchina elettrica posteriore'
+      pl: 'Straty tylnej maszyny elektrycznej'
+      ru: 'Потери задней электромашины'
+      zh: '后电机损耗'
+      hu: 'A hátsó elektromos gép veszteségei'
+      pt: 'Perdas da máquina elétrica traseira'
+    type: 'uint'
+    factor: 200
+    min: 0
+    max: 20000
+    units: 'W'
+    invalid: 0x7F
+    default: 0x00
+
+  HV_DC_LINK_VOLTAGE:
+    bits: '5.0-7.4'
+    comment:
+      en: 'High-voltage DC link voltage'
+      fr: 'Tension du bus continu haute tension'
+      es: 'Tensión del bus de corriente continua de alta tensión'
+      de: 'Spannung des Hochvolt-Gleichspannungszwischenkreises'
+      it: 'Tensione del bus in corrente continua ad alta tensione'
+      pl: 'Napięcie magistrali DC wysokiego napięcia'
+      ru: 'Напряжение высоковольтной шины постоянного тока'
+      zh: '高压直流母线电压'
+      hu: 'A nagyfeszültségű egyenáramú köztes kör feszültsége'
+      pt: 'Tensão do barramento contínuo de alta tensão'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x13EC
+    default: 0x00

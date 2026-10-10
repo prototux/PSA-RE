@@ -1,0 +1,135 @@
+id: 0x1AD
+name: 'REAR_CLIMATE_MOTOR_COMMAND'
+type: 'can'
+length: 3
+comment:
+  en: 'Control of the rear climate-control module motors: blower and air-distribution flaps.'
+  fr: 'Commande des moteurs du module de climatisation arrière : pulseur et volets de distribution d''air.'
+  es: 'Control de los motores del módulo de climatización trasero: motor de ventilación y compuertas de distribución.'
+  de: 'Ansteuerung der Motoren des hinteren Klimamoduls: Gebläse und Luftverteilklappen.'
+  it: 'Controllo dei motori del modulo di climatizzazione posteriore: ventola e serrande di distribuzione aria.'
+  pl: 'Sterowanie silnikami tylnego modułu klimatyzacji: dmuchawa i klapy rozdziału powietrza.'
+  ru: 'Управление моторами заднего модуля климат-контроля: вентилятор и заслонки распределения воздуха.'
+  zh: '后排空调模块电机控制:鼓风机和风门分配挡板。'
+  hu: 'A hátsó klímamodul motorjainak vezérlése: fűtőventilátor és légelosztó terelőlapok.'
+  pt: 'Comando dos motores do módulo de climatização traseira: ventilador e comportas de distribuição de ar.'
+observations:
+  en: 'On state change of: REAR_AC_ENABLED. On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur changement d''état de : REAR_AC_ENABLED. Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'Al cambiar el estado de: REAR_AC_ENABLED. En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Statusänderung von: REAR_AC_ENABLED. Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Al cambiamento di stato di: REAR_AC_ENABLED. Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'Wysyłane przy zmianie stanu: REAR_AC_ENABLED. W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'При изменении состояния: REAR_AC_ENABLED. На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '当AUTOR_CLIM_AR状态变化时. 在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A(z) REAR_AC_ENABLED állapotváltozásakor. A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Na mudança de estado de: REAR_AC_ENABLED. Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['CLIM_AR']
+
+signals:
+  REAR_BLOWER_MOTOR_SETPOINT:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Rear blower motor setpoint'
+      fr: 'Consigne du moteur de pulseur arrière'
+      es: 'Consigna del motor del ventilador trasero'
+      de: 'Sollwert des hinteren Gebläsemotors'
+      it: 'Setpoint del motore ventola posteriore'
+      pl: 'Wartość zadana silnika dmuchawy tylnej'
+      ru: 'Задание привода вентилятора отопителя сзади'
+      zh: '后排鼓风机电机设定值'
+      hu: 'Hátsó fűtőventilátor motor alapjele'
+      pt: 'Consigna do motor do ventilador traseiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  REAR_DISTRIBUTION_MOTOR_SETPOINT:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Rear air distribution motor setpoint'
+      fr: 'Consigne du moteur de distribution d''air arrière'
+      es: 'Consigna del motor de distribución de aire trasero'
+      de: 'Sollwert des hinteren Luftverteilungsmotors'
+      it: 'Setpoint del motore di distribuzione aria posteriore'
+      pl: 'Wartość zadana silnika rozdziału powietrza tylnego'
+      ru: 'Задание привода заслонки распределения воздуха сзади'
+      zh: '后排空气分配电机设定值'
+      hu: 'Hátsó légelosztó motor alapjele'
+      pt: 'Consigna do motor de distribuição de ar traseiro'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  REAR_AC_ENABLED:
+    bits: '3.7'
+    comment:
+      en: 'Rear air conditioning enabled'
+      fr: 'Autorisation de fonctionnement de la climatisation arrière'
+      es: 'Aire acondicionado trasero habilitado'
+      de: 'Freigabe der Fondklimatisierung'
+      it: 'Climatizzatore posteriore abilitato'
+      pl: 'Zezwolenie na działanie klimatyzacji tylnej'
+      ru: 'Разрешение работы задней климатической установки'
+      zh: '后排空调启用'
+      hu: 'Hátsó klíma engedélyezve'
+      pt: 'Ar condicionado traseiro habilitado'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not allowed'
+        fr: 'Non autorisé'
+        es: 'No permitido'
+        de: 'Nicht erlaubt'
+        it: 'Non consentito'
+        pl: 'Niedozwolone'
+        ru: 'Не разрешено'
+        zh: '不允许'
+        hu: 'Nem engedélyezett'
+        pt: 'Não permitido'
+      0x01:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+
+  UNUSED_1:
+    bits: '3.6'
+    unused: true
+
+  UNUSED_2:
+    bits: '3.5'
+    unused: true
+
+  UNUSED_3:
+    bits: '3.4'
+    unused: true
+
+  UNUSED_4:
+    bits: '3.3'
+    unused: true
+
+  UNUSED_5:
+    bits: '3.2'
+    unused: true
+
+  UNUSED_6:
+    bits: '3.1-3.0'
+    unused: true

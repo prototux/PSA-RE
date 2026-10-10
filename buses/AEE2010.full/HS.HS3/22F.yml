@@ -1,0 +1,301 @@
+id: 0x22F
+name: 'HV_BATTERY_INSULATION_STATUS'
+type: 'can'
+length: 8
+comment:
+  en: 'High-voltage battery insulation and voltage-fault status, relayed by the body computer (BSI).'
+  fr: 'État de l''isolement et des défauts de tension de la batterie haute tension, relayé par le BSI.'
+  es: 'Estado del aislamiento y de los fallos de tensión de la batería de alta tensión, retransmitido por la BSI.'
+  de: 'Isolations- und Spannungsfehlerstatus der Hochvoltbatterie, weitergeleitet vom BSI.'
+  it: 'Stato dell''isolamento e dei guasti di tensione della batteria ad alta tensione, inoltrato dal BSI.'
+  pl: 'Stan izolacji i usterek napięcia akumulatora wysokiego napięcia, przekazywany przez BSI.'
+  ru: 'Состояние изоляции и неисправностей напряжения высоковольтной батареи, ретранслируемое BSI.'
+  zh: '由车身控制器(BSI)转发的高压电池绝缘及电压故障状态。'
+  hu: 'A nagyfeszültségű akkumulátor szigetelési és feszültséghiba-állapota, amelyet a BSI továbbít.'
+  pt: 'Estado de isolamento e de avaria de tensão da bateria de alta tensão, retransmitido pelo computador de servidão (BSI).'
+periodicity: ['1000ms']
+senders: ['BSI']
+receivers: ['BSRF']
+
+signals:
+  HV_BATTERY_ACTUAL_VOLTAGE:
+    bits: '1.7-2.5'
+    comment:
+      en: 'HV battery actual voltage (V)'
+      fr: 'Tension réelle de la batterie haute tension (V)'
+      es: 'Tensión real de la batería de alta tensión (V)'
+      de: 'Tatsächliche Spannung der Hochvoltbatterie (V)'
+      it: 'Tensione reale della batteria ad alta tensione (V)'
+      pl: 'Rzeczywiste napięcie akumulatora wysokiego napięcia (V)'
+      ru: 'Фактическое напряжение высоковольтной батареи (В)'
+      zh: '高压电池实际电压(V)'
+      hu: 'A nagyfeszültségű akkumulátor tényleges feszültsége (V)'
+      pt: 'Tensão real da bateria de alta tensão (V)'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 500
+    units: 'V'
+    invalid: 0x7FF
+
+  HV_BATTERY_SOC_2:
+    bits: '3.1-4.0'
+    comment:
+      en: 'HV battery state of charge (%)'
+      fr: 'État de charge (SOC) de la batterie haute tension (%)'
+      es: 'Estado de carga (SOC) de la batería de alta tensión (%)'
+      de: 'Ladezustand (SOC) der Hochvoltbatterie (%)'
+      it: 'Stato di carica (SOC) della batteria ad alta tensione (%)'
+      pl: 'Stan naładowania (SOC) akumulatora wysokiego napięcia (%)'
+      ru: 'Уровень заряда (SOC) высоковольтной батареи (%)'
+      zh: '高压电池荷电状态(SOC)(%)'
+      hu: 'A nagyfeszültségű akkumulátor töltöttségi állapota (SOC) (%)'
+      pt: 'Estado de carga da bateria de alta tensão (%)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x3FF
+
+  REM_OVERTEMPERATURE_FAULT:
+    bits: '8.7'
+    comment:
+      en: 'Rear electric machine (eRAD) overheating fault'
+      fr: 'Défaut de surchauffe de la machine électrique arrière (eRAD)'
+      es: 'Fallo de sobrecalentamiento de la máquina eléctrica trasera (eRAD)'
+      de: 'Überhitzungsfehler der hinteren elektrischen Maschine (eRAD)'
+      it: 'Guasto di surriscaldamento della macchina elettrica posteriore (eRAD)'
+      pl: 'Usterka przegrzania tylnej maszyny elektrycznej (eRAD)'
+      ru: 'Неисправность перегрева задней электрической машины (eRAD)'
+      zh: '后电机(eRAD)过热故障'
+      hu: 'A hátsó elektromos gép (eRAD) túlmelegedési hibája'
+      pt: 'Falha de sobreaquecimento da máquina elétrica traseira (eRAD)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No failure'
+        fr: 'Aucune défaillance'
+        es: 'Sin fallo'
+        de: 'Kein Ausfall'
+        it: 'Nessun guasto'
+        pl: 'Brak awarii'
+        ru: 'Нет отказа'
+        zh: '无故障'
+        hu: 'Nincs meghibásodás'
+        pt: 'Sem falha'
+      0x01:
+        en: 'Overheating'
+        fr: 'Surchauffe'
+        es: 'Sobrecalentamiento'
+        de: 'Überhitzung'
+        it: 'Surriscaldamento'
+        pl: 'Przegrzanie'
+        ru: 'Перегрев'
+        zh: '过热'
+        hu: 'Túlmelegedés'
+        pt: 'Sobreaquecimento'
+
+  HV_BATTERY_INTERLOCK_LINE_STATUS:
+    bits: '8.6-8.5'
+    comment:
+      en: 'HV traction battery interlock line status'
+      fr: 'État de la ligne d''interverrouillage de la batterie de traction haute tension'
+      es: 'Estado de la línea de enclavamiento de la batería de tracción de alta tensión'
+      de: 'Status der Verriegelungsleitung der Hochvolt-Traktionsbatterie'
+      it: 'Stato della linea di interblocco della batteria di trazione ad alta tensione'
+      pl: 'Stan linii blokady wzajemnej akumulatora trakcyjnego wysokiego napięcia'
+      ru: 'Состояние линии блокировки высоковольтной тяговой батареи'
+      zh: '高压牵引电池互锁线状态'
+      hu: 'A nagyfeszültségű vontatóakkumulátor reteszelő vonalának állapota'
+      pt: 'Estado da linha de interlock da bateria de tração de alta tensão'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No error (interlock line closed)'
+        fr: 'Pas d''erreur (ligne d''interlock fermée)'
+        es: 'Sin error (línea de enclavamiento cerrada)'
+        de: 'Kein Fehler (Interlock-Leitung geschlossen)'
+        it: 'Nessun errore (linea di interblocco chiusa)'
+        pl: 'Brak błędu (linia blokady zamknięta)'
+        ru: 'Ошибки нет (линия блокировки замкнута)'
+        zh: '无错误(联锁线路闭合)'
+        hu: 'Nincs hiba (interlock vonal zárva)'
+        pt: 'Sem erro (linha de intertravamento fechada)'
+      0x01:
+        en: 'Error detected (interlock line open)'
+        fr: 'Erreur détectée (ligne de verrouillage ouverte)'
+        es: 'Error detectado (línea de enclavamiento abierta)'
+        de: 'Fehler erkannt (Verriegelungsleitung unterbrochen)'
+        it: 'Errore rilevato (linea di interblocco aperta)'
+        pl: 'Wykryto błąd (linia blokady otwarta)'
+        ru: 'Обнаружена ошибка (линия блокировки разомкнута)'
+        zh: '检测到错误(联锁线路断开)'
+        hu: 'Hiba észlelve (a reteszelő vonal nyitott)'
+        pt: 'Erro detetado (linha de interbloqueio aberta)'
+      0x02:
+        en: 'Invalid (interlock line undefined)'
+        fr: 'Non valide (ligne de verrouillage indéfinie)'
+        es: 'No válido (línea de enclavamiento indefinida)'
+        de: 'Ungültig (Verriegelungsleitung undefiniert)'
+        it: 'Non valido (linea di interblocco indefinita)'
+        pl: 'Nieważne (linia blokady niezdefiniowana)'
+        ru: 'Недействительно (линия блокировки не определена)'
+        zh: '无效(互锁线路未定义)'
+        hu: 'Érvénytelen (reteszelő vonal nincs meghatározva)'
+        pt: 'Inválido (linha de intertravamento indefinida)'
+      0x03:
+        unused: true
+
+  DCDC_OVERTEMPERATURE:
+    bits: '8.4'
+    comment:
+      en: 'DC/DC converter overheating'
+      fr: 'Surchauffe du convertisseur DC/DC'
+      es: 'Sobrecalentamiento del convertidor DC/DC'
+      de: 'Überhitzung des DC/DC-Wandlers'
+      it: 'Surriscaldamento del convertitore DC/DC'
+      pl: 'Przegrzanie przetwornicy DC/DC'
+      ru: 'Перегрев преобразователя DC/DC'
+      zh: 'DC/DC变换器过热'
+      hu: 'A DC/DC átalakító túlmelegedése'
+      pt: 'Sobreaquecimento do conversor DC/DC'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'False'
+        fr: 'Faux'
+        es: 'Falso'
+        de: 'Falsch'
+        it: 'Falso'
+        pl: 'Fałsz'
+        ru: 'Ложь'
+        zh: '假'
+        hu: 'Hamis'
+        pt: 'Falso'
+      0x01:
+        en: 'Overtemperature'
+        fr: 'Overtemperature'
+        es: 'Sobretemperatura'
+        de: 'Übertemperatur'
+        it: 'Sovratemperatura'
+        pl: 'Przegrzanie'
+        ru: 'Перегрев'
+        zh: '过温'
+        hu: 'Túlmelegedés'
+        pt: 'Sobretemperatura'
+
+  HV_BATTERY_INSULATION_FAULT_STATUS:
+    bits: '8.3-8.1'
+    comment:
+      en: 'HV battery insulation fault diagnostic status'
+      fr: 'État du diagnostic des défauts d''isolement de la batterie haute tension'
+      es: 'Estado del diagnóstico de fallos de aislamiento de la batería de alta tensión'
+      de: 'Status der Diagnose von Isolationsfehlern der Hochvoltbatterie'
+      it: 'Stato della diagnosi dei guasti di isolamento della batteria ad alta tensione'
+      pl: 'Stan diagnostyki usterek izolacji akumulatora wysokiego napięcia'
+      ru: 'Статус диагностики неисправностей изоляции высоковольтной батареи'
+      zh: '高压电池绝缘故障诊断状态'
+      hu: 'A nagyfeszültségű akkumulátor szigetelési hibájának diagnosztikai állapota'
+      pt: 'Estado de diagnóstico de avaria de isolamento da bateria de alta tensão'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No failure'
+        fr: 'Pas de défaillance'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem falha'
+      0x01:
+        en: 'Symmetric fault'
+        fr: 'Panne symétrique'
+        es: 'Fallo simétrico'
+        de: 'Symmetrischer Fehler'
+        it: 'Guasto simmetrico'
+        pl: 'Usterka symetryczna'
+        ru: 'Симметричная неисправность'
+        zh: '对称故障'
+        hu: 'Szimmetrikus hiba'
+        pt: 'Falha simétrica'
+      0x02:
+        en: 'Asymmetric failure HV +'
+        fr: 'Défaut asymétrique HT +'
+        es: 'Fallo asimétrico AT +'
+        de: 'Asymmetrischer Fehler HV +'
+        it: 'Guasto asimmetrico AT +'
+        pl: 'Usterka asymetryczna WN +'
+        ru: 'Асимметричная неисправность ВН +'
+        zh: '高压不对称故障+'
+        hu: 'Aszimmetrikus hiba HV +'
+        pt: 'Falha assimétrica de alta tensão +'
+      0x03:
+        en: 'Asymmetric high-voltage failure (negative)'
+        fr: 'Défaut asymétrique haute tension (négatif)'
+        es: 'Fallo asimétrico de alta tensión (negativo)'
+        de: 'Asymmetrischer Hochvoltfehler (negativ)'
+        it: 'Guasto asimmetrico alta tensione (negativo)'
+        pl: 'Asymetryczna usterka wysokiego napięcia (ujemna)'
+        ru: 'Асимметричная неисправность высокого напряжения (отрицательная)'
+        zh: '非对称高压故障(负)'
+        hu: 'Aszimmetrikus nagyfeszültségű hiba (negatív)'
+        pt: 'Falha assimétrica de alta tensão (negativa)'
+      0x04:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Não válido'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  HV_BATTERY_MIN_VOLTAGE_WARNING:
+    bits: '8.0'
+    comment:
+      en: 'HV battery minimum voltage warning'
+      fr: 'Alerte de tension minimale de la batterie haute tension'
+      es: 'Alerta de tensión mínima de la batería de alta tensión'
+      de: 'Warnung vor Mindestspannung der Hochvoltbatterie'
+      it: 'Avviso di tensione minima della batteria ad alta tensione'
+      pl: 'Ostrzeżenie o minimalnym napięciu akumulatora wysokiego napięcia'
+      ru: 'Предупреждение о минимальном напряжении высоковольтной батареи'
+      zh: '高压电池最低电压警告'
+      hu: 'A nagyfeszültségű akkumulátor minimális feszültségének riasztása'
+      pt: 'Aviso de tensão mínima da bateria de alta tensão'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No alert'
+        fr: 'Pas d''alerte'
+        es: 'Sin alerta'
+        de: 'Keine Warnung'
+        it: 'Nessun avviso'
+        pl: 'Brak alertu'
+        ru: 'Нет предупреждения'
+        zh: '无警报'
+        hu: 'Nincs riasztás'
+        pt: 'Sem alerta'
+      0x01:
+        en: 'Battery voltage safety threshold warning'
+        fr: 'Alerte de seuil de sécurité de tension batterie'
+        es: 'Alerta de umbral de seguridad de tensión de batería'
+        de: 'Sicherheitsschwellenwarnung Batteriespannung'
+        it: 'Allarme soglia di sicurezza tensione batteria'
+        pl: 'Ostrzeżenie o progu bezpieczeństwa napięcia akumulatora'
+        ru: 'Предупреждение о пороге безопасности напряжения батареи'
+        zh: '电池电压安全阈值警告'
+        hu: 'Akkumulátorfeszültség biztonsági küszöbfigyelmeztetés'
+        pt: 'Aviso de limiar de segurança da tensão da bateria'

@@ -1,0 +1,99 @@
+id: 0x127
+name: 'VTH_CONTROL'
+type: 'can'
+length: 6
+comment:
+  en: 'Hybrid control data: time before vehicle stop.'
+  fr: 'Données du contrôle hybride : temps avant arrêt du véhicule.'
+  es: 'Datos del control híbrido: tiempo antes de la parada del vehículo.'
+  de: 'Hybridsteuerungsdaten: Zeit bis zum Fahrzeugstillstand.'
+  it: 'Dati del controllo ibrido: tempo prima dell''arresto del veicolo.'
+  pl: 'Dane kontroli hybrydowej: czas do zatrzymania pojazdu.'
+  ru: 'Данные гибридного управления: время до остановки автомобиля.'
+  zh: '混合动力控制数据:车辆停止前的时间。'
+  hu: 'Hibrid vezérlési adatok: a jármű megállásáig hátralévő idő.'
+  pt: 'Dados de controlo híbrido: tempo até à paragem do veículo.'
+periodicity: ['10ms']
+senders: ['HCU1']
+receivers: ['BSI', 'CMM', 'ABS']
+
+signals:
+  CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle de la trame'
+      es: 'Suma de comprobación de la trama'
+      de: 'Frame-Prüfsumme'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'Keret ellenőrző összege'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  DRIVER_DEMAND:
+    bits: '2.1-3.0'
+    comment:
+      en: 'Driver demand (accelerator pedal request) (%)'
+      fr: 'Volonté du conducteur (demande de la pédale d''accélérateur) (%)'
+      es: 'Voluntad del conductor (solicitud del pedal acelerador) (%)'
+      de: 'Fahrerwunsch (Fahrpedalanforderung) (%)'
+      it: 'Richiesta del conducente (richiesta del pedale acceleratore) (%)'
+      pl: 'Żądanie kierowcy (żądanie pedału przyspieszenia) (%)'
+      ru: 'Запрос водителя (запрос педали акселератора) (%)'
+      zh: '驾驶员意图(油门踏板请求)(%)'
+      hu: 'A vezető kérése (gázpedál-kérés) (%)'
+      pt: 'Vontade do condutor (pedido do pedal do acelerador) (%)'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x3FF
+    default: 0x00
+
+  DRIVER_TORQUE_REQUEST_BEFORE_PROCESSING:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Torque requested by the driver before processing by the hybrid control unit (N.m)'
+      fr: 'Couple demandé par le conducteur avant traitement par le calculateur hybride (N.m)'
+      es: 'Par solicitado por el conductor antes del procesamiento por el calculador híbrido (N.m)'
+      de: 'Vom Fahrer angefordertes Drehmoment vor der Verarbeitung durch das Hybridsteuergerät (N.m)'
+      it: 'Coppia richiesta dal conducente prima dell''elaborazione da parte della centralina ibrida (N.m)'
+      pl: 'Moment obrotowy żądany przez kierowcę przed przetworzeniem przez sterownik hybrydowy (N.m)'
+      ru: 'Крутящий момент, запрошенный водителем, до обработки гибридным блоком управления (Н·м)'
+      zh: '驾驶员请求扭矩(经混合动力控制单元处理前)(N.m)'
+      hu: 'A vezető által kért nyomaték a hibrid vezérlőegység feldolgozása előtt (N.m)'
+      pt: 'Binário solicitado pelo condutor antes do processamento pela unidade de controlo híbrida (N.m)'
+    type: 'uint'
+    factor: 2.5
+    offset: -200
+    min: -200
+    max: 435
+    units: 'Nm'
+    invalid: 0xFF
+    default: 0x50
+
+  UNUSED_1:
+    bits: '5.3-6.0'
+    unused: true

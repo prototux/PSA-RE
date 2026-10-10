@@ -1,0 +1,113 @@
+id: 0x228
+name: 'CLOCK_TIME'
+type: 'can'
+length: 8
+comment:
+  en: 'Sent for the Easy Move function: accelerator pedal position, motor speed, motor torque feedback and secondary brake-booster pressure.'
+  fr: 'Émise pour la fonction Easy Move : position pédale d''accélérateur, régime moteur, retour de couple moteur et pression servofrein secondaire.'
+  es: 'Enviada para la función Easy Move: posición del pedal acelerador, régimen motor, retorno de par motor y presión del servofreno secundario.'
+  de: 'Für die Easy-Move-Funktion gesendet: Gaspedalstellung, Motordrehzahl, Motormoment-Rückmeldung und sekundärer Bremskraftverstärkerdruck.'
+  it: 'Inviata per la funzione Easy Move: posizione pedale acceleratore, regime motore, retroazione coppia motore e pressione servofreno secondario.'
+  pl: 'Wysyłana dla funkcji Easy Move: pozycja pedału przyspieszenia, obroty silnika, sprzężenie zwrotne momentu silnika i ciśnienie wspomagania hamulca wtórnego.'
+  ru: 'Отправляется для функции Easy Move: положение педали акселератора, обороты двигателя, обратная связь по моменту двигателя и давление вторичного усилителя тормозов.'
+  zh: '为Easy Move功能发送:加速踏板位置、电机转速、电机扭矩反馈和辅助制动助力器压力。'
+  hu: 'Az Easy Move funkcióhoz küldve: gázpedál pozíció, motorfordulatszám, motornyomaték visszacsatolás és másodlagos fékrásegítő nyomás.'
+  pt: 'Enviada para a função Easy Move: posição do pedal do acelerador, velocidade do motor, retorno de binário do motor e pressão secundária do servofreio.'
+periodicity: ['10ms']
+senders: ['PIU']
+receivers: ['ABS', 'BSI']
+
+signals:
+  ELECTRIC_MOTOR_SPEED:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Electric motor speed'
+      fr: 'Régime du moteur électrique'
+      es: 'Régimen del motor eléctrico'
+      de: 'Drehzahl des Elektromotors'
+      it: 'Regime del motore elettrico'
+      pl: 'Prędkość obrotowa silnika elektrycznego'
+      ru: 'Обороты электродвигателя'
+      zh: '电动机转速'
+      hu: 'Villanymotor fordulatszáma'
+      pt: 'Regime do motor elétrico'
+    type: 'uint'
+    factor: 1
+    offset: -10000
+    min: -10000
+    max: 10000
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0x2710
+
+  UNUSED_1:
+    bits: '3.7-3.0'
+    unused: true
+
+  ELECTRIC_MOTOR_TORQUE_FEEDBACK:
+    bits: '4.7-5.0'
+    comment:
+      en: 'Electric motor output torque, feedback'
+      fr: 'Couple de sortie du moteur électrique, retour'
+      es: 'Par de salida del motor eléctrico, retorno'
+      de: 'Ausgangsdrehmoment des Elektromotors, Rückmeldung'
+      it: 'Coppia in uscita del motore elettrico, riscontro'
+      pl: 'Moment wyjściowy silnika elektrycznego, sprzężenie zwrotne'
+      ru: 'Выходной крутящий момент электродвигателя, обратная связь'
+      zh: '电动机输出扭矩反馈'
+      hu: 'A villanymotor kimeneti nyomatéka, visszajelzés'
+      pt: 'Binário de saída do motor elétrico, retorno'
+    type: 'uint'
+    factor: 0.1
+    offset: -200
+    min: -200
+    max: 200
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0x7D0
+
+  BRAKE_BOOSTER_PRESSURE_2:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Brake booster pressure, sensor 2'
+      fr: 'Pression de l''assistance de freinage (Mastervac), capteur 2'
+      es: 'Presión del servofreno (Mastervac), sensor 2'
+      de: 'Bremskraftverstärker-Druck (Mastervac), Sensor 2'
+      it: 'Pressione del servofreno (Mastervac), sensore 2'
+      pl: 'Ciśnienie wspomagania hamowania (Mastervac), czujnik 2'
+      ru: 'Давление вакуумного усилителя тормозов (Mastervac), датчик 2'
+      zh: '制动助力器(Mastervac)压力,传感器2'
+      hu: 'Fékrásegítő (Mastervac) nyomása, 2. érzékelő'
+      pt: 'Pressão da assistência de travagem (Mastervac), sensor 2'
+    type: 'uint'
+    factor: 5
+    min: 0
+    max: 1200
+    units: 'hPa'
+    invalid: 0xFF
+    default: 0xFE
+
+  ACCELERATOR_PEDAL_POSITION_SENSOR:
+    bits: '7.7-8.3'
+    comment:
+      en: 'Accelerator pedal position sensor'
+      fr: 'Capteur de position de la pédale d''accélérateur'
+      es: 'Sensor de posición del pedal del acelerador'
+      de: 'Fahrpedalstellungssensor'
+      it: 'Sensore di posizione del pedale dell''acceleratore'
+      pl: 'Czujnik położenia pedału przyspieszenia'
+      ru: 'Датчик положения педали акселератора'
+      zh: '加速踏板位置传感器'
+      hu: 'Gázpedál-helyzetérzékelő'
+      pt: 'Sensor de posição do pedal do acelerador'
+    type: 'uint'
+    factor: 0.02
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x1FFF
+    default: 0x00
+
+  UNUSED_2:
+    bits: '8.2-8.0'
+    unused: true

@@ -1,0 +1,351 @@
+id: 0x0B6
+name: 'FAST_BSI_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Fast vehicle data broadcast by the body controller: engine speed, vehicle speed, distance and fuel consumption counters.'
+  fr: 'Données rapides véhicule diffusées par la BSI : régime moteur, vitesse véhicule, compteurs de distance et de consommation carburant.'
+  es: 'Datos rápidos del vehículo difundidos por la BSI: régimen motor, velocidad del vehículo, contadores de distancia y de consumo de combustible.'
+  de: 'Vom BSI gesendete schnelle Fahrzeugdaten: Motordrehzahl, Fahrzeuggeschwindigkeit, Distanz- und Kraftstoffverbrauchszähler.'
+  it: 'Dati rapidi veicolo trasmessi dalla BSI: regime motore, velocità veicolo, contatori di distanza e consumo carburante.'
+  pl: 'Szybkie dane pojazdu nadawane przez BSI: obroty silnika, prędkość pojazdu, liczniki dystansu i zużycia paliwa.'
+  ru: 'Быстрые данные автомобиля, транслируемые BSI: обороты двигателя, скорость автомобиля, счётчики расстояния и расхода топлива.'
+  zh: '由BSI广播的快速车辆数据:发动机转速、车速、距离和燃油消耗计数器。'
+  hu: 'A BSI által sugárzott gyors jármű adatok: motorfordulatszám, jármű sebessége, táv- és üzemanyag-fogyasztás számlálók.'
+  pt: 'Dados rápidos do veículo difundidos pelo computador de servidão: velocidade do motor, velocidade do veículo, contadores de distância e de consumo de combustível.'
+periodicity: ['5020ms']
+senders: ['BSI']
+receivers: ['BDM_C', 'BTE', 'BSTL', 'EDP_C', 'RBG', 'SAM', 'CVM', 'IDVR']
+
+signals:
+  RPM:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Engine speed, 0.125 rpm per bit; invalid when all bits set'
+      fr: 'Régime moteur, résolution 0,125 tr/min ; invalide si tous les bits sont à 1'
+      es: 'Régimen del motor, resolución 0,125 rpm; inválido si todos los bits están a 1'
+      de: 'Motordrehzahl, Auflösung 0,125 U/min; ungültig bei allen Bits gesetzt'
+      it: 'Regime motore, risoluzione 0,125 giri/min; non valido se tutti i bit sono a 1'
+      pl: 'Obroty silnika, rozdzielczość 0,125 obr/min; nieprawidłowe, gdy wszystkie bity ustawione'
+      ru: 'Обороты двигателя, разрешение 0,125 об/мин; недействительно, если все биты установлены'
+      zh: '发动机转速,分辨率 0.125 转/分钟;所有位为 1 时无效'
+      hu: 'Motorfordulatszám, felbontás 0,125 ford/perc; érvénytelen, ha minden bit be van állítva'
+      pt: 'Regime do motor, resolução 0,125 rpm; inválido se todos os bits estiverem a 1'
+    type: 'uint'
+    factor: 0.125
+    min: 0
+    max: 8191.75
+    units: 'rpm'
+    invalid: 0xFFFF
+    default: 0x1F40
+
+  SPEED:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Instantaneous vehicle speed (average of the driven wheels)'
+      fr: 'Vitesse instantanée du véhicule (moyenne des roues motrices)'
+      es: 'Velocidad instantánea del vehículo (media de las ruedas motrices)'
+      de: 'Momentane Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder)'
+      it: 'Velocità istantanea del veicolo (media delle ruote motrici)'
+      pl: 'Chwilowa prędkość pojazdu (średnia z kół napędowych)'
+      ru: 'Мгновенная скорость автомобиля (среднее по ведущим колёсам)'
+      zh: '车辆瞬时车速(驱动轮平均值)'
+      hu: 'Pillanatnyi jármű sebesség (a hajtott kerekek átlaga)'
+      pt: 'Velocidade instantânea do veículo (média das rodas motrizes)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00
+
+  DISTANCE_TRAVELLED:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Rolling distance counter, 0.1 m per bit, wraps after 0xFFFF (6553.5 m); no invalid value, frozen when unknown'
+      fr: 'Compteur cumulatif de distance, 0,1 m par bit, boucle après 0xFFFF (6553,5 m) ; pas de valeur invalide, figé si inconnu'
+      es: 'Contador acumulativo de distancia, 0,1 m por bit, se reinicia tras 0xFFFF (6553,5 m); sin valor inválido, se congela si es desconocido'
+      de: 'Fortlaufender Streckenzähler, 0,1 m pro Bit, Überlauf nach 0xFFFF (6553,5 m); kein ungültiger Wert, eingefroren bei Unbekannt'
+      it: 'Contatore cumulativo di distanza, 0,1 m per bit, si azzera dopo 0xFFFF (6553,5 m); nessun valore non valido, congelato se sconosciuto'
+      pl: 'Narastający licznik przebytej odległości, 0,1 m na bit, zawija się po 0xFFFF (6553,5 m); brak wartości nieprawidłowej, zamrożony gdy nieznany'
+      ru: 'Накопительный счётчик пройденного расстояния, 0,1 м на бит, переполнение после 0xFFFF (6553,5 м); недействительного значения нет, замораживается при неизвестном значении'
+      zh: '累计行驶距离计数器,每位 0.1 米,在 0xFFFF(6553.5 米)后回绕;无无效值,未知时保持不变'
+      hu: 'Halmozott megtett távolság számláló, 0,1 m/bit, 0xFFFF (6553,5 m) után túlcsordul; nincs érvénytelen érték, ismeretlen esetben befagy'
+      pt: 'Contador acumulativo de distância, 0,1 m por bit, reinicia após 0xFFFF (6553,5 m); sem valor inválido, fica fixo se desconhecido'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6553.5
+    units: 'm'
+    default: 0x00
+
+  FUEL_CONSUMPTION:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Rolling fuel consumption counter, 80 mm3 per bit, wraps at 20400 mm3; no invalid value, frozen when unknown'
+      fr: 'Compteur cumulatif de consommation de carburant, 80 mm3 par bit, boucle à 20400 mm3 ; pas de valeur invalide, figé si inconnu'
+      es: 'Contador acumulativo de consumo de combustible, 80 mm3 por bit, se reinicia a 20400 mm3; sin valor inválido, se congela si es desconocido'
+      de: 'Fortlaufender Kraftstoffverbrauchszähler, 80 mm3 pro Bit, Überlauf bei 20400 mm3; kein ungültiger Wert, eingefroren bei Unbekannt'
+      it: 'Contatore cumulativo del consumo di carburante, 80 mm3 per bit, si azzera a 20400 mm3; nessun valore non valido, congelato se sconosciuto'
+      pl: 'Narastający licznik zużycia paliwa, 80 mm3 na bit, zawija się przy 20400 mm3; brak wartości nieprawidłowej, zamrożony gdy nieznany'
+      ru: 'Накопительный счётчик расхода топлива, 80 мм3 на бит, переполнение при 20400 мм3; недействительного значения нет, замораживается при неизвестном расходе'
+      zh: '累计燃油消耗计数器,每位 80 mm3,在 20400 mm3 处回绕;无无效值,未知时保持不变'
+      hu: 'Halmozott üzemanyag-fogyasztás számláló, 80 mm3/bit, 20400 mm3-nél túlcsordul; nincs érvénytelen érték, ismeretlen esetben befagy'
+      pt: 'Contador cumulativo de consumo de combustível, 80 mm3 por bit, reinicia aos 20400 mm3; sem valor inválido, congelado se desconhecido'
+    type: 'uint'
+    factor: 80
+    min: 0
+    max: 20400
+    units: 'mm3'
+    default: 0x00
+
+  SECURISATION:
+    bits: '8.7'
+    comment:
+      en: 'Vehicle speed information security status'
+      fr: 'Sécurisation de l''information de vitesse véhicule'
+      es: 'Estado de seguridad de la información de velocidad del vehículo'
+      de: 'Absicherungsstatus der Fahrzeuggeschwindigkeitsinformation'
+      it: 'Stato di sicurezza dell''informazione di velocità del veicolo'
+      pl: 'Stan zabezpieczenia informacji o prędkości pojazdu'
+      ru: 'Статус защиты информации о скорости автомобиля'
+      zh: '车速信息安全状态'
+      hu: 'A járműsebesség-információ biztonsági állapota'
+      pt: 'Estado de segurança da informação de velocidade do veículo'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Speed information unavailable'
+        fr: 'Information de vitesse indisponible'
+        es: 'Información de velocidad no disponible'
+        de: 'Geschwindigkeitsinformation nicht verfügbar'
+        it: 'Informazioni di velocità non disponibili'
+        pl: 'Informacja o prędkości niedostępna'
+        ru: 'Информация о скорости недоступна'
+        zh: '车速信息不可用'
+        hu: 'Sebességinformáció nem elérhető'
+        pt: 'Informação de velocidade indisponível'
+      0x01:
+        en: 'Speed information available'
+        fr: 'Information de vitesse disponible'
+        es: 'Información de velocidad disponible'
+        de: 'Geschwindigkeitsinformation verfügbar'
+        it: 'Informazione di velocità disponibile'
+        pl: 'Dostępna informacja o prędkości'
+        ru: 'Информация о скорости доступна'
+        zh: '车速信息可用'
+        hu: 'Sebességinformáció elérhető'
+        pt: 'Informação de velocidade disponível'
+
+  SECU_VITESSE:
+    bits: '8.6-8.3'
+    comment:
+      en: 'Vehicle speed information security status'
+      fr: 'Sécurisation de l''information de vitesse véhicule'
+      es: 'Estado de seguridad de la información de velocidad del vehículo'
+      de: 'Absicherungsstatus der Fahrzeuggeschwindigkeitsinformation'
+      it: 'Stato di sicurezza dell''informazione di velocità del veicolo'
+      pl: 'Stan zabezpieczenia informacji o prędkości pojazdu'
+      ru: 'Статус защиты информации о скорости автомобиля'
+      zh: '车速信息安全状态'
+      hu: 'A járműsebesség-információ biztonsági állapota'
+      pt: 'Estado de segurança da informação de velocidade do veículo'
+    type: 'enum'
+    default: 0x05
+    values:
+      0x00:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x01:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x02:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x03:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x04:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x05:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x06:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x07:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x08:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x09:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x0A:
+        en: 'Gear available'
+        fr: 'Vitesse disponible'
+        es: 'Marcha disponible'
+        de: 'Gang verfügbar'
+        it: 'Marcia disponibile'
+        pl: 'Bieg dostępny'
+        ru: 'Передача доступна'
+        zh: '挡位可用'
+        hu: 'Fokozat elérhető'
+        pt: 'Mudança disponível'
+      0x0B:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x0C:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x0D:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x0E:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+      0x0F:
+        en: 'Speed unavailable'
+        fr: 'Vitesse indisponible'
+        es: 'Velocidad no disponible'
+        de: 'Geschwindigkeit nicht verfügbar'
+        it: 'Velocità non disponibile'
+        pl: 'Prędkość niedostępna'
+        ru: 'Скорость недоступна'
+        zh: '车速不可用'
+        hu: 'Sebesség nem elérhető'
+        pt: 'Velocidade indisponível'
+
+  UNUSED_1:
+    bits: '8.2-8.0'
+    unused: true
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 50ms'
+      fr: 'Aussi observée avec une période de 50ms'
+      es: 'También observada con un periodo de 50ms'
+      de: 'Auch mit einer Periode von 50ms beobachtet'
+      it: 'Osservata anche con un periodo di 50ms'
+      pl: 'Obserwowana także z okresem 50ms'
+      ru: 'Также наблюдалась с периодом 50ms'
+      zh: '也观察到周期为50ms'
+      hu: 'Megfigyelve 50ms periódussal is'
+      pt: 'Também observada com um período de 50ms'
+    periodicity: ['50ms']

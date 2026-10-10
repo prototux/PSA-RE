@@ -1,0 +1,280 @@
+id: 0x319
+name: 'LATERAL_ACCEL_YAW_SENSOR_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'Lateral acceleration and yaw rate sensor data: raw/calibrated and unfiltered values, validity and fault status, sensor serial number and oscillator frequency deviation.'
+  fr: 'Données du capteur d''accélération latérale et de vitesse de lacet : valeurs brutes/calibrées et non filtrées, validité et état de défaut, numéro de série du capteur et écart de fréquence d''oscillation.'
+  es: 'Datos del sensor de aceleración lateral y velocidad de guiñada: valores brutos/calibrados y sin filtrar, validez y estado de fallo, número de serie del sensor y desviación de frecuencia de oscilación.'
+  de: 'Daten des Querbeschleunigungs- und Gierratensensors: Roh-/kalibrierte und ungefilterte Werte, Gültigkeit und Fehlerstatus, Seriennummer des Sensors und Oszillatorfrequenzabweichung.'
+  it: 'Dati del sensore di accelerazione laterale e velocità di imbardata: valori grezzi/calibrati e non filtrati, validità e stato di guasto, numero di serie del sensore e scostamento di frequenza dell''oscillatore.'
+  pl: 'Dane czujnika przyspieszenia bocznego i prędkości odchylenia: wartości surowe/skalibrowane i niefiltrowane, ważność i stan usterki, numer seryjny czujnika i odchylenie częstotliwości oscylatora.'
+  ru: 'Данные датчика бокового ускорения и скорости рыскания: сырые/калиброванные и нефильтрованные значения, достоверность и статус неисправности, серийный номер датчика и отклонение частоты осциллятора.'
+  zh: '横向加速度和横摆角速度传感器数据:原始/校准和未滤波值、有效性和故障状态、传感器序列号和振荡器频率偏差。'
+  hu: 'Az oldalirányú gyorsulás- és legyezőszög-érzékelő adatai: nyers/kalibrált és szűretlen értékek, érvényesség és hibaállapot, érzékelő sorozatszáma és oszcillátor frekvenciaeltérése.'
+  pt: 'Dados do sensor de aceleração lateral e velocidade de guinada: valores em bruto/calibrados e não filtrados, validade e estado de avaria, número de série do sensor e desvio da frequência do oscilador.'
+periodicity: ['10ms']
+senders: ['ACCEL_SENSOR']
+receivers: ['ABS']
+
+signals:
+  YAW_SENSOR_FAULT_STATE:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Yaw/acceleration dual sensor fault state'
+      fr: 'État de défaut du bi-capteur lacet/accélération'
+      es: 'Estado de fallo del bisensor de guiñada/aceleración'
+      de: 'Fehlerstatus des Gier-/Beschleunigungs-Doppelsensors'
+      it: 'Stato di guasto del bi-sensore imbardata/accelerazione'
+      pl: 'Stan usterki podwójnego czujnika odchylania/przyspieszenia'
+      ru: 'Статус неисправности сдвоенного датчика рыскания/ускорения'
+      zh: '横摆/加速度双传感器故障状态'
+      hu: 'A legyezés/gyorsulás kettős érzékelő hibaállapota'
+      pt: 'Estado de avaria do sensor duplo de guinada/aceleração'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Нет неисправности'
+        zh: '无故障'
+        hu: 'Nincs hiba'
+        pt: 'Sem avaria'
+
+  LATERAL_ACCEL_CALIBRATION_ACTIVE:
+    bits: '1.3'
+    comment:
+      en: 'Lateral acceleration sensor calibration active'
+      fr: 'Calibrage actif du capteur d''accélération latérale'
+      es: 'Calibración activa del sensor de aceleración lateral'
+      de: 'Kalibrierung des Querbeschleunigungssensors aktiv'
+      it: 'Calibrazione attiva del sensore di accelerazione laterale'
+      pl: 'Aktywna kalibracja czujnika przyspieszenia poprzecznego'
+      ru: 'Активна калибровка датчика поперечного ускорения'
+      zh: '横向加速度传感器校准激活'
+      hu: 'A keresztirányú gyorsulásérzékelő kalibrálása aktív'
+      pt: 'Calibração do sensor de aceleração lateral ativa'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Calibration in progress'
+        fr: 'Calibrage en cours'
+        es: 'Calibración en curso'
+        de: 'Kalibrierung läuft'
+        it: 'Calibrazione in corso'
+        pl: 'Trwa kalibracja'
+        ru: 'Выполняется калибровка'
+        zh: '校准进行中'
+        hu: 'Kalibrálás folyamatban'
+        pt: 'Calibração em curso'
+      0x01:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  LATERAL_ACCEL_VALID:
+    bits: '1.2'
+    comment:
+      en: 'Lateral acceleration signal validity bit'
+      fr: 'Bit de validité du signal d''accélération latérale'
+      es: 'Bit de validez de la señal de aceleración lateral'
+      de: 'Gültigkeitsbit des Querbeschleunigungssignals'
+      it: 'Bit di validità del segnale di accelerazione laterale'
+      pl: 'Bit ważności sygnału przyspieszenia poprzecznego'
+      ru: 'Бит достоверности сигнала поперечного ускорения'
+      zh: '横向加速度信号有效位'
+      hu: 'A keresztirányú gyorsulásjel érvényességi bitje'
+      pt: 'Bit de validade do sinal de aceleração lateral'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Enter'
+        fr: 'Valider'
+        es: 'Validar'
+        de: 'Bestätigen'
+        it: 'Conferma'
+        pl: 'Zatwierdź'
+        ru: 'Подтвердить'
+        zh: '确认'
+        hu: 'Megerősít'
+        pt: 'Validar'
+      0x01:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  YAW_RATE_CALIBRATION_ACTIVE:
+    bits: '1.1'
+    comment:
+      en: 'Yaw rate sensor calibration active'
+      fr: 'Calibrage actif du capteur de vitesse de lacet'
+      es: 'Calibración activa del sensor de velocidad de guiñada'
+      de: 'Kalibrierung des Giergeschwindigkeitssensors aktiv'
+      it: 'Calibrazione attiva del sensore di velocità di imbardata'
+      pl: 'Aktywna kalibracja czujnika prędkości odchylania'
+      ru: 'Активна калибровка датчика скорости рыскания'
+      zh: '横摆角速度传感器校准激活'
+      hu: 'A legyezési szögsebesség-érzékelő kalibrálása aktív'
+      pt: 'Calibração ativa do sensor de velocidade de guinada'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Calibration in progress'
+        fr: 'Calibrage en cours'
+        es: 'Calibración en curso'
+        de: 'Kalibrierung läuft'
+        it: 'Calibrazione in corso'
+        pl: 'Trwa kalibracja'
+        ru: 'Выполняется калибровка'
+        zh: '校准进行中'
+        hu: 'Kalibrálás folyamatban'
+        pt: 'Calibração em curso'
+      0x01:
+        en: 'Invalid'
+        fr: 'Non valide'
+        es: 'No válido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  YAW_RATE_VALID:
+    bits: '1.0'
+    comment:
+      en: 'Yaw rate signal validity bit'
+      fr: 'Bit de validité du signal de vitesse de lacet'
+      es: 'Bit de validez de la señal de velocidad de guiñada'
+      de: 'Gültigkeitsbit des Gierratensignals'
+      it: 'Bit di validità del segnale di velocità di imbardata'
+      pl: 'Bit ważności sygnału prędkości odchylania'
+      ru: 'Бит достоверности сигнала скорости рыскания'
+      zh: '横摆角速度信号有效位'
+      hu: 'A legyezési szögsebesség-jel érvényességi bitje'
+      pt: 'Bit de validade do sinal de velocidade de guinada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Valid'
+        fr: 'Valide'
+        es: 'Válido'
+        de: 'Gültig'
+        it: 'Valido'
+        pl: 'Ważne'
+        ru: 'Действительно'
+        zh: '有效'
+        hu: 'Érvényes'
+        pt: 'Válido'
+      0x01:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  YAW_RATE_RAW:
+    bits: '2.7-3.4'
+    comment:
+      en: 'Raw (unfiltered) yaw rate'
+      fr: 'Vitesse de lacet brute (non filtrée)'
+      es: 'Velocidad de guiñada en bruto (sin filtrar)'
+      de: 'Rohe (ungefilterte) Gierrate'
+      it: 'Velocità di imbardata grezza (non filtrata)'
+      pl: 'Surowa (niefiltrowana) prędkość odchylania'
+      ru: 'Необработанная (нефильтрованная) скорость рыскания'
+      zh: '原始(未过滤)横摆角速度'
+      hu: 'Nyers (szűretlen) legyezési szögsebesség'
+      pt: 'Velocidade de guinada em bruto (não filtrada)'
+    type: 'uint'
+    factor: 0.0625
+    offset: -128
+    min: -128
+    max: 127.938
+    units: '°/s'
+    default: 0x00
+
+  LATERAL_ACCEL_RAW:
+    bits: '3.3-4.0'
+    comment:
+      en: 'Raw (unfiltered) lateral acceleration'
+      fr: 'Accélération latérale brute (non filtrée)'
+      es: 'Aceleración lateral en bruto (sin filtrar)'
+      de: 'Rohe (ungefilterte) Querbeschleunigung'
+      it: 'Accelerazione laterale grezza (non filtrata)'
+      pl: 'Surowe (niefiltrowane) przyspieszenie poprzeczne'
+      ru: 'Необработанное (нефильтрованное) поперечное ускорение'
+      zh: '原始(未过滤)横向加速度'
+      hu: 'Nyers (szűretlen) keresztirányú gyorsulás'
+      pt: 'Aceleração lateral bruta (não filtrada)'
+    type: 'uint'
+    factor: 0.015625
+    offset: -32
+    min: -32
+    max: 31.984
+    units: 'm/s2'
+    default: 0x00
+
+  YAW_SENSOR_OSCILLATOR_FREQUENCY:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Yaw sensor oscillator frequency'
+      fr: 'Fréquence d''oscillation du capteur de lacet'
+      es: 'Frecuencia de oscilación del sensor de guiñada'
+      de: 'Oszillatorfrequenz des Giersensors'
+      it: 'Frequenza dell''oscillatore del sensore di imbardata'
+      pl: 'Częstotliwość oscylatora czujnika odchylania'
+      ru: 'Частота генератора датчика рыскания'
+      zh: '横摆传感器振荡器频率'
+      hu: 'A legyezésérzékelő oszcillátorfrekvenciája'
+      pt: 'Frequência do oscilador do sensor de guinada'
+    type: 'uint'
+    factor: 0.5
+    offset: -64
+    min: -64
+    max: 63.5
+    units: 'Hz'
+
+  YAW_SENSOR_SERIAL_NUMBER:
+    bits: '6.7-8.0'
+    comment:
+      en: 'Yaw/acceleration dual sensor serial number'
+      fr: 'Numéro de série du bi-capteur lacet/accélération'
+      es: 'Número de serie del bisensor de guiñada/aceleración'
+      de: 'Seriennummer des Gier-/Beschleunigungs-Doppelsensors'
+      it: 'Numero di serie del bi-sensore imbardata/accelerazione'
+      pl: 'Numer seryjny podwójnego czujnika odchylania/przyspieszenia'
+      ru: 'Серийный номер сдвоенного датчика рыскания/ускорения'
+      zh: '横摆/加速度双传感器序列号'
+      hu: 'A legyezés/gyorsulás kettős érzékelő sorozatszáma'
+      pt: 'Número de série do sensor duplo de guinada/aceleração'
+    type: 'uint'

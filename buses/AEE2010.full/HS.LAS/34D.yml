@@ -1,0 +1,818 @@
+id: 0x34D
+name: 'ESP_SYNCHRONISATION_DATA'
+type: 'can'
+length: 8
+comment:
+  en: 'ESP synchronisation data: ESP disconnected, ASR+ state, hill-start assist state, ESP regulation and warning-lamp requests.'
+  fr: 'Données de synchronisation ESP : ESP déconnecté, état ASR+, état assistance au démarrage en côte, régulation ESP et demandes de voyant.'
+  es: 'Datos de sincronización ESP: ESP desconectado, estado ASR+, estado de asistencia de arranque en pendiente, regulación ESP y solicitudes de testigo.'
+  de: 'ESP-Synchronisationsdaten: ESP getrennt, ASR+-Status, Berganfahrhilfe-Status, ESP-Regelung und Kontrollleuchtenanforderungen.'
+  it: 'Dati di sincronizzazione ESP: ESP disconnesso, stato ASR+, stato assistenza partenza in salita, regolazione ESP e richieste spia.'
+  pl: 'Dane synchronizacji ESP: ESP odłączony, stan ASR+, stan asystenta ruszania pod górę, regulacja ESP i żądania kontrolki.'
+  ru: 'Данные синхронизации ESP: ESP отключён, статус ASR+, статус ассистента старта в гору, регулирование ESP и запросы индикатора.'
+  zh: 'ESP同步数据:ESP断开、ASR+状态、上坡辅助状态、ESP调节和警示灯请求。'
+  hu: 'ESP szinkronizációs adatok: ESP lekapcsolva, ASR+ állapot, hegyimenet-segítő állapota, ESP szabályozás és jelzőlámpa-kérések.'
+  pt: 'Dados de sincronização do ESP: ESP desativado, estado do ASR+, estado da ajuda ao arranque em subida, regulação do ESP e pedidos da luz avisadora.'
+periodicity: ['20ms']
+senders: ['ABS']
+receivers: ['CVM', 'ECR', 'ARTIV']
+
+signals:
+  ASR_ESP_DISCONNECT_STATUS:
+    bits: '1.7'
+    comment:
+      en: 'ASR-ESP connection status, as set by the driver'
+      fr: 'État de connexion de l''ASR-ESP, tel que réglé par le conducteur'
+      es: 'Estado de conexión del ASR-ESP, según lo ajustado por el conductor'
+      de: 'ASR-ESP-Verbindungsstatus, vom Fahrer eingestellt'
+      it: 'Stato di connessione dell''ASR-ESP, impostato dal conducente'
+      pl: 'Stan połączenia ASR-ESP, ustawiony przez kierowcę'
+      ru: 'Статус подключения ASR-ESP, установленный водителем'
+      zh: '由驾驶员设置的 ASR-ESP 连接状态'
+      hu: 'Az ASR-ESP csatlakozási állapota, a vezető beállítása szerint'
+      pt: 'Estado de ligação do ASR-ESP, tal como ajustado pelo condutor'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Connected by the driver'
+        fr: 'Connecté par le conducteur'
+        es: 'Conectado por el conductor'
+        de: 'Vom Fahrer verbunden'
+        it: 'Connesso dal conducente'
+        pl: 'Podłączone przez kierowcę'
+        ru: 'Подключено водителем'
+        zh: '由驾驶员连接'
+        hu: 'A vezető által csatlakoztatva'
+        pt: 'Ligado pelo condutor'
+      0x01:
+        en: 'Disconnected by the driver'
+        fr: 'Déconnecté par le conducteur'
+        es: 'Desconectado por el conductor'
+        de: 'Vom Fahrer getrennt'
+        it: 'Disconnesso dal conducente'
+        pl: 'Rozłączone przez kierowcę'
+        ru: 'Отключено водителем'
+        zh: '由驾驶员断开连接'
+        hu: 'A vezető által lecsatlakoztatva'
+        pt: 'Desligado pelo condutor'
+
+  ASR_ESP_REGULATION_ACTIVE:
+    bits: '1.6'
+    comment:
+      en: 'ASR-ESP regulation active'
+      fr: 'Régulation de l''ASR-ESP active'
+      es: 'Regulación del ASR-ESP activa'
+      de: 'ASR-ESP-Regelung aktiv'
+      it: 'Regolazione ASR-ESP attiva'
+      pl: 'Aktywna regulacja ASR-ESP'
+      ru: 'Активно регулирование ASR-ESP'
+      zh: 'ASR-ESP 调节激活'
+      hu: 'Az ASR-ESP szabályozása aktív'
+      pt: 'Regulação do ASR-ESP ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  GEARBOX_VDC_PROGRAM_REQUEST:
+    bits: '1.5'
+    comment:
+      en: 'Request to switch the gearbox to the VDC (vehicle dynamic control) shift program'
+      fr: 'Demande de passage de la boîte de vitesses en programme VDC (contrôle dynamique du véhicule)'
+      es: 'Solicitud de cambio de la caja de cambios al programa VDC (control dinámico del vehículo)'
+      de: 'Anforderung zum Umschalten des Getriebes auf das VDC-Schaltprogramm (Fahrdynamikregelung)'
+      it: 'Richiesta di passaggio del cambio al programma VDC (controllo dinamico del veicolo)'
+      pl: 'Żądanie przełączenia skrzyni biegów na program VDC (dynamiczna kontrola pojazdu)'
+      ru: 'Запрос переключения коробки передач на программу VDC (динамический контроль автомобиля)'
+      zh: '请求变速箱切换至 VDC(车辆动态控制)换挡程序'
+      hu: 'A váltó VDC (menetdinamika-szabályozás) váltási programra váltásának kérése'
+      pt: 'Pedido de mudança da caixa de velocidades para o programa VDC (controlo dinâmico do veículo)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'VDC program request'
+        fr: 'Demande de loi VDC'
+        es: 'Solicitud de programa VDC'
+        de: 'Anforderung VDC-Regelprogramm'
+        it: 'Richiesta di programma VDC'
+        pl: 'Żądanie programu VDC'
+        ru: 'Запрос программы VDC'
+        zh: 'VDC程序请求'
+        hu: 'VDC program kérés'
+        pt: 'Pedido de programa VDC'
+
+  ASR_ESP_FAULT_LAMP_REQUEST:
+    bits: '1.4'
+    comment:
+      en: 'ASR-ESP fault warning lamp request'
+      fr: 'Demande d''allumage du témoin de défaut ASR-ESP'
+      es: 'Solicitud de encendido del testigo de fallo ASR-ESP'
+      de: 'Anforderung der Warnleuchte für ASR-ESP-Fehler'
+      it: 'Richiesta di accensione della spia di guasto ASR-ESP'
+      pl: 'Żądanie zapalenia kontrolki usterki ASR-ESP'
+      ru: 'Запрос включения лампы неисправности ASR-ESP'
+      zh: 'ASR-ESP 故障警示灯请求'
+      hu: 'ASR-ESP hiba jelzőlámpájának kérése'
+      pt: 'Pedido de acendimento do testemunho de falha ASR-ESP'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  UNUSED_1:
+    bits: '1.3'
+    unused: true
+
+  ESP_TORQUE_REQUEST_STATUS:
+    bits: '1.2-1.0'
+    comment:
+      en: 'ESP torque request status (no action / ASR reduction / MSR increase)'
+      fr: 'État de la demande de couple ESP (aucune action / réduction ASR / augmentation MSR)'
+      es: 'Estado de la solicitud de par ESP (sin acción / reducción ASR / aumento MSR)'
+      de: 'Status der ESP-Drehmomentanforderung (keine Aktion / ASR-Reduzierung / MSR-Erhöhung)'
+      it: 'Stato della richiesta di coppia ESP (nessuna azione / riduzione ASR / aumento MSR)'
+      pl: 'Stan żądania momentu ESP (brak działania / redukcja ASR / zwiększenie MSR)'
+      ru: 'Статус запроса момента ESP (нет действия / снижение ASR / увеличение MSR)'
+      zh: 'ESP 扭矩请求状态(无动作/ASR降扭/MSR增扭)'
+      hu: 'ESP nyomatékigény állapota (nincs beavatkozás / ASR csökkentés / MSR növelés)'
+      pt: 'Estado do pedido de binário ESP (nenhuma ação / redução ASR / aumento MSR)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No action on torque'
+        fr: 'Pas d''action sur le couple'
+        es: 'Sin acción sobre el par'
+        de: 'Kein Eingriff auf das Drehmoment'
+        it: 'Nessuna azione sulla coppia'
+        pl: 'Brak działania na moment obrotowy'
+        ru: 'Нет воздействия на крутящий момент'
+        zh: '对扭矩无操作'
+        hu: 'Nincs beavatkozás a nyomatékba'
+        pt: 'Sem ação sobre o binário'
+      0x01:
+        unused: true
+      0x02:
+        unused: true
+      0x03:
+        unused: true
+      0x04:
+        unused: true
+      0x05:
+        en: 'Reduction request (ASR)'
+        fr: 'Consigne de réduction (ASR)'
+        es: 'Consigna de reducción (ASR)'
+        de: 'Reduktionsanforderung (ASR)'
+        it: 'Richiesta di riduzione (ASR)'
+        pl: 'Żądanie redukcji (ASR)'
+        ru: 'Запрос снижения (ASR)'
+        zh: '降低请求(ASR)'
+        hu: 'Csökkentési kérés (ASR)'
+        pt: 'Consigna de redução (ASR)'
+      0x06:
+        en: 'Increase setpoint (MSR)'
+        fr: 'Consigne d''augmentation (MSR)'
+        es: 'Consigna de aumento (MSR)'
+        de: 'Erhöhungssollwert (MSR)'
+        it: 'Setpoint di aumento (MSR)'
+        pl: 'Wartość zadana zwiększenia (MSR)'
+        ru: 'Уставка увеличения (MSR)'
+        zh: '增加设定值（MSR）'
+        hu: 'Növelési beállított érték (MSR)'
+        pt: 'Consigna de aumento (MSR)'
+      0x07:
+        unused: true
+
+  ASR_PLUS_MODE:
+    bits: '2.7-2.5'
+    comment:
+      en: 'ASR+ mode (normal/snow/mud/sand/ESP off)'
+      fr: 'Mode ASR+ (normal/neige/boue/sable/ESP désactivé)'
+      es: 'Modo ASR+ (normal/nieve/barro/arena/ESP desactivado)'
+      de: 'ASR+-Modus (normal/Schnee/Schlamm/Sand/ESP aus)'
+      it: 'Modalità ASR+ (normale/neve/fango/sabbia/ESP disattivato)'
+      pl: 'Tryb ASR+ (normalny/śnieg/błoto/piasek/ESP wyłączony)'
+      ru: 'Режим ASR+ (нормальный/снег/грязь/песок/ESP выкл)'
+      zh: 'ASR+ 模式(普通/雪地/泥地/沙地/ESP 关闭)'
+      hu: 'ASR+ mód (normál/hó/sár/homok/ESP kikapcsolva)'
+      pt: 'Modo ASR+ (normal/neve/lama/areia/ESP desativado)'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'ASR+ in ESP OFF mode'
+        fr: 'ASR+ en mode ESP OFF'
+        es: 'ASR+ en modo ESP OFF'
+        de: 'ASR+ im Modus ESP OFF'
+        it: 'ASR+ in modalità ESP OFF'
+        pl: 'ASR+ w trybie ESP OFF'
+        ru: 'ASR+ в режиме ESP OFF'
+        zh: 'ESP OFF 模式下的 ASR+'
+        hu: 'ASR+ ESP OFF üzemmódban'
+        pt: 'ASR+ em modo ESP OFF'
+      0x01:
+        en: 'ASR+ normal mode'
+        fr: 'Mode ASR+ normal'
+        es: 'Modo ASR+ normal'
+        de: 'ASR+ Normalmodus'
+        it: 'Modalità ASR+ normale'
+        pl: 'Tryb normalny ASR+'
+        ru: 'Нормальный режим ASR+'
+        zh: 'ASR+ 普通模式'
+        hu: 'ASR+ normál mód'
+        pt: 'Modo normal do ASR+'
+      0x02:
+        en: 'ASR+ in snow mode'
+        fr: 'ASR+ en mode neige'
+        es: 'ASR+ en modo nieve'
+        de: 'ASR+ im Schneemodus'
+        it: 'ASR+ in modalità neve'
+        pl: 'ASR+ w trybie śnieżnym'
+        ru: 'ASR+ в снежном режиме'
+        zh: 'ASR+雪地模式'
+        hu: 'ASR+ hó üzemmódban'
+        pt: 'ASR+ em modo neve'
+      0x03:
+        en: 'ASR+ in mud mode'
+        fr: 'ASR+ en mode boue'
+        es: 'ASR+ en modo barro'
+        de: 'ASR+ im Schlammmodus'
+        it: 'ASR+ in modalità fango'
+        pl: 'ASR+ w trybie błota'
+        ru: 'ASR+ в режиме грязи'
+        zh: 'ASR+泥地模式'
+        hu: 'ASR+ sár üzemmódban'
+        pt: 'ASR+ em modo lama'
+      0x04:
+        en: 'ASR+ in sand mode'
+        fr: 'ASR+ en mode sable'
+        es: 'ASR+ en modo arena'
+        de: 'ASR+ im Sandmodus'
+        it: 'ASR+ in modalità sabbia'
+        pl: 'ASR+ w trybie piasku'
+        ru: 'ASR+ в режиме песка'
+        zh: 'ASR+沙地模式'
+        hu: 'ASR+ homok üzemmódban'
+        pt: 'ASR+ em modo areia'
+      0x05:
+        en: 'Reserved value'
+        fr: 'Valeur réservée'
+        es: 'Valor reservado'
+        de: 'Reservierter Wert'
+        it: 'Valore riservato'
+        pl: 'Wartość zarezerwowana'
+        ru: 'Зарезервированное значение'
+        zh: '保留值'
+        hu: 'Fenntartott érték'
+        pt: 'Valor reservado'
+      0x06:
+        en: 'ASR+ selector failure'
+        fr: 'Sélecteur ASR+ en défaut'
+        es: 'Selector ASR+ con fallo'
+        de: 'ASR+-Wahlschalter fehlerhaft'
+        it: 'Selettore ASR+ guasto'
+        pl: 'Usterka przełącznika ASR+'
+        ru: 'Неисправность переключателя ASR+'
+        zh: 'ASR+选择器故障'
+        hu: 'Az ASR+ választókapcsoló hibás'
+        pt: 'Seletor ASR+ com falha'
+      0x07:
+        en: 'ESP ASR+ selector failure'
+        fr: 'Sélecteur ESP ASR+ en défaut'
+        es: 'Fallo del selector ESP ASR+'
+        de: 'Fehler des ESP-ASR+-Wählschalters'
+        it: 'Guasto del selettore ESP ASR+'
+        pl: 'Usterka przełącznika ESP ASR+'
+        ru: 'Неисправность переключателя ESP ASR+'
+        zh: 'ESP ASR+选择开关故障'
+        hu: 'ESP ASR+ választókapcsoló hibája'
+        pt: 'Falha do seletor ESP ASR+'
+
+  UNUSED_2:
+    bits: '2.4-2.2'
+    unused: true
+
+  GEAR_CHANGE_AUTHORIZATION:
+    bits: '2.1-2.0'
+    comment:
+      en: 'Gear shift authorization (upshift/downshift)'
+      fr: 'Autorisation de changement de rapport (montée/descente)'
+      es: 'Autorización de cambio de marcha (subida/bajada)'
+      de: 'Schaltfreigabe (Hoch-/Herunterschalten)'
+      it: 'Autorizzazione al cambio marcia (scalata/salita)'
+      pl: 'Zezwolenie na zmianę biegu (w górę/w dół)'
+      ru: 'Разрешение переключения передачи (вверх/вниз)'
+      zh: '换挡授权(升挡/降挡)'
+      hu: 'Fokozatváltás engedélyezése (felfelé/lefelé)'
+      pt: 'Autorização de mudança de marcha (subida/descida)'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Shifting not allowed'
+        fr: 'Changement interdit'
+        es: 'Cambio no permitido'
+        de: 'Schalten nicht erlaubt'
+        it: 'Cambio non consentito'
+        pl: 'Zmiana biegu niedozwolona'
+        ru: 'Переключение запрещено'
+        zh: '禁止换挡'
+        hu: 'Váltás nem engedélyezett'
+        pt: 'Mudança não permitida'
+      0x01:
+        en: 'Downshift allowed'
+        fr: 'Rapport descendant autorisé'
+        es: 'Reducción de marcha permitida'
+        de: 'Herunterschalten erlaubt'
+        it: 'Scalata marcia consentita'
+        pl: 'Dozwolona redukcja biegu'
+        ru: 'Понижение передачи разрешено'
+        zh: '允许降挡'
+        hu: 'Visszakapcsolás engedélyezve'
+        pt: 'Redução de mudança permitida'
+      0x02:
+        en: 'Upshift allowed'
+        fr: 'Passage de rapport montant autorisé'
+        es: 'Cambio de marcha ascendente permitido'
+        de: 'Hochschalten erlaubt'
+        it: 'Cambio marcia in salita consentito'
+        pl: 'Dozwolona zmiana biegu w górę'
+        ru: 'Разрешено повышение передачи'
+        zh: '允许升挡'
+        hu: 'Felváltás engedélyezve'
+        pt: 'Mudança para cima permitida'
+      0x03:
+        en: 'Upshift or downshift allowed'
+        fr: 'Rapport descendant ou montant autorisé'
+        es: 'Cambio a marcha superior o inferior permitido'
+        de: 'Hoch- oder Herunterschalten erlaubt'
+        it: 'Cambio marcia superiore o inferiore consentito'
+        pl: 'Dozwolona zmiana biegu w górę lub w dół'
+        ru: 'Переключение вверх или вниз разрешено'
+        zh: '允许升挡或降挡'
+        hu: 'Fel- vagy lekapcsolás engedélyezett'
+        pt: 'Mudança para cima ou para baixo permitida'
+
+  ASR_STATIC_TORQUE_SETPOINT:
+    bits: '3.7-3.0'
+    comment:
+      en: 'ASR static torque setpoint'
+      fr: 'Consigne de couple statique de l''ASR'
+      es: 'Consigna de par estático del ASR'
+      de: 'Statischer Drehmomentsollwert des ASR'
+      it: 'Consegna di coppia statica dell''ASR'
+      pl: 'Zadana wartość momentu statycznego ASR'
+      ru: 'Заданное значение статического момента ASR'
+      zh: 'ASR 静态扭矩设定值'
+      hu: 'Az ASR statikus nyomaték-alapjele'
+      pt: 'Consigna de binário estático do ASR'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 400
+    units: 'Nm'
+    default: 0xFA
+
+  ASR_DYNAMIC_TORQUE_SETPOINT:
+    bits: '4.7-4.0'
+    comment:
+      en: 'ASR dynamic torque setpoint'
+      fr: 'Consigne de couple dynamique de l''ASR'
+      es: 'Consigna de par dinámico del ASR'
+      de: 'Dynamischer Drehmomentsollwert des ASR'
+      it: 'Consegna di coppia dinamica dell''ASR'
+      pl: 'Zadana wartość momentu dynamicznego ASR'
+      ru: 'Заданное значение динамического момента ASR'
+      zh: 'ASR 动态扭矩设定值'
+      hu: 'Az ASR dinamikus nyomaték-alapjele'
+      pt: 'Consigna de binário dinâmico do ASR'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 400
+    units: 'Nm'
+    default: 0xFA
+
+  MSR_TORQUE_SETPOINT:
+    bits: '5.7-5.0'
+    comment:
+      en: 'MSR (engine drag torque control) torque setpoint'
+      fr: 'Consigne de couple du régulateur anti-patinage en frein moteur (MSR)'
+      es: 'Consigna de par del control de arrastre del motor (MSR)'
+      de: 'Drehmomentsollwert der Motorschleppmomentregelung (MSR)'
+      it: 'Consegna di coppia del regolatore di coppia frenante motore (MSR)'
+      pl: 'Zadana wartość momentu regulacji momentu hamującego silnika (MSR)'
+      ru: 'Заданный момент системы регулирования тормозного момента двигателя (MSR)'
+      zh: '发动机拖曳扭矩控制(MSR)扭矩设定值'
+      hu: 'A motorfékező-nyomaték szabályozó (MSR) nyomaték-alapjele'
+      pt: 'Consigna de binário do controlo de travagem do motor (MSR)'
+    type: 'uint'
+    factor: 2
+    offset: -100
+    min: -100
+    max: 400
+    units: 'Nm'
+    default: 0x00
+
+  UNUSED_3:
+    bits: '6.7'
+    unused: true
+
+  HILL_ASSIST_STATUS:
+    bits: '6.6-6.5'
+    comment:
+      en: 'Hill Assist function status'
+      fr: 'État de la fonction d''assistance au démarrage en côte'
+      es: 'Estado de la función de asistencia de arranque en pendiente'
+      de: 'Status der Berganfahrhilfe-Funktion'
+      it: 'Stato della funzione Hill Assist'
+      pl: 'Stan funkcji asystenta ruszania pod górę'
+      ru: 'Статус функции ассистента старта на подъёме'
+      zh: '坡道辅助功能状态'
+      hu: 'A hegyi indítássegítő funkció állapota'
+      pt: 'Estado da função de assistência ao arranque em subida'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No Hill Assist regulation in progress'
+        fr: 'Pas de régulation Hill Assist en cours'
+        es: 'Sin regulación Hill Assist en curso'
+        de: 'Keine laufende Hill-Assist-Regelung'
+        it: 'Nessuna regolazione Hill Assist in corso'
+        pl: 'Brak trwającej regulacji Hill Assist'
+        ru: 'Регулирование Hill Assist не выполняется'
+        zh: '坡道辅助未在调节中'
+        hu: 'Nincs folyamatban lévő Hill Assist szabályozás'
+        pt: 'Sem regulação Hill Assist em curso'
+      0x01:
+        en: 'Hill Assist hold in progress'
+        fr: 'Maintien Hill Assist en cours'
+        es: 'Retención Hill Assist en curso'
+        de: 'Hill-Assist-Halten aktiv'
+        it: 'Mantenimento Hill Assist in corso'
+        pl: 'Trwa przytrzymanie Hill Assist'
+        ru: 'Удержание Hill Assist активно'
+        zh: '坡道辅助保持进行中'
+        hu: 'Hill Assist tartás folyamatban'
+        pt: 'Retenção Hill Assist em curso'
+      0x02:
+        unused: true
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+
+  UNUSED_4:
+    bits: '6.4'
+    unused: true
+
+  PROCESS_COUNTER_4BIT:
+    bits: '6.3-6.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4 位处理计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  ASR_ESP_REGULATION_LAMP_REQUEST:
+    bits: '7.7'
+    comment:
+      en: 'ASR-ESP regulation indicator lamp request'
+      fr: 'Demande d''allumage du témoin de régulation ASR-ESP'
+      es: 'Solicitud de encendido del testigo de regulación ASR-ESP'
+      de: 'Anforderung der ASR-ESP-Regelungsanzeigeleuchte'
+      it: 'Richiesta di accensione della spia di regolazione ASR-ESP'
+      pl: 'Żądanie zapalenia kontrolki regulacji ASR-ESP'
+      ru: 'Запрос включения индикатора регулирования ASR-ESP'
+      zh: 'ASR-ESP 调节指示灯请求'
+      hu: 'ASR-ESP szabályozás jelzőlámpájának kérése'
+      pt: 'Pedido de acendimento do testemunho de regulação ASR-ESP'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Switch-on request'
+        fr: 'Demande d''allumage'
+        es: 'Solicitud de encendido'
+        de: 'Einschaltanforderung'
+        it: 'Richiesta di accensione'
+        pl: 'Żądanie włączenia'
+        ru: 'Запрос включения'
+        zh: '开启请求'
+        hu: 'Bekapcsolási kérés'
+        pt: 'Pedido de ligação'
+
+  UNUSED_5:
+    bits: '7.6'
+    unused: true
+
+  AFU_REGULATION_ACTIVE:
+    bits: '7.5'
+    comment:
+      en: 'Emergency brake assist (AFU) regulation active'
+      fr: 'Régulation de l''assistance au freinage d''urgence (AFU) active'
+      es: 'Regulación de la asistencia de frenado de emergencia (AFU) activa'
+      de: 'Regelung der Notbremsassistenz (AFU) aktiv'
+      it: 'Regolazione dell''assistenza alla frenata d''emergenza (AFU) attiva'
+      pl: 'Aktywna regulacja wspomagania hamowania awaryjnego (AFU)'
+      ru: 'Активно регулирование экстренного тормозного ассистента (AFU)'
+      zh: '紧急制动辅助(AFU)调节激活'
+      hu: 'A vészfékrásegítés (AFU) szabályozása aktív'
+      pt: 'Regulação da assistência de travagem de emergência (AFU) ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  ESP_REGULATION_ACTIVE:
+    bits: '7.4'
+    comment:
+      en: 'ESP regulation active'
+      fr: 'Régulation de l''ESP active'
+      es: 'Regulación del ESP activa'
+      de: 'ESP-Regelung aktiv'
+      it: 'Regolazione ESP attiva'
+      pl: 'Aktywna regulacja ESP'
+      ru: 'Активно регулирование ESP'
+      zh: 'ESP 调节激活'
+      hu: 'Az ESP szabályozása aktív'
+      pt: 'Regulação do ESP ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  MSR_REGULATION_ACTIVE:
+    bits: '7.3'
+    comment:
+      en: 'MSR (engine drag torque control) regulation active'
+      fr: 'Régulation MSR (frein moteur) active'
+      es: 'Regulación MSR (freno motor) activa'
+      de: 'MSR-Regelung (Motorschleppmomentregelung) aktiv'
+      it: 'Regolazione MSR (freno motore) attiva'
+      pl: 'Aktywna regulacja MSR (hamowanie silnikiem)'
+      ru: 'Активно регулирование MSR (тормозной момент двигателя)'
+      zh: 'MSR(发动机拖曳扭矩控制)调节激活'
+      hu: 'Az MSR (motorfékező-nyomaték szabályozás) aktív'
+      pt: 'Regulação MSR (travão motor) ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  ASR_REGULATION_ACTIVE:
+    bits: '7.2'
+    comment:
+      en: 'ASR (traction control) regulation active'
+      fr: 'Régulation de l''ASR (antipatinage) active'
+      es: 'Regulación del ASR (control de tracción) activa'
+      de: 'ASR-Regelung (Antriebsschlupfregelung) aktiv'
+      it: 'Regolazione ASR (controllo trazione) attiva'
+      pl: 'Aktywna regulacja ASR (kontrola trakcji)'
+      ru: 'Активно регулирование ASR (противобуксовочная система)'
+      zh: 'ASR(牵引力控制)调节激活'
+      hu: 'Az ASR (kipörgésgátló) szabályozása aktív'
+      pt: 'Regulação do ASR (controlo de tração) ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  BASR_REGULATION_ACTIVE:
+    bits: '7.1'
+    comment:
+      en: 'Brake-based traction control (BASR) regulation active'
+      fr: 'Régulation de l''antipatinage par freinage (BASR) active'
+      es: 'Regulación del control de tracción por frenado (BASR) activa'
+      de: 'Regelung der bremsbasierten Antriebsschlupfregelung (BASR) aktiv'
+      it: 'Regolazione del controllo trazione tramite freni (BASR) attiva'
+      pl: 'Aktywna regulacja kontroli trakcji przez hamowanie (BASR)'
+      ru: 'Активно регулирование тормозной противобуксовочной системы (BASR)'
+      zh: '制动式牵引力控制(BASR)调节激活'
+      hu: 'A fékalapú kipörgésgátló (BASR) szabályozása aktív'
+      pt: 'Regulação do controlo de tração por travagem (BASR) ativa'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not in regulation'
+        fr: 'Non en régulation'
+        es: 'Sin regulación'
+        de: 'Nicht in Regelung'
+        it: 'Non in regolazione'
+        pl: 'Brak regulacji'
+        ru: 'Не в режиме регулирования'
+        zh: '未处于调节状态'
+        hu: 'Nincs szabályozásban'
+        pt: 'Sem regulação'
+      0x01:
+        en: 'Regulation active'
+        fr: 'En régulation'
+        es: 'Regulación activa'
+        de: 'Regelung aktiv'
+        it: 'Regolazione attiva'
+        pl: 'Aktywna regulacja'
+        ru: 'Регулирование активно'
+        zh: '调节中'
+        hu: 'Szabályozás aktív'
+        pt: 'Regulação ativa'
+
+  UNUSED_6:
+    bits: '7.0'
+    unused: true
+
+  UNUSED_7:
+    bits: '8.7-8.6'
+    unused: true
+
+  STATIC_SLOPE:
+    bits: '8.5-8.0'
+    comment:
+      en: 'Static road slope'
+      fr: 'Pente statique de la route'
+      es: 'Pendiente estática de la carretera'
+      de: 'Statisches Fahrbahngefälle'
+      it: 'Pendenza statica della strada'
+      pl: 'Statyczne nachylenie drogi'
+      ru: 'Статический уклон дороги'
+      zh: '静态道路坡度'
+      hu: 'Statikus útmeredekség'
+      pt: 'Inclinação estática da estrada'
+    type: 'uint'
+    factor: 1
+    offset: -30
+    min: -30
+    max: 30
+    units: '%'
+    invalid: 0x3F
+    default: 0x3E

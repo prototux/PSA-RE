@@ -1,0 +1,447 @@
+id: 0x558
+name: 'RAIN_LIGHT_SENSOR_VEHICLE_STATE'
+type: 'van'
+length: 6
+comment:
+  en: 'Vehicle state for the rain/light sensor: wiping system state, auto-lamp and climate function state, sensor mode, engine running, ignition key position and vehicle speed.'
+  fr: 'État véhicule pour le capteur de pluie/luminosité : état du système d''essuyage, état des fonctions éclairage auto et climatisation, mode du capteur, moteur tournant, position clé de contact et vitesse véhicule.'
+  es: 'Estado del vehículo para el sensor de lluvia/luminosidad: estado del sistema de limpiaparabrisas, estado de las funciones de alumbrado automático y climatización, modo del sensor, motor en marcha, posición de la llave de contacto y velocidad del vehículo.'
+  de: 'Fahrzeugzustand für den Regen-/Lichtsensor: Zustand des Wischsystems, Zustand der Funktionen Automatiklicht und Klimaanlage, Sensormodus, Motor läuft, Zündschlüsselposition und Fahrzeuggeschwindigkeit.'
+  it: 'Stato del veicolo per il sensore pioggia/luce: stato del sistema di tergicristalli, stato delle funzioni luci automatiche e climatizzazione, modalità del sensore, motore in moto, posizione della chiave di accensione e velocità del veicolo.'
+  pl: 'Stan pojazdu dla czujnika deszczu/światła: stan układu wycieraczek, stan funkcji automatycznych świateł i klimatyzacji, tryb czujnika, praca silnika, pozycja kluczyka zapłonu i prędkość pojazdu.'
+  ru: 'Состояние автомобиля для датчика дождя/света: состояние системы стеклоочистителей, состояние функций автосвета и климата, режим датчика, работающий двигатель, положение ключа зажигания и скорость автомобиля.'
+  zh: '雨量/光线传感器的车辆状态：雨刷系统状态、自动大灯及空调功能状态、传感器模式、发动机运转、点火钥匙位置及车速。'
+  hu: 'Az eső-/fényérzékelő járműállapota: a törlőrendszer állapota, az automatikus fény és klíma funkció állapota, érzékelő üzemmódja, motor jár, gyújtáskulcs helyzete és jármű sebessége.'
+  pt: 'Estado do veículo para o sensor de chuva/luz: estado do sistema de limpeza, estado das funções automáticas de luz e climatização, modo do sensor, motor em funcionamento, posição da chave de ignição e velocidade do veículo.'
+periodicity: ['50ms']
+senders: ['BSI']
+receivers: ['CDPL']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.4'
+    unused: true
+
+  MANUAL_WIPE_REQUEST:
+    bits: '1.3'
+    comment:
+      en: 'Manual front wipe requested by the driver (held for the whole wipe cycle)'
+      fr: 'Essuyage avant manuel demandé par le conducteur (maintenu pendant tout le cycle d''essuyage)'
+      es: 'Limpieza delantera manual solicitada por el conductor (mantenida durante todo el ciclo)'
+      de: 'Manuelles Frontscheibenwischen vom Fahrer angefordert (für den gesamten Wischzyklus gehalten)'
+      it: 'Tergitura anteriore manuale richiesta dal conducente (mantenuta per tutto il ciclo)'
+      pl: 'Ręczne wycieranie przedniej szyby zażądane przez kierowcę (utrzymywane przez cały cykl)'
+      ru: 'Ручной запрос протирки лобового стекла водителем (удерживается весь цикл протирки)'
+      zh: '驾驶员请求手动前刮水(保持整个刮水周期)'
+      hu: 'A vezető által kért kézi első ablaktörlés (a teljes törlési ciklus alatt fennáll)'
+      pt: 'Limpeza dianteira manual pedida pelo condutor (mantida durante todo o ciclo de limpeza)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  WASH_CYCLE:
+    bits: '1.2'
+    comment:
+      en: 'Windscreen wash cycle in progress (actual system state)'
+      fr: 'Cycle de lavage de pare-brise en cours (état réel du système)'
+      es: 'Ciclo de lavado del parabrisas en curso (estado real del sistema)'
+      de: 'Scheibenwaschzyklus läuft (tatsächlicher Systemzustand)'
+      it: 'Ciclo di lavaggio del parabrezza in corso (stato reale del sistema)'
+      pl: 'Trwa cykl spryskiwania przedniej szyby (rzeczywisty stan systemu)'
+      ru: 'Выполняется цикл омывания лобового стекла (фактическое состояние системы)'
+      zh: '挡风玻璃清洗循环进行中(系统实际状态)'
+      hu: 'Szélvédőmosási ciklus folyamatban (a rendszer tényleges állapota)'
+      pt: 'Ciclo de lavagem do para-brisas em curso (estado real do sistema)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No washing'
+        fr: 'Pas de lavage'
+        es: 'Sin lavado'
+        de: 'Kein Waschen'
+        it: 'Nessun lavaggio'
+        pl: 'Brak mycia'
+        ru: 'Мойка отсутствует'
+        zh: '无清洗'
+        hu: 'Nincs mosás'
+        pt: 'Sem lavagem'
+      0x01:
+        en: 'Washing'
+        fr: 'Lavage'
+        es: 'Lavado'
+        de: 'Waschen'
+        it: 'Lavaggio'
+        pl: 'Mycie'
+        ru: 'Мойка'
+        zh: '清洗'
+        hu: 'Mosás'
+        pt: 'Lavagem'
+
+  WIPER_PARKED:
+    bits: '1.1'
+    comment:
+      en: 'Front wiper motor in park position'
+      fr: 'Moteur d''essuie-glace avant en position d''arrêt fixe'
+      es: 'Motor del limpiaparabrisas delantero en posición de reposo'
+      de: 'Frontwischermotor in Parkposition'
+      it: 'Motore del tergicristallo anteriore in posizione di riposo'
+      pl: 'Silnik przedniej wycieraczki w pozycji spoczynkowej'
+      ru: 'Двигатель переднего дворника в парковочном положении'
+      zh: '前刮水电机处于停放位置'
+      hu: 'Az első törlőlapát motorja nyugalmi helyzetben'
+      pt: 'Motor do limpa-para-brisas dianteiro em posição de repouso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not parked'
+        fr: 'Pas à l''arrêt fixe'
+        es: 'Sin estacionamiento fijo'
+        de: 'Nicht geparkt'
+        it: 'Non in sosta fissa'
+        pl: 'Nie zaparkowany'
+        ru: 'Не на стоянке'
+        zh: '非固定停车'
+        hu: 'Nincs leparkolva'
+        pt: 'Não em paragem fixa'
+      0x01:
+        en: 'Parked'
+        fr: 'Arrêt fixe'
+        es: 'Estacionado'
+        de: 'Fest geparkt'
+        it: 'Parcheggiato'
+        pl: 'Postój na stałe'
+        ru: 'Стоянка'
+        zh: '固定停车'
+        hu: 'Rögzített állás'
+        pt: 'Estacionado'
+
+  AUTO_WIPE_ENABLED:
+    bits: '1.0'
+    comment:
+      en: 'Automatic windscreen wiping function enabled'
+      fr: 'Fonction d''essuyage automatique du pare-brise active'
+      es: 'Función de limpiaparabrisas automático activa'
+      de: 'Automatische Scheibenwischfunktion aktiv'
+      it: 'Funzione di tergicristallo automatico attiva'
+      pl: 'Aktywna funkcja automatycznego wycierania przedniej szyby'
+      ru: 'Активна функция автоматической работы дворников'
+      zh: '自动雨刷功能启用'
+      hu: 'Az automatikus szélvédőtörlés funkció aktív'
+      pt: 'Função de limpeza automática do para-brisas ativa'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  UNUSED_2:
+    bits: '2.7-2.2'
+    unused: true
+
+  AUTO_AC_ENABLED:
+    bits: '2.1'
+    comment:
+      en: 'Automatic climate control function active'
+      fr: 'Fonction climatisation automatique active'
+      es: 'Función de climatización automática activa'
+      de: 'Automatische Klimaregelung aktiv'
+      it: 'Funzione di climatizzazione automatica attiva'
+      pl: 'Aktywna funkcja automatycznej klimatyzacji'
+      ru: 'Активна функция автоматического климат-контроля'
+      zh: '自动空调功能激活'
+      hu: 'Az automatikus klímavezérlés funkció aktív'
+      pt: 'Função de climatização automática ativa'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  AUTO_LAMPS_ENABLED:
+    bits: '2.0'
+    comment:
+      en: 'Automatic headlamp switching function enabled'
+      fr: 'Fonction d''allumage automatique des feux active'
+      es: 'Función de encendido automático de las luces activa'
+      de: 'Automatische Lichteinschaltfunktion aktiv'
+      it: 'Funzione di accensione automatica dei fari attiva'
+      pl: 'Aktywna funkcja automatycznego włączania świateł'
+      ru: 'Активна функция автоматического включения фар'
+      zh: '自动大灯开启功能启用'
+      hu: 'Az automatikus fényszóró-bekapcsolás funkció aktív'
+      pt: 'Função automática de comutação dos faróis ativada'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  UNUSED_3:
+    bits: '3.7-3.5'
+    unused: true
+
+  SENSOR_MODE:
+    bits: '3.4-3.3'
+    comment:
+      en: 'Rain/light sensor operating mode: customer (normal), factory (no wipe/lamp requests), economy (all consumers off)'
+      fr: 'Mode de fonctionnement du capteur pluie/luminosité: client (normal), usine (aucune demande d''essuyage ni d''allumage), éco (tous les consommateurs coupés)'
+      es: 'Modo de funcionamiento del sensor de lluvia/luz: cliente (normal), fábrica (sin solicitudes de limpieza ni encendido), económico (todos los consumidores apagados)'
+      de: 'Betriebsmodus des Regen-/Lichtsensors: Kunde (normal), Werk (keine Wisch-/Lichtanforderungen), Eco (alle Verbraucher aus)'
+      it: 'Modalità operativa del sensore pioggia/luce: cliente (normale), fabbrica (nessuna richiesta di tergitura/accensione), eco (tutti gli utilizzatori spenti)'
+      pl: 'Tryb pracy czujnika deszczu/światła: klient (normalny), fabryczny (brak żądań wycierania/oświetlenia), eco (wszystkie odbiorniki wyłączone)'
+      ru: 'Режим работы датчика дождя/света: клиент (обычный), завод (без запросов протирки/света), эко (все потребители отключены)'
+      zh: '雨光传感器工作模式:客户(正常)、工厂(无刮水/大灯请求)、经济(所有耗电元件关闭)'
+      hu: 'Az eső-/fényérzékelő üzemmódja: ügyfél (normál), gyári (nincs törlési/világítási kérés), eco (minden fogyasztó kikapcsolva)'
+      pt: 'Modo de funcionamento do sensor de chuva/luminosidade: cliente (normal), fábrica (sem pedidos de limpeza nem de acendimento), económico (todos os consumidores desligados)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Customer (normal)'
+        fr: 'Client (normal)'
+        es: 'Cliente (normal)'
+        de: 'Kunde (normal)'
+        it: 'Cliente (normale)'
+        pl: 'Klient (normalny)'
+        ru: 'Клиент (обычный)'
+        zh: '客户（正常）'
+        hu: 'Ügyfél (normál)'
+        pt: 'Cliente (normal)'
+      0x01:
+        en: 'Factory'
+        fr: 'Usine'
+        es: 'Fábrica'
+        de: 'Werk'
+        it: 'Fabbrica'
+        pl: 'Fabryka'
+        ru: 'Завод'
+        zh: '工厂'
+        hu: 'Gyár'
+        pt: 'Fábrica'
+      0x02:
+        en: 'Eco'
+        fr: 'Éco'
+        es: 'Eco'
+        de: 'Eco'
+        it: 'Eco'
+        pl: 'Eco'
+        ru: 'Эко'
+        zh: '经济模式'
+        hu: 'Eco'
+        pt: 'Eco'
+      0x03:
+        unused: true
+
+  ENGINE_RUNNING:
+    bits: '3.2'
+    comment:
+      en: 'Engine running'
+      fr: 'Moteur tournant'
+      es: 'Motor en marcha'
+      de: 'Motor läuft'
+      it: 'Motore in moto'
+      pl: 'Silnik pracuje'
+      ru: 'Двигатель работает'
+      zh: '发动机运转'
+      hu: 'A motor jár'
+      pt: 'Motor em funcionamento'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Not running'
+        fr: 'Non tournant'
+        es: 'Sin girar'
+        de: 'Nicht laufend'
+        it: 'Non in funzione'
+        pl: 'Niepracujący'
+        ru: 'Не работает'
+        zh: '未运转'
+        hu: 'Nem jár'
+        pt: 'Sem rotação'
+      0x01:
+        en: 'Running'
+        fr: 'En marche'
+        es: 'En marcha'
+        de: 'Läuft'
+        it: 'In funzione'
+        pl: 'Pracuje'
+        ru: 'Работает'
+        zh: '运转中'
+        hu: 'Jár'
+        pt: 'Em funcionamento'
+
+  IGNITION_KEY_POSITION:
+    bits: '3.1-3.0'
+    comment:
+      en: 'Ignition key position'
+      fr: 'Position de la clé de contact'
+      es: 'Posición de la llave de contacto'
+      de: 'Position des Zündschlüssels'
+      it: 'Posizione della chiave di accensione'
+      pl: 'Pozycja kluczyka zapłonu'
+      ru: 'Положение ключа зажигания'
+      zh: '点火钥匙位置'
+      hu: 'A gyújtáskulcs helyzete'
+      pt: 'Posição da chave de ignição'
+    type: 'enum'
+    default: 0x03
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączony'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'Accessories'
+        fr: 'Accessoires'
+        es: 'Accesorios'
+        de: 'Zubehör'
+        it: 'Accessori'
+        pl: 'Akcesoria'
+        ru: 'Аксессуары'
+        zh: '附件'
+        hu: 'Tartozékok'
+        pt: 'Acessórios'
+      0x02:
+        en: 'Cranking'
+        fr: 'Démarreur en action'
+        es: 'Motor de arranque en marcha'
+        de: 'Anlasser dreht'
+        it: 'Motorino di avviamento in azione'
+        pl: 'Rozrusznik pracuje'
+        ru: 'Стартер вращает двигатель'
+        zh: '起动机运转中'
+        hu: 'Indítómotor forog'
+        pt: 'A rodar (arranque)'
+      0x03:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+        es: 'Contacto puesto'
+        de: 'Zündung ein'
+        it: 'Contatto inserito'
+        pl: 'Zapłon włączony'
+        ru: 'Зажигание включено'
+        zh: '点火开启'
+        hu: 'Gyújtás bekapcsolva'
+        pt: 'Ignição ligada'
+
+  VEHICLE_SPEED:
+    bits: '4.7-5.0'
+    comment:
+      en: 'Vehicle speed (average of driven wheels), reads 0 below 2.75 km/h'
+      fr: 'Vitesse du véhicule (moyenne des roues motrices), nulle en dessous de 2,75 km/h'
+      es: 'Velocidad del vehículo (media de las ruedas motrices), nula por debajo de 2,75 km/h'
+      de: 'Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder), unter 2,75 km/h gleich null'
+      it: 'Velocità del veicolo (media delle ruote motrici), nulla al di sotto di 2,75 km/h'
+      pl: 'Prędkość pojazdu (średnia kół napędowych), zerowa poniżej 2,75 km/h'
+      ru: 'Скорость автомобиля (среднее по ведущим колёсам), равна нулю ниже 2,75 км/ч'
+      zh: '车速(驱动轮平均值),低于2.75 km/h时读数为0'
+      hu: 'Járműsebesség (a hajtott kerekek átlaga), 2,75 km/h alatt nulla'
+      pt: 'Velocidade do veículo (média das rodas motrizes), nula abaixo de 2,75 km/h'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 635.34
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00
+
+  UNUSED_4:
+    bits: '6.7-6.0'
+    unused: true

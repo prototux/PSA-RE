@@ -1,0 +1,217 @@
+id: 0x04E
+name: 'AVE_AUTH_COMMAND'
+type: 'can'
+length: 6
+comment:
+  en: 'Authentication command sent by the BSI to the AVE (electric steering lock) module: command, encryption info state, encrypted code, random number and decryption status.'
+  fr: 'Commande d''authentification envoyée par la BSI au module AVE (antivol électrique de direction) : commande, état des informations de chiffrement, code chiffré, nombre aléatoire et état de déchiffrement.'
+  es: 'Orden de autenticación enviada por la BSI al módulo AVE (bloqueo de dirección eléctrico): orden, estado de la información de cifrado, código cifrado, número aleatorio y estado de descifrado.'
+  de: 'Von der BSI an das AVE-Modul (elektrische Lenkradsperre) gesendeter Authentifizierungsbefehl: Befehl, Verschlüsselungsinfo-Status, verschlüsselter Code, Zufallszahl und Entschlüsselungsstatus.'
+  it: 'Comando di autenticazione inviato dalla BSI al modulo AVE (bloccasterzo elettrico): comando, stato delle informazioni di cifratura, codice cifrato, numero casuale e stato di decifratura.'
+  pl: 'Polecenie uwierzytelnienia wysyłane przez BSI do modułu AVE (elektryczna blokada kierownicy): polecenie, stan informacji szyfrowania, zaszyfrowany kod, liczba losowa i stan deszyfrowania.'
+  ru: 'Команда аутентификации, отправляемая BSI в модуль AVE (электрический замок рулевой колонки): команда, состояние информации шифрования, зашифрованный код, случайное число и статус расшифровки.'
+  zh: '由BSI发送给AVE（电子转向锁）模块的认证命令：命令、加密信息状态、加密代码、随机数及解密状态。'
+  hu: 'A BSI hitelesítési parancsa az AVE (elektromos kormányzár) modul felé: parancs, titkosítási információ állapota, titkosított kód, véletlen szám és visszafejtési állapot.'
+  pt: 'Comando de autenticação enviado pela BSI ao módulo AVE (bloqueio elétrico da direção): comando, estado da informação de encriptação, código encriptado, número aleatório e estado de desencriptação.'
+observations:
+  en: 'On +APC power-up and power-down'
+  fr: 'Sur mise et coupure du +APC'
+  es: 'Al activar y desactivar el +APC'
+  de: 'Beim Ein- und Ausschalten von +APC'
+  it: 'All''attivazione e disattivazione del +APC'
+  pl: 'Przy włączeniu i wyłączeniu +APC'
+  ru: 'При включении и выключении +APC'
+  zh: '+APC上电及断电时'
+  hu: 'A +APC be- és kikapcsolásakor'
+  pt: 'Na ativação e desativação do +APC'
+periodicity: ['trigger']
+senders: ['BSI']
+receivers: ['AVE']
+
+signals:
+  AVE_RANDOM_CODE:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Random code used for the AVE authentication exchange'
+      fr: 'Code aléatoire utilisé pour l''échange d''authentification AVE'
+      es: 'Código aleatorio utilizado para el intercambio de autenticación AVE'
+      de: 'Zufallscode für den AVE-Authentifizierungsaustausch'
+      it: 'Codice casuale utilizzato per lo scambio di autenticazione AVE'
+      pl: 'Kod losowy używany w wymianie uwierzytelniania AVE'
+      ru: 'Случайный код, используемый при обмене аутентификацией AVE'
+      zh: '用于AVE认证交换的随机码'
+      hu: 'Az AVE hitelesítési cseréhez használt véletlen kód'
+      pt: 'Código aleatório utilizado para a troca de autenticação AVE'
+    type: 'uint'
+
+  AVE_CIPHERED_PASSWORD:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Ciphered password used for the AVE authentication exchange'
+      fr: 'Mot de passe chiffré utilisé pour l''échange d''authentification AVE'
+      es: 'Contraseña cifrada utilizada para el intercambio de autenticación AVE'
+      de: 'Verschlüsseltes Passwort für den AVE-Authentifizierungsaustausch'
+      it: 'Password cifrata utilizzata per lo scambio di autenticazione AVE'
+      pl: 'Zaszyfrowane hasło używane w wymianie uwierzytelniania AVE'
+      ru: 'Зашифрованный пароль, используемый при обмене аутентификацией AVE'
+      zh: '用于AVE认证交换的加密密码'
+      hu: 'Az AVE hitelesítési cseréhez használt titkosított jelszó'
+      pt: 'Palavra-passe cifrada utilizada na troca de autenticação AVE'
+    type: 'uint'
+
+  UNUSED_1:
+    bits: '5.7-5.5'
+    unused: true
+
+  AVE_DECIPHER_STATUS:
+    bits: '5.4-5.3'
+    comment:
+      en: 'Deciphering status of the AVE authentication exchange'
+      fr: 'État de déchiffrement de l''échange d''authentification AVE'
+      es: 'Estado de descifrado del intercambio de autenticación AVE'
+      de: 'Entschlüsselungsstatus des AVE-Authentifizierungsaustauschs'
+      it: 'Stato di decifratura dello scambio di autenticazione AVE'
+      pl: 'Stan odszyfrowywania wymiany uwierzytelniania AVE'
+      ru: 'Статус расшифровки обмена аутентификацией AVE'
+      zh: 'AVE认证交换的解密状态'
+      hu: 'Az AVE hitelesítési csere visszafejtési állapota'
+      pt: 'Estado de decifragem da troca de autenticação AVE'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Status NOK'
+        fr: 'Status NOK'
+        es: 'Estado NOK'
+        de: 'Status NOK'
+        it: 'Stato NOK'
+        pl: 'Stan NOK'
+        ru: 'Статус NOK'
+        zh: '状态NOK'
+        hu: 'Állapot NOK'
+        pt: 'Estado NOK'
+      0x01:
+        en: 'Status OK'
+        fr: 'État OK'
+        es: 'Estado OK'
+        de: 'Status OK'
+        it: 'Stato OK'
+        pl: 'Stan OK'
+        ru: 'Статус ОК'
+        zh: '状态正常'
+        hu: 'Állapot OK'
+        pt: 'Estado OK'
+      0x02:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x03:
+        unused: true
+    alternatives:
+      - note:
+          en: 'Also observed at bits 5.3'
+          fr: 'Aussi observé aux bits 5.3'
+          es: 'También observado en los bits 5.3'
+          de: 'Auch an den Bits 5.3 beobachtet'
+          it: 'Osservato anche ai bit 5.3'
+          pl: 'Obserwowany także na bitach 5.3'
+          ru: 'Также наблюдался в битах 5.3'
+          zh: '也观察到位于位5.3'
+          hu: 'Megfigyelve a(z) 5.3 biteken is'
+          pt: 'Também observado nos bits 5.3'
+        bits: '5.3'
+
+  INFO_CIPHER_STATUS:
+    bits: '5.2'
+    comment:
+      en: 'Status of whether the information is ciphered or not'
+      fr: 'État indiquant si l''information est chiffrée ou non'
+      es: 'Estado que indica si la información está cifrada o no'
+      de: 'Status, ob die Information verschlüsselt ist oder nicht'
+      it: 'Stato che indica se l''informazione è cifrata o meno'
+      pl: 'Stan wskazujący, czy informacja jest zaszyfrowana'
+      ru: 'Статус, зашифрована информация или нет'
+      zh: '指示信息是否加密的状态'
+      hu: 'Az adat titkosítási állapota'
+      pt: 'Estado que indica se a informação está cifrada ou não'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Information not ciphered'
+        fr: 'Information non cryptée'
+        es: 'Información no cifrada'
+        de: 'Information nicht verschlüsselt'
+        it: 'Informazione non cifrata'
+        pl: 'Informacja nieszyfrowana'
+        ru: 'Информация не зашифрована'
+        zh: '信息未加密'
+        hu: 'Nem titkosított információ'
+        pt: 'Informação não cifrada'
+      0x01:
+        en: 'Information ciphered'
+        fr: 'Information cryptée'
+        es: 'Información cifrada'
+        de: 'Information verschlüsselt'
+        it: 'Informazione cifrata'
+        pl: 'Informacja zaszyfrowana'
+        ru: 'Информация зашифрована'
+        zh: '信息已加密'
+        hu: 'Titkosított információ'
+        pt: 'Informação cifrada'
+
+  AVE_LOCK_COMMAND:
+    bits: '5.1-5.0'
+    comment:
+      en: 'Lock/unlock command for the electronic immobilizer (AVE) authentication'
+      fr: 'Commande de verrouillage/déverrouillage pour l''authentification antivol électronique (AVE)'
+      es: 'Comando de bloqueo/desbloqueo para la autenticación del antirrobo electrónico (AVE)'
+      de: 'Verriegelungs-/Entriegelungsbefehl für die Authentifizierung der elektronischen Wegfahrsperre (AVE)'
+      it: 'Comando di blocco/sblocco per l''autenticazione dell''antifurto elettronico (AVE)'
+      pl: 'Polecenie blokady/odblokowania uwierzytelniania elektronicznej blokady rozruchu (AVE)'
+      ru: 'Команда блокировки/разблокировки для аутентификации электронного иммобилайзера (AVE)'
+      zh: '电子防盗器(AVE)认证的上锁/解锁命令'
+      hu: 'Az elektronikus indításgátló (AVE) hitelesítésének zárolási/feloldási parancsa'
+      pt: 'Comando de bloqueio/desbloqueio para a autenticação do imobilizador eletrónico (AVE)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Locking request'
+        fr: 'Demande de verrouillage'
+        es: 'Solicitud de bloqueo'
+        de: 'Verriegelungsanforderung'
+        it: 'Richiesta di blocco'
+        pl: 'Żądanie zablokowania'
+        ru: 'Запрос блокировки'
+        zh: '落锁请求'
+        hu: 'Zárási kérés'
+        pt: 'Pedido de bloqueio'
+      0x02:
+        en: 'Unlock request'
+        fr: 'Demande de déverrouillage'
+        es: 'Solicitud de desbloqueo'
+        de: 'Entriegelungsanforderung'
+        it: 'Richiesta di sblocco'
+        pl: 'Żądanie odblokowania'
+        ru: 'Запрос разблокировки'
+        zh: '解锁请求'
+        hu: 'Kinyitási kérés'
+        pt: 'Pedido de desbloqueio'
+      0x03:
+        unused: true

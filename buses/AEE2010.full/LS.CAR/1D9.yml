@@ -1,0 +1,151 @@
+id: 0x1D9
+name: 'FRONT_LIGHT_SENSOR_STATUS'
+type: 'can'
+length: 1
+comment:
+  en: 'Front light sensor status: function fault, headlamp switching request, light level valid flag.'
+  fr: 'État du capteur de luminosité avant : défaut fonction, demande de commutation des feux, validité du niveau de luminosité.'
+  es: 'Estado del sensor de luz delantero: fallo de función, solicitud de conmutación de faros, indicador de validez del nivel de luz.'
+  de: 'Status des vorderen Lichtsensors: Funktionsfehler, Scheinwerferumschaltanforderung, Gültigkeitsflag des Lichtpegels.'
+  it: 'Stato del sensore di luce anteriore: guasto funzione, richiesta di commutazione fari, flag di validità del livello di luce.'
+  pl: 'Stan przedniego czujnika światła: usterka funkcji, żądanie przełączenia świateł, flaga ważności poziomu światła.'
+  ru: 'Статус переднего датчика света: неисправность функции, запрос переключения фар, флаг достоверности уровня освещённости.'
+  zh: '前部光线传感器状态:功能故障、大灯切换请求、光照有效标志。'
+  hu: 'Az első fényérzékelő állapota: funkcióhiba, fényszóró-átkapcsolási kérés, fényszint érvényességi jelző.'
+  pt: 'Estado do sensor de luz dianteiro: avaria da função, pedido de comutação dos faróis, indicador de validade do nível de luz.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['200ms', 'trigger']
+senders: ['CAFR']
+receivers: ['BSI']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.3'
+    unused: true
+
+  CAFR_FUNCTION_FAULT:
+    bits: '1.2'
+    comment:
+      en: 'CAFR function status (normal or faulty)'
+      fr: 'État de la fonction CAFR (normal ou défaillant)'
+      es: 'Estado de la función CAFR (normal o defectuoso)'
+      de: 'Status der CAFR-Funktion (normal oder fehlerhaft)'
+      it: 'Stato della funzione CAFR (normale o guasto)'
+      pl: 'Stan funkcji CAFR (normalny lub uszkodzony)'
+      ru: 'Состояние функции CAFR (норма или неисправность)'
+      zh: 'CAFR功能状态（正常或故障）'
+      hu: 'A CAFR funkció állapota (normál vagy hibás)'
+      pt: 'Estado da função CAFR (normal ou com falha)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Normal'
+        fr: 'Normal'
+        es: 'Normal'
+        de: 'Normal'
+        it: 'Normale'
+        pl: 'Normalny'
+        ru: 'Нормальный'
+        zh: '正常'
+        hu: 'Normál'
+        pt: 'Normal'
+      0x01:
+        en: 'Faulty'
+        fr: 'Défaillant'
+        es: 'Averiado'
+        de: 'Gestört'
+        it: 'Guasto'
+        pl: 'Uszkodzony'
+        ru: 'Неисправен'
+        zh: '故障'
+        hu: 'Hibás'
+        pt: 'Avariado'
+
+  LOW_HIGH_BEAM_SWITCHING_REQUEST:
+    bits: '1.1'
+    comment:
+      en: 'Low/high beam switching request'
+      fr: 'Demande de commutation des feux de croisement et de route'
+      es: 'Solicitud de conmutación de luces de cruce y de carretera'
+      de: 'Anforderung zum Umschalten zwischen Abblend- und Fernlicht'
+      it: 'Richiesta di commutazione tra anabbaglianti e abbaglianti'
+      pl: 'Żądanie przełączania między światłami mijania i drogowymi'
+      ru: 'Запрос переключения ближнего/дальнего света'
+      zh: '近光/远光切换请求'
+      hu: 'Tompított/távolsági fény váltásának kérése'
+      pt: 'Pedido de comutação entre luzes de cruzamento e de máximos'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Dipped beam position'
+        fr: 'Position de croisement'
+        es: 'Posición de cruce'
+        de: 'Abblendlichtstellung'
+        it: 'Posizione anabbagliante'
+        pl: 'Pozycja świateł mijania'
+        ru: 'Положение ближнего света'
+        zh: '近光位置'
+        hu: 'Tompított fény állás'
+        pt: 'Posição de cruzamento'
+      0x01:
+        en: 'High beam position'
+        fr: 'Position feux de route'
+        es: 'Posición de luces de carretera'
+        de: 'Fernlichtstellung'
+        it: 'Posizione abbaglianti'
+        pl: 'Pozycja świateł drogowych'
+        ru: 'Положение дальнего света'
+        zh: '远光灯位置'
+        hu: 'Távolsági fény pozíció'
+        pt: 'Posição de máximos'
+
+  CAFR_BRIGHTNESS_STATUS:
+    bits: '1.0'
+    comment:
+      en: 'CAFR brightness validity status'
+      fr: 'État de validité de la luminosité du CAFR'
+      es: 'Estado de validez de la luminosidad del CAFR'
+      de: 'Gültigkeitsstatus der CAFR-Helligkeit'
+      it: 'Stato di validità della luminosità del CAFR'
+      pl: 'Stan ważności jasności CAFR'
+      ru: 'Состояние достоверности яркости CAFR'
+      zh: 'CAFR亮度有效性状态'
+      hu: 'A CAFR fényerejének érvényességi állapota'
+      pt: 'Estado de validade da luminosidade do CAFR'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'CAFR brightness not OK'
+        fr: 'Luminosité CAFR non conforme'
+        es: 'Luminosidad CAFR no correcta'
+        de: 'CAFR-Helligkeit nicht in Ordnung'
+        it: 'Luminosità CAFR non corretta'
+        pl: 'Nieprawidłowa jasność CAFR'
+        ru: 'Яркость CAFR не в норме'
+        zh: 'CAFR 亮度异常'
+        hu: 'CAFR fényerő nem megfelelő'
+        pt: 'Luminosidade CAFR não conforme'
+      0x01:
+        en: 'CAFR brightness OK'
+        fr: 'Luminosité CAFR OK'
+        es: 'Luminosidad CAFR OK'
+        de: 'CAFR-Helligkeit OK'
+        it: 'Luminosità CAFR OK'
+        pl: 'Jasność CAFR OK'
+        ru: 'Яркость CAFR в норме'
+        zh: 'CAFR亮度正常'
+        hu: 'CAFR fényerő rendben'
+        pt: 'Luminosidade CAFR OK'

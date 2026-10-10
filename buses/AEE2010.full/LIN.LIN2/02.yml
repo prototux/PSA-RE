@@ -1,0 +1,135 @@
+id: 0x02
+name: 'ADDITIVE_PUMP_STATUS'
+type: 'lin'
+length: 2
+comment:
+  en: 'Additive injection pump status: command fault, fault response, low/high pressure internal volume.'
+  fr: 'État de la pompe d''injection d''additif : défaut de commande, réponse de défaut, volume interne basse/haute pression.'
+  es: 'Estado de la bomba de inyección de aditivo: fallo de mando, respuesta de fallo, volumen interno de baja/alta presión.'
+  de: 'Status der Additiv-Einspritzpumpe: Ansteuerungsfehler, Fehlerrückmeldung, Innenvolumen Nieder-/Hochdruck.'
+  it: 'Stato della pompa di iniezione additivo: guasto di comando, risposta di guasto, volume interno bassa/alta pressione.'
+  pl: 'Stan pompy wtrysku dodatku: usterka sterowania, odpowiedź o usterce, wewnętrzna objętość niskiego/wysokiego ciśnienia.'
+  ru: 'Статус насоса впрыска присадки: неисправность команды, ответ о неисправности, внутренний объём низкого/высокого давления.'
+  zh: '添加剂喷射泵状态:指令故障、故障响应、低/高压内部容积。'
+  hu: 'Az adalék-befecskendező szivattyú állapota: vezérlési hiba, hibaválasz, alacsony/magas nyomású belső térfogat.'
+  pt: 'Estado da bomba de injeção de aditivo: avaria de comando, resposta de avaria, volume interno de baixa/alta pressão.'
+periodicity: ['trigger']
+senders: ['ADDGO']
+receivers: ['BSI']
+lin:
+  master: 'BSI'
+
+signals:
+  ADDITIVE_PUMP_FAULT:
+    bits: '1.7'
+    comment:
+      en: 'Diesel additive dosing pump command fault'
+      fr: 'Défaut de la commande de la pompe d''additivation gazole'
+      es: 'Fallo del mando de la bomba de dosificación de aditivo diésel'
+      de: 'Fehler der Steuerung der Diesel-Additiv-Dosierpumpe'
+      it: 'Guasto del comando della pompa di dosaggio additivo diesel'
+      pl: 'Usterka sterowania pompą dozującą dodatku do oleju napędowego'
+      ru: 'Неисправность управления дозирующим насосом дизельной присадки'
+      zh: '柴油添加剂加注泵控制故障'
+      hu: 'A dízeladalék-adagoló szivattyú vezérlési hibája'
+      pt: 'Falha do comando da bomba de dosagem de aditivo do gasóleo'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  ADDITIVE_PUMP_RESPONSE_ERROR:
+    bits: '1.3'
+    comment:
+      en: 'Error in the service request response from the additive pump'
+      fr: 'Erreur dans la réponse à la requête de service de la pompe d''additif'
+      es: 'Error en la respuesta a la solicitud de servicio de la bomba de aditivo'
+      de: 'Fehler in der Dienstanfrageantwort der Additivpumpe'
+      it: 'Errore nella risposta alla richiesta di servizio della pompa additivo'
+      pl: 'Błąd w odpowiedzi na żądanie usługi pompy dodatku'
+      ru: 'Ошибка в ответе на сервисный запрос насоса присадки'
+      zh: '添加剂泵服务请求响应错误'
+      hu: 'Az adalékszivattyú szolgáltatáskérésének válaszhibája'
+      pt: 'Erro na resposta ao pedido de serviço da bomba de aditivo'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No error detected'
+        fr: 'Aucune erreur détectée'
+        es: 'No se ha detectado ningún error'
+        de: 'Kein Fehler erkannt'
+        it: 'Nessun errore rilevato'
+        pl: 'Nie wykryto błędu'
+        ru: 'Ошибок не обнаружено'
+        zh: '未检测到错误'
+        hu: 'Nincs hiba észlelve'
+        pt: 'Nenhum erro detetado'
+      0x01:
+        en: 'Error detected'
+        fr: 'Erreur détectée'
+        es: 'Error detectado'
+        de: 'Fehler erkannt'
+        it: 'Errore rilevato'
+        pl: 'Wykryto błąd'
+        ru: 'Обнаружена ошибка'
+        zh: '检测到错误'
+        hu: 'Hiba érzékelve'
+        pt: 'Erro detetado'
+
+  ADDITIVE_VOLUME_HIGH_BYTE:
+    bits: '1.2-1.0'
+    comment:
+      en: 'Elementary additive volume interpreted by the pump, high byte of the 11-bit value'
+      fr: 'Volume élémentaire additif interprété par la pompe, poids fort des 11 bits'
+      es: 'Volumen elemental de aditivo interpretado por la bomba, byte alto del valor de 11 bits'
+      de: 'Von der Pumpe interpretiertes Additiv-Elementarvolumen, höherwertiges Byte des 11-Bit-Werts'
+      it: 'Volume elementare additivo interpretato dalla pompa, byte alto del valore a 11 bit'
+      pl: 'Elementarna objętość dodatku odczytana przez pompę, starszy bajt wartości 11-bitowej'
+      ru: 'Элементарный объём присадки, интерпретируемый насосом, старший байт 11-битного значения'
+      zh: '泵解读的基本添加剂量,11位数值的高字节'
+      hu: 'A szivattyú által értelmezett elemi adaléktérfogat, a 11 bites érték felső bájtja'
+      pt: 'Volume elementar de aditivo interpretado pela bomba, byte alto do valor de 11 bits'
+    type: 'uint'
+    factor: 12750
+    min: 0
+    max: 76500
+    invalid: 0x07
+
+  ADDITIVE_VOLUME_LOW_BYTE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Elementary additive volume interpreted by the pump, low byte of the 11-bit value'
+      fr: 'Volume élémentaire additif interprété par la pompe, poids faible des 11 bits'
+      es: 'Volumen elemental de aditivo interpretado por la bomba, byte bajo del valor de 11 bits'
+      de: 'Von der Pumpe interpretiertes Additiv-Elementarvolumen, niederwertiges Byte des 11-Bit-Werts'
+      it: 'Volume elementare additivo interpretato dalla pompa, byte basso del valore a 11 bit'
+      pl: 'Elementarna objętość dodatku odczytana przez pompę, młodszy bajt wartości 11-bitowej'
+      ru: 'Элементарный объём присадки, интерпретируемый насосом, младший байт 11-битного значения'
+      zh: '泵解读的基本添加剂量,11位数值的低字节'
+      hu: 'A szivattyú által értelmezett elemi adaléktérfogat, a 11 bites érték alsó bájtja'
+      pt: 'Volume elementar de aditivo interpretado pela bomba, byte baixo do valor de 11 bits'
+    type: 'uint'
+    factor: 50
+    min: 0
+    max: 12700
+    invalid: 0xFF

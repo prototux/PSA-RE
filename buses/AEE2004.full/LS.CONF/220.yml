@@ -1,155 +1,588 @@
 id: 0x220
-name: 'DOORS_STATUS'
-length: 2
+name: 'DOOR_STATUS'
+alt_names: ['DOORS_STATUS']
 type: 'can'
-periodicity: ['500ms']
-senders:
-  - 'BSI'
-receivers:
-  - 'CMB'
-  - 'EMF'
+length: 2
+comment:
+  en: 'Openings status, sent on change: front/rear doors, boot, bonnet, rear window, fuel filler cap and roof, plus vehicle type.'
+  fr: 'État des ouvrants, envoyé sur changement : portes avant/arrière, coffre, capot, lunette arrière, trappe à carburant et toit, ainsi que le type de véhicule.'
+  es: 'Estado de las aperturas, enviado en cambio: puertas delanteras/traseras, maletero, capó, luneta trasera, tapa de combustible y techo, además del tipo de vehículo.'
+  de: 'Status der Öffnungen, bei Änderung gesendet: Vorder-/Hintertüren, Kofferraum, Motorhaube, Heckscheibe, Tankklappe und Dach, sowie der Fahrzeugtyp.'
+  it: 'Stato delle aperture, inviato al cambiamento: porte anteriori/posteriori, baule, cofano, lunotto, sportello carburante e tetto, oltre al tipo di veicolo.'
+  pl: 'Stan otwarć, wysyłany przy zmianie: drzwi przednie/tylne, bagażnik, maska, tylna szyba, klapka wlewu paliwa i dach, oraz typ pojazdu.'
+  ru: 'Статус проёмов, отправляемый при изменении: передние/задние двери, багажник, капот, заднее стекло, лючок бензобака и крыша, а также тип автомобиля.'
+  zh: '开口状态,状态变化时发送:前后车门、后备箱、发动机盖、后窗、油箱盖和车顶,以及车辆类型。'
+  hu: 'A nyílászárók állapota, változáskor küldve: első/hátsó ajtók, csomagtartó, motorháztető, hátsó ablak, üzemanyagtöltő fedél és tető, valamint a járműtípus.'
+  pt: 'Estado das aberturas, enviado na mudança: portas dianteiras/traseiras, bagageira, capot, vidro traseiro, tampa do depósito e teto, além do tipo de veículo.'
+observations:
+  en: 'On state change of: FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+  fr: 'Sur changement d''état de : FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+  es: 'Al cambiar el estado de: FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+  de: 'Bei Statusänderung von: FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+  it: 'Al cambiamento di stato di: FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+  pl: 'Wysyłane przy zmianie stanu: FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+  ru: 'При изменении состояния: FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+  zh: '当ETAT_PORTE_AVG, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, ETAT_BRDS状态变化时'
+  hu: 'A(z) FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS állapotváltozásakor'
+  pt: 'Na mudança de estado de: FRONT_LEFT_DOOR_STATUS, FRONT_RIGHT_DOOR_STATUS, REAR_LEFT_DOOR_STATUS, TRUNK_STATUS_USER, BONNET_STATUS, REAR_WINDOW_STATUS, SPARE_WHEEL_ARM_STATUS'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['CMB', 'EMF']
 
 signals:
-  FRONT_LEFT_DOOR:
+  FRONT_LEFT_DOOR_STATUS:
     bits: '1.7'
-    alt_names: ['ETAT_PORTE_AVG']
+    alt_names: ['FRONT_LEFT_DOOR', 'ETAT_PORTE_AVG']
     comment:
       en: 'Front left door status'
-      fr: 'Etat porte avant gauche'
+      fr: 'État de la porte avant gauche'
+      es: 'Estado de la puerta delantera izquierda'
+      de: 'Status der Tür vorne links'
+      it: 'Stato della portiera anteriore sinistra'
+      pl: 'Stan drzwi przednich lewych'
+      ru: 'Состояние передней левой двери'
+      zh: '左前车门状态'
+      hu: 'Első bal ajtó állapota'
+      pt: 'Estado da porta dianteira esquerda'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Fermee'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
 
-  FRONT_RIGHT_DOOR:
+  FRONT_RIGHT_DOOR_STATUS:
     bits: '1.6'
-    alt_names: ['ETAT_PORTE_AVD']
+    alt_names: ['FRONT_RIGHT_DOOR', 'ETAT_PORTE_AVD']
     comment:
       en: 'Front right door status'
-      fr: 'Etat porte avant droite'
+      fr: 'État de la porte avant droite'
+      es: 'Estado de la puerta delantera derecha'
+      de: 'Status der Tür vorne rechts'
+      it: 'Stato della portiera anteriore destra'
+      pl: 'Stan drzwi przednich prawych'
+      ru: 'Состояние передней правой двери'
+      zh: '右前车门状态'
+      hu: 'Első jobb ajtó állapota'
+      pt: 'Estado da porta dianteira direita'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Fermee'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
 
-  REAR_LEFT_DOOR:
+  REAR_LEFT_DOOR_STATUS:
     bits: '1.5'
-    alt_names: ['ETAT_PORTE_ARG']
+    alt_names: ['REAR_LEFT_DOOR', 'ETAT_PORTE_ARG']
     comment:
       en: 'Rear left door status'
-      fr: 'Etat porte arriere gauche'
+      fr: 'État de la porte arrière gauche'
+      es: 'Estado de la puerta trasera izquierda'
+      de: 'Status der Tür hinten links'
+      it: 'Stato della portiera posteriore sinistra'
+      pl: 'Stan drzwi tylnych lewych'
+      ru: 'Состояние задней левой двери'
+      zh: '左后车门状态'
+      hu: 'Hátsó bal ajtó állapota'
+      pt: 'Estado da porta traseira esquerda'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Fermee'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
 
-  REAR_RIGHT_DOOR:
+  REAR_RIGHT_DOOR_STATUS:
     bits: '1.4'
-    alt_names: ['ETAT_PORTE_ARD']
+    alt_names: ['REAR_RIGHT_DOOR', 'ETAT_PORTE_ARD']
     comment:
       en: 'Rear right door status'
-      fr: 'Etat porte arriere droite'
+      fr: 'État de la porte arrière droite'
+      es: 'Estado de la puerta trasera derecha'
+      de: 'Status der Tür hinten rechts'
+      it: 'Stato della portiera posteriore destra'
+      pl: 'Stan drzwi tylnych prawych'
+      ru: 'Состояние задней правой двери'
+      zh: '右后车门状态'
+      hu: 'Hátsó jobb ajtó állapota'
+      pt: 'Estado da porta traseira direita'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Fermee'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouverte'
+        es: 'Abierta'
+        de: 'Offen'
+        it: 'Aperta'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberta'
 
-  TRUNK:
+  TRUNK_STATUS_USER:
     bits: '1.3'
-    alt_names: ['ETAT_COFFRE_BAG']
+    alt_names: ['TRUNK', 'ETAT_COFFRE_BAG']
     comment:
-      en: 'Trunk status'
-      fr: 'Etat du coffre'
+      en: 'Luggage compartment (boot) status'
+      fr: 'État du coffre à bagages'
+      es: 'Estado del maletero'
+      de: 'Status des Kofferraums'
+      it: 'Stato del bagagliaio'
+      pl: 'Stan bagażnika'
+      ru: 'Состояние багажника'
+      zh: '行李箱状态'
+      hu: 'Csomagtartó állapota'
+      pt: 'Estado da mala'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Ferme'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
 
-  HOOD:
+  BONNET_STATUS:
     bits: '1.2'
-    alt_names: ['ETAT_CAP']
+    alt_names: ['HOOD', 'ETAT_CAP']
     comment:
-      en: 'Hood status'
-      fr: 'Etat capot'
+      en: 'Bonnet status'
+      fr: 'État du capot'
+      es: 'Estado del capó'
+      de: 'Motorhaubenstatus'
+      it: 'Stato del cofano'
+      pl: 'Stan maski silnika'
+      ru: 'Состояние капота'
+      zh: '发动机盖状态'
+      hu: 'Motorháztető állapota'
+      pt: 'Estado do capot'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Ferme'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
 
-  REAR_WINDOW: # On SW models only
+  REAR_WINDOW_STATUS:
     bits: '1.1'
-    alt_names: ['ETAT_LUN_AR']
+    alt_names: ['REAR_WINDOW', 'ETAT_LUN_AR']
     comment:
       en: 'Rear window status'
-      fr: 'Etat lunette arriere'
+      fr: 'État de la lunette arrière'
+      es: 'Estado de la luna trasera'
+      de: 'Heckscheibenstatus'
+      it: 'Stato del lunotto posteriore'
+      pl: 'Stan tylnej szyby'
+      ru: 'Состояние заднего стекла'
+      zh: '后窗状态'
+      hu: 'Hátsó ablak állapota'
+      pt: 'Estado do vidro traseiro'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Fermee'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
       0x01:
-        en: 'Opened'
-        fr: 'Ouverte'
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
 
   FUEL_CAP:
     bits: '1.0'
-    alt_names: ['ETAT_BOUCHON_CARB']
     comment:
       en: 'Fuel cap status'
-      fr: 'Etat bouchon carburant'
+      fr: 'État du bouchon de carburant'
+      es: 'Estado del tapón de combustible'
+      de: 'Status des Tankdeckels'
+      it: 'Stato del tappo del carburante'
+      pl: 'Stan korka wlewu paliwa'
+      ru: 'Статус крышки топливного бака'
+      zh: '油箱盖状态'
+      hu: 'Üzemanyag-betöltő sapka állapota'
+      pt: 'Estado da tampa de combustível'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Ferme'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
 
-  CAR_TYPE:
+  VEHICLE_TYPE:
     bits: '2.7'
-    alt_names: ['TYPE_VEHICULE']
+    alt_names: ['CAR_TYPE', 'TYPE_VEHICULE']
     comment:
-      en: 'Car type'
-      fr: 'Type voiture'
+      en: 'Vehicle type'
+      fr: 'Type de véhicule'
+      es: 'Tipo de vehículo'
+      de: 'Fahrzeugtyp'
+      it: 'Tipo di veicolo'
+      pl: 'Typ pojazdu'
+      ru: 'Тип автомобиля'
+      zh: '车辆类型'
+      hu: 'Jármű típusa'
+      pt: 'Tipo de veículo'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: '5 doors'
         fr: '5 portes'
+        es: '5 puertas'
+        de: '5 Türen'
+        it: '5 porte'
+        pl: '5 drzwi'
+        ru: '5 дверей'
+        zh: '5门'
+        hu: '5 ajtó'
+        pt: '5 portas'
       0x01:
         en: '3 doors'
         fr: '3 portes'
+        es: '3 puertas'
+        de: '3 Türen'
+        it: '3 porte'
+        pl: '3 drzwi'
+        ru: '3 двери'
+        zh: '3门'
+        hu: '3 ajtó'
+        pt: '3 portas'
 
   SPARE_WHEEL_ARM_STATUS:
     bits: '2.6'
-    alt_names: ['ETAT_BRDS']
     comment:
-      en: 'Spare wheel arm status'
-      fr: 'Etat bras de roue de secours'
+      en: 'Spare wheel carrier arm status'
+      fr: 'État du bras de la roue de secours'
+      es: 'Estado del brazo de la rueda de repuesto'
+      de: 'Status des Reserveradträgerarms'
+      it: 'Stato del braccio portaruota di scorta'
+      pl: 'Stan ramienia mocowania koła zapasowego'
+      ru: 'Статус кронштейна запасного колеса'
+      zh: '备胎支架臂状态'
+      hu: 'Pótkerék tartókarjának állapota'
+      pt: 'Estado do braço da roda sobresselente'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
         en: 'Closed'
-        fr: 'Ferme'
+        fr: 'Fermée'
+        es: 'Cerrada'
+        de: 'Geschlossen'
+        it: 'Chiusa'
+        pl: 'Zamknięte'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechada'
       0x01:
-        en: 'Opened'
+        en: 'Open'
         fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
 
   UNUSED_1:
     bits: '2.5-2.0'
     unused: true
+
+alternatives:
+  - note:
+      en: 'Other layout observed for this frame (other software or car version)'
+      fr: 'Autre disposition observée pour cette trame (autre version de logiciel ou de véhicule)'
+      es: 'Otra disposición observada para esta trama (otra versión de software o de vehículo)'
+      de: 'Andere beobachtete Belegung dieser Botschaft (andere Software- oder Fahrzeugversion)'
+      it: 'Altra disposizione osservata per questo frame (altra versione di software o di vettura)'
+      pl: 'Inny zaobserwowany układ tej ramki (inna wersja oprogramowania lub samochodu)'
+      ru: 'Другая наблюдаемая раскладка этого кадра (другая версия ПО или автомобиля)'
+      zh: '此帧观察到的另一种布局（其他软件或车型版本）'
+      hu: 'A keret másik megfigyelt elrendezése (más szoftver- vagy autóverzió)'
+      pt: 'Outra disposição observada para esta trama (outra versão de software ou de veículo)'
+    periodicity: ['trigger']
+    signals:
+      RDS_ALT_FREQ_OPTION:
+        bits: '1.7-1.6'
+        comment:
+          en: 'RDS alternative frequency tracking option'
+          fr: 'Option de suivi RDS (fréquences alternatives)'
+          es: 'Opción de seguimiento RDS (frecuencias alternativas)'
+          de: 'Option der RDS-Alternativfrequenzverfolgung'
+          it: 'Opzione di inseguimento RDS (frequenze alternative)'
+          pl: 'Opcja śledzenia RDS (częstotliwości alternatywne)'
+          ru: 'Опция слежения RDS (альтернативные частоты)'
+          zh: 'RDS备用频率跟踪选项'
+          hu: 'RDS alternatív frekvenciakövetés beállítása'
+          pt: 'Opção de seguimento RDS (frequências alternativas)'
+        type: 'uint'
+      RDS_ALT_FREQ_ENABLED:
+        bits: '1.5'
+        comment:
+          en: 'RDS alternative frequency tracking activation status'
+          fr: 'État d''activation du suivi RDS'
+          es: 'Estado de activación del seguimiento RDS'
+          de: 'Aktivierungsstatus der RDS-Verfolgung'
+          it: 'Stato di attivazione dell''inseguimento RDS'
+          pl: 'Stan aktywacji śledzenia RDS'
+          ru: 'Статус активации слежения RDS'
+          zh: 'RDS跟踪激活状态'
+          hu: 'RDS követés aktiválási állapota'
+          pt: 'Estado de ativação do seguimento RDS'
+        type: 'bool'
+      TMC_OPTION:
+        bits: '1.4-1.3'
+        comment:
+          en: 'Traffic message channel (TMC) information option'
+          fr: 'Option des informations trafic (TMC)'
+          es: 'Opción de información de tráfico (TMC)'
+          de: 'Option der Verkehrsinformationen (TMC)'
+          it: 'Opzione delle informazioni sul traffico (TMC)'
+          pl: 'Opcja informacji drogowych (TMC)'
+          ru: 'Опция дорожной информации (TMC)'
+          zh: '交通信息通道(TMC)选项'
+          hu: 'Forgalmi információ (TMC) beállítása'
+          pt: 'Opção das informações de tráfego (TMC)'
+        type: 'uint'
+      TMC_STATUS_ALT:
+        bits: '1.2'
+        comment:
+          en: 'TMC information activation status'
+          fr: 'État d''activation des informations TMC'
+          es: 'Estado de activación de la información TMC'
+          de: 'Aktivierungsstatus der TMC-Informationen'
+          it: 'Stato di attivazione delle informazioni TMC'
+          pl: 'Stan aktywacji informacji TMC'
+          ru: 'Статус активации информации TMC'
+          zh: 'TMC信息激活状态'
+          hu: 'TMC információ aktiválási állapota'
+          pt: 'Estado de ativação das informações TMC'
+        type: 'bool'
+      REG_MODE_OPTION:
+        bits: '1.1-1.0'
+        comment:
+          en: 'REG mode option (regional RDS)'
+          fr: 'Option du mode REG (RDS régional)'
+          es: 'Opción del modo REG (RDS regional)'
+          de: 'Option des REG-Modus (regionales RDS)'
+          it: 'Opzione della modalità REG (RDS regionale)'
+          pl: 'Opcja trybu REG (RDS regionalny)'
+          ru: 'Опция режима REG (региональный RDS)'
+          zh: 'REG模式选项(区域RDS)'
+          hu: 'REG mód beállítása (regionális RDS)'
+          pt: 'Opção do modo REG (RDS regional)'
+        type: 'uint'
+      REG_MODE_STATUS:
+        bits: '2.7'
+        comment:
+          en: 'REG mode activation status'
+          fr: 'État d''activation du mode REG'
+          es: 'Estado de activación del modo REG'
+          de: 'Aktivierungsstatus des REG-Modus'
+          it: 'Stato di attivazione della modalità REG'
+          pl: 'Stan aktywacji trybu REG'
+          ru: 'Статус активации режима REG'
+          zh: 'REG模式激活状态'
+          hu: 'REG mód aktiválási állapota'
+          pt: 'Estado de ativação do modo REG'
+        type: 'bool'
+      VOLUME_AUTO_OPTION:
+        bits: '2.6-2.5'
+        comment:
+          en: 'Automatic volume option'
+          fr: 'Option du volume automatique'
+          es: 'Opción de volumen automático'
+          de: 'Option der automatischen Lautstärke'
+          it: 'Opzione del volume automatico'
+          pl: 'Opcja automatycznej głośności'
+          ru: 'Опция автоматической громкости'
+          zh: '自动音量选项'
+          hu: 'Automatikus hangerő beállítása'
+          pt: 'Opção de volume automático'
+        type: 'uint'
+      VOLUME_AUTO_STATUS:
+        bits: '2.4'
+        comment:
+          en: 'Automatic volume activation status'
+          fr: 'État d''activation du volume automatique'
+          es: 'Estado de activación del volumen automático'
+          de: 'Aktivierungsstatus der automatischen Lautstärke'
+          it: 'Stato di attivazione del volume automatico'
+          pl: 'Stan aktywacji automatycznej głośności'
+          ru: 'Статус активации автоматической громкости'
+          zh: '自动音量激活状态'
+          hu: 'Automatikus hangerő aktiválási állapota'
+          pt: 'Estado de ativação do volume automático'
+        type: 'bool'
+      AMBIENCE_OPTION_RAD:
+        bits: '2.3-2.2'
+        comment:
+          en: 'Musical ambience selection option'
+          fr: 'Option de sélection d''une ambiance musicale'
+          es: 'Opción de selección de un ambiente musical'
+          de: 'Option zur Auswahl einer Klangambiente'
+          it: 'Opzione di selezione di un''ambientazione musicale'
+          pl: 'Opcja wyboru nastroju muzycznego'
+          ru: 'Опция выбора музыкальной атмосферы'
+          zh: '音乐氛围选择选项'
+          hu: 'Zenei hangulat kiválasztásának beállítása'
+          pt: 'Opção de seleção de um ambiente musical'
+        type: 'uint'
+      AMBIENCE_STATUS:
+        bits: '2.1'
+        comment:
+          en: 'Musical ambience mode activation status'
+          fr: 'État d''activation du mode d''ambiance musicale'
+          es: 'Estado de activación del modo de ambiente musical'
+          de: 'Aktivierungsstatus des Klangambiente-Modus'
+          it: 'Stato di attivazione della modalità di ambientazione musicale'
+          pl: 'Stan aktywacji trybu nastroju muzycznego'
+          ru: 'Статус активации режима музыкальной атмосферы'
+          zh: '音乐氛围模式激活状态'
+          hu: 'Zenei hangulat mód aktiválási állapota'
+          pt: 'Estado de ativação do modo de ambiente musical'
+        type: 'bool'

@@ -1,101 +1,703 @@
 id: 0x612
-name: 'GATEWAY_DATA_4'
-length: 5
-comment:
-  en: 'This is data that is gatewated or gathered from/by the BSI and sent into the IS bus'
-  fr: "Il s'agit de données qui sont contrôlées ou collectées depuis/par le BSI et envoyées dans le bus IS"
-  de: 'Diese Daten kommen von anderen Bussen über das BSI in den IS Bus'
+name: 'BSI_DATA_3'
+alt_names: ['GATEWAY_DATA_4']
 type: 'can'
-periodicity: 100 # messured avg 99.98 ms
-senders:
-  - 'BSI'
+length: 6
+comment:
+  en: 'Body controller data 7: left/right indicator requests, low/high-beam state, fuel level info, and daytime-running/motorway/town/dynamic-bend lighting inhibitions.'
+  fr: 'Données BSI 7 : demandes de clignotant droit/gauche, état feux de croisement/route, info niveau carburant, et inhibitions d''éclairage diurne/autoroute/ville/virage dynamique.'
+  es: 'Datos de la BSI 7: solicitudes de intermitente derecho/izquierdo, estado de luces de cruce/carretera, información de nivel de combustible, e inhibiciones de iluminación diurna/autopista/ciudad/curva dinámica.'
+  de: 'BSI-Daten 7: Blinkeranforderungen rechts/links, Abblend-/Fernlichtstatus, Kraftstoffstandinfo, sowie Sperren für Tagfahrlicht/Autobahn-/Stadt-/dynamisches Kurvenlicht.'
+  it: 'Dati BSI 7: richieste indicatore destro/sinistro, stato anabbagliante/abbagliante, info livello carburante, e inibizioni illuminazione diurna/autostrada/città/curva dinamica.'
+  pl: 'Dane BSI 7: żądania kierunkowskazu prawego/lewego, stan świateł mijania/drogowych, informacja o poziomie paliwa oraz blokady oświetlenia dziennego/autostradowego/miejskiego/dynamicznego doświetlania zakrętów.'
+  ru: 'Данные BSI 7: запросы правого/левого поворотника, статус ближнего/дальнего света, информация об уровне топлива, а также блокировки дневных ходовых огней/автомагистрального/городского/динамического поворотного освещения.'
+  zh: 'BSI数据7:左右转向灯请求、近光/远光状态、燃油油位信息,以及日间行车灯/高速公路/市区/弯道动态照明抑制。'
+  hu: 'BSI adatok 7: jobb/bal index kérések, tompított/távolsági fény állapota, üzemanyagszint infó, valamint nappali menetfény/autópálya/városi/dinamikus kanyarfény-kikapcsolások.'
+  pt: 'Dados 7 do computador de servidão: pedidos de piscas esquerdo/direito, estado dos médios/máximos, informação do nível de combustível, e inibições da iluminação diurna/autoestrada/cidade/curva dinâmica.'
+observations:
+  en: 'On cars built from about 2007 (AEE2004 evolution) this frame carries more data, see AEE2004.ev'
+  fr: 'Sur les voitures produites à partir de 2007 environ (évolution AEE2004), cette trame contient plus de données, voir AEE2004.ev'
+  es: 'En los coches fabricados desde aproximadamente 2007 (evolución AEE2004) esta trama lleva más datos, ver AEE2004.ev'
+  de: 'Bei Fahrzeugen ab etwa 2007 (AEE2004-Evolution) enthält diese Botschaft mehr Daten, siehe AEE2004.ev'
+  it: 'Sulle auto prodotte da circa il 2007 (evoluzione AEE2004) questo frame contiene più dati, vedi AEE2004.ev'
+  pl: 'W autach produkowanych od około 2007 (ewolucja AEE2004) ta ramka zawiera więcej danych, patrz AEE2004.ev'
+  ru: 'На автомобилях примерно с 2007 года (эволюция AEE2004) этот кадр содержит больше данных, см. AEE2004.ev'
+  zh: '在约2007年起生产的车型（AEE2004演进版）上，此帧包含更多数据，见AEE2004.ev'
+  hu: 'A kb. 2007-től gyártott autókon (AEE2004 evolúció) ez a keret több adatot tartalmaz, lásd AEE2004.ev'
+  pt: 'Nos carros fabricados a partir de cerca de 2007 (evolução AEE2004) esta trama contém mais dados, ver AEE2004.ev'
+periodicity: ['100ms']
+senders: ['BSI']
 receivers:
-  - 'CMM'
+  - 'CSS'
   - 'BCP'
+  - 'CMM'
+  - 'CAAR'
+  - 'HCU1'
+  - 'ACC'
+  - 'AMVAR'
+  - 'AR2S'
+  - 'BVA'
+  - 'ACCEL_SENSOR'
+  - 'CAV'
+  - 'CGPL'
+  - 'CMEL'
+  - 'DSG'
+  - 'FSE'
+  - 'DIAG_TOOL'
+  - 'SBW'
+  - 'SCDT'
+  - 'BHI'
+  - 'TBMU'
+  - 'DAE'
+  - 'ABS'
 
 signals:
-  UNKNOWN_1: 
-    bits: '1.7-1.0'
+  DYNAMIC_LIGHTING_DAYTIME_INHIBIT:
+    bits: '1.7'
+    comment:
+      en: 'Daytime inhibition of dynamic lighting'
+      fr: 'Inhibition diurne de l''éclairage dynamique'
+      es: 'Inhibición diurna de la iluminación dinámica'
+      de: 'Tagesabschaltung der dynamischen Beleuchtung'
+      it: 'Inibizione diurna dell''illuminazione dinamica'
+      pl: 'Dzienne wyłączenie oświetlenia dynamicznego'
+      ru: 'Дневное отключение динамического освещения'
+      zh: '动态照明的白天抑制'
+      hu: 'A dinamikus világítás nappali letiltása'
+      pt: 'Inibição diurna da iluminação dinâmica'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition'
+        fr: 'Pas d''inhibition'
+        es: 'Sin inhibición'
+        de: 'Keine Sperrung'
+        it: 'Nessuna inibizione'
+        pl: 'Brak blokady'
+        ru: 'Нет блокировки'
+        zh: '无禁止'
+        hu: 'Nincs tiltás'
+        pt: 'Sem inibição'
+      0x01:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
 
-  LEFT_TURN_SIGNAL: 
+  MOTORWAY_LIGHTING_INHIBIT:
+    bits: '1.6'
+    comment:
+      en: 'Motorway lighting inhibition'
+      fr: 'Inhibition de l''éclairage autoroute'
+      es: 'Inhibición de la iluminación de autopista'
+      de: 'Abschaltung des Autobahnlichts'
+      it: 'Inibizione dell''illuminazione autostradale'
+      pl: 'Wyłączenie oświetlenia autostradowego'
+      ru: 'Отключение автомагистрального освещения'
+      zh: '高速公路照明抑制'
+      hu: 'Az autópálya-fény letiltása'
+      pt: 'Inibição da iluminação de autoestrada'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition'
+        fr: 'Pas d''inhibition'
+        es: 'Sin inhibición'
+        de: 'Keine Sperrung'
+        it: 'Nessuna inibizione'
+        pl: 'Brak blokady'
+        ru: 'Нет блокировки'
+        zh: '无抑制'
+        hu: 'Nincs letiltás'
+        pt: 'Sem inibição'
+      0x01:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+
+  DYNAMIC_CURVE_LIGHTING_INHIBIT:
+    bits: '1.5'
+    comment:
+      en: 'Dynamic curve lighting inhibition'
+      fr: 'Inhibition de l''éclairage de virage dynamique'
+      es: 'Inhibición de la iluminación dinámica en curva'
+      de: 'Abschaltung des dynamischen Kurvenlichts'
+      it: 'Inibizione dell''illuminazione dinamica in curva'
+      pl: 'Wyłączenie dynamicznego oświetlenia zakrętu'
+      ru: 'Отключение динамического освещения поворота'
+      zh: '动态弯道照明抑制'
+      hu: 'A dinamikus kanyarfény letiltása'
+      pt: 'Inibição da iluminação dinâmica em curva'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition'
+        fr: 'Pas d''inhibition'
+        es: 'Sin inhibición'
+        de: 'Keine Sperrung'
+        it: 'Nessuna inibizione'
+        pl: 'Brak blokady'
+        ru: 'Нет блокировки'
+        zh: '无抑制'
+        hu: 'Nincs letiltás'
+        pt: 'Sem inibição'
+      0x01:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+
+  STATIC_CURVE_LIGHTING_INHIBIT:
+    bits: '1.4'
+    comment:
+      en: 'Static curve lighting inhibition'
+      fr: 'Inhibition de l''éclairage de virage statique'
+      es: 'Inhibición de la iluminación estática en curva'
+      de: 'Abschaltung des statischen Kurvenlichts'
+      it: 'Inibizione dell''illuminazione statica in curva'
+      pl: 'Wyłączenie statycznego oświetlenia zakrętu'
+      ru: 'Отключение статического освещения поворота'
+      zh: '静态弯道照明抑制'
+      hu: 'A statikus kanyarfény letiltása'
+      pt: 'Inibição da iluminação estática em curva'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition'
+        fr: 'Pas d''inhibition'
+        es: 'Sin inhibición'
+        de: 'Keine Sperrung'
+        it: 'Nessuna inibizione'
+        pl: 'Brak blokady'
+        ru: 'Нет блокировки'
+        zh: '无抑制'
+        hu: 'Nincs letiltás'
+        pt: 'Sem inibição'
+      0x01:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+
+  UNUSED_1:
+    bits: '1.3'
+    unused: true
+
+  UNUSED_2:
+    bits: '1.2'
+    unused: true
+
+  CITY_LIGHTING_INHIBIT:
+    bits: '1.1'
+    comment:
+      en: 'City lighting inhibition'
+      fr: 'Inhibition de l''éclairage ville'
+      es: 'Inhibición de la iluminación urbana'
+      de: 'Abschaltung des Stadtlichts'
+      it: 'Inibizione dell''illuminazione urbana'
+      pl: 'Wyłączenie oświetlenia miejskiego'
+      ru: 'Отключение городского освещения'
+      zh: '城市照明抑制'
+      hu: 'A városi fény letiltása'
+      pt: 'Inibição da iluminação urbana'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition'
+        fr: 'Pas d''inhibition'
+        es: 'Sin inhibición'
+        de: 'Keine Sperrung'
+        it: 'Nessuna inibizione'
+        pl: 'Brak blokady'
+        ru: 'Нет блокировки'
+        zh: '无抑制'
+        hu: 'Nincs letiltás'
+        pt: 'Sem inibição'
+      0x01:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+
+  CORNER_LIGHTING_INHIBIT:
+    bits: '1.0'
+    comment:
+      en: 'Corner lighting inhibition'
+      fr: 'Inhibition de l''éclairage d''angle'
+      es: 'Inhibición de la iluminación de giro'
+      de: 'Abschaltung des Kurvenlichts'
+      it: 'Inibizione dell''illuminazione d''angolo'
+      pl: 'Wyłączenie oświetlenia narożnego'
+      ru: 'Отключение углового освещения'
+      zh: '转角照明抑制'
+      hu: 'A kanyarfény letiltása'
+      pt: 'Inibição da iluminação de canto'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No inhibition'
+        fr: 'Pas d''inhibition'
+        es: 'Sin inhibición'
+        de: 'Keine Sperrung'
+        it: 'Nessuna inibizione'
+        pl: 'Brak blokady'
+        ru: 'Нет блокировки'
+        zh: '无抑制'
+        hu: 'Nincs letiltás'
+        pt: 'Sem inibição'
+      0x01:
+        en: 'Inhibition'
+        fr: 'Inhibition'
+        es: 'Inhibición'
+        de: 'Sperrung'
+        it: 'Inibizione'
+        pl: 'Blokada'
+        ru: 'Блокировка'
+        zh: '抑制'
+        hu: 'Letiltás'
+        pt: 'Inibição'
+
+  LEFT_INDICATOR_REQUEST:
     bits: '2.7'
+    alt_names: ['LEFT_TURN_SIGNAL']
+    comment:
+      en: 'Left turn indicator request'
+      fr: 'Demande de clignotant gauche'
+      es: 'Solicitud del intermitente izquierdo'
+      de: 'Anforderung des linken Blinkers'
+      it: 'Richiesta dell''indicatore di direzione sinistro'
+      pl: 'Żądanie lewego kierunkowskazu'
+      ru: 'Запрос левого указателя поворота'
+      zh: '左转向灯请求'
+      hu: 'A bal oldali irányjelző kérése'
+      pt: 'Pedido do pisca esquerdo'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Inactive'
-        fr: 'Inactive'
-        de: 'Deaktiviert'
+        en: 'Off'
+        fr: 'Éteints'
+        es: 'Apagados'
+        de: 'Aus'
+        it: 'Spenti'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '已关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'Active'
-        fr: 'Active'
-        de: 'Aktiviert'
+        en: 'On'
+        fr: 'Allumés'
+        es: 'Encendidas'
+        de: 'An'
+        it: 'Accesi'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '已点亮'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
 
-  RIGHT_TURN_SIGNAL: 
+  RIGHT_INDICATOR_REQUEST:
     bits: '2.6'
+    alt_names: ['RIGHT_TURN_SIGNAL']
+    comment:
+      en: 'Right turn indicator request'
+      fr: 'Demande de clignotant droit'
+      es: 'Solicitud del intermitente derecho'
+      de: 'Anforderung des rechten Blinkers'
+      it: 'Richiesta dell''indicatore di direzione destro'
+      pl: 'Żądanie prawego kierunkowskazu'
+      ru: 'Запрос правого указателя поворота'
+      zh: '右转向灯请求'
+      hu: 'A jobb oldali irányjelző kérése'
+      pt: 'Pedido do pisca direito'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Inactive'
-        fr: 'Inactive'
-        de: 'Deaktiviert'
+        en: 'Off'
+        fr: 'Éteints'
+        es: 'Apagados'
+        de: 'Aus'
+        it: 'Spenti'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '已关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'Active'
-        fr: 'Active'
-        de: 'Aktiviert'
+        en: 'On'
+        fr: 'Allumés'
+        es: 'Encendidas'
+        de: 'An'
+        it: 'Accesi'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '已点亮'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
 
-  UNKNOWN_2: # constant 0b10
+  VEHICLE_CONFIGURATION_MODE:
     bits: '2.5-2.4'
+    comment:
+      en: 'Vehicle configuration mode (factory, showroom, customer)'
+      fr: 'Mode de configuration du véhicule (usine, showroom, client)'
+      es: 'Modo de configuración del vehículo (fábrica, showroom, cliente)'
+      de: 'Fahrzeugkonfigurationsmodus (Werk, Showroom, Kunde)'
+      it: 'Modalità di configurazione veicolo (fabbrica, showroom, cliente)'
+      pl: 'Tryb konfiguracji pojazdu (fabryka, salon, klient)'
+      ru: 'Режим конфигурации автомобиля (завод, шоурум, клиент)'
+      zh: '车辆配置模式(工厂、展厅、客户)'
+      hu: 'Jármű konfigurációs módja (gyári, bemutatótermi, ügyfél)'
+      pt: 'Modo de configuração do veículo (fábrica, showroom, cliente)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: 'Factory'
+        fr: 'Usine'
+        es: 'Fábrica'
+        de: 'Werk'
+        it: 'Fabbrica'
+        pl: 'Fabryka'
+        ru: 'Завод'
+        zh: '工厂'
+        hu: 'Gyár'
+        pt: 'Fábrica'
+      0x01:
+        en: 'Showroom mode'
+        fr: 'Mode vitrine'
+        es: 'Modo escaparate'
+        de: 'Showroom-Modus'
+        it: 'Modalità vetrina'
+        pl: 'Tryb ekspozycji'
+        ru: 'Режим витрины'
+        zh: '展厅模式'
+        hu: 'Bemutatóterem üzemmód'
+        pt: 'Modo showroom'
+      0x02:
+        en: 'Customer (normal)'
+        fr: 'Client (normal)'
+        es: 'Cliente (normal)'
+        de: 'Kunde (normal)'
+        it: 'Cliente (normale)'
+        pl: 'Klient (normalny)'
+        ru: 'Клиент (обычный)'
+        zh: '客户（正常）'
+        hu: 'Ügyfél (normál)'
+        pt: 'Cliente (normal)'
+      0x03:
+        unused: true
 
-  FRONT_FOG_LIGHTS:
+  UNUSED_3:
     bits: '2.3'
-    values:
-      0x00:
-        en: 'Inactive'
-        fr: 'Inactive'
-        de: 'Deaktiviert'
-      0x01:
-        en: 'Active'
-        fr: 'Active'
-        de: 'Aktiviert'
+    unused: true
 
-  HIGH_BEAM_LIGHTS:
+  HIGH_BEAM_STATE:
     bits: '2.2'
+    alt_names: ['HIGH_BEAM_LIGHTS']
+    comment:
+      en: 'High beam headlights state'
+      fr: 'État des feux de route'
+      es: 'Estado de las luces largas'
+      de: 'Zustand des Fernlichts'
+      it: 'Stato degli abbaglianti'
+      pl: 'Stan świateł drogowych'
+      ru: 'Состояние дальнего света фар'
+      zh: '远光灯状态'
+      hu: 'A távolsági fényszóró állapota'
+      pt: 'Estado das luzes de máximos'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Inactive'
-        fr: 'Inactive'
-        de: 'Deaktiviert'
+        en: 'Off'
+        fr: 'Éteints'
+        es: 'Apagados'
+        de: 'Aus'
+        it: 'Spenti'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '已关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'Active'
-        fr: 'Active'
-        de: 'Aktiviert'
+        en: 'On'
+        fr: 'Allumés'
+        es: 'Encendidas'
+        de: 'An'
+        it: 'Accesi'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '已点亮'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
 
-  LOW_BEAM_LIGHTS:
+  LOW_BEAM_STATE:
     bits: '2.1'
+    alt_names: ['LOW_BEAM_LIGHTS']
+    comment:
+      en: 'Low beam headlights state'
+      fr: 'État des feux de croisement'
+      es: 'Estado de las luces de cruce'
+      de: 'Zustand des Abblendlichts'
+      it: 'Stato degli anabbaglianti'
+      pl: 'Stan świateł mijania'
+      ru: 'Состояние ближнего света фар'
+      zh: '近光灯状态'
+      hu: 'A tompított fényszóró állapota'
+      pt: 'Estado das luzes de cruzamento'
+    type: 'bool'
+    default: 0x00
     values:
       0x00:
-        en: 'Inactive'
-        fr: 'Inactive'
-        de: 'Deaktiviert'
+        en: 'Off'
+        fr: 'Éteints'
+        es: 'Apagados'
+        de: 'Aus'
+        it: 'Spenti'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '已关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
       0x01:
-        en: 'Active'
-        fr: 'Active'
-        de: 'Aktiviert'
+        en: 'On'
+        fr: 'Allumés'
+        es: 'Encendidas'
+        de: 'An'
+        it: 'Accesi'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '已点亮'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
 
-  PARK_LIGHT:
+  UNUSED_4:
     bits: '2.0'
+    unused: true
+
+  UNUSED_5:
+    bits: '3.7-3.2'
+    unused: true
+
+  ECO_MODE:
+    bits: '3.1-3.0'
+    comment:
+      en: 'Eco driving mode status'
+      fr: 'État du mode de conduite éco'
+      es: 'Estado del modo de conducción eco'
+      de: 'Status des Eco-Fahrmodus'
+      it: 'Stato della modalità di guida eco'
+      pl: 'Stan trybu jazdy ekonomicznej (ECO)'
+      ru: 'Статус экономичного режима движения (ECO)'
+      zh: '经济驾驶模式状态'
+      hu: 'Az eco vezetési mód állapota'
+      pt: 'Estado do modo de condução eco'
+    type: 'enum'
+    default: 0x00
     values:
       0x00:
-        en: 'Inactive'
-        fr: 'Inactive'
-        de: 'Deaktiviert'
+        en: 'Initialization value'
+        fr: 'Valeur d''initialisation'
+        es: 'Valor de inicialización'
+        de: 'Initialisierungswert'
+        it: 'Valore di inizializzazione'
+        pl: 'Wartość inicjalizacyjna'
+        ru: 'Значение инициализации'
+        zh: '初始化值'
+        hu: 'Inicializálási érték'
+        pt: 'Valor de inicialização'
       0x01:
-        en: 'Active'
-        fr: 'Active'
-        de: 'Aktiviert'
-  UNKNOWN_3: 
-    bits: '3.7-3.0'
+        en: 'No eco mode'
+        fr: 'Pas de mode Éco'
+        es: 'Sin modo Eco'
+        de: 'Kein Eco-Modus'
+        it: 'Nessuna modalità Eco'
+        pl: 'Brak trybu Eco'
+        ru: 'Режим Эко отсутствует'
+        zh: '无经济模式'
+        hu: 'Nincs Eco mód'
+        pt: 'Sem modo eco'
+      0x02:
+        en: 'Eco mode requested'
+        fr: 'Mode Éco demandé'
+        es: 'Modo Eco solicitado'
+        de: 'Eco-Modus angefordert'
+        it: 'Modalità Eco richiesta'
+        pl: 'Zażądano trybu Eco'
+        ru: 'Запрошен режим Эко'
+        zh: '请求经济模式'
+        hu: 'Eco mód kérve'
+        pt: 'Modo Eco solicitado'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
 
-  UNKNOWN_4:
+  FUEL_LEVEL:
     bits: '4.7-4.0'
+    comment:
+      en: 'Fuel level'
+      fr: 'Niveau de carburant'
+      es: 'Nivel de combustible'
+      de: 'Kraftstoffstand'
+      it: 'Livello carburante'
+      pl: 'Poziom paliwa'
+      ru: 'Уровень топлива'
+      zh: '燃油液位'
+      hu: 'Üzemanyagszint'
+      pt: 'Nível de combustível'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 127
+    units: 'L'
+    invalid: 0xFF
 
-  UNKNOWN_5:
-    bits: '5.7-5.0'
+  MOBILE_DEFLECTOR_POSITION:
+    bits: '5.6-5.4'
+    comment:
+      en: 'Mobile air deflector position'
+      fr: 'Position du déflecteur d''air mobile'
+      es: 'Posición del deflector de aire móvil'
+      de: 'Position der beweglichen Luftleitklappe'
+      it: 'Posizione del deflettore d''aria mobile'
+      pl: 'Pozycja ruchomego deflektora powietrza'
+      ru: 'Положение подвижного воздушного дефлектора'
+      zh: '可移动导流板位置'
+      hu: 'A mozgó légterelő helyzete'
+      pt: 'Posição do defletor de ar móvel'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Unspecified'
+        fr: 'Indéterminé'
+        es: 'No especificado'
+        de: 'Nicht spezifiziert'
+        it: 'Non specificato'
+        pl: 'Nieokreślone'
+        ru: 'Не указано'
+        zh: '未指定'
+        hu: 'Meghatározatlan'
+        pt: 'Não especificado'
+      0x01:
+        en: 'In position 0'
+        fr: 'En position 0'
+        es: 'En posición 0'
+        de: 'In Position 0'
+        it: 'In posizione 0'
+        pl: 'W pozycji 0'
+        ru: 'В положении 0'
+        zh: '位于0位置'
+        hu: '0. pozícióban'
+        pt: 'Na posição 0'
+      0x02:
+        unused: true
+      0x03:
+        en: 'In position 1'
+        fr: 'En position 1'
+        es: 'En posición 1'
+        de: 'In Stellung 1'
+        it: 'In posizione 1'
+        pl: 'W pozycji 1'
+        ru: 'В положении 1'
+        zh: '处于位置1'
+        hu: '1. helyzetben'
+        pt: 'Em posição 1'
+      0x04:
+        unused: true
+      0x05:
+        en: 'In position 2'
+        fr: 'En position 2'
+        es: 'En posición 2'
+        de: 'In Position 2'
+        it: 'In posizione 2'
+        pl: 'W pozycji 2'
+        ru: 'В положении 2'
+        zh: '位于位置2'
+        hu: '2. helyzetben'
+        pt: 'Na posição 2'
+      0x06:
+        en: 'In maintenance position'
+        fr: 'En position maintenance'
+        es: 'En posición de mantenimiento'
+        de: 'In Wartungsposition'
+        it: 'In posizione di manutenzione'
+        pl: 'W pozycji serwisowej'
+        ru: 'В положении обслуживания'
+        zh: '处于维护位置'
+        hu: 'Karbantartási pozícióban'
+        pt: 'Em posição de manutenção'
+      0x07:
+        unused: true
+
+  UNUSED_6:
+    bits: '5.3'
+    unused: true
+
+  STARTING_PREDICTED_VOLTAGE:
+    bits: '5.2-6.0'
+    comment:
+      en: 'Predicted battery voltage at engine start'
+      fr: 'Tension batterie prédite au démarrage moteur'
+      es: 'Tensión de batería prevista en el arranque del motor'
+      de: 'Vorhergesagte Batteriespannung beim Motorstart'
+      it: 'Tensione batteria prevista all''avviamento motore'
+      pl: 'Przewidywane napięcie akumulatora przy rozruchu silnika'
+      ru: 'Прогнозируемое напряжение батареи при запуске двигателя'
+      zh: '发动机启动时预测的电池电压'
+      hu: 'Az akkumulátor motorindításkor becsült feszültsége'
+      pt: 'Tensão de bateria prevista no arranque do motor'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 13
+    units: 'V'
+    invalid: 0x7FF
+    default: 0x7FE

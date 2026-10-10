@@ -1,0 +1,666 @@
+id: 0x1E9
+name: 'NAV_TRAFFIC_INFO'
+type: 'can'
+length: 6
+comment:
+  en: 'Navigation traffic information: advised/limit speed, radar warning pictograms and traffic alert distance/duration.'
+  fr: 'Informations trafic navigation : vitesse conseillée/limite, pictogrammes d''alerte radar et distance/durée d''alerte trafic.'
+  es: 'Información de tráfico de la navegación: velocidad aconsejada/límite, pictogramas de alerta de radar y distancia/duración de la alerta de tráfico.'
+  de: 'Navigations-Verkehrsinformationen: empfohlene/Höchstgeschwindigkeit, Radarwarn-Piktogramme und Verkehrswarnungsdistanz/-dauer.'
+  it: 'Informazioni sul traffico della navigazione: velocità consigliata/limite, pittogrammi di allerta autovelox e distanza/durata dell''allerta traffico.'
+  pl: 'Informacje o ruchu drogowym z nawigacji: prędkość zalecana/ograniczenie, piktogramy ostrzeżeń radarowych oraz odległość/czas trwania alertu ruchu.'
+  ru: 'Информация о трафике от навигации: рекомендуемая/предельная скорость, пиктограммы предупреждения о радарах и расстояние/длительность предупреждения о трафике.'
+  zh: '导航交通信息:建议/限制车速、测速摄像头警示图标及交通警报距离/时长。'
+  hu: 'Navigációs forgalmi információk: ajánlott/megengedett sebesség, radarfigyelmeztető piktogramok és a forgalmi riasztás távolsága/időtartama.'
+  pt: 'Informação de trânsito da navegação: velocidade aconselhada/limite, pictogramas de alerta de radar e distância/duração do alerta de trânsito.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['500ms', 'trigger']
+senders: ['ICSV', 'BTEL', 'OVIP']
+receivers: ['CMB', 'MATT', 'BSI']
+
+signals:
+  SPEED_LIMIT:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Speed limit'
+      fr: 'Limitation de vitesse'
+      es: 'Límite de velocidad'
+      de: 'Geschwindigkeitsbegrenzung'
+      it: 'Limite di velocità'
+      pl: 'Ograniczenie prędkości'
+      ru: 'Ограничение скорости'
+      zh: '限速'
+      hu: 'Sebességkorlátozás'
+      pt: 'Limite de velocidade'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 199
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0xFF
+
+  ADVISED_SPEED:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Advised speed'
+      fr: 'Vitesse conseillée'
+      es: 'Velocidad aconsejada'
+      de: 'Empfohlene Geschwindigkeit'
+      it: 'Velocità consigliata'
+      pl: 'Zalecana prędkość'
+      ru: 'Рекомендуемая скорость'
+      zh: '建议车速'
+      hu: 'Ajánlott sebesség'
+      pt: 'Velocidade aconselhada'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 199
+    units: 'km/h'
+    invalid: 0xFF
+    default: 0xFF
+
+  SPEED_CAMERA_POI_PICTOGRAM:
+    bits: '3.7-3.4'
+    comment:
+      en: 'Speed-camera point-of-interest pictogram'
+      fr: 'Pictogramme de point d''intérêt radar'
+      es: 'Pictograma del punto de interés radar'
+      de: 'Symbol für den Blitzer-Point-of-Interest'
+      it: 'Pittogramma del punto di interesse autovelox'
+      pl: 'Piktogram punktu zainteresowania fotoradaru'
+      ru: 'Пиктограмма точки интереса «камера контроля скорости»'
+      zh: '测速摄像头兴趣点图标'
+      hu: 'Traffipax érdekes pont piktogramja'
+      pt: 'Pictograma do ponto de interesse de radar'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No radar'
+        fr: 'Pas de radar'
+        es: 'Sin radar'
+        de: 'Kein Radar'
+        it: 'Nessun radar'
+        pl: 'Brak radaru'
+        ru: 'Нет радара'
+        zh: '无雷达'
+        hu: 'Nincs radar'
+        pt: 'Sem radar'
+      0x01:
+        en: 'Fixed radar'
+        fr: 'Radar fixe'
+        es: 'Radar fijo'
+        de: 'Stationärer Blitzer'
+        it: 'Autovelox fisso'
+        pl: 'Radar stacjonarny'
+        ru: 'Стационарный радар'
+        zh: '固定测速仪'
+        hu: 'Fix traffipax'
+        pt: 'Radar fixo'
+      0x02:
+        en: 'Red-light camera'
+        fr: 'Radar de feu rouge'
+        es: 'Radar de semáforo en rojo'
+        de: 'Rotlichtblitzer'
+        it: 'Autovelox semaforico'
+        pl: 'Fotoradar na czerwonym świetle'
+        ru: 'Камера контроля проезда на красный свет'
+        zh: '红灯监控雷达'
+        hu: 'Piros jelzésen áthajtást ellenőrző kamera'
+        pt: 'Radar de semáforo vermelho'
+      0x03:
+        en: 'Danger zone'
+        fr: 'Zone de danger'
+        es: 'Zona de peligro'
+        de: 'Gefahrenzone'
+        it: 'Zona di pericolo'
+        pl: 'Strefa zagrożenia'
+        ru: 'Опасная зона'
+        zh: '危险区域'
+        hu: 'Veszélyzóna'
+        pt: 'Zona de perigo'
+      0x04:
+        en: 'Dangerous uphill'
+        fr: 'Montée dangereuse'
+        es: 'Subida peligrosa'
+        de: 'Gefährliche Steigung'
+        it: 'Salita pericolosa'
+        pl: 'Niebezpieczny podjazd'
+        ru: 'Опасный подъём'
+        zh: '危险上坡'
+        hu: 'Veszélyes emelkedő'
+        pt: 'Subida perigosa'
+      0x05:
+        en: 'Dangerous downhill'
+        fr: 'Descente dangereuse'
+        es: 'Bajada peligrosa'
+        de: 'Gefährliches Gefälle'
+        it: 'Discesa pericolosa'
+        pl: 'Niebezpieczny zjazd'
+        ru: 'Опасный спуск'
+        zh: '危险下坡'
+        hu: 'Veszélyes lejtő'
+        pt: 'Descida perigosa'
+      0x06:
+        en: 'Railway crossing not protected'
+        fr: 'Passage à niveau non protégé'
+        es: 'Paso a nivel no protegido'
+        de: 'Ungesicherter Bahnübergang'
+        it: 'Passaggio a livello non protetto'
+        pl: 'Niestrzeżony przejazd kolejowy'
+        ru: 'Нерегулируемый железнодорожный переезд'
+        zh: '无保护的铁路道口'
+        hu: 'Nem biztosított vasúti átjáró'
+        pt: 'Passagem de nível não protegida'
+      0x07:
+        en: 'Protected railway crossing'
+        fr: 'Passage à niveau protégé'
+        es: 'Paso a nivel protegido'
+        de: 'Gesicherter Bahnübergang'
+        it: 'Passaggio a livello protetto'
+        pl: 'Chroniony przejazd kolejowy'
+        ru: 'Охраняемый железнодорожный переезд'
+        zh: '有保护的铁路道口'
+        hu: 'Védett vasúti átjáró'
+        pt: 'Passagem de nível protegida'
+      0x08:
+        en: 'Black-spot pictogram'
+        fr: 'Pictogramme point noir'
+        es: 'Pictograma de punto negro'
+        de: 'Symbol für Unfallschwerpunkt'
+        it: 'Pittogramma punto nero'
+        pl: 'Piktogram czarnego punktu'
+        ru: 'Пиктограмма чёрной точки (опасный участок)'
+        zh: '事故黑点图标'
+        hu: 'Balesetveszélyes pont piktogram'
+        pt: 'Pictograma de ponto negro'
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Radar stop'
+        fr: 'Fin de zone radar'
+        es: 'Fin de zona de radar'
+        de: 'Ende Radarzone'
+        it: 'Fine zona autovelox'
+        pl: 'Koniec strefy radaru'
+        ru: 'Конец зоны радара'
+        zh: '测速区结束'
+        hu: 'Sebességmérő zóna vége'
+        pt: 'Paragem do radar'
+      0x0B:
+        en: 'Mobile speed camera, very frequent'
+        fr: 'Radar mobile très fréquent'
+        es: 'Radar móvil muy frecuente'
+        de: 'Mobiler Blitzer sehr häufig'
+        it: 'Autovelox mobile molto frequente'
+        pl: 'Fotoradar mobilny bardzo częsty'
+        ru: 'Мобильный радар (очень часто)'
+        zh: '移动测速仪(非常频繁)'
+        hu: 'Mobil sebességmérő, nagyon gyakori'
+        pt: 'Radar móvel muito frequente'
+      0x0C:
+        en: 'Frequent mobile speed camera'
+        fr: 'Radar mobile fréquent'
+        es: 'Radar móvil frecuente'
+        de: 'Häufig auftretender mobiler Blitzer'
+        it: 'Autovelox mobile frequente'
+        pl: 'Częsty fotoradar mobilny'
+        ru: 'Частая мобильная камера контроля скорости'
+        zh: '频繁出现的移动测速仪'
+        hu: 'Gyakori mobil sebességmérő'
+        pt: 'Radar móvel frequente'
+      0x0D:
+        en: 'Mobile radar infrequent'
+        fr: 'Radar mobile peu fréquent'
+        es: 'Radar móvil poco frecuente'
+        de: 'Mobiler Blitzer selten'
+        it: 'Autovelox mobile poco frequente'
+        pl: 'Rzadko spotykany radar mobilny'
+        ru: 'Мобильный радар редко встречается'
+        zh: '移动测速仪不常见'
+        hu: 'Ritka mobil sebességmérő'
+        pt: 'Radar móvel pouco frequente'
+      0x0E:
+        en: 'Section radar'
+        fr: 'Radar tronçon'
+        es: 'Radar de tramo'
+        de: 'Abschnittskontrolle (Section-Radar)'
+        it: 'Autovelox a tratta'
+        pl: 'Radar odcinkowy'
+        ru: 'Секционный радар'
+        zh: '区间测速雷达'
+        hu: 'Szakaszos sebességmérő'
+        pt: 'Radar de troço'
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  SPEED_DISPLAY_AUTHORIZATION:
+    bits: '3.3'
+    comment:
+      en: 'Speed display authorization'
+      fr: 'Autorisation d''affichage de la vitesse'
+      es: 'Autorización de visualización de la velocidad'
+      de: 'Anzeigefreigabe der Geschwindigkeit'
+      it: 'Autorizzazione alla visualizzazione della velocità'
+      pl: 'Zezwolenie na wyświetlanie prędkości'
+      ru: 'Разрешение отображения скорости'
+      zh: '车速显示授权'
+      hu: 'A sebesség megjelenítésének engedélyezése'
+      pt: 'Autorização de visualização da velocidade'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Display not authorized'
+        fr: 'Affichage non autorisé'
+        es: 'Visualización no autorizada'
+        de: 'Anzeige nicht zulässig'
+        it: 'Visualizzazione non autorizzata'
+        pl: 'Wyświetlanie niedozwolone'
+        ru: 'Отображение не разрешено'
+        zh: '显示未授权'
+        hu: 'A megjelenítés nincs engedélyezve'
+        pt: 'Apresentação não autorizada'
+      0x01:
+        en: 'Display authorized'
+        fr: 'Affichage autorisé'
+        es: 'Visualización autorizada'
+        de: 'Anzeige zugelassen'
+        it: 'Visualizzazione autorizzata'
+        pl: 'Wyświetlanie dozwolone'
+        ru: 'Отображение разрешено'
+        zh: '显示已授权'
+        hu: 'Kijelzés engedélyezve'
+        pt: 'Visualização autorizada'
+
+  UNUSED_1:
+    bits: '3.2-3.0'
+    unused: true
+
+  SPEED_CAMERA_POI_PICTOGRAM_2:
+    bits: '4.7-4.2'
+    comment:
+      en: 'Speed-camera point-of-interest pictogram (2)'
+      fr: 'Pictogramme de point d''intérêt radar (2)'
+      es: 'Pictograma del punto de interés radar (2)'
+      de: 'Symbol für den Blitzer-Point-of-Interest (2)'
+      it: 'Pittogramma del punto di interesse autovelox (2)'
+      pl: 'Piktogram punktu zainteresowania fotoradaru (2)'
+      ru: 'Пиктограмма точки интереса «камера контроля скорости» (2)'
+      zh: '测速摄像头兴趣点图标(2)'
+      hu: 'Traffipax érdekes pont piktogramja (2)'
+      pt: 'Pictograma do ponto de interesse de radar (2)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No radar'
+        fr: 'Pas de radar'
+        es: 'Sin radar'
+        de: 'Kein Radar'
+        it: 'Nessun radar'
+        pl: 'Brak radaru'
+        ru: 'Нет радара'
+        zh: '无雷达'
+        hu: 'Nincs radar'
+        pt: 'Sem radar'
+      0x01:
+        en: 'Fixed radar'
+        fr: 'Radar fixe'
+        es: 'Radar fijo'
+        de: 'Stationärer Blitzer'
+        it: 'Autovelox fisso'
+        pl: 'Radar stacjonarny'
+        ru: 'Стационарный радар'
+        zh: '固定测速仪'
+        hu: 'Fix traffipax'
+        pt: 'Radar fixo'
+      0x02:
+        en: 'Red-light camera'
+        fr: 'Radar de feu rouge'
+        es: 'Radar de semáforo en rojo'
+        de: 'Rotlichtblitzer'
+        it: 'Autovelox semaforico'
+        pl: 'Fotoradar na czerwonym świetle'
+        ru: 'Камера контроля проезда на красный свет'
+        zh: '红灯监控雷达'
+        hu: 'Piros jelzésen áthajtást ellenőrző kamera'
+        pt: 'Radar de semáforo vermelho'
+      0x03:
+        en: 'Danger zone'
+        fr: 'Zone de danger'
+        es: 'Zona de peligro'
+        de: 'Gefahrenzone'
+        it: 'Zona di pericolo'
+        pl: 'Strefa zagrożenia'
+        ru: 'Опасная зона'
+        zh: '危险区域'
+        hu: 'Veszélyzóna'
+        pt: 'Zona de perigo'
+      0x04:
+        en: 'Dangerous uphill'
+        fr: 'Montée dangereuse'
+        es: 'Subida peligrosa'
+        de: 'Gefährliche Steigung'
+        it: 'Salita pericolosa'
+        pl: 'Niebezpieczny podjazd'
+        ru: 'Опасный подъём'
+        zh: '危险上坡'
+        hu: 'Veszélyes emelkedő'
+        pt: 'Subida perigosa'
+      0x05:
+        en: 'Dangerous downhill'
+        fr: 'Descente dangereuse'
+        es: 'Bajada peligrosa'
+        de: 'Gefährliches Gefälle'
+        it: 'Discesa pericolosa'
+        pl: 'Niebezpieczny zjazd'
+        ru: 'Опасный спуск'
+        zh: '危险下坡'
+        hu: 'Veszélyes lejtő'
+        pt: 'Descida perigosa'
+      0x06:
+        en: 'Railway crossing not protected'
+        fr: 'Passage à niveau non protégé'
+        es: 'Paso a nivel no protegido'
+        de: 'Ungesicherter Bahnübergang'
+        it: 'Passaggio a livello non protetto'
+        pl: 'Niestrzeżony przejazd kolejowy'
+        ru: 'Нерегулируемый железнодорожный переезд'
+        zh: '无保护的铁路道口'
+        hu: 'Nem biztosított vasúti átjáró'
+        pt: 'Passagem de nível não protegida'
+      0x07:
+        en: 'Protected railway crossing'
+        fr: 'Passage à niveau protégé'
+        es: 'Paso a nivel protegido'
+        de: 'Gesicherter Bahnübergang'
+        it: 'Passaggio a livello protetto'
+        pl: 'Chroniony przejazd kolejowy'
+        ru: 'Охраняемый железнодорожный переезд'
+        zh: '有保护的铁路道口'
+        hu: 'Védett vasúti átjáró'
+        pt: 'Passagem de nível protegida'
+      0x08:
+        en: 'Black-spot pictogram'
+        fr: 'Pictogramme point noir'
+        es: 'Pictograma de punto negro'
+        de: 'Symbol für Unfallschwerpunkt'
+        it: 'Pittogramma punto nero'
+        pl: 'Piktogram czarnego punktu'
+        ru: 'Пиктограмма чёрной точки (опасный участок)'
+        zh: '事故黑点图标'
+        hu: 'Balesetveszélyes pont piktogram'
+        pt: 'Pictograma de ponto negro'
+      0x09:
+        unused: true
+      0x0A:
+        en: 'Radar stop'
+        fr: 'Fin de zone radar'
+        es: 'Fin de zona de radar'
+        de: 'Ende Radarzone'
+        it: 'Fine zona autovelox'
+        pl: 'Koniec strefy radaru'
+        ru: 'Конец зоны радара'
+        zh: '测速区结束'
+        hu: 'Sebességmérő zóna vége'
+        pt: 'Paragem do radar'
+      0x0B:
+        en: 'Mobile speed camera, very frequent'
+        fr: 'Radar mobile très fréquent'
+        es: 'Radar móvil muy frecuente'
+        de: 'Mobiler Blitzer sehr häufig'
+        it: 'Autovelox mobile molto frequente'
+        pl: 'Fotoradar mobilny bardzo częsty'
+        ru: 'Мобильный радар (очень часто)'
+        zh: '移动测速仪(非常频繁)'
+        hu: 'Mobil sebességmérő, nagyon gyakori'
+        pt: 'Radar móvel muito frequente'
+      0x0C:
+        en: 'Frequent mobile speed camera'
+        fr: 'Radar mobile fréquent'
+        es: 'Radar móvil frecuente'
+        de: 'Häufig auftretender mobiler Blitzer'
+        it: 'Autovelox mobile frequente'
+        pl: 'Częsty fotoradar mobilny'
+        ru: 'Частая мобильная камера контроля скорости'
+        zh: '频繁出现的移动测速仪'
+        hu: 'Gyakori mobil sebességmérő'
+        pt: 'Radar móvel frequente'
+      0x0D:
+        en: 'Mobile radar infrequent'
+        fr: 'Radar mobile peu fréquent'
+        es: 'Radar móvil poco frecuente'
+        de: 'Mobiler Blitzer selten'
+        it: 'Autovelox mobile poco frequente'
+        pl: 'Rzadko spotykany radar mobilny'
+        ru: 'Мобильный радар редко встречается'
+        zh: '移动测速仪不常见'
+        hu: 'Ritka mobil sebességmérő'
+        pt: 'Radar móvel pouco frequente'
+      0x0E:
+        en: 'Section radar'
+        fr: 'Radar tronçon'
+        es: 'Radar de tramo'
+        de: 'Abschnittskontrolle (Section-Radar)'
+        it: 'Autovelox a tratta'
+        pl: 'Radar odcinkowy'
+        ru: 'Секционный радар'
+        zh: '区间测速雷达'
+        hu: 'Szakaszos sebességmérő'
+        pt: 'Radar de troço'
+      0x0F:
+        en: 'Level crossing'
+        fr: 'Passage à niveau'
+        es: 'Paso a nivel'
+        de: 'Bahnübergang'
+        it: 'Passaggio a livello'
+        pl: 'Przejazd kolejowy'
+        ru: 'Железнодорожный переезд'
+        zh: '铁路道口'
+        hu: 'Vasúti átjáró'
+        pt: 'Passagem de nível'
+      0x10:
+        en: 'Restricted zone'
+        fr: 'Zone restreinte'
+        es: 'Zona restringida'
+        de: 'Eingeschränkte Zone'
+        it: 'Zona ristretta'
+        pl: 'Strefa ograniczona'
+        ru: 'Ограниченная зона'
+        zh: '限制区域'
+        hu: 'Korlátozott zóna'
+        pt: 'Zona restrita'
+      0x11:
+        en: 'Red light / speed camera'
+        fr: 'Caméra radar feu rouge / vitesse'
+        es: 'Cámara de semáforo en rojo / velocidad'
+        de: 'Rotlicht-/Geschwindigkeitskamera'
+        it: 'Telecamera semaforo rosso / velocità'
+        pl: 'Kamera na czerwonym świetle / prędkości'
+        ru: 'Камера контроля проезда на красный свет / скорости'
+        zh: '闯红灯/超速摄像头'
+        hu: 'Piros jelzésen áthaladást / sebességet ellenőrző kamera'
+        pt: 'Semáforo vermelho / radar de velocidade'
+      0x12:
+        en: 'Multiple fixed speed camera'
+        fr: 'Radar fixe multiple'
+        es: 'Radar fijo múltiple'
+        de: 'Mehrfach-Blitzer (fest)'
+        it: 'Autovelox fisso multiplo'
+        pl: 'Wielokrotny fotoradar stacjonarny'
+        ru: 'Множественная стационарная камера контроля скорости'
+        zh: '多重固定测速摄像头'
+        hu: 'Több fix sebességmérő kamera'
+        pt: 'Radar fixo múltiplo'
+      0x13:
+        en: 'Mobile speed camera'
+        fr: 'Radar mobile'
+        es: 'Radar móvil'
+        de: 'Mobiler Blitzer'
+        it: 'Autovelox mobile'
+        pl: 'Radar mobilny'
+        ru: 'Мобильный радар'
+        zh: '移动测速雷达'
+        hu: 'Mobil sebességmérő'
+        pt: 'Radar de velocidade móvel'
+      0x14:
+        en: 'Mobile speed camera detector connected'
+        fr: 'Détecteur de radars mobiles connecté'
+        es: 'Detector de radares móviles conectado'
+        de: 'Mobiler Blitzer-Warner verbunden'
+        it: 'Rilevatore di autovelox mobili connesso'
+        pl: 'Podłączony wykrywacz radarów mobilnych'
+        ru: 'Подключён детектор мобильных радаров'
+        zh: '移动测速雷达探测器已连接'
+        hu: 'Mobil sebességmérő-érzékelő csatlakoztatva'
+        pt: 'Detetor de radar de velocidade móvel ligado'
+      0x15:
+        en: 'Fixed danger zone'
+        fr: 'Zone de danger fixe'
+        es: 'Zona de peligro fija'
+        de: 'Feste Gefahrenzone'
+        it: 'Zona di pericolo fissa'
+        pl: 'Stała strefa zagrożenia'
+        ru: 'Постоянная опасная зона'
+        zh: '固定危险区域'
+        hu: 'Állandó veszélyzóna'
+        pt: 'Zona de perigo fixa'
+      0x16:
+        en: 'Mobile danger zone'
+        fr: 'Zone de danger mobile'
+        es: 'Zona de peligro móvil'
+        de: 'Mobiler Gefahrenbereich'
+        it: 'Zona di pericolo mobile'
+        pl: 'Ruchoma strefa zagrożenia'
+        ru: 'Подвижная опасная зона'
+        zh: '移动危险区域'
+        hu: 'Mozgó veszélyzóna'
+        pt: 'Zona de perigo móvel'
+      0x17:
+        en: 'Certified mobile danger zone'
+        fr: 'Zone de danger mobile certifiée'
+        es: 'Zona de peligro móvil certificada'
+        de: 'Zertifizierte mobile Gefahrenzone'
+        it: 'Zona di pericolo mobile certificata'
+        pl: 'Certyfikowana mobilna strefa zagrożenia'
+        ru: 'Сертифицированная мобильная зона опасности'
+        zh: '认证移动危险区域'
+        hu: 'Tanúsított mobil veszélyzóna'
+        pt: 'Zona de perigo móvel certificada'
+      0x18:
+        en: 'Inter-distance camera'
+        fr: 'Caméra de distance inter-véhicule'
+        es: 'Cámara de distancia entre vehículos'
+        de: 'Abstandskamera'
+        it: 'Telecamera di distanza tra veicoli'
+        pl: 'Kamera odległości międzypojazdowej'
+        ru: 'Камера межавтомобильной дистанции'
+        zh: '车距摄像头'
+        hu: 'Járműköz-kamera'
+        pt: 'Câmara de distância entre veículos'
+      0x19:
+        unused: true
+      0x1A:
+        unused: true
+      0x1B:
+        unused: true
+      0x1C:
+        unused: true
+      0x1D:
+        unused: true
+      0x1E:
+        unused: true
+      0x1F:
+        unused: true
+      0x20:
+        unused: true
+      0x21:
+        unused: true
+      0x22:
+        unused: true
+      0x23:
+        unused: true
+      0x24:
+        unused: true
+      0x25:
+        unused: true
+      0x26:
+        unused: true
+      0x27:
+        unused: true
+      0x28:
+        unused: true
+      0x29:
+        unused: true
+      0x2A:
+        unused: true
+      0x2B:
+        unused: true
+
+  UNUSED_2:
+    bits: '4.1-4.0'
+    unused: true
+
+  NEXT_TRAFFIC_SLOWDOWN_DURATION:
+    bits: '5.7-5.0'
+    comment:
+      en: 'Duration of the next traffic slowdown'
+      fr: 'Durée du prochain ralentissement'
+      es: 'Duración de la próxima retención de tráfico'
+      de: 'Dauer des nächsten Verkehrsstaus'
+      it: 'Durata del prossimo rallentamento del traffico'
+      pl: 'Czas trwania najbliższego zwolnienia ruchu'
+      ru: 'Продолжительность следующего затора'
+      zh: '下一处交通拥堵的持续时间'
+      hu: 'A következő forgalmi torlódás időtartama'
+      pt: 'Duração do próximo abrandamento de trânsito'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'min'
+    invalid: 0xFF
+    default: 0xFF
+
+  NEXT_TRAFFIC_SLOWDOWN_DISTANCE:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Distance to the next traffic slowdown'
+      fr: 'Distance jusqu''au prochain ralentissement'
+      es: 'Distancia hasta la próxima retención de tráfico'
+      de: 'Entfernung bis zum nächsten Verkehrsstau'
+      it: 'Distanza dal prossimo rallentamento del traffico'
+      pl: 'Odległość do najbliższego zwolnienia ruchu'
+      ru: 'Расстояние до следующего затора'
+      zh: '距下一处交通拥堵的距离'
+      hu: 'A következő forgalmi torlódásig hátralévő távolság'
+      pt: 'Distância até ao próximo abrandamento de trânsito'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 254
+    units: 'km'
+    invalid: 0xFF
+    default: 0xFF

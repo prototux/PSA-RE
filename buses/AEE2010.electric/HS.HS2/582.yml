@@ -1,0 +1,464 @@
+id: 0x582
+name: 'EV_CHARGE_STATUS_3'
+type: 'can'
+length: 4
+comment:
+  en: 'Electric vehicle charge status: charging station stop-charge request and charge-in-progress mode.'
+  fr: 'État de charge du véhicule électrique : demande d''arrêt de charge de la borne et mode charge en cours.'
+  es: 'Estado de carga del vehículo eléctrico: solicitud de parada de carga del punto de carga y modo de carga en curso.'
+  de: 'Ladestatus des Elektrofahrzeugs: Ladestopp-Anforderung der Ladestation und Modus „Ladevorgang läuft“.'
+  it: 'Stato di ricarica del veicolo elettrico: richiesta di arresto ricarica dalla colonnina e modalità ricarica in corso.'
+  pl: 'Stan ładowania pojazdu elektrycznego: żądanie zatrzymania ładowania ze stacji ładowania i tryb trwającego ładowania.'
+  ru: 'Статус зарядки электромобиля: запрос остановки зарядки от зарядной станции и режим выполняющейся зарядки.'
+  zh: '电动车充电状态:充电桩停止充电请求和充电进行中模式。'
+  hu: 'Az elektromos jármű töltési állapota: a töltőállomás töltésleállítási kérése és a folyamatban lévő töltés módja.'
+  pt: 'Estado de carga do veículo elétrico: pedido de paragem de carga do posto de carregamento e modo de carregamento em curso.'
+periodicity: ['1000ms']
+senders: ['E_VCU']
+receivers: ['BSI']
+
+signals:
+  HEATER_CORE_INLET_WATER_TEMPERATURE:
+    bits: '1.7-2.7'
+    comment:
+      en: 'Heater core water temperature (°C)'
+      fr: 'Température de l''eau du réchauffeur (°C)'
+      es: 'Temperatura del agua del calentador (°C)'
+      de: 'Wassertemperatur des Heizers (°C)'
+      it: 'Temperatura dell''acqua del riscaldatore (°C)'
+      pl: 'Temperatura wody nagrzewnicy (°C)'
+      ru: 'Температура воды нагревателя (°C)'
+      zh: '加热器芯水温(°C)'
+      hu: 'A fűtőradiátor vizének hőmérséklete (°C)'
+      pt: 'Temperatura da água do núcleo do aquecedor (°C)'
+    type: 'uint'
+    factor: 0.25
+    offset: -40
+    min: -40
+    max: 80
+    units: '°C'
+    invalid: 0x1FF
+
+  HEAT_PUMP_WORKING_MODE:
+    bits: '2.6-2.2'
+    comment:
+      en: 'Primary heat pump compressor (ECMP) working mode'
+      fr: 'Mode de fonctionnement du compresseur primaire de la pompe à chaleur (ECMP)'
+      es: 'Modo de funcionamiento del compresor primario de la bomba de calor (ECMP)'
+      de: 'Betriebsmodus des primären Wärmepumpenkompressors (ECMP)'
+      it: 'Modalità di funzionamento del compressore primario della pompa di calore (ECMP)'
+      pl: 'Tryb pracy głównej sprężarki pompy ciepła (ECMP)'
+      ru: 'Режим работы основного компрессора теплового насоса (ECMP)'
+      zh: '主热泵压缩机(ECMP)工作模式'
+      hu: 'A hőszivattyú elsődleges kompresszorának (ECMP) üzemmódja'
+      pt: 'Modo de funcionamento do compressor da bomba de calor primária (ECMP)'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Stop mode'
+        fr: 'Mode arrêt'
+        es: 'Modo parada'
+        de: 'Stopp-Modus'
+        it: 'Modalità arresto'
+        pl: 'Tryb zatrzymania'
+        ru: 'Режим остановки'
+        zh: '停止模式'
+        hu: 'Leállási mód'
+        pt: 'Modo de paragem'
+      0x01:
+        en: 'Fault mode 1'
+        fr: 'Mode défaut 1'
+        es: 'Modo de fallo 1'
+        de: 'Fehlermodus 1'
+        it: 'Modalità guasto 1'
+        pl: 'Tryb usterki 1'
+        ru: 'Режим неисправности 1'
+        zh: '故障模式1'
+        hu: '1. hibamód'
+        pt: 'Modo de falha 1'
+      0x02:
+        en: 'Fault mode 2'
+        fr: 'Mode défaut 2'
+        es: 'Modo de fallo 2'
+        de: 'Fehlermodus 2'
+        it: 'Modalità guasto 2'
+        pl: 'Tryb usterki 2'
+        ru: 'Аварийный режим 2'
+        zh: '故障模式2'
+        hu: '2. hibaüzemmód'
+        pt: 'Modo de avaria 2'
+      0x03:
+        en: 'Fault mode 3'
+        fr: 'Mode défaut 3'
+        es: 'Modo de fallo 3'
+        de: 'Fehlermodus 3'
+        it: 'Modalità guasto 3'
+        pl: 'Tryb usterki 3'
+        ru: 'Режим неисправности 3'
+        zh: '故障模式3'
+        hu: '3. hibamód'
+        pt: 'Modo de avaria 3'
+      0x04:
+        en: 'Fault mode 4'
+        fr: 'Mode défaut 4'
+        es: 'Modo de fallo 4'
+        de: 'Fehlermodus 4'
+        it: 'Modalità di guasto 4'
+        pl: 'Tryb usterki 4'
+        ru: 'Режим неисправности 4'
+        zh: '故障模式4'
+        hu: 'Hibamód 4'
+        pt: 'Modo de falha 4'
+      0x05:
+        en: 'Default mode 5'
+        fr: 'Mode défaut 5'
+        es: 'Modo de fallo 5'
+        de: 'Fehlermodus 5'
+        it: 'Modalità di guasto 5'
+        pl: 'Tryb usterki 5'
+        ru: 'Режим неисправности 5'
+        zh: '故障模式5'
+        hu: '5. hibaüzemmód'
+        pt: 'Modo de falha 5'
+      0x06:
+        en: 'Fault mode 6'
+        fr: 'Mode défaut 6'
+        es: 'Modo de fallo 6'
+        de: 'Fehlermodus 6'
+        it: 'Modalità di guasto 6'
+        pl: 'Tryb usterki 6'
+        ru: 'Аварийный режим 6'
+        zh: '故障模式6'
+        hu: '6. hibamód'
+        pt: 'Modo de falha 6'
+      0x07:
+        en: 'Fault mode 7'
+        fr: 'Mode défaut 7'
+        es: 'Modo de fallo 7'
+        de: 'Fehlermodus 7'
+        it: 'Modalità guasto 7'
+        pl: 'Tryb usterki 7'
+        ru: 'Режим неисправности 7'
+        zh: '故障模式7'
+        hu: '7. hibaüzemmód'
+        pt: 'Modo de avaria 7'
+      0x08:
+        en: 'AC mode'
+        fr: 'Mode AC'
+        es: 'Modo AC'
+        de: 'AC-Modus'
+        it: 'Modalità AC'
+        pl: 'Tryb AC'
+        ru: 'Режим AC'
+        zh: 'AC模式'
+        hu: 'AC mód'
+        pt: 'Modo AC'
+      0x09:
+        en: 'HP mode'
+        fr: 'Mode HP'
+        es: 'Modo HP'
+        de: 'HP-Modus'
+        it: 'Modalità HP'
+        pl: 'Tryb HP'
+        ru: 'Режим HP'
+        zh: 'HP 模式'
+        hu: 'HP üzemmód'
+        pt: 'Modo HP'
+      0x0A:
+        en: 'Full dehumidify-and-heat mode'
+        fr: 'Mode déshumidification/réchauffage complet'
+        es: 'Modo completo de deshumidificación y calefacción'
+        de: 'Vollständiger Entfeuchtungs-/Heizmodus'
+        it: 'Modalità completa di deumidificazione e riscaldamento'
+        pl: 'Pełny tryb osuszania i ogrzewania'
+        ru: 'Полный режим осушения и обогрева'
+        zh: '完全除湿加热模式'
+        hu: 'Teljes páramentesítő-fűtő üzemmód'
+        pt: 'Modo completo de desumidificação e aquecimento'
+      0x0B:
+        en: 'Simple dehumidify-and-heat mode'
+        fr: 'Mode déshumidification/réchauffage simple'
+        es: 'Modo simple de deshumidificación y calefacción'
+        de: 'Einfacher Entfeuchtungs-/Heizmodus'
+        it: 'Modalità semplice di deumidificazione e riscaldamento'
+        pl: 'Prosty tryb osuszania i ogrzewania'
+        ru: 'Простой режим осушения и обогрева'
+        zh: '简单除湿加热模式'
+        hu: 'Egyszerű páramentesítő-fűtő üzemmód'
+        pt: 'Modo simples de desumidificação e aquecimento'
+      0x0C:
+        en: 'Defrost mode'
+        fr: 'Mode dégivrage'
+        es: 'Modo desescarchado'
+        de: 'Enteisungsmodus'
+        it: 'Modalità sbrinamento'
+        pl: 'Tryb odszraniania'
+        ru: 'Режим разморозки'
+        zh: '除霜模式'
+        hu: 'Jégmentesítő üzemmód'
+        pt: 'Modo descongelação'
+      0x0D:
+        en: 'Transition mode'
+        fr: 'Mode transition'
+        es: 'Modo de transición'
+        de: 'Übergangsmodus'
+        it: 'Modalità di transizione'
+        pl: 'Tryb przejściowy'
+        ru: 'Переходный режим'
+        zh: '过渡模式'
+        hu: 'Átmeneti mód'
+        pt: 'Modo de transição'
+      0x0E:
+        en: 'Fault mode'
+        fr: 'Mode défaut'
+        es: 'Modo de fallo'
+        de: 'Fehlermodus'
+        it: 'Modalità guasto'
+        pl: 'Tryb usterki'
+        ru: 'Аварийный режим'
+        zh: '故障模式'
+        hu: 'Hibamód'
+        pt: 'Modo de falha'
+      0x0F:
+        en: 'Chiller-only mode'
+        fr: 'Mode chiller seul'
+        es: 'Modo solo enfriador'
+        de: 'Nur-Kühler-Modus'
+        it: 'Modalità solo chiller'
+        pl: 'Tryb tylko chłodnicy'
+        ru: 'Режим только чиллера'
+        zh: '仅制冷模式'
+        hu: 'Csak hűtő üzemmód'
+        pt: 'Modo apenas chiller'
+      0x10:
+        en: 'AC and chiller mode'
+        fr: 'Mode climatisation et refroidisseur'
+        es: 'Modo aire acondicionado y enfriador'
+        de: 'Klimaanlagen- und Kühlermodus'
+        it: 'Modalità climatizzatore e chiller'
+        pl: 'Tryb klimatyzacji i chłodnicy'
+        ru: 'Режим кондиционера и чиллера'
+        zh: '空调和冷却器模式'
+        hu: 'Klíma és hűtő üzemmód'
+        pt: 'Modo de ar condicionado e chiller'
+      0x11:
+        en: 'Dehumidification and chiller mode'
+        fr: 'Mode déshumidification et refroidisseur'
+        es: 'Modo deshumidificación y enfriador'
+        de: 'Entfeuchtungs- und Kühlermodus'
+        it: 'Modalità deumidificazione e refrigeratore'
+        pl: 'Tryb osuszania i chillera'
+        ru: 'Режим осушения и чиллера'
+        zh: '除湿和制冷机模式'
+        hu: 'Páramentesítő és hűtő üzemmód'
+        pt: 'Modo desumidificação e chiller'
+      0x12:
+        unused: true
+      0x13:
+        en: 'Hot water mode'
+        fr: 'Mode eau chaude'
+        es: 'Modo agua caliente'
+        de: 'Warmwassermodus'
+        it: 'Modalità acqua calda'
+        pl: 'Tryb ciepłej wody'
+        ru: 'Режим горячей воды'
+        zh: '热水模式'
+        hu: 'Melegvíz üzemmód'
+        pt: 'Modo de água quente'
+      0x14:
+        unused: true
+      0x15:
+        unused: true
+      0x16:
+        unused: true
+      0x17:
+        unused: true
+      0x18:
+        unused: true
+      0x19:
+        unused: true
+      0x1A:
+        unused: true
+      0x1B:
+        unused: true
+      0x1C:
+        unused: true
+      0x1D:
+        unused: true
+      0x1E:
+        unused: true
+      0x1F:
+        unused: true
+
+  POWER_DOWN_WARNING:
+    bits: '2.1'
+    comment:
+      en: 'Entering power-limitation (limp-home / turtle) mode'
+      fr: 'Entrée en mode de limitation de puissance (mode dégradé "tortue")'
+      es: 'Entrada en modo de limitación de potencia (modo degradado "tortuga")'
+      de: 'Eintritt in den Leistungsbegrenzungsmodus (Notlauf-/"Schildkröten"-Modus)'
+      it: 'Ingresso in modalità di limitazione della potenza (modalità degradata "tartaruga")'
+      pl: 'Wejście w tryb ograniczenia mocy (tryb awaryjny "żółwia")'
+      ru: 'Переход в режим ограничения мощности (аварийный режим "черепаха")'
+      zh: '进入功率限制(跛行/龟速)模式'
+      hu: 'Belépés a teljesítménykorlátozó (vészjáró / "teknős") módba'
+      pt: 'Entrada em modo de limitação de potência (modo degradado «tartaruga»)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+        es: 'Encendido'
+        de: 'Ein'
+        it: 'Acceso'
+        pl: 'Włączone'
+        ru: 'Включено'
+        zh: '开启'
+        hu: 'Bekapcsolva'
+        pt: 'Ligado'
+
+  CHILLER_ACTIVATION_REQUEST:
+    bits: '2.0'
+    comment:
+      en: 'Request to activate the chiller'
+      fr: 'Demande d''activation du chiller (refroidisseur)'
+      es: 'Solicitud de activación del enfriador (chiller)'
+      de: 'Anforderung zur Aktivierung des Chillers (Kühlers)'
+      it: 'Richiesta di attivazione del chiller (refrigeratore)'
+      pl: 'Żądanie aktywacji chłodnicy (chillera)'
+      ru: 'Запрос на активацию чиллера (охладителя)'
+      zh: '冷却器(chiller)激活请求'
+      hu: 'A hűtőegység (chiller) aktiválási kérése'
+      pt: 'Pedido de ativação do arrefecedor (chiller)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  HEAT_PUMP_WATER_FLOW:
+    bits: '3.7-4.5'
+    comment:
+      en: 'Water circulation flow in the heat pump water pump cooling circuit (L/h)'
+      fr: 'Débit de circulation d''eau dans le circuit de la pompe à eau de la pompe à chaleur (L/h)'
+      es: 'Caudal de circulación de agua en el circuito de la bomba de agua de la bomba de calor (L/h)'
+      de: 'Wasserumlaufmenge im Kühlkreislauf der Wärmepumpen-Wasserpumpe (L/h)'
+      it: 'Portata di circolazione dell''acqua nel circuito della pompa dell''acqua della pompa di calore (L/h)'
+      pl: 'Natężenie przepływu wody w obiegu pompy wodnej pompy ciepła (L/h)'
+      ru: 'Расход циркуляции воды в контуре водяного насоса теплового насоса (л/ч)'
+      zh: '热泵水泵冷却回路中的水循环流量(L/h)'
+      hu: 'A hőszivattyú vízszivattyújának hűtőkörében a víz keringési térfogatárama (L/h)'
+      pt: 'Caudal de circulação de água no circuito de arrefecimento da bomba de água da bomba de calor (L/h)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2000
+    units: 'L/h'
+    invalid: 0x7FF
+
+  BATTERY_PRECONDITIONING_STATE:
+    bits: '4.4-4.2'
+    comment:
+      en: 'HV battery preconditioning state'
+      fr: 'État du préconditionnement de la batterie haute tension'
+      es: 'Estado del preacondicionamiento de la batería de alta tensión'
+      de: 'Status der Vorkonditionierung der Hochvoltbatterie'
+      it: 'Stato del precondizionamento della batteria ad alta tensione'
+      pl: 'Stan wstępnego kondycjonowania akumulatora wysokiego napięcia'
+      ru: 'Состояние предварительного кондиционирования высоковольтной батареи'
+      zh: '高压电池预处理状态'
+      hu: 'A nagyfeszültségű akkumulátor előkondicionálási állapota'
+      pt: 'Estado do pré-condicionamento da bateria de alta tensão'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+      0x02:
+        en: 'Finished'
+        fr: 'Terminé'
+        es: 'Finalizado'
+        de: 'Abgeschlossen'
+        it: 'Terminato'
+        pl: 'Zakończone'
+        ru: 'Завершено'
+        zh: '已完成'
+        hu: 'Befejezve'
+        pt: 'Terminado'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+      0x04:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true

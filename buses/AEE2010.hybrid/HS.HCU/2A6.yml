@@ -1,0 +1,331 @@
+id: 0x2A6
+name: 'HCU2_DYNAMIC_DATA_6'
+type: 'can'
+length: 8
+comment:
+  en: 'Front electric-motor current and fault states (short circuit, mode, performance), from the hybrid control unit.'
+  fr: 'Courant et états de défaut (court-circuit, mode, performance) du moteur électrique avant, issus du calculateur hybride.'
+  es: 'Corriente y estados de fallo (cortocircuito, modo, rendimiento) del motor eléctrico delantero, procedentes de la centralita híbrida.'
+  de: 'Strom und Fehlerzustände (Kurzschluss, Modus, Leistung) des vorderen Elektromotors vom Hybridsteuergerät.'
+  it: 'Corrente e stati di guasto (cortocircuito, modalità, prestazioni) del motore elettrico anteriore, dalla centralina ibrida.'
+  pl: 'Prąd i stany usterek (zwarcie, tryb, wydajność) przedniego silnika elektrycznego z hybrydowego sterownika.'
+  ru: 'Ток и статусы неисправностей (короткое замыкание, режим, производительность) переднего электродвигателя от гибридного блока управления.'
+  zh: '前置电动机的电流及故障状态(短路、模式、性能),来自混合动力控制单元。'
+  hu: 'Az első elektromos motor árama és hibaállapotai (rövidzárlat, üzemmód, teljesítmény) a hibrid vezérlőegységtől.'
+  pt: 'Corrente e estados de avaria (curto-circuito, modo, desempenho) do motor elétrico dianteiro, da unidade de controlo híbrida.'
+periodicity: ['10ms']
+senders: ['HCU2']
+receivers: ['HCU1']
+
+signals:
+  FRAME_CHECKSUM:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Checksum of the frame'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Frames'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER:
+    bits: '1.3-1.0'
+    comment:
+      en: 'Rolling counter incremented at each calculation cycle'
+      fr: 'Compteur cyclique incrémenté à chaque cycle de calcul'
+      es: 'Contador cíclico incrementado en cada ciclo de cálculo'
+      de: 'Zyklischer Zähler, der bei jedem Berechnungszyklus erhöht wird'
+      it: 'Contatore ciclico incrementato a ogni ciclo di calcolo'
+      pl: 'Licznik cykliczny zwiększany przy każdym cyklu obliczeń'
+      ru: 'Циклический счётчик, увеличивающийся на каждом цикле расчёта'
+      zh: '每个计算周期递增的循环计数器'
+      hu: 'A számítási ciklus minden lépésekor növekvő ciklikus számláló'
+      pt: 'Contador cíclico incrementado a cada ciclo de cálculo'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  DCDC_LV_VOLTAGE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'DC/DC converter low-voltage side voltage'
+      fr: 'Tension côté basse tension du convertisseur DC/DC'
+      es: 'Tensión del lado de baja tensión del convertidor DC/DC'
+      de: 'Spannung auf der Niedervoltseite des DC/DC-Wandlers'
+      it: 'Tensione lato bassa tensione del convertitore DC/DC'
+      pl: 'Napięcie po stronie niskiego napięcia przetwornicy DC/DC'
+      ru: 'Напряжение на стороне низкого напряжения DC/DC-преобразователя'
+      zh: 'DC/DC转换器低压侧电压'
+      hu: 'A DC/DC átalakító feszültsége a kisfeszültségű oldalon'
+      pt: 'Tensão do lado de baixa tensão do conversor DC/DC'
+    type: 'uint'
+    factor: 0.1
+    offset: 5
+    min: 5
+    max: 18
+    units: 'V'
+    invalid: 0xFF
+    default: 0x38
+
+  DCDC_CONVERTER_STATUS:
+    bits: '3.7-3.5'
+    comment:
+      en: 'DC/DC converter state'
+      fr: 'Etat du convertisseur DC/DC'
+      es: 'Estado del convertidor DC/DC'
+      de: 'Status des DC/DC-Wandlers'
+      it: 'Stato del convertitore DC/DC'
+      pl: 'Stan przetwornicy DC/DC'
+      ru: 'Состояние DC/DC-преобразователя'
+      zh: 'DC/DC转换器状态'
+      hu: 'A DC/DC átalakító állapota'
+      pt: 'Estado do conversor DC/DC'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Tryb czuwania'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x01:
+        en: 'Buck'
+        fr: 'Abaisseur'
+        es: 'Reductor'
+        de: 'Abwärtswandler'
+        it: 'Buck (riduttore)'
+        pl: 'Obniżający (buck)'
+        ru: 'Понижающий (buck)'
+        zh: '降压'
+        hu: 'Csökkentő (buck)'
+        pt: 'Buck'
+      0x02:
+        en: 'Boost'
+        fr: 'Boost'
+        es: 'Boost'
+        de: 'Boost'
+        it: 'Boost'
+        pl: 'Boost'
+        ru: 'Boost (форсаж)'
+        zh: '增压'
+        hu: 'Boost'
+        pt: 'Boost'
+      0x03:
+        en: 'Derating'
+        fr: 'Réduction de puissance'
+        es: 'Reducción de potencia'
+        de: 'Leistungsreduzierung'
+        it: 'Riduzione di potenza'
+        pl: 'Ograniczenie mocy'
+        ru: 'Снижение мощности'
+        zh: '降额'
+        hu: 'Teljesítménycsökkentés'
+        pt: 'Redução de potência'
+      0x04:
+        en: 'Failure'
+        fr: 'Défaillance'
+        es: 'Fallo'
+        de: 'Ausfall'
+        it: 'Guasto'
+        pl: 'Awaria'
+        ru: 'Отказ'
+        zh: '故障'
+        hu: 'Meghibásodás'
+        pt: 'Falha'
+      0x05:
+        en: 'Off'
+        fr: 'Arrêt'
+        es: 'Apagado'
+        de: 'Aus'
+        it: 'Spento'
+        pl: 'Wyłączone'
+        ru: 'Выключено'
+        zh: '关闭'
+        hu: 'Kikapcsolva'
+        pt: 'Desligado'
+      0x06:
+        unused: true
+      0x07:
+        en: 'Init'
+        fr: 'Initialisation'
+        es: 'Inicialización'
+        de: 'Initialisierung'
+        it: 'Inizializzazione'
+        pl: 'Inicjalizacja'
+        ru: 'Инициализация'
+        zh: '初始化'
+        hu: 'Inicializálás'
+        pt: 'Inicialização'
+
+  HCU2_POWER_LATCH_REQUEST:
+    bits: '3.4'
+    comment:
+      en: 'HCU2 power latch request'
+      fr: 'Demande de maintien d''alimentation (power latch) du HCU2'
+      es: 'Solicitud de retención de alimentación (power latch) del HCU2'
+      de: 'Anforderung der Selbsthaltung (Power Latch) des HCU2'
+      it: 'Richiesta di automantenimento dell''alimentazione (power latch) dell''HCU2'
+      pl: 'Żądanie podtrzymania zasilania (power latch) HCU2'
+      ru: 'Запрос удержания питания (power latch) HCU2'
+      zh: 'HCU2电源自锁请求'
+      hu: 'A HCU2 önfenntartó tápellátásának (power latch) kérése'
+      pt: 'Pedido de retenção de alimentação (power latch) do HCU2'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandé'
+        es: 'Solicitado'
+        de: 'Angefordert'
+        it: 'Richiesto'
+        pl: 'Żądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Pedido'
+
+  FRONT_EMOTOR_FID:
+    bits: '3.3-5.4'
+    comment:
+      en: 'Front electric machine identifier (FID)'
+      fr: 'Identifiant (FID) de la machine électrique avant'
+      es: 'Identificador (FID) de la máquina eléctrica delantera'
+      de: 'Kennung (FID) der vorderen E-Maschine'
+      it: 'Identificativo (FID) della macchina elettrica anteriore'
+      pl: 'Identyfikator (FID) przedniej maszyny elektrycznej'
+      ru: 'Идентификатор (FID) передней электромашины'
+      zh: '前电机识别码(FID)'
+      hu: 'Az első elektromos gép azonosítója (FID)'
+      pt: 'Identificador (FID) da máquina elétrica dianteira'
+    type: 'uint'
+    min: 0
+    max: 65535
+    default: 0xFFFF
+
+  FRONT_EMOTOR_ROTOR_LOCKED_FAULT:
+    bits: '6.3'
+    comment:
+      en: 'Fault following the front electric machine rotor lock-up'
+      fr: 'Défaut suite au blocage du rotor de la machine électrique avant'
+      es: 'Fallo tras el bloqueo del rotor de la máquina eléctrica delantera'
+      de: 'Fehler infolge Blockierung des Rotors der vorderen E-Maschine'
+      it: 'Guasto a seguito del bloccaggio del rotore della macchina elettrica anteriore'
+      pl: 'Usterka wskutek zablokowania wirnika przedniej maszyny elektrycznej'
+      ru: 'Неисправность из-за блокировки ротора передней электромашины'
+      zh: '前电机转子卡死导致的故障'
+      hu: 'Hiba az első elektromos gép rotorjának beszorulása miatt'
+      pt: 'Falha na sequência do bloqueio do rotor da máquina elétrica dianteira'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reconfiguration'
+        fr: 'Pas de reconfiguration'
+        es: 'Sin reconfiguración'
+        de: 'Keine Neukonfiguration'
+        it: 'Nessuna riconfigurazione'
+        pl: 'Brak rekonfiguracji'
+        ru: 'Нет реконфигурации'
+        zh: '无重新配置'
+        hu: 'Nincs újrakonfigurálás'
+        pt: 'Sem reconfiguração'
+      0x01:
+        en: 'Reconfiguration'
+        fr: 'Reconfiguration'
+        es: 'Reconfiguración'
+        de: 'Neukonfiguration'
+        it: 'Riconfigurazione'
+        pl: 'Rekonfiguracja'
+        ru: 'Реконфигурация'
+        zh: '重新配置'
+        hu: 'Újrakonfigurálás'
+        pt: 'Reconfiguração'
+
+  REAR_EMOTOR_RECONFIG_POWER_LIMIT_L4:
+    bits: '6.2'
+    comment:
+      en: 'Rear electric machine (BASS) reconfiguration following a level-4 power limitation'
+      fr: 'Reconfiguration du BASS suite à une limitation de puissance de niveau 4'
+      es: 'Reconfiguración del BASS tras una limitación de potencia de nivel 4'
+      de: 'Rekonfiguration des BASS infolge einer Leistungsbegrenzung der Stufe 4'
+      it: 'Riconfigurazione del BASS a seguito di una limitazione di potenza di livello 4'
+      pl: 'Rekonfiguracja BASS wskutek ograniczenia mocy poziomu 4'
+      ru: 'Реконфигурация BASS вследствие ограничения мощности уровня 4'
+      zh: '由于4级功率限制导致的BASS重新配置'
+      hu: 'A BASS átkonfigurálása a 4. szintű teljesítménykorlátozás miatt'
+      pt: 'Reconfiguração da máquina elétrica traseira (BASS) na sequência de uma limitação de potência de nível 4'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No reconfiguration'
+        fr: 'Pas de reconfiguration'
+        es: 'Sin reconfiguración'
+        de: 'Keine Neukonfiguration'
+        it: 'Nessuna riconfigurazione'
+        pl: 'Brak rekonfiguracji'
+        ru: 'Нет реконфигурации'
+        zh: '无重新配置'
+        hu: 'Nincs újrakonfigurálás'
+        pt: 'Sem reconfiguração'
+      0x01:
+        en: 'Reconfiguration'
+        fr: 'Reconfiguration'
+        es: 'Reconfiguración'
+        de: 'Neukonfiguration'
+        it: 'Riconfigurazione'
+        pl: 'Rekonfiguracja'
+        ru: 'Реконфигурация'
+        zh: '重新配置'
+        hu: 'Újrakonfigurálás'
+        pt: 'Reconfiguração'
+
+  UNUSED_1:
+    bits: '6.1-6.0'
+    unused: true
+
+  FRONT_EMOTOR_COOLANT_TEMPERATURE:
+    bits: '7.7-8.0'
+    comment:
+      en: 'Calculated coolant temperature of the front electric machine system'
+      fr: 'Température calculée du système de refroidissement de la machine électrique avant'
+      es: 'Temperatura calculada del sistema de refrigeración de la máquina eléctrica delantera'
+      de: 'Berechnete Kühlmitteltemperatur des Systems der vorderen E-Maschine'
+      it: 'Temperatura calcolata del sistema di raffreddamento della macchina elettrica anteriore'
+      pl: 'Obliczona temperatura układu chłodzenia przedniej maszyny elektrycznej'
+      ru: 'Расчётная температура охлаждающей жидкости системы передней электромашины'
+      zh: '计算得出的前电机冷却系统温度'
+      hu: 'Az első elektromosgép-rendszer számított hűtőfolyadék-hőmérséklete'
+      pt: 'Temperatura calculada do sistema de refrigeração da máquina elétrica dianteira'
+    type: 'uint'
+    factor: 0.00390625
+    offset: -40
+    min: -40
+    max: 215.9921875
+    units: '°C'
+    invalid: 0xFF
+    default: 0x2800

@@ -1,0 +1,937 @@
+id: 0x527
+name: 'TE_SUPERVISION'
+type: 'can'
+length: 8
+comment:
+  en: 'Hybrid control unit (HCU1) data: charge authorisations, available energy and mains power state.'
+  fr: 'Données du calculateur hybride (HCU1) : autorisations de charge, énergie disponible et état de l''alimentation secteur.'
+  es: 'Datos de la unidad de control híbrida (HCU1): autorizaciones de carga, energía disponible y estado de la alimentación de red.'
+  de: 'Daten des Hybridsteuergeräts (HCU1): Ladefreigaben, verfügbare Energie und Netzversorgungszustand.'
+  it: 'Dati della centralina ibrida (HCU1): autorizzazioni di ricarica, energia disponibile e stato dell''alimentazione di rete.'
+  pl: 'Dane sterownika hybrydowego (HCU1): zezwolenia na ładowanie, dostępna energia i stan zasilania sieciowego.'
+  ru: 'Данные гибридного блока управления (HCU1): разрешения на зарядку, доступная энергия и состояние сетевого питания.'
+  zh: '混合动力控制单元(HCU1)数据:充电授权、可用能量和市电供电状态。'
+  hu: 'A hibrid vezérlőegység (HCU1) adatai: töltési engedélyek, elérhető energia és hálózati tápellátás állapota.'
+  pt: 'Dados da unidade de controlo híbrida (HCU1): autorizações de carga, energia disponível e estado da alimentação de rede.'
+observations:
+  en: 'On state change of: COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+  fr: 'Sur changement d''état de : COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+  es: 'Al cambiar el estado de: COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+  de: 'Bei Statusänderung von: COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+  it: 'Al cambiamento di stato di: COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+  pl: 'Wysyłane przy zmianie stanu: COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+  ru: 'При изменении состояния: COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+  zh: '当ETAT_MTH, ELECTRIC_MOTOR_STATUS, RECHARGE状态变化时'
+  hu: 'A(z) COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE állapotváltozásakor'
+  pt: 'Na mudança de estado de: COMBUSTION_ENGINE_STATUS, ELECTRIC_MOTOR_STATUS, RECHARGE'
+periodicity: ['100ms', 'trigger']
+senders: ['HCU1']
+receivers: ['ABS', 'BSI', 'BCP']
+
+signals:
+  HYBRID_POWERTRAIN_STATE_HMI:
+    bits: '1.7-1.5'
+    comment:
+      en: 'Hybrid powertrain state for the instrument display'
+      fr: 'État du GMP hybride pour l''affichage'
+      es: 'Estado de la cadena cinemática híbrida para la pantalla'
+      de: 'Status des Hybridantriebsstrangs für die Anzeige'
+      it: 'Stato del powertrain ibrido per il display'
+      pl: 'Stan hybrydowego układu napędowego do wyświetlacza'
+      ru: 'Состояние гибридного силового агрегата для дисплея'
+      zh: '用于仪表显示的混合动力总成状态'
+      hu: 'A hibrid hajtáslánc állapota a kijelző számára'
+      pt: 'Estado da cadeia cinemática híbrida para o visor'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Inactive'
+        fr: 'Inactive'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x02:
+        en: 'Active while stopped'
+        fr: 'Active à l''arrêt'
+        es: 'Activa en parada'
+        de: 'Aktiv im Stillstand'
+        it: 'Attiva da fermo'
+        pl: 'Aktywna podczas postoju'
+        ru: 'Активно при остановке'
+        zh: '停止时激活'
+        hu: 'Aktív álló helyzetben'
+        pt: 'Ativo enquanto parado'
+      0x03:
+        en: 'Active in traction mode'
+        fr: 'Active en traction'
+        es: 'Activo en modo tracción'
+        de: 'Aktiv im Zugbetrieb'
+        it: 'Attivo in trazione'
+        pl: 'Aktywny w trybie napędu'
+        ru: 'Активно в режиме тяги'
+        zh: '牵引模式下激活'
+        hu: 'Aktív vontatási módban'
+        pt: 'Ativo em modo tração'
+      0x04:
+        en: 'Active in propulsion mode'
+        fr: 'Actif en mode propulsion'
+        es: 'Activo en modo propulsión'
+        de: 'Aktiv im Antriebsmodus'
+        it: 'Attivo in modalità propulsione'
+        pl: 'Aktywne w trybie napędu'
+        ru: 'Активно в режиме тяги'
+        zh: '驱动模式下激活'
+        hu: 'Aktív hajtási módban'
+        pt: 'Ativo em modo propulsão'
+      0x05:
+        en: 'Active in hybrid mode'
+        fr: 'Active en mode hybride'
+        es: 'Activo en modo híbrido'
+        de: 'Aktiv im Hybridmodus'
+        it: 'Attivo in modalità ibrida'
+        pl: 'Aktywny w trybie hybrydowym'
+        ru: 'Активно в гибридном режиме'
+        zh: '混合动力模式下激活'
+        hu: 'Aktív hibrid üzemmódban'
+        pt: 'Ativo em modo híbrido'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  HYBRID_OPERATING_MODE:
+    bits: '1.3-1.1'
+    comment:
+      en: 'Hybrid powertrain operating mode (4x4, Sport, Hybrid, ZEV)'
+      fr: 'Mode d''utilisation du GMP hybride (4x4, Sport, Hybride, ZEV)'
+      es: 'Modo de uso de la cadena cinemática híbrida (4x4, Sport, Híbrido, ZEV)'
+      de: 'Nutzungsmodus des Hybridantriebsstrangs (4x4, Sport, Hybrid, ZEV)'
+      it: 'Modalità di utilizzo del powertrain ibrido (4x4, Sport, Ibrido, ZEV)'
+      pl: 'Tryb użytkowania hybrydowego układu napędowego (4x4, Sport, Hybryda, ZEV)'
+      ru: 'Режим использования гибридного силового агрегата (4x4, Спорт, Гибрид, ZEV)'
+      zh: '混合动力总成使用模式(4x4、运动、混合动力、纯电动)'
+      hu: 'A hibrid hajtáslánc használati módja (4x4, Sport, Hibrid, ZEV)'
+      pt: 'Modo de utilização do GMP híbrido (4x4, Sport, Hybrid, ZEV)'
+    type: 'enum'
+    default: 0x02
+    values:
+      0x00:
+        en: '4x4'
+        fr: '4x4'
+        es: '4x4'
+        de: '4x4'
+        it: '4x4'
+        pl: '4x4'
+        ru: '4x4'
+        zh: '4x4'
+        hu: '4x4'
+        pt: '4x4'
+      0x01:
+        en: 'Sport'
+        fr: 'Sport'
+        es: 'Sport'
+        de: 'Sport'
+        it: 'Sport'
+        pl: 'Sport'
+        ru: 'Спорт'
+        zh: '运动'
+        hu: 'Sport'
+        pt: 'Desportivo'
+      0x02:
+        en: 'HY'
+        fr: 'HY'
+        es: 'HY'
+        de: 'HY'
+        it: 'HY'
+        pl: 'HY'
+        ru: 'HY'
+        zh: 'HY'
+        hu: 'HY'
+        pt: 'HY'
+      0x03:
+        en: 'ZEV'
+        fr: 'ZEV'
+        es: 'ZEV'
+        de: 'ZEV'
+        it: 'ZEV'
+        pl: 'ZEV'
+        ru: 'ZEV'
+        zh: 'ZEV'
+        hu: 'ZEV'
+        pt: 'ZEV'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  HYBRID_FRONT_MOTOR_FLOW_STATE:
+    bits: '2.7-2.4'
+    comment:
+      en: 'Front hybrid electric motor power flow state (traction / regeneration)'
+      fr: 'État du flux de puissance du moteur électrique hybride avant (traction / récupération)'
+      es: 'Estado del flujo de potencia del motor eléctrico híbrido delantero (tracción / recuperación)'
+      de: 'Leistungsflusszustand des vorderen Hybrid-Elektromotors (Antrieb / Rekuperation)'
+      it: 'Stato del flusso di potenza del motore elettrico ibrido anteriore (trazione / recupero)'
+      pl: 'Stan przepływu mocy przedniego hybrydowego silnika elektrycznego (napęd / odzysk)'
+      ru: 'Состояние потока мощности переднего гибридного электродвигателя (тяга / рекуперация)'
+      zh: '前混合动力电机功率流状态(驱动/回收)'
+      hu: 'Az első hibrid elektromos motor teljesítményáramlásának állapota (hajtás / rekuperáció)'
+      pt: 'Estado do fluxo de potência do motor elétrico híbrido dianteiro (tração / recuperação)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Traction'
+        fr: 'Traction'
+        es: 'Tracción'
+        de: 'Traktion'
+        it: 'Trazione'
+        pl: 'Napęd'
+        ru: 'Тяга'
+        zh: '牵引'
+        hu: 'Vontatás'
+        pt: 'Tração'
+      0x02:
+        en: 'Recuperation'
+        fr: 'Récupération'
+        es: 'Recuperación'
+        de: 'Rekuperation'
+        it: 'Recupero'
+        pl: 'Odzysk energii'
+        ru: 'Рекуперация'
+        zh: '能量回收'
+        hu: 'Rekuperáció'
+        pt: 'Recuperação'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  HYBRID_REAR_MOTOR_FLOW_STATE:
+    bits: '2.3-2.0'
+    comment:
+      en: 'Rear hybrid electric motor power flow state (propulsion / regeneration)'
+      fr: 'État du flux de puissance du moteur électrique hybride arrière (propulsion / récupération)'
+      es: 'Estado del flujo de potencia del motor eléctrico híbrido trasero (propulsión / recuperación)'
+      de: 'Leistungsflusszustand des hinteren Hybrid-Elektromotors (Antrieb / Rekuperation)'
+      it: 'Stato del flusso di potenza del motore elettrico ibrido posteriore (trazione / recupero)'
+      pl: 'Stan przepływu mocy tylnego hybrydowego silnika elektrycznego (napęd / odzysk)'
+      ru: 'Состояние потока мощности заднего гибридного электродвигателя (тяга / рекуперация)'
+      zh: '后混合动力电机功率流状态(驱动/回收)'
+      hu: 'A hátsó hibrid elektromos motor teljesítményáramlásának állapota (hajtás / rekuperáció)'
+      pt: 'Estado do fluxo de potência do motor elétrico híbrido traseiro (propulsão / recuperação)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not activated'
+        fr: 'Non activé'
+        es: 'No activado'
+        de: 'Nicht aktiviert'
+        it: 'Non attivato'
+        pl: 'Nieaktywowany'
+        ru: 'Не активировано'
+        zh: '未激活'
+        hu: 'Nincs aktiválva'
+        pt: 'Não ativado'
+      0x01:
+        en: 'Propulsion'
+        fr: 'Propulsion'
+        es: 'Propulsión'
+        de: 'Antrieb'
+        it: 'Propulsione'
+        pl: 'Napęd'
+        ru: 'Тяга'
+        zh: '驱动'
+        hu: 'Hajtás'
+        pt: 'Propulsão'
+      0x02:
+        en: 'Recuperation'
+        fr: 'Récupération'
+        es: 'Recuperación'
+        de: 'Rekuperation'
+        it: 'Recupero'
+        pl: 'Odzysk energii'
+        ru: 'Рекуперация'
+        zh: '能量回收'
+        hu: 'Rekuperáció'
+        pt: 'Recuperação'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  HYBRID_BATTERY_FLOW_STATE:
+    bits: '3.7-3.4'
+    comment:
+      en: 'HV battery power flow state (charge / discharge)'
+      fr: 'État du flux de puissance de la batterie haute tension (charge / décharge)'
+      es: 'Estado del flujo de potencia de la batería de alta tensión (carga / descarga)'
+      de: 'Leistungsflusszustand der Hochvoltbatterie (Laden / Entladen)'
+      it: 'Stato del flusso di potenza della batteria ad alta tensione (carica / scarica)'
+      pl: 'Stan przepływu mocy akumulatora wysokiego napięcia (ładowanie / rozładowanie)'
+      ru: 'Состояние потока мощности высоковольтной батареи (заряд / разряд)'
+      zh: '高压电池功率流状态(充电/放电)'
+      hu: 'A nagyfeszültségű akkumulátor teljesítményáramlásának állapota (töltés / kisütés)'
+      pt: 'Estado do fluxo de potência da bateria de alta tensão (carga / descarga)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Non actif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Non attivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Recharge'
+        fr: 'Recharge'
+        es: 'Recarga'
+        de: 'Aufladen'
+        it: 'Ricarica'
+        pl: 'Ładowanie'
+        ru: 'Подзарядка'
+        zh: '充电'
+        hu: 'Töltés'
+        pt: 'Recarga'
+      0x02:
+        en: 'Discharge'
+        fr: 'Décharge'
+        es: 'Descarga'
+        de: 'Entladung'
+        it: 'Scarica'
+        pl: 'Rozładowanie'
+        ru: 'Разряд'
+        zh: '放电'
+        hu: 'Kisütés'
+        pt: 'Descarga'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x04:
+        unused: true
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+      0x08:
+        unused: true
+      0x09:
+        unused: true
+      0x0A:
+        unused: true
+      0x0B:
+        unused: true
+      0x0C:
+        unused: true
+      0x0D:
+        unused: true
+      0x0E:
+        unused: true
+      0x0F:
+        unused: true
+
+  HV_BATTERY_SOC:
+    bits: '3.3-4.3'
+    comment:
+      en: 'HV battery state of charge (%)'
+      fr: 'État de charge (SOC) de la batterie haute tension (%)'
+      es: 'Estado de carga (SOC) de la batería de alta tensión (%)'
+      de: 'Ladezustand (SOC) der Hochvoltbatterie (%)'
+      it: 'Stato di carica (SOC) della batteria ad alta tensione (%)'
+      pl: 'Stan naładowania (SOC) akumulatora wysokiego napięcia (%)'
+      ru: 'Уровень заряда (SOC) высоковольтной батареи (%)'
+      zh: '高压电池荷电状态(SOC)(%)'
+      hu: 'A nagyfeszültségű akkumulátor töltöttségi állapota (SOC) (%)'
+      pt: 'Estado de carga (SOC) da bateria de alta tensão (%)'
+    type: 'uint'
+    factor: 0.25
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0x1FF
+    default: 0x118
+
+  STOP_START_FUNCTION_STATE:
+    bits: '4.1-4.0'
+    comment:
+      en: 'Stop & start function state'
+      fr: 'État de la fonction stop & start'
+      es: 'Estado de la función Stop & Start'
+      de: 'Status der Start-Stopp-Funktion'
+      it: 'Stato della funzione Stop & Start'
+      pl: 'Stan funkcji Stop & Start'
+      ru: 'Состояние функции Старт-стоп'
+      zh: '启停功能状态'
+      hu: 'A Stop & Start funkció állapota'
+      pt: 'Estado da função Stop & Start'
+    type: 'enum'
+    default: 0x01
+    values:
+      0x00:
+        en: 'STT disabled by outside temperature'
+        fr: 'Stop & start désactivé par la température extérieure'
+        es: 'Stop & start desactivado por la temperatura exterior'
+        de: 'Stopp-Start deaktiviert durch Außentemperatur'
+        it: 'Stop & start disattivato dalla temperatura esterna'
+        pl: 'Stop & start wyłączony przez temperaturę zewnętrzną'
+        ru: 'Старт-стоп отключён из-за наружной температуры'
+        zh: '由于车外温度而禁用启停功能'
+        hu: 'A start-stop kikapcsolva a külső hőmérséklet miatt'
+        pt: 'Stop & Start desativado pela temperatura exterior'
+      0x01:
+        en: 'STT active'
+        fr: 'STT activé'
+        es: 'STT activado'
+        de: 'STT aktiv'
+        it: 'STT attivo'
+        pl: 'STT aktywny'
+        ru: 'STT активна'
+        zh: 'STT已激活'
+        hu: 'STT aktív'
+        pt: 'STT ativado'
+      0x02:
+        en: 'Stop & Start deactivated'
+        fr: 'Stop & Start désactivé'
+        es: 'Stop & Start desactivado'
+        de: 'Stopp-Start deaktiviert'
+        it: 'Stop & Start disattivato'
+        pl: 'Stop & Start wyłączony'
+        ru: 'Стоп-старт отключён'
+        zh: '启停系统已停用'
+        hu: 'Stop & Start kikapcsolva'
+        pt: 'Stop & Start desativado'
+      0x03:
+        en: 'STT in fault'
+        fr: 'STT en défaut'
+        es: 'STT en fallo'
+        de: 'STT fehlerhaft'
+        it: 'STT in guasto'
+        pl: 'Usterka STT'
+        ru: 'Неисправность STT'
+        zh: 'STT故障'
+        hu: 'STT hibás'
+        pt: 'STT com falha'
+
+  HV_PRECONDITIONING_AUTHORIZATION:
+    bits: '5.7-5.6'
+    comment:
+      en: 'Authorisation to trigger plug-in preconditioning'
+      fr: 'Autorisation de déclenchement du préconditionnement sur prise'
+      es: 'Autorización de activación del preacondicionamiento enchufado'
+      de: 'Freigabe zur Aktivierung der Plug-in-Vorkonditionierung'
+      it: 'Autorizzazione all''attivazione del precondizionamento con presa collegata'
+      pl: 'Zezwolenie na uruchomienie wstępnej klimatyzacji przy podłączeniu do gniazda'
+      ru: 'Разрешение на запуск предварительного кондиционирования при подключении к сети'
+      zh: '插电式预处理启动授权'
+      hu: 'A hálózatra csatlakoztatott előkondicionálás indításának engedélyezése'
+      pt: 'Autorização de ativação do pré-condicionamento com ligação à tomada'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        unused: true
+      0x01:
+        en: 'Allowed'
+        fr: 'Autorisé'
+        es: 'Permitido'
+        de: 'Erlaubt'
+        it: 'Consentito'
+        pl: 'Dozwolone'
+        ru: 'Разрешено'
+        zh: '允许'
+        hu: 'Engedélyezve'
+        pt: 'Permitido'
+      0x02:
+        en: 'Standby'
+        fr: 'Veille'
+        es: 'En espera'
+        de: 'Standby'
+        it: 'Standby'
+        pl: 'Tryb czuwania'
+        ru: 'Ожидание'
+        zh: '待机'
+        hu: 'Készenlét'
+        pt: 'Em espera'
+      0x03:
+        unused: true
+
+  SLOW_CHARGE_CABLE_STATUS_2:
+    bits: '5.5'
+    comment:
+      en: 'Slow-charge cable connection state (vehicle side)'
+      fr: 'État de branchement du câble de charge lente (côté véhicule)'
+      es: 'Estado de conexión del cable de carga lenta (lado del vehículo)'
+      de: 'Anschlusszustand des Langsamladekabels (Fahrzeugseite)'
+      it: 'Stato di collegamento del cavo di ricarica lenta (lato veicolo)'
+      pl: 'Stan podłączenia przewodu ładowania wolnego (strona pojazdu)'
+      ru: 'Состояние подключения кабеля медленной зарядки (со стороны автомобиля)'
+      zh: '慢充电缆连接状态(车辆侧)'
+      hu: 'A lassú töltőkábel csatlakozási állapota (jármű oldal)'
+      pt: 'Estado de ligação do cabo de carregamento lento (lado do veículo)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Not connected'
+        fr: 'Non branché'
+        es: 'No conectado'
+        de: 'Nicht angeschlossen'
+        it: 'Non collegato'
+        pl: 'Niepodłączone'
+        ru: 'Не подключено'
+        zh: '未连接'
+        hu: 'Nincs csatlakoztatva'
+        pt: 'Não ligado'
+      0x01:
+        en: 'Plugged in'
+        fr: 'Branché'
+        es: 'Enchufado'
+        de: 'Eingesteckt'
+        it: 'Collegato'
+        pl: 'Podłączony'
+        ru: 'Подключено'
+        zh: '已插入'
+        hu: 'Csatlakoztatva'
+        pt: 'Ligado à tomada'
+
+  RECHARGE_SYSTEM_FAILURE:
+    bits: '5.4'
+    comment:
+      en: 'Recharge system failure'
+      fr: 'Défaillance du système de recharge'
+      es: 'Fallo del sistema de recarga'
+      de: 'Ausfall des Ladesystems'
+      it: 'Guasto del sistema di ricarica'
+      pl: 'Awaria systemu ładowania'
+      ru: 'Отказ системы зарядки'
+      zh: '充电系统故障'
+      hu: 'A töltőrendszer meghibásodása'
+      pt: 'Avaria do sistema de recarga'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'NOK'
+        fr: 'NOK'
+        es: 'NOK'
+        de: 'NOK'
+        it: 'NOK'
+        pl: 'NOK'
+        ru: 'NOK'
+        zh: 'NOK'
+        hu: 'NOK'
+        pt: 'NOK'
+
+  SLOW_CHARGE_CABLE_STATUS:
+    bits: '5.3'
+    comment:
+      en: 'Slow-charge cable connection state (vehicle side)'
+      fr: 'État de branchement du câble de charge lente (côté véhicule)'
+      es: 'Estado de conexión del cable de carga lenta (lado del vehículo)'
+      de: 'Anschlusszustand des Langsamladekabels (Fahrzeugseite)'
+      it: 'Stato di collegamento del cavo di ricarica lenta (lato veicolo)'
+      pl: 'Stan podłączenia przewodu ładowania wolnego (strona pojazdu)'
+      ru: 'Состояние подключения кабеля медленной зарядки (со стороны автомобиля)'
+      zh: '慢充电缆连接状态(车辆侧)'
+      hu: 'A lassú töltőkábel csatlakozási állapota (jármű oldal)'
+      pt: 'Estado de ligação do cabo de carregamento lento (lado do veículo)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'NOK'
+        fr: 'NOK'
+        es: 'NOK'
+        de: 'NOK'
+        it: 'NOK'
+        pl: 'NOK'
+        ru: 'NOK'
+        zh: 'NOK'
+        hu: 'NOK'
+        pt: 'NOK'
+
+  GEARBOX_RECHARGE_AUTHORIZATION:
+    bits: '5.2-5.1'
+    comment:
+      en: 'Gearbox system authorisation'
+      fr: 'Autorisation du système de boîte de vitesses'
+      es: 'Autorización del sistema de la caja de cambios'
+      de: 'Freigabe des Getriebesystems'
+      it: 'Autorizzazione del sistema del cambio'
+      pl: 'Zezwolenie systemu skrzyni biegów'
+      ru: 'Разрешение системы коробки передач'
+      zh: '变速箱系统授权'
+      hu: 'A váltórendszer engedélyezése'
+      pt: 'Autorização do sistema da caixa de velocidades'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'No neutral'
+        fr: 'Pas de point mort'
+        es: 'Sin punto muerto'
+        de: 'Kein Leerlauf'
+        it: 'Nessun folle'
+        pl: 'Brak biegu jałowego'
+        ru: 'Нет нейтрали'
+        zh: '无空挡'
+        hu: 'Nincs üresjárat'
+        pt: 'Sem ponto morto'
+      0x02:
+        en: 'No P'
+        fr: 'Pas de P'
+        es: 'Sin P'
+        de: 'Kein P'
+        it: 'Nessuna P'
+        pl: 'Brak P'
+        ru: 'Нет P'
+        zh: '无P'
+        hu: 'Nincs P'
+        pt: 'Sem P'
+      0x03:
+        unused: true
+
+  MAINS_SUPPLY_PRESENCE:
+    bits: '5.0'
+    comment:
+      en: 'Mains (230V) supply presence'
+      fr: 'Présence de l''alimentation secteur (230V)'
+      es: 'Presencia de alimentación de red (230V)'
+      de: 'Vorhandensein der Netzversorgung (230V)'
+      it: 'Presenza dell''alimentazione di rete (230V)'
+      pl: 'Obecność zasilania sieciowego (230V)'
+      ru: 'Наличие сетевого питания (230В)'
+      zh: '市电供电(230V)存在'
+      hu: 'Hálózati (230V) tápellátás jelenléte'
+      pt: 'Presença da alimentação de rede (230V)'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+        es: 'OK'
+        de: 'OK'
+        it: 'OK'
+        pl: 'OK'
+        ru: 'OK'
+        zh: 'OK'
+        hu: 'OK'
+        pt: 'OK'
+      0x01:
+        en: 'NOK'
+        fr: 'NOK'
+        es: 'NOK'
+        de: 'NOK'
+        it: 'NOK'
+        pl: 'NOK'
+        ru: 'NOK'
+        zh: 'NOK'
+        hu: 'NOK'
+        pt: 'NOK'
+
+  HV_AC_AVAILABLE_POWER:
+    bits: '6.7-6.0'
+    comment:
+      en: 'Power available for the high-voltage air conditioning (preconditioning or operation)'
+      fr: 'Puissance disponible pour la climatisation haute tension (préconditionnement ou fonctionnement)'
+      es: 'Potencia disponible para el climatizador de alta tensión (preacondicionamiento o funcionamiento)'
+      de: 'Für die Hochvolt-Klimaanlage verfügbare Leistung (Vorkonditionierung oder Betrieb)'
+      it: 'Potenza disponibile per il climatizzatore ad alta tensione (precondizionamento o funzionamento)'
+      pl: 'Moc dostępna dla klimatyzacji wysokiego napięcia (wstępna klimatyzacja lub praca)'
+      ru: 'Мощность, доступная для высоковольтного кондиционера (предварительное кондиционирование или работа)'
+      zh: '高压空调可用功率(预处理或运行)'
+      hu: 'A nagyfeszültségű klíma számára rendelkezésre álló teljesítmény (előkondicionálás vagy üzem)'
+      pt: 'Potência disponível para o ar condicionado de alta tensão (pré-condicionamento ou funcionamento)'
+    type: 'uint'
+    factor: 100
+    min: 0
+    max: 15000
+    units: 'W'
+    invalid: 0xFF
+    default: 0x00
+
+  HV_BATTERY_CHARGE_STATE:
+    bits: '7.7'
+    comment:
+      en: 'High-voltage battery charge state'
+      fr: 'État de charge de la batterie haute tension'
+      es: 'Estado de carga de la batería de alta tensión'
+      de: 'Ladezustand der Hochvoltbatterie'
+      it: 'Stato di carica della batteria ad alta tensione'
+      pl: 'Stan naładowania akumulatora wysokiego napięcia'
+      ru: 'Состояние заряда высоковольтной батареи'
+      zh: '高压电池充电状态'
+      hu: 'A nagyfeszültségű akkumulátor töltési állapota'
+      pt: 'Estado de carga da bateria de alta tensão'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'Battery not charged'
+        fr: 'Batterie non chargée'
+        es: 'Batería no cargada'
+        de: 'Batterie nicht geladen'
+        it: 'Batteria non carica'
+        pl: 'Akumulator nienaładowany'
+        ru: 'Батарея не заряжена'
+        zh: '电池未充电'
+        hu: 'Akkumulátor nincs feltöltve'
+        pt: 'Bateria não carregada'
+      0x01:
+        en: 'Battery charged'
+        fr: 'Batterie chargée'
+        es: 'Batería cargada'
+        de: 'Batterie geladen'
+        it: 'Batteria carica'
+        pl: 'Akumulator naładowany'
+        ru: 'Батарея заряжена'
+        zh: '电池已充满'
+        hu: 'Akkumulátor feltöltve'
+        pt: 'Bateria carregada'
+
+  HV_BATTERY_RECHARGE_STATE:
+    bits: '7.6'
+    comment:
+      en: 'High-voltage battery recharge state'
+      fr: 'État de recharge de la batterie haute tension'
+      es: 'Estado de recarga de la batería de alta tensión'
+      de: 'Wiederaufladezustand der Hochvoltbatterie'
+      it: 'Stato di ricarica della batteria ad alta tensione'
+      pl: 'Stan doładowania akumulatora wysokiego napięcia'
+      ru: 'Состояние подзарядки высоковольтной батареи'
+      zh: '高压电池充电状态(补充)'
+      hu: 'A nagyfeszültségű akkumulátor újratöltési állapota'
+      pt: 'Estado de recarga da bateria de alta tensão'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No charging in progress'
+        fr: 'Pas de recharge en cours'
+        es: 'Sin carga en curso'
+        de: 'Kein Ladevorgang läuft'
+        it: 'Nessuna ricarica in corso'
+        pl: 'Brak trwającego ładowania'
+        ru: 'Зарядка не выполняется'
+        zh: '无正在进行的充电'
+        hu: 'Nincs folyamatban töltés'
+        pt: 'Sem carregamento em curso'
+      0x01:
+        en: 'Charging in progress'
+        fr: 'Recharge en cours'
+        es: 'Carga en curso'
+        de: 'Ladevorgang läuft'
+        it: 'Ricarica in corso'
+        pl: 'Ładowanie w toku'
+        ru: 'Идёт зарядка'
+        zh: '正在充电'
+        hu: 'Töltés folyamatban'
+        pt: 'Carregamento em curso'
+
+  ZEV_MODE_REQUEST_STATE:
+    bits: '7.5-7.4'
+    comment:
+      en: 'System state on ZEV mode switch request'
+      fr: 'État du système sur demande de passage en mode ZEV'
+      es: 'Estado del sistema ante la solicitud de paso a modo ZEV'
+      de: 'Systemzustand bei Anforderung des ZEV-Moduswechsels'
+      it: 'Stato del sistema alla richiesta di passaggio in modalità ZEV'
+      pl: 'Stan systemu przy żądaniu przejścia w tryb ZEV'
+      ru: 'Состояние системы при запросе переключения в режим ZEV'
+      zh: '请求切换至ZEV模式时的系统状态'
+      hu: 'A rendszer állapota a ZEV módra váltás kérésekor'
+      pt: 'Estado do sistema perante o pedido de mudança para modo ZEV'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'No refusal'
+        fr: 'Pas de refus'
+        es: 'Sin rechazo'
+        de: 'Keine Ablehnung'
+        it: 'Nessun rifiuto'
+        pl: 'Brak odmowy'
+        ru: 'Нет отказа'
+        zh: '无拒绝'
+        hu: 'Nincs elutasítás'
+        pt: 'Sem recusa'
+      0x01:
+        en: 'SOC insufficient'
+        fr: 'SOC insuffisant'
+        es: 'SOC insuficiente'
+        de: 'SOC unzureichend'
+        it: 'SOC insufficiente'
+        pl: 'Niewystarczający SOC'
+        ru: 'Недостаточный SOC'
+        zh: 'SOC不足'
+        hu: 'Nem elegendő SOC'
+        pt: 'SOC insuficiente'
+      0x02:
+        en: 'Hybrid system fault'
+        fr: 'Défaut du système hybride'
+        es: 'Fallo del sistema híbrido'
+        de: 'Fehler des Hybridsystems'
+        it: 'Guasto del sistema ibrido'
+        pl: 'Usterka układu hybrydowego'
+        ru: 'Неисправность гибридной системы'
+        zh: '混合动力系统故障'
+        hu: 'Hibrid rendszer hibája'
+        pt: 'Falha do sistema híbrido'
+      0x03:
+        unused: true
+
+  AVAILABLE_ENERGY_STATE:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Available energy state'
+      fr: 'État de l''énergie disponible'
+      es: 'Estado de la energía disponible'
+      de: 'Zustand der verfügbaren Energie'
+      it: 'Stato dell''energia disponibile'
+      pl: 'Stan dostępnej energii'
+      ru: 'Состояние доступной энергии'
+      zh: '可用能量状态'
+      hu: 'A rendelkezésre álló energia állapota'
+      pt: 'Estado da energia disponível'
+    type: 'uint'
+    factor: 256
+    min: 0
+    max: 60000
+    units: 'kJ'
+    invalid: 0x0F

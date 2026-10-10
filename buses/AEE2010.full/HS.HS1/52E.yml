@@ -1,0 +1,100 @@
+id: 0x52E
+name: 'BSI_CABIN_DATA_12'
+type: 'can'
+length: 8
+comment:
+  en: 'Body controller cabin data: hybrid blower setpoint, load-shedding requests for ABS/ESP, electric power steering, EasyMove and suspension, demisting request and hybrid zero-emission cabin inhibition.'
+  fr: 'Données habitacle de la BSI : consigne pulseur hybride, demandes de délestage ABS/ESP, direction assistée électrique, EasyMove et suspension, demande de désembuage et inhibition du mode zéro émission habitacle hybride.'
+  es: 'Datos del habitáculo de la BSI: consigna del ventilador híbrido, solicitudes de reducción de carga de ABS/ESP, dirección asistida eléctrica, EasyMove y suspensión, solicitud de desempañado e inhibición del modo cero emisiones del habitáculo híbrido.'
+  de: 'BSI-Innenraumdaten: Sollwert des Hybrid-Gebläses, Lastabwurfanforderungen für ABS/ESP, elektrische Servolenkung, EasyMove und Federung, Anforderung Entfeuchtung und Sperre des emissionsfreien Hybridmodus im Innenraum.'
+  it: 'Dati abitacolo della BSI: setpoint ventola ibrida, richieste di riduzione carico per ABS/ESP, servosterzo elettrico, EasyMove e sospensione, richiesta di disappannamento e inibizione della modalità zero emissioni abitacolo ibrido.'
+  pl: 'Dane kabiny z BSI: nastawa dmuchawy hybrydowej, żądania zrzutu obciążenia dla ABS/ESP, elektrycznego wspomagania kierownicy, EasyMove i zawieszenia, żądanie odparowania szyb i blokada trybu zero emisji w kabinie hybrydowej.'
+  ru: 'Данные салона от BSI: уставка гибридного вентилятора, запросы сброса нагрузки для ABS/ESP, электроусилителя руля, EasyMove и подвески, запрос осушения стёкол и блокировка режима нулевых выбросов в салоне гибрида.'
+  zh: 'BSI座舱数据:混合动力鼓风机设定值、ABS/ESP减载请求、电动助力转向、EasyMove和悬挂减载请求、除雾请求以及混合动力座舱零排放模式抑制。'
+  hu: 'BSI utastér adatok: hibrid fűtőventilátor alapjel, ABS/ESP, elektromos szervokormány, EasyMove és felfüggesztés terheléscsökkentési kérések, páramentesítési kérés és a hibrid utastér nulla emissziós módjának letiltása.'
+  pt: 'Dados do habitáculo do computador de servidão: ponto de ajuste do ventilador híbrido, pedidos de corte de carga para ABS/ESP, direção assistida elétrica, EasyMove e suspensão, pedido de desembaciamento e inibição do habitáculo em modo híbrido de emissões zero.'
+periodicity: ['1000ms']
+senders: ['BSI']
+
+signals:
+  AUTONOMY:
+    bits: '1.7-2.0'
+    comment:
+      en: 'Residual range'
+      fr: 'Autonomie résiduelle'
+      es: 'Autonomía residual'
+      de: 'Restreichweite'
+      it: 'Autonomia residua'
+      pl: 'Pozostały zasięg'
+      ru: 'Остаточный запас хода'
+      zh: '剩余续航里程'
+      hu: 'Fennmaradó hatótávolság'
+      pt: 'Autonomia residual'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 2000
+    units: 'km'
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  DISTANCE_TRAVELLED:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Rolling distance counter, 0.1 m per bit, wraps after 0xFFFF (6553.5 m); no invalid value, frozen when unknown'
+      fr: 'Compteur cumulatif de distance, 0,1 m par bit, boucle après 0xFFFF (6553,5 m) ; pas de valeur invalide, figé si inconnu'
+      es: 'Contador acumulativo de distancia, 0,1 m por bit, se reinicia tras 0xFFFF (6553,5 m); sin valor inválido, se congela si es desconocido'
+      de: 'Fortlaufender Streckenzähler, 0,1 m pro Bit, Überlauf nach 0xFFFF (6553,5 m); kein ungültiger Wert, eingefroren bei Unbekannt'
+      it: 'Contatore cumulativo di distanza, 0,1 m per bit, si azzera dopo 0xFFFF (6553,5 m); nessun valore non valido, congelato se sconosciuto'
+      pl: 'Narastający licznik przebytej odległości, 0,1 m na bit, zawija się po 0xFFFF (6553,5 m); brak wartości nieprawidłowej, zamrożony gdy nieznany'
+      ru: 'Накопительный счётчик пройденного расстояния, 0,1 м на бит, переполнение после 0xFFFF (6553,5 м); недействительного значения нет, замораживается при неизвестном значении'
+      zh: '累计行驶距离计数器,每位 0.1 米,在 0xFFFF(6553.5 米)后回绕;无无效值,未知时保持不变'
+      hu: 'Halmozott megtett távolság számláló, 0,1 m/bit, 0xFFFF (6553,5 m) után túlcsordul; nincs érvénytelen érték, ismeretlen esetben befagy'
+      pt: 'Contador acumulativo de distância, 0,1 m por bit, reinicia após 0xFFFF (6553,5 m); sem valor inválido, fica fixo se desconhecido'
+    type: 'uint'
+    factor: 0.1
+    min: 0
+    max: 6553.5
+    units: 'm'
+    default: 0x00
+
+  DISTANCE:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Mileage before maintenance'
+      fr: 'Kilométrage avant maintenance'
+      es: 'Kilometraje antes del mantenimiento'
+      de: 'Kilometerstand bis zur Wartung'
+      it: 'Chilometraggio prima della manutenzione'
+      pl: 'Przebieg do przeglądu'
+      ru: 'Пробег до обслуживания'
+      zh: '距保养的里程'
+      hu: 'A szervizig hátralévő kilométer'
+      pt: 'Quilometragem até à manutenção'
+    type: 'uint'
+    factor: 20
+    min: 0
+    max: 140000
+    units: 'km'
+    invalid: 0xFFFF
+
+  CRUISE_CONTROL_SPEED:
+    bits: '7.7-8.0'
+    comment:
+      en: 'speed limiter/cruise control speed setpoint'
+      fr: 'Consigne de vitesse speed limiter/cruise control'
+      es: 'Consigna de velocidad speed limiter/cruise control'
+      de: 'speed limiter/cruise control-Geschwindigkeits-Sollwert'
+      it: 'Valore di riferimento di velocità speed limiter/cruise control'
+      pl: 'Wartość zadana prędkości speed limiter/cruise control'
+      ru: 'Заданная скорость speed limiter/cruise control'
+      zh: 'speed limiter/RVV速度设定值'
+      hu: 'speed limiter/cruise control sebesség-alapjel'
+      pt: 'Consigna de velocidade speed limiter/cruise control'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 254
+    units: 'km/h'
+    invalid: 0xFFFF
+    default: 0x00

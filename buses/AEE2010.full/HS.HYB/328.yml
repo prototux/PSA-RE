@@ -1,0 +1,379 @@
+id: 0x328
+name: 'ENGINE_ECU_DATA'
+type: 'can'
+length: 4
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+periodicity: ['100ms']
+senders: ['CMM']
+receivers: ['HCU2', 'HCU1', 'TBMU']
+
+signals:
+  CALCULATED_ENGINE_LOAD:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Calculated engine load value (%)'
+      fr: 'Valeur de charge moteur calculée (%)'
+      es: 'Valor de carga del motor calculada (%)'
+      de: 'Berechneter Motorlastwert (%)'
+      it: 'Valore di carico motore calcolato (%)'
+      pl: 'Obliczona wartość obciążenia silnika (%)'
+      ru: 'Расчётное значение нагрузки двигателя (%)'
+      zh: '计算得出的发动机负荷值(%)'
+      hu: 'A számított motorterhelés értéke (%)'
+      pt: 'Valor de carga do motor calculado (%)'
+    type: 'uint'
+    factor: 0.39216
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x00
+
+  OBD_IGNITION_CONTACT:
+    bits: '2.7'
+    comment:
+      en: 'Ignition contact state, as seen by OBD'
+      fr: 'Présence du contact, au sens OBD'
+      es: 'Presencia del contacto, en el sentido OBD'
+      de: 'Vorhandensein der Zündung im OBD-Sinne'
+      it: 'Presenza del contatto, ai fini OBD'
+      pl: 'Obecność stacyjki, w rozumieniu OBD'
+      ru: 'Наличие зажигания в смысле OBD'
+      zh: '点火开关接通状态(OBD含义)'
+      hu: 'Gyújtáskapcsoló állapota OBD értelemben'
+      pt: 'Presença do contacto, no sentido OBD'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Absent'
+        fr: 'Absent'
+        es: 'Ausente'
+        de: 'Nicht vorhanden'
+        it: 'Assente'
+        pl: 'Brak'
+        ru: 'Отсутствует'
+        zh: '缺失'
+        hu: 'Hiányzik'
+        pt: 'Ausente'
+      0x01:
+        en: 'Present'
+        fr: 'Présent'
+        es: 'Presente'
+        de: 'Vorhanden'
+        it: 'Presente'
+        pl: 'Obecny'
+        ru: 'Присутствует'
+        zh: '存在'
+        hu: 'Jelen van'
+        pt: 'Presente'
+
+  DRIVING_CYCLE_GLOBAL_SYNC_STATUS:
+    bits: '2.6'
+    comment:
+      en: 'Global driving cycle synchronization status'
+      fr: 'État de synchronisation du cycle de conduite global'
+      es: 'Estado de sincronización del ciclo de conducción global'
+      de: 'Synchronisationsstatus des globalen Fahrzyklus'
+      it: 'Stato di sincronizzazione del ciclo di guida globale'
+      pl: 'Stan synchronizacji globalnego cyklu jazdy'
+      ru: 'Статус синхронизации глобального ездового цикла'
+      zh: '全局行驶循环同步状态'
+      hu: 'A globális menetciklus szinkronizációs állapota'
+      pt: 'Estado de sincronização do ciclo de condução global'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not carried out'
+        fr: 'Non réalisé'
+        es: 'No realizado'
+        de: 'Nicht durchgeführt'
+        it: 'Non eseguito'
+        pl: 'Niewykonane'
+        ru: 'Не выполнено'
+        zh: '未执行'
+        hu: 'Nincs végrehajtva'
+        pt: 'Não realizado'
+      0x01:
+        en: 'Completed'
+        fr: 'Réalisé'
+        es: 'Realizado'
+        de: 'Ausgeführt'
+        it: 'Eseguito'
+        pl: 'Wykonano'
+        ru: 'Выполнено'
+        zh: '已完成'
+        hu: 'Végrehajtva'
+        pt: 'Concluído'
+
+  WARM_UP_CYCLE_COMPLETED_STATUS:
+    bits: '2.5'
+    comment:
+      en: 'Warm-up cycle completion status'
+      fr: 'État de réalisation du cycle de préchauffage (Warm Up Cycle)'
+      es: 'Estado de realización del ciclo de calentamiento (Warm Up Cycle)'
+      de: 'Abschlussstatus des Warmlaufzyklus (Warm Up Cycle)'
+      it: 'Stato di completamento del ciclo di riscaldamento (Warm Up Cycle)'
+      pl: 'Stan wykonania cyklu rozgrzewania (Warm Up Cycle)'
+      ru: 'Статус завершения цикла прогрева (Warm Up Cycle)'
+      zh: '预热循环(Warm Up Cycle)完成状态'
+      hu: 'A bemelegítési ciklus (Warm Up Cycle) végrehajtási állapota'
+      pt: 'Estado de conclusão do ciclo de aquecimento (WUC)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not carried out'
+        fr: 'Non réalisé'
+        es: 'No realizado'
+        de: 'Nicht durchgeführt'
+        it: 'Non eseguito'
+        pl: 'Niewykonane'
+        ru: 'Не выполнено'
+        zh: '未执行'
+        hu: 'Nincs végrehajtva'
+        pt: 'Não realizado'
+      0x01:
+        en: 'Completed'
+        fr: 'Réalisé'
+        es: 'Realizado'
+        de: 'Ausgeführt'
+        it: 'Eseguito'
+        pl: 'Wykonano'
+        ru: 'Выполнено'
+        zh: '已完成'
+        hu: 'Végrehajtva'
+        pt: 'Concluído'
+
+  ENGINE_BACKUP_MODE_2:
+    bits: '2.4'
+    comment:
+      en: 'Combustion engine degraded (backup) mode activation'
+      fr: 'Activation du mode dégradé du moteur thermique'
+      es: 'Activación del modo degradado del motor térmico'
+      de: 'Aktivierung des Notlaufmodus des Verbrennungsmotors'
+      it: 'Attivazione della modalità degradata del motore termico'
+      pl: 'Aktywacja trybu awaryjnego silnika spalinowego'
+      ru: 'Активация аварийного режима двигателя внутреннего сгорания'
+      zh: '内燃机降级(备用)模式激活'
+      hu: 'A belső égésű motor korlátozott (tartalék) üzemmódjának aktiválása'
+      pt: 'Ativação do modo degradado do motor térmico'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No activation'
+        fr: 'Pas d''activation'
+        es: 'Sin activación'
+        de: 'Keine Aktivierung'
+        it: 'Nessuna attivazione'
+        pl: 'Brak aktywacji'
+        ru: 'Нет активации'
+        zh: '未激活'
+        hu: 'Nincs aktiválás'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  ENGINE_BACKUP_MODE_6:
+    bits: '2.2'
+    comment:
+      en: 'Combustion engine degraded (backup) mode activation'
+      fr: 'Activation du mode dégradé du moteur thermique'
+      es: 'Activación del modo degradado del motor térmico'
+      de: 'Aktivierung des Notlaufmodus des Verbrennungsmotors'
+      it: 'Attivazione della modalità degradata del motore termico'
+      pl: 'Aktywacja trybu awaryjnego silnika spalinowego'
+      ru: 'Активация аварийного режима двигателя внутреннего сгорания'
+      zh: '内燃机降级(备用)模式激活'
+      hu: 'A belső égésű motor korlátozott (tartalék) üzemmódjának aktiválása'
+      pt: 'Ativação do modo degradado do motor térmico'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No activation'
+        fr: 'Pas d''activation'
+        es: 'Sin activación'
+        de: 'Keine Aktivierung'
+        it: 'Nessuna attivazione'
+        pl: 'Brak aktywacji'
+        ru: 'Нет активации'
+        zh: '未激活'
+        hu: 'Nincs aktiválás'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  ENGINE_BACKUP_MODE_5:
+    bits: '2.0'
+    comment:
+      en: 'Combustion engine degraded (backup) mode activation'
+      fr: 'Activation du mode dégradé du moteur thermique'
+      es: 'Activación del modo degradado del motor térmico'
+      de: 'Aktivierung des Notlaufmodus des Verbrennungsmotors'
+      it: 'Attivazione della modalità degradata del motore termico'
+      pl: 'Aktywacja trybu awaryjnego silnika spalinowego'
+      ru: 'Активация аварийного режима двигателя внутреннего сгорания'
+      zh: '内燃机降级(备用)模式激活'
+      hu: 'A belső égésű motor korlátozott (tartalék) üzemmódjának aktiválása'
+      pt: 'Ativação do modo degradado do motor térmico'
+    type: 'bool'
+    values:
+      0x00:
+        en: 'No activation'
+        fr: 'Pas d''activation'
+        es: 'Sin activación'
+        de: 'Keine Aktivierung'
+        it: 'Nessuna attivazione'
+        pl: 'Brak aktywacji'
+        ru: 'Нет активации'
+        zh: '未激活'
+        hu: 'Nincs aktiválás'
+        pt: 'Sem ativação'
+      0x01:
+        en: 'Activation'
+        fr: 'Activation'
+        es: 'Activación'
+        de: 'Aktivierung'
+        it: 'Attivazione'
+        pl: 'Aktywacja'
+        ru: 'Активация'
+        zh: '激活'
+        hu: 'Aktiválás'
+        pt: 'Ativação'
+
+  ENGINE_COOLANT_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Engine coolant temperature (°C)'
+      fr: 'Température d''eau moteur (°C)'
+      es: 'Temperatura del líquido refrigerante del motor (°C)'
+      de: 'Motorkühlmitteltemperatur (°C)'
+      it: 'Temperatura del liquido di raffreddamento motore (°C)'
+      pl: 'Temperatura płynu chłodzącego silnika (°C)'
+      ru: 'Температура охлаждающей жидкости двигателя (°C)'
+      zh: '发动机冷却液温度(°C)'
+      hu: 'Motorhűtőfolyadék-hőmérséklet (°C)'
+      pt: 'Temperatura do líquido de refrigeração do motor (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  COMBUSTION_BACKUP_MODE:
+    bits: '4.7-4.5'
+    comment:
+      en: 'Combustion degraded (backup) mode status'
+      fr: 'État du mode dégradé de combustion'
+      es: 'Estado del modo degradado de combustión'
+      de: 'Zustand des Verbrennungs-Notlaufmodus'
+      it: 'Stato della modalità degradata di combustione'
+      pl: 'Stan trybu awaryjnego spalania'
+      ru: 'Состояние аварийного режима сгорания'
+      zh: '燃烧降级(备用)模式状态'
+      hu: 'Az égés korlátozott (tartalék) üzemmódjának állapota'
+      pt: 'Estado do modo degradado de combustão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Rated operation'
+        fr: 'Fonctionnement nominal'
+        es: 'Funcionamiento nominal'
+        de: 'Nennbetrieb'
+        it: 'Funzionamento nominale'
+        pl: 'Praca znamionowa'
+        ru: 'Номинальный режим работы'
+        zh: '额定运行'
+        hu: 'Névleges üzem'
+        pt: 'Funcionamento nominal'
+      0x01:
+        en: 'Torque limitation active, limit not reached'
+        fr: 'Limitation de couple active, limite non atteinte'
+        es: 'Limitación de par activa, límite no alcanzado'
+        de: 'Drehmomentbegrenzung aktiv, Grenzwert nicht erreicht'
+        it: 'Limitazione di coppia attiva, limite non raggiunto'
+        pl: 'Aktywne ograniczenie momentu, limit nieosiągnięty'
+        ru: 'Ограничение крутящего момента активно, предел не достигнут'
+        zh: '扭矩限制激活，未达到限值'
+        hu: 'Nyomatékkorlátozás aktív, a határérték nincs elérve'
+        pt: 'Limitação de binário ativa, limite não atingido'
+      0x02:
+        en: 'Torque limitation, limit reached'
+        fr: 'Limitation de couple, limite atteinte'
+        es: 'Limitación de par, límite alcanzado'
+        de: 'Drehmomentbegrenzung, Grenze erreicht'
+        it: 'Limitazione di coppia, limite raggiunto'
+        pl: 'Ograniczenie momentu obrotowego, osiągnięto limit'
+        ru: 'Ограничение крутящего момента, предел достигнут'
+        zh: '扭矩限制,已达到限值'
+        hu: 'Nyomatékkorlátozás, a határérték elérve'
+        pt: 'Limitação de binário, limite atingido'
+      0x03:
+        en: 'Engine-speed limitation, limit not reached'
+        fr: 'Limitation de régime, limite non atteinte'
+        es: 'Limitación de régimen, límite no alcanzado'
+        de: 'Drehzahlbegrenzung, Grenze nicht erreicht'
+        it: 'Limitazione del regime, limite non raggiunto'
+        pl: 'Ograniczenie obrotów, limit nieosiągnięty'
+        ru: 'Ограничение оборотов, предел не достигнут'
+        zh: '转速限制,未达到限值'
+        hu: 'Fordulatszám-korlátozás, a határérték nincs elérve'
+        pt: 'Limitação de regime, limite não atingido'
+      0x04:
+        en: 'Engine speed limitation, limit reached'
+        fr: 'Limitation de régime, limite atteinte'
+        es: 'Limitación de régimen, límite alcanzado'
+        de: 'Drehzahlbegrenzung, Grenze erreicht'
+        it: 'Limitazione del regime, limite raggiunto'
+        pl: 'Ograniczenie obrotów, osiągnięto limit'
+        ru: 'Ограничение оборотов, предел достигнут'
+        zh: '转速限制,已达到极限'
+        hu: 'Fordulatszám-korlátozás, határérték elérve'
+        pt: 'Limitação de regime, limite atingido'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        en: 'Engine speed regulation'
+        fr: 'Régulation de régime moteur'
+        es: 'Regulación del régimen del motor'
+        de: 'Motordrehzahlregelung'
+        it: 'Regolazione del regime motore'
+        pl: 'Regulacja obrotów silnika'
+        ru: 'Регулирование оборотов двигателя'
+        zh: '发动机转速调节'
+        hu: 'Motorfordulatszám-szabályozás'
+        pt: 'Regulação do regime do motor'

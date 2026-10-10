@@ -1,0 +1,151 @@
+id: 0x231
+name: 'ADDITIVE_SYSTEM_VEHICLE_INFO'
+type: 'can'
+length: 7
+comment:
+  en: 'Vehicle information sent to the diesel additive injection ECU: fuel level, vehicle speed, filler cap and ignition key position.'
+  fr: 'Informations véhicule envoyées au calculateur d''injection de l''additif gasoil : niveau de carburant, vitesse véhicule, trappe à carburant et position de la clé de contact.'
+  es: 'Información del vehículo enviada a la ECU de inyección del aditivo diésel: nivel de combustible, velocidad del vehículo, tapa del depósito y posición de la llave de contacto.'
+  de: 'An das Diesel-Additiv-Einspritzsteuergerät gesendete Fahrzeuginformationen: Kraftstoffstand, Fahrzeuggeschwindigkeit, Tankklappe und Zündschlüsselstellung.'
+  it: 'Informazioni del veicolo inviate alla centralina di iniezione dell''additivo diesel: livello carburante, velocità veicolo, sportello del serbatoio e posizione della chiave di accensione.'
+  pl: 'Informacje o pojeździe wysyłane do sterownika wtrysku dodatku do oleju napędowego: poziom paliwa, prędkość pojazdu, klapka wlewu paliwa i pozycja kluczyka zapłonu.'
+  ru: 'Информация об автомобиле, отправляемая блоку управления впрыском дизельной присадки: уровень топлива, скорость автомобиля, лючок бака и положение ключа зажигания.'
+  zh: '发送给柴油添加剂喷射控制单元的车辆信息:油位、车速、加油口盖及点火钥匙位置。'
+  hu: 'A dízeladalék-befecskendező vezérlőnek küldött járműinformációk: üzemanyagszint, járműsebesség, tanksapka és gyújtáskulcs helyzete.'
+  pt: 'Informação do veículo enviada à ECU de injeção do aditivo de gasóleo: nível de combustível, velocidade do veículo, tampa do depósito e posição da chave de ignição.'
+periodicity: ['trigger']
+senders: []  # TODO: find the sender(s)
+
+signals:
+  FUEL_LEVEL_RAW:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Raw (unfiltered) fuel level'
+      fr: 'Niveau de carburant brut (non filtré)'
+      es: 'Nivel de combustible bruto (sin filtrar)'
+      de: 'Roher (ungefilterter) Kraftstoffstand'
+      it: 'Livello carburante grezzo (non filtrato)'
+      pl: 'Surowy (niefiltrowany) poziom paliwa'
+      ru: 'Необработанный (нефильтрованный) уровень топлива'
+      zh: '原始(未滤波)燃油液位'
+      hu: 'Nyers (szűretlen) üzemanyagszint'
+      pt: 'Nível de combustível bruto (não filtrado)'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 126
+    units: 'L'
+
+  FUEL_LEVEL_FILTERED:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Filtered (displayed) fuel level'
+      fr: 'Niveau de carburant filtré (affiché)'
+      es: 'Nivel de combustible filtrado (mostrado)'
+      de: 'Gefilterter (angezeigter) Kraftstoffstand'
+      it: 'Livello carburante filtrato (visualizzato)'
+      pl: 'Filtrowany (wyświetlany) poziom paliwa'
+      ru: 'Отфильтрованный (отображаемый) уровень топлива'
+      zh: '滤波(显示)燃油液位'
+      hu: 'Szűrt (kijelzett) üzemanyagszint'
+      pt: 'Nível de combustível filtrado (mostrado)'
+    type: 'uint'
+    factor: 0.5
+    min: 0
+    max: 126
+    units: 'L'
+
+  SPEED:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Instantaneous vehicle speed (average of the driven wheels)'
+      fr: 'Vitesse instantanée du véhicule (moyenne des roues motrices)'
+      es: 'Velocidad instantánea del vehículo (media de las ruedas motrices)'
+      de: 'Momentane Fahrzeuggeschwindigkeit (Mittelwert der Antriebsräder)'
+      it: 'Velocità istantanea del veicolo (media delle ruote motrici)'
+      pl: 'Chwilowa prędkość pojazdu (średnia z kół napędowych)'
+      ru: 'Мгновенная скорость автомобиля (среднее по ведущим колёсам)'
+      zh: '车辆瞬时车速(驱动轮平均值)'
+      hu: 'Pillanatnyi jármű sebesség (a hajtott kerekek átlaga)'
+      pt: 'Velocidade instantânea do veículo (média das rodas motrizes)'
+    type: 'uint'
+    factor: 0.01
+    min: 0
+    max: 655.34
+    units: 'km/h'
+
+  UNUSED_1:
+    bits: '5.7'
+    unused: true
+
+  FUEL_CAP_STATE:
+    bits: '5.6-5.5'
+    comment:
+      en: 'Fuel filler cap presence'
+      fr: 'Présence du bouchon de réservoir de carburant'
+      es: 'Presencia del tapón del depósito de combustible'
+      de: 'Vorhandensein des Tankdeckels'
+      it: 'Presenza del tappo del serbatoio del carburante'
+      pl: 'Obecność korka wlewu paliwa'
+      ru: 'Наличие крышки топливного бака'
+      zh: '油箱盖存在状态'
+      hu: 'Az üzemanyag-betöltő nyílás fedelének jelenléte'
+      pt: 'Presença da tampa do depósito de combustível'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+      0x01:
+        en: 'Cap absent'
+        fr: 'Bouchon absent'
+        es: 'Tapón ausente'
+        de: 'Verschluss fehlt'
+        it: 'Tappo assente'
+        pl: 'Brak korka'
+        ru: 'Крышка отсутствует'
+        zh: '无盖'
+        hu: 'Sapka hiányzik'
+        pt: 'Tampão ausente'
+      0x02:
+        en: 'Plug present'
+        fr: 'Bouchon présent'
+        es: 'Tapón presente'
+        de: 'Stopfen vorhanden'
+        it: 'Tappo presente'
+        pl: 'Obecna zaślepka'
+        ru: 'Заглушка присутствует'
+        zh: '插塞存在'
+        hu: 'Dugó jelen van'
+        pt: 'Ficha presente'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_2:
+    bits: '5.4-5.0'
+    unused: true
+
+  UNUSED_3:
+    bits: '6.7-6.0'
+    unused: true
+
+  UNUSED_4:
+    bits: '7.7-7.0'
+    unused: true

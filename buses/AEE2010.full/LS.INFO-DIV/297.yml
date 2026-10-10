@@ -1,0 +1,270 @@
+id: 0x297
+name: 'LED_DRIVER_RIGHT_LEVELLING_POSITION'
+type: 'can'
+length: 2
+comment:
+  en: 'Head-up display status: memory and recall, mirror movement, displayed speed.'
+  fr: 'État de l''affichage tête haute : mémoire et rappel, mouvement du miroir, vitesse affichée.'
+  es: 'Estado de la pantalla head-up: memoria y recuperación, movimiento del espejo, velocidad mostrada.'
+  de: 'Status des Head-up-Displays: Memory und Abruf, Spiegelbewegung, angezeigte Geschwindigkeit.'
+  it: 'Stato del display head-up: memoria e richiamo, movimento dello specchio, velocità visualizzata.'
+  pl: 'Stan wyświetlacza przezierowego: pamięć i przywołanie, ruch lusterka, wyświetlana prędkość.'
+  ru: 'Статус проекционного дисплея: память и вызов, движение зеркала, отображаемая скорость.'
+  zh: '平视显示器状态:记忆及调用、反射镜移动、显示速度。'
+  hu: 'A head-up kijelző állapota: memória és visszahívás, tükörmozgás, kijelzett sebesség.'
+  pt: 'Estado do head-up display: memória e recuperação, movimento do espelho, velocidade apresentada.'
+observations:
+  en: 'On state change of: MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+  fr: 'Sur changement d''état de : MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+  es: 'Al cambiar el estado de: MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+  de: 'Bei Statusänderung von: MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+  it: 'Al cambiamento di stato di: MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+  pl: 'Wysyłane przy zmianie stanu: MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+  ru: 'При изменении состояния: MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+  zh: '当DEFAUT_AFFICHEUR, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, MOUV_MIROIR_VTH状态变化时'
+  hu: 'A(z) MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT állapotváltozásakor'
+  pt: 'Na mudança de estado de: MEDIA_DISPLAY_FAULT, HUD_MEMORY_STATUS, HUD_MEMORY_RECALL, HUD_SCREEN_MANUAL_MOVEMENT'
+periodicity: ['200ms', 'trigger']
+senders: ['VTH', 'CMB']
+receivers: ['BSI', 'MATT']
+
+signals:
+  UNUSED_1:
+    bits: '1.7-1.6'
+    unused: true
+
+  MEDIA_DISPLAY_FAULT:
+    bits: '1.5'
+    comment:
+      en: 'Media display fault'
+      fr: 'Défaut d''affichage du média.'
+      es: 'Fallo de visualización del medio'
+      de: 'Fehler bei der Medienanzeige'
+      it: 'Guasto di visualizzazione del supporto'
+      pl: 'Usterka wyświetlania nośnika'
+      ru: 'Неисправность отображения носителя'
+      zh: '媒体显示故障'
+      hu: 'Médiamegjelenítési hiba'
+      pt: 'Falha de visualização do media'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No fault detected'
+        fr: 'Pas de défaut'
+        es: 'Sin fallo'
+        de: 'Kein Fehler'
+        it: 'Nessun guasto'
+        pl: 'Brak usterki'
+        ru: 'Неисправность не обнаружена'
+        zh: '未检测到故障'
+        hu: 'Nincs hiba'
+        pt: 'Nenhuma avaria detetada'
+      0x01:
+        en: 'Failure detected'
+        fr: 'Défaut détecté'
+        es: 'Fallo detectado'
+        de: 'Fehler erkannt'
+        it: 'Guasto rilevato'
+        pl: 'Wykryto usterkę'
+        ru: 'Обнаружена неисправность'
+        zh: '检测到故障'
+        hu: 'Hiba észlelve'
+        pt: 'Falha detetada'
+
+  HUD_ACTIVATION_STATUS:
+    bits: '1.4-1.3'
+    comment:
+      en: 'HUD activation status'
+      fr: 'État d''activation de la HUD'
+      es: 'Estado de activación de la HUD (HUD)'
+      de: 'Aktivierungsstatus des Head-up-Displays (HUD)'
+      it: 'Stato di attivazione dell''HUD (HUD)'
+      pl: 'Stan aktywacji wyświetlacza przezierowego (HUD)'
+      ru: 'Состояние активации проекционного дисплея (HUD)'
+      zh: '抬头显示器（HUD）激活状态'
+      hu: 'A head-up kijelző (HUD) aktiválási állapota'
+      pt: 'Estado de ativação da HUD (HUD)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'HUD not activated'
+        fr: 'HUD non activé'
+        es: 'HUD no activado'
+        de: 'HUD nicht aktiviert'
+        it: 'HUD non attivato'
+        pl: 'HUD nieaktywowany'
+        ru: 'HUD не активирован'
+        zh: 'VTH未激活'
+        hu: 'HUD nincs aktiválva'
+        pt: 'HUD não ativado'
+      0x01:
+        en: 'Head-up display activated'
+        fr: 'Affichage tête haute activé'
+        es: 'Pantalla head-up activada'
+        de: 'Head-up-Display aktiviert'
+        it: 'Head-up display attivato'
+        pl: 'Wyświetlacz przezierny aktywowany'
+        ru: 'Проекционный дисплей активирован'
+        zh: '抬头显示已激活'
+        hu: 'Head-up kijelző aktiválva'
+        pt: 'Ecrã head-up ativado'
+      0x02:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x03:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  HUD_MEMORY_STATUS:
+    bits: '1.2'
+    comment:
+      en: 'Storing in progress'
+      fr: 'Mémorisation en cours'
+      es: 'Memorización en curso'
+      de: 'Speichervorgang läuft'
+      it: 'Memorizzazione in corso'
+      pl: 'Trwa zapis do pamięci'
+      ru: 'Выполняется сохранение'
+      zh: '记忆存储进行中'
+      hu: 'Tárolás folyamatban'
+      pt: 'Memorização em curso'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No memorization ongoing'
+        fr: 'Pas de mémorisation en cours'
+        es: 'Sin memorización en curso'
+        de: 'Kein Speichervorgang läuft'
+        it: 'Nessuna memorizzazione in corso'
+        pl: 'Brak trwającego zapisu do pamięci'
+        ru: 'Сохранение не выполняется'
+        zh: '无正在进行的存储'
+        hu: 'Nincs folyamatban lévő mentés'
+        pt: 'Sem memorização em curso'
+      0x01:
+        en: 'Memorization ongoing'
+        fr: 'Mémorisation en cours'
+        es: 'Memorización en curso'
+        de: 'Speicherung läuft'
+        it: 'Memorizzazione in corso'
+        pl: 'Trwa zapamiętywanie'
+        ru: 'Идёт сохранение в память'
+        zh: '正在存储'
+        hu: 'Mentés folyamatban'
+        pt: 'Memorização em curso'
+
+  HUD_MEMORY_RECALL:
+    bits: '1.1'
+    comment:
+      en: 'HUD memory recall'
+      fr: 'Rappel mémorisation HUD'
+      es: 'Recuperación de memoria de la HUD'
+      de: 'Speicherabruf des Head-up-Displays'
+      it: 'Richiamo memoria dell''HUD'
+      pl: 'Przywołanie pamięci wyświetlacza przezierowego'
+      ru: 'Вызов из памяти проекционного дисплея'
+      zh: '抬头显示器记忆调用'
+      hu: 'A head-up kijelző memóriájának előhívása'
+      pt: 'Recuperação de memória da HUD'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No memory recall'
+        fr: 'Pas de rappel de mémorisation'
+        es: 'Sin recuperación de memoria'
+        de: 'Kein Speicherabruf'
+        it: 'Nessun richiamo memoria'
+        pl: 'Brak przywołania z pamięci'
+        ru: 'Нет вызова из памяти'
+        zh: '无记忆调用'
+        hu: 'Nincs memóriapozíció-visszahívás'
+        pt: 'Sem chamada de memória'
+      0x01:
+        en: 'Memorisation recall'
+        fr: 'Rappel de mémorisation'
+        es: 'Recuperación de memorización'
+        de: 'Abruf der Speicherung'
+        it: 'Richiamo della memorizzazione'
+        pl: 'Przywołanie zapamiętanego ustawienia'
+        ru: 'Вызов сохранённой настройки'
+        zh: '记忆调用'
+        hu: 'A mentés visszahívása'
+        pt: 'Recuperação de memorização'
+
+  HUD_SCREEN_MANUAL_MOVEMENT:
+    bits: '1.0'
+    comment:
+      en: 'Mirror in manual movement'
+      fr: 'Miroir en mouvement manuel'
+      es: 'Espejo en movimiento manual'
+      de: 'Spiegel in manueller Bewegung'
+      it: 'Specchio in movimento manuale'
+      pl: 'Lusterko w ruchu ręcznym'
+      ru: 'Зеркало в ручном перемещении'
+      zh: '反射镜手动移动中'
+      hu: 'A tükör kézi mozgatás alatt'
+      pt: 'Espelho em movimento manual'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No manual mirror movement'
+        fr: 'Pas de mouvement manuel du rétroviseur'
+        es: 'Sin movimiento manual del espejo'
+        de: 'Keine manuelle Spiegelbewegung'
+        it: 'Nessun movimento manuale dello specchietto'
+        pl: 'Brak ręcznego ruchu lusterka'
+        ru: 'Нет ручного перемещения зеркала'
+        zh: '无手动后视镜调节动作'
+        hu: 'Nincs kézi tükörmozgatás'
+        pt: 'Sem movimento manual do retrovisor'
+      0x01:
+        en: 'Manual movement of the mirror'
+        fr: 'Mouvement manuel du rétroviseur'
+        es: 'Movimiento manual del retrovisor'
+        de: 'Manuelle Bewegung des Spiegels'
+        it: 'Movimento manuale dello specchietto'
+        pl: 'Ręczny ruch lusterka'
+        ru: 'Ручное перемещение зеркала'
+        zh: '手动调整后视镜'
+        hu: 'A tükör kézi mozgatása'
+        pt: 'Movimento manual do espelho retrovisor'
+
+  SPEED_DISPLAYED_ON_HUD:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Speed displayed in the HUD'
+      fr: 'Vitesse affichée à la HUD'
+      es: 'Velocidad mostrada en la HUD'
+      de: 'In der HUD angezeigte Geschwindigkeit'
+      it: 'Velocità visualizzata sull''HUD'
+      pl: 'Prędkość wyświetlana na wyświetlaczu przezierowym'
+      ru: 'Скорость, отображаемая на проекционном дисплее'
+      zh: '抬头显示器上显示的车速'
+      hu: 'A head-up kijelzőn megjelenített sebesség'
+      pt: 'Velocidade apresentada na HUD'
+    type: 'uint'
+    min: 0
+    max: 254
+    invalid: 0xFF
+    default: 0x00

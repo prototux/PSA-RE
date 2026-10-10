@@ -1,88 +1,224 @@
 id: 0x1D7
 name: 'BCD_STATUS'
-alt_names: ['ETAT_BCD']
+type: 'can'
 length: 1
 comment:
-  en: 'Contains BCD system information'
-  fr: 'Contient des informations relatives au système BCD'
-type: 'can'
+  en: 'Status of the particulate filter additive injection ECU: operational flag and fault flags, cumulated injected additive, fuel cap sensor, additive level and particulate filter downstream temperature.'
+  fr: 'État du système d''injection d''additif : indicateur de fonctionnement et défauts, quantité d''additif injecté cumulée, capteur de bouchon de réservoir, niveau d''additif et température en aval du filtre à particules.'
+  es: 'Estado de la centralita de inyección de aditivo del filtro de partículas: indicador de funcionamiento y de fallo, cantidad acumulada de aditivo inyectado, sensor del tapón de depósito, nivel de aditivo y temperatura aguas abajo del filtro de partículas.'
+  de: 'Status des Steuergeräts für die Additiv-Einspritzung des Partikelfilters: Betriebs- und Fehlerkennung, kumulierte eingespritzte Additivmenge, Tankdeckelsensor, Additivstand und Temperatur stromabwärts des Partikelfilters.'
+  it: 'Stato della centralina di iniezione additivo del filtro antiparticolato: indicatore di funzionamento e guasto, quantità cumulata di additivo iniettato, sensore tappo serbatoio, livello additivo e temperatura a valle del filtro antiparticolato.'
+  pl: 'Stan sterownika wtrysku dodatku do filtra cząstek stałych: flaga pracy i usterek, skumulowana ilość wtryśniętego dodatku, czujnik korka wlewu, poziom dodatku i temperatura za filtrem cząstek stałych.'
+  ru: 'Статус блока управления впрыском присадки сажевого фильтра: флаги работы и неисправности, накопленное количество впрыснутой присадки, датчик крышки бака, уровень присадки и температура за сажевым фильтром.'
+  zh: '颗粒物过滤器添加剂喷射控制单元状态:运行和故障标志、累计喷射添加剂量、油箱盖传感器、添加剂液位及颗粒物过滤器下游温度。'
+  hu: 'A részecskeszűrő adalékbefecskendező vezérlőegységének állapota: üzemi és hibajelző, összesített befecskendezett adalékmennyiség, tanksapka-érzékelő, adalékszint és a részecskeszűrő utáni hőmérséklet.'
+  pt: 'Estado da unidade de controlo de injeção de aditivo do filtro de partículas: indicador operacional e indicadores de avaria, aditivo injetado acumulado, sensor da tampa do depósito, nível de aditivo e temperatura a jusante do filtro de partículas.'
 periodicity: ['200ms', 'trigger']
-senders:
-  - 'BCD'
-receivers:
-  - 'CMB'
-  - 'BSI'
+senders: ['BCD']
+receivers: ['CMB', 'BSI']
 
 signals:
   MAINTENANCE_RESET_REQUEST:
-    alt_names: ['RAZM']
-    bits: "1.7"
+    bits: '1.7'
     comment:
-      fr: "Raz maintenance demandée"
-      en: "Maintenance reset request"
+      en: 'Maintenance reset requested'
+      fr: 'Réinitialisation de maintenance demandée'
+      es: 'Reinicio de mantenimiento solicitado'
+      de: 'Wartungsrückstellung angefordert'
+      it: 'Azzeramento di manutenzione richiesto'
+      pl: 'Zażądano resetu obsługi serwisowej'
+      ru: 'Запрошен сброс сервисного обслуживания'
+      zh: '请求维护复位'
+      hu: 'Karbantartási visszaállítás kérve'
+      pt: 'Reinicialização de manutenção solicitada'
+    type: 'bool'
+    default: 0x00
     values:
-      0:
-        fr: "Non demandée"
-        en: "Not requested"
-      1:
-        fr: "Demandée"
-        en: "Requested"
+      0x00:
+        en: 'Not requested'
+        fr: 'Non demandée'
+        es: 'No solicitada'
+        de: 'Nicht angefordert'
+        it: 'Non richiesta'
+        pl: 'Nie zażądano'
+        ru: 'Не запрошено'
+        zh: '未请求'
+        hu: 'Nincs kérve'
+        pt: 'Não solicitada'
+      0x01:
+        en: 'Requested'
+        fr: 'Demandée'
+        es: 'Solicitada'
+        de: 'Angefordert'
+        it: 'Richiesta'
+        pl: 'Zażądane'
+        ru: 'Запрошено'
+        zh: '已请求'
+        hu: 'Kérve'
+        pt: 'Solicitada'
 
   AIRBAG_INHIBITION_STATUS:
-    alt_names: ['IHM_INHIB']
-    bits: "1.6-1.5"
+    bits: '1.6-1.5'
     comment:
-      fr: "Signalisation au client d'une inhibition airbag"
-      en: "Airbag inhibition signaling to the client"
+      en: 'Airbag inhibition signaling to the driver display'
+      fr: 'Signalisation de l''inhibition de l''airbag au combiné d''instruments'
+      es: 'Señalización de la inhibición del airbag al cuadro de instrumentos'
+      de: 'Meldung der Airbag-Deaktivierung an das Kombiinstrument'
+      it: 'Segnalazione dell''inibizione dell''airbag al quadro strumenti'
+      pl: 'Sygnalizacja wyłączenia poduszki powietrznej na desce rozdzielczej'
+      ru: 'Сигнализация отключения подушки безопасности на приборной панели'
+      zh: '向仪表盘发送安全气囊禁用信号'
+      hu: 'A légzsák letiltásának jelzése a műszerfalnak'
+      pt: 'Sinalização de inibição do airbag no ecrã do condutor'
+    type: 'enum'
+    default: 0x02
     values:
-      0:
-        fr: "Indéfini"
-        en: "Undefined"
-      1:
-        fr: "Signalisation"
-        en: "Signaling"
-      2:
-        fr: "Pas de signalisation"
-        en: "No signaling"
-      3:
-        fr: "Défaut"
-        en: "Fault"
+      0x00:
+        en: 'Undefined'
+        fr: 'Indéfini'
+        es: 'Indefinido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Meghatározatlan'
+        pt: 'Indefinido'
+      0x01:
+        en: 'Signalling'
+        fr: 'Signalisation'
+        es: 'Señalización'
+        de: 'Signalisierung'
+        it: 'Segnalazione'
+        pl: 'Sygnalizacja'
+        ru: 'Сигнализация'
+        zh: '信号'
+        hu: 'Jelzés'
+        pt: 'Sinalização'
+      0x02:
+        en: 'No signalling'
+        fr: 'Pas de signalisation'
+        es: 'Sin señalización'
+        de: 'Keine Signalisierung'
+        it: 'Nessuna segnalazione'
+        pl: 'Brak sygnalizacji'
+        ru: 'Нет сигнализации'
+        zh: '无信号指示'
+        hu: 'Nincs jelzés'
+        pt: 'Sem sinalização'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
 
   AIRBAG_FAULT_STATUS:
-    alt_names: ['SIGNAL_DEF_AIRBAG']
-    bits: "1.4-1.3"
+    bits: '1.4-1.3'
     comment:
-      fr: "Signalisation au client d'un défaut airbag"
-      en: "Informing the client of an airbag defect"
+      en: 'Airbag fault signaling to the driver display'
+      fr: 'Signalisation d''un défaut airbag au combiné d''instruments'
+      es: 'Señalización de un fallo del airbag al cuadro de instrumentos'
+      de: 'Meldung eines Airbagfehlers an das Kombiinstrument'
+      it: 'Segnalazione di un guasto airbag al quadro strumenti'
+      pl: 'Sygnalizacja usterki poduszki powietrznej na desce rozdzielczej'
+      ru: 'Сигнализация неисправности подушки безопасности на приборной панели'
+      zh: '向仪表盘发送安全气囊故障信号'
+      hu: 'Légzsákhiba jelzése a műszerfalnak'
+      pt: 'Sinalização de uma falha do airbag ao quadro de instrumentos'
+    type: 'enum'
+    default: 0x02
     values:
-      0:
-        fr: "Indéfini"
-        en: "Undefined"
-      1:
-        fr: "Signalisation"
-        en: "Signaling"
-      2:
-        fr: "Pas de signalisation"
-        en: "No signaling"
-      3:
-        fr: "Défaut"
-        en: "Fault"
+      0x00:
+        en: 'Undefined'
+        fr: 'Indéfini'
+        es: 'Indefinido'
+        de: 'Undefiniert'
+        it: 'Non definito'
+        pl: 'Nieokreślony'
+        ru: 'Не определено'
+        zh: '未定义'
+        hu: 'Meghatározatlan'
+        pt: 'Indefinido'
+      0x01:
+        en: 'Signalling'
+        fr: 'Signalisation'
+        es: 'Señalización'
+        de: 'Signalisierung'
+        it: 'Segnalazione'
+        pl: 'Sygnalizacja'
+        ru: 'Сигнализация'
+        zh: '信号'
+        hu: 'Jelzés'
+        pt: 'Sinalização'
+      0x02:
+        en: 'No signalling'
+        fr: 'Pas de signalisation'
+        es: 'Sin señalización'
+        de: 'Keine Signalisierung'
+        it: 'Nessuna segnalazione'
+        pl: 'Brak sygnalizacji'
+        ru: 'Нет сигнализации'
+        zh: '无信号指示'
+        hu: 'Nincs jelzés'
+        pt: 'Sem sinalização'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
 
-  RHEOSTAT_PUSH_STATUS:
-    alt_names: ['PUSH_RHEO']
-    bits: "1.2"
+  RHEOSTAT_PUSH_BUTTON:
+    bits: '1.2'
+    alt_names: ['RHEOSTAT_PUSH_STATUS', 'PUSH_RHEO']
     comment:
-      fr: "Push rhéostatage"
-      en: "Rheostating push-button"
+      en: 'Dimmer rheostat push-button'
+      fr: 'Bouton-poussoir du rhéostat d''éclairage'
+      es: 'Pulsador del reóstato de atenuación'
+      de: 'Taster des Beleuchtungs-Dimmreglers'
+      it: 'Pulsante del reostato di dimmerazione'
+      pl: 'Przycisk reostatu ściemniania'
+      ru: 'Кнопка реостата регулировки яркости'
+      zh: '调光电位器按钮'
+      hu: 'A fényerő-szabályozó reosztát nyomógombja'
+      pt: 'Botão do reóstato de iluminação'
+    type: 'bool'
+    default: 0x00
     values:
-      0:
-        fr: "Relâché"
-        en: "Released"
-      1:
-        fr: "Appuyé"
-        en: "Pressed"
+      0x00:
+        en: 'Released'
+        fr: 'Relâché'
+        es: 'Soltado'
+        de: 'Losgelassen'
+        it: 'Rilasciato'
+        pl: 'Zwolniony'
+        ru: 'Отпущено'
+        zh: '已释放'
+        hu: 'Elengedve'
+        pt: 'Solto'
+      0x01:
+        en: 'Pressed'
+        fr: 'Appuyé'
+        es: 'Pulsado'
+        de: 'Gedrückt'
+        it: 'Premuto'
+        pl: 'Wciśnięty'
+        ru: 'Нажато'
+        zh: '已按下'
+        hu: 'Megnyomva'
+        pt: 'Premido'
 
   UNUSED_1:
-    alt_names: ['LIBRE_1']
-    bits: "1.1-1.0"
+    bits: '1.1-1.0'
     unused: true

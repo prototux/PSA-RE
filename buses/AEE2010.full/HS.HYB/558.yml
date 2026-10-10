@@ -1,0 +1,705 @@
+id: 0x558
+name: 'ENGINE_ECU_DATA_13'
+type: 'can'
+length: 8
+comment:
+  en: 'Engine ECU data: power-reduction-off request, atmospheric pressure, main wake-up and SCR purge wake-up.'
+  fr: 'Données du calculateur moteur : demande de suppression de réduction de puissance, pression atmosphérique, réveil principal et réveil de purge SCR.'
+  es: 'Datos de la centralita del motor: solicitud de supresión de reducción de potencia, presión atmosférica, activación principal y activación de purga SCR.'
+  de: 'Motorsteuergerätdaten: Anforderung zur Aufhebung der Leistungsreduzierung, Luftdruck, Hauptweckung und SCR-Spülweckung.'
+  it: 'Dati della centralina motore: richiesta di rimozione riduzione potenza, pressione atmosferica, risveglio principale e risveglio di spurgo SCR.'
+  pl: 'Dane sterownika silnika: żądanie zniesienia redukcji mocy, ciśnienie atmosferyczne, główne wybudzenie i wybudzenie przedmuchu SCR.'
+  ru: 'Данные ЭБУ двигателя: запрос отмены снижения мощности, атмосферное давление, главное пробуждение и пробуждение продувки SCR.'
+  zh: '发动机ECU数据:解除功率降低请求、大气压力、主唤醒和SCR吹扫唤醒。'
+  hu: 'Motorvezérlő adatok: teljesítménycsökkentés megszüntetésének kérése, légköri nyomás, fő ébresztés és SCR öblítési ébresztés.'
+  pt: 'Dados da unidade de controlo do motor: pedido de desativação da redução de potência, pressão atmosférica, ativação principal e ativação de purga SCR.'
+observations:
+  en: 'On state change of: DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+  fr: 'Sur changement d''état de : DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+  es: 'Al cambiar el estado de: DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+  de: 'Bei Statusänderung von: DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+  it: 'Al cambiamento di stato di: DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+  pl: 'Wysyłane przy zmianie stanu: DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+  ru: 'При изменении состояния: DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+  zh: '当ACTIV_DCDC_REQ, DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE状态变化时'
+  hu: 'A(z), DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE állapotváltozásakor'
+  pt: 'Na mudança de estado de: DCDC_REGULATION_MODE_REQUEST, HV_CONVERTER_ACTIVATION_REQUEST, EPS_STATE'
+periodicity: ['100ms', 'trigger']
+senders: ['CMM']
+receivers: ['OBC', 'TBMU', 'VCU', 'CMEL', 'ERAD']
+
+signals:
+  CHECKSUM_FRAME_558:
+    bits: '1.7-1.4'
+    comment:
+      en: 'Frame checksum'
+      fr: 'Somme de contrôle (checksum) de la trame'
+      es: 'Suma de comprobación (checksum) de la trama'
+      de: 'Prüfsumme (Checksum) des Rahmens'
+      it: 'Checksum del frame'
+      pl: 'Suma kontrolna (checksum) ramki'
+      ru: 'Контрольная сумма кадра'
+      zh: '帧校验和'
+      hu: 'A keret ellenőrző összege (checksum)'
+      pt: 'Soma de verificação da trama'
+    type: 'uint'
+
+  PROCESS_COUNTER_4B_558:
+    bits: '1.3-1.0'
+    comment:
+      en: '4-bit process counter'
+      fr: 'Compteur de process 4 bits'
+      es: 'Contador de proceso de 4 bits'
+      de: '4-Bit-Prozesszähler'
+      it: 'Contatore di processo a 4 bit'
+      pl: '4-bitowy licznik procesu'
+      ru: '4-битный счётчик процесса'
+      zh: '4位过程计数器'
+      hu: '4 bites folyamatszámláló'
+      pt: 'Contador de processo de 4 bits'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  DCDC_REGULATION_MODE_REQUEST:
+    bits: '2.7-2.6'
+    comment:
+      en: 'DC/DC converter regulation type request'
+      fr: 'Type de régulation demandé pour le convertisseur DC/DC'
+      es: 'Tipo de regulación solicitado para el convertidor DC/DC'
+      de: 'Angeforderte Regelungsart des DC/DC-Wandlers'
+      it: 'Tipo di regolazione richiesto per il convertitore DC/DC'
+      pl: 'Żądany typ regulacji przetwornicy DC/DC'
+      ru: 'Запрошенный тип регулирования DC/DC преобразователя'
+      zh: 'DC/DC变换器请求的调节类型'
+      hu: 'A DC/DC átalakító kért szabályozási típusa'
+      pt: 'Tipo de regulação solicitado para o conversor DC/DC'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Waiting'
+        fr: 'En attente'
+        es: 'En espera'
+        de: 'Wartend'
+        it: 'In attesa'
+        pl: 'Oczekiwanie'
+        ru: 'Ожидание'
+        zh: '等待中'
+        hu: 'Várakozás'
+        pt: 'Em espera'
+      0x01:
+        en: 'Voltage mode'
+        fr: 'Mode tension'
+        es: 'Modo tensión'
+        de: 'Spannungsmodus'
+        it: 'Modalità tensione'
+        pl: 'Tryb napięciowy'
+        ru: 'Режим напряжения'
+        zh: '电压模式'
+        hu: 'Feszültség üzemmód'
+        pt: 'Modo tensão'
+      0x02:
+        en: 'Current mode'
+        fr: 'Mode courant'
+        es: 'Modo actual'
+        de: 'Aktueller Modus'
+        it: 'Modalità corrente'
+        pl: 'Bieżący tryb'
+        ru: 'Текущий режим'
+        zh: '当前模式'
+        hu: 'Jelenlegi üzemmód'
+        pt: 'Modo atual'
+      0x03:
+        unused: true
+
+  COLD_CRANK_HV_BATT_MODE_REQUEST:
+    bits: '2.5'
+    comment:
+      en: 'HV battery performance mode request for cold cranking'
+      fr: 'Demande de mode performance de la batterie haute tension pour démarrage à froid'
+      es: 'Solicitud de modo de rendimiento de la batería de alta tensión para arranque en frío'
+      de: 'Anforderung des Leistungsmodus der Hochvoltbatterie für Kaltstart'
+      it: 'Richiesta di modalità prestazioni della batteria ad alta tensione per l''avviamento a freddo'
+      pl: 'Żądanie trybu wydajności akumulatora wysokiego napięcia na potrzeby zimnego rozruchu'
+      ru: 'Запрос режима производительности высоковольтной батареи для холодного пуска'
+      zh: '冷起动时高压电池性能模式请求'
+      hu: 'A nagyfeszültségű akkumulátor teljesítménymódjának kérése hidegindításhoz'
+      pt: 'Pedido de modo de desempenho da bateria de alta tensão para arranque a frio'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Ready'
+        fr: 'Prêt'
+        es: 'Listo'
+        de: 'Bereit'
+        it: 'Pronto'
+        pl: 'Gotowy'
+        ru: 'Готово'
+        zh: '就绪'
+        hu: 'Kész'
+        pt: 'Pronto'
+      0x01:
+        en: 'Conversion'
+        fr: 'Conversion'
+        es: 'Conversión'
+        de: 'Umwandlung'
+        it: 'Conversione'
+        pl: 'Konwersja'
+        ru: 'Преобразование'
+        zh: '转换'
+        hu: 'Átalakítás'
+        pt: 'Conversão'
+
+  HV_BATTERY_CONTACTOR_REQUEST:
+    bits: '2.4-2.3'
+    comment:
+      en: 'HV battery contactor state request'
+      fr: 'Demande d''état du contacteur de la batterie haute tension'
+      es: 'Solicitud de estado del contactor de la batería de alta tensión'
+      de: 'Zustandsanforderung des Hochvoltbatterie-Schützes'
+      it: 'Richiesta di stato del contattore della batteria ad alta tensione'
+      pl: 'Żądanie stanu stycznika akumulatora wysokiego napięcia'
+      ru: 'Запрос состояния контактора высоковольтной батареи'
+      zh: '高压电池接触器状态请求'
+      hu: 'A nagyfeszültségű akkumulátor mágneskapcsolójának állapotkérése'
+      pt: 'Pedido de estado do contactor da bateria de alta tensão'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Request to open contactors'
+        fr: 'Demande d''ouverture des contacteurs'
+        es: 'Solicitud de apertura de los contactores'
+        de: 'Anforderung zum Öffnen der Schütze'
+        it: 'Richiesta di apertura dei contattori'
+        pl: 'Żądanie otwarcia styczników'
+        ru: 'Запрос размыкания контакторов'
+        zh: '请求断开接触器'
+        hu: 'Kontaktorok nyitási kérése'
+        pt: 'Pedido de abertura dos contactores'
+      0x01:
+        en: 'Request to close the contactors'
+        fr: 'Demande de fermeture des contacteurs'
+        es: 'Solicitud de cierre de los contactores'
+        de: 'Anforderung zum Schließen der Schütze'
+        it: 'Richiesta di chiusura dei contattori'
+        pl: 'Żądanie zamknięcia styczników'
+        ru: 'Запрос замыкания контакторов'
+        zh: '接触器闭合请求'
+        hu: 'A kontaktorok zárási kérése'
+        pt: 'Pedido de fecho dos contactores'
+      0x02:
+        en: 'No request'
+        fr: 'Pas de demande'
+        es: 'Sin solicitud'
+        de: 'Keine Anforderung'
+        it: 'Nessuna richiesta'
+        pl: 'Brak żądania'
+        ru: 'Нет запроса'
+        zh: '无请求'
+        hu: 'Nincs kérés'
+        pt: 'Sem pedido'
+      0x03:
+        unused: true
+
+  HYBRID_MEAP_GEN2_STATE:
+    bits: '2.2-2.0'
+    comment:
+      en: 'Status of the 2nd generation MEAP actuator for the hybrid system'
+      fr: 'Statut du MEAP de 2e génération pour l''hybride'
+      es: 'Estado del actuador MEAP de 2ª generación para el híbrido'
+      de: 'Status des MEAP-Aktuators der 2. Generation für das Hybridsystem'
+      it: 'Stato dell''attuatore MEAP di 2ª generazione per l''ibrido'
+      pl: 'Stan siłownika MEAP 2. generacji dla układu hybrydowego'
+      ru: 'Состояние привода MEAP 2-го поколения для гибридной системы'
+      zh: '混合动力系统第二代MEAP执行器状态'
+      hu: 'A hibrid rendszer 2. generációs MEAP aktuátorának állapota'
+      pt: 'Estado do atuador MEAP de 2.ª geração para o sistema híbrido'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'unavailable'
+        fr: 'ndisponible'
+        es: 'no disponible'
+        de: 'nicht verfügbar'
+        it: 'non disponibile'
+        pl: 'niedostępne'
+        ru: 'недоступно'
+        zh: '不可用'
+        hu: 'nem elérhető'
+        pt: 'não disponível'
+      0x01:
+        en: 'Closed'
+        fr: 'Fermé'
+        es: 'Cerrado'
+        de: 'Geschlossen'
+        it: 'Chiuso'
+        pl: 'Zamknięty'
+        ru: 'Закрыто'
+        zh: '关闭'
+        hu: 'Zárva'
+        pt: 'Fechado'
+      0x02:
+        en: 'Open'
+        fr: 'Ouvert'
+        es: 'Abierto'
+        de: 'Offen'
+        it: 'Aperto'
+        pl: 'Otwarte'
+        ru: 'Открыто'
+        zh: '打开'
+        hu: 'Nyitva'
+        pt: 'Aberto'
+      0x03:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+      0x04:
+        en: 'Referencing (calibration)'
+        fr: 'Référencement'
+        es: 'Referenciado'
+        de: 'Referenzierung'
+        it: 'Riferimento (calibrazione)'
+        pl: 'Referencjonowanie'
+        ru: 'Калибровка (референсирование)'
+        zh: '基准定位'
+        hu: 'Referenciázás'
+        pt: 'Referenciação'
+      0x05:
+        unused: true
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  ENGINE_COOLANT_TEMPERATURE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Engine coolant temperature (°C)'
+      fr: 'Température d''eau moteur (°C)'
+      es: 'Temperatura del líquido refrigerante del motor (°C)'
+      de: 'Motorkühlmitteltemperatur (°C)'
+      it: 'Temperatura del liquido di raffreddamento motore (°C)'
+      pl: 'Temperatura płynu chłodzącego silnika (°C)'
+      ru: 'Температура охлаждающей жидкости двигателя (°C)'
+      zh: '发动机冷却液温度(°C)'
+      hu: 'Motorhűtőfolyadék-hőmérséklet (°C)'
+      pt: 'Temperatura do líquido de refrigeração do motor (°C)'
+    type: 'uint'
+    factor: 1
+    offset: -40
+    min: -40
+    max: 214
+    units: '°C'
+    invalid: 0xFF
+    default: 0x3C
+
+  COOLING_FAN_SPEED_REQUEST:
+    bits: '4.7-4.1'
+    comment:
+      en: 'Cooling fan speed request (%)'
+      fr: 'Demande de vitesse du ventilateur de refroidissement (%)'
+      es: 'Solicitud de velocidad del ventilador de refrigeración (%)'
+      de: 'Anforderung der Kühlerlüfterdrehzahl (%)'
+      it: 'Richiesta di velocità della ventola di raffreddamento (%)'
+      pl: 'Żądanie prędkości wentylatora chłodzącego (%)'
+      ru: 'Запрос скорости вентилятора охлаждения (%)'
+      zh: '冷却风扇转速请求(%)'
+      hu: 'A hűtőventilátor sebességének kérése (%)'
+      pt: 'Pedido de velocidade da ventoinha de arrefecimento (%)'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 110
+    units: '%'
+    invalid: 0x7F
+    default: 0x00
+
+  REAR_EMOTOR_STATE_FEEDBACK:
+    bits: '4.0'
+    comment:
+      en: 'Rear electric axle (eTAR) status feedback'
+      fr: 'Retour d''état du train arrière électrique (eTAR)'
+      es: 'Retorno de estado del eje trasero eléctrico (eTAR)'
+      de: 'Zustandsrückmeldung der elektrischen Hinterachse (eTAR)'
+      it: 'Riscontro di stato dell''asse posteriore elettrico (eTAR)'
+      pl: 'Informacja zwrotna o stanie tylnej osi elektrycznej (eTAR)'
+      ru: 'Обратная связь о состоянии заднего электрического моста (eTAR)'
+      zh: '后电桥(eTAR)状态反馈'
+      hu: 'A hátsó elektromos tengely (eTAR) állapotvisszajelzése'
+      pt: 'Retorno de estado do eixo traseiro elétrico (eTAR)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Inactive'
+        fr: 'Inactif'
+        es: 'Inactivo'
+        de: 'Inaktiv'
+        it: 'Inattivo'
+        pl: 'Nieaktywny'
+        ru: 'Неактивно'
+        zh: '未激活'
+        hu: 'Inaktív'
+        pt: 'Inativo'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+        es: 'Activo'
+        de: 'Aktiv'
+        it: 'Attivo'
+        pl: 'Aktywny'
+        ru: 'Активно'
+        zh: '激活'
+        hu: 'Aktív'
+        pt: 'Ativo'
+
+  HV_CONVERTER_ACTIVATION_REQUEST:
+    bits: '5.7'
+    comment:
+      en: 'Request to activate the HV active discharge converter'
+      fr: 'Demande d''activation du convertisseur de décharge active haute tension'
+      es: 'Solicitud de activación del convertidor de descarga activa de alta tensión'
+      de: 'Anforderung zur Aktivierung des Hochvolt-Aktiventladungswandlers'
+      it: 'Richiesta di attivazione del convertitore di scarica attiva ad alta tensione'
+      pl: 'Żądanie aktywacji przekształtnika aktywnego rozładowania wysokiego napięcia'
+      ru: 'Запрос на активацию преобразователя активного разряда высоковольтной системы'
+      zh: '高压主动放电变换器激活请求'
+      hu: 'A nagyfeszültségű aktív kisütő átalakító aktiválási kérése'
+      pt: 'Pedido de ativação do conversor de descarga ativa de alta tensão'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'No activation request'
+        fr: 'Pas de demande d''activation'
+        es: 'Sin solicitud de activación'
+        de: 'Keine Aktivierungsanforderung'
+        it: 'Nessuna richiesta di attivazione'
+        pl: 'Brak żądania aktywacji'
+        ru: 'Нет запроса активации'
+        zh: '无激活请求'
+        hu: 'Nincs aktiválási kérés'
+        pt: 'Sem pedido de ativação'
+      0x01:
+        en: 'Activation request'
+        fr: 'Demande d''activation'
+        es: 'Solicitud de activación'
+        de: 'Aktivierungsanforderung'
+        it: 'Richiesta di attivazione'
+        pl: 'Żądanie aktywacji'
+        ru: 'Запрос активации'
+        zh: '激活请求'
+        hu: 'Aktiválási kérés'
+        pt: 'Pedido de ativação'
+
+  EPS_STATE:
+    bits: '5.6-5.4'
+    comment:
+      en: 'Electric power steering (EPS) state'
+      fr: 'État de l''assistance de direction électrique (EPS)'
+      es: 'Estado de la dirección asistida eléctrica (EPS)'
+      de: 'Zustand der elektrischen Servolenkung (EPS)'
+      it: 'Stato dello sterzo assistito elettrico (EPS)'
+      pl: 'Stan elektrycznego wspomagania kierownicy (EPS)'
+      ru: 'Состояние электроусилителя рулевого управления (EPS)'
+      zh: '电动助力转向(EPS)状态'
+      hu: 'Az elektromos szervokormány (EPS) állapota'
+      pt: 'Estado da direção assistida elétrica (EPS)'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Deactivated'
+        fr: 'Désactivé'
+        es: 'Desactivado'
+        de: 'Deaktiviert'
+        it: 'Disattivato'
+        pl: 'Wyłączony'
+        ru: 'Отключено'
+        zh: '已停用'
+        hu: 'Letiltva'
+        pt: 'Desativado'
+      0x01:
+        en: 'In progress'
+        fr: 'En cours'
+        es: 'En curso'
+        de: 'Läuft'
+        it: 'In corso'
+        pl: 'W toku'
+        ru: 'Выполняется'
+        zh: '进行中'
+        hu: 'Folyamatban'
+        pt: 'Em curso'
+      0x02:
+        en: 'Partial activation'
+        fr: 'Activation partielle'
+        es: 'Activación parcial'
+        de: 'Teilaktivierung'
+        it: 'Attivazione parziale'
+        pl: 'Częściowa aktywacja'
+        ru: 'Частичная активация'
+        zh: '部分激活'
+        hu: 'Részleges aktiválás'
+        pt: 'Ativação parcial'
+      0x03:
+        en: 'Full activation'
+        fr: 'Activation complète'
+        es: 'Activación completa'
+        de: 'Vollständige Aktivierung'
+        it: 'Attivazione completa'
+        pl: 'Pełna aktywacja'
+        ru: 'Полная активация'
+        zh: '完全激活'
+        hu: 'Teljes aktiválás'
+        pt: 'Ativação total'
+      0x04:
+        en: 'Charge-Discharge'
+        fr: 'Charge-Décharge'
+        es: 'Carga-Descarga'
+        de: 'Laden-Entladen'
+        it: 'Carica-Scarica'
+        pl: 'Ładowanie-Rozładowanie'
+        ru: 'Заряд-Разряд'
+        zh: '充电-放电'
+        hu: 'Töltés-Kisütés'
+        pt: 'Carga-Descarga'
+      0x05:
+        en: 'Fault'
+        fr: 'Défaut'
+        es: 'Fallo'
+        de: 'Fehler'
+        it: 'Guasto'
+        pl: 'Usterka'
+        ru: 'Неисправность'
+        zh: '故障'
+        hu: 'Hiba'
+        pt: 'Falha'
+      0x06:
+        unused: true
+      0x07:
+        unused: true
+
+  DRIVING_CYCLE_GLOBAL_SYNC_STATUS:
+    bits: '5.3'
+    comment:
+      en: 'Global driving cycle synchronization status'
+      fr: 'État de synchronisation du cycle de conduite global'
+      es: 'Estado de sincronización del ciclo de conducción global'
+      de: 'Synchronisationsstatus des globalen Fahrzyklus'
+      it: 'Stato di sincronizzazione del ciclo di guida globale'
+      pl: 'Stan synchronizacji globalnego cyklu jazdy'
+      ru: 'Статус синхронизации глобального ездового цикла'
+      zh: '全局行驶循环同步状态'
+      hu: 'A globális menetciklus szinkronizációs állapota'
+      pt: 'Estado de sincronização do ciclo de condução global'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not carried out'
+        fr: 'Non réalisé'
+        es: 'No realizado'
+        de: 'Nicht durchgeführt'
+        it: 'Non eseguito'
+        pl: 'Niewykonane'
+        ru: 'Не выполнено'
+        zh: '未执行'
+        hu: 'Nincs végrehajtva'
+        pt: 'Não realizado'
+      0x01:
+        en: 'Completed'
+        fr: 'Réalisé'
+        es: 'Realizado'
+        de: 'Ausgeführt'
+        it: 'Eseguito'
+        pl: 'Wykonano'
+        ru: 'Выполнено'
+        zh: '已完成'
+        hu: 'Végrehajtva'
+        pt: 'Concluído'
+
+  WARM_UP_CYCLE_COMPLETED_STATUS:
+    bits: '5.2'
+    comment:
+      en: 'Warm-up cycle completion status'
+      fr: 'État de réalisation du cycle de préchauffage (Warm Up Cycle)'
+      es: 'Estado de realización del ciclo de calentamiento (Warm Up Cycle)'
+      de: 'Abschlussstatus des Warmlaufzyklus (Warm Up Cycle)'
+      it: 'Stato di completamento del ciclo di riscaldamento (Warm Up Cycle)'
+      pl: 'Stan wykonania cyklu rozgrzewania (Warm Up Cycle)'
+      ru: 'Статус завершения цикла прогрева (Warm Up Cycle)'
+      zh: '预热循环(Warm Up Cycle)完成状态'
+      hu: 'A bemelegítési ciklus (Warm Up Cycle) végrehajtási állapota'
+      pt: 'Estado de conclusão do ciclo de aquecimento (WUC)'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Not carried out'
+        fr: 'Non réalisé'
+        es: 'No realizado'
+        de: 'Nicht durchgeführt'
+        it: 'Non eseguito'
+        pl: 'Niewykonane'
+        ru: 'Не выполнено'
+        zh: '未执行'
+        hu: 'Nincs végrehajtva'
+        pt: 'Não realizado'
+      0x01:
+        en: 'Completed'
+        fr: 'Réalisé'
+        es: 'Realizado'
+        de: 'Ausgeführt'
+        it: 'Eseguito'
+        pl: 'Wykonano'
+        ru: 'Выполнено'
+        zh: '已完成'
+        hu: 'Végrehajtva'
+        pt: 'Concluído'
+
+  OBD_CONDITION_COUNTER_SYNC_STATUS:
+    bits: '5.1-5.0'
+    comment:
+      en: 'OBD condition counter synchronization status'
+      fr: 'État de synchronisation du compteur de conditions OBD'
+      es: 'Estado de sincronización del contador de condiciones OBD'
+      de: 'Synchronisationsstatus des OBD-Bedingungszählers'
+      it: 'Stato di sincronizzazione del contatore di condizioni OBD'
+      pl: 'Stan synchronizacji licznika warunków OBD'
+      ru: 'Статус синхронизации счётчика условий OBD'
+      zh: 'OBD条件计数器同步状态'
+      hu: 'Az OBD feltételszámláló szinkronizációs állapota'
+      pt: 'Estado de sincronização do contador de condições OBD'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x00:
+        en: 'OBD COND has not been incremented'
+        fr: 'OBD COND n''a pas été incrémenté'
+        es: 'OBD COND no se ha incrementado'
+        de: 'OBD COND wurde nicht erhöht'
+        it: 'OBD COND non è stato incrementato'
+        pl: 'OBD COND nie zostało zwiększone'
+        ru: 'OBD COND не был увеличен'
+        zh: 'OBD COND 未递增'
+        hu: 'Az OBD COND nem növekedett'
+        pt: 'OBD COND não foi incrementado'
+      0x01:
+        en: 'OBD COND has been incremented'
+        fr: 'OBD COND a été incrémenté'
+        es: 'OBD COND se ha incrementado'
+        de: 'OBD COND wurde erhöht'
+        it: 'OBD COND è stato incrementato'
+        pl: 'OBD COND został zwiększony'
+        ru: 'OBD COND был увеличен'
+        zh: 'OBD COND已递增'
+        hu: 'Az OBD COND növelve'
+        pt: 'OBD COND foi incrementado'
+      0x02:
+        en: 'OBD condition fault'
+        fr: 'Défaut de condition OBD'
+        es: 'Fallo de condición OBD'
+        de: 'OBD-Bedingungsfehler'
+        it: 'Guasto della condizione OBD'
+        pl: 'Usterka warunku OBD'
+        ru: 'Неисправность условия OBD'
+        zh: 'OBD 条件故障'
+        hu: 'OBD feltétel hiba'
+        pt: 'Falha de condição OBD'
+      0x03:
+        unused: true
+
+  IGNITION_COUNTER_SYNC_STATUS:
+    bits: '6.7'
+    comment:
+      en: 'Ignition counter synchronization status'
+      fr: 'État de synchronisation du compteur d''allumage'
+      es: 'Estado de sincronización del contador de encendido'
+      de: 'Synchronisationsstatus des Zündungszählers'
+      it: 'Stato di sincronizzazione del contatore di accensione'
+      pl: 'Stan synchronizacji licznika zapłonów'
+      ru: 'Статус синхронизации счётчика циклов зажигания'
+      zh: '点火计数器同步状态'
+      hu: 'A gyújtásszámláló szinkronizációs állapota'
+      pt: 'Estado de sincronização do contador de ignições'
+    type: 'bool'
+    default: 0x00
+    values:
+      0x00:
+        en: 'Ignition counter has not been incremented'
+        fr: 'Le compteur d''allumage n''a pas été incrémenté'
+        es: 'El contador de encendido no se ha incrementado'
+        de: 'Zündungszähler wurde nicht erhöht'
+        it: 'Il contatore di accensione non è stato incrementato'
+        pl: 'Licznik zapłonu nie został zwiększony'
+        ru: 'Счётчик зажигания не был увеличен'
+        zh: '点火计数器未递增'
+        hu: 'A gyújtásszámláló nem növekedett'
+        pt: 'O contador de ignição não foi incrementado'
+      0x01:
+        en: 'Ignition counter has been incremented'
+        fr: 'Le compteur d''allumage a été incrémenté'
+        es: 'El contador de encendido se ha incrementado'
+        de: 'Der Zündzähler wurde erhöht'
+        it: 'Il contatore di accensione è stato incrementato'
+        pl: 'Licznik zapłonów został zwiększony'
+        ru: 'Счётчик зажигания был увеличен'
+        zh: '点火计数器已递增'
+        hu: 'A gyújtásszámláló növekedett'
+        pt: 'O contador de ignição foi incrementado'
+
+  UNUSED_1:
+    bits: '6.6-6.0'
+    unused: true
+
+  THROTTLE_POSITION_RAW_1:
+    bits: '7.7-7.0'
+    comment:
+      en: 'Raw absolute throttle position sensor value, track 1 (%)'
+      fr: 'Valeur brute absolue du capteur de position papillon, piste 1 (%)'
+      es: 'Valor bruto absoluto del sensor de posición de la mariposa, pista 1 (%)'
+      de: 'Absoluter Rohwert des Drosselklappen-Positionssensors, Spur 1 (%)'
+      it: 'Valore grezzo assoluto del sensore di posizione della farfalla, pista 1 (%)'
+      pl: 'Surowa wartość bezwzględna czujnika położenia przepustnicy, ścieżka 1 (%)'
+      ru: 'Абсолютное необработанное значение датчика положения дроссельной заслонки, канал 1 (%)'
+      zh: '节气门位置传感器原始绝对值,通道1(%)'
+      hu: 'A fojtószelep-helyzetérzékelő nyers abszolút értéke, 1. nyomvonal (%)'
+      pt: 'Valor bruto absoluto do sensor de posição da borboleta, pista 1 (%)'
+    type: 'uint'
+    factor: 0.39216
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x00
+
+  CALCULATED_ENGINE_LOAD:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Calculated engine load value (%)'
+      fr: 'Valeur de charge moteur calculée (%)'
+      es: 'Valor de carga del motor calculada (%)'
+      de: 'Berechneter Motorlastwert (%)'
+      it: 'Valore di carico motore calcolato (%)'
+      pl: 'Obliczona wartość obciążenia silnika (%)'
+      ru: 'Расчётное значение нагрузки двигателя (%)'
+      zh: '计算得出的发动机负荷值(%)'
+      hu: 'A számított motorterhelés értéke (%)'
+      pt: 'Valor de carga do motor calculado (%)'
+    type: 'uint'
+    factor: 0.39216
+    min: 0
+    max: 100
+    units: '%'
+    default: 0x00

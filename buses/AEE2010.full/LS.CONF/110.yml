@@ -1,0 +1,117 @@
+id: 0x110
+name: 'CSS_VERSION'
+type: 'can'
+length: 6
+comment:
+  en: 'Air conditioning control module data from external sensors: carbon monoxide and NOx levels, blown-air temperatures.'
+  fr: 'Données du module de contrôle climatisation issues de capteurs extérieurs : niveaux de monoxyde de carbone et de NOx, températures d''air soufflé.'
+  es: 'Datos del módulo de control del climatizador de sensores exteriores: niveles de monóxido de carbono y NOx, temperaturas de aire soplado.'
+  de: 'Daten des Klimasteuermoduls von externen Sensoren: Kohlenmonoxid- und NOx-Werte, Ausblastemperaturen.'
+  it: 'Dati del modulo di controllo del climatizzatore dai sensori esterni: livelli di monossido di carbonio e NOx, temperature dell''aria soffiata.'
+  pl: 'Dane modułu sterowania klimatyzacją z czujników zewnętrznych: poziomy tlenku węgla i NOx, temperatury nadmuchu powietrza.'
+  ru: 'Данные модуля управления кондиционером от внешних датчиков: уровни угарного газа и NOx, температура выдуваемого воздуха.'
+  zh: '空调控制模块外部传感器数据:一氧化碳及NOx水平、出风温度。'
+  hu: 'A klíma vezérlőmodul külső érzékelőktől származó adatai: szén-monoxid- és NOx-szint, befúvási hőmérséklet.'
+  pt: 'Dados do módulo de controlo da climatização provenientes de sensores exteriores: níveis de monóxido de carbono e de NOx, temperaturas do ar soprado.'
+periodicity: ['1000ms']
+senders: ['CLIM_AV']
+receivers: ['BSI']
+
+signals:
+  CO_POLLUTANT_LEVEL_NEW:
+    bits: '1.7-1.0'
+    comment:
+      en: 'CO pollutant level (new technology)'
+      fr: 'Niveau de polluant CO (nouvelle technologie)'
+      es: 'Nivel de contaminante CO (nueva tecnología)'
+      de: 'CO-Schadstoffgehalt (neue Technologie)'
+      it: 'Livello di inquinante CO (nuova tecnologia)'
+      pl: 'Poziom zanieczyszczenia CO (nowa technologia)'
+      ru: 'Уровень загрязнения CO (новая технология)'
+      zh: 'CO污染物水平(新技术)'
+      hu: 'CO szennyezőanyag szintje (új technológia)'
+      pt: 'Nível do poluente CO (nova tecnologia)'
+    type: 'uint'
+    factor: 0.4
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  NOX_POLLUTANT_LEVEL_NEW:
+    bits: '2.7-2.0'
+    comment:
+      en: 'NOx pollutant level (new technology)'
+      fr: 'Niveau de polluant NOx (nouvelle technologie)'
+      es: 'Nivel de contaminante NOx (nueva tecnología)'
+      de: 'NOx-Schadstoffgehalt (neue Technologie)'
+      it: 'Livello di inquinante NOx (nuova tecnologia)'
+      pl: 'Poziom zanieczyszczenia NOx (nowa technologia)'
+      ru: 'Уровень загрязнения NOx (новая технология)'
+      zh: 'NOx污染物水平(新技术)'
+      hu: 'NOx szennyezőanyag szintje (új technológia)'
+      pt: 'Nível do poluente NOx (nova tecnologia)'
+    type: 'uint'
+    factor: 0.4
+    min: 0
+    max: 100
+    units: '%'
+    invalid: 0xFF
+    default: 0xFF
+
+  LEFT_BLOWN_AIR_TEMPERATURE:
+    bits: '3.7-4.0'
+    comment:
+      en: 'Left blown air temperature'
+      fr: 'Température de l''air soufflé gauche'
+      es: 'Temperatura del aire impulsado izquierdo'
+      de: 'Temperatur der ausgeblasenen Luft links'
+      it: 'Temperatura dell''aria soffiata sinistra'
+      pl: 'Temperatura nawiewanego powietrza po lewej'
+      ru: 'Температура обдуваемого воздуха слева'
+      zh: '左侧出风口空气温度'
+      hu: 'A bal oldali befúvott levegő hőmérséklete'
+      pt: 'Temperatura do ar insuflado esquerdo'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 85
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+  RIGHT_BLOWN_AIR_TEMPERATURE:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Right blown air temperature'
+      fr: 'Température de l''air soufflé droit'
+      es: 'Temperatura del aire impulsado derecho'
+      de: 'Temperatur der ausgeblasenen Luft rechts'
+      it: 'Temperatura dell''aria soffiata destra'
+      pl: 'Temperatura nawiewanego powietrza po prawej'
+      ru: 'Температура обдуваемого воздуха справа'
+      zh: '右侧出风口空气温度'
+      hu: 'A jobb oldali befúvott levegő hőmérséklete'
+      pt: 'Temperatura do ar insuflado direito'
+    type: 'uint'
+    factor: 0.1
+    offset: -40
+    min: -40
+    max: 85
+    invalid: 0xFFFF
+    default: 0xFFFF
+
+alternatives:
+  - note:
+      en: 'Also observed with a period of 100ms'
+      fr: 'Aussi observée avec une période de 100ms'
+      es: 'También observada con un periodo de 100ms'
+      de: 'Auch mit einer Periode von 100ms beobachtet'
+      it: 'Osservata anche con un periodo di 100ms'
+      pl: 'Obserwowana także z okresem 100ms'
+      ru: 'Также наблюдалась с периодом 100ms'
+      zh: '也观察到周期为100ms'
+      hu: 'Megfigyelve 100ms periódussal is'
+      pt: 'Também observada com um período de 100ms'
+    periodicity: ['100ms']

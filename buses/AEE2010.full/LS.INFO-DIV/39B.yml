@@ -1,0 +1,363 @@
+id: 0x39B
+name: 'CLOCK_UPDATE_REQUEST'
+type: 'can'
+length: 5
+comment:
+  en: 'Clock update request: year, month, day, hour, minute and time-format mode.'
+  fr: 'Demande de mise à jour de l''horloge : année, mois, jour, heure, minute et mode de format horaire.'
+  es: 'Solicitud de actualización del reloj: año, mes, día, hora, minuto y modo de formato horario.'
+  de: 'Anforderung zur Aktualisierung der Uhr: Jahr, Monat, Tag, Stunde, Minute und Zeitformatmodus.'
+  it: 'Richiesta di aggiornamento orologio: anno, mese, giorno, ora, minuto e modalità formato ora.'
+  pl: 'Żądanie aktualizacji zegara: rok, miesiąc, dzień, godzina, minuta i tryb formatu czasu.'
+  ru: 'Запрос обновления часов: год, месяц, день, час, минута и режим формата времени.'
+  zh: '时钟更新请求:年、月、日、时、分和时间格式模式。'
+  hu: 'Óra frissítési kérés: év, hónap, nap, óra, perc és időformátum mód.'
+  pt: 'Pedido de atualização do relógio: ano, mês, dia, hora, minuto e modo de formato de hora.'
+observations:
+  en: 'On state change of any parameter of the frame'
+  fr: 'Sur changement d''état de n''importe quel paramètre de la trame'
+  es: 'Al cambiar el estado de cualquier parámetro de la trama'
+  de: 'Bei Statusänderung eines beliebigen Parameters des Frames'
+  it: 'Al cambiamento di stato di qualsiasi parametro del frame'
+  pl: 'Wysyłane przy zmianie stanu dowolnego parametru ramki'
+  ru: 'При изменении состояния любого параметра кадра'
+  zh: '该帧任意参数状态变化时'
+  hu: 'A keret bármely paraméterének állapotváltozásakor'
+  pt: 'Na mudança de estado de qualquer parâmetro da trama.'
+periodicity: ['trigger']
+senders: ['ICSV', 'BTEL', 'OVIP', 'CMB', 'EMF', 'MATT']
+receivers: ['BSI']
+
+signals:
+  CONFIG_DISPLAY_TIME:
+    bits: '1.7'
+    comment:
+      en: 'Time display format configured by the customer (12h/24h)'
+      fr: 'Format d''affichage de l''heure configuré par le client (12h/24h)'
+      es: 'Formato de visualización de la hora configurado por el cliente (12h/24h)'
+      de: 'Vom Kunden eingestelltes Uhrzeitformat (12/24 Std.)'
+      it: 'Formato dell''ora configurato dal cliente (12h/24h)'
+      pl: 'Format wyświetlania godziny ustawiony przez klienta (12h/24h)'
+      ru: 'Формат отображения времени, настроенный клиентом (12/24 ч)'
+      zh: '客户设置的时间显示格式(12小时/24小时)'
+      hu: 'Az ügyfél által beállított óraformátum (12/24 óra)'
+      pt: 'Formato de visualização da hora configurado pelo cliente (12h/24h)'
+    type: 'bool'
+    default: 0x01
+    values:
+      0x00:
+        en: 'Time displayed in 12-hour mode'
+        fr: 'Heure affichée au format 12 heures'
+        es: 'Hora mostrada en formato de 12 horas'
+        de: 'Uhrzeit im 12-Stunden-Format angezeigt'
+        it: 'Ora visualizzata in formato 12 ore'
+        pl: 'Godzina wyświetlana w formacie 12-godzinnym'
+        ru: 'Время отображается в 12-часовом формате'
+        zh: '时间以12小时制显示'
+        hu: 'Idő 12 órás formátumban jelenik meg'
+        pt: 'Hora apresentada no formato de 12 horas'
+      0x01:
+        en: 'Time displayed in 24-hour mode'
+        fr: 'Heure affichée au format 24 heures'
+        es: 'Hora mostrada en formato de 24 horas'
+        de: 'Uhrzeit im 24-Stunden-Format angezeigt'
+        it: 'Ora visualizzata in formato 24 ore'
+        pl: 'Godzina wyświetlana w formacie 24-godzinnym'
+        ru: 'Время отображается в 24-часовом формате'
+        zh: '时间以24小时制显示'
+        hu: 'Idő 24 órás formátumban jelenik meg'
+        pt: 'Hora apresentada no formato de 24 horas'
+
+  CLOCK_YEAR:
+    bits: '1.6-1.0'
+    comment:
+      en: 'Clock year value'
+      fr: 'Valeur de l''année de l''horloge'
+      es: 'Valor del año del reloj'
+      de: 'Jahreswert der Uhr'
+      it: 'Valore dell''anno dell''orologio'
+      pl: 'Wartość roku zegara'
+      ru: 'Значение года часов'
+      zh: '时钟的年份数值'
+      hu: 'Az óra év-értéke'
+      pt: 'Valor do ano do relógio'
+    type: 'uint'
+    factor: 1
+    offset: 2000
+    min: 0
+    max: 125
+    units: 'year'
+    invalid: 0x7F
+    default: 0x7E
+
+  UNUSED_1:
+    bits: '2.7-2.4'
+    unused: true
+
+  CLOCK_MONTH:
+    bits: '2.3-2.0'
+    comment:
+      en: 'Clock month value'
+      fr: 'Valeur du mois de l''horloge'
+      es: 'Valor del mes del reloj'
+      de: 'Monatswert der Uhr'
+      it: 'Valore del mese dell''orologio'
+      pl: 'Wartość miesiąca zegara'
+      ru: 'Значение месяца часов'
+      zh: '时钟的月份数值'
+      hu: 'Az óra hónap-értéke'
+      pt: 'Valor do mês do relógio'
+    type: 'enum'
+    default: 0x0E
+    values:
+      0x00:
+        en: 'Value not used (0000)'
+        fr: 'Valeur non utilisée (0000)'
+        es: 'Valor no utilizado (0000)'
+        de: 'Wert nicht verwendet (0000)'
+        it: 'Valore non utilizzato (0000)'
+        pl: 'Wartość nieużywana (0000)'
+        ru: 'Значение не используется (0000)'
+        zh: '未使用的值(0000)'
+        hu: 'Nem használt érték (0000)'
+        pt: 'Valor não utilizado (0000)'
+      0x01:
+        en: 'January'
+        fr: 'Janvier'
+        es: 'Enero'
+        de: 'Januar'
+        it: 'Gennaio'
+        pl: 'Styczeń'
+        ru: 'Январь'
+        zh: '一月'
+        hu: 'Január'
+        pt: 'Janeiro'
+      0x02:
+        en: 'February'
+        fr: 'Février'
+        es: 'Febrero'
+        de: 'Februar'
+        it: 'Febbraio'
+        pl: 'Luty'
+        ru: 'Февраль'
+        zh: '二月'
+        hu: 'Február'
+        pt: 'Fevereiro'
+      0x03:
+        en: 'March'
+        fr: 'Mars'
+        es: 'Marzo'
+        de: 'März'
+        it: 'Marzo'
+        pl: 'Marzec'
+        ru: 'Март'
+        zh: '三月'
+        hu: 'Március'
+        pt: 'Março'
+      0x04:
+        en: 'April'
+        fr: 'Avril'
+        es: 'Abril'
+        de: 'April'
+        it: 'Aprile'
+        pl: 'Kwiecień'
+        ru: 'Апрель'
+        zh: '四月'
+        hu: 'Április'
+        pt: 'Abril'
+      0x05:
+        en: 'May'
+        fr: 'Mai'
+        es: 'Mayo'
+        de: 'Mai'
+        it: 'Maggio'
+        pl: 'Maj'
+        ru: 'Май'
+        zh: '五月'
+        hu: 'Május'
+        pt: 'Maio'
+      0x06:
+        en: 'June'
+        fr: 'Juin'
+        es: 'Junio'
+        de: 'Juni'
+        it: 'Giugno'
+        pl: 'Czerwiec'
+        ru: 'Июнь'
+        zh: '六月'
+        hu: 'Június'
+        pt: 'Junho'
+      0x07:
+        en: 'July'
+        fr: 'Juillet'
+        es: 'Julio'
+        de: 'Juli'
+        it: 'Luglio'
+        pl: 'Lipiec'
+        ru: 'Июль'
+        zh: '七月'
+        hu: 'Július'
+        pt: 'Julho'
+      0x08:
+        en: 'August'
+        fr: 'Août'
+        es: 'Agosto'
+        de: 'August'
+        it: 'Agosto'
+        pl: 'Sierpień'
+        ru: 'Август'
+        zh: '八月'
+        hu: 'Augusztus'
+        pt: 'Agosto'
+      0x09:
+        en: 'September'
+        fr: 'Septembre'
+        es: 'Septiembre'
+        de: 'September'
+        it: 'Settembre'
+        pl: 'Wrzesień'
+        ru: 'Сентябрь'
+        zh: '九月'
+        hu: 'Szeptember'
+        pt: 'Setembro'
+      0x0A:
+        en: 'October'
+        fr: 'Octobre'
+        es: 'Octubre'
+        de: 'Oktober'
+        it: 'Ottobre'
+        pl: 'Październik'
+        ru: 'Октябрь'
+        zh: '十月'
+        hu: 'Október'
+        pt: 'Outubro'
+      0x0B:
+        en: 'November'
+        fr: 'Novembre'
+        es: 'Noviembre'
+        de: 'November'
+        it: 'Novembre'
+        pl: 'Listopad'
+        ru: 'Ноябрь'
+        zh: '十一月'
+        hu: 'November'
+        pt: 'Novembro'
+      0x0C:
+        en: 'December'
+        fr: 'Décembre'
+        es: 'Diciembre'
+        de: 'Dezember'
+        it: 'Dicembre'
+        pl: 'Grudzień'
+        ru: 'Декабрь'
+        zh: '十二月'
+        hu: 'December'
+        pt: 'Dezembro'
+      0x0D:
+        en: 'Unused value (1101)'
+        fr: 'Valeur non utilisée (1101)'
+        es: 'Valor no utilizado (1101)'
+        de: 'Nicht verwendeter Wert (1101)'
+        it: 'Valore non utilizzato (1101)'
+        pl: 'Wartość nieużywana (1101)'
+        ru: 'Неиспользуемое значение (1101)'
+        zh: '未使用的值 (1101)'
+        hu: 'Nem használt érték (1101)'
+        pt: 'Valor não utilizado (1101)'
+      0x0E:
+        en: 'Unavailable'
+        fr: 'Indisponible'
+        es: 'No disponible'
+        de: 'Nicht verfügbar'
+        it: 'Non disponibile'
+        pl: 'Niedostępne'
+        ru: 'Недоступно'
+        zh: '不可用'
+        hu: 'Nem elérhető'
+        pt: 'Indisponível'
+      0x0F:
+        en: 'Invalid'
+        fr: 'Invalide'
+        es: 'Inválido'
+        de: 'Ungültig'
+        it: 'Non valido'
+        pl: 'Nieprawidłowe'
+        ru: 'Недействительно'
+        zh: '无效'
+        hu: 'Érvénytelen'
+        pt: 'Inválido'
+
+  UNUSED_2:
+    bits: '3.7-3.6'
+    unused: true
+
+  CLOCK_DAY:
+    bits: '3.5-3.0'
+    comment:
+      en: 'Clock day value'
+      fr: 'Valeur du jour de l''horloge'
+      es: 'Valor del día del reloj'
+      de: 'Tageswert der Uhr'
+      it: 'Valore del giorno dell''orologio'
+      pl: 'Wartość dnia zegara'
+      ru: 'Значение дня часов'
+      zh: '时钟的日期数值'
+      hu: 'Az óra nap-értéke'
+      pt: 'Valor do dia do relógio'
+    type: 'uint'
+    factor: 1
+    min: 1
+    max: 31
+    units: 'day'
+    invalid: 0x3F
+    default: 0x3E
+
+  UNUSED_3:
+    bits: '4.7-4.5'
+    unused: true
+
+  TIME_HOUR:
+    bits: '4.4-4.0'
+    comment:
+      en: 'Clock hour'
+      fr: 'Heure de l''horloge'
+      es: 'Hora del reloj'
+      de: 'Uhrzeit (Stunde)'
+      it: 'Ora dell''orologio'
+      pl: 'Godzina zegara'
+      ru: 'Часы (значение часов)'
+      zh: '时钟小时'
+      hu: 'Óra (óraérték)'
+      pt: 'Hora do relógio'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 23
+    units: 'h'
+    invalid: 0x1F
+    default: 0x1E
+
+  UNUSED_4:
+    bits: '5.7-5.6'
+    unused: true
+
+  TIME_MINUTE:
+    bits: '5.5-5.0'
+    comment:
+      en: 'Clock minute'
+      fr: 'Minutes de l''horloge'
+      es: 'Minutos del reloj'
+      de: 'Uhrzeit (Minute)'
+      it: 'Minuti dell''orologio'
+      pl: 'Minuty zegara'
+      ru: 'Часы (значение минут)'
+      zh: '时钟分钟'
+      hu: 'Óra (percérték)'
+      pt: 'Minuto do relógio'
+    type: 'uint'
+    factor: 1
+    min: 0
+    max: 59
+    units: 'min'
+    invalid: 0x3F
+    default: 0x3E

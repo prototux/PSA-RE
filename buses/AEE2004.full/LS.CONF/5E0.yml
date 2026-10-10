@@ -1,0 +1,234 @@
+id: 0x5E0
+name: 'RADIO_VERSION'
+type: 'can'
+length: 8
+comment:
+  en: 'Software and calibration identification of the ECU, sent once at start-up.'
+  fr: 'Identification logicielle et de calibration du calculateur, émise une fois au démarrage.'
+  es: 'Identificación de software y calibración de la ECU, enviada una vez al arrancar.'
+  de: 'Software- und Kalibrierungskennung des Steuergeräts, einmal beim Start gesendet.'
+  it: 'Identificazione software e calibrazione della centralina, inviata una volta all''avvio.'
+  pl: 'Identyfikacja oprogramowania i kalibracji sterownika, wysyłana raz przy uruchomieniu.'
+  ru: 'Идентификация программного обеспечения и калибровки блока управления, отправляется один раз при запуске.'
+  zh: '该ECU的软件和标定版本信息，启动时发送一次。'
+  hu: 'A vezérlőegység szoftver- és kalibrációs azonosítója, indításkor egyszer elküldve.'
+  pt: 'Identificação de software e calibração da ECU, enviada uma vez no arranque.'
+periodicity: ['trigger']
+senders: ['RAD', 'ICSV']
+receivers: ['BSI']
+
+signals:
+  ECU_NUMBER:
+    bits: '1.7-1.0'
+    comment:
+      en: 'ECU number.'
+      fr: 'Numéro d''UCE (calculateur).'
+      es: 'Número de unidad de control.'
+      de: 'Steuergerätenummer.'
+      it: 'Numero di centralina.'
+      pl: 'Numer sterownika.'
+      ru: 'Номер блока управления.'
+      zh: '控制单元编号。'
+      hu: 'Vezérlőegység száma.'
+      pt: 'Número de UCE (centralina).'
+    type: 'enum'
+    invalid: 0xFF
+    default: 0x00
+    values:
+      0x00:
+        en: '(none)'
+        fr: '(aucun)'
+        es: '(ninguno)'
+        de: '(keine)'
+        it: '(nessuno)'
+        pl: '(brak)'
+        ru: '(нет)'
+        zh: '(无)'
+        hu: '(nincs)'
+        pt: '(nenhum)'
+      0x12:
+        en: 'BSI (body controller)'
+        fr: 'BSI (contrôleur de carrosserie)'
+        es: 'BSI (controlador de carrocería)'
+        de: 'BSI (Aufbausteuergerät)'
+        it: 'BSI (centralina carrozzeria)'
+        pl: 'BSI (sterownik nadwozia)'
+        ru: 'BSI (блок управления кузовом)'
+        zh: 'BSI(车身控制器)'
+        hu: 'BSI (karosszéria-vezérlő)'
+        pt: 'BSI (controlador de carroçaria)'
+      0x1D:
+        en: 'Parking aid'
+        fr: 'AAS'
+        es: 'Ayuda al aparcamiento'
+        de: 'Einparkhilfe'
+        it: 'Assistenza al parcheggio'
+        pl: 'Wspomaganie parkowania'
+        ru: 'Помощь при парковке'
+        zh: '泊车辅助'
+        hu: 'Parkolássegéd'
+        pt: 'Ajuda ao estacionamento'
+      0x20:
+        en: 'RAD'
+        fr: 'RAD'
+        es: 'RAD'
+        de: 'RAD'
+        it: 'RAD'
+        pl: 'RAD'
+        ru: 'RAD'
+        zh: 'RAD'
+        hu: 'RAD'
+        pt: 'RAD'
+      0x25:
+        en: 'EMF'
+        fr: 'EMF'
+        es: 'EMF'
+        de: 'EMF'
+        it: 'EMF'
+        pl: 'EMF'
+        ru: 'EMF'
+        zh: 'EMF'
+        hu: 'EMF'
+        pt: 'EMF'
+      0x31:
+        en: 'CDC'
+        fr: 'CDC'
+        es: 'CDC'
+        de: 'CDC'
+        it: 'CDC'
+        pl: 'CDC'
+        ru: 'CDC'
+        zh: 'CDC'
+        hu: 'CDC'
+        pt: 'CDC'
+
+  SOFTWARE_VERSION_DAY:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Software version, day.'
+      fr: 'Version du logiciel, jour.'
+      es: 'Versión del software, día.'
+      de: 'Softwareversion, Tag.'
+      it: 'Versione del software, giorno.'
+      pl: 'Wersja oprogramowania, dzień.'
+      ru: 'Версия программного обеспечения, день.'
+      zh: '软件版本，日。'
+      hu: 'Szoftververzió, nap.'
+      pt: 'Versão do software, dia'
+    type: 'uint'
+    min: 1
+    max: 31
+    default: 0x00
+
+  SOFTWARE_VERSION_MONTH:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Software version, month.'
+      fr: 'Version du logiciel, mois.'
+      es: 'Versión del software, mes.'
+      de: 'Softwareversion, Monat.'
+      it: 'Versione del software, mese.'
+      pl: 'Wersja oprogramowania, miesiąc.'
+      ru: 'Версия программного обеспечения, месяц.'
+      zh: '软件版本，月。'
+      hu: 'Szoftververzió, hónap.'
+      pt: 'Versão do software, mês'
+    type: 'uint'
+    min: 1
+    max: 12
+    invalid: 0xFF
+    default: 0x00
+
+  SOFTWARE_VERSION_YEAR:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Software version, year.'
+      fr: 'Version du logiciel, année.'
+      es: 'Versión del software, año.'
+      de: 'Softwareversion, Jahr.'
+      it: 'Versione del software, anno.'
+      pl: 'Wersja oprogramowania, rok.'
+      ru: 'Версия программного обеспечения, год.'
+      zh: '软件版本，年。'
+      hu: 'Szoftververzió, év.'
+      pt: 'Versão do software, ano'
+    type: 'uint'
+    factor: 1
+    offset: 2000
+    min: 2000
+    max: 2200
+    default: 0x00
+
+  SOFTWARE_IDENTIFICATION:
+    bits: '5.7-6.0'
+    comment:
+      en: 'Characterizes the software identification.'
+      fr: 'Caractérise l''identification du logiciel.'
+      es: 'Caracteriza la identificación del software.'
+      de: 'Kennzeichnet die Software-Identifikation.'
+      it: 'Caratterizza l''identificazione del software.'
+      pl: 'Określa identyfikację oprogramowania.'
+      ru: 'Характеризует идентификацию программного обеспечения.'
+      zh: '表征软件标识。'
+      hu: 'A szoftverazonosítást jellemzi.'
+      pt: 'Carateriza a identificação do software.'
+    type: 'uint'
+    min: 0
+    max: 65534
+    invalid: 0xFFFF
+    default: 0x00
+
+  GENERATION_NUMBER_DIGIT_1:
+    bits: '7.7-7.4'
+    comment:
+      en: 'Generation number (1st digit).'
+      fr: 'Numéro de génération (1er chiffre).'
+      es: 'Número de generación (1er dígito).'
+      de: 'Generationsnummer (1. Ziffer).'
+      it: 'Numero di generazione (1° cifra).'
+      pl: 'Numer generacji (1. cyfra).'
+      ru: 'Номер поколения (1-я цифра).'
+      zh: '代数编号（第1位数字）。'
+      hu: 'Generációszám (1. számjegy).'
+      pt: 'Número de geração (1.º dígito).'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  GENERATION_NUMBER_DIGIT_2:
+    bits: '7.3-7.0'
+    comment:
+      en: 'Generation number (2nd digit).'
+      fr: 'Numéro de génération (2ème chiffre).'
+      es: 'Número de generación (2º dígito).'
+      de: 'Generationsnummer (2. Ziffer).'
+      it: 'Numero di generazione (2° cifra).'
+      pl: 'Numer generacji (2. cyfra).'
+      ru: 'Номер поколения (2-я цифра).'
+      zh: '代数编号（第2位数字）。'
+      hu: 'Generációszám (2. számjegy).'
+      pt: 'Número de geração (2.º dígito).'
+    type: 'uint'
+    min: 0
+    max: 15
+    default: 0x00
+
+  EDITION_NUMBER:
+    bits: '8.7-8.0'
+    comment:
+      en: 'Edition number.'
+      fr: 'Numéro de l''édition.'
+      es: 'Número de edición.'
+      de: 'Ausgabenummer.'
+      it: 'Numero di edizione.'
+      pl: 'Numer edycji.'
+      ru: 'Номер редакции.'
+      zh: '版本编号。'
+      hu: 'Kiadásszám.'
+      pt: 'Número da edição.'
+    type: 'uint'
+    min: 0
+    max: 254
+    invalid: 0xFF
+    default: 0x00

@@ -1,0 +1,126 @@
+id: 0xE64
+name: 'AIR_CONDITIONING_FAULT_EVENT'
+type: 'van'
+length: 4
+comment:
+  en: 'Air conditioning fault appearance/disappearance event, logged in the body controller''s centralised fault log.'
+  fr: 'Événement d''apparition/disparition de défaut climatisation, enregistré dans le journal des défauts centralisé du BSI.'
+  es: 'Evento de aparición/desaparición de fallo del climatizador, registrado en el registro de fallos centralizado de la BSI.'
+  de: 'Ereignis für das Auftreten/Verschwinden eines Klimaanlagenfehlers, im zentralen Fehlerspeicher des BSI vermerkt.'
+  it: 'Evento di comparsa/scomparsa di un guasto del climatizzatore, registrato nel registro guasti centralizzato della BSI.'
+  pl: 'Zdarzenie pojawienia się/zniknięcia usterki klimatyzacji, zapisywane w centralnym dzienniku usterek BSI.'
+  ru: 'Событие появления/исчезновения неисправности кондиционера, регистрируется в централизованном журнале неисправностей BSI.'
+  zh: '空调故障出现/消失事件,记录在车身控制器的集中故障日志中。'
+  hu: 'A klíma hibájának megjelenése/eltűnése esemény, amelyet a BSI központi hibanaplója rögzít.'
+  pt: 'Evento de aparecimento/desaparecimento de avaria do ar condicionado, registado no registo de avarias centralizado do computador de servidão.'
+periodicity: ['trigger']
+senders: ['CLIM_AV']
+receivers: ['BSI']
+van:
+  access: 'write'
+  ack: true
+  rtr: false
+  reply: 'none'
+
+signals:
+  STATION_CODE:
+    bits: '1.7-1.0'
+    comment:
+      en: 'Multiplex station number of the sending unit'
+      fr: 'Numéro de station multiplex de l''unité émettrice'
+      es: 'Número de estación multiplex de la unidad emisora'
+      de: 'Multiplex-Stationsnummer des sendenden Geräts'
+      it: 'Numero di stazione multiplex dell''unità mittente'
+      pl: 'Numer stacji multipleksowej jednostki nadawczej'
+      ru: 'Номер мультиплексной станции передающего устройства'
+      zh: '发送单元的多路复用站号'
+      hu: 'A küldő egység multiplex állomásszáma'
+      pt: 'Número da estação multiplex da unidade emissora'
+    type: 'enum'
+    default: 0x00
+    mux_selector: true
+    values:
+      0x0E:
+        en: 'Climate control station number'
+        fr: 'Numéro de station de la climatisation'
+        es: 'Número de estación del climatizador'
+        de: 'Stationsnummer der Klimaanlage'
+        it: 'Numero di stazione del climatizzatore'
+        pl: 'Numer stacji klimatyzacji'
+        ru: 'Номер станции климат-контроля'
+        zh: '空调站号'
+        hu: 'A klíma állomásszáma'
+        pt: 'Número da estação de climatização'
+
+  FAULT_LOG_SERVICE:
+    bits: '2.7-2.0'
+    comment:
+      en: 'Fault log service: fault appearance or disappearance'
+      fr: 'Service du journal de défauts : apparition ou disparition du défaut'
+      es: 'Servicio del registro de fallos: aparición o desaparición del fallo'
+      de: 'Fehlerprotokolldienst: Auftreten oder Verschwinden eines Fehlers'
+      it: 'Servizio del registro guasti: comparsa o scomparsa del guasto'
+      pl: 'Usługa dziennika usterek: pojawienie się lub zniknięcie usterki'
+      ru: 'Служба журнала неисправностей: появление или исчезновение неисправности'
+      zh: '故障日志服务:故障出现或消失'
+      hu: 'Hibanapló szolgáltatás: hiba megjelenése vagy eltűnése'
+      pt: 'Serviço de registo de avarias: aparecimento ou desaparecimento de avaria'
+    type: 'enum'
+    default: 0x00
+    values:
+      0x10:
+        en: 'Fault disappeared'
+        fr: 'Disparition du défaut'
+        es: 'Fallo desaparecido'
+        de: 'Fehler verschwunden'
+        it: 'Guasto scomparso'
+        pl: 'Usterka zniknęła'
+        ru: 'Неисправность исчезла'
+        zh: '故障已消失'
+        hu: 'A hiba megszűnt'
+        pt: 'Desaparecimento da falha'
+      0x90:
+        en: 'Fault appeared'
+        fr: 'Apparition du défaut'
+        es: 'Aparición del fallo'
+        de: 'Fehler aufgetreten'
+        it: 'Comparsa del guasto'
+        pl: 'Wystąpienie usterki'
+        ru: 'Появление неисправности'
+        zh: '故障出现'
+        hu: 'Hiba fellépett'
+        pt: 'Avaria surgida'
+
+  FAULT_CODE:
+    bits: '3.7-3.0'
+    comment:
+      en: 'Climate control fault code: index of the faulty bit in the diagnostic fault table'
+      fr: 'Code défaut climatisation : index du bit en défaut dans la table de diagnostic'
+      es: 'Código de fallo de climatización: índice del bit en fallo en la tabla de diagnóstico'
+      de: 'Fehlercode der Klimaanlage: Index des fehlerhaften Bits in der Diagnosefehlertabelle'
+      it: 'Codice guasto climatizzazione: indice del bit guasto nella tabella diagnostica'
+      pl: 'Kod usterki klimatyzacji: indeks błędnego bitu w tabeli diagnostycznej usterek'
+      ru: 'Код неисправности климат-контроля: индекс неисправного бита в диагностической таблице неисправностей'
+      zh: '空调故障码:诊断故障表中故障位的索引'
+      hu: 'A klíma hibakódja: a hibás bit indexe a diagnosztikai hibatáblában'
+      pt: 'Código de falha da climatização: índice do bit em falha na tabela de diagnóstico'
+    type: 'uint'
+    min: 0
+    max: 39
+    default: 0x00
+
+  CHECKSUM:
+    bits: '4.7-4.0'
+    comment:
+      en: 'Checksum of the fault event frame data (STATION_CODE + LID + fault code)'
+      fr: 'Somme de contrôle des données de la trame d''événement défaut (STATION_CODE + LID + code défaut)'
+      es: 'Suma de comprobación de los datos de la trama de evento de fallo (STATION_CODE + LID + código de fallo)'
+      de: 'Prüfsumme der Fehlerereignis-Frame-Daten (STATION_CODE + LID + Fehlercode)'
+      it: 'Checksum dei dati della trama di evento guasto (STATION_CODE + LID + codice guasto)'
+      pl: 'Suma kontrolna danych ramki zdarzenia usterki (STATION_CODE + LID + kod usterki)'
+      ru: 'Контрольная сумма данных кадра события неисправности (STATION_CODE + LID + код неисправности)'
+      zh: '故障事件帧数据校验和(STATION_CODE + LID + 故障码)'
+      hu: 'A hibaesemény-keret adatainak ellenőrzőösszege (STATION_CODE + LID + hibakód)'
+      pt: 'Soma de verificação dos dados da trama de evento de falha (STATION_CODE + LID + código de falha)'
+    type: 'uint'
+    default: 0x00
