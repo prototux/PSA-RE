@@ -1,53 +1,88 @@
-# CAN message format
-id: 0x042 # hex format, uppercase letters, 0x format
-name: 'TEST_FRAME' # uppercase and underscores only
-alt_names: # List containing altnerative names, such as the original name, optional
-  - 'MESSAGE_DE_TEST'
-length: 5 # Length in bytes
-comment: # Comment, optional
-  # PLEASE DO NOT FEEL PRESSURED TO ADD OTHER LANGUAGE COMMENTS EVERYWHERE
-  # THE ONLY TWO IMPORTANT LANGUAGES ARE FRENCH AND ENGLISH
-  en: 'This is an english comment'
-  fr: 'Ceci est un commentaire en francais'
-type: 'can' # or 'can-tp'
-periodicity: 'oneshot' # or 'trigger' or 'Xms' eg. '200ms'
-senders: # Nodes that can emit this message
-  - 'BSI'
-receivers: # Nodes that uses this message
-  - 'RADIO'
+# CAN frame example (buses/<ARCH>.<variant>/<NET>.<BUS>/<ID>.yml, eg. buses/AEE2004.full/HS.IS/208.yml)
+id: 0x208                  # frame identifier, hex, uppercase
+name: 'ENGINE_DATA'        # english, UPPER_SNAKE_CASE, unique on the bus
+alt_names: ['OTHER_NAME']  # optional, other names this frame is known by
+type: 'can'                # can | can-tp | van | lin
+extended: false            # optional, 29 bit identifier (can only)
+length: 8                  # payload length in bytes
+length_min: 7              # optional, shortest length seen/accepted
+comment:                   # what the frame is, 'en' mandatory, 'fr' recommended, other languages welcome
+  en: 'Engine speed and torque data'
+  fr: 'Régime et couple moteur'
+  de: 'Motordrehzahl und Drehmoment'
+observations:              # optional, how the frame behaves on the bus
+  en: 'Stops being sent a few seconds after ignition off'
+  fr: "N'est plus émise quelques secondes après la coupure du contact"
+periodicity: ['10ms']      # list of: 'NNNms' (period), 'trigger' (on change/event), 'request' (only when asked)
+senders: ['CMM']           # nodes sending it (defined in nodes/<ARCH>.<variant>.yml)
+receivers: ['BSI', 'BVA']  # nodes using it
 
-# Message signals
 signals:
-  FIRST_SIGNAL: # signal ID, uppercase and underscores only
-    # The bits fields can either have a single bit location
-    # or a range. Ranges are defined as (start)-(end)
-    # Bits are defined in the form of (byte).(bit)
-    # The bytes are big-endian (counting left to right)
-    # The bit order is MSB->LSB (counting right to left)
-    # eg. [byte 0] [byte 1] [byte 3]
-    #             /        \
-    #          ----         ----
-    #         /                 \
-    #         [b3] [b2] [b1] [b0]
-    bits: '1.7-1.0' # Or single value, or '1.7-n' for can-tp
-    unused: true # If it is unused, optional
-    alt_names: # Alternative names, optional
-      - 'SIGNAL'
-    comment: # Comment, optional
-      en: 'Signal comment'
-      fr: 'Commentaire du signal'
-    signed: true  # This value defines if the CAN value is signed or unsigned 
-                  # When not defined it defaults to false
-                  # For readability only define when signed!
-    type: 'uint' # or sint, float, double, str
-    min: 0x000 # Min value, optional
-    max: 0x000 # Max value, optional
-    units: 'kph' # Unit, optional
-    offset: '-40' # Offset (value to add or substract), optional
-    factor: '-100' # Factor (value to multiply or divide), optional
-    values: # List of values with their names and descriptions
-      0x000:
-        unused: false # Only set the unused flag when needed
-        # Comment about the value
-        en: 'enabled'
-        fr: 'active'
+  ENGINE_RPM:              # english, UPPER_SNAKE_CASE, unique in the frame
+    bits: '1.7-2.0'        # <byte>.<bit>, bytes from 1, bits 7 (MSB) to 0, ranges in transmission order (big endian)
+    comment:
+      en: 'Engine speed'
+      fr: 'Régime moteur'
+    type: 'uint'           # uint (default) | sint | bool | enum | bcd | str | bytes | float
+    factor: 0.125          # physical = raw * factor + offset
+    offset: 0
+    min: 0                 # physical min/max
+    max: 8191.75
+    units: 'rpm'
+    invalid: 0xFFFF        # raw value(s) meaning "not available"
+    default: 0x0000        # raw value sent when the data is not known yet
+
+  CRUISE_STATUS:
+    bits: '3.7-3.6'
+    type: 'enum'
+    comment:
+      en: 'Cruise control status'
+      fr: 'Etat du régulateur de vitesse'
+    values:                # raw value -> meaning, keys in hex
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+      0x01:
+        en: 'Active'
+        fr: 'Actif'
+      0x02:
+        en: 'Suspended'
+        fr: 'Suspendu'
+      0x03:
+        unused: true       # reserved / never observed
+    alternatives:          # optional, conflicting observations of this signal (partial overrides)
+      - note:
+          en: 'Seen as a single bit on older engine ECUs'
+          fr: 'Vu comme un seul bit sur les anciens calculateurs moteur'
+        bits: '3.7'
+
+  UNUSED_1:
+    bits: '3.5-3.0'
+    unused: true           # reserved bits
+
+  SPEED_LE:
+    bits: '4.7-5.0'
+    byte_order: 'little_endian'   # rare: least significant byte sent first
+    factor: 0.01
+    units: 'km/h'
+
+  MODE:
+    bits: '6.7-6.6'
+    mux_selector: true     # this signal selects the layout of the rest of the frame
+    values:
+      0x00:
+        en: 'Page 0'
+      0x01:
+        en: 'Page 1'
+
+  PAGE0_VALUE:
+    bits: '7.7-8.0'
+    mux:                   # only present when MODE is 0
+      selector: 'MODE'
+      values: [0x00]
+
+  PAGE1_VALUE:
+    bits: '7.7-8.0'
+    mux:
+      selector: 'MODE'
+      values: [0x01]

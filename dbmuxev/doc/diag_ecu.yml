@@ -1,0 +1,36 @@
+# Diagnostic description of one ECU (diag/<ARCH>.<variant>/<NODE>/ecu.yml)
+node: 'BSI'
+comment:
+  en: 'Body control module, reachable through the diagnostic socket CAN'
+  fr: 'BSI, accessible par le CAN de la prise diagnostic'
+protocols: ['UDS']         # KWP2000 | KWP-PSA2000 | UDS | EOBD
+addressing:
+  - transport: 'can-tp'    # can-tp | k-line | doip
+    bus: 'LS.CONF'
+    protocol: 'UDS'
+    request_id: 0x752      # tester -> ECU
+    response_id: 0x652     # ECU -> tester
+  - transport: 'can-tp'
+    protocol: 'EOBD'
+    request_id: 0x7E4
+    response_id: 0x7EC
+    functional_id: 0x7DF
+sessions:                  # DiagnosticSessionControl (0x10) sub-functions
+  0x01:
+    en: 'Default session'
+    fr: 'Session par défaut'
+  0x03:
+    en: 'Extended session'
+    fr: 'Session étendue'
+resets:                    # ECUReset (0x11) sub-functions
+  0x01:
+    en: 'Hard reset'
+    fr: 'Reset matériel'
+services: [0x10, 0x11, 0x14, 0x19, 0x22, 0x27, 0x2E, 0x2F, 0x31, 0x3E]   # see diag/protocols/UDS.yml
+security_access:
+  - level: 0x03            # requestSeed sub-function, sendKey is level + 1
+    algorithm: 'PSA_SEED_KEY'      # described in diag/protocols/UDS.yml
+    key: 'B2B2'            # ECU specific constant used by the algorithm
+tester_present:
+  request: '3E 00'
+  period_ms: 2000

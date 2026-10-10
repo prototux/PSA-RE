@@ -1,47 +1,35 @@
-# VAN message format
-id: 0x042 # hex format, uppercase letters, 0x format
-name: 'TEST_FRAME' # uppercase and underscores only
-alt_names: # Alternative names, optional
-  - 'MESSAGE_DE_TEST'
-length: 15 # Length in bytes
-comment: # Comment, optional
-  en: 'This is an english comment'
-  fr: 'Ceci est un commentaire en francais'
+# VAN frame example (AEE2001 cars), eg. buses/AEE2001.full/VAN.CONF/8A4.yml
+id: 0x8A4                  # 12 bit identifier
+name: 'BSI_SLOW_DATA'
 type: 'van'
-periodicity: 'oneshot' # or 'trigger' or 'Xms' eg. '200ms'
-senders:
-  - 'BSI'
-receivers:
-  - 'RADIO'
+length: 7                  # data field length, up to 28 bytes
+comment:
+  en: 'Slow changing data from the BSI (ignition, lighting...)'
+  fr: 'Données lentes de la BSI (contact, éclairage...)'
+periodicity: ['500ms', 'trigger']
+senders: ['BSI']
+receivers: ['EMF', 'RAD', 'CMB']
+van:
+  access: 'write'          # write: the producer sends its data; read: the frame is a read request
+  ack: true                # RAK bit: in-frame acknowledge requested
+  rtr: false               # RTR bit
+  reply: 'none'            # for read requests: in-frame (the producer fills the request frame) or deferred
+  # requested_by: ['BSI']  # for read requests: nodes that poll it
 
-# Message signals
 signals:
-  FIRST_SIGNAL: # signal ID, uppercase and underscores only
-    # The bits fields can either have a single bit location
-    # or a range. Ranges are defined as (start)-(end)
-    # Bits are defined in the form of (byte).(bit)
-    # The bytes are big-endian (counting left to right)
-    # The bit order is MSB->LSB (counting right to left)
-    # eg. [byte 0] [byte 1] [byte 3]
-    #             /        \
-    #          ----         ----
-    #         /                 \
-    #         [b3] [b2] [b1] [b0]
-    bits: '1.7-1.0' # Or single value, or '1.7-n' for can-tp
-    unused: true # If it is unused, optional
-    alt_names: # Alternative names, optional
-      - 'SIGNAL'
-    comment: # Comment, optional
-      en: 'Signal comment'
-      fr: 'Commentaire du signal'
-    type: 'uint' # or sint, float, double, str
-    min: 0x000 # Min value, optional
-    max: 0x000 # Max value, optional
-    units: 'kph' # Unit, optional
-    offset: '-40' # Offset (value to add or substract), optional
-    factor: '-100' # Factor (value to multiply or divide), optional
-    values: # List of values with their names and descriptions
-      0x000:
-        unused: true # If it is unused, optional
-        en: 'thing is enabled'
-        fr: 'thing is disabled'
+  IGNITION:
+    bits: '2.1-2.0'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'Off'
+        fr: 'Arrêt'
+      0x01:
+        en: 'Accessories'
+        fr: 'Accessoires'
+      0x02:
+        en: 'Ignition on'
+        fr: 'Contact mis'
+      0x03:
+        en: 'Cranking'
+        fr: 'Démarrage'

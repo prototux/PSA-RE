@@ -1,33 +1,25 @@
-# Nodes file
+# Nodes file (nodes/<ARCH>.<variant>.yml)
 
-BSI: # Node name, uppercase only
-  bus:
-    - '<network>.<bus>'
-  id: # hex format, uppercase letters
-    HS: 0x12 # network name: format
+BSI:                       # node name, uppercase, english or well known acronym
+  bus:                     # buses it is connected to, '<network>.<bus>' from architectures.yml
+    - 'HS.IS'
+    - 'LS.CONF'
+  id:                      # optional, electronic unit code per network (as used in supervision/version frames)
+    HS: 0x12
     LS: 0x12
-  alt: # Alternative names, list because some nodes have multiple names...
-    - 'BSI'
-  # PLEASE DO NOT FEEL PRESSURED TO ADD OTHER LANGUAGE COMMENTS / NAMES EVERYWHERE
-  # THE ONLY TWO IMPORTANT LANGUAGES ARE FRENCH AND ENGLISH
-  name: # For display
-    en: 'Built-In System'
-    fr: 'Boitier de Servitude Intelligent'
-  comment:
+  alt: ['VSM', 'BCM']      # optional, other names
+  name:
+    en: 'Body control module'
+    fr: 'Boîtier de servitude intelligent'
+  comment:                 # optional
     en: 'Main gateway'
     fr: 'Passerelle principale'
-  diag_services: # List of UDS services implemented
-    - 'reset'
-    - 'read_dtc'
-    - 'reset_dtc'
-    - 'read_did'
-    - 'write_did'
-    - 'read_mem'
-    - 'write_mem'
-    - 'download'
-    - 'upload'
-    - 'ioctl'
-  diag_sessions: # If the node uses custom sessions
-    0x42: 'custom session name'
-  diag_reset: # If the node uses custom reset schemes
-    0x42: 'custom reset scheme name'
+  released: true           # optional, false for nodes never seen in a production car
+  diag:                    # optional, diagnostic addressing summary (details in diag/<ARCH>.<variant>/<NODE>/ecu.yml)
+    protocols: ['KWP2000', 'UDS']
+    bus: 'LS.CONF'
+    request_id: 0x752      # tester -> ECU
+    response_id: 0x652     # ECU -> tester
+    obd_request_id: 0x7E4  # optional, OBD (EOBD) addressing
+    obd_response_id: 0x7EC
+    kline_address: 0x4B    # optional, K-line target address

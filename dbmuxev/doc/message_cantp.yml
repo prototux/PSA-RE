@@ -1,0 +1,34 @@
+# CAN-TP (ISO 15765-2 / ISO-TP) transfer example
+# The frame is the logical message: the signals describe the reassembled payload,
+# byte 1 is the first payload byte after the protocol control information (PCI).
+id: 0x0A4                  # CAN ID carrying the data (single/first/consecutive frames)
+name: 'RADIO_TEXT'
+type: 'can-tp'
+length: 64                 # maximum payload length (up to 4095)
+comment:
+  en: 'Radio text (RDS / track name) sent to the display'
+  fr: "Texte radio (RDS / nom de piste) envoyé à l'afficheur"
+periodicity: ['trigger']
+senders: ['RAD']
+receivers: ['EMF']
+isotp:
+  flow_control_id: 0x09F   # CAN ID used by the receiver for flow control frames
+  addressing: 'normal'     # normal | extended | mixed
+  padding: 0x00            # padding byte, or null when frames are not padded
+  block_size: 0
+  st_min: 10               # ms
+
+signals:
+  TEXT_TYPE:
+    bits: '1.7-1.0'
+    type: 'enum'
+    values:
+      0x01:
+        en: 'Station name'
+        fr: 'Nom de station'
+  TEXT:
+    bits: '2.7-n'          # until the end of the payload
+    type: 'str'
+    comment:
+      en: 'Text, ISO-8859-1'
+      fr: 'Texte, ISO-8859-1'

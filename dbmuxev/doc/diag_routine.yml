@@ -1,13 +1,29 @@
-# Diag (UDS) routine definition
-routine: 0x0001 # Routine ID, hex format, uppercase letters
-original_name: ROUTINE_NAME # Original name, optional
-display_name: # Display name, optional
+# Routine (diag/<ARCH>.<variant>/<NODE>/routines/<ID>.yml)
+# UDS: 31 01 <ID_HI> <ID_LO> (start), 31 02 (stop), 31 03 (results)
+# KWP2000: 31 <LID> (start), 32 <LID> (stop), 33 <LID> (results)
+routine: 0x0001
+name: 'ENGINE_TEST'
+display_name:
   en: 'Engine test'
   fr: 'Test du moteur'
-comment: # Comment, optional
-  en: 'This starts the engine'
-  fr: 'Demarre le moteur'
-return_values: # Possible return values, optional
-  0x00:
-    en: 'Incorrect'
-    fr: 'Test non reussi'
+comment:
+  en: 'Starts an actuator test'
+  fr: "Démarre un test d'actionneur"
+session: 0x03
+control: ['start', 'results']
+params:                    # option record sent with start
+  DURATION:
+    bits: '1.7-1.0'
+    units: 's'
+results:                   # returned by results
+  STATUS:
+    bits: '1.7-1.0'
+    type: 'enum'
+    values:
+      0x00:
+        en: 'OK'
+        fr: 'OK'
+return_values:             # optional, routine status codes
+  0x01:
+    en: 'Failed'
+    fr: 'Echec'

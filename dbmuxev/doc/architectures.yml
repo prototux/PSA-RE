@@ -1,23 +1,27 @@
-# Architectures file
+# Architectures file (architectures.yml)
 
-AEE2001: # Architecture family
-  full: # Variant name
-    comment:
-      en: 'full VAN+CAN'
-      fr: 'VAN+CAN complet'
+AEE2004:                   # architecture family, uppercase
+  full:                    # variant name, lowercase (full, eco, ev...)
+    comment:               # 'en' mandatory, other languages welcome
+      en: 'Full CAN, 1st generation'
+      fr: 'Tout CAN, 1ère génération'
+    years: '2004-2018'     # optional, approximate production years
+    status: 'partial'      # optional: documented | partial | todo
     networks:
-      HS: # Network name
-        CONF: # Bus name
-          protocol: 'CAN' # Protocol the bus is running on
-          bitrate: 125 # Bitrate the bus is running on in kbit/s 
-            # PLEASE DO NOT FEEL PRESSURED TO ADD OTHER LANGUAGE COMMENTS / DISPLAY_NAMES EVERYWHERE
-            # THE ONLY TWO IMPORTANT LANGUAGES ARE FRENCH AND ENGLISH
+      HS:                  # network name
+        IS:                # bus name, the bus is referenced as 'HS.IS'
+          protocol: 'CAN'  # CAN | CAN-FD | VAN | LIN | K-LINE | ETHERNET...
+          bitrate: 500     # kbit/s
           display_name:
-            en: 'Comfort bus'
-            fr: 'Bus confort'
+            en: 'Inter-systems'
+            fr: 'Inter-systèmes'
           comment:
-            en: 'Bus for comfort nodes'
-            fr: 'Bus pour les noeuds confort'
-    protocols: # List of protocols used in this architecture, diagnostics included
-      - 'CAN'
-      - 'LIN'
+            en: 'Bus for the powertrain and chassis nodes'
+            fr: 'Bus des calculateurs moteur et châssis'
+    protocols: ['CAN', 'CAN-TP', 'LIN', 'KWP2000', 'UDS', 'EOBD']   # everything used, diagnostics included
+
+  ev:                      # a later evolution: only what changed is described
+    parent: 'full'         # inherits the networks (and nodes) of 'full'
+    comment:
+      en: 'Full CAN, 1st generation, 2007 evolution'
+      fr: 'Tout CAN, 1ère génération, évolution 2007'

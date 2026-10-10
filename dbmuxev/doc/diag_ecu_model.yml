@@ -1,0 +1,46 @@
+# Diagnostic description of one ECU model (diag/<ARCH>.<variant>/<NODE>/<MODEL>/ecu.yml)
+# Used when a node exists as several ECU models with their own identifiers (eg. engine ECUs from different suppliers)
+node: 'CMM'
+model: 'EDC17C60'
+display_name:
+  en: 'Engine control unit (EDC17C60)'
+  fr: 'Calculateur moteur (EDC17C60)'
+protocols: ['UDS']
+addressing:
+  - transport: 'can-tp'
+    protocol: 'UDS'
+    request_id: 0x6A8
+    response_id: 0x688
+sessions:
+  0x01:
+    en: 'Default session'
+    fr: 'Session par défaut'
+  0x03:
+    en: 'Extended diagnostic session'
+    fr: 'Session de diagnostic étendue'
+services: [0x10, 0x11, 0x14, 0x19, 0x22, 0x27, 0x2E, 0x31, 0x3E]
+security_access:
+  - level: 0x03
+    algorithm: 'PSA_SEED_KEY'
+    key: '3102'
+identification:            # how to read the part number, which gives the software variant
+  request: '22 F0 80'
+  part_number: '1.7-5.0'   # in the answer data, after the service and identifier bytes (BCD)
+cars: ['B9', 'P8', 'T9']   # cars/<project>.yml
+variants:                  # software variants: id -> part numbers, cars
+  B9_V1:
+    parts: ['9666912580']
+    cars: ['B9']
+  T9_V1:
+    parts: ['9806794380']
+    cars: ['T9']
+  T9_V2:
+    parts: ['9810227880']
+    cars: ['T9']
+
+# In dids/, lids/, routines/ and ioctls/ of this directory:
+#   variants: ['T9_*']     only seen on these variants ('*': every variant starting with this prefix)
+#   alternatives:          other layouts of the same identifier
+#     - note: {en: 'Layout seen on 2 other software variant(s)', fr: '...'}
+#       variants: ['B9_V1']
+#       params: {...}      complete params map of that layout

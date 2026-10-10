@@ -1,0 +1,1928 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/prototux/PSA-RE/schemas/dbmuxev.schema.json",
+  "title": "DBMUXEv v0.2",
+  "description": "Bundle of all DBMUXEv document schemas. Each document type is under #/definitions/<type>. YAML integer keys (eg. value tables written as 0x01:) are validated after conversion to JSON, where they become decimal strings.",
+  "definitions": {
+    "_comment_common": {
+      "description": "==================== COMMON TYPES ===================="
+    },
+    "identifier": {
+      "description": "Unique names/IDs: english, uppercase, digits and underscores only",
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "node_name": {
+      "description": "Node (ECU) name, as defined in nodes/<arch>.<variant>.yml",
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "lang_code": {
+      "description": "ISO 639-1 language code, optionally with a region (eg. zh, pt-BR)",
+      "type": "string",
+      "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+    },
+    "multilang": {
+      "description": "Translated text. 'en' is mandatory, 'fr' is strongly recommended (validator warning). Other supported languages: es, de, it, pl, ru, zh, hu, pt (any ISO 639-1 code is accepted).",
+      "type": "object",
+      "required": [
+        "en"
+      ],
+      "propertyNames": {
+        "$ref": "#/definitions/lang_code"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "hex_or_int": {
+      "description": "An integer. In YAML, write it as hex (0x1A) or decimal",
+      "type": "integer",
+      "minimum": 0
+    },
+    "bits": {
+      "description": "Bit position in PSA notation <byte>.<bit>, bytes are numbered from 1 (first transmitted byte), bits from 7 (MSB, first transmitted) to 0. A range is <start>-<end> in transmission order (big-endian / Motorola), eg. '1.7-2.0' is a 16 bit value spanning bytes 1 and 2. For variable length (can-tp / diag) payloads, the end can be 'n' (until the end of the payload), eg. '3.7-n'",
+      "type": "string",
+      "pattern": "^[1-9][0-9]*\\.[0-7](-([1-9][0-9]*\\.[0-7]|n))?$"
+    },
+    "periodicity": {
+      "description": "How the frame is sent: a list of periods ('100ms') and/or 'trigger' (sent on event/change). A frame both periodic and sent on change is ['100ms', 'trigger']. A frame only sent on request (VAN reply, diag) is 'request'.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^([0-9]+ms|trigger|request)$"
+      }
+    },
+    "value_entry": {
+      "description": "Meaning of one raw value. Either a translated text (multilang), optionally flagged 'unused' (reserved/never observed), or only {unused: true}",
+      "type": "object",
+      "properties": {
+        "unused": {
+          "type": "boolean"
+        }
+      },
+      "patternProperties": {
+        "^[a-z]{2}(-[A-Z]{2})?$": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "en"
+          ]
+        },
+        {
+          "required": [
+            "unused"
+          ]
+        }
+      ]
+    },
+    "value_table": {
+      "description": "Raw value (hex 0x.. or decimal integer key) to meaning. Never write binary-looking keys like 010, YAML reads them as decimal",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$"
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/value_entry"
+      }
+    },
+    "signal": {
+      "description": "A value carried inside a frame (or inside a diag payload)",
+      "type": "object",
+      "required": [
+        "bits"
+      ],
+      "properties": {
+        "bits": {
+          "$ref": "#/definitions/bits"
+        },
+        "unused": {
+          "type": "boolean",
+          "description": "Reserved / always observed at the same value / padding"
+        },
+        "alt_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "type": {
+          "description": "uint (default): unsigned integer; sint: two's complement signed integer; bool: 1 bit flag; enum: integer whose meaning is given by 'values'; bcd: binary coded decimal; str: text (ASCII/ISO-8859-1); bytes: opaque raw bytes; float: IEEE754. Legacy types (uint8, uint16, uint24, int8, int16, int24) are accepted but deprecated.",
+          "type": "string",
+          "enum": [
+            "uint",
+            "sint",
+            "bool",
+            "enum",
+            "bcd",
+            "str",
+            "bytes",
+            "float",
+            "uint8",
+            "uint16",
+            "uint24",
+            "int8",
+            "int16",
+            "int24"
+          ]
+        },
+        "signed": {
+          "type": "boolean",
+          "description": "Deprecated, use type: sint"
+        },
+        "factor": {
+          "type": "number",
+          "not": {
+            "const": 0
+          },
+          "description": "physical = raw * factor + offset"
+        },
+        "resolution": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Deprecated alias of factor"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "min": {
+          "type": "number",
+          "description": "Minimum physical value"
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum physical value"
+        },
+        "units": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "invalid": {
+          "description": "Raw value(s) meaning 'invalid / not available'",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/hex_or_int"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/hex_or_int"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "Raw value sent when the data is not (yet) available, eg. at wakeup"
+        },
+        "values": {
+          "$ref": "#/definitions/value_table"
+        },
+        "mux_selector": {
+          "type": "boolean",
+          "description": "This signal selects which multiplexed signals are present in the frame"
+        },
+        "mux": {
+          "description": "This signal is only present when the selector signal has one of these raw values",
+          "type": "object",
+          "required": [
+            "selector",
+            "values"
+          ],
+          "properties": {
+            "selector": {
+              "$ref": "#/definitions/identifier"
+            },
+            "values": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/hex_or_int"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "alternatives": {
+          "description": "Conflicting observations for this signal: each item overrides some fields of the signal. Kept so maintainers can decide which one is right",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/signal_alternative"
+          }
+        },
+        "receivers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node_name"
+          },
+          "uniqueItems": true,
+          "description": "When only some of the frame receivers use this signal"
+        },
+        "byte_order": {
+          "type": "string",
+          "enum": [
+            "big_endian",
+            "little_endian"
+          ],
+          "default": "big_endian",
+          "description": "Byte order of a multi-byte value. PSA uses big endian (most significant byte first) almost everywhere; 'little_endian' means the covered bytes are sent least significant byte first ('bits' still gives the covered range in transmission order)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "signal_alternative": {
+      "type": "object",
+      "required": [
+        "note"
+      ],
+      "properties": {
+        "note": {
+          "$ref": "#/definitions/multilang"
+        },
+        "bits": {
+          "$ref": "#/definitions/bits"
+        },
+        "unused": {
+          "type": "boolean"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "type": {
+          "type": "string"
+        },
+        "factor": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "units": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "invalid": {},
+        "default": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "values": {
+          "$ref": "#/definitions/value_table"
+        }
+      },
+      "additionalProperties": false
+    },
+    "signals": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/definitions/identifier"
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/signal"
+      }
+    },
+    "_comment_message": {
+      "description": "==================== FRAMES / MESSAGES ===================="
+    },
+    "message": {
+      "description": "One frame on a bus (CAN, CAN-TP/ISO-TP, VAN or LIN). File: buses/<arch>.<variant>/<network>.<bus>/<ID>.yml (optionally <ID>_<SUFFIX>.yml when several frames share an ID)",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "signals"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "name": {
+          "$ref": "#/definitions/identifier"
+        },
+        "alt_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "can",
+            "can-tp",
+            "van",
+            "lin"
+          ]
+        },
+        "extended": {
+          "type": "boolean",
+          "description": "CAN only: 29 bit identifier"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Payload length in bytes (maximum length for can-tp)"
+        },
+        "length_min": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Shortest length accepted/observed, when receivers accept shorter frames"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "observations": {
+          "$ref": "#/definitions/multilang",
+          "description": "Free notes about how the frame behaves on the bus"
+        },
+        "periodicity": {
+          "$ref": "#/definitions/periodicity"
+        },
+        "senders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node_name"
+          },
+          "uniqueItems": true
+        },
+        "receivers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node_name"
+          },
+          "uniqueItems": true
+        },
+        "isotp": {
+          "$ref": "#/definitions/isotp"
+        },
+        "van": {
+          "$ref": "#/definitions/van"
+        },
+        "lin": {
+          "$ref": "#/definitions/lin"
+        },
+        "signals": {
+          "$ref": "#/definitions/signals"
+        },
+        "alternatives": {
+          "description": "Conflicting observations for the whole frame (other length, period, senders, or other signal layout). Each item overrides the given fields; 'signals' here fully replaces the signal map. Kept so maintainers can decide which one is right",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/message_alternative"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "can"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "length"
+            ],
+            "properties": {
+              "length": {
+                "maximum": 8
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "van"
+                  ]
+                },
+                {
+                  "required": [
+                    "lin"
+                  ]
+                },
+                {
+                  "required": [
+                    "isotp"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "can-tp"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "isotp"
+            ],
+            "properties": {
+              "length": {
+                "maximum": 4095
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "van"
+                  ]
+                },
+                {
+                  "required": [
+                    "lin"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "van"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "length",
+              "van"
+            ],
+            "properties": {
+              "id": {
+                "maximum": 4095
+              },
+              "length": {
+                "maximum": 28
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "isotp"
+                  ]
+                },
+                {
+                  "required": [
+                    "lin"
+                  ]
+                },
+                {
+                  "required": [
+                    "extended"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "lin"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "length"
+            ],
+            "properties": {
+              "id": {
+                "maximum": 63
+              },
+              "length": {
+                "minimum": 1,
+                "maximum": 8
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "isotp"
+                  ]
+                },
+                {
+                  "required": [
+                    "van"
+                  ]
+                },
+                {
+                  "required": [
+                    "extended"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "message_alternative": {
+      "type": "object",
+      "required": [
+        "note"
+      ],
+      "properties": {
+        "note": {
+          "$ref": "#/definitions/multilang"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "length_min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "periodicity": {
+          "$ref": "#/definitions/periodicity"
+        },
+        "senders": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node_name"
+          }
+        },
+        "receivers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node_name"
+          }
+        },
+        "signals": {
+          "$ref": "#/definitions/signals"
+        }
+      },
+      "additionalProperties": false
+    },
+    "isotp": {
+      "description": "ISO 15765-2 (ISO-TP / CAN-TP) transport. The frame 'id' is the CAN ID carrying the data (sender side); signals describe the reassembled payload (byte 1 = first payload byte after the PCI)",
+      "type": "object",
+      "properties": {
+        "flow_control_id": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "CAN ID used by the receiver for flow control frames"
+        },
+        "addressing": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "extended",
+            "mixed"
+          ],
+          "default": "normal"
+        },
+        "address": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "First byte of the frame for extended/mixed addressing"
+        },
+        "padding": {
+          "description": "Padding byte used to fill frames to 8 bytes, or null when frames are not padded (DLC < 8)",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/hex_or_int"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "block_size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "st_min": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255,
+          "description": "Separation time (ms) between consecutive frames"
+        },
+        "functional": {
+          "type": "boolean",
+          "description": "Functional (broadcast) addressing, single frame only"
+        }
+      },
+      "additionalProperties": false
+    },
+    "van": {
+      "description": "VAN (ISO 11519-3) specifics. The frame 'id' is the 12 bit identifier. The 4 bit command field is EXT (always 1), RAK (acknowledge request), R/W and RTR",
+      "type": "object",
+      "required": [
+        "access"
+      ],
+      "properties": {
+        "access": {
+          "type": "string",
+          "enum": [
+            "write",
+            "read",
+            "read-write"
+          ],
+          "description": "write: the producer sends its data (R/W=0). read: the frame is a read request answered by the producer (R/W=1). read-write: both are observed"
+        },
+        "ack": {
+          "type": "boolean",
+          "description": "RAK bit: an in-frame acknowledge is requested"
+        },
+        "rtr": {
+          "type": "boolean",
+          "description": "RTR bit set (remote transmission request)"
+        },
+        "reply": {
+          "type": "string",
+          "enum": [
+            "none",
+            "in-frame",
+            "deferred"
+          ],
+          "description": "For read requests: in-frame (the producer fills the data field of the request frame itself) or deferred (the producer answers later with a separate frame)"
+        },
+        "requested_by": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node_name"
+          },
+          "description": "Nodes that issue the read request"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lin": {
+      "description": "LIN specifics. 'id' is the 6 bit frame identifier (0x00-0x3F)",
+      "type": "object",
+      "properties": {
+        "protected_id": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "Identifier with parity bits, as seen on the wire"
+        },
+        "checksum": {
+          "type": "string",
+          "enum": [
+            "classic",
+            "enhanced"
+          ]
+        },
+        "frame_type": {
+          "type": "string",
+          "enum": [
+            "unconditional",
+            "event_triggered",
+            "sporadic",
+            "diagnostic"
+          ]
+        },
+        "master": {
+          "$ref": "#/definitions/node_name",
+          "description": "LIN master of the bus (header sender)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "_comment_arch": {
+      "description": "==================== ARCHITECTURES / NODES / CARS ===================="
+    },
+    "bus": {
+      "type": "object",
+      "required": [
+        "protocol"
+      ],
+      "properties": {
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "CAN",
+            "CAN-FD",
+            "VAN",
+            "LIN",
+            "K-LINE",
+            "ETHERNET",
+            "LVDS",
+            "MOST"
+          ]
+        },
+        "bitrate": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "kbit/s"
+        },
+        "display_name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        }
+      },
+      "additionalProperties": false
+    },
+    "network": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Z][A-Z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/bus"
+      }
+    },
+    "arch_variant": {
+      "type": "object",
+      "required": [
+        "comment"
+      ],
+      "properties": {
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "display_name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "parent": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "description": "Variant this one derives from (frames not redefined are the same)"
+        },
+        "years": {
+          "type": "string",
+          "pattern": "^[0-9]{4}(-([0-9]{4})?)?$",
+          "description": "Approximate production years, eg. '2004-2008'"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "documented",
+            "partial",
+            "todo"
+          ]
+        },
+        "networks": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/network"
+          }
+        },
+        "protocols": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "CAN",
+              "CAN-FD",
+              "CAN-TP",
+              "VAN",
+              "LIN",
+              "K-LINE",
+              "KWP2000",
+              "KWP-PSA2000",
+              "UDS",
+              "EOBD",
+              "DOIP",
+              "ETHERNET"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "architectures": {
+      "description": "architectures.yml: <ARCH> -> <variant> -> definition",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Z][A-Z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "additionalProperties": {
+          "$ref": "#/definitions/arch_variant"
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": [
+        "bus",
+        "name"
+      ],
+      "properties": {
+        "bus": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*\\.[A-Z][A-Z0-9_-]*$"
+          }
+        },
+        "id": {
+          "description": "Electronic unit code per network (used in supervision/version/wakeup frames and diag addressing)",
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/hex_or_int"
+          }
+        },
+        "alt": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "released": {
+          "type": "boolean",
+          "description": "false for nodes that never reached a production car"
+        },
+        "diag": {
+          "$ref": "#/definitions/node_diag"
+        },
+        "diag_services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Deprecated, see diag/<arch>.<variant>/<node>/ecu.yml"
+        },
+        "diag_sessions": {
+          "type": "object",
+          "description": "Deprecated, see diag/<arch>.<variant>/<node>/ecu.yml"
+        },
+        "diag_reset": {
+          "type": "object",
+          "description": "Deprecated, see diag/<arch>.<variant>/<node>/ecu.yml"
+        }
+      },
+      "additionalProperties": false
+    },
+    "node_diag": {
+      "description": "Short diag addressing summary (full details in diag/)",
+      "type": "object",
+      "properties": {
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "KWP2000",
+              "KWP-PSA2000",
+              "UDS",
+              "EOBD"
+            ]
+          }
+        },
+        "bus": {
+          "type": "string"
+        },
+        "request_id": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "response_id": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "kline_address": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "obd_request_id": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "obd_response_id": {
+          "$ref": "#/definitions/hex_or_int"
+        }
+      },
+      "additionalProperties": false
+    },
+    "nodes": {
+      "description": "nodes/<arch>.<variant>.yml: NODE -> definition",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/definitions/node_name"
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/node"
+      }
+    },
+    "car_version": {
+      "type": "object",
+      "required": [
+        "architecture"
+      ],
+      "properties": {
+        "architecture": {
+          "type": "string",
+          "pattern": "^([A-Z][A-Z0-9_]*\\.[a-z][a-z0-9_]*|none)$",
+          "description": "'ARCH.variant', or 'none' for non multiplexed cars"
+        },
+        "years": {
+          "type": "string",
+          "pattern": "^[0-9]{4}(-([0-9]{4})?)?$"
+        },
+        "codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Subset of codes this version applies to (default: all)"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "nodes": {
+          "description": "Nodes (ECUs) seen in this version, per network. Mandatory nodes are always fitted, optional ones depend on trim/options",
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/definitions/node_name"
+            }
+          }
+        },
+        "optional_nodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/node_name"
+          },
+          "description": "Nodes of the 'nodes' map that are only fitted with some options/trims"
+        },
+        "buses": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*\\.[A-Z][A-Z0-9_-]*$"
+          },
+          "description": "Buses of the architecture fitted on this version (<network>.<bus>); some only come with optional nodes"
+        },
+        "ecu_models": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": "ECU models seen on this version, per node (as in diag/<arch>/<node>/<model>/)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "car": {
+      "description": "cars/<project>.yml",
+      "type": "object",
+      "required": [
+        "codes",
+        "versions"
+      ],
+      "properties": {
+        "codes": {
+          "description": "Project/silhouette codes -> commercial name(s)",
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            ]
+          }
+        },
+        "brand": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "peugeot",
+              "citroen",
+              "ds",
+              "opel",
+              "vauxhall",
+              "toyota",
+              "fiat",
+              "mitsubishi",
+              "dongfeng",
+              "other"
+            ]
+          }
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "platform": {
+          "type": "string"
+        },
+        "years": {
+          "type": "string",
+          "pattern": "^[0-9]{4}(-([0-9]{4})?)?$"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "versions": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/car_version"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "_comment_diag": {
+      "description": "==================== DIAGNOSTICS (KWP2000 / UDS) ===================="
+    },
+    "diag_ecu": {
+      "description": "diag/<arch>.<variant>/<NODE>/ecu.yml: how to talk to one ECU",
+      "type": "object",
+      "required": [
+        "node",
+        "protocols"
+      ],
+      "properties": {
+        "node": {
+          "$ref": "#/definitions/node_name"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "protocols": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "KWP2000",
+              "KWP-PSA2000",
+              "UDS",
+              "EOBD"
+            ]
+          }
+        },
+        "addressing": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "transport"
+            ],
+            "properties": {
+              "transport": {
+                "type": "string",
+                "enum": [
+                  "can-tp",
+                  "k-line",
+                  "doip"
+                ]
+              },
+              "bus": {
+                "type": "string",
+                "description": "<network>.<bus> the tester is connected to (usually through the diag socket / gateway)"
+              },
+              "request_id": {
+                "$ref": "#/definitions/hex_or_int"
+              },
+              "response_id": {
+                "$ref": "#/definitions/hex_or_int"
+              },
+              "functional_id": {
+                "$ref": "#/definitions/hex_or_int"
+              },
+              "kline_address": {
+                "$ref": "#/definitions/hex_or_int"
+              },
+              "kline_init": {
+                "type": "string",
+                "enum": [
+                  "5baud",
+                  "fast",
+                  "none"
+                ]
+              },
+              "bitrate": {
+                "type": "number"
+              },
+              "protocol": {
+                "type": "string",
+                "enum": [
+                  "KWP2000",
+                  "KWP-PSA2000",
+                  "UDS",
+                  "EOBD"
+                ]
+              },
+              "comment": {
+                "$ref": "#/definitions/multilang"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "sessions": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/multilang"
+          }
+        },
+        "resets": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/multilang"
+          }
+        },
+        "services": {
+          "description": "Supported service IDs (0x10, 0x22...), see diag/protocols/<protocol>.yml for their definition",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hex_or_int"
+          }
+        },
+        "security_access": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "level"
+            ],
+            "properties": {
+              "level": {
+                "$ref": "#/definitions/hex_or_int",
+                "description": "requestSeed sub-function (sendKey = level + 1)"
+              },
+              "algorithm": {
+                "type": "string",
+                "description": "Name of the seed/key algorithm (see diag/protocols)"
+              },
+              "key": {
+                "type": "string",
+                "pattern": "^[0-9A-Fa-f]{4}$",
+                "description": "ECU specific constant fed to the algorithm"
+              },
+              "comment": {
+                "$ref": "#/definitions/multilang"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "tester_present": {
+          "type": "object",
+          "properties": {
+            "request": {
+              "type": "string",
+              "pattern": "^([0-9A-Fa-f]{2} ?)+$"
+            },
+            "period_ms": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": false
+        },
+        "model": {
+          "type": "string",
+          "description": "ECU model (hardware / software family), when the node has several models: diag/<arch>.<variant>/<NODE>/<MODEL>/"
+        },
+        "display_name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "identification": {
+          "description": "How to read the ECU part number, which gives the software variant",
+          "type": "object",
+          "required": [
+            "request"
+          ],
+          "properties": {
+            "request": {
+              "type": "string",
+              "pattern": "^([0-9A-Fa-f]{2} ?)+$"
+            },
+            "part_number": {
+              "$ref": "#/definitions/bits",
+              "description": "Position of the part number in the answer data (after the service and identifier bytes)"
+            },
+            "comment": {
+              "$ref": "#/definitions/multilang"
+            }
+          },
+          "additionalProperties": false
+        },
+        "cars": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cars (cars/<project>.yml) this ECU model was seen on"
+        },
+        "variants": {
+          "description": "Software variants of this ECU model: variant id -> part numbers and cars",
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/definitions/identifier"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "parts": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[0-9A-Fa-f]+$"
+                }
+              },
+              "cars": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "comment": {
+                "$ref": "#/definitions/multilang"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "diag_data": {
+      "description": "diag/<arch>.<variant>/<NODE>/dids/<DID>.yml (UDS ReadDataByIdentifier 0x22 / WriteDataByIdentifier 0x2E) or lids/<LID>.yml (KWP2000 ReadDataByLocalIdentifier 0x21 / WriteDataByLocalIdentifier 0x3B)",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "oneOf": [
+        {
+          "required": [
+            "did"
+          ]
+        },
+        {
+          "required": [
+            "lid"
+          ]
+        }
+      ],
+      "properties": {
+        "did": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "lid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "name": {
+          "$ref": "#/definitions/identifier"
+        },
+        "alt_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "display_name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "live",
+            "config",
+            "identification",
+            "counter",
+            "other"
+          ],
+          "description": "live: measured value; config: coding / configuration (usually writable); identification: part numbers, versions"
+        },
+        "access": {
+          "type": "string",
+          "enum": [
+            "read",
+            "write",
+            "read-write"
+          ]
+        },
+        "session": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "Session needed to access it"
+        },
+        "security_level": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "Security access level needed to write it"
+        },
+        "length": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Payload length in bytes (without the service/identifier bytes), null when variable"
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ECU sub-families this identifier was seen on"
+        },
+        "params": {
+          "$ref": "#/definitions/signals"
+        },
+        "service": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "Service used to read it, when not the usual one (eg. 0x1A ReadEcuIdentification for files named <ID>_IDENT.yml)"
+        },
+        "mapped": {
+          "$ref": "#/definitions/diag_mapped"
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "note"
+            ],
+            "properties": {
+              "note": {
+                "$ref": "#/definitions/multilang"
+              },
+              "variants": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "ECU software variants (see the variants of ecu.yml) this applies to"
+              },
+              "access": {
+                "type": "string",
+                "enum": [
+                  "read",
+                  "write",
+                  "read-write"
+                ]
+              },
+              "length": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0,
+                "description": "Payload length in bytes (without the service/identifier bytes), null when variable"
+              },
+              "params": {
+                "$ref": "#/definitions/signals"
+              },
+              "mapped": {
+                "$ref": "#/definitions/diag_mapped"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": "Other layouts (other software variants, or other readings of the same bytes); params replaces the whole params map"
+        }
+      },
+      "additionalProperties": false
+    },
+    "diag_dtcs": {
+      "description": "diag/<arch>.<variant>/<NODE>/dtcs.yml: DTC code (P/C/B/U + 4 hex, optionally -XX failure type) -> description",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[PCBU][0-9A-F]{4}(-[0-9A-F]{2})?$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "display_name"
+        ],
+        "properties": {
+          "raw": {
+            "type": "string",
+            "pattern": "^[0-9A-F]{4,6}$",
+            "description": "Code as sent on the bus (hex)"
+          },
+          "display_name": {
+            "$ref": "#/definitions/multilang"
+          },
+          "comment": {
+            "$ref": "#/definitions/multilang"
+          },
+          "clues": {
+            "$ref": "#/definitions/multilang"
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "failure_types": {
+            "$ref": "#/definitions/value_table",
+            "description": "Failure type (characterisation) byte sent with 2 byte codes"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "diag_routine": {
+      "description": "diag/<arch>.<variant>/<NODE>/routines/<ID>.yml (UDS RoutineControl 0x31 / KWP2000 StartRoutineByLocalIdentifier 0x31)",
+      "type": "object",
+      "required": [
+        "routine",
+        "name"
+      ],
+      "properties": {
+        "routine": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "name": {
+          "$ref": "#/definitions/identifier"
+        },
+        "alt_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "display_name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "session": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "security_level": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "control": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "start",
+              "stop",
+              "results"
+            ]
+          }
+        },
+        "params": {
+          "$ref": "#/definitions/signals"
+        },
+        "results": {
+          "$ref": "#/definitions/signals"
+        },
+        "return_values": {
+          "$ref": "#/definitions/value_table"
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ECU software variants (see the variants of ecu.yml) this applies to"
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/diag_test"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "diag_ioctl": {
+      "description": "diag/<arch>.<variant>/<NODE>/ioctls/<ID>.yml (UDS InputOutputControlByIdentifier 0x2F / KWP2000 InputOutputControlByLocalIdentifier 0x30)",
+      "type": "object",
+      "required": [
+        "ioctl",
+        "name"
+      ],
+      "properties": {
+        "ioctl": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "name": {
+          "$ref": "#/definitions/identifier"
+        },
+        "display_name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "session": {
+          "$ref": "#/definitions/hex_or_int"
+        },
+        "params": {
+          "$ref": "#/definitions/signals"
+        },
+        "alt_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "controls": {
+          "$ref": "#/definitions/value_table",
+          "description": "Control option values (UDS: first data byte, 00 return control, 03 short term adjustment...)"
+        },
+        "results": {
+          "$ref": "#/definitions/signals"
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ECU software variants (see the variants of ecu.yml) this applies to"
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/diag_test"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "diag_protocol": {
+      "description": "diag/protocols/<PROTOCOL>.yml: generic definition of a diagnostic protocol (services, sub-functions, negative response codes)",
+      "type": "object",
+      "required": [
+        "protocol",
+        "services"
+      ],
+      "properties": {
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "KWP2000",
+            "KWP-PSA2000",
+            "UDS",
+            "EOBD"
+          ]
+        },
+        "standard": {
+          "type": "string"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "transport": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "services": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(0x[0-9A-Fa-f]+|[0-9]+)$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/definitions/identifier"
+              },
+              "display_name": {
+                "$ref": "#/definitions/multilang"
+              },
+              "comment": {
+                "$ref": "#/definitions/multilang"
+              },
+              "request": {
+                "type": "string",
+                "description": "Request layout, eg. 'SID DID_HI DID_LO'"
+              },
+              "response": {
+                "type": "string",
+                "description": "Positive response layout (SID + 0x40 ...)"
+              },
+              "subfunctions": {
+                "$ref": "#/definitions/value_table"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "negative_responses": {
+          "$ref": "#/definitions/value_table"
+        },
+        "algorithms": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "comment": {
+                "$ref": "#/definitions/multilang"
+              },
+              "pseudocode": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "diag_test": {
+      "description": "Actuator test using this routine / io control, as offered by diagnostic tools",
+      "type": "object",
+      "required": [
+        "display_name"
+      ],
+      "properties": {
+        "display_name": {
+          "$ref": "#/definitions/multilang"
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "max_duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "mapped_signal": {
+      "description": "A value of a mapped identifier: same as a signal, but its position is given by the ECU parameter table (index) instead of bits",
+      "type": "object",
+      "required": [],
+      "properties": {
+        "unused": {
+          "type": "boolean",
+          "description": "Reserved / always observed at the same value / padding"
+        },
+        "alt_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "type": {
+          "description": "uint (default): unsigned integer; sint: two's complement signed integer; bool: 1 bit flag; enum: integer whose meaning is given by 'values'; bcd: binary coded decimal; str: text (ASCII/ISO-8859-1); bytes: opaque raw bytes; float: IEEE754. Legacy types (uint8, uint16, uint24, int8, int16, int24) are accepted but deprecated.",
+          "type": "string",
+          "enum": [
+            "uint",
+            "sint",
+            "bool",
+            "enum",
+            "bcd",
+            "str",
+            "bytes",
+            "float",
+            "uint8",
+            "uint16",
+            "uint24",
+            "int8",
+            "int16",
+            "int24"
+          ]
+        },
+        "signed": {
+          "type": "boolean",
+          "description": "Deprecated, use type: sint"
+        },
+        "factor": {
+          "type": "number",
+          "not": {
+            "const": 0
+          },
+          "description": "physical = raw * factor + offset"
+        },
+        "resolution": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Deprecated alias of factor"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "min": {
+          "type": "number",
+          "description": "Minimum physical value"
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum physical value"
+        },
+        "units": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "invalid": {
+          "description": "Raw value(s) meaning 'invalid / not available'",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/hex_or_int"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/hex_or_int"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "$ref": "#/definitions/hex_or_int",
+          "description": "Raw value sent when the data is not (yet) available, eg. at wakeup"
+        },
+        "values": {
+          "$ref": "#/definitions/value_table"
+        },
+        "mux_selector": {
+          "type": "boolean",
+          "description": "This signal selects which multiplexed signals are present in the frame"
+        },
+        "mux": {
+          "description": "This signal is only present when the selector signal has one of these raw values",
+          "type": "object",
+          "required": [
+            "selector",
+            "values"
+          ],
+          "properties": {
+            "selector": {
+              "$ref": "#/definitions/identifier"
+            },
+            "values": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/hex_or_int"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "alternatives": {
+          "description": "Conflicting observations for this signal: each item overrides some fields of the signal. Kept so maintainers can decide which one is right",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/signal_alternative"
+          }
+        },
+        "receivers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/node_name"
+          },
+          "uniqueItems": true,
+          "description": "When only some of the frame receivers use this signal"
+        },
+        "byte_order": {
+          "type": "string",
+          "enum": [
+            "big_endian",
+            "little_endian"
+          ],
+          "default": "big_endian",
+          "description": "Byte order of a multi-byte value. PSA uses big endian (most significant byte first) almost everywhere; 'little_endian' means the covered bytes are sent least significant byte first ('bits' still gives the covered range in transmission order)"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Index of the value in the ECU parameter table"
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Length in bits"
+        }
+      },
+      "additionalProperties": false
+    },
+    "diag_mapped": {
+      "description": "Values without fixed position (the ECU sends the layout itself)",
+      "type": "object",
+      "required": [
+        "params"
+      ],
+      "properties": {
+        "comment": {
+          "$ref": "#/definitions/multilang"
+        },
+        "params": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/definitions/identifier"
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/mapped_signal"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

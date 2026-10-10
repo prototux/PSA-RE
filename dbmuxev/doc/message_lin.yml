@@ -1,0 +1,23 @@
+# LIN frame example, eg. buses/AEE2010.full/LIN.LIN1/05.yml (LIN IDs are written with 2 hex digits)
+id: 0x05                   # 6 bit frame identifier (0x00-0x3F)
+name: 'RAIN_LIGHT_SENSOR_FAST_STATUS'
+type: 'lin'
+length: 2                  # 1 to 8 bytes
+comment:
+  en: 'Rain and light sensor fast status'
+  fr: 'Etat rapide du capteur de pluie et de luminosité'
+periodicity: ['20ms']      # period of the slot in the master schedule
+senders: ['CDPL']          # the slave answering the header
+receivers: ['BSI']
+lin:
+  protected_id: 0x85       # identifier with parity bits, as seen on the wire
+  checksum: 'enhanced'     # classic (LIN 1.x) | enhanced (LIN 2.x)
+  frame_type: 'unconditional'
+  master: 'BSI'            # node sending the header
+
+signals:
+  RAIN_INTENSITY:
+    bits: '1.7-1.4'
+    factor: 1
+    min: 0
+    max: 15
