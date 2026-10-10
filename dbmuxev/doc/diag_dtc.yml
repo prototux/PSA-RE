@@ -1,5 +1,16 @@
 # Diagnostic trouble codes of one ECU (diag/<ARCH>.<variant>/<NODE>/dtcs.yml)
 # Key: P/C/B/U + 4 hex digits, optionally followed by -XX (failure type byte, UDS)
+
+# optional: failure types (characterisation byte sent with 2 byte codes) shared by every code
+# that does not have its own 'failure_types'
+failure_types:
+  0x01:
+    en: 'Electrical fault'
+    fr: 'Défaut électrique'
+  0x02:
+    en: 'Signal incorrect'
+    fr: 'Signal incorrect'
+
 'B1003-00':
   raw: 'D00300'            # optional, code as sent on the bus (hex)
   display_name:
@@ -12,3 +23,14 @@
     en: 'Re-code the ECU'
     fr: 'Refaire le télécodage'
   variants: ['BSI_2010']   # optional
+  failure_types: {}        # optional: this code has no failure type (the shared ones do not apply)
+
+'P0001':
+  raw: '0001'
+  display_name:
+    en: 'Control of the high pressure fuel flow regulator'
+    fr: 'Commande du régulateur de débit haute pression carburant'
+  failure_types:           # optional: this code's own failure types, replacing the shared ones
+    0x12:
+      en: 'Short circuit to positive'
+      fr: 'Court-circuit au plus'

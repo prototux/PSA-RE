@@ -594,6 +594,40 @@ class TestDiag(RepoTestCase):
         self.assertEqual(lid.write_request({'CODE': 0x1234}), bytes.fromhex('3B801234'))
         self.assertEqual(lid.decode_response('61 80 12 34')['CODE'].value, 0x1234)
 
+    def test_shared_failure_types(self):
+        from dbmuxev.diag import DtcTable
+        text = textwrap.dedent('''\
+        failure_types:
+          0x01:
+            en: 'Electrical fault'
+        'P0001':
+          raw: '0001'
+          display_name:
+            en: 'Fuel flow regulator'
+        'P0002':
+          raw: '0002'
+          display_name:
+            en: 'Fuel pressure'
+          failure_types:
+            0x12:
+              en: 'Short circuit to positive'
+        'P0003':
+          raw: '0003'
+          display_name:
+            en: 'Fuel level'
+          failure_types: {}
+        ''')
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, 'dtcs.yml')
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(text)
+            t = DtcTable.load(path)
+            self.assertEqual(sorted(t), ['P0001', 'P0002', 'P0003'])           # the shared table is not a code
+            self.assertEqual(list(t['P0001'].effective_failure_types), [0x01])  # shared
+            self.assertEqual(list(t['P0002'].effective_failure_types), [0x12])  # its own replaces the shared one
+            self.assertEqual(t['P0003'].effective_failure_types, {})           # none
+            self.assertFalse(t.is_modified)
+
     def test_dtc_codes(self):
         self.assertEqual(dtc_to_raw('B1003-00'), bytes.fromhex('900300'))
         self.assertEqual(dtc_to_raw('P0420'), bytes.fromhex('0420'))

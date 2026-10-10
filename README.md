@@ -198,7 +198,8 @@ params:
 * `mapped`: values without a fixed position (the ECU sends a table of parameters), given by `index` and `length`
 * routines and I/O controls give their parameters, `results`, `controls` (control option values) and the actuator
   `tests` that use them
-* `dtcs.yml`: fault codes with their description, and `failure_types` when the ECU sends a failure type byte
+* `dtcs.yml`: fault codes with their description, and the meaning of the failure type byte sent after 2 byte codes:
+  the top level `failure_types` applies to every code that does not have its own (`failure_types: {}`: none)
 
 ## Using the data
 

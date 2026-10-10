@@ -1471,44 +1471,50 @@
       "additionalProperties": false
     },
     "diag_dtcs": {
-      "description": "diag/<arch>.<variant>/<NODE>/dtcs.yml: DTC code (P/C/B/U + 4 hex, optionally -XX failure type) -> description",
+      "description": "diag/<arch>.<variant>/<NODE>/dtcs.yml: DTC code (P/C/B/U + 4 hex, optionally -XX failure type) -> description. The optional top level failure_types is shared by the codes that do not have their own",
       "type": "object",
-      "propertyNames": {
-        "pattern": "^[PCBU][0-9A-F]{4}(-[0-9A-F]{2})?$"
+      "properties": {
+        "failure_types": {
+          "$ref": "#/definitions/value_table",
+          "description": "Failure types shared by every code of the table that has no failure_types of its own"
+        }
       },
-      "additionalProperties": {
-        "type": "object",
-        "required": [
-          "display_name"
-        ],
-        "properties": {
-          "raw": {
-            "type": "string",
-            "pattern": "^[0-9A-F]{4,6}$",
-            "description": "Code as sent on the bus (hex)"
-          },
-          "display_name": {
-            "$ref": "#/definitions/multilang"
-          },
-          "comment": {
-            "$ref": "#/definitions/multilang"
-          },
-          "clues": {
-            "$ref": "#/definitions/multilang"
-          },
-          "variants": {
-            "type": "array",
-            "items": {
-              "type": "string"
+      "patternProperties": {
+        "^[PCBU][0-9A-F]{4}(-[0-9A-F]{2})?$": {
+          "type": "object",
+          "required": [
+            "display_name"
+          ],
+          "properties": {
+            "raw": {
+              "type": "string",
+              "pattern": "^[0-9A-F]{4,6}$",
+              "description": "Code as sent on the bus (hex)"
+            },
+            "display_name": {
+              "$ref": "#/definitions/multilang"
+            },
+            "comment": {
+              "$ref": "#/definitions/multilang"
+            },
+            "clues": {
+              "$ref": "#/definitions/multilang"
+            },
+            "variants": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "failure_types": {
+              "$ref": "#/definitions/value_table",
+              "description": "Failure type (characterisation) byte sent with 2 byte codes. Replaces the table's shared failure_types for this code; an empty map means the code has no failure type"
             }
           },
-          "failure_types": {
-            "$ref": "#/definitions/value_table",
-            "description": "Failure type (characterisation) byte sent with 2 byte codes"
-          }
-        },
-        "additionalProperties": false
-      }
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     },
     "diag_routine": {
       "description": "diag/<arch>.<variant>/<NODE>/routines/<ID>.yml (UDS RoutineControl 0x31 / KWP2000 StartRoutineByLocalIdentifier 0x31)",

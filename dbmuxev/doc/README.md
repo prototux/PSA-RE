@@ -100,7 +100,9 @@ software `variants` (variant id -> part numbers and cars).
 * `lids/{LID}_IDENT.yml`: data read with KWP2000 ReadEcuIdentification (`service: 0x1A`); `routines/{ID}_LID.yml` and
   `ioctls/{ID}_LID.yml`: KWP2000 routines / input-output controls by local identifier (1 byte identifiers).
 * routines and ioctls can list the actuator `tests` that use them; ioctls give their `controls` (control option values) and `results`.
-* `dtcs.yml` entries can have `failure_types`: the failure type byte sent with 2 byte codes.
+* `dtcs.yml` entries can have `failure_types`: the failure type byte sent with 2 byte codes. The failure types used by
+  most codes of an ECU are written once, as a top level `failure_types` map; a code with its own `failure_types` uses
+  those instead, and `failure_types: {}` means the code has none.
 
 See [diag_ecu_model.yml](diag_ecu_model.yml).
 
@@ -126,4 +128,4 @@ See [diag_ecu_model.yml](diag_ecu_model.yml).
 * architectures: `parent`, `years`, `status`; `ev` means evolution
 * cars: `brand`, `years`, `platform`, `optional_nodes`, per version `years`/`codes`, `architecture: 'none'` for non multiplexed cars
 * diagnostics: `ecu.yml`, `dids/`, `lids/` (KWP2000), `dtcs.yml`, `routines/`, `ioctls/`, `protocols/`
-* diagnostics: ECU models (`{node}/{model}/`), `variants`, `identification`, `alternatives`, `mapped`, actuator `tests`, `failure_types`
+* diagnostics: ECU models (`{node}/{model}/`), `variants`, `identification`, `alternatives`, `mapped`, actuator `tests`, `failure_types` (shared at the top of `dtcs.yml`, or per code)

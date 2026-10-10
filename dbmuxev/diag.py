@@ -372,6 +372,7 @@ class Dtc(Model):
     comment: MultiLang = None
     clues: MultiLang = None
     variants: list = None
+    failure_types: dict = None      # own failure types (value table), None: the table's shared ones, {}: none
 
     FIELDS = (
         Field('raw'),
@@ -379,7 +380,17 @@ class Dtc(Model):
         Field('comment', load=ml_in, dump=ml_out),
         Field('clues', load=ml_in, dump=ml_out),
         Field('variants', load=list_in),
+        Field('failure_types'),
     )
+
+    _table = None
+
+    @property
+    def effective_failure_types(self):
+        """{byte: labels} of this code: its own failure types, else the ones shared by its table"""
+        if self.failure_types is not None:
+            return self.failure_types
+        return (self._table.failure_types if self._table is not None else None) or {}
 
     @property
     def raw_bytes(self):
@@ -390,21 +401,29 @@ class Dtc(Model):
 
 
 class DtcTable(Document, dict):
-    """``dtcs.yml``: {code: Dtc}"""
+    """``dtcs.yml``: {code: Dtc}, plus ``failure_types``: the failure types shared by the codes that do not have
+    their own"""
     SPACED_TOP = False
-    QUOTE_KEYS = True
+    QUOTE_KEYS = staticmethod(lambda key: key != 'failure_types')   # DTC codes are quoted
 
-    def __init__(self, dtcs=None):
+    def __init__(self, dtcs=None, failure_types=None):
         dict.__init__(self, dtcs or {})
+        self.failure_types = failure_types
         self.path = None
         self.header = ''
+        for d in self.values():
+            d._table = self
 
     @classmethod
     def from_dict(cls, data, **kwargs):
-        return cls({str(code): Dtc.from_dict(d, code=str(code)) for code, d in (data or {}).items()})
+        data = dict(data or {})
+        shared = data.pop('failure_types', None)
+        return cls({str(code): Dtc.from_dict(d, code=str(code)) for code, d in data.items()}, failure_types=shared)
 
     def to_dict(self):
-        return {code: d.to_dict() for code, d in self.items()}
+        out = {'failure_types': self.failure_types} if self.failure_types else {}
+        out.update((code, d.to_dict()) for code, d in self.items())
+        return out
 
     def lookup(self, code):
         """Dtc from a code ('B1003-00', 'B1003') or raw bytes/hex ('900300'); falls back to the code without failure type"""
@@ -423,6 +442,7 @@ class DtcTable(Document, dict):
 
     def add(self, code, display_name, **kwargs):
         d = Dtc(code=code, display_name=MultiLang.of(display_name), **kwargs)
+        d._table = self
         self[code] = d
         return d
 

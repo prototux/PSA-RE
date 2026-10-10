@@ -361,7 +361,8 @@ class _Emitter:
             else:
                 blank = spaced or (not path and k in BLANK_BEFORE)
             self.pre(kpath, i == 0, blank)
-            self.value(f'{key_text(k, self.quote_keys and not path)}:', v, indent, kpath)
+            quote = self.quote_keys(k) if callable(self.quote_keys) else self.quote_keys
+            self.value(f'{key_text(k, quote and not path)}:', v, indent, kpath)
 
     def value(self, prefix, v, indent, path):
         pad = ' ' * indent
@@ -417,7 +418,7 @@ def dumps(data, header='', spaced_top=False, quote_keys=False, layout=None):
 
     header: comment block written first (as is)
     spaced_top: blank line between the top level entries (nodes files)
-    quote_keys: quote the top level keys (DTC codes)
+    quote_keys: quote the top level keys (DTC codes), or a function key -> bool
     layout: Layout of the original text, to keep its comments, blank lines and list styles
     """
     em = _Emitter(layout, spaced_top, quote_keys)
