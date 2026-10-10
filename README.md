@@ -2,15 +2,16 @@
 
 PSA-RE documents the in-car networks of the PSA group cars (Peugeot, Citroën, DS, and the Opel/Vauxhall models built on
 PSA platforms): which electronic architecture each car uses, the buses of each architecture, the ECUs connected to them,
-and the frames they exchange, down to the meaning of every bit.
+the frames they exchange, down to the meaning of every bit, and how to diagnose each ECU (UDS / KWP2000 identifiers,
+routines, actuator tests and fault codes).
 
 Everything is plain YAML in the [DBMUXEv format](dbmuxev/doc/README.md), checked by a JSON schema, and every text is
 available in English and French (and most of it in Spanish, German, Italian, Polish, Russian, Chinese, Hungarian and
 Portuguese). The goal is to let anybody understand their own car and build tools, dashboards, retrofits or DIY ECUs
 on top of it.
 
-**Browse it online: [explorer.openleo.org](https://explorer.openleo.org)**: search frames and signals, see which
-ECUs and buses a car has, decode a capture log, export DBC files, all in the browser.
+**Browse it online: [explorer.openleo.org](https://explorer.openleo.org)**: search frames, signals and diagnostic
+data, see which ECUs and buses a car has, decode a capture log, export DBC files, all in the browser.
 
 ## What's inside
 
@@ -20,6 +21,10 @@ ECUs and buses a car has, decode a capture log, export DBC files, all in the bro
 | `AEE2004` | first "full CAN" cars, 2004 to 2018 (207, 308 I, C4 I, C5 II...) | HS and LS CAN, LIN | 849 |
 | `AEE2010` | second generation, 2010 to the early 2020s (208 I/II, 308 II, 3008 II, C4 Picasso II, DS 7...) | up to 11 HS CAN buses, LS CAN, LIN | 1962 |
 | `NEA2020` | 2021+ cars | not documented yet | - |
+
+The diagnostics cover 486 ECU models (on these architectures and on the cars built with Mitsubishi, Fiat and Toyota):
+11938 UDS data identifiers, 4215 KWP2000 local identifiers, 1472 routines, 2888 input/output controls (actuator
+tests) and the fault codes of 363 ECU models.
 
 Each architecture has **variants** (`<architecture>.<variant>`):
 
@@ -55,6 +60,15 @@ buses/{architecture}.{variant}/{network}.{bus}/{ID}.yml
                                       one frame per file, ID in uppercase hex
 buses/.../{ID}_{NAME}.yml             when several different frames use the same ID on a bus
 diag/protocols/                       diagnostic protocols (KWP2000, KWP-PSA2000, UDS, EOBD)
+diag/{architecture}.{variant}/{node}/{model}/
+                                      diagnostics of one ECU model:
+    ecu.yml                           addressing (request / response CAN IDs), protocol, sessions, security access,
+                                      identification and software variants
+    dids/{DID}.yml                    UDS data identifiers (read 0x22, write 0x2E)
+    lids/{LID}.yml                    KWP2000 local identifiers (read 0x21, write 0x3B)
+    routines/{ID}.yml                 routines (0x31, or KWP2000 0x31/0x32/0x33 with a 1 byte identifier: {ID}_LID.yml)
+    ioctls/{ID}.yml                   input/output controls, actuator tests (0x2F, KWP2000 0x30: {ID}_LID.yml)
+    dtcs.yml                          fault codes
 schemas/dbmuxev.schema.json           JSON schema of every document
 dbmuxev/                              Python library (load, decode, encode) and the format documentation (dbmuxev/doc)
 tools/                                validator and DBC export
@@ -158,12 +172,40 @@ Node names (`BSI`, `CMM`, `ABS`, `BSM`...) are the usual PSA ECU names; their de
 `nodes/{architecture}.{variant}.yml`: `BSI` is the body computer and main gateway, `CMM` the engine ECU, `BVA` the
 automatic gearbox, `CMB` the instrument cluster, `BSM` the under-hood fuse box, and so on.
 
+## Reading the diagnostics
+
+Each ECU model has its own directory, because ECUs with the same role (an engine ECU, a BSI...) come from different
+suppliers and generations, each with its own identifiers. `ecu.yml` tells how to reach it (the diagnostic CAN IDs or
+K-line address, the protocol), which sessions and services it supports, and how to tell its software variants apart.
+
+Data identifiers use the same `params` format as frame signals, with byte 1 being the first data byte after the
+identifier. For a UDS DID, read `22 F1 8B`, the ECU answers `62 F1 8B` followed by the data that `params` describes:
+
+```yaml
+did: 0xF18B
+name: 'MANUFACTURING_DATE'
+kind: 'identification'          # live | config | identification | counter | other
+access: 'read'
+length: 3                       # data bytes after the DID
+params:
+  PRODUCTION_DATE:
+    bits: '1.7-3.0'
+    type: 'uint'
+```
+
+* `variants`: the software variants (listed in `ecu.yml`) an identifier was seen on; none means all of them
+* `alternatives`: another layout of the same identifier on some variants, with a `note`
+* `mapped`: values without a fixed position (the ECU sends a table of parameters), given by `index` and `length`
+* routines and I/O controls give their parameters, `results`, `controls` (control option values) and the actuator
+  `tests` that use them
+* `dtcs.yml`: fault codes with their description, and `failure_types` when the ECU sends a failure type byte
+
 ## Using the data
 
 ### In the browser
 
 [explorer.openleo.org](https://explorer.openleo.org) loads this repository directly: browse the architectures, cars,
-ECUs, frames and signals, decode a capture log, estimate the bus load, export DBC or JSON files. It can also load a
+ECUs, frames, signals and diagnostic data, decode a capture log, estimate the bus load, export DBC or JSON files. It can also load a
 local copy or a fork, to check your own changes.
 
 ### With Python
