@@ -1,0 +1,21 @@
+# Asks the explorer (https://explorer.openleo.org) to rebuild its data bundle of this repository after each push,
+# so the online explorer loads the new data quickly. Needs the EXPLORER_DISPATCH_TOKEN secret: a token allowed to
+# send repository dispatches to OpenLeo/explorer (fine-grained token with "Contents: read and write" on it).
+name: explorer bundle
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask the explorer to rebuild its data bundle
+        env:
+          TOKEN: ${{ secrets.EXPLORER_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then echo "::warning::EXPLORER_DISPATCH_TOKEN is not set, the explorer bundle is only rebuilt by its hourly check"; exit 0; fi
+          curl -fsS -X POST https://api.github.com/repos/OpenLeo/explorer/dispatches \
+            -H "Authorization: Bearer $TOKEN" -H 'Accept: application/vnd.github+json' \
+            -d '{"event_type": "psa-re-push", "client_payload": {"repo": "${{ github.repository }}", "sha": "${{ github.sha }}"}}'
