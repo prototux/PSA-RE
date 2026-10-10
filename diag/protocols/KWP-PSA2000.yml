@@ -1,0 +1,220 @@
+protocol: 'KWP-PSA2000'
+standard: 'ISO 14230-3 services over ISO 15765-2 (PSA "KWP on CAN")'
+comment:
+  en: 'PSA flavour of KWP2000 carried on CAN with ISO-TP, used by most AEE2004 ECUs (and by some ECUs of early AEE2010 cars). Partially known, from what diagnostic tools send. Cabin ECUs (reached through the BSI from the diagnostic socket) open the session with 10 C0 and close it with 10 81; powertrain ECUs on the CAN IS use 81 (start communication) / 82 (stop communication) instead. The session is kept with 3E about every second. Security access: 27 83 / 27 84 for configuration, 27 81 / 27 82 for download, the 4 byte key is computed with the same PSA_SEED_KEY algorithm as UDS (see UDS.yml). Data are read with 21 <LID> and written with 3B <LID>; faults are read with 17 FF 00 (answer 57 <count> then 3 bytes per fault) and cleared with 14 FF 00. Cabin ECUs are rebooted with the routine 31 A8 00 (or 31 A8 01). After a configuration change, tools write a traceability record (for example 3B A0 FF FD ...), the exact layout is not confirmed. CAN ids: 0x740 + code / 0x640 + code for cabin ECUs, 0x620 + code / 0x600 + code for powertrain ECUs'
+  fr: 'Variante PSA du KWP2000 transportée sur CAN par ISO-TP, utilisée par la plupart des calculateurs AEE2004 (et quelques calculateurs des premiers véhicules AEE2010). Partiellement connue, d''après ce qu''envoient les outils de diagnostic. Les calculateurs habitacle (atteints par la BSI depuis la prise diagnostic) ouvrent la session par 10 C0 et la ferment par 10 81 ; les calculateurs moteur du CAN IS utilisent 81 (début de communication) / 82 (fin de communication). La session est maintenue par 3E environ chaque seconde. Accès sécurisé : 27 83 / 27 84 pour la configuration, 27 81 / 27 82 pour le téléchargement, la clé de 4 octets est calculée avec le même algorithme PSA_SEED_KEY que l''UDS (voir UDS.yml). Les données sont lues par 21 <LID> et écrites par 3B <LID> ; les défauts sont lus par 17 FF 00 (réponse 57 <nombre> puis 3 octets par défaut) et effacés par 14 FF 00. Les calculateurs habitacle redémarrent avec la routine 31 A8 00 (ou 31 A8 01). Après une modification de configuration, les outils écrivent un enregistrement de traçabilité (par exemple 3B A0 FF FD ...), dont le format exact n''est pas confirmé. Identifiants CAN : 0x740 + code / 0x640 + code pour l''habitacle, 0x620 + code / 0x600 + code pour le moteur et le châssis'
+transport: ['can-tp']
+
+services:
+  0x10:
+    name: 'START_DIAGNOSTIC_SESSION'
+    display_name:
+      en: 'Start diagnostic session'
+      fr: 'Ouverture de session de diagnostic'
+    request: '10 SESSION'
+    response: '50 SESSION'
+    subfunctions:
+      0x81:
+        en: 'Default session / end of diagnostic'
+        fr: 'Session par défaut / fin de diagnostic'
+      0xC0:
+        en: 'PSA diagnostic session (reading and configuration)'
+        fr: 'Session de diagnostic PSA (lecture et configuration)'
+  0x14:
+    name: 'CLEAR_DIAGNOSTIC_INFORMATION'
+    display_name:
+      en: 'Clear diagnostic information'
+      fr: 'Effacement des défauts'
+    request: '14 GROUP_HI GROUP_LO'
+    response: '54 GROUP_HI GROUP_LO'
+    comment:
+      en: '14 FF 00 clears all the faults'
+      fr: '14 FF 00 efface tous les défauts'
+  0x17:
+    name: 'READ_STATUS_OF_DIAGNOSTIC_TROUBLE_CODES'
+    display_name:
+      en: 'Read status of DTCs'
+      fr: 'Lecture de l''état des défauts'
+    request: '17 GROUP_HI GROUP_LO'
+    response: '57 COUNT [DTC_HI DTC_LO STATUS]...'
+  0x21:
+    name: 'READ_DATA_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Read data by local identifier'
+      fr: 'Lecture de données par identifiant local'
+    request: '21 LID [OPTION...]'
+    response: '61 LID DATA...'
+  0x27:
+    name: 'SECURITY_ACCESS'
+    display_name:
+      en: 'Security access'
+      fr: 'Accès sécurisé'
+    request: '27 LEVEL [KEY...]'
+    response: '67 LEVEL [SEED...]'
+    subfunctions:
+      0x81:
+        en: 'Request seed, download'
+        fr: 'Demande de graine, téléchargement'
+      0x82:
+        en: 'Send key, download'
+        fr: 'Envoi de la clé, téléchargement'
+      0x83:
+        en: 'Request seed, configuration'
+        fr: 'Demande de graine, configuration'
+      0x84:
+        en: 'Send key, configuration'
+        fr: 'Envoi de la clé, configuration'
+  0x30:
+    name: 'INPUT_OUTPUT_CONTROL_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Input/output control by local identifier'
+      fr: 'Pilotage des entrées/sorties par identifiant local'
+    request: '30 LID CONTROL [STATE...]'
+    response: '70 LID ...'
+  0x31:
+    name: 'START_ROUTINE_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Start routine by local identifier'
+      fr: 'Lancement de routine par identifiant local'
+    request: '31 RID [OPTIONS...]'
+    response: '71 RID [RESULTS...]'
+    comment:
+      en: '31 A8 00 / 31 A8 01 reboot cabin ECUs'
+      fr: '31 A8 00 / 31 A8 01 redémarrent les calculateurs habitacle'
+  0x34:
+    name: 'REQUEST_DOWNLOAD'
+    display_name:
+      en: 'Request download'
+      fr: 'Demande de téléchargement'
+    request: '34 ADDRESS... FORMAT SIZE...'
+    response: '74 MAX_BLOCK'
+  0x36:
+    name: 'TRANSFER_DATA'
+    display_name:
+      en: 'Transfer data'
+      fr: 'Transfert de données'
+    request: '36 DATA...'
+    response: '76'
+  0x37:
+    name: 'REQUEST_TRANSFER_EXIT'
+    display_name:
+      en: 'Request transfer exit'
+      fr: 'Fin de transfert'
+    request: '37'
+    response: '77'
+  0x3B:
+    name: 'WRITE_DATA_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Write data by local identifier'
+      fr: 'Écriture de données par identifiant local'
+    request: '3B LID DATA...'
+    response: '7B LID'
+  0x3E:
+    name: 'TESTER_PRESENT'
+    display_name:
+      en: 'Tester present'
+      fr: 'Testeur présent'
+    request: '3E'
+    response: '7E'
+  0x81:
+    name: 'START_COMMUNICATION'
+    display_name:
+      en: 'Start communication'
+      fr: 'Début de communication'
+    request: '81'
+    response: 'C1 ...'
+    comment:
+      en: 'Opens the dialogue with the powertrain ECUs of the CAN IS'
+      fr: 'Ouvre le dialogue avec les calculateurs moteur/châssis du CAN IS'
+  0x82:
+    name: 'STOP_COMMUNICATION'
+    display_name:
+      en: 'Stop communication'
+      fr: 'Fin de communication'
+    request: '82'
+    response: 'C2'
+negative_responses:
+  0x10:
+    en: 'General reject'
+    fr: 'Rejet général'
+  0x11:
+    en: 'Service not supported'
+    fr: 'Service non supporté'
+  0x12:
+    en: 'Sub-function not supported or invalid format'
+    fr: 'Sous-fonction non supportée ou format invalide'
+  0x21:
+    en: 'Busy, repeat request'
+    fr: 'Occupé, répéter la requête'
+  0x22:
+    en: 'Conditions not correct or request sequence error'
+    fr: 'Conditions non correctes ou erreur de séquence'
+  0x23:
+    en: 'Routine not complete'
+    fr: 'Routine non terminée'
+  0x31:
+    en: 'Request out of range'
+    fr: 'Requête hors limites'
+  0x33:
+    en: 'Security access denied'
+    fr: 'Accès sécurisé refusé'
+  0x35:
+    en: 'Invalid key'
+    fr: 'Clé invalide'
+  0x36:
+    en: 'Exceeded number of attempts'
+    fr: 'Nombre d''essais dépassé'
+  0x37:
+    en: 'Required time delay not expired'
+    fr: 'Délai requis non écoulé'
+  0x40:
+    en: 'Download not accepted'
+    fr: 'Téléchargement refusé'
+  0x41:
+    en: 'Improper download type'
+    fr: 'Type de téléchargement incorrect'
+  0x42:
+    en: 'Cannot download to specified address'
+    fr: 'Téléchargement impossible à l''adresse indiquée'
+  0x43:
+    en: 'Cannot download number of bytes requested'
+    fr: 'Téléchargement impossible du nombre d''octets demandé'
+  0x50:
+    en: 'Upload not accepted'
+    fr: 'Remontée refusée'
+  0x51:
+    en: 'Improper upload type'
+    fr: 'Type de remontée incorrect'
+  0x52:
+    en: 'Cannot upload from specified address'
+    fr: 'Remontée impossible depuis l''adresse indiquée'
+  0x53:
+    en: 'Cannot upload number of bytes requested'
+    fr: 'Remontée impossible du nombre d''octets demandé'
+  0x71:
+    en: 'Transfer suspended'
+    fr: 'Transfert suspendu'
+  0x72:
+    en: 'Transfer aborted'
+    fr: 'Transfert abandonné'
+  0x74:
+    en: 'Illegal address in block transfer'
+    fr: 'Adresse illégale dans le transfert de bloc'
+  0x75:
+    en: 'Illegal byte count in block transfer'
+    fr: 'Nombre d''octets illégal dans le transfert de bloc'
+  0x76:
+    en: 'Illegal block transfer type'
+    fr: 'Type de transfert de bloc illégal'
+  0x77:
+    en: 'Block transfer data checksum error'
+    fr: 'Erreur de somme de contrôle du bloc'
+  0x78:
+    en: 'Request correctly received, response pending'
+    fr: 'Requête bien reçue, réponse en attente'
+  0x79:
+    en: 'Incorrect byte count during block transfer'
+    fr: 'Nombre d''octets incorrect pendant le transfert de bloc'
+  0x80:
+    en: 'Service not supported in active diagnostic mode'
+    fr: 'Service non supporté dans le mode de diagnostic actif'

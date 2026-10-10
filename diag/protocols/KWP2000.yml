@@ -1,0 +1,319 @@
+protocol: 'KWP2000'
+standard: 'ISO 14230 (KWP2000 on K-line)'
+comment:
+  en: 'Keyword protocol 2000 on the K-line (10.4 kbit/s), used on the VAN+CAN cars (AEE2001). The tool talks to the BSI (address 0xD0, fast init), which relays the requests to the VAN ECUs through its gateway function; each CAN IS ECU (engine, gearbox, ABS...) also has its own K-line. Messages are framed with a format byte, target and source addresses, the data and a checksum. PSA uses mostly local identifiers: 21 <LID> reads, 3B <LID> writes (whole identifier, or one parameter at a time with its number, 0xFF meaning the whole block), 31 <RID> 00 starts a routine and 31 <RID> 01 polls its status, 30 <LID> drives an output'
+  fr: 'Keyword protocol 2000 sur ligne K (10,4 kbit/s), utilisé sur les véhicules VAN+CAN (AEE2001). L''outil dialogue avec la BSI (adresse 0xD0, fast init), qui relaie les requêtes vers les calculateurs VAN par sa fonction passerelle ; chaque calculateur du CAN IS (moteur, boîte, ABS...) a aussi sa propre ligne K. Les messages comportent un octet de format, les adresses cible et source, les données et une somme de contrôle. PSA utilise surtout des identifiants locaux : 21 <LID> lit, 3B <LID> écrit (l''identifiant complet, ou un paramètre à la fois avec son numéro, 0xFF signifiant le bloc complet), 31 <RID> 00 lance une routine et 31 <RID> 01 demande son statut, 30 <LID> pilote une sortie'
+transport: ['k-line']
+
+services:
+  0x10:
+    name: 'START_DIAGNOSTIC_SESSION'
+    display_name:
+      en: 'Start diagnostic session'
+      fr: 'Ouverture de session de diagnostic'
+    request: '10 SESSION [BAUDRATE]'
+    response: '50 SESSION'
+  0x11:
+    name: 'ECU_RESET'
+    display_name:
+      en: 'ECU reset'
+      fr: 'Réinitialisation du calculateur'
+    request: '11 MODE'
+    response: '51 MODE'
+  0x12:
+    name: 'READ_FREEZE_FRAME_DATA'
+    display_name:
+      en: 'Read freeze frame data'
+      fr: 'Lecture des contextes figés'
+    request: '12 FRAME_NUMBER ...'
+    response: '52 DATA...'
+  0x13:
+    name: 'READ_DIAGNOSTIC_TROUBLE_CODES'
+    display_name:
+      en: 'Read diagnostic trouble codes'
+      fr: 'Lecture des codes défauts'
+    request: '13'
+    response: '53 COUNT DTC...'
+  0x14:
+    name: 'CLEAR_DIAGNOSTIC_INFORMATION'
+    display_name:
+      en: 'Clear diagnostic information'
+      fr: 'Effacement des défauts'
+    request: '14 GROUP_HI GROUP_LO'
+    response: '54 GROUP_HI GROUP_LO'
+    comment:
+      en: '14 FF 00 clears all the faults'
+      fr: '14 FF 00 efface tous les défauts'
+  0x17:
+    name: 'READ_STATUS_OF_DIAGNOSTIC_TROUBLE_CODES'
+    display_name:
+      en: 'Read status of DTCs'
+      fr: 'Lecture de l''état des défauts'
+    request: '17 GROUP_HI GROUP_LO'
+    response: '57 COUNT [DTC_HI DTC_LO STATUS]...'
+  0x18:
+    name: 'READ_DTC_BY_STATUS'
+    display_name:
+      en: 'Read DTCs by status'
+      fr: 'Lecture des défauts par état'
+    request: '18 STATUS GROUP_HI GROUP_LO'
+    response: '58 COUNT [DTC_HI DTC_LO STATUS]...'
+  0x1A:
+    name: 'READ_ECU_IDENTIFICATION'
+    display_name:
+      en: 'Read ECU identification'
+      fr: 'Lecture de l''identification du calculateur'
+    request: '1A OPTION'
+    response: '5A OPTION DATA...'
+  0x20:
+    name: 'STOP_DIAGNOSTIC_SESSION'
+    display_name:
+      en: 'Stop diagnostic session'
+      fr: 'Fin de session de diagnostic'
+    request: '20'
+    response: '60'
+  0x21:
+    name: 'READ_DATA_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Read data by local identifier'
+      fr: 'Lecture de données par identifiant local'
+    request: '21 LID [OPTION...]'
+    response: '61 LID DATA...'
+  0x22:
+    name: 'READ_DATA_BY_COMMON_IDENTIFIER'
+    display_name:
+      en: 'Read data by common identifier'
+      fr: 'Lecture de données par identifiant commun'
+    request: '22 CID_HI CID_LO'
+    response: '62 CID_HI CID_LO DATA...'
+  0x23:
+    name: 'READ_MEMORY_BY_ADDRESS'
+    display_name:
+      en: 'Read memory by address'
+      fr: 'Lecture mémoire par adresse'
+    request: '23 ADDR_HI ADDR_MID ADDR_LO SIZE'
+    response: '63 DATA...'
+  0x27:
+    name: 'SECURITY_ACCESS'
+    display_name:
+      en: 'Security access'
+      fr: 'Accès sécurisé'
+    request: '27 LEVEL [KEY...]'
+    response: '67 LEVEL [SEED...]'
+    comment:
+      en: 'Odd sub-function = request seed, even = send key'
+      fr: 'Sous-fonction impaire = demande de graine, paire = envoi de la clé'
+  0x2C:
+    name: 'DYNAMICALLY_DEFINE_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Dynamically define local identifier'
+      fr: 'Définition dynamique d''identifiant local'
+    request: '2C LID MODE ...'
+    response: '6C LID'
+  0x2E:
+    name: 'WRITE_DATA_BY_COMMON_IDENTIFIER'
+    display_name:
+      en: 'Write data by common identifier'
+      fr: 'Écriture de données par identifiant commun'
+    request: '2E CID_HI CID_LO DATA...'
+    response: '6E CID_HI CID_LO'
+  0x2F:
+    name: 'INPUT_OUTPUT_CONTROL_BY_COMMON_IDENTIFIER'
+    display_name:
+      en: 'Input/output control by common identifier'
+      fr: 'Pilotage des entrées/sorties par identifiant commun'
+    request: '2F CID_HI CID_LO CONTROL [STATE...]'
+    response: '6F CID_HI CID_LO ...'
+  0x30:
+    name: 'INPUT_OUTPUT_CONTROL_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Input/output control by local identifier'
+      fr: 'Pilotage des entrées/sorties par identifiant local'
+    request: '30 LID CONTROL [STATE...]'
+    response: '70 LID ...'
+  0x31:
+    name: 'START_ROUTINE_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Start routine by local identifier'
+      fr: 'Lancement de routine par identifiant local'
+    request: '31 RID [OPTIONS...]'
+    response: '71 RID [RESULTS...]'
+  0x32:
+    name: 'STOP_ROUTINE_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Stop routine by local identifier'
+      fr: 'Arrêt de routine par identifiant local'
+    request: '32 RID'
+    response: '72 RID'
+  0x33:
+    name: 'REQUEST_ROUTINE_RESULTS_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Request routine results by local identifier'
+      fr: 'Résultats de routine par identifiant local'
+    request: '33 RID'
+    response: '73 RID RESULTS...'
+  0x34:
+    name: 'REQUEST_DOWNLOAD'
+    display_name:
+      en: 'Request download'
+      fr: 'Demande de téléchargement'
+    request: '34 ADDRESS... FORMAT SIZE...'
+    response: '74 MAX_BLOCK'
+  0x35:
+    name: 'REQUEST_UPLOAD'
+    display_name:
+      en: 'Request upload'
+      fr: 'Demande de remontée'
+    request: '35 ADDRESS... FORMAT SIZE...'
+    response: '75 MAX_BLOCK'
+  0x36:
+    name: 'TRANSFER_DATA'
+    display_name:
+      en: 'Transfer data'
+      fr: 'Transfert de données'
+    request: '36 DATA...'
+    response: '76'
+  0x37:
+    name: 'REQUEST_TRANSFER_EXIT'
+    display_name:
+      en: 'Request transfer exit'
+      fr: 'Fin de transfert'
+    request: '37'
+    response: '77'
+  0x3B:
+    name: 'WRITE_DATA_BY_LOCAL_IDENTIFIER'
+    display_name:
+      en: 'Write data by local identifier'
+      fr: 'Écriture de données par identifiant local'
+    request: '3B LID DATA...'
+    response: '7B LID'
+  0x3D:
+    name: 'WRITE_MEMORY_BY_ADDRESS'
+    display_name:
+      en: 'Write memory by address'
+      fr: 'Écriture mémoire par adresse'
+    request: '3D ADDRESS... SIZE DATA...'
+    response: '7D ADDRESS...'
+  0x3E:
+    name: 'TESTER_PRESENT'
+    display_name:
+      en: 'Tester present'
+      fr: 'Testeur présent'
+    request: '3E [01|02]'
+    response: '7E'
+  0x81:
+    name: 'START_COMMUNICATION'
+    display_name:
+      en: 'Start communication'
+      fr: 'Début de communication'
+    request: '81'
+    response: 'C1 KEYBYTE1 KEYBYTE2'
+    comment:
+      en: 'Sent after the fast init wake-up pattern on the K-line'
+      fr: 'Envoyé après la séquence de réveil fast init sur la ligne K'
+  0x82:
+    name: 'STOP_COMMUNICATION'
+    display_name:
+      en: 'Stop communication'
+      fr: 'Fin de communication'
+    request: '82'
+    response: 'C2'
+  0x83:
+    name: 'ACCESS_TIMING_PARAMETERS'
+    display_name:
+      en: 'Access timing parameters'
+      fr: 'Accès aux paramètres temporels'
+    request: '83 TYPE [P2MIN P2MAX P3MIN P3MAX P4MIN]'
+    response: 'C3 TYPE [...]'
+  0x85:
+    name: 'CONTROL_DTC_SETTING'
+    display_name:
+      en: 'Control DTC setting'
+      fr: 'Contrôle de l''enregistrement des défauts'
+    request: '85 TYPE'
+    response: 'C5 TYPE'
+negative_responses:
+  0x10:
+    en: 'General reject'
+    fr: 'Rejet général'
+  0x11:
+    en: 'Service not supported'
+    fr: 'Service non supporté'
+  0x12:
+    en: 'Sub-function not supported or invalid format'
+    fr: 'Sous-fonction non supportée ou format invalide'
+  0x21:
+    en: 'Busy, repeat request'
+    fr: 'Occupé, répéter la requête'
+  0x22:
+    en: 'Conditions not correct or request sequence error'
+    fr: 'Conditions non correctes ou erreur de séquence'
+  0x23:
+    en: 'Routine not complete'
+    fr: 'Routine non terminée'
+  0x31:
+    en: 'Request out of range'
+    fr: 'Requête hors limites'
+  0x33:
+    en: 'Security access denied'
+    fr: 'Accès sécurisé refusé'
+  0x35:
+    en: 'Invalid key'
+    fr: 'Clé invalide'
+  0x36:
+    en: 'Exceeded number of attempts'
+    fr: 'Nombre d''essais dépassé'
+  0x37:
+    en: 'Required time delay not expired'
+    fr: 'Délai requis non écoulé'
+  0x40:
+    en: 'Download not accepted'
+    fr: 'Téléchargement refusé'
+  0x41:
+    en: 'Improper download type'
+    fr: 'Type de téléchargement incorrect'
+  0x42:
+    en: 'Cannot download to specified address'
+    fr: 'Téléchargement impossible à l''adresse indiquée'
+  0x43:
+    en: 'Cannot download number of bytes requested'
+    fr: 'Téléchargement impossible du nombre d''octets demandé'
+  0x50:
+    en: 'Upload not accepted'
+    fr: 'Remontée refusée'
+  0x51:
+    en: 'Improper upload type'
+    fr: 'Type de remontée incorrect'
+  0x52:
+    en: 'Cannot upload from specified address'
+    fr: 'Remontée impossible depuis l''adresse indiquée'
+  0x53:
+    en: 'Cannot upload number of bytes requested'
+    fr: 'Remontée impossible du nombre d''octets demandé'
+  0x71:
+    en: 'Transfer suspended'
+    fr: 'Transfert suspendu'
+  0x72:
+    en: 'Transfer aborted'
+    fr: 'Transfert abandonné'
+  0x74:
+    en: 'Illegal address in block transfer'
+    fr: 'Adresse illégale dans le transfert de bloc'
+  0x75:
+    en: 'Illegal byte count in block transfer'
+    fr: 'Nombre d''octets illégal dans le transfert de bloc'
+  0x76:
+    en: 'Illegal block transfer type'
+    fr: 'Type de transfert de bloc illégal'
+  0x77:
+    en: 'Block transfer data checksum error'
+    fr: 'Erreur de somme de contrôle du bloc'
+  0x78:
+    en: 'Request correctly received, response pending'
+    fr: 'Requête bien reçue, réponse en attente'
+  0x79:
+    en: 'Incorrect byte count during block transfer'
+    fr: 'Nombre d''octets incorrect pendant le transfert de bloc'
+  0x80:
+    en: 'Service not supported in active diagnostic mode'
+    fr: 'Service non supporté dans le mode de diagnostic actif'

@@ -1,0 +1,377 @@
+protocol: 'UDS'
+standard: 'ISO 14229-1 (services), ISO 15765-2 (CAN transport)'
+comment:
+  en: 'Unified diagnostic services, used by the AEE2010 ECUs and by the late AEE2004 ones. Each ECU has a physical request / response CAN id pair (see the ecu.yml files): cabin ECUs (codes 0x01-0x7F) use 0x740 + code / 0x640 + code (BSI 0x752 / 0x652), powertrain and chassis ECUs (codes 0x80 and above) use 0x620 + code / 0x600 + code (engine ECU 0x6A8 / 0x688), with a few exceptions for recent ECUs. LIN slaves are reached through the BSI with shared ids (0x730-0x737 / 0x710-0x717) and their LIN node address. Frames use ISO-TP (single frame, first/consecutive frames, flow control 30 00 00), usually padded to 8 bytes. The configuration is changed in the extended session (10 03) after unlocking with 27 03 / 27 04 (PSA_SEED_KEY algorithm with the ECU constant); 27 01 / 27 02 unlock the download (programming session 10 02). The session is kept open with 3E 00 about every second; without traffic the ECU relocks after about 5 s. After writing secured coding values, the traceability identifier 0x2901 (coding site, tool signature, date) must be written in the same session, otherwise the BSI raises the fault B1003'
+  fr: 'Services de diagnostic unifiés, utilisés par les calculateurs AEE2010 et les derniers AEE2004. Chaque calculateur a une paire d''identifiants CAN requête / réponse (voir les fichiers ecu.yml) : les calculateurs habitacle (codes 0x01-0x7F) utilisent 0x740 + code / 0x640 + code (BSI 0x752 / 0x652), les calculateurs moteur et châssis (codes 0x80 et plus) 0x620 + code / 0x600 + code (calculateur moteur 0x6A8 / 0x688), avec quelques exceptions pour les calculateurs récents. Les esclaves LIN sont atteints à travers la BSI avec des identifiants partagés (0x730-0x737 / 0x710-0x717) et leur adresse de nœud LIN. Les trames utilisent l''ISO-TP (trame unique, première trame / trames consécutives, contrôle de flux 30 00 00), en général complétées à 8 octets. La configuration se modifie en session étendue (10 03) après déverrouillage par 27 03 / 27 04 (algorithme PSA_SEED_KEY avec la constante du calculateur) ; 27 01 / 27 02 déverrouillent le téléchargement (session de programmation 10 02). La session est maintenue par 3E 00 environ chaque seconde ; sans trafic le calculateur se reverrouille après environ 5 s. Après l''écriture de valeurs de télécodage sécurisé, l''identifiant de traçabilité 0x2901 (site, signature de l''outil, date) doit être écrit dans la même session, sinon la BSI lève le défaut B1003'
+transport: ['can-tp']
+
+services:
+  0x10:
+    name: 'DIAGNOSTIC_SESSION_CONTROL'
+    display_name:
+      en: 'Diagnostic session control'
+      fr: 'Contrôle de session de diagnostic'
+    request: '10 SESSION'
+    response: '50 SESSION P2_HI P2_LO P2X_HI P2X_LO'
+    subfunctions:
+      0x01:
+        en: 'Default session'
+        fr: 'Session par défaut'
+      0x02:
+        en: 'Programming session'
+        fr: 'Session de programmation'
+      0x03:
+        en: 'Extended session (configuration)'
+        fr: 'Session étendue (configuration)'
+  0x11:
+    name: 'ECU_RESET'
+    display_name:
+      en: 'ECU reset'
+      fr: 'Réinitialisation du calculateur'
+    request: '11 TYPE'
+    response: '51 TYPE'
+    subfunctions:
+      0x01:
+        en: 'Hard reset'
+        fr: 'Reset matériel'
+      0x02:
+        en: 'Key off/on reset'
+        fr: 'Reset coupure/remise du contact'
+      0x03:
+        en: 'Soft reset (used by PSA tools to reboot an ECU)'
+        fr: 'Reset logiciel (utilisé par les outils PSA pour redémarrer un calculateur)'
+  0x14:
+    name: 'CLEAR_DIAGNOSTIC_INFORMATION'
+    display_name:
+      en: 'Clear diagnostic information'
+      fr: 'Effacement des défauts'
+    request: '14 GROUP_HI GROUP_MID GROUP_LO'
+    response: '54'
+    comment:
+      en: '14 FF FF FF clears all the faults'
+      fr: '14 FF FF FF efface tous les défauts'
+  0x19:
+    name: 'READ_DTC_INFORMATION'
+    display_name:
+      en: 'Read DTC information'
+      fr: 'Lecture des informations de défauts'
+    request: '19 REPORT_TYPE [MASK / DTC...]'
+    response: '59 REPORT_TYPE DATA...'
+    comment:
+      en: '19 02 09 lists the faults with status bits 0 (test failed) or 3 (confirmed); each DTC is 3 bytes (2 bytes code + failure type byte) followed by its status byte'
+      fr: '19 02 09 liste les défauts avec les bits d''état 0 (test échoué) ou 3 (confirmé) ; chaque défaut fait 3 octets (2 octets de code + octet de type de défaillance) suivis de son octet d''état'
+    subfunctions:
+      0x01:
+        en: 'Number of DTC by status mask'
+        fr: 'Nombre de défauts par masque d''état'
+      0x02:
+        en: 'DTC by status mask'
+        fr: 'Défauts par masque d''état'
+      0x04:
+        en: 'DTC snapshot record by DTC number'
+        fr: 'Contexte figé d''un défaut'
+      0x06:
+        en: 'DTC extended data record by DTC number'
+        fr: 'Données étendues d''un défaut'
+      0x0A:
+        en: 'Supported DTCs'
+        fr: 'Défauts supportés'
+  0x22:
+    name: 'READ_DATA_BY_IDENTIFIER'
+    display_name:
+      en: 'Read data by identifier'
+      fr: 'Lecture de données par identifiant'
+    request: '22 DID_HI DID_LO [DID_HI DID_LO...]'
+    response: '62 DID_HI DID_LO DATA...'
+  0x23:
+    name: 'READ_MEMORY_BY_ADDRESS'
+    display_name:
+      en: 'Read memory by address'
+      fr: 'Lecture mémoire par adresse'
+    request: '23 FORMAT ADDRESS... SIZE...'
+    response: '63 DATA...'
+  0x27:
+    name: 'SECURITY_ACCESS'
+    display_name:
+      en: 'Security access'
+      fr: 'Accès sécurisé'
+    request: '27 LEVEL [KEY...]'
+    response: '67 LEVEL [SEED...]'
+    comment:
+      en: 'Odd sub-function = request seed (4 bytes), even = send key (4 bytes). Key computed with PSA_SEED_KEY'
+      fr: 'Sous-fonction impaire = demande de graine (4 octets), paire = envoi de la clé (4 octets). Clé calculée avec PSA_SEED_KEY'
+    subfunctions:
+      0x01:
+        en: 'Request seed, download'
+        fr: 'Demande de graine, téléchargement'
+      0x02:
+        en: 'Send key, download'
+        fr: 'Envoi de la clé, téléchargement'
+      0x03:
+        en: 'Request seed, configuration'
+        fr: 'Demande de graine, configuration'
+      0x04:
+        en: 'Send key, configuration'
+        fr: 'Envoi de la clé, configuration'
+  0x28:
+    name: 'COMMUNICATION_CONTROL'
+    display_name:
+      en: 'Communication control'
+      fr: 'Contrôle de la communication'
+    request: '28 TYPE COMM_TYPE'
+    response: '68 TYPE'
+  0x2E:
+    name: 'WRITE_DATA_BY_IDENTIFIER'
+    display_name:
+      en: 'Write data by identifier'
+      fr: 'Écriture de données par identifiant'
+    request: '2E DID_HI DID_LO DATA...'
+    response: '6E DID_HI DID_LO'
+  0x2F:
+    name: 'INPUT_OUTPUT_CONTROL_BY_IDENTIFIER'
+    display_name:
+      en: 'Input/output control by identifier'
+      fr: 'Pilotage des entrées/sorties par identifiant'
+    request: '2F DID_HI DID_LO CONTROL [STATE...]'
+    response: '6F DID_HI DID_LO CONTROL [STATE...]'
+    subfunctions:
+      0x00:
+        en: 'Return control to ECU'
+        fr: 'Rendre la main au calculateur'
+      0x01:
+        en: 'Reset to default'
+        fr: 'Retour à la valeur par défaut'
+      0x02:
+        en: 'Freeze current state'
+        fr: 'Figer l''état courant'
+      0x03:
+        en: 'Short term adjustment'
+        fr: 'Ajustement temporaire'
+  0x31:
+    name: 'ROUTINE_CONTROL'
+    display_name:
+      en: 'Routine control'
+      fr: 'Contrôle de routine'
+    request: '31 TYPE RID_HI RID_LO [OPTIONS...]'
+    response: '71 TYPE RID_HI RID_LO [STATUS...]'
+    comment:
+      en: 'PSA uses routine FF00 to erase the flash before a download (31 01 FF 00 ...)'
+      fr: 'PSA utilise la routine FF00 pour effacer la mémoire flash avant un téléchargement (31 01 FF 00 ...)'
+    subfunctions:
+      0x01:
+        en: 'Start routine'
+        fr: 'Lancer la routine'
+      0x02:
+        en: 'Stop routine'
+        fr: 'Arrêter la routine'
+      0x03:
+        en: 'Request routine results'
+        fr: 'Demander les résultats'
+  0x34:
+    name: 'REQUEST_DOWNLOAD'
+    display_name:
+      en: 'Request download'
+      fr: 'Demande de téléchargement'
+    request: '34 FORMAT ADDR_LEN ADDRESS... SIZE...'
+    response: '74 LEN_FORMAT MAX_BLOCK...'
+  0x35:
+    name: 'REQUEST_UPLOAD'
+    display_name:
+      en: 'Request upload'
+      fr: 'Demande de remontée'
+    request: '35 FORMAT ADDR_LEN ADDRESS... SIZE...'
+    response: '75 LEN_FORMAT MAX_BLOCK...'
+  0x36:
+    name: 'TRANSFER_DATA'
+    display_name:
+      en: 'Transfer data'
+      fr: 'Transfert de données'
+    request: '36 COUNTER DATA...'
+    response: '76 COUNTER'
+  0x37:
+    name: 'REQUEST_TRANSFER_EXIT'
+    display_name:
+      en: 'Request transfer exit'
+      fr: 'Fin de transfert'
+    request: '37 [DATA...]'
+    response: '77 [DATA...]'
+  0x3D:
+    name: 'WRITE_MEMORY_BY_ADDRESS'
+    display_name:
+      en: 'Write memory by address'
+      fr: 'Écriture mémoire par adresse'
+    request: '3D FORMAT ADDRESS... SIZE... DATA...'
+    response: '7D FORMAT ADDRESS... SIZE...'
+  0x3E:
+    name: 'TESTER_PRESENT'
+    display_name:
+      en: 'Tester present'
+      fr: 'Testeur présent'
+    request: '3E 00'
+    response: '7E 00'
+    comment:
+      en: '3E 80 suppresses the answer'
+      fr: '3E 80 supprime la réponse'
+    subfunctions:
+      0x00:
+        en: 'Answer expected'
+        fr: 'Réponse attendue'
+      0x80:
+        en: 'No answer'
+        fr: 'Sans réponse'
+  0x85:
+    name: 'CONTROL_DTC_SETTING'
+    display_name:
+      en: 'Control DTC setting'
+      fr: 'Contrôle de l''enregistrement des défauts'
+    request: '85 TYPE'
+    response: 'C5 TYPE'
+    subfunctions:
+      0x01:
+        en: 'On'
+        fr: 'Marche'
+      0x02:
+        en: 'Off'
+        fr: 'Arrêt'
+negative_responses:
+  0x10:
+    en: 'General reject'
+    fr: 'Rejet général'
+  0x11:
+    en: 'Service not supported'
+    fr: 'Service non supporté'
+  0x12:
+    en: 'Sub-function not supported'
+    fr: 'Sous-fonction non supportée'
+  0x13:
+    en: 'Incorrect message length or invalid format'
+    fr: 'Longueur de message incorrecte ou format invalide'
+  0x14:
+    en: 'Response too long'
+    fr: 'Réponse trop longue'
+  0x21:
+    en: 'Busy, repeat request'
+    fr: 'Occupé, répéter la requête'
+  0x22:
+    en: 'Conditions not correct'
+    fr: 'Conditions non correctes'
+  0x24:
+    en: 'Request sequence error'
+    fr: 'Erreur de séquence de requêtes'
+  0x25:
+    en: 'No response from sub-net component'
+    fr: 'Pas de réponse du composant du sous-réseau'
+  0x26:
+    en: 'Failure prevents execution of requested action'
+    fr: 'Une défaillance empêche l''exécution de l''action demandée'
+  0x31:
+    en: 'Request out of range'
+    fr: 'Requête hors limites'
+  0x33:
+    en: 'Security access denied'
+    fr: 'Accès sécurisé refusé'
+  0x35:
+    en: 'Invalid key'
+    fr: 'Clé invalide'
+  0x36:
+    en: 'Exceeded number of attempts'
+    fr: 'Nombre d''essais dépassé'
+  0x37:
+    en: 'Required time delay not expired'
+    fr: 'Délai requis non écoulé'
+  0x70:
+    en: 'Upload/download not accepted'
+    fr: 'Chargement/téléchargement refusé'
+  0x71:
+    en: 'Transfer data suspended'
+    fr: 'Transfert de données suspendu'
+  0x72:
+    en: 'General programming failure'
+    fr: 'Échec général de programmation'
+  0x73:
+    en: 'Wrong block sequence counter'
+    fr: 'Mauvais compteur de séquence de bloc'
+  0x78:
+    en: 'Request correctly received, response pending'
+    fr: 'Requête bien reçue, réponse en attente'
+  0x7E:
+    en: 'Sub-function not supported in active session'
+    fr: 'Sous-fonction non supportée dans la session active'
+  0x7F:
+    en: 'Service not supported in active session'
+    fr: 'Service non supporté dans la session active'
+  0x81:
+    en: 'RPM too high'
+    fr: 'Régime trop élevé'
+  0x82:
+    en: 'RPM too low'
+    fr: 'Régime trop bas'
+  0x83:
+    en: 'Engine is running'
+    fr: 'Moteur tournant'
+  0x84:
+    en: 'Engine is not running'
+    fr: 'Moteur arrêté'
+  0x85:
+    en: 'Engine run time too low'
+    fr: 'Temps de fonctionnement moteur trop court'
+  0x86:
+    en: 'Temperature too high'
+    fr: 'Température trop élevée'
+  0x87:
+    en: 'Temperature too low'
+    fr: 'Température trop basse'
+  0x88:
+    en: 'Vehicle speed too high'
+    fr: 'Vitesse véhicule trop élevée'
+  0x89:
+    en: 'Vehicle speed too low'
+    fr: 'Vitesse véhicule trop basse'
+  0x8A:
+    en: 'Throttle/pedal too high'
+    fr: 'Pédale trop enfoncée'
+  0x8B:
+    en: 'Throttle/pedal too low'
+    fr: 'Pédale pas assez enfoncée'
+  0x8C:
+    en: 'Transmission range not in neutral'
+    fr: 'Boîte de vitesses pas au neutre'
+  0x8D:
+    en: 'Transmission range not in gear'
+    fr: 'Boîte de vitesses pas en prise'
+  0x8F:
+    en: 'Brake switch not closed'
+    fr: 'Contacteur de frein non fermé'
+  0x90:
+    en: 'Shifter lever not in park'
+    fr: 'Levier de vitesses pas en position parking'
+  0x91:
+    en: 'Torque converter clutch locked'
+    fr: 'Embrayage du convertisseur verrouillé'
+  0x92:
+    en: 'Voltage too high'
+    fr: 'Tension trop élevée'
+  0x93:
+    en: 'Voltage too low'
+    fr: 'Tension trop basse'
+algorithms:
+  PSA_SEED_KEY:
+    comment:
+      en: 'Seed/key computation used by PSA ECUs for security access (UDS 27 01/03, KWP on CAN 27 81/83). The ECU sends a 4 byte seed, the tester answers a 4 byte key computed from the seed and a 16 bit constant specific to the ECU family (the "key" of the security_access entries of the ecu.yml files). Community implementations exist in C and Python. Note: the Python port found online treats a zero value as negative; it only gives a different result when the value is 0 or a negative multiple of sec[0]. What the ECUs really do in these cases is not confirmed'
+      fr: 'Calcul graine/clé utilisé par les calculateurs PSA pour l''accès sécurisé (UDS 27 01/03, KWP sur CAN 27 81/83). Le calculateur envoie une graine de 4 octets, l''outil répond une clé de 4 octets calculée à partir de la graine et d''une constante de 16 bits propre à la famille de calculateur (la « key » des entrées security_access des fichiers ecu.yml). Des implémentations communautaires existent en C et en Python. Remarque : le portage Python qui circule traite une donnée nulle comme négative ; il ne donne un résultat différent que lorsque la donnée vaut 0 ou un multiple négatif de sec[0]. Le comportement réel des calculateurs dans ces cas n''est pas confirmé'
+    pseudocode: |
+      # all values are integers, "/" and "%" truncate toward zero (C semantics)
+      SEC1 = (0xB2, 0x3F, 0xAA)          # (178, 63, 170)
+      SEC2 = (0xB1, 0x02, 0xAB)          # (177, 2, 171)
+
+      transform(data16, sec):
+          data = data16 interpreted as a signed 16 bit value (0x8000..0xFFFF -> negative)
+          result = (data % sec[0]) * sec[2] - (data / sec[0]) * sec[1]
+          if result < 0:
+              result = result + sec[0] * sec[2] + sec[1]
+          return result & 0xFFFF
+
+      key(seed[0..3], constant16):          # seed bytes in received order, constant e.g. 0xB2B2
+          msb = transform(constant16, SEC1) | transform((seed[0] << 8) | seed[3], SEC2)
+          lsb = transform((seed[1] << 8) | seed[2], SEC1) | transform(msb, SEC2)
+          return bytes(msb >> 8, msb & 0xFF, lsb >> 8, lsb & 0xFF)   # sent after 27 <level + 1>

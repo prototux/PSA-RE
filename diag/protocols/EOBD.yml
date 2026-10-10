@@ -1,0 +1,97 @@
+protocol: 'EOBD'
+standard: 'ISO 15031-5 / SAE J1979 over ISO 15765-4'
+comment:
+  en: 'European on-board diagnostics (emissions). On AEE2004 / AEE2010 cars it is served on the CAN IS of the diagnostic socket (500 kbit/s, 11 bit ids): functional request 0x7DF, physical requests 0x7E0-0x7E7 answered on 0x7E8-0x7EF (engine ECU 0x7E0 / 0x7E8, gearbox 0x7E1 / 0x7E9, BSI 0x7E4 / 0x7EC...). On VAN+CAN cars it uses the K-line of the engine ECU'
+  fr: 'Diagnostic embarqué européen (émissions). Sur les véhicules AEE2004 / AEE2010 il est servi sur le CAN IS de la prise diagnostic (500 kbit/s, identifiants 11 bits) : requête fonctionnelle 0x7DF, requêtes physiques 0x7E0-0x7E7 avec réponses 0x7E8-0x7EF (calculateur moteur 0x7E0 / 0x7E8, boîte 0x7E1 / 0x7E9, BSI 0x7E4 / 0x7EC...). Sur les véhicules VAN+CAN, il passe par la ligne K du calculateur moteur'
+transport: ['can-tp', 'k-line']
+
+services:
+  0x01:
+    name: 'CURRENT_DATA'
+    display_name:
+      en: 'Show current data'
+      fr: 'Données courantes'
+    request: '01 PID'
+    response: '41 PID DATA...'
+  0x02:
+    name: 'FREEZE_FRAME_DATA'
+    display_name:
+      en: 'Show freeze frame data'
+      fr: 'Données figées'
+    request: '02 PID FRAME'
+    response: '42 PID FRAME DATA...'
+  0x03:
+    name: 'STORED_DTCS'
+    display_name:
+      en: 'Show stored emission DTCs'
+      fr: 'Défauts antipollution mémorisés'
+    request: '03'
+    response: '43 [COUNT] DTC...'
+  0x04:
+    name: 'CLEAR_DTCS'
+    display_name:
+      en: 'Clear emission DTCs and stored values'
+      fr: 'Effacement des défauts antipollution'
+    request: '04'
+    response: '44'
+  0x05:
+    name: 'O2_SENSOR_MONITORING'
+    display_name:
+      en: 'Oxygen sensor monitoring results'
+      fr: 'Résultats de surveillance des sondes à oxygène'
+    request: '05 TID O2S'
+    response: '45 ...'
+  0x06:
+    name: 'ONBOARD_MONITORING'
+    display_name:
+      en: 'On-board monitoring test results'
+      fr: 'Résultats des tests de surveillance embarquée'
+    request: '06 MID'
+    response: '46 MID ...'
+  0x07:
+    name: 'PENDING_DTCS'
+    display_name:
+      en: 'Show pending emission DTCs'
+      fr: 'Défauts antipollution en attente'
+    request: '07'
+    response: '47 [COUNT] DTC...'
+  0x08:
+    name: 'CONTROL_ONBOARD_SYSTEM'
+    display_name:
+      en: 'Control of on-board system'
+      fr: 'Pilotage de système embarqué'
+    request: '08 TID ...'
+    response: '48 TID ...'
+  0x09:
+    name: 'VEHICLE_INFORMATION'
+    display_name:
+      en: 'Request vehicle information (VIN, calibration ids...)'
+      fr: 'Informations véhicule (VIN, identifiants de calibration...)'
+    request: '09 INFOTYPE'
+    response: '49 INFOTYPE DATA...'
+  0x0A:
+    name: 'PERMANENT_DTCS'
+    display_name:
+      en: 'Permanent emission DTCs'
+      fr: 'Défauts antipollution permanents'
+    request: '0A'
+    response: '4A [COUNT] DTC...'
+negative_responses:
+  0x10:
+    en: 'General reject'
+    fr: 'Rejet général'
+  0x11:
+    en: 'Service not supported'
+    fr: 'Service non supporté'
+  0x12:
+    en: 'Sub-function not supported'
+    fr: 'Sous-fonction non supportée'
+  0x22:
+    en: 'Conditions not correct'
+    fr: 'Conditions non correctes'
+  0x31:
+    en: 'Request out of range'
+    fr: 'Requête hors limites'
+  0x78:
+    en: 'Request correctly received, response pending'
+    fr: 'Requête bien reçue, réponse en attente'
