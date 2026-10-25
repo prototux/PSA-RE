@@ -5,6 +5,8 @@ display_name:
   fr: 'Enregistrement 0x2101 (4 valeurs)'
 kind: 'config'
 access: 'read-write'
+session: 0x03
+security_level: 0x03
 length: 6
 
 params:
@@ -14,38 +16,47 @@ params:
 
   VOLUME_PEDESTRIAN_HORN_FORWARD_GEAR:
     bits: '2.7-3.0'
+    byte_order: 'little_endian'
+    factor: 0.00006103515625   # 1/16384, raw 0x4000 = gain 1.0
+    min: 0
+    max: 1.0
     comment:
-      en: 'Volume of the pedestrian horn in forward gear'
-      fr: 'Niveau sonore de l''avertisseur piéton en marche avant'
-      es: 'Nivel sonoro de la alarma de peatón en marcha adelante'
-      de: 'Lautstärke der Fußgängerhupe im Vorwärtsgang'
-      pl: 'Poziom głośności sygnalizatora dźwiękowego biegu do przodu dla pieszych'
-      hu: 'A gyalogosriasztó hangszintje előremenetben'
+      en: 'Volume of the pedestrian warning sound in forward gear, linear gain with 0x4000 = 1.0 = full level (0 dB) as highest accepted value, factory value 0x143D = -10 dB'
+      de: 'Lautstärke des Fahrzeug-Warngeräusches im Vorwärtsgang, lineare Verstärkung mit 0x4000 = 1,0 = volle Lautstärke (0 dB) als höchstem angenommenem Wert, Werkswert 0x143D = -10 dB'
+      fr: 'Volume du son d''avertissement pour piétons en marche avant, gain linéaire avec 0x4000 = 1,0 = niveau maximal (0 dB) comme valeur la plus élevée acceptée, valeur d''usine 0x143D = -10 dB'
+      es: 'Volumen del sonido de advertencia para peatones en marcha adelante, ganancia lineal con 0x4000 = 1,0 = nivel máximo (0 dB) como valor más alto aceptado, valor de fábrica 0x143D = -10 dB'
+      pl: 'Głośność dźwięku ostrzegawczego dla pieszych na biegu do przodu, wzmocnienie liniowe, przy czym 0x4000 = 1,0 = pełny poziom (0 dB) jest najwyższą akceptowaną wartością, wartość fabryczna 0x143D = -10 dB'
+      hu: 'A gyalogosfigyelmeztető hang hangereje előremenetben, lineáris erősítés, amelynél a legnagyobb elfogadott érték 0x4000 = 1,0 = teljes szint (0 dB), gyári érték 0x143D = -10 dB'
     type: 'uint'
 
   VOLUME_REAR_PARKING_ASSISTANCE:
     bits: '4.7-5.0'
+    byte_order: 'little_endian'
+    factor: 0.00006103515625   # 1/16384, raw 0x4000 = gain 1.0
+    min: 0
+    max: 1.0
     comment:
-      en: 'Volume of the rear parking assistance'
-      fr: 'Niveau sonore de l''aide au stationnement arrière'
-      es: 'Nivel sonoro de la ayuda al estacionamiento hacia atrás'
-      de: 'Lautstärke der Parkhilfe hinten'
-      pl: 'Natężenie dźwięku pomocy przy parkowaniu tyłem'
-      hu: 'Hátsó parkolási segédlet hangerőszintje'
+      en: 'Volume of the pedestrian warning sound in reverse gear, linear gain with 0x4000 = 1.0 = full level (0 dB) as highest accepted value, factory value 0x197A = -8 dB'
+      de: 'Lautstärke des Fahrzeug-Warngeräusches im Rückwärtsgang, lineare Verstärkung mit 0x4000 = 1,0 = volle Lautstärke (0 dB) als höchstem angenommenem Wert, Werkswert 0x197A = -8 dB'
+      fr: 'Volume du son d''avertissement pour piétons en marche arrière, gain linéaire avec 0x4000 = 1,0 = niveau maximal (0 dB) comme valeur la plus élevée acceptée, valeur d''usine 0x197A = -8 dB'
+      es: 'Volumen del sonido de advertencia para peatones en marcha atrás, ganancia lineal con 0x4000 = 1,0 = nivel máximo (0 dB) como valor más alto aceptado, valor de fábrica 0x197A = -8 dB'
+      pl: 'Głośność dźwięku ostrzegawczego dla pieszych na biegu wstecznym, wzmocnienie liniowe, przy czym 0x4000 = 1,0 = pełny poziom (0 dB) jest najwyższą akceptowaną wartością, wartość fabryczna 0x197A = -8 dB'
+      hu: 'A gyalogosfigyelmeztető hang hangereje hátramenetben, lineáris erősítés, amelynél a legnagyobb elfogadott érték 0x4000 = 1,0 = teljes szint (0 dB), gyári érték 0x197A = -8 dB'
     type: 'uint'
 
   SELECTION_PEDESTRIAN_HORN_SOUND:
     bits: '6.7-6.0'
     comment:
-      en: 'Selection of the pedestrian horn sound'
-      fr: 'Sélection du son de l''avertisseur piéton'
-      es: 'Selección del indicador sonoro de peatón'
-      de: 'Auswahl des Tons der Fußgängerhupe'
-      pl: 'Wybór dźwięku sygnalizatora dźwiękowego dla pieszych'
-      hu: 'A gyalogosriasztó hangjának kiválasztása'
+      en: 'Selection of the pedestrian warning sound, counted from 1 to 6 (0x00 and 0x07 are refused with 7F 2E 31). Variant P2JO_V2 plays only 1 and 2, whereas 3 to 6 are accepted but silent'
+      fr: 'Sélection du son d''avertissement pour piétons, compté de 1 à 6 (0x00 et 0x07 sont refusés avec 7F 2E 31). La variante P2JO_V2 ne joue que 1 et 2, tandis que 3 à 6 sont acceptés mais restent muets'
+      es: 'Selección del sonido de advertencia para peatones, contado de 1 a 6 (0x00 y 0x07 se rechazan con 7F 2E 31). La variante P2JO_V2 solo reproduce 1 y 2, mientras que 3 a 6 se aceptan pero permanecen en silencio'
+      de: 'Auswahl des Tons des Fahrzeug-Warngeräusches, gezählt von 1 bis 6 (0x00 und 0x07 werden mit 7F 2E 31 abgelehnt). Variante P2JO_V2 spielt nur 1 und 2, während 3 bis 6 angenommen werden, aber stumm bleiben'
+      pl: 'Wybór dźwięku ostrzegawczego dla pieszych, liczony od 1 do 6 (0x00 i 0x07 są odrzucane z 7F 2E 31). Wariant P2JO_V2 odtwarza tylko 1 i 2, natomiast 3 do 6 są akceptowane, ale pozostają ciche'
+      hu: 'A gyalogosfigyelmeztető hang kiválasztása, 1-től 6-ig számozva (a 0x00 és 0x07 értéket 7F 2E 31 válasszal elutasítja). A P2JO_V2 változat csak az 1-et és a 2-t játssza le, míg a 3–6 értékeket elfogadja, de azok némák maradnak'
     type: 'enum'
     values:
       0x00:
+        unused: true   # refused with 7F 2E 31 when written
         en: 'Default value. no sound'
         fr: 'Valeur par défaut. pas de son'
         es: 'Valor por defecto. sin sonido'
